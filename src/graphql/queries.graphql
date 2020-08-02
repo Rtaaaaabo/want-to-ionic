@@ -1,0 +1,410 @@
+# this is an auto generated file. This will be overwritten
+query GetCompany($id: ID!) {
+  getCompany(id: $id) {
+    id
+    name
+    domain
+    room {
+      items {
+        id
+        companyID
+        name
+        description
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    members {
+      items {
+        id
+        email
+        companyID
+        username
+        registered
+        authority
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+  }
+}
+query ListCompanys(
+  $filter: ModelCompanyFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listCompanys(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      name
+      domain
+      room {
+        nextToken
+      }
+      members {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    nextToken
+  }
+}
+query GetRoom($id: ID!) {
+  getRoom(id: $id) {
+    id
+    companyID
+    name
+    description
+    members {
+      id
+      email
+      companyID
+      username
+      registered
+      authority
+      company {
+        id
+        name
+        domain
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+    company {
+      id
+      name
+      domain
+      room {
+        nextToken
+      }
+      members {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    tasks {
+      items {
+        id
+        authorID
+        roomID
+        title
+        description
+        scheduleDate
+        priority
+        status
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+  }
+}
+query ListRooms(
+  $filter: ModelRoomFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listRooms(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      companyID
+      name
+      description
+      members {
+        id
+        email
+        companyID
+        username
+        registered
+        authority
+        createdAt
+        updatedAt
+      }
+      company {
+        id
+        name
+        domain
+        createdAt
+        updatedAt
+      }
+      tasks {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    nextToken
+  }
+}
+query GetTask($id: ID!) {
+  getTask(id: $id) {
+    id
+    authorID
+    roomID
+    title
+    description
+    scheduleDate
+    priority
+    status
+    createdAt
+    members {
+      id
+      email
+      companyID
+      username
+      registered
+      authority
+      company {
+        id
+        name
+        domain
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+    room {
+      id
+      companyID
+      name
+      description
+      members {
+        id
+        email
+        companyID
+        username
+        registered
+        authority
+        createdAt
+        updatedAt
+      }
+      company {
+        id
+        name
+        domain
+        createdAt
+        updatedAt
+      }
+      tasks {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    messages {
+      items {
+        id
+        taskID
+        content
+        createdAt
+        isSent
+        updatedAt
+      }
+      nextToken
+    }
+    updatedAt
+  }
+}
+query ListTasks(
+  $filter: ModelTaskFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listTasks(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      authorID
+      roomID
+      title
+      description
+      scheduleDate
+      priority
+      status
+      createdAt
+      members {
+        id
+        email
+        companyID
+        username
+        registered
+        authority
+        createdAt
+        updatedAt
+      }
+      room {
+        id
+        companyID
+        name
+        description
+        createdAt
+        updatedAt
+      }
+      messages {
+        nextToken
+      }
+      updatedAt
+    }
+    nextToken
+  }
+}
+query GetMessage($id: ID!) {
+  getMessage(id: $id) {
+    id
+    taskID
+    author {
+      id
+      email
+      companyID
+      username
+      registered
+      authority
+      company {
+        id
+        name
+        domain
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+    content
+    createdAt
+    isSent
+    task {
+      id
+      authorID
+      roomID
+      title
+      description
+      scheduleDate
+      priority
+      status
+      createdAt
+      members {
+        id
+        email
+        companyID
+        username
+        registered
+        authority
+        createdAt
+        updatedAt
+      }
+      room {
+        id
+        companyID
+        name
+        description
+        createdAt
+        updatedAt
+      }
+      messages {
+        nextToken
+      }
+      updatedAt
+    }
+    updatedAt
+  }
+}
+query ListMessages(
+  $filter: ModelMessageFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listMessages(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      taskID
+      author {
+        id
+        email
+        companyID
+        username
+        registered
+        authority
+        createdAt
+        updatedAt
+      }
+      content
+      createdAt
+      isSent
+      task {
+        id
+        authorID
+        roomID
+        title
+        description
+        scheduleDate
+        priority
+        status
+        createdAt
+        updatedAt
+      }
+      updatedAt
+    }
+    nextToken
+  }
+}
+query GetUser($id: ID!) {
+  getUser(id: $id) {
+    id
+    email
+    companyID
+    username
+    registered
+    authority
+    company {
+      id
+      name
+      domain
+      room {
+        nextToken
+      }
+      members {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    createdAt
+    updatedAt
+  }
+}
+query ListUsers(
+  $filter: ModelUserFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      email
+      companyID
+      username
+      registered
+      authority
+      company {
+        id
+        name
+        domain
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+    nextToken
+  }
+}

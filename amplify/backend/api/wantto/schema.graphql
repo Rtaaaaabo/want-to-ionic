@@ -1,0 +1,52 @@
+type Company @model {
+  id: ID!
+  name: String!
+  domain: String!
+  room: [Room] @connection(keyName: "byCompany", fields: ["id"])
+  members: [User] @connection(keyName: "byCompany", fields: ["id"])
+}
+
+type Room @model @key(name: "byCompany", fields: ["companyID"]) {
+  id: ID!
+  companyID: ID!
+  name: String!
+  description: String!
+  members: [User]
+  company: Company! @connection(fields: ["companyID"])
+  tasks: [Task] @connection(keyName: "byRoom", fields: ["id"])
+}
+
+type Task @model @key(name: "byRoom", fields: ["roomID"]) {
+  id: ID!
+  authorID: ID!
+  roomID: ID!
+  title: String!
+  description: String
+  scheduleDate: AWSDateTime
+  priority: Int
+  status: Int
+  createdAt: AWSDateTime
+  members: [User]
+  room: Room! @connection(fields: ["roomID"])
+  messages: [Message] @connection(keyName: "byTask", fields: ["id"])
+}
+
+type Message @model @key(name: "byTask", fields: ["taskID"]) {
+  id: ID!
+  taskID: ID!
+  author: User
+  content: String!
+  createdAt: AWSDateTime
+  isSent: Boolean
+  task: Task! @connection(fields: ["taskID"])
+}
+
+type User @model @key(name: "byCompany", fields: ["companyID"]) {
+  id: ID!
+  email: String!
+  companyID: ID!
+  username: String!
+  registered: Boolean
+  authority: String
+  company: Company! @connection(fields: ["companyID"])
+}

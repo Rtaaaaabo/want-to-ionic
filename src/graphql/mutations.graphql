@@ -1,0 +1,775 @@
+# this is an auto generated file. This will be overwritten
+mutation CreateCompany(
+  $input: CreateCompanyInput!
+  $condition: ModelCompanyConditionInput
+) {
+  createCompany(input: $input, condition: $condition) {
+    id
+    name
+    domain
+    room {
+      items {
+        id
+        companyID
+        name
+        description
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    members {
+      items {
+        id
+        email
+        companyID
+        username
+        registered
+        authority
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+  }
+}
+mutation UpdateCompany(
+  $input: UpdateCompanyInput!
+  $condition: ModelCompanyConditionInput
+) {
+  updateCompany(input: $input, condition: $condition) {
+    id
+    name
+    domain
+    room {
+      items {
+        id
+        companyID
+        name
+        description
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    members {
+      items {
+        id
+        email
+        companyID
+        username
+        registered
+        authority
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+  }
+}
+mutation DeleteCompany(
+  $input: DeleteCompanyInput!
+  $condition: ModelCompanyConditionInput
+) {
+  deleteCompany(input: $input, condition: $condition) {
+    id
+    name
+    domain
+    room {
+      items {
+        id
+        companyID
+        name
+        description
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    members {
+      items {
+        id
+        email
+        companyID
+        username
+        registered
+        authority
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+  }
+}
+mutation CreateRoom(
+  $input: CreateRoomInput!
+  $condition: ModelRoomConditionInput
+) {
+  createRoom(input: $input, condition: $condition) {
+    id
+    companyID
+    name
+    description
+    members {
+      id
+      email
+      companyID
+      username
+      registered
+      authority
+      company {
+        id
+        name
+        domain
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+    company {
+      id
+      name
+      domain
+      room {
+        nextToken
+      }
+      members {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    tasks {
+      items {
+        id
+        authorID
+        roomID
+        title
+        description
+        scheduleDate
+        priority
+        status
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+  }
+}
+mutation UpdateRoom(
+  $input: UpdateRoomInput!
+  $condition: ModelRoomConditionInput
+) {
+  updateRoom(input: $input, condition: $condition) {
+    id
+    companyID
+    name
+    description
+    members {
+      id
+      email
+      companyID
+      username
+      registered
+      authority
+      company {
+        id
+        name
+        domain
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+    company {
+      id
+      name
+      domain
+      room {
+        nextToken
+      }
+      members {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    tasks {
+      items {
+        id
+        authorID
+        roomID
+        title
+        description
+        scheduleDate
+        priority
+        status
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+  }
+}
+mutation DeleteRoom(
+  $input: DeleteRoomInput!
+  $condition: ModelRoomConditionInput
+) {
+  deleteRoom(input: $input, condition: $condition) {
+    id
+    companyID
+    name
+    description
+    members {
+      id
+      email
+      companyID
+      username
+      registered
+      authority
+      company {
+        id
+        name
+        domain
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+    company {
+      id
+      name
+      domain
+      room {
+        nextToken
+      }
+      members {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    tasks {
+      items {
+        id
+        authorID
+        roomID
+        title
+        description
+        scheduleDate
+        priority
+        status
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+  }
+}
+mutation CreateTask(
+  $input: CreateTaskInput!
+  $condition: ModelTaskConditionInput
+) {
+  createTask(input: $input, condition: $condition) {
+    id
+    authorID
+    roomID
+    title
+    description
+    scheduleDate
+    priority
+    status
+    createdAt
+    members {
+      id
+      email
+      companyID
+      username
+      registered
+      authority
+      company {
+        id
+        name
+        domain
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+    room {
+      id
+      companyID
+      name
+      description
+      members {
+        id
+        email
+        companyID
+        username
+        registered
+        authority
+        createdAt
+        updatedAt
+      }
+      company {
+        id
+        name
+        domain
+        createdAt
+        updatedAt
+      }
+      tasks {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    messages {
+      items {
+        id
+        taskID
+        content
+        createdAt
+        isSent
+        updatedAt
+      }
+      nextToken
+    }
+    updatedAt
+  }
+}
+mutation UpdateTask(
+  $input: UpdateTaskInput!
+  $condition: ModelTaskConditionInput
+) {
+  updateTask(input: $input, condition: $condition) {
+    id
+    authorID
+    roomID
+    title
+    description
+    scheduleDate
+    priority
+    status
+    createdAt
+    members {
+      id
+      email
+      companyID
+      username
+      registered
+      authority
+      company {
+        id
+        name
+        domain
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+    room {
+      id
+      companyID
+      name
+      description
+      members {
+        id
+        email
+        companyID
+        username
+        registered
+        authority
+        createdAt
+        updatedAt
+      }
+      company {
+        id
+        name
+        domain
+        createdAt
+        updatedAt
+      }
+      tasks {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    messages {
+      items {
+        id
+        taskID
+        content
+        createdAt
+        isSent
+        updatedAt
+      }
+      nextToken
+    }
+    updatedAt
+  }
+}
+mutation DeleteTask(
+  $input: DeleteTaskInput!
+  $condition: ModelTaskConditionInput
+) {
+  deleteTask(input: $input, condition: $condition) {
+    id
+    authorID
+    roomID
+    title
+    description
+    scheduleDate
+    priority
+    status
+    createdAt
+    members {
+      id
+      email
+      companyID
+      username
+      registered
+      authority
+      company {
+        id
+        name
+        domain
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+    room {
+      id
+      companyID
+      name
+      description
+      members {
+        id
+        email
+        companyID
+        username
+        registered
+        authority
+        createdAt
+        updatedAt
+      }
+      company {
+        id
+        name
+        domain
+        createdAt
+        updatedAt
+      }
+      tasks {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    messages {
+      items {
+        id
+        taskID
+        content
+        createdAt
+        isSent
+        updatedAt
+      }
+      nextToken
+    }
+    updatedAt
+  }
+}
+mutation CreateMessage(
+  $input: CreateMessageInput!
+  $condition: ModelMessageConditionInput
+) {
+  createMessage(input: $input, condition: $condition) {
+    id
+    taskID
+    author {
+      id
+      email
+      companyID
+      username
+      registered
+      authority
+      company {
+        id
+        name
+        domain
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+    content
+    createdAt
+    isSent
+    task {
+      id
+      authorID
+      roomID
+      title
+      description
+      scheduleDate
+      priority
+      status
+      createdAt
+      members {
+        id
+        email
+        companyID
+        username
+        registered
+        authority
+        createdAt
+        updatedAt
+      }
+      room {
+        id
+        companyID
+        name
+        description
+        createdAt
+        updatedAt
+      }
+      messages {
+        nextToken
+      }
+      updatedAt
+    }
+    updatedAt
+  }
+}
+mutation UpdateMessage(
+  $input: UpdateMessageInput!
+  $condition: ModelMessageConditionInput
+) {
+  updateMessage(input: $input, condition: $condition) {
+    id
+    taskID
+    author {
+      id
+      email
+      companyID
+      username
+      registered
+      authority
+      company {
+        id
+        name
+        domain
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+    content
+    createdAt
+    isSent
+    task {
+      id
+      authorID
+      roomID
+      title
+      description
+      scheduleDate
+      priority
+      status
+      createdAt
+      members {
+        id
+        email
+        companyID
+        username
+        registered
+        authority
+        createdAt
+        updatedAt
+      }
+      room {
+        id
+        companyID
+        name
+        description
+        createdAt
+        updatedAt
+      }
+      messages {
+        nextToken
+      }
+      updatedAt
+    }
+    updatedAt
+  }
+}
+mutation DeleteMessage(
+  $input: DeleteMessageInput!
+  $condition: ModelMessageConditionInput
+) {
+  deleteMessage(input: $input, condition: $condition) {
+    id
+    taskID
+    author {
+      id
+      email
+      companyID
+      username
+      registered
+      authority
+      company {
+        id
+        name
+        domain
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+    content
+    createdAt
+    isSent
+    task {
+      id
+      authorID
+      roomID
+      title
+      description
+      scheduleDate
+      priority
+      status
+      createdAt
+      members {
+        id
+        email
+        companyID
+        username
+        registered
+        authority
+        createdAt
+        updatedAt
+      }
+      room {
+        id
+        companyID
+        name
+        description
+        createdAt
+        updatedAt
+      }
+      messages {
+        nextToken
+      }
+      updatedAt
+    }
+    updatedAt
+  }
+}
+mutation CreateUser(
+  $input: CreateUserInput!
+  $condition: ModelUserConditionInput
+) {
+  createUser(input: $input, condition: $condition) {
+    id
+    email
+    companyID
+    username
+    registered
+    authority
+    company {
+      id
+      name
+      domain
+      room {
+        nextToken
+      }
+      members {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    createdAt
+    updatedAt
+  }
+}
+mutation UpdateUser(
+  $input: UpdateUserInput!
+  $condition: ModelUserConditionInput
+) {
+  updateUser(input: $input, condition: $condition) {
+    id
+    email
+    companyID
+    username
+    registered
+    authority
+    company {
+      id
+      name
+      domain
+      room {
+        nextToken
+      }
+      members {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    createdAt
+    updatedAt
+  }
+}
+mutation DeleteUser(
+  $input: DeleteUserInput!
+  $condition: ModelUserConditionInput
+) {
+  deleteUser(input: $input, condition: $condition) {
+    id
+    email
+    companyID
+    username
+    registered
+    authority
+    company {
+      id
+      name
+      domain
+      room {
+        nextToken
+      }
+      members {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    createdAt
+    updatedAt
+  }
+}
