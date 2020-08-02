@@ -1,0 +1,7 @@
+{
+  "name": "wantTo",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
