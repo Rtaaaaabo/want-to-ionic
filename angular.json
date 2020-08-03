@@ -94,24 +94,8 @@
         "test": {
           "builder": "@angular-builders/jest:run",
           "options": {
-            "main": "src/test.ts",
-            "polyfills": "src/polyfills.ts",
-            "tsConfig": "tsconfig.spec.json",
-            "karmaConfig": "karma.conf.js",
-            "styles": [],
-            "scripts": [],
-            "assets": [
-              {
-                "glob": "favicon.ico",
-                "input": "src/",
-                "output": "/"
-              },
-              {
-                "glob": "**/*",
-                "input": "src/assets",
-                "output": "/assets"
-              }
-            ]
+            "no-cache": true,
+            "reporters": "jest-junit"
           },
           "configurations": {
             "ci": {
