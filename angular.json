@@ -93,10 +93,7 @@
         },
         "test": {
           "builder": "@angular-builders/jest:run",
-          "options": {
-            "no-cache": true,
-            "reporters": "jest-junit"
-          },
+          "options": {},
           "configurations": {
             "ci": {
               "progress": false,
