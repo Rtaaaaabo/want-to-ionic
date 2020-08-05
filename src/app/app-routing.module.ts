@@ -8,19 +8,15 @@ const routes: Routes = [
   },
   {
     path: 'home',
-    loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule)
+    loadChildren: () => import('./pages/home/home.module').then(m => m.HomePageModule)
   },
   {
     path: 'setting',
-    loadChildren: () => import('./pages/setting/setting.module').then( m => m.SettingPageModule)
-  },
-  {
-    path: 'pagesown-task',
-    loadChildren: () => import('./pagesown-task/pagesown-task.module').then( m => m.PagesownTaskPageModule)
+    loadChildren: () => import('./pages/setting/setting.module').then(m => m.SettingPageModule)
   },
   {
     path: 'own-task',
-    loadChildren: () => import('./pages/own-task/own-task.module').then( m => m.OwnTaskPageModule)
+    loadChildren: () => import('./pages/own-task/own-task.module').then(m => m.OwnTaskPageModule)
   }
 ];
 @NgModule({
