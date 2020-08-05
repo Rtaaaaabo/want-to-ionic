@@ -7,8 +7,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ListRoomComponent implements OnInit {
 
+  roomList = [];
+
   constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() { }
+
+  presentAddRoomItem(companyId: string): void {
+    console.log('companyId', companyId);
+  }
+
+  navigateToTask(room): void {
+    console.log(room);
+  }
+
+  deleteRoom(room): void {
+    console.log(room);
+  }
 
 }
