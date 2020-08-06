@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ModalController } from '@ionic/angular';
+import { AddRoomModalComponent } from '../../../../shared/component/modal/add-room-modal/add-room-modal.component';
 
 @Component({
   selector: 'app-list-room',
@@ -9,12 +11,17 @@ export class ListRoomComponent implements OnInit {
 
   roomList = [];
 
-  constructor() { }
+  constructor(
+    private modalCtrl: ModalController
+  ) { }
 
   ngOnInit() { }
 
-  presentAddRoomItem(companyId: string): void {
-    console.log('companyId', companyId);
+  async presentAddRoomItem(companyId: string): void {
+    const modal = await this.modalCtrl.create({
+      component: AddRoomModalComponent,
+    });
+    return modal.present();
   }
 
   navigateToTask(room): void {

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { HomePageRoutingModule } from './home-routing.module';
+import { SharedModule } from '../../shared/shared.module';
 import { HomePage } from './home.page';
 import { ListRoomComponent } from './componet/list-room/list-room.component';
 
@@ -11,7 +12,8 @@ import { ListRoomComponent } from './componet/list-room/list-room.component';
     CommonModule,
     FormsModule,
     IonicModule,
-    HomePageRoutingModule
+    HomePageRoutingModule,
+    SharedModule,
   ],
   declarations: [HomePage, ListRoomComponent]
 })
