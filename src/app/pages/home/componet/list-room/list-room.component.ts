@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { AddRoomModalComponent } from '../../../../shared/component/modal/add-room-modal/add-room-modal.component';
+import { HomeLogicService } from '../../logic/home-logic.service';
 
 @Component({
   selector: 'app-list-room',
@@ -12,7 +13,9 @@ export class ListRoomComponent implements OnInit {
   roomList = [];
 
   constructor(
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    private homeLogic: HomeLogicService,
+
   ) { }
 
   ngOnInit() { }
@@ -23,6 +26,7 @@ export class ListRoomComponent implements OnInit {
     });
     modal.onDidDismiss().then(({ data }) => {
       console.log(data);
+      this.homeLogic.createRoom(data);
     });
     return modal.present();
   }

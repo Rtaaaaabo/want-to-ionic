@@ -1,10 +1,26 @@
 import { Injectable } from '@angular/core';
-import { HomeServiceService } from '../service/home-service.service';
+import { HomeService } from '../service/home-service.service';
+import { HomePageModule } from '../home.module';
+import { v4 as uuid } from 'uuid';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class HomeLogicService {
 
-  constructor(service: HomeServiceService) { }
+  constructor(
+    private homeService: HomeService,
+  ) { }
+
+  createRoom(content) {
+    const requestContent = {
+      id: `${uuid}`,
+      companyID: 'takuCloudCom',
+      name: content.nameItem,
+      description: content.descriptionItem,
+    };
+    return this.homeService.createRoom(requestContent).subscribe((data) => {
+      return data;
+    });
+  }
 }

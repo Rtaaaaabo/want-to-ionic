@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
+import { HomePageModule } from '../home.module';
 import { APIService } from '../../../API.service';
 import { from, Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class HomeServiceService {
+export class HomeService {
 
   constructor(private amplifyService: APIService) { }
 
