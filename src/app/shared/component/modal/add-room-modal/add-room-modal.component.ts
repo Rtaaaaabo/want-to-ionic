@@ -29,11 +29,11 @@ export class AddRoomModalComponent implements OnInit {
 
   ngOnInit() { }
 
-  dismissModal() {
+  dismissModal(): void {
     this.modalCtrl.dismiss();
   }
 
-  createItem() {
+  createItem(): void {
     this.modalCtrl.dismiss(this.roomItemGroup.value);
   }
 

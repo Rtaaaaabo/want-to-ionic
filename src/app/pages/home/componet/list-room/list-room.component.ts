@@ -21,6 +21,9 @@ export class ListRoomComponent implements OnInit {
     const modal = await this.modalCtrl.create({
       component: AddRoomModalComponent,
     });
+    modal.onDidDismiss().then(({ data }) => {
+      console.log(data);
+    });
     return modal.present();
   }
 
