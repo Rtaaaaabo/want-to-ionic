@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ModalController, NavParams } from '@ionic/angular';
+import { FormGroup, FormControl, Validators, FormGroupDirective } from '@angular/forms';
 
 @Component({
   selector: 'app-add-room-modal',
@@ -7,8 +9,32 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddRoomModalComponent implements OnInit {
 
-  constructor() { }
+  roomItemGroup = new FormGroup({
+    nameItem: new FormControl('', [Validators.required]),
+    descriptionItem: new FormControl(''),
+  });
 
-  ngOnInit() {}
+  constructor(
+    private modalCtrl: ModalController,
+    private navParams: NavParams,
+  ) { }
+
+  get nameItem() {
+    return this.roomItemGroup.get('nameItem');
+  }
+
+  get descriptionItem() {
+    return this.roomItemGroup.get('descriptionItem');
+  }
+
+  ngOnInit() { }
+
+  dismissModal() {
+    this.modalCtrl.dismiss();
+  }
+
+  createItem() {
+    this.modalCtrl.dismiss(this.roomItemGroup.value);
+  }
 
 }

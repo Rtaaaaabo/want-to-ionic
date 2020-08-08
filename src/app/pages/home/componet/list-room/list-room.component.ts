@@ -17,7 +17,7 @@ export class ListRoomComponent implements OnInit {
 
   ngOnInit() { }
 
-  async presentAddRoomItem(companyId: string): void {
+  async presentAddRoomItem(companyId: string) {
     const modal = await this.modalCtrl.create({
       component: AddRoomModalComponent,
     });

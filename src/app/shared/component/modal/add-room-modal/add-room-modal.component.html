@@ -1,3 +1,31 @@
-<p>
-  add-room-modal works!
-</p>
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>案件の追加</ion-title>
+    <ion-buttons slot="start">
+      <ion-button (click)="dismissModal()">
+        <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="roomItemGroup">
+    <ion-item>
+      <ion-label position="floating">案件名</ion-label>
+      <ion-input formControlName="nameItem"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">詳細</ion-label>
+      <ion-textarea autoGrow="true" formControlName="descriptionItem">
+      </ion-textarea>
+    </ion-item>
+
+    <ion-button
+      (click)="createItem()"
+      [disabled]="nameItem.invalid"
+      expand="full"
+      >追加
+    </ion-button>
+  </form>
+</ion-content>
