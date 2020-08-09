@@ -17,10 +17,6 @@ const routes: Routes = [
   {
     path: 'own-task',
     loadChildren: () => import('./pages/own-task/own-task.module').then(m => m.OwnTaskPageModule)
-  },
-  {
-    path: 'signup',
-    loadChildren: () => import('./pages/signup/signup.module').then( m => m.SignupPageModule)
   }
 ];
 @NgModule({
