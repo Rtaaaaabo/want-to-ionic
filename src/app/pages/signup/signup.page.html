@@ -1,7 +1,46 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>signup</ion-title>
+    <ion-title>新規登録</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content> </ion-content>
+<ion-content>
+  <form [formGroup]="signpForm">
+    <ion-list>
+      <ion-item>
+        <ion-label for="username" position="floating">氏名</ion-label>
+        <ion-input type="input" formControlName="username"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label for="email" position="floating"></ion-label>
+        <ion-input type="email" formControlName="email"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label for="passwordform" position="floating">パスワード</ion-label>
+        <ion-input type="password" formControlName="passwordform"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label for="confirmPasswordform" position="floating"
+          >パスワード（確認）</ion-label
+        >
+        <ion-input
+          type="password"
+          formControlName="confirmPasswordform"
+        ></ion-input>
+      </ion-item>
+    </ion-list>
+  </form>
+  <div class="register-button">
+    <ion-button
+      (click)="onSubmit()"
+      [disabled]="signpForm.invalid"
+      expand="block"
+      >登録</ion-button
+    >
+  </div>
+  <div class="text-center">
+    <ion-button (click)="goBackToLogin()" fill="outline"
+      >ログインする</ion-button
+    >
+  </div>
+</ion-content>
