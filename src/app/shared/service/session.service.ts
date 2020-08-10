@@ -15,6 +15,10 @@ export class SessionService {
     this.loggedIn = new BehaviorSubject<boolean>(false);
   }
 
+  entryUserSignup(valueObj): Observable<any> {
+    return from(Auth.signUp(valueObj));
+  }
+
   isAuthenticated(): Observable<boolean> {
     return from(Auth.currentAuthenticatedUser()).pipe(
       map(() => {
