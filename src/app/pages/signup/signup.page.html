@@ -5,7 +5,7 @@
 </ion-header>
 
 <ion-content>
-  <form [formGroup]="signpForm">
+  <form [formGroup]="signupForm">
     <ion-list>
       <ion-item>
         <ion-label for="username" position="floating">氏名</ion-label>
@@ -33,7 +33,7 @@
   <div class="register-button">
     <ion-button
       (click)="onSubmit()"
-      [disabled]="signpForm.invalid"
+      [disabled]="signupForm.invalid"
       expand="block"
       >登録</ion-button
     >
