@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { ConfirmLogicService } from './logic/confirm-logic.service';
 
 @Component({
   selector: 'app-confirm',
@@ -8,17 +10,25 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 })
 
 export class ConfirmPage implements OnInit {
+  confirmTargetEmail: string;
   confirmForm = new FormGroup({
     confirmNumber: new FormControl('', [Validators.required])
   });
 
-  constructor() { }
+  constructor(
+    private logic: ConfirmLogicService,
+    private router: Router,
+  ) {
+  }
 
   ngOnInit() {
+    this.confirmTargetEmail = this.router.getCurrentNavigation().extras.state.data.email;
   }
 
   confirmSignup() {
-    console.log('ConfirmSignup');
+    this.logic.sendConfirmUser(this.confirmTargetEmail, this.confirmForm.get('confirmNumber').value).subscribe(() => {
+      this.router.navigate(['/login']);
+    })
   }
 
   reSendSignup() {

@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { SignupLogicService } from './logic/signup-logic.service';
 import { InterfaceSignup } from '../../interfaces/signup.interface';
-import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-signup',

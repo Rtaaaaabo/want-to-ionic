@@ -2,12 +2,10 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
-
 import { IonicModule } from '@ionic/angular';
-
 import { ConfirmPageRoutingModule } from './confirm-routing.module';
-
 import { ConfirmPage } from './confirm.page';
+import { ConfirmLogicService } from './logic/confirm-logic.service';
 
 @NgModule({
   imports: [
@@ -17,6 +15,7 @@ import { ConfirmPage } from './confirm.page';
     ReactiveFormsModule,
     ConfirmPageRoutingModule
   ],
-  declarations: [ConfirmPage]
+  declarations: [ConfirmPage],
+  providers: [ConfirmLogicService],
 })
 export class ConfirmPageModule { }
