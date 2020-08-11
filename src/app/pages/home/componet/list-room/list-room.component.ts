@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { AddRoomModalComponent } from '../../../../shared/component/modal/add-room-modal/add-room-modal.component';
 import { HomeLogicService } from '../../logic/home-logic.service';
+import { from } from 'rxjs';
+import { flatMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-list-room',
@@ -25,6 +27,10 @@ export class ListRoomComponent implements OnInit {
       component: AddRoomModalComponent,
     });
 
+    const observable = from(modal.onDidDismiss());
+    observable.pipe(flatMap(({ data }) => this.homeLogic.createRoom(data))).subscribe((response) => {
+      console.log(response);
+    })
     // modal.onDidDismiss().then(({ data }) => {
     //   this.homeLogic.createRoom(data);
     // });
