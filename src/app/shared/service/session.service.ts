@@ -31,4 +31,12 @@ export class SessionService {
       })
     );
   }
+
+  confirmSignUp(username, code): Observable<void> {
+    return from(Auth.confirmSignUp(username, code));
+  }
+
+  resendConfurmNumbseForSignup(username): Observable<string> {
+    return from(Auth.resendSignUp(username));
+  }
 }
