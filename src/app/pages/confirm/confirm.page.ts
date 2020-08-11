@@ -21,4 +21,8 @@ export class ConfirmPage implements OnInit {
     console.log('ConfirmSignup');
   }
 
+  reSendSignup() {
+    console.log('reSendSignup');
+  }
+
 }
