@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HomeService } from '../service/home-service.service';
-import { HomePageModule } from '../home.module';
 import { v4 as uuid } from 'uuid';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -12,15 +12,13 @@ export class HomeLogicService {
     private homeService: HomeService,
   ) { }
 
-  createRoom(content) {
+  createRoom(content): Observable<any> {
     const requestContent = {
-      id: `${uuid}`,
+      id: `${uuid()}`,
       companyID: 'takuCloudCom',
       name: content.nameItem,
       description: content.descriptionItem,
     };
-    return this.homeService.createRoom(requestContent).subscribe((data) => {
-      return data;
-    });
+    return this.homeService.createRoom(requestContent);
   }
 }

@@ -24,11 +24,14 @@ export class ListRoomComponent implements OnInit {
     const modal = await this.modalCtrl.create({
       component: AddRoomModalComponent,
     });
-    modal.onDidDismiss().then(({ data }) => {
-      console.log(data);
-      this.homeLogic.createRoom(data);
-    });
+
+    // modal.onDidDismiss().then(({ data }) => {
+    //   this.homeLogic.createRoom(data);
+    // });
     return modal.present();
+  }
+
+  dismissModal() {
   }
 
   navigateToTask(room): void {

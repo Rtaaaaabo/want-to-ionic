@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HomePageModule } from '../home.module';
-import { APIService } from '../../../API.service';
+// import { APIService } from '../../../API.service';
+import { AmplifyService } from '../../../shared/service/amplify.service';
 import { from, Observable } from 'rxjs';
 
 @Injectable({
@@ -8,9 +9,9 @@ import { from, Observable } from 'rxjs';
 })
 export class HomeService {
 
-  constructor(private amplifyService: APIService) { }
+  constructor(private amplifyService: AmplifyService) { }
 
   createRoom(content): Observable<any> {
-    return from(this.amplifyService.CreateRoom(content)).pipe();
+    return from(this.amplifyService.CreateRoom(content));
   }
 }
