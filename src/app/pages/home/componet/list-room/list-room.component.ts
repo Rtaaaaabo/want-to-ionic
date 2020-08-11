@@ -31,9 +31,6 @@ export class ListRoomComponent implements OnInit {
     observable.pipe(flatMap(({ data }) => this.homeLogic.createRoom(data))).subscribe((response) => {
       console.log(response);
     })
-    // modal.onDidDismiss().then(({ data }) => {
-    //   this.homeLogic.createRoom(data);
-    // });
     return modal.present();
   }
 
