@@ -36,9 +36,9 @@ export class SignupPage implements OnInit {
 
   onSubmit() {
     const value: InterfaceSignup = this.signupForm.value;
-    this.logic.entrySignupUser(value).pipe(tap(() => {
+    this.logic.entrySignupUser(value).subscribe(() => {
       this.router.navigate(['/confirm'], { state: { data: { email: value.email } } });
-    }))
+    })
     if (this.signupForm.invalid) {
       return;
     }

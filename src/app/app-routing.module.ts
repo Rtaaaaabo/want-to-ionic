@@ -29,7 +29,7 @@ const routes: Routes = [
   },
   {
     path: 'confirm',
-    loadChildren: () => import('./pages/confirm/confirm.module').then( m => m.ConfirmPageModule)
+    loadChildren: () => import('./pages/confirm/confirm.module').then(m => m.ConfirmPageModule)
   }
 ];
 @NgModule({

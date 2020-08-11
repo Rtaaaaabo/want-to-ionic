@@ -12,10 +12,10 @@ export class SignupLogicService {
   entrySignupUser(value): Observable<any> {
     const signupContent = {
       username: value.email,
-      password: value.password,
+      password: value.passwordform,
       attributes: {
-        userName: value.username,
-        companyId: 'takucloudcom'
+        email: value.email,
+        // companyId: 'takucloudcom'
       }
     }
     return this.sessionService.entryUserSignup(signupContent);
