@@ -15,7 +15,6 @@ export class SignupLogicService {
       password: value.passwordform,
       attributes: {
         email: value.email,
-        // companyId: 'takucloudcom'
       }
     }
     return this.sessionService.entryUserSignup(signupContent);
