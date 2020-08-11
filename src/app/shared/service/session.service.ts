@@ -39,4 +39,8 @@ export class SessionService {
   resendConfurmNumbseForSignup(username): Observable<string> {
     return from(Auth.resendSignUp(username));
   }
+
+  userLogin(email, password): Observable<void> {
+    return from(Auth.signIn(email, password)).pipe(tap(() => this.loggedIn.next(true)));
+  }
 }

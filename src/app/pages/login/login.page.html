@@ -1,9 +1,24 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>login</ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content>
-
+<ion-content class="ion-padding">
+  <div class="center">
+    <div class="center-text">
+      <h4>Want to</h4>
+    </div>
+    <form [formGroup]="loginForm">
+      <ion-item class="item-padding">
+        <ion-label position="floating">Email</ion-label>
+        <ion-input formControlName="email"></ion-input>
+      </ion-item>
+      <ion-item class="item-padding">
+        <ion-label position="floating">パスワード</ion-label>
+        <ion-input type="password" formControlName="password"></ion-input>
+      </ion-item>
+      <ion-button
+        (click)="login()"
+        expand="block"
+        [disabled]="loginForm.invalid"
+      >
+        ログイン
+      </ion-button>
+    </form>
+  </div>
 </ion-content>
