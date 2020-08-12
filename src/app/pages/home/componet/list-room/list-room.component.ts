@@ -12,7 +12,7 @@ import { flatMap } from 'rxjs/operators';
 })
 export class ListRoomComponent implements OnInit {
 
-  roomList = [];
+  roomList: Array<any>;
 
   constructor(
     private modalCtrl: ModalController,
@@ -20,7 +20,11 @@ export class ListRoomComponent implements OnInit {
 
   ) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.homeLogic.listRoom('takuCloudCom').subscribe((result) => {
+      this.roomList = result;
+    })
+  }
 
   async presentAddRoomItem(companyId: string) {
     const modal = await this.modalCtrl.create({
@@ -32,7 +36,7 @@ export class ListRoomComponent implements OnInit {
       .pipe(flatMap(({ data }) => this.homeLogic.createRoom(data)))
       .pipe(flatMap(() => this.homeLogic.listRoom('takuCloudCom')))
       .subscribe((response) => {
-        console.log(response);
+        this.roomList = response;
       })
     return modal.present();
   }

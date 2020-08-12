@@ -7,9 +7,9 @@
   </ion-list-header>
   <ion-item-sliding #slidingItem *ngFor="let room of roomList">
     <ion-item (click)="navigateToTask(room)">
-      <ion-avatar slot="start">
+      <!-- <ion-avatar slot="start">
         <img src="../../../assets/img/sojiro-taku.jpg" />
-      </ion-avatar>
+      </ion-avatar> -->
       <ion-label>
         <h2>{{ room.name }}</h2>
         <p>{{ room.describe }}</p>

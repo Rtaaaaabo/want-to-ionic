@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HomeService } from '../service/home-service.service';
 import { v4 as uuid } from 'uuid';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -23,6 +24,6 @@ export class HomeLogicService {
   }
 
   listRoom(companyId: string): Observable<any> {
-    return this.homeService.fetchRoomList(companyId);
+    return this.homeService.fetchRoomList(companyId).pipe(map((result) => result.items));
   }
 }
