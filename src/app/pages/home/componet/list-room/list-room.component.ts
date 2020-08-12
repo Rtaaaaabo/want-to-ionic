@@ -45,8 +45,8 @@ export class ListRoomComponent implements OnInit {
     console.log(room);
   }
 
-  deleteRoom(room): void {
-    console.log(room);
+  deleteRoom(roomId): void {
+    console.log(roomId);
   }
 
 }
