@@ -21,4 +21,11 @@ export class HomeService {
     }
     return from(this.amplifyService.ListRooms(filterContent));
   }
+
+  deleteRoomItem(roomId: string): Observable<any> {
+    const requestContent = {
+      id: roomId
+    }
+    return from(this.amplifyService.DeleteRoom(requestContent));
+  }
 }

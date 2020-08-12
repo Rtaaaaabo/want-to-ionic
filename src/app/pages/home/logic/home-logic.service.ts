@@ -26,4 +26,8 @@ export class HomeLogicService {
   listRoom(companyId: string): Observable<any> {
     return this.homeService.fetchRoomList(companyId).pipe(map((result) => result.items));
   }
+
+  deleteRoomItem(roomId: string): Observable<any> {
+    return this.homeService.deleteRoomItem(roomId);
+  }
 }

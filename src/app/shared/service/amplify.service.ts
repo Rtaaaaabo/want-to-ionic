@@ -2630,58 +2630,6 @@ export class AmplifyService {
           companyID
           name
           description
-          members {
-            __typename
-            id
-            email
-            companyID
-            username
-            registered
-            authority
-            company {
-              __typename
-              id
-              name
-              domain
-              createdAt
-              updatedAt
-            }
-            createdAt
-            updatedAt
-          }
-          company {
-            __typename
-            id
-            name
-            domain
-            room {
-              __typename
-              nextToken
-            }
-            members {
-              __typename
-              nextToken
-            }
-            createdAt
-            updatedAt
-          }
-          tasks {
-            __typename
-            items {
-              __typename
-              id
-              authorID
-              roomID
-              title
-              description
-              scheduleDate
-              priority
-              status
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
           createdAt
           updatedAt
         }
