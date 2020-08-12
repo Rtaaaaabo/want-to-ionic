@@ -7,10 +7,4 @@ import { ModalController } from '@ionic/angular';
 export class SharedLogicService {
 
   constructor(public modalCtrl: ModalController) { }
-
-  // creatModal(targetComponent) {
-  //   const modal = this.modalCtrl.create({
-  //     component: targetComponent
-  //   })
-  // }
 }

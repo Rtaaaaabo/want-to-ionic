@@ -28,13 +28,13 @@ export class ListRoomComponent implements OnInit {
     });
 
     const observable = from(modal.onDidDismiss());
-    observable.pipe(flatMap(({ data }) => this.homeLogic.createRoom(data))).subscribe((response) => {
-      console.log(response);
-    })
+    observable
+      .pipe(flatMap(({ data }) => this.homeLogic.createRoom(data)))
+      .pipe(flatMap(() => this.homeLogic.listRoom('takuCloudCom')))
+      .subscribe((response) => {
+        console.log(response);
+      })
     return modal.present();
-  }
-
-  dismissModal() {
   }
 
   navigateToTask(room): void {

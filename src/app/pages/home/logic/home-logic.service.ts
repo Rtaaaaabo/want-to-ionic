@@ -21,4 +21,8 @@ export class HomeLogicService {
     };
     return this.homeService.createRoom(requestContent);
   }
+
+  listRoom(companyId: string): Observable<any> {
+    return this.homeService.fetchRoomList(companyId);
+  }
 }

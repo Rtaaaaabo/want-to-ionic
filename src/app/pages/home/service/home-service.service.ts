@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HomePageModule } from '../home.module';
-// import { APIService } from '../../../API.service';
-import { AmplifyService } from '../../../shared/service/amplify.service';
+import { AmplifyService, ModelRoomFilterInput, ListRoomsQuery } from '../../../shared/service/amplify.service';
 import { from, Observable } from 'rxjs';
 
 @Injectable({
@@ -13,5 +11,14 @@ export class HomeService {
 
   createRoom(content): Observable<any> {
     return from(this.amplifyService.CreateRoom(content));
+  }
+
+  fetchRoomList(companyId: string): Observable<ListRoomsQuery> {
+    const filterContent: ModelRoomFilterInput = {
+      companyID: {
+        eq: `${companyId}`
+      }
+    }
+    return from(this.amplifyService.ListRooms(filterContent));
   }
 }

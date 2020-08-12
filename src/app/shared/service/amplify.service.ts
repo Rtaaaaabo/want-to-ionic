@@ -3532,29 +3532,6 @@ export class AmplifyService {
             companyID
             name
             description
-            members {
-              __typename
-              id
-              email
-              companyID
-              username
-              registered
-              authority
-              createdAt
-              updatedAt
-            }
-            company {
-              __typename
-              id
-              name
-              domain
-              createdAt
-              updatedAt
-            }
-            tasks {
-              __typename
-              nextToken
-            }
             createdAt
             updatedAt
           }
