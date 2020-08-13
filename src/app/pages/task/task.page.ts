@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./task.page.scss'],
 })
 export class TaskPage implements OnInit {
+  room;
 
   constructor(
     private router: Router,
@@ -15,6 +16,8 @@ export class TaskPage implements OnInit {
   ) { }
 
   ngOnInit() {
+    // this.room = this.router.getCurrentNavigation().extras.state.data;
+    // console.log(this.room);
   }
 
   goBackToRoom() {
