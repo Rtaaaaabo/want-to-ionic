@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { TaskPageRoutingModule } from './task-routing.module';
 
 import { TaskPage } from './task.page';
+import { TaskLogicService } from './logic/task-logic.service';
 
 @NgModule({
   imports: [
@@ -15,6 +16,7 @@ import { TaskPage } from './task.page';
     IonicModule,
     TaskPageRoutingModule
   ],
-  declarations: [TaskPage]
+  declarations: [TaskPage],
+  providers: [TaskLogicService],
 })
-export class TaskPageModule {}
+export class TaskPageModule { }
