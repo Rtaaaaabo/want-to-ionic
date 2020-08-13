@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { AddRoomModalComponent } from '../../../../shared/component/modal/add-room-modal/add-room-modal.component';
 import { HomeLogicService } from '../../logic/home-logic.service';
@@ -17,7 +18,7 @@ export class ListRoomComponent implements OnInit {
   constructor(
     private modalCtrl: ModalController,
     private homeLogic: HomeLogicService,
-
+    private router: Router,
   ) { }
 
   ngOnInit() {
@@ -42,7 +43,7 @@ export class ListRoomComponent implements OnInit {
   }
 
   navigateToTask(room): void {
-    console.log(room);
+    this.router.navigate(['task', `${room.id}`]);
   }
 
   deleteRoom(roomId): void {

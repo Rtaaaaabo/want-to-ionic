@@ -5,7 +5,7 @@ import { TaskPage } from './task.page';
 
 const routes: Routes = [
   {
-    path: '',
+    path: ':id',
     component: TaskPage
   }
 ];
@@ -14,4 +14,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class TaskPageRoutingModule {}
+export class TaskPageRoutingModule { }
