@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import { TaskLogicService } from './logic/task-logic.service';
+import { GetRoomQuery } from 'src/app/shared/service/amplify.service';
 
 @Component({
   selector: 'app-task',
@@ -9,7 +10,8 @@ import { TaskLogicService } from './logic/task-logic.service';
   styleUrls: ['./task.page.scss'],
 })
 export class TaskPage implements OnInit {
-  room;
+  room = {} as GetRoomQuery;
+  roomId: string;
 
   constructor(
     private router: Router,
@@ -19,11 +21,10 @@ export class TaskPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    // this.route.paramMap.subscribe((param) => {
-    //   console.log(param);
-    // })
-    // console.log(this.route.snapshot.paramMap.get('id'));
-    // this.logic.featchRoomInfo()
+    this.roomId = this.route.snapshot.paramMap.get('id');
+    this.logic.featchRoomInfo(this.roomId).subscribe((data: GetRoomQuery) => {
+      this.room = data;
+    })
   }
 
   goBackToRoom() {
