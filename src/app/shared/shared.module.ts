@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { AddRoomModalComponent } from './component/modal/add-room-modal/add-room-modal.component';
+import { AddTaskModalComponent } from './component/modal/add-task-modal/add-task-modal.component';
 import { SessionService } from './service/session.service';
 import { SharedLogicService } from './logic/shared-logic.service';
 
@@ -13,9 +14,10 @@ import { SharedLogicService } from './logic/shared-logic.service';
     IonicModule,
     ReactiveFormsModule,
   ],
-  entryComponents: [AddRoomModalComponent],
+  entryComponents: [AddRoomModalComponent, AddTaskModalComponent],
   exports: [
-    AddRoomModalComponent
+    AddRoomModalComponent,
+    AddTaskModalComponent,
   ],
   providers: [
     SessionService,

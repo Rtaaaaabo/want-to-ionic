@@ -27,6 +27,10 @@ export class TaskPage implements OnInit {
     })
   }
 
+  presentAddTask() {
+    console.log('Present Add Task');
+  }
+
   goBackToRoom() {
     this.location.back();
   }
