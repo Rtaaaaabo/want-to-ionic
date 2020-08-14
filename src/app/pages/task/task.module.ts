@@ -8,6 +8,7 @@ import { TaskPageRoutingModule } from './task-routing.module';
 
 import { TaskPage } from './task.page';
 import { TaskLogicService } from './logic/task-logic.service';
+import { TaskServiceService } from './service/task-service.service';
 
 @NgModule({
   imports: [
@@ -17,6 +18,6 @@ import { TaskLogicService } from './logic/task-logic.service';
     TaskPageRoutingModule
   ],
   declarations: [TaskPage],
-  providers: [TaskLogicService],
+  providers: [TaskLogicService, TaskServiceService],
 })
 export class TaskPageModule { }
