@@ -11,7 +11,12 @@ export class TaskLogicService {
   constructor(
     private taskService: TaskServiceService,
   ) { }
+
   featchRoomInfo(roomId: string): Observable<GetRoomQuery> {
     return this.taskService.fetchRoomInfo(roomId);
   }
+
+  // createTaskToRoom(roomId: string): Observable<any> {
+  //   return this.taskService
+  // }
 }

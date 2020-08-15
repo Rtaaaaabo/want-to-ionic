@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
+import { ModalController } from '@ionic/angular';
+import { from } from 'rxjs';
 import { TaskLogicService } from './logic/task-logic.service';
 import { GetRoomQuery } from 'src/app/shared/service/amplify.service';
+import { AddTaskModalComponent } from '../../shared/component/modal/add-task-modal/add-task-modal.component';
 
 @Component({
   selector: 'app-task',
@@ -15,6 +18,7 @@ export class TaskPage implements OnInit {
 
   constructor(
     private router: Router,
+    private modalCtrl: ModalController,
     private route: ActivatedRoute,
     private location: Location,
     private logic: TaskLogicService,
@@ -27,8 +31,13 @@ export class TaskPage implements OnInit {
     })
   }
 
-  presentAddTask() {
-    console.log('Present Add Task');
+  async presentAddTask() {
+    const modal = await this.modalCtrl.create({
+      component: AddTaskModalComponent,
+    });
+    // const observable = from(modal.onDidDismiss());
+    return modal.present();
+
   }
 
   goBackToRoom() {
