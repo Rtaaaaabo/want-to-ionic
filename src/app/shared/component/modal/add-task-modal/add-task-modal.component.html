@@ -19,5 +19,25 @@
       <ion-label position="floating">説明</ion-label>
       <ion-input formControlName="descriptionItem"></ion-input>
     </ion-item>
+    <ion-item>
+      <ion-label position="floating">期限</ion-label>
+      <ion-datetime
+        displayFormat="YYYY/MM/DD"
+        displayTimezone="Asia/Tokyo"
+        cancelText="キャンセル"
+        dayNames="曜日"
+        placeholder="選択してください"
+        formControlName="scheduleDateItem"
+        doneText="完了"
+      ></ion-datetime>
+    </ion-item>
+
+    <ion-button
+      (click)="createTaskItem()"
+      [disabled]="taskItemForm.invalid"
+      expand="full"
+    >
+      追加
+    </ion-button>
   </form>
 </ion-content>

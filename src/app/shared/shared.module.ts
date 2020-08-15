@@ -8,7 +8,7 @@ import { SessionService } from './service/session.service';
 import { SharedLogicService } from './logic/shared-logic.service';
 
 @NgModule({
-  declarations: [AddRoomModalComponent],
+  declarations: [AddRoomModalComponent, AddTaskModalComponent],
   imports: [
     CommonModule,
     IonicModule,
