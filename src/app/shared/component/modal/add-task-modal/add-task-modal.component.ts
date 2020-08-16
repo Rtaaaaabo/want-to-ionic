@@ -13,17 +13,19 @@ export class AddTaskModalComponent implements OnInit {
     nameItem: new FormControl('', [Validators.required]),
     descriptionItem: new FormControl(''),
     scheduleDateItem: new FormControl(''),
-  })
+  });
+
+  minYear: string = '';
+  maxYear: string = '';
 
   constructor(
     private modalCtrl: ModalController,
   ) { }
 
   ngOnInit() {
-    const dateTime = new Date();
-    const isoString = dateTime.toISOString();
-    console.log(isoString);
-
+    const currentDate = new Date();
+    this.minYear = (currentDate.getFullYear()).toString();
+    this.maxYear = (currentDate.getFullYear() + 1).toString();
   }
 
   dismissModal(): void {
@@ -31,10 +33,12 @@ export class AddTaskModalComponent implements OnInit {
   }
 
   createTaskItem(): void {
-    console.log('Date', new Date());
-
     console.log(this.taskItemForm.value);
     this.modalCtrl.dismiss(this.taskItemForm.value);
+  }
+
+  changeDate() {
+    console.log('changeDate');
   }
 
 }

@@ -22,6 +22,7 @@
     <ion-item>
       <ion-label position="floating">期限</ion-label>
       <ion-datetime
+        (ionChange)="changeDate()"
         displayFormat="YYYY/MM/DD"
         displayTimezone="Asia/Tokyo"
         cancelText="キャンセル"
@@ -29,6 +30,8 @@
         placeholder="選択してください"
         formControlName="scheduleDateItem"
         doneText="完了"
+        [min]="minYear"
+        [max]="maxYear"
       ></ion-datetime>
     </ion-item>
 
