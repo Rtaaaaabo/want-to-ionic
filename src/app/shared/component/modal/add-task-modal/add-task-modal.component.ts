@@ -17,6 +17,7 @@ export class AddTaskModalComponent implements OnInit {
 
   minYear: string = '';
   maxYear: string = '';
+  currentIsoString: string;
 
   constructor(
     private modalCtrl: ModalController,
@@ -26,6 +27,10 @@ export class AddTaskModalComponent implements OnInit {
     const currentDate = new Date();
     this.minYear = (currentDate.getFullYear()).toString();
     this.maxYear = (currentDate.getFullYear() + 1).toString();
+    this.currentIsoString = currentDate.toISOString();
+    this.taskItemForm.patchValue({
+      scheduleDateItem: this.currentIsoString
+    })
   }
 
   dismissModal(): void {
@@ -33,7 +38,6 @@ export class AddTaskModalComponent implements OnInit {
   }
 
   createTaskItem(): void {
-    console.log(this.taskItemForm.value);
     this.modalCtrl.dismiss(this.taskItemForm.value);
   }
 
