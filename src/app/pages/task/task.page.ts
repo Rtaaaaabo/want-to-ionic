@@ -35,13 +35,16 @@ export class TaskPage implements OnInit {
     const modal = await this.modalCtrl.create({
       component: AddTaskModalComponent,
     });
-    // const observable = from(modal.onDidDismiss());
     return modal.present();
 
   }
 
   goBackToRoom() {
     this.location.back();
+  }
+
+  sortTaskItem() {
+    console.log('Sort Task Item');
   }
 
 }
