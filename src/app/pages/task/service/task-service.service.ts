@@ -15,7 +15,7 @@ export class TaskServiceService {
     return from(this.amplifyService.GetRoom(roomId));
   }
 
-  // createTaskItem(roomId: string): Observable<any> {
-  //   return from(this.amplifyService.CreateTask());
-  // }
+  createTaskItem(content): Observable<any> {
+    return from(this.amplifyService.CreateTask(content));
+  }
 }

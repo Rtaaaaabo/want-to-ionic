@@ -3,9 +3,10 @@ import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { from } from 'rxjs';
-import { TaskLogicService } from './logic/task-logic.service';
 import { GetRoomQuery } from 'src/app/shared/service/amplify.service';
 import { AddTaskModalComponent } from '../../shared/component/modal/add-task-modal/add-task-modal.component';
+import { TaskLogicService } from './logic/task-logic.service';
+import { flatMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-task',
@@ -35,6 +36,8 @@ export class TaskPage implements OnInit {
     const modal = await this.modalCtrl.create({
       component: AddTaskModalComponent,
     });
+    const dismissObservable = from(modal.onDidDismiss());
+    dismissObservable.pipe(flatMap(({ data }) => this.logic.createTaskToRoom(data)))
     return modal.present();
 
   }
