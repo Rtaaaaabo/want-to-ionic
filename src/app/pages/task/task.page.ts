@@ -6,7 +6,7 @@ import { from } from 'rxjs';
 import { GetRoomQuery } from 'src/app/shared/service/amplify.service';
 import { AddTaskModalComponent } from '../../shared/component/modal/add-task-modal/add-task-modal.component';
 import { TaskLogicService } from './logic/task-logic.service';
-import { flatMap } from 'rxjs/operators';
+import { flatMap, mergeMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-task',
@@ -16,6 +16,7 @@ import { flatMap } from 'rxjs/operators';
 export class TaskPage implements OnInit {
   room = {} as GetRoomQuery;
   roomId: string;
+  userEmail: string;
 
   constructor(
     private router: Router,
@@ -27,9 +28,11 @@ export class TaskPage implements OnInit {
 
   ngOnInit() {
     this.roomId = this.route.snapshot.paramMap.get('id');
-    this.logic.featchRoomInfo(this.roomId).subscribe((data: GetRoomQuery) => {
-      this.room = data;
-    })
+    this.logic.featchRoomInfo(this.roomId)
+      .subscribe((roomInfo: GetRoomQuery) => {
+        this.room = roomInfo;
+      });
+    this.logic.fetchCurrentUserInfo().subscribe((email) => this.userEmail = email);
   }
 
   async presentAddTask() {
@@ -37,7 +40,7 @@ export class TaskPage implements OnInit {
       component: AddTaskModalComponent,
     });
     const dismissObservable = from(modal.onDidDismiss());
-    dismissObservable.pipe(flatMap(({ data }) => this.logic.createTaskToRoom(data)))
+    dismissObservable.pipe(flatMap(({ data }) => this.logic.createTaskToRoom(data, this.roomId, this.userEmail)))
     return modal.present();
 
   }

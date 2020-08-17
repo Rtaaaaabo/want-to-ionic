@@ -43,4 +43,8 @@ export class SessionService {
   userLogin(email, password): Observable<void> {
     return from(Auth.signIn(email, password)).pipe(tap(() => this.loggedIn.next(true)));
   }
+
+  fetchCurrentUser(): Observable<any> {
+    return from(Auth.currentAuthenticatedUser());
+  }
 }

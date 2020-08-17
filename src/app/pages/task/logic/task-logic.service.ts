@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { TaskServiceService } from '../service/task-service.service';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { GetRoomQuery } from 'src/app/shared/service/amplify.service';
+import { SessionService } from '../../../shared/service/session.service';
 import { v4 as uuid } from 'uuid';
 
 @Injectable({
@@ -11,17 +13,22 @@ export class TaskLogicService {
 
   constructor(
     private taskService: TaskServiceService,
+    private sessionService: SessionService,
   ) { }
 
   featchRoomInfo(roomId: string): Observable<GetRoomQuery> {
     return this.taskService.fetchRoomInfo(roomId);
   }
 
-  createTaskToRoom(dismissData): Observable<any> {
+  fetchCurrentUserInfo(): Observable<string> {
+    return this.sessionService.fetchCurrentUser().pipe(map(res => res.attributes.email));
+  }
+
+  createTaskToRoom(dismissData, roomId, email): Observable<any> {
     const content = {
       id: `${uuid()}`,
-      authorID: 'ここからは別Serviceから取得',
-      roomID: 'ここも渡す',
+      authorID: `${email}`,
+      roomID: `${roomId}`,
       title: dismissData.nameItem,
       description: dismissData.description,
       scheduleDate: dismissData.scheduleDateItem,
