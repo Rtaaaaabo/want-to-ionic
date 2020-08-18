@@ -3492,30 +3492,6 @@ export class AmplifyService {
             priority
             status
             createdAt
-            members {
-              __typename
-              id
-              email
-              companyID
-              username
-              registered
-              authority
-              createdAt
-              updatedAt
-            }
-            room {
-              __typename
-              id
-              companyID
-              name
-              description
-              createdAt
-              updatedAt
-            }
-            messages {
-              __typename
-              nextToken
-            }
             updatedAt
           }
           nextToken

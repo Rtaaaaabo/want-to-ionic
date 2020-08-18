@@ -19,4 +19,13 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content> </ion-content>
+<ion-content>
+  <ion-list>
+    <ion-card *ngFor="let item of taskItems">
+      <ion-item>
+        <h3>{{ item.title }}</h3>
+        <p>{{ item.description }}</p>
+      </ion-item>
+    </ion-card>
+  </ion-list>
+</ion-content>

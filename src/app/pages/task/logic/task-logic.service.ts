@@ -37,4 +37,13 @@ export class TaskLogicService {
     }
     return this.taskService.createTaskItem(content);
   }
+
+  fetchTaskPerRoom(roomId): Observable<any> {
+    const filterContent = {
+      roomID: {
+        eq: `${roomId}`
+      }
+    }
+    return this.taskService.fetchTaskItemsPerRoom(filterContent);
+  }
 }
