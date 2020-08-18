@@ -25,12 +25,13 @@ export class TaskLogicService {
   }
 
   createTaskToRoom(dismissData, roomId, email): Observable<any> {
+    console.log(dismissData);
     const content = {
       id: `${uuid()}`,
       authorID: `${email}`,
       roomID: `${roomId}`,
       title: dismissData.nameItem,
-      description: dismissData.description,
+      description: dismissData.descriptionItem,
       scheduleDate: dismissData.scheduleDateItem,
       status: 0,
       priority: 1

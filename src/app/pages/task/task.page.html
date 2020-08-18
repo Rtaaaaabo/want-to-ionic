@@ -22,10 +22,10 @@
 <ion-content>
   <ion-list>
     <ion-card *ngFor="let item of taskItems">
-      <ion-item>
-        <h3>{{ item.title }}</h3>
+      <ion-card-content>
+        <h2 class="task-title">{{ item.title }}</h2>
         <p>{{ item.description }}</p>
-      </ion-item>
+      </ion-card-content>
     </ion-card>
   </ion-list>
 </ion-content>
