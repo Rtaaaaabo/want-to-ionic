@@ -8,7 +8,8 @@
     </ion-buttons>
     <ion-buttons slot="end">
       <ion-button (click)="sortTaskItem()">
-        <ion-icon name="swap-vertical-sharp"></ion-icon>
+        <ion-icon *ngIf="isReorder" name="swap-vertical-sharp"></ion-icon>
+        <ion-icon *ngIf="!isReorder" name="checkmark-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -16,12 +17,19 @@
 
 <ion-content>
   <ion-list>
-    <ion-card *ngFor="let item of taskItems">
-      <ion-card-content>
-        <h2 class="task-title">{{ item.title }}</h2>
-        <p>{{ item.description }}</p>
-      </ion-card-content>
-    </ion-card>
+    <ion-reorder-group
+      (ionItemReorder)="reorderTask($event)"
+      [disabled]="isReorder"
+    >
+      <ion-card *ngFor="let item of taskItems">
+        <ion-reorder>
+          <ion-card-content>
+            <h2 class="task-title">{{ item.title }}</h2>
+            <p>{{ item.description }}</p>
+          </ion-card-content>
+        </ion-reorder>
+      </ion-card>
+    </ion-reorder-group>
   </ion-list>
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">

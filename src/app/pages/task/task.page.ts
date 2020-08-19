@@ -18,6 +18,7 @@ export class TaskPage implements OnInit {
   roomId: string;
   userEmail: string;
   taskItems;
+  isReorder: boolean;
 
   constructor(
     private router: Router,
@@ -28,6 +29,7 @@ export class TaskPage implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.isReorder = true;
     this.roomId = this.route.snapshot.paramMap.get('id');
     this.logic.featchRoomInfo(this.roomId)
       .subscribe((roomInfo: GetRoomQuery) => {
@@ -58,8 +60,15 @@ export class TaskPage implements OnInit {
     this.location.back();
   }
 
-  sortTaskItem() {
-    console.log('Sort Task Item');
+  sortTaskItem(): void {
+    this.isReorder = !this.isReorder
+  }
+
+  reorderTask(ev) {
+    console.log('ev', ev);
+    const itemMove = this.taskItems.splice(ev.detail.from, 1)[0];
+    this.taskItems.splice(ev.detail.to, 0, itemMove);
+    ev.detail.complete();
   }
 
 }

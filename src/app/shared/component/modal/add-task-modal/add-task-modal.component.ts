@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { runInThisContext } from 'vm';
 
 @Component({
   selector: 'app-add-task-modal',
@@ -27,7 +28,6 @@ export class AddTaskModalComponent implements OnInit {
 
   ngOnInit() {
     const currentDate = new Date();
-    console.log('room', this.room);
     this.minYear = (currentDate.getFullYear()).toString();
     this.maxYear = (currentDate.getFullYear() + 1).toString();
     this.currentIsoString = currentDate.toISOString();
