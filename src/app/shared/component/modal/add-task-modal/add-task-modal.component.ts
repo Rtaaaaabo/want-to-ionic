@@ -15,6 +15,8 @@ export class AddTaskModalComponent implements OnInit {
     scheduleDateItem: new FormControl(''),
   });
 
+  room;
+
   minYear: string = '';
   maxYear: string = '';
   currentIsoString: string;
@@ -25,6 +27,7 @@ export class AddTaskModalComponent implements OnInit {
 
   ngOnInit() {
     const currentDate = new Date();
+    console.log('room', this.room);
     this.minYear = (currentDate.getFullYear()).toString();
     this.maxYear = (currentDate.getFullYear() + 1).toString();
     this.currentIsoString = currentDate.toISOString();

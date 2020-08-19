@@ -42,6 +42,7 @@ export class TaskPage implements OnInit {
   async presentAddTask() {
     const modal = await this.modalCtrl.create({
       component: AddTaskModalComponent,
+      componentProps: { room: this.room },
     });
     const dismissObservable = from(modal.onDidDismiss());
     dismissObservable
