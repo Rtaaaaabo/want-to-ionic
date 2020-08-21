@@ -28,7 +28,7 @@ export class TaskPage implements OnInit {
     private logic: TaskLogicService,
   ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.isReorder = true;
     this.roomId = this.route.snapshot.paramMap.get('id');
     this.logic.featchRoomInfo(this.roomId)
@@ -56,7 +56,7 @@ export class TaskPage implements OnInit {
     return modal.present();
   }
 
-  goBackToRoom() {
+  goBackToRoom(): void {
     this.location.back();
   }
 
@@ -64,8 +64,7 @@ export class TaskPage implements OnInit {
     this.isReorder = !this.isReorder
   }
 
-  reorderTask(ev) {
-    console.log('ev', ev);
+  reorderTask(ev): void {
     const itemMove = this.taskItems.splice(ev.detail.from, 1)[0];
     this.taskItems.splice(ev.detail.to, 0, itemMove);
     ev.detail.complete();
