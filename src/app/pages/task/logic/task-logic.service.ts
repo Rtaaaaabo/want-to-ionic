@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { TaskServiceService } from '../service/task-service.service';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { GetRoomQuery } from 'src/app/shared/service/amplify.service';
 import { SessionService } from '../../../shared/service/session.service';
@@ -26,17 +26,21 @@ export class TaskLogicService {
 
   createTaskToRoom(dismissData, roomId, email): Observable<any> {
     console.log(dismissData);
-    const content = {
-      id: `${uuid()}`,
-      authorID: `${email}`,
-      roomID: `${roomId}`,
-      title: dismissData.nameItem,
-      description: dismissData.descriptionItem,
-      scheduleDate: dismissData.scheduleDateItem,
-      status: 0,
-      priority: 1
+    if (dismissData === undefined) {
+      return of({});
+    } else {
+      const content = {
+        id: `${uuid()}`,
+        authorID: `${email}`,
+        roomID: `${roomId}`,
+        title: dismissData.nameItem,
+        description: dismissData.descriptionItem,
+        scheduleDate: dismissData.scheduleDateItem,
+        status: 0,
+        priority: 1
+      }
+      return this.taskService.createTaskItem(content);
     }
-    return this.taskService.createTaskItem(content);
   }
 
   fetchTaskPerRoom(roomId): Observable<any> {
