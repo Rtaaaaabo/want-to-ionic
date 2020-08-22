@@ -22,19 +22,24 @@
       [disabled]="isReorder"
     >
       <ion-card *ngFor="let item of taskItems">
-        <ion-reorder>
-          <ion-card-content>
+        <ion-card-content (click)="navigateToTaskDetail(item)">
+          <ion-reorder *ngIf="!isReorder">
+            <ion-label>
+              <h2 class="task-title">{{ item.title }}</h2>
+              <p>{{item.description}}</p>
+            </ion-label>
+          </ion-reorder>
+          <ion-label *ngIf="isReorder">
             <h2 class="task-title">{{ item.title }}</h2>
-            <p>{{ item.description }}</p>
-          </ion-card-content>
-        </ion-reorder>
+            <p>{{item.description}}</p>
+          </ion-label>
+        </ion-card-content>
       </ion-card>
     </ion-reorder-group>
   </ion-list>
-
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button (click)="presentAddTask()">
-      <ion-icon name="add-sharp"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
 </ion-content>
+<ion-fab vertical="bottom" horizontal="end">
+  <ion-fab-button (click)="presentAddTask()">
+    <ion-icon name="add-sharp"></ion-icon>
+  </ion-fab-button>
+</ion-fab>

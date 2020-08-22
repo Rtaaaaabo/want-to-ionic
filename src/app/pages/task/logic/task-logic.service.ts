@@ -25,7 +25,7 @@ export class TaskLogicService {
   }
 
   createTaskToRoom(dismissData, roomId, email): Observable<any> {
-    console.log(dismissData);
+    const iosStringDate = (new Date()).toISOString();
     if (dismissData === undefined) {
       return of({});
     } else {
@@ -36,8 +36,9 @@ export class TaskLogicService {
         title: dismissData.nameItem,
         description: dismissData.descriptionItem,
         scheduleDate: dismissData.scheduleDateItem,
-        status: 0,
-        priority: 1
+        createdAt: iosStringDate,
+        // status: 0,
+        // priority: 1
       }
       return this.taskService.createTaskItem(content);
     }

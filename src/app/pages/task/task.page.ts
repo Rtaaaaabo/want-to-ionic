@@ -70,4 +70,8 @@ export class TaskPage implements OnInit {
     ev.detail.complete();
   }
 
+  navigateToTaskDetail(item): void {
+    console.log(item);
+  }
+
 }
