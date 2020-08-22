@@ -70,8 +70,8 @@ export class TaskPage implements OnInit {
     ev.detail.complete();
   }
 
-  navigateToTaskDetail(item): void {
-    console.log(item);
+  navigateToTaskDetail(task): void {
+    this.router.navigate(['task-detail', `${task.id}`])
   }
 
 }

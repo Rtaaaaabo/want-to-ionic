@@ -5,7 +5,7 @@ import { TaskDetailPage } from './task-detail.page';
 
 const routes: Routes = [
   {
-    path: '',
+    path: ':id',
     component: TaskDetailPage
   }
 ];
@@ -14,4 +14,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class TaskDetailPageRoutingModule {}
+export class TaskDetailPageRoutingModule { }
