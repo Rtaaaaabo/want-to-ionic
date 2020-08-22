@@ -39,6 +39,10 @@ const routes: Routes = [
     path: 'task',
     loadChildren: () => import('./pages/task/task.module').then(m => m.TaskPageModule),
     canActivate: [AuthGuard],
+  },
+  {
+    path: 'task-detail',
+    loadChildren: () => import('./pages/task-detail/task-detail.module').then( m => m.TaskDetailPageModule)
   }
 ];
 @NgModule({
