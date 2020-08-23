@@ -3398,25 +3398,6 @@ export class AmplifyService {
           priority
           status
           createdAt
-          members {
-            __typename
-            id
-            email
-            companyID
-            username
-            registered
-            authority
-            company {
-              __typename
-              id
-              name
-              domain
-              createdAt
-              updatedAt
-            }
-            createdAt
-            updatedAt
-          }
           room {
             __typename
             id
@@ -3431,14 +3412,6 @@ export class AmplifyService {
               username
               registered
               authority
-              createdAt
-              updatedAt
-            }
-            company {
-              __typename
-              id
-              name
-              domain
               createdAt
               updatedAt
             }
