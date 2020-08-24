@@ -22,26 +22,50 @@
       [disabled]="isReorder"
     >
       <ion-card *ngFor="let item of taskItems">
-        <ion-card-content (click)="navigateToTaskDetail(item)">
+        <ion-card-content
+          class="task-card-content"
+          (click)="navigateToTaskDetail(item)"
+        >
           <ion-reorder *ngIf="!isReorder">
             <ion-label>
+              <ion-avatar>
+                <img
+                  src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y"
+                />
+              </ion-avatar>
               <h2 class="task-title">{{ item.title }}</h2>
               <p>{{item.description}}</p>
             </ion-label>
           </ion-reorder>
-          <ion-label *ngIf="isReorder">
-            <h2 class="task-title">{{ item.title }}</h2>
-            <p>{{item.description}}</p>
-          </ion-label>
-          <ion-button fill="clear" color="danger">
-            <ion-icon slot="start" name="share-alt"></ion-icon>
-            Share
-          </ion-button>
-          <ion-button fill="clear" color="primary">
-            <ion-icon slot="start" name="share-alt"></ion-icon>
-            Share
-          </ion-button>
+          <ion-item class="background-item">
+            <ion-avatar slot="start">
+              <img
+                src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y"
+              />
+            </ion-avatar>
+            <ion-label *ngIf="isReorder">
+              <h2 class="task-title">{{ item.title }}</h2>
+              <p>{{item.description}}</p>
+            </ion-label>
+          </ion-item>
         </ion-card-content>
+        <ion-row class="cardfooter">
+          <ion-col>
+            <ion-button fill="clear" color="primary">
+              <ion-icon name="chatbubbles-outline"></ion-icon>
+            </ion-button>
+          </ion-col>
+          <ion-col>
+            <ion-button fill="clear" color="primary">
+              <ion-icon name="checkmark-circle-outline"></ion-icon>
+            </ion-button>
+          </ion-col>
+          <ion-col>
+            <ion-button fill="clear" color="danger">
+              <ion-icon name="trash-outline"></ion-icon>
+            </ion-button>
+          </ion-col>
+        </ion-row>
       </ion-card>
     </ion-reorder-group>
   </ion-list>
