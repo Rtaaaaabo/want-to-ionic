@@ -74,4 +74,16 @@ export class TaskPage implements OnInit {
     this.router.navigate(['task-detail', `${task.id}`])
   }
 
+  addComment(item) {
+    console.log('addComment', item);
+  }
+
+  doneTask(item) {
+    console.log('doneTask', item);
+  }
+
+  deleteTask(item) {
+    console.log('deleteTask', item);
+  }
+
 }

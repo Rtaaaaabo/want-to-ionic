@@ -51,17 +51,17 @@
         </ion-card-content>
         <ion-row class="cardfooter">
           <ion-col>
-            <ion-button fill="clear" color="primary">
+            <ion-button (click)="addComment(item)" fill="clear" color="primary">
               <ion-icon name="chatbubbles-outline"></ion-icon>
             </ion-button>
           </ion-col>
           <ion-col>
-            <ion-button fill="clear" color="primary">
+            <ion-button (click)="doneTask(item)" fill="clear" color="primary">
               <ion-icon name="checkmark-circle-outline"></ion-icon>
             </ion-button>
           </ion-col>
           <ion-col>
-            <ion-button fill="clear" color="danger">
+            <ion-button (click)="deleteTask(item)" fill="clear" color="danger">
               <ion-icon name="trash-outline"></ion-icon>
             </ion-button>
           </ion-col>
