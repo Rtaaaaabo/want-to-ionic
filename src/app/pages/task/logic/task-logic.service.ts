@@ -52,4 +52,11 @@ export class TaskLogicService {
     }
     return this.taskService.fetchTaskItemsPerRoom(filterContent);
   }
+
+  deleteTaskItem(taskId: string): Observable<any> {
+    const content = {
+      id: `${taskId}`,
+    }
+    return this.taskService.deleteTaskItem(content);
+  }
 }

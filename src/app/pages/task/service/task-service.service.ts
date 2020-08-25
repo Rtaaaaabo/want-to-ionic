@@ -22,4 +22,8 @@ export class TaskServiceService {
   fetchTaskItemsPerRoom(content): Observable<ListTasksQuery> {
     return from(this.amplifyService.ListTasks(content));
   }
+
+  deleteTaskItem(content): Observable<any> {
+    return from(this.amplifyService.DeleteTask(content));
+  }
 }

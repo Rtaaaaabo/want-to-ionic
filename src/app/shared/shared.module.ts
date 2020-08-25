@@ -6,18 +6,28 @@ import { AddRoomModalComponent } from './component/modal/add-room-modal/add-room
 import { AddTaskModalComponent } from './component/modal/add-task-modal/add-task-modal.component';
 import { SessionService } from './service/session.service';
 import { SharedLogicService } from './logic/shared-logic.service';
+import { DeleteTaskModalComponent } from './component/modal/delete-task-modal/delete-task-modal.component';
 
 @NgModule({
-  declarations: [AddRoomModalComponent, AddTaskModalComponent],
+  declarations: [
+    AddRoomModalComponent,
+    AddTaskModalComponent,
+    DeleteTaskModalComponent,
+  ],
   imports: [
     CommonModule,
     IonicModule,
     ReactiveFormsModule,
   ],
-  entryComponents: [AddRoomModalComponent, AddTaskModalComponent],
+  entryComponents: [
+    AddRoomModalComponent,
+    AddTaskModalComponent,
+    DeleteTaskModalComponent,
+  ],
   exports: [
     AddRoomModalComponent,
     AddTaskModalComponent,
+    DeleteTaskModalComponent,
   ],
   providers: [
     SessionService,

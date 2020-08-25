@@ -6,6 +6,7 @@ import { from } from 'rxjs';
 import { flatMap } from 'rxjs/operators';
 import { GetRoomQuery } from 'src/app/shared/service/amplify.service';
 import { AddTaskModalComponent } from '../../shared/component/modal/add-task-modal/add-task-modal.component';
+import { DeleteTaskModalComponent } from '../../shared/component/modal/delete-task-modal/delete-task-modal.component';
 import { TaskLogicService } from './logic/task-logic.service';
 
 @Component({
@@ -82,8 +83,22 @@ export class TaskPage implements OnInit {
     console.log('doneTask', item);
   }
 
-  deleteTask(item) {
-    console.log('deleteTask', item);
+  async deleteTask(item) {
+    const modal = await this.modalCtrl.create({
+      component: DeleteTaskModalComponent,
+      componentProps: { task: item },
+    });
+    const dismissObservable = from(modal.onDidDismiss());
+    dismissObservable.subscribe(result => {
+      console.log(result);
+    })
+    // dismissObservable
+    //   .pipe(flatMap(({ data }) => this.logic.deleteTaskItem(item.id)))
+    //   .pipe(flatMap(() => this.logic.fetchTaskPerRoom(this.roomId)))
+    //   .subscribe(({ items }) => {
+    //     this.taskItems = items;
+    //   });
+    return modal.present();
   }
 
 }
