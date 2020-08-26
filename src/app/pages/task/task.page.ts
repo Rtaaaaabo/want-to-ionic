@@ -79,8 +79,8 @@ export class TaskPage implements OnInit {
     console.log('addComment', item);
   }
 
-  doneTask(item) {
-    console.log('doneTask', item);
+  doneTask(room) {
+    console.log('doneTask', room);
   }
 
   async deleteTask(item) {
@@ -89,9 +89,6 @@ export class TaskPage implements OnInit {
       componentProps: { task: item },
     });
     const dismissObservable = from(modal.onDidDismiss());
-    // dismissObservable.subscribe(result => {
-    //   console.log(result);
-    // })
     dismissObservable
       .pipe(flatMap(({ data }) => this.logic.deleteTaskItem(data.id)))
       .pipe(flatMap(() => this.logic.fetchTaskPerRoom(this.roomId)))

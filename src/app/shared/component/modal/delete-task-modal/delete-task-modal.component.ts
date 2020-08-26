@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { loadingBarFill } from 'aws-amplify';
 
 @Component({
   selector: 'app-delete-task-modal',
