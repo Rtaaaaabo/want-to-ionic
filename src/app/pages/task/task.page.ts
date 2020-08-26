@@ -89,15 +89,15 @@ export class TaskPage implements OnInit {
       componentProps: { task: item },
     });
     const dismissObservable = from(modal.onDidDismiss());
-    dismissObservable.subscribe(result => {
-      console.log(result);
-    })
-    // dismissObservable
-    //   .pipe(flatMap(({ data }) => this.logic.deleteTaskItem(item.id)))
-    //   .pipe(flatMap(() => this.logic.fetchTaskPerRoom(this.roomId)))
-    //   .subscribe(({ items }) => {
-    //     this.taskItems = items;
-    //   });
+    // dismissObservable.subscribe(result => {
+    //   console.log(result);
+    // })
+    dismissObservable
+      .pipe(flatMap(({ data }) => this.logic.deleteTaskItem(data.id)))
+      .pipe(flatMap(() => this.logic.fetchTaskPerRoom(this.roomId)))
+      .subscribe(({ items }) => {
+        this.taskItems = items;
+      });
     return modal.present();
   }
 

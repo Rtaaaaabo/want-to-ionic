@@ -1,1 +1,30 @@
-<p>test</p>
+<!-- <ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>タスクを削除してもよいでしょうか？</ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-content fullscreen padding>
+  <ion-grid class="item-paddind">
+    <ion-row class="ion-align-items-center ion-padding-vertical">
+      <ion-col size="12" class="ion-text-center">
+        <p>「{{ task.title }}」</p>
+        <p>削除してもよいでしょうか？</p>
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-align-items-center">
+      <ion-col size="6" class="ion-text-center ion-padding-top">
+        <ion-button (click)="onCancel()">キャンセル</ion-button>
+      </ion-col>
+      <ion-col size="6" class="ion-text-center">
+        <ion-button
+          (click)="deleteTargetTask(task)"
+          color="danger"
+          fill="outline"
+        >
+          削除
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

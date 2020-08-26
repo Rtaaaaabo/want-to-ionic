@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { runInThisContext } from 'vm';
 
 @Component({
   selector: 'app-add-task-modal',

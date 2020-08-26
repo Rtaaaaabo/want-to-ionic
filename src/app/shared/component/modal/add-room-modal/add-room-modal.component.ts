@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController, NavParams } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
@@ -16,7 +16,6 @@ export class AddRoomModalComponent implements OnInit {
 
   constructor(
     private modalCtrl: ModalController,
-    private navParams: NavParams,
   ) { }
 
   get nameItem() {
