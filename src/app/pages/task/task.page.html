@@ -14,7 +14,7 @@
     </ion-buttons>
   </ion-toolbar>
   <ion-toolbar *ngIf="!isReorder">
-    <ion-segment value="all" (ionChange)="segmentChanged($event)">
+    <ion-segment [value]="segment" (ionChange)="segmentChanged($event)">
       <ion-segment-button value="active">
         <ion-label>Active</ion-label>
       </ion-segment-button>

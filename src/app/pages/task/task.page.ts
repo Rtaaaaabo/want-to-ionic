@@ -20,6 +20,7 @@ export class TaskPage implements OnInit {
   userEmail: string;
   taskItems;
   isReorder: boolean;
+  segment;
 
   constructor(
     private router: Router,
@@ -32,6 +33,7 @@ export class TaskPage implements OnInit {
 
   ngOnInit(): void {
     this.isReorder = false;
+    this.segment = 'active';
     this.roomId = this.route.snapshot.paramMap.get('id');
     this.logic.featchRoomInfo(this.roomId)
       .subscribe((roomInfo: GetRoomQuery) => {
@@ -84,15 +86,15 @@ export class TaskPage implements OnInit {
     this.router.navigate(['task-detail', `${task.id}`])
   }
 
-  addComment(item) {
+  addComment(item): void {
     console.log('addComment', item);
   }
 
   segmentChanged(ev): void {
-    console.log('ev', ev);
+    this.segment = ev.detail.value;
   }
 
-  doneTask(taskItem) {
+  doneTask(taskItem): void {
     const presetnToast = from(this.presentDoneToast());
     this.logic.updateTaskItem(taskItem, 10).pipe(tap(() => presetnToast));
   }
