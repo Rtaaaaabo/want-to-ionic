@@ -13,6 +13,16 @@
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
+  <ion-toolbar *ngIf="!isReorder">
+    <ion-segment value="all" (ionChange)="segmentChanged($event)">
+      <ion-segment-button value="active">
+        <ion-label>Active</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="done">
+        <ion-label>Done</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>
@@ -51,7 +61,7 @@
             </ion-label>
           </ion-item>
         </ion-card-content>
-        <ion-row class="cardfooter">
+        <ion-row *ngIf="!isReorder" class="cardfooter">
           <ion-col>
             <ion-button (click)="addComment(item)" fill="clear" color="primary">
               <ion-icon name="chatbubbles-outline"></ion-icon>

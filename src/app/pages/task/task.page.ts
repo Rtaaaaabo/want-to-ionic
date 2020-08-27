@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ModalController } from '@ionic/angular';
+import { ModalController, ToastController } from '@ionic/angular';
 import { from, of } from 'rxjs';
 import { flatMap, catchError } from 'rxjs/operators';
 import { GetRoomQuery } from 'src/app/shared/service/amplify.service';
@@ -27,6 +27,7 @@ export class TaskPage implements OnInit {
     private route: ActivatedRoute,
     private location: Location,
     private logic: TaskLogicService,
+    private toastCtrl: ToastController,
   ) { }
 
   ngOnInit(): void {
@@ -39,6 +40,12 @@ export class TaskPage implements OnInit {
     this.logic.fetchCurrentUserInfo().subscribe((email) => this.userEmail = email);
     this.logic.fetchTaskPerRoom(this.roomId).subscribe(({ items }) => {
       this.taskItems = items;
+    })
+  }
+
+  async presentDoneToast() {
+    const toast = await this.toastCtrl.create({
+      message: ''
     })
   }
 
@@ -62,9 +69,7 @@ export class TaskPage implements OnInit {
   }
 
   sortTaskItem(): void {
-    this.isReorder = !this.isReorder
-    console.log('isReorder', this.isReorder);
-
+    this.isReorder = !this.isReorder;
   }
 
   reorderTask(ev): void {
@@ -81,8 +86,12 @@ export class TaskPage implements OnInit {
     console.log('addComment', item);
   }
 
-  doneTask(room) {
-    console.log('doneTask', room);
+  segmentChanged(ev): void {
+    console.log('ev', ev);
+  }
+
+  doneTask(taskItem) {
+    console.log('doneTask', taskItem);
   }
 
   async deleteTask(item) {
