@@ -3,7 +3,7 @@ import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ModalController, ToastController } from '@ionic/angular';
 import { from, of } from 'rxjs';
-import { flatMap, catchError } from 'rxjs/operators';
+import { flatMap, catchError, tap } from 'rxjs/operators';
 import { GetRoomQuery } from 'src/app/shared/service/amplify.service';
 import { AddTaskModalComponent } from '../../shared/component/modal/add-task-modal/add-task-modal.component';
 import { DeleteTaskModalComponent } from '../../shared/component/modal/delete-task-modal/delete-task-modal.component';
@@ -43,10 +43,12 @@ export class TaskPage implements OnInit {
     })
   }
 
-  async presentDoneToast() {
+  async presentDoneToast(): Promise<void> {
     const toast = await this.toastCtrl.create({
-      message: ''
-    })
+      message: 'おつかれさまでした！',
+      duration: 2000
+    });
+    toast.present();
   }
 
   async presentAddTask() {
@@ -91,7 +93,8 @@ export class TaskPage implements OnInit {
   }
 
   doneTask(taskItem) {
-    console.log('doneTask', taskItem);
+    const presetnToast = from(this.presentDoneToast());
+    this.logic.updateTaskItem(taskItem, 10).pipe(tap(() => presetnToast));
   }
 
   async deleteTask(item) {

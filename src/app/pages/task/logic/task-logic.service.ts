@@ -53,6 +53,14 @@ export class TaskLogicService {
     return this.taskService.fetchTaskItemsPerRoom(filterContent);
   }
 
+  updateTaskItem(taskItem, status): Observable<any> {
+    const content = {
+      id: taskItem.id,
+      status: status,
+    }
+    return this.taskService.updateTaskItem(content);
+  }
+
   deleteTaskItem(taskId: string): Observable<any> {
     const content = {
       id: `${taskId}`,

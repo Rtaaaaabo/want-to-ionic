@@ -19,6 +19,10 @@ export class TaskServiceService {
     return from(this.amplifyService.CreateTask(content));
   }
 
+  updateTaskItem(content): Observable<any> {
+    return from(this.amplifyService.UpdateTask(content));
+  }
+
   fetchTaskItemsPerRoom(content): Observable<ListTasksQuery> {
     return from(this.amplifyService.ListTasks(content));
   }
