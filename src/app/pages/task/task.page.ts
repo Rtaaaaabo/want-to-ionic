@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ModalController } from '@ionic/angular';
-import { from } from 'rxjs';
-import { flatMap } from 'rxjs/operators';
+import { from, of } from 'rxjs';
+import { flatMap, catchError } from 'rxjs/operators';
 import { GetRoomQuery } from 'src/app/shared/service/amplify.service';
 import { AddTaskModalComponent } from '../../shared/component/modal/add-task-modal/add-task-modal.component';
 import { DeleteTaskModalComponent } from '../../shared/component/modal/delete-task-modal/delete-task-modal.component';
@@ -30,7 +30,7 @@ export class TaskPage implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.isReorder = true;
+    this.isReorder = false;
     this.roomId = this.route.snapshot.paramMap.get('id');
     this.logic.featchRoomInfo(this.roomId)
       .subscribe((roomInfo: GetRoomQuery) => {
@@ -63,6 +63,8 @@ export class TaskPage implements OnInit {
 
   sortTaskItem(): void {
     this.isReorder = !this.isReorder
+    console.log('isReorder', this.isReorder);
+
   }
 
   reorderTask(ev): void {
@@ -90,7 +92,7 @@ export class TaskPage implements OnInit {
     });
     const dismissObservable = from(modal.onDidDismiss());
     dismissObservable
-      .pipe(flatMap(({ data }) => this.logic.deleteTaskItem(data.id)))
+      .pipe(flatMap(({ data }) => this.logic.deleteTaskItem(data.id)), catchError(err => of(err)))
       .pipe(flatMap(() => this.logic.fetchTaskPerRoom(this.roomId)))
       .subscribe(({ items }) => {
         this.taskItems = items;

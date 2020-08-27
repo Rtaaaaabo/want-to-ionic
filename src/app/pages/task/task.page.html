@@ -8,8 +8,8 @@
     </ion-buttons>
     <ion-buttons slot="end">
       <ion-button (click)="sortTaskItem()">
-        <ion-icon *ngIf="isReorder" name="swap-vertical-sharp"></ion-icon>
-        <ion-icon *ngIf="!isReorder" name="checkmark-outline"></ion-icon>
+        <ion-icon *ngIf="!isReorder" name="swap-vertical-sharp"></ion-icon>
+        <ion-icon *ngIf="isReorder" name="checkmark-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -19,14 +19,14 @@
   <ion-list>
     <ion-reorder-group
       (ionItemReorder)="reorderTask($event)"
-      [disabled]="isReorder"
+      [disabled]="!isReorder"
     >
       <ion-card *ngFor="let item of taskItems">
         <ion-card-content
           class="task-card-content"
           (click)="navigateToTaskDetail(item)"
         >
-          <ion-reorder *ngIf="!isReorder">
+          <ion-reorder *ngIf="isReorder">
             <ion-item class="background-item">
               <ion-avatar slot="start">
                 <img
@@ -39,13 +39,13 @@
               </ion-label>
             </ion-item>
           </ion-reorder>
-          <ion-item *ngIf="isReorder" class="background-item">
+          <ion-item *ngIf="!isReorder" class="background-item">
             <ion-avatar slot="start">
               <img
                 src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y"
               />
             </ion-avatar>
-            <ion-label *ngIf="isReorder">
+            <ion-label *ngIf="!isReorder">
               <h2 class="task-title">{{ item.title }}</h2>
               <p>{{item.description}}</p>
             </ion-label>
