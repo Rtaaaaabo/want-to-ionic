@@ -25,13 +25,13 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content *ngIf="segment === 'active'">
   <ion-list>
     <ion-reorder-group
       (ionItemReorder)="reorderTask($event)"
       [disabled]="!isReorder"
     >
-      <ion-card *ngFor="let item of taskItems">
+      <ion-card *ngFor="let item of taskActiveItems">
         <ion-card-content
           class="task-card-content"
           (click)="navigateToTaskDetail(item)"
@@ -87,3 +87,26 @@
     <ion-icon name="add-sharp"></ion-icon>
   </ion-fab-button>
 </ion-fab>
+
+<ion-content *ngIf="segment === 'done'">
+  <ion-list>
+    <ion-card *ngFor="let item of taskDoneItems">
+      <ion-card-content
+        class="task-card-content"
+        (click)="navigateToTaskDetail(item)"
+      >
+        <ion-item class="background-item">
+          <ion-avatar slot="start">
+            <img
+              src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y"
+            />
+          </ion-avatar>
+          <ion-label>
+            <h2 class="task-title">{{ item.title }}</h2>
+            <p>{{item.description}}</p>
+          </ion-label>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
+</ion-content>

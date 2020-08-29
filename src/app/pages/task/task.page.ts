@@ -3,7 +3,7 @@ import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ModalController, ToastController } from '@ionic/angular';
 import { from, of } from 'rxjs';
-import { flatMap, catchError, tap } from 'rxjs/operators';
+import { flatMap, catchError, tap, filter } from 'rxjs/operators';
 import { GetRoomQuery } from 'src/app/shared/service/amplify.service';
 import { AddTaskModalComponent } from '../../shared/component/modal/add-task-modal/add-task-modal.component';
 import { DeleteTaskModalComponent } from '../../shared/component/modal/delete-task-modal/delete-task-modal.component';
@@ -18,7 +18,8 @@ export class TaskPage implements OnInit {
   room = {} as GetRoomQuery;
   roomId: string;
   userEmail: string;
-  taskItems;
+  taskActiveItems;
+  taskDoneItems;
   isReorder: boolean;
   segment;
 
@@ -40,9 +41,15 @@ export class TaskPage implements OnInit {
         this.room = roomInfo;
       });
     this.logic.fetchCurrentUserInfo().subscribe((email) => this.userEmail = email);
-    this.logic.fetchTaskPerRoom(this.roomId).subscribe(({ items }) => {
-      this.taskItems = items;
-    })
+    this.logic.fetchActiveTaskPerRoom(this.roomId)
+      .subscribe((items) => {
+        this.taskActiveItems = items;
+      })
+
+    this.logic.fetchDoneTaskPerRoom(this.roomId)
+      .subscribe((items) => {
+        this.taskDoneItems = items;
+      })
   }
 
   async presentDoneToast(): Promise<void> {
@@ -61,9 +68,9 @@ export class TaskPage implements OnInit {
     const dismissObservable = from(modal.onDidDismiss());
     dismissObservable
       .pipe(flatMap(({ data }) => this.logic.createTaskToRoom(data, this.roomId, this.userEmail)))
-      .pipe(flatMap(() => this.logic.fetchTaskPerRoom(this.roomId)))
+      .pipe(flatMap(() => this.logic.fetchActiveTaskPerRoom(this.roomId)))
       .subscribe(({ items }) => {
-        this.taskItems = items;
+        this.taskActiveItems = items;
       });
     return modal.present();
   }
@@ -77,8 +84,8 @@ export class TaskPage implements OnInit {
   }
 
   reorderTask(ev): void {
-    const itemMove = this.taskItems.splice(ev.detail.from, 1)[0];
-    this.taskItems.splice(ev.detail.to, 0, itemMove);
+    const itemMove = this.taskActiveItems.splice(ev.detail.from, 1)[0];
+    this.taskActiveItems.splice(ev.detail.to, 0, itemMove);
     ev.detail.complete();
   }
 
@@ -107,9 +114,9 @@ export class TaskPage implements OnInit {
     const dismissObservable = from(modal.onDidDismiss());
     dismissObservable
       .pipe(flatMap(({ data }) => this.logic.deleteTaskItem(data.id)), catchError(err => of(err)))
-      .pipe(flatMap(() => this.logic.fetchTaskPerRoom(this.roomId)))
+      .pipe(flatMap(() => this.logic.fetchActiveTaskPerRoom(this.roomId)))
       .subscribe(({ items }) => {
-        this.taskItems = items;
+        this.taskActiveItems = items;
       });
     return modal.present();
   }

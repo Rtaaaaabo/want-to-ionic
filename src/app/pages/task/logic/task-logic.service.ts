@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { TaskServiceService } from '../service/task-service.service';
 import { Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, filter, flatMap, mergeMap, toArray } from 'rxjs/operators';
 import { GetRoomQuery } from 'src/app/shared/service/amplify.service';
 import { SessionService } from '../../../shared/service/session.service';
 import { v4 as uuid } from 'uuid';
@@ -44,13 +44,28 @@ export class TaskLogicService {
     }
   }
 
-  fetchTaskPerRoom(roomId): Observable<any> {
+  fetchActiveTaskPerRoom(roomId): Observable<any> {
     const filterContent = {
       roomID: {
         eq: `${roomId}`
       }
     }
-    return this.taskService.fetchTaskItemsPerRoom(filterContent);
+    return this.taskService.fetchTaskItemsPerRoom(filterContent)
+      .pipe(mergeMap((res) => res.items))
+      .pipe(filter(data => data.status < 10))
+      .pipe(toArray());
+  }
+
+  fetchDoneTaskPerRoom(roomId): Observable<any> {
+    const filterContent = {
+      roomID: {
+        eq: `${roomId}`
+      }
+    }
+    return this.taskService.fetchTaskItemsPerRoom(filterContent)
+      .pipe(mergeMap((res) => res.items))
+      .pipe(filter(data => data.status === 10))
+      .pipe(toArray());
   }
 
   updateTaskItem(taskItem, status): Observable<any> {
