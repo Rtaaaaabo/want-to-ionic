@@ -6,7 +6,7 @@
         <ion-icon name="chevron-back-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-buttons slot="end">
+    <ion-buttons *ngIf="segment === 'active'" slot="end">
       <ion-button (click)="sortTaskItem()">
         <ion-icon *ngIf="!isReorder" name="swap-vertical-sharp"></ion-icon>
         <ion-icon *ngIf="isReorder" name="checkmark-outline"></ion-icon>
