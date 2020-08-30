@@ -70,6 +70,7 @@ export class TaskPage implements OnInit {
       .pipe(flatMap(({ data }) => this.logic.createTaskToRoom(data, this.roomId, this.userEmail)))
       .pipe(flatMap(() => this.logic.fetchActiveTaskPerRoom(this.roomId)))
       .subscribe(({ items }) => {
+        console.log('add task item', items);
         this.taskActiveItems = items;
       });
     return modal.present();
@@ -103,7 +104,9 @@ export class TaskPage implements OnInit {
 
   doneTask(taskItem): void {
     const presetnToast = from(this.presentDoneToast());
-    this.logic.updateTaskItem(taskItem, 10).pipe(tap(() => presetnToast));
+    this.logic.updateTaskItem(taskItem, 10)
+      .pipe(flatMap(() => this.logic.fetchActiveTaskPerRoom(this.roomId)))
+      .pipe(tap(() => presetnToast)).subscribe(data => this.taskActiveItems = data);
   }
 
   async deleteTask(item) {

@@ -37,8 +37,8 @@ export class TaskLogicService {
         description: dismissData.descriptionItem,
         scheduleDate: dismissData.scheduleDateItem,
         createdAt: iosStringDate,
-        // status: 0,
-        // priority: 1
+        status: 0,
+        priority: 1
       }
       return this.taskService.createTaskItem(content);
     }
