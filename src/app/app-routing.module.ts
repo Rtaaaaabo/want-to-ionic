@@ -43,6 +43,10 @@ const routes: Routes = [
   {
     path: 'task-detail',
     loadChildren: () => import('./pages/task-detail/task-detail.module').then( m => m.TaskDetailPageModule)
+  },
+  {
+    path: 'comment',
+    loadChildren: () => import('./pages/comment/comment.module').then( m => m.CommentPageModule)
   }
 ];
 @NgModule({
