@@ -33,6 +33,10 @@ export class TaskPage implements OnInit {
   ) { }
 
   ngOnInit(): void {
+
+  }
+
+  ngAfterViewInit(): void {
     this.isReorder = false;
     this.segment = 'active';
     this.roomId = this.route.snapshot.paramMap.get('id');
@@ -69,9 +73,9 @@ export class TaskPage implements OnInit {
     dismissObservable
       .pipe(flatMap(({ data }) => this.logic.createTaskToRoom(data, this.roomId, this.userEmail)))
       .pipe(flatMap(() => this.logic.fetchActiveTaskPerRoom(this.roomId)))
-      .subscribe(({ items }) => {
-        console.log('add task item', items);
-        this.taskActiveItems = items;
+      .subscribe((items) => {
+        console.log(items);
+        // this.taskActiveItems = items;
       });
     return modal.present();
   }
@@ -118,7 +122,7 @@ export class TaskPage implements OnInit {
     dismissObservable
       .pipe(flatMap(({ data }) => this.logic.deleteTaskItem(data.id)), catchError(err => of(err)))
       .pipe(flatMap(() => this.logic.fetchActiveTaskPerRoom(this.roomId)))
-      .subscribe(({ items }) => {
+      .subscribe((items) => {
         this.taskActiveItems = items;
       });
     return modal.present();
