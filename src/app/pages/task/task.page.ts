@@ -33,7 +33,6 @@ export class TaskPage implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
   }
 
   ngAfterViewInit(): void {
@@ -54,6 +53,7 @@ export class TaskPage implements OnInit {
       .subscribe((items) => {
         this.taskDoneItems = items;
       })
+
   }
 
   async presentDoneToast(): Promise<void> {
@@ -74,8 +74,7 @@ export class TaskPage implements OnInit {
       .pipe(flatMap(({ data }) => this.logic.createTaskToRoom(data, this.roomId, this.userEmail)))
       .pipe(flatMap(() => this.logic.fetchActiveTaskPerRoom(this.roomId)))
       .subscribe((items) => {
-        console.log(items);
-        // this.taskActiveItems = items;
+        this.taskActiveItems = items;
       });
     return modal.present();
   }
@@ -98,8 +97,8 @@ export class TaskPage implements OnInit {
     this.router.navigate(['task-detail', `${task.id}`])
   }
 
-  addComment(item): void {
-    console.log('addComment', item);
+  addCommentToTaskDetail(task): void {
+    this.router.navigate(['task-detail', `${task.id}`], { fragment: 'comment' })
   }
 
   segmentChanged(ev): void {

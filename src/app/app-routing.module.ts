@@ -42,16 +42,21 @@ const routes: Routes = [
   },
   {
     path: 'task-detail',
-    loadChildren: () => import('./pages/task-detail/task-detail.module').then( m => m.TaskDetailPageModule)
+    loadChildren: () => import('./pages/task-detail/task-detail.module').then(m => m.TaskDetailPageModule)
   },
   {
     path: 'comment',
-    loadChildren: () => import('./pages/comment/comment.module').then( m => m.CommentPageModule)
+    loadChildren: () => import('./pages/comment/comment.module').then(m => m.CommentPageModule)
   }
 ];
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
+    RouterModule.forRoot(routes, {
+      preloadingStrategy: PreloadAllModules,
+      scrollPositionRestoration: 'enabled',
+      anchorScrolling: 'enabled',
+      scrollOffset: [0, 64],
+    })
   ],
   exports: [RouterModule]
 })

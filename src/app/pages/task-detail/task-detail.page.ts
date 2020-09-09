@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { TaskDetailLogicService } from './logic/task-detail-logic.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-task-detail',
@@ -11,6 +11,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class TaskDetailPage implements OnInit {
   taskId: string;
   task;
+  link = "comment"
+  testHref;
 
   constructor(
     private location: Location,
@@ -21,10 +23,30 @@ export class TaskDetailPage implements OnInit {
 
   ngOnInit() {
     this.taskId = this.route.snapshot.paramMap.get('id');
-    this.logic.fetchAnyTask(this.taskId).subscribe(data => {
+    this.testHref = `task-detail/${this.taskId}#comment`;
+    this.logic.fetchAnyTask(this.taskId).subscribe((data) => {
       this.task = data;
-      console.log(this.task);
     })
+    this.router.events.subscribe((s) => {
+      if (s instanceof NavigationEnd) {
+        const tree = this.router.parseUrl(this.router.url);
+        if (tree.fragment) {
+          const element = document.querySelector('#' + tree.fragment);
+          if (element) {
+            element.scrollIntoView(true);
+
+            // element.scrollIntoView(true)
+          };
+        }
+      }
+    })
+    // this.route.fragment.subscribe((data) => {
+    //   this.link = data;
+    // });
+  }
+
+  ngAfterViewInit(): void {
+
   }
 
   goBackToRoom() {
