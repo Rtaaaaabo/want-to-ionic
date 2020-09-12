@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Location } from '@angular/common';
 import { TaskDetailLogicService } from './logic/task-detail-logic.service';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
@@ -13,6 +13,8 @@ export class TaskDetailPage implements OnInit {
   task;
   link = "comment"
   testHref;
+  fragmentComment = '';
+  @ViewChild('comment') child: HTMLElement;
 
   constructor(
     private location: Location,
@@ -26,27 +28,19 @@ export class TaskDetailPage implements OnInit {
     this.testHref = `task-detail/${this.taskId}#comment`;
     this.logic.fetchAnyTask(this.taskId).subscribe((data) => {
       this.task = data;
-    })
-    this.router.events.subscribe((s) => {
-      if (s instanceof NavigationEnd) {
-        const tree = this.router.parseUrl(this.router.url);
-        if (tree.fragment) {
-          const element = document.querySelector('#' + tree.fragment);
-          if (element) {
-            element.scrollIntoView(true);
-
-            // element.scrollIntoView(true)
-          };
-        }
-      }
-    })
-    // this.route.fragment.subscribe((data) => {
-    //   this.link = data;
-    // });
+    });
+    this.route.fragment.subscribe((data) => {
+      this.fragmentComment = data;
+    });
   }
 
   ngAfterViewInit(): void {
-
+    console.log(this.child);
+    console.log(document.getElementById('comment').offsetTop);
+    // this.route.fragment.subscribe((result) => {
+    //   // document.querySelector('#' + data).scrollIntoView(true);
+    //   // console.log(document.querySelector('#' + data));
+    // });
   }
 
   goBackToRoom() {
