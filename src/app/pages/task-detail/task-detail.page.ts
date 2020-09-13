@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Location } from '@angular/common';
+import { Location, ViewportScroller } from '@angular/common';
 import { TaskDetailLogicService } from './logic/task-detail-logic.service';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 
@@ -21,6 +21,7 @@ export class TaskDetailPage implements OnInit {
     private logic: TaskDetailLogicService,
     private route: ActivatedRoute,
     private router: Router,
+    private scroll: ViewportScroller,
   ) { }
 
   ngOnInit() {
@@ -29,18 +30,19 @@ export class TaskDetailPage implements OnInit {
     this.logic.fetchAnyTask(this.taskId).subscribe((data) => {
       this.task = data;
     });
-    this.route.fragment.subscribe((data) => {
-      this.fragmentComment = data;
-    });
+    // this.route.fragment.subscribe((data) => {
+    //   this.fragmentComment = data;
+    //   console.log(this.fragmentComment);
+    //   this.scroll.scrollToAnchor(this.fragmentComment);
+    // });
   }
 
   ngAfterViewInit(): void {
-    console.log(this.child);
-    console.log(document.getElementById('comment').offsetTop);
-    // this.route.fragment.subscribe((result) => {
-    //   // document.querySelector('#' + data).scrollIntoView(true);
-    //   // console.log(document.querySelector('#' + data));
-    // });
+    this.route.fragment.subscribe((result) => {
+      this.scroll.scrollToAnchor(result);
+      // document.querySelector('#' + data).scrollIntoView(true);
+      // console.log(document.querySelector('#' + data));
+    });
   }
 
   goBackToRoom() {
