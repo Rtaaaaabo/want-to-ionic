@@ -1,100 +1,36 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title> {{ task?.title }} </ion-title>
+    <ion-title> {{ taskDetail?.title }} </ion-title>
     <ion-buttons slot="start">
       <ion-button (click)="goBackToRoom()">
         <ion-icon name="chevron-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="presentActionSheet(taskDetail)">
+        <ion-icon name="ellipsis-horizontal-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <div id="constent">
-    <div>ダミーなもの</div>
-    <div>ダミーなもの</div>
-    <div>ダミーなもの</div>
-    <div>ダミーなもの</div>
-    <div>ダミーなもの</div>
-    <div>ダミーなもの</div>
-    <div>ダミーなもの</div>
-    <div>ダミーなもの</div>
-    <div>ダミーなもの</div>
-    <div>ダミーなもの</div>
-    <div>ダミーなもの</div>
-    <div>ダミーなもの</div>
-    <div>ダミーなもの</div>
-    <div>ダミーなもの</div>
-    <div>ダミーなもの</div>
-    <div>ダミーなもの</div>
-    <div>ダミーなもの</div>
-    <div>ダミーなもの</div>
-    <div>ダミーなもの</div>
-    <div>ダミーなもの</div>
-    <div>ダミーなもの</div>
-    <div>ダミーなもの</div>
-    <div>ダミーなもの</div>
-    <div>ダミーなもの</div>
-    <div>ダミーなもの</div>
-    <div>ダミーなもの</div>
-    <div>ダミーなもの</div>
-    <div>ダミーなもの</div>
-    <div>ダミーなもの</div>
-    <div>ダミーなもの</div>
-    <div>ダミーなもの</div>
-    <div>ダミーなもの</div>
-    <div>ダミーなもの</div>
-    <div>ダミーなもの</div>
-    <div>ダミーなもの</div>
-    <div>ダミーなもの</div>
-    <div>ダミーなもの</div>
-    <div>ダミーなもの</div>
-    <div>ダミーなもの</div>
-    <div>ダミーなもの</div>
-    <div>ダミーなもの</div>
-    <div>ダミーなもの</div>
-  </div>
-  <p #comment>
-    ここまでスクロールをしてほしいのだが、なかなかできない。
-  </p>
-  <div id="content-2">
-    <div>ダミーなもの</div>
-    <div>ダミーなもの</div>
-    <div>ダミーなもの</div>
-    <div>ダミーなもの</div>
-    <div>ダミーなもの</div>
-    <div>ダミーなもの</div>
-    <div>ダミーなもの</div>
-    <div>ダミーなもの</div>
-    <div>ダミーなもの</div>
-    <div>ダミーなもの</div>
-    <div>ダミーなもの</div>
-    <div>ダミーなもの</div>
-    <div>ダミーなもの</div>
-    <div>ダミーなもの</div>
-    <div>ダミーなもの</div>
-    <div>ダミーなもの</div>
-    <div>ダミーなもの</div>
-    <div>ダミーなもの</div>
-    <div>ダミーなもの</div>
-    <div>ダミーなもの</div>
-    <div>ダミーなもの</div>
-    <div>ダミーなもの</div>
-    <div>ダミーなもの</div>
-    <div>ダミーなもの</div>
-    <div>ダミーなもの</div>
-    <div>ダミーなもの</div>
-    <div>ダミーなもの</div>
-    <div>ダミーなもの</div>
-    <div>ダミーなもの</div>
-    <div>ダミーなもの</div>
-    <div>ダミーなもの</div>
-    <div>ダミーなもの</div>
-    <div>ダミーなもの</div>
-    <div>ダミーなもの</div>
-    <div>ダミーなもの</div>
-    <div>ダミーなもの</div>
-    <div>ダミーなもの</div>
-    <div>ダミーなもの</div>
-  </div>
+  <ion-card>
+    <ion-card-content>
+      <ion-item lines="none">
+        <ion-text>{{ taskDetail?.description}}</ion-text>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+  <ion-list>
+    <ion-list-header>
+      <ion-label>コメント</ion-label>
+    </ion-list-header>
+    <ion-item>
+      MEssage
+    </ion-item>
+    <ion-item>
+      MEssage
+    </ion-item>
+  </ion-list>
 </ion-content>
