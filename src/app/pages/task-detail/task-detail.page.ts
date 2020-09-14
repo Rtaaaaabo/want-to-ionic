@@ -36,6 +36,7 @@ export class TaskDetailPage implements OnInit {
     this.testHref = `task-detail/${this.taskId}#comment`;
     this.logic.fetchAnyTask(this.taskId).subscribe((data) => {
       this.taskDetail = data;
+      console.log(this.taskDetail);
     });
   }
 
@@ -65,7 +66,7 @@ export class TaskDetailPage implements OnInit {
     const presetnToast = from(this.presentDoneToast());
     this.logic.updateTaskItem(taskDetail, 10)
       .pipe(flatMap(() => this.logic.fetchAnyTask(taskDetail.id)))
-      .pipe(tap(() => presetnToast)).subscribe((data) => console.log(data));
+      .pipe(tap(() => presetnToast)).subscribe((data) => this.taskDetail = data);
   }
 
   async presentActionSheet(taskDetail) {

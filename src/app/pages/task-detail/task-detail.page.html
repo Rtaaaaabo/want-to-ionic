@@ -17,11 +17,19 @@
 <ion-content>
   <ion-card>
     <ion-card-content>
-      <ion-item lines="none">
+      <ion-icon
+        *ngIf="taskDetail?.status > 0"
+        size="large"
+        name="checkmark-circle"
+        color="secondary"
+      ></ion-icon>
+      <ion-item class="card-background" lines="none">
         <ion-text>{{ taskDetail?.description}}</ion-text>
       </ion-item>
     </ion-card-content>
   </ion-card>
+
+  <!-- ここから下はCommentとMessage -->
   <ion-list>
     <ion-list-header>
       <ion-label>コメント</ion-label>
