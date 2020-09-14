@@ -1,10 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Location, ViewportScroller } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { ModalController, ActionSheetController } from '@ionic/angular';
+import { ModalController, ActionSheetController, ToastController } from '@ionic/angular';
+import { from } from 'rxjs';
 
 import { TaskDetailLogicService } from './logic/task-detail-logic.service';
 import { AddTaskModalComponent } from 'src/app/shared/component/modal/add-task-modal/add-task-modal.component';
+import { flatMap, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-task-detail',
@@ -26,6 +28,7 @@ export class TaskDetailPage implements OnInit {
     private scroll: ViewportScroller,
     private modalCtrl: ModalController,
     private actionSheetCtrl: ActionSheetController,
+    private toastCtrl: ToastController,
   ) { }
 
   ngOnInit() {
@@ -33,8 +36,15 @@ export class TaskDetailPage implements OnInit {
     this.testHref = `task-detail/${this.taskId}#comment`;
     this.logic.fetchAnyTask(this.taskId).subscribe((data) => {
       this.taskDetail = data;
-      console.log(this.taskDetail);
     });
+  }
+
+  async presentDoneToast(): Promise<void> {
+    const toast = await this.toastCtrl.create({
+      message: 'おつかれさまでした！',
+      duration: 2000
+    });
+    toast.present();
   }
 
   ngAfterViewInit(): void {
@@ -43,17 +53,32 @@ export class TaskDetailPage implements OnInit {
     });
   }
 
-  presentModalEditTask(taskDetail) {
-    const modal = this.modalCtrl.create({
+  async presentModalEditTask(taskDetail) {
+    const modal = await this.modalCtrl.create({
       component: AddTaskModalComponent,
       componentProps: { taskDetail: taskDetail },
     });
+    return modal.present();
+  }
+
+  doneTask(taskDetail) {
+    const presetnToast = from(this.presentDoneToast());
+    this.logic.updateTaskItem(taskDetail, 10)
+      .pipe(flatMap(() => this.logic.fetchAnyTask(taskDetail.id)))
+      .pipe(tap(() => presetnToast)).subscribe((data) => console.log(data));
   }
 
   async presentActionSheet(taskDetail) {
     const actionSheet = await this.actionSheetCtrl.create({
       cssClass: 'my-custom-class',
       buttons: [{
+        text: '完了',
+        icon: 'checkbox',
+        handler: () => {
+          this.doneTask(taskDetail);
+        }
+      },
+      {
         text: '編集',
         icon: 'create',
         handler: () => {

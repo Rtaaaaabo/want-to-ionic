@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { AmplifyService } from '../../../shared/service/amplify.service';
 import { TaskDetailServiceService } from '../service/task-detail-service.service';
 import { Observable, from } from 'rxjs';
 
@@ -14,4 +15,13 @@ export class TaskDetailLogicService {
   fetchAnyTask(taskId: string): Observable<any> {
     return from(this.taskDetailService.getTask(taskId));
   }
+
+  updateTaskItem(taskItem, status): Observable<any> {
+    const content = {
+      id: taskItem.id,
+      status: status,
+    }
+    return this.taskDetailService.updateTaskItem(content);
+  }
+
 }

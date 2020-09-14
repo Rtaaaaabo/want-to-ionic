@@ -16,6 +16,7 @@ export class AddTaskModalComponent implements OnInit {
   });
 
   room;
+  taskDetail;
 
   minYear: string = '';
   maxYear: string = '';
@@ -26,6 +27,14 @@ export class AddTaskModalComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    if (this.taskDetail !== undefined) {
+      this.taskItemForm.patchValue({
+        nameItem: this.taskDetail.title,
+        descriptionItem: this.taskDetail.description,
+      });
+      this.room = this.taskDetail.room;
+    }
+    console.log(this.taskDetail);
     const currentDate = new Date();
     this.minYear = (currentDate.getFullYear()).toString();
     this.maxYear = (currentDate.getFullYear() + 1).toString();

@@ -109,7 +109,7 @@ export class TaskPage implements OnInit {
     const presetnToast = from(this.presentDoneToast());
     this.logic.updateTaskItem(taskItem, 10)
       .pipe(flatMap(() => this.logic.fetchActiveTaskPerRoom(this.roomId)))
-      .pipe(tap(() => presetnToast)).subscribe(data => this.taskActiveItems = data);
+      .pipe(tap(() => presetnToast)).subscribe((data) => this.taskActiveItems = data);
   }
 
   async deleteTask(item) {

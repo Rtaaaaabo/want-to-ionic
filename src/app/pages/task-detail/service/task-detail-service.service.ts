@@ -14,4 +14,8 @@ export class TaskDetailServiceService {
   getTask(taskId: string): Observable<GetTaskQuery> {
     return from(this.amplifyService.GetTask(taskId))
   }
+
+  updateTaskItem(content): Observable<any> {
+    return from(this.amplifyService.UpdateTask(content));
+  }
 }
