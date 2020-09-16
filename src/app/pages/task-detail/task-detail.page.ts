@@ -3,7 +3,6 @@ import { Location, ViewportScroller } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { ModalController, ActionSheetController, ToastController } from '@ionic/angular';
 import { from } from 'rxjs';
-
 import { TaskDetailLogicService } from './logic/task-detail-logic.service';
 import { AddTaskModalComponent } from 'src/app/shared/component/modal/add-task-modal/add-task-modal.component';
 import { flatMap, tap } from 'rxjs/operators';

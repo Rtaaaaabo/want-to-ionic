@@ -77,7 +77,11 @@
             </ion-button>
           </ion-col>
           <ion-col>
-            <ion-button (click)="deleteTask(item)" fill="clear" color="danger">
+            <ion-button
+              (click)="presentConfirmDelete(item)"
+              fill="clear"
+              color="danger"
+            >
               <ion-icon name="trash-outline"></ion-icon>
             </ion-button>
           </ion-col>

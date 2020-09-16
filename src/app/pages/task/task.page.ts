@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ModalController, ToastController } from '@ionic/angular';
+import { ModalController, ToastController, ActionSheetController } from '@ionic/angular';
 import { from, of } from 'rxjs';
 import { flatMap, catchError, tap } from 'rxjs/operators';
 import { GetRoomQuery } from 'src/app/shared/service/amplify.service';
@@ -30,13 +30,8 @@ export class TaskPage implements OnInit {
     private location: Location,
     private logic: TaskLogicService,
     private toastCtrl: ToastController,
+    private actionSheetCtrl: ActionSheetController,
   ) { }
-
-  ngOnInit(): void {
-  }
-
-  ngAfterViewInit(): void {
-  }
 
   ionViewWillEnter() {
     this.isReorder = false;
@@ -114,19 +109,33 @@ export class TaskPage implements OnInit {
       .pipe(tap(() => presentToast)).subscribe((data) => this.taskActiveItems = data);
   }
 
-  async deleteTask(item) {
-    const modal = await this.modalCtrl.create({
-      component: DeleteTaskModalComponent,
-      componentProps: { task: item },
-    });
-    const dismissObservable = from(modal.onDidDismiss());
-    dismissObservable
-      .pipe(flatMap(({ data }) => this.logic.deleteTaskItem(data.id)), catchError(err => of(err)))
+
+  async presentConfirmDelete(task) {
+    const actionSheet = await this.actionSheetCtrl.create({
+      buttons: [
+        {
+          text: '削除',
+          role: 'destructive',
+          icon: 'trash',
+          handler: () => {
+            this.deleteTask(task)
+          }
+        },
+        {
+          text: 'キャンセル',
+          icon: 'close',
+          role: 'cancel',
+        }
+      ]
+    })
+    return actionSheet.present();
+  }
+
+  deleteTask(task) {
+    console.log(task);
+    this.logic.deleteTaskItem(task.id)
       .pipe(flatMap(() => this.logic.fetchActiveTaskPerRoom(this.roomId)))
-      .subscribe((items) => {
-        this.taskActiveItems = items;
-      });
-    return modal.present();
+      .subscribe((result) => this.taskActiveItems = result);
   }
 
 }
