@@ -36,10 +36,13 @@ export class TaskPage implements OnInit {
   }
 
   ngAfterViewInit(): void {
+  }
+
+  ionViewWillEnter() {
     this.isReorder = false;
     this.segment = 'active';
     this.roomId = this.route.snapshot.paramMap.get('id');
-    this.logic.featchRoomInfo(this.roomId)
+    this.logic.fetchRoomInfo(this.roomId)
       .subscribe((roomInfo: GetRoomQuery) => {
         this.room = roomInfo;
       });
@@ -53,7 +56,6 @@ export class TaskPage implements OnInit {
       .subscribe((items) => {
         this.taskDoneItems = items;
       })
-
   }
 
   async presentDoneToast(): Promise<void> {

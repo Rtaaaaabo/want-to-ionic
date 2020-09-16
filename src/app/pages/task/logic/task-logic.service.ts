@@ -16,7 +16,7 @@ export class TaskLogicService {
     private sessionService: SessionService,
   ) { }
 
-  featchRoomInfo(roomId: string): Observable<GetRoomQuery> {
+  fetchRoomInfo(roomId: string): Observable<GetRoomQuery> {
     return this.taskService.fetchRoomInfo(roomId);
   }
 
