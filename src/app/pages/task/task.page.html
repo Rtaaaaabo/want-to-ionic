@@ -34,7 +34,7 @@
       <ion-card *ngFor="let item of taskActiveItems">
         <ion-card-content
           class="task-card-content"
-          (click)="navigateToTaskDetail(item)"
+          (click)="navigateToTaskDetail(item, segment)"
         >
           <ion-reorder *ngIf="isReorder">
             <ion-item class="background-item">
@@ -97,7 +97,7 @@
     <ion-card *ngFor="let item of taskDoneItems">
       <ion-card-content
         class="task-card-content"
-        (click)="navigateToTaskDetail(item)"
+        (click)="navigateToTaskDetail(item, segment)"
       >
         <ion-item class="background-item">
           <ion-avatar slot="start">

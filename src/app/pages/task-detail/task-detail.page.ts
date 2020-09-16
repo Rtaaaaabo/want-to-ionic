@@ -15,6 +15,7 @@ import { flatMap, tap } from 'rxjs/operators';
 })
 export class TaskDetailPage implements OnInit {
   taskId: string;
+  segment: string;
   taskDetail;
   link = "comment"
   testHref;
@@ -33,6 +34,7 @@ export class TaskDetailPage implements OnInit {
 
   ngOnInit() {
     this.taskId = this.route.snapshot.paramMap.get('id');
+    this.segment = this.route.snapshot.paramMap.get('segment');
     this.testHref = `task-detail/${this.taskId}#comment`;
     this.logic.fetchAnyTask(this.taskId).subscribe((data) => {
       this.taskDetail = data;
@@ -63,48 +65,97 @@ export class TaskDetailPage implements OnInit {
   }
 
   doneTask(taskDetail) {
-    const presetnToast = from(this.presentDoneToast());
+    const presentToast = from(this.presentDoneToast());
     this.logic.updateTaskItem(taskDetail, 10)
       .pipe(flatMap(() => this.logic.fetchAnyTask(taskDetail.id)))
-      .pipe(tap(() => presetnToast)).subscribe((data) => this.taskDetail = data);
+      .pipe(tap(() => presentToast)).subscribe((data) => this.taskDetail = data);
+  }
+
+  moveTask(taskDetail) {
+    const presentToast = from(this.presentDoneToast());
+    this.logic.updateTaskItem(taskDetail, 0)
+      .pipe(flatMap(() => this.logic.fetchAnyTask(taskDetail.id)))
+      .pipe(tap(() => presentToast)).subscribe((data) => this.taskDetail = data);
   }
 
   async presentActionSheet(taskDetail) {
-    const actionSheet = await this.actionSheetCtrl.create({
+
+    const activeActionSheet = await this.actionSheetCtrl.create({
       cssClass: 'my-custom-class',
-      buttons: [{
-        text: '完了',
-        icon: 'checkbox',
-        handler: () => {
-          this.doneTask(taskDetail);
+      buttons: [
+        {
+          text: '完了',
+          icon: 'checkbox',
+          handler: () => {
+            this.doneTask(taskDetail);
+          }
+        },
+        {
+          text: '編集',
+          icon: 'create',
+          handler: () => {
+            this.presentModalEditTask(taskDetail)
+          }
+        },
+        {
+          text: '削除',
+          role: 'destructive',
+          icon: 'trash',
+          handler: () => {
+            this.deleteTask(taskDetail)
+          }
+        },
+        {
+          text: 'キャンセル',
+          icon: 'close',
+          role: 'cancel',
+          handler: () => {
+            console.log('キャンセル');
+          }
         }
-      },
-      {
-        text: '編集',
-        icon: 'create',
-        handler: () => {
-          this.presentModalEditTask(taskDetail)
-        }
-      },
-      {
-        text: '削除',
-        role: 'destructive',
-        icon: 'trash',
-        handler: () => {
-          this.deleteTask(taskDetail)
-        }
-      },
-      {
-        text: 'キャンセル',
-        icon: 'close',
-        role: 'cancel',
-        handler: () => {
-          console.log('キャンセル');
-        }
-      }
       ]
     });
-    await actionSheet.present();
+
+    const doneActionSheet = await this.actionSheetCtrl.create({
+      cssClass: 'my-custom-class',
+      buttons: [
+        {
+          text: 'Activeに移動',
+          handler: () => {
+            this.moveTask(taskDetail);
+          }
+        },
+        {
+          text: '編集',
+          icon: 'create',
+          handler: () => {
+            this.presentModalEditTask(taskDetail)
+          }
+        },
+        {
+          text: '削除',
+          role: 'destructive',
+          icon: 'trash',
+          handler: () => {
+            this.deleteTask(taskDetail)
+          }
+        },
+        {
+          text: 'キャンセル',
+          icon: 'close',
+          role: 'cancel',
+          handler: () => {
+            console.log('キャンセル');
+          }
+        }
+      ]
+    });
+
+    if (this.segment === 'active') {
+      await activeActionSheet.present();
+    } else if (this.segment === 'done') {
+      await doneActionSheet.present();
+    }
   }
 
   deleteTask(taskDetail) {

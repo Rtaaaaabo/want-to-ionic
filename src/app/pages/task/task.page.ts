@@ -93,8 +93,8 @@ export class TaskPage implements OnInit {
     ev.detail.complete();
   }
 
-  navigateToTaskDetail(task): void {
-    this.router.navigate(['task-detail', `${task.id}`])
+  navigateToTaskDetail(task, segment): void {
+    this.router.navigate(['task-detail', `${task.id}`, `${segment}`])
   }
 
   addCommentToTaskDetail(task): void {
@@ -106,10 +106,10 @@ export class TaskPage implements OnInit {
   }
 
   doneTask(taskItem): void {
-    const presetnToast = from(this.presentDoneToast());
+    const presentToast = from(this.presentDoneToast());
     this.logic.updateTaskItem(taskItem, 10)
       .pipe(flatMap(() => this.logic.fetchActiveTaskPerRoom(this.roomId)))
-      .pipe(tap(() => presetnToast)).subscribe((data) => this.taskActiveItems = data);
+      .pipe(tap(() => presentToast)).subscribe((data) => this.taskActiveItems = data);
   }
 
   async deleteTask(item) {

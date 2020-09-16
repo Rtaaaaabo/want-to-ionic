@@ -5,7 +5,7 @@ import { TaskDetailPage } from './task-detail.page';
 
 const routes: Routes = [
   {
-    path: ':id',
+    path: ':id/:segment',
     component: TaskDetailPage
   },
   {
