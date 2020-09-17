@@ -33,6 +33,10 @@ export class TaskPage implements OnInit {
     private actionSheetCtrl: ActionSheetController,
   ) { }
 
+  ngOnInit(): void {
+
+  }
+
   ionViewWillEnter() {
     this.isReorder = false;
     this.segment = 'active';
