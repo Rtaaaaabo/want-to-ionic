@@ -19,6 +19,7 @@ export class TaskDetailPage implements OnInit {
   link = "comment"
   testHref;
   fragmentComment = '';
+  newMsg: string = '';
   @ViewChild('comment') child: HTMLElement;
 
   constructor(
@@ -39,6 +40,10 @@ export class TaskDetailPage implements OnInit {
       this.taskDetail = data;
       console.log(this.taskDetail);
     });
+  }
+
+  sendMessage() {
+    console.log('Send Message');
   }
 
   async presentDoneToast(): Promise<void> {
