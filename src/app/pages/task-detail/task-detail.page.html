@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title> {{ taskDetail?.title }} </ion-title>
+    <ion-title>タスクの詳細</ion-title>
     <ion-buttons slot="start">
       <ion-button (click)="goBackToRoom()">
         <ion-icon name="chevron-back-outline"></ion-icon>
@@ -16,13 +16,17 @@
 
 <ion-content>
   <ion-card>
+    <ion-icon
+      class="ion-padding"
+      *ngIf="taskDetail?.status > 0"
+      size="large"
+      name="checkmark-circle"
+      color="secondary"
+    ></ion-icon>
+    <ion-card-header class="card-title">
+      <ion-card-title>{{ taskDetail?.title }}</ion-card-title>
+    </ion-card-header>
     <ion-card-content>
-      <ion-icon
-        *ngIf="taskDetail?.status > 0"
-        size="large"
-        name="checkmark-circle"
-        color="secondary"
-      ></ion-icon>
       <ion-item class="card-background" lines="none">
         <ion-text>{{ taskDetail?.description}}</ion-text>
       </ion-item>
@@ -38,6 +42,7 @@
     <ion-item> MEssage </ion-item>
   </ion-list>
 </ion-content>
+
 <ion-footer>
   <ion-toolbar light="light">
     <ion-row align-items-center class="ion-no-padding">
