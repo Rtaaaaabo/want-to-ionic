@@ -49,6 +49,14 @@ export class TaskDetailPage implements OnInit {
     toast.present();
   }
 
+  async presentMoveTask(): Promise<void> {
+    const toast = await this.toastCtrl.create({
+      message: '再度、戻しました。',
+      duration: 2000
+    });
+    toast.present();
+  }
+
   ngAfterViewInit(): void {
     this.route.fragment.subscribe((result) => {
       this.scroll.scrollToAnchor(result);
@@ -71,7 +79,7 @@ export class TaskDetailPage implements OnInit {
   }
 
   moveTask(taskDetail) {
-    const presentToast = from(this.presentDoneToast());
+    const presentToast = from(this.presentMoveTask());
     this.logic.updateTaskItem(taskDetail, 0)
       .pipe(flatMap(() => this.logic.fetchAnyTask(taskDetail.id)))
       .pipe(tap(() => presentToast)).subscribe((data) => this.taskDetail = data);
