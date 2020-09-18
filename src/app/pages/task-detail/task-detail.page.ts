@@ -38,12 +38,11 @@ export class TaskDetailPage implements OnInit {
     this.testHref = `task-detail/${this.taskId}#comment`;
     this.logic.fetchAnyTask(this.taskId).subscribe((data) => {
       this.taskDetail = data;
-      console.log(this.taskDetail);
     });
   }
 
   sendMessage() {
-    console.log('Send Message');
+    this.logic.sendNewMessage(this.taskId, this.newMsg).subscribe((data) => console.log(data));
   }
 
   async presentDoneToast(): Promise<void> {

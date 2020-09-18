@@ -2744,65 +2744,9 @@ export class AmplifyService {
           __typename
           id
           taskID
-          author {
-            __typename
-            id
-            email
-            companyID
-            username
-            registered
-            authority
-            company {
-              __typename
-              id
-              name
-              domain
-              createdAt
-              updatedAt
-            }
-            createdAt
-            updatedAt
-          }
           content
           createdAt
           isSent
-          task {
-            __typename
-            id
-            authorID
-            roomID
-            title
-            description
-            scheduleDate
-            priority
-            status
-            createdAt
-            members {
-              __typename
-              id
-              email
-              companyID
-              username
-              registered
-              authority
-              createdAt
-              updatedAt
-            }
-            room {
-              __typename
-              id
-              companyID
-              name
-              description
-              createdAt
-              updatedAt
-            }
-            messages {
-              __typename
-              nextToken
-            }
-            updatedAt
-          }
           updatedAt
         }
       }`;

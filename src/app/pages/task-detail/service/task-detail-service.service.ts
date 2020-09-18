@@ -15,7 +15,11 @@ export class TaskDetailServiceService {
     return from(this.amplifyService.GetTask(taskId))
   }
 
-  updateTaskItem(content): Observable<any> {
-    return from(this.amplifyService.UpdateTask(content));
+  updateTaskItem(inputContent): Observable<any> {
+    return from(this.amplifyService.UpdateTask(inputContent));
+  }
+
+  createMessageItem(inputContent): Observable<any> {
+    return from(this.amplifyService.CreateMessage(inputContent));
   }
 }
