@@ -62,7 +62,7 @@
           </ion-item>
         </ion-card-content>
         <ion-row *ngIf="!isReorder" class="cardfooter">
-          <ion-col>
+          <ion-col class="button-center">
             <ion-button
               (click)="addCommentToTaskDetail(item)"
               fill="clear"
@@ -71,12 +71,12 @@
               <ion-icon name="chatbubbles-outline"></ion-icon>
             </ion-button>
           </ion-col>
-          <ion-col>
+          <ion-col class="button-center">
             <ion-button (click)="doneTask(item)" fill="clear" color="primary">
               <ion-icon name="checkmark-circle-outline"></ion-icon>
             </ion-button>
           </ion-col>
-          <ion-col>
+          <ion-col class="button-center">
             <ion-button
               (click)="presentConfirmDelete(item)"
               fill="clear"
