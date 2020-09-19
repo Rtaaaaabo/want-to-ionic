@@ -15,11 +15,19 @@ export class TaskDetailServiceService {
     return from(this.amplifyService.GetTask(taskId))
   }
 
+  fetchMessagePerTask(filterInfo): Observable<any> {
+    return from(this.amplifyService.ListMessages(filterInfo));
+  }
+
   updateTaskItem(inputContent): Observable<any> {
     return from(this.amplifyService.UpdateTask(inputContent));
   }
 
   createMessageItem(inputContent): Observable<any> {
     return from(this.amplifyService.CreateMessage(inputContent));
+  }
+
+  onMessageListener(): Observable<any> {
+    return from(this.amplifyService.OnCreateMessageListener);
   }
 }

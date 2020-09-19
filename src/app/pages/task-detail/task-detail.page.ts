@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Location, ViewportScroller } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { ModalController, ActionSheetController, ToastController } from '@ionic/angular';
+import { ModalController, ActionSheetController, ToastController, IonContent, Platform } from '@ionic/angular';
 import { from } from 'rxjs';
 import { TaskDetailLogicService } from './logic/task-detail-logic.service';
 import { AddTaskModalComponent } from 'src/app/shared/component/modal/add-task-modal/add-task-modal.component';
@@ -13,6 +13,8 @@ import { flatMap, tap } from 'rxjs/operators';
   styleUrls: ['./task-detail.page.scss'],
 })
 export class TaskDetailPage implements OnInit {
+  @ViewChild('comment') child: HTMLElement;
+  @ViewChild(IonContent, { static: false }) content: IonContent;
   taskId: string;
   segment: string;
   taskDetail;
@@ -20,7 +22,8 @@ export class TaskDetailPage implements OnInit {
   testHref;
   fragmentComment = '';
   newMsg: string = '';
-  @ViewChild('comment') child: HTMLElement;
+  message;
+
 
   constructor(
     private location: Location,
@@ -30,6 +33,7 @@ export class TaskDetailPage implements OnInit {
     private modalCtrl: ModalController,
     private actionSheetCtrl: ActionSheetController,
     private toastCtrl: ToastController,
+    private platform: Platform,
   ) { }
 
   ngOnInit() {
@@ -39,6 +43,9 @@ export class TaskDetailPage implements OnInit {
     this.logic.fetchAnyTask(this.taskId).subscribe((data) => {
       this.taskDetail = data;
     });
+    this.logic.fetchMessagePerTask(this.taskId).subscribe((data) => {
+      this.message = data.items;
+    })
   }
 
   sendMessage() {
@@ -175,6 +182,14 @@ export class TaskDetailPage implements OnInit {
 
   goBackToRoom() {
     this.location.back();
+  }
+
+  initializeApp() {
+    this.platform.ready().then(() => {
+      this.logic.onCreateMessageListener().subscribe((ev: any) => {
+        console.log(ev);
+      })
+    })
   }
 
 }

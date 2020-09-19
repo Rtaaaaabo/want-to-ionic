@@ -11,11 +11,19 @@ export class TaskDetailLogicService {
 
   constructor(
     private taskDetailService: TaskDetailServiceService,
-    private amplifyService: AmplifyService,
   ) { }
 
   fetchAnyTask(taskId: string): Observable<any> {
     return from(this.taskDetailService.getTask(taskId));
+  }
+
+  fetchMessagePerTask(taskId: string): Observable<any> {
+    const filterContent = {
+      taskID: {
+        eq: `${taskId}`
+      }
+    }
+    return from(this.taskDetailService.fetchMessagePerTask(filterContent))
   }
 
   updateTaskItem(taskItem, status): Observable<any> {
@@ -28,12 +36,16 @@ export class TaskDetailLogicService {
 
   sendNewMessage(taskId, messageContent): Observable<any> {
     const inputContent = {
+      id: `${uuid()}`,
       content: messageContent,
       taskID: taskId,
       isSent: true,
-      id: `${uuid}`,
     }
     return this.taskDetailService.createMessageItem(inputContent);
+  }
+
+  onCreateMessageListener(): Observable<any> {
+    return this.taskDetailService.onMessageListener();
   }
 
 }
