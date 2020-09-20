@@ -2071,6 +2071,7 @@ export type OnDeleteTaskSubscription = {
 };
 
 export type OnCreateMessageSubscription = {
+  _isScalar: 'string',
   __typename: "Message";
   id: string;
   taskID: string;
@@ -4110,34 +4111,13 @@ export class AmplifyService {
     )
   ) as Observable<OnDeleteTaskSubscription>;
 
-  OnCreateMessageListener: Observable<
-    OnCreateMessageSubscription
-  > = API.graphql(
+  OnCreateMessageListener: Observable<OnCreateMessageSubscription> = API.graphql(
     graphqlOperation(
       `subscription OnCreateMessage {
         onCreateMessage {
           __typename
           id
           taskID
-          author {
-            __typename
-            id
-            email
-            companyID
-            username
-            registered
-            authority
-            company {
-              __typename
-              id
-              name
-              domain
-              createdAt
-              updatedAt
-            }
-            createdAt
-            updatedAt
-          }
           content
           createdAt
           isSent

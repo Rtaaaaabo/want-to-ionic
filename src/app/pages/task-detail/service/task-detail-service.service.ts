@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AmplifyService, GetTaskQuery } from '../../../shared/service/amplify.service';
+import { AmplifyService, GetTaskQuery, OnCreateMessageSubscription } from '../../../shared/service/amplify.service';
 import { Observable, from } from 'rxjs';
 
 @Injectable({
@@ -27,7 +27,7 @@ export class TaskDetailServiceService {
     return from(this.amplifyService.CreateMessage(inputContent));
   }
 
-  onMessageListener(): Observable<any> {
-    return from(this.amplifyService.OnCreateMessageListener);
+  onMessageListener() {
+    return this.amplifyService.OnCreateMessageListener;
   }
 }

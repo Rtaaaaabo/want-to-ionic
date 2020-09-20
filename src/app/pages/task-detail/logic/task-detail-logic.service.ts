@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AmplifyService } from '../../../shared/service/amplify.service';
+import { AmplifyService, OnCreateMessageSubscription } from '../../../shared/service/amplify.service';
 import { TaskDetailServiceService } from '../service/task-detail-service.service';
 import { Observable, from } from 'rxjs';
 import { v4 as uuid } from 'uuid';
@@ -44,7 +44,8 @@ export class TaskDetailLogicService {
     return this.taskDetailService.createMessageItem(inputContent);
   }
 
-  onCreateMessageListener(): Observable<any> {
+  // OnCreateMessageSubscription
+  onCreateMessageListener() {
     return this.taskDetailService.onMessageListener();
   }
 

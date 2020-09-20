@@ -2,10 +2,10 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Location, ViewportScroller } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { ModalController, ActionSheetController, ToastController, IonContent, Platform } from '@ionic/angular';
-import { from } from 'rxjs';
+import { from, Observable } from 'rxjs';
 import { TaskDetailLogicService } from './logic/task-detail-logic.service';
 import { AddTaskModalComponent } from 'src/app/shared/component/modal/add-task-modal/add-task-modal.component';
-import { flatMap, tap } from 'rxjs/operators';
+import { flatMap, tap, map, filter, isEmpty } from 'rxjs/operators';
 
 @Component({
   selector: 'app-task-detail',
@@ -34,7 +34,18 @@ export class TaskDetailPage implements OnInit {
     private actionSheetCtrl: ActionSheetController,
     private toastCtrl: ToastController,
     private platform: Platform,
-  ) { }
+  ) {
+    this.initializeApp()
+      .subscribe(() => {
+        this.logic.onCreateMessageListener()
+          .subscribe((value) => {
+            this.logic.fetchMessagePerTask(this.taskId).subscribe((result) => {
+              this.message = result.items
+              console.log(this.message);
+            })
+          });
+      });
+  }
 
   ngOnInit() {
     this.taskId = this.route.snapshot.paramMap.get('id');
@@ -49,7 +60,7 @@ export class TaskDetailPage implements OnInit {
   }
 
   sendMessage() {
-    this.logic.sendNewMessage(this.taskId, this.newMsg).subscribe((data) => console.log(data));
+    this.logic.sendNewMessage(this.taskId, this.newMsg).subscribe();
   }
 
   async presentDoneToast(): Promise<void> {
@@ -127,9 +138,6 @@ export class TaskDetailPage implements OnInit {
           text: 'キャンセル',
           icon: 'close',
           role: 'cancel',
-          handler: () => {
-            console.log('キャンセル');
-          }
         }
       ]
     });
@@ -184,12 +192,9 @@ export class TaskDetailPage implements OnInit {
     this.location.back();
   }
 
-  initializeApp() {
-    this.platform.ready().then(() => {
-      this.logic.onCreateMessageListener().subscribe((ev: any) => {
-        console.log(ev);
-      })
-    })
+
+  initializeApp(): Observable<string> {
+    return from(this.platform.ready());
   }
 
 }
