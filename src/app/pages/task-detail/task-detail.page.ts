@@ -38,11 +38,11 @@ export class TaskDetailPage implements OnInit {
     this.initializeApp()
       .subscribe(() => {
         this.logic.onCreateMessageListener()
-          .subscribe((value) => {
-            this.logic.fetchMessagePerTask(this.taskId).subscribe((result) => {
-              this.message = result.items
-              console.log(this.message);
-            })
+          .subscribe(() => {
+            this.logic.fetchMessagePerTask(this.taskId)
+              .subscribe((result) => {
+                this.message = result.items
+              })
           });
       });
   }
@@ -60,7 +60,8 @@ export class TaskDetailPage implements OnInit {
   }
 
   sendMessage() {
-    this.logic.sendNewMessage(this.taskId, this.newMsg).subscribe();
+    this.logic.sendNewMessage(this.taskId, this.newMsg)
+      .subscribe(() => this.newMsg = '');
   }
 
   async presentDoneToast(): Promise<void> {
@@ -114,14 +115,12 @@ export class TaskDetailPage implements OnInit {
       buttons: [
         {
           text: '完了',
-          icon: 'checkbox',
           handler: () => {
             this.doneTask(taskDetail);
           }
         },
         {
           text: '編集',
-          icon: 'create',
           handler: () => {
             this.presentModalEditTask(taskDetail)
           }
@@ -129,14 +128,12 @@ export class TaskDetailPage implements OnInit {
         {
           text: '削除',
           role: 'destructive',
-          icon: 'trash',
           handler: () => {
             this.deleteTask(taskDetail)
           }
         },
         {
           text: 'キャンセル',
-          icon: 'close',
           role: 'cancel',
         }
       ]
@@ -153,7 +150,6 @@ export class TaskDetailPage implements OnInit {
         },
         {
           text: '編集',
-          icon: 'create',
           handler: () => {
             this.presentModalEditTask(taskDetail)
           }
@@ -161,18 +157,13 @@ export class TaskDetailPage implements OnInit {
         {
           text: '削除',
           role: 'destructive',
-          icon: 'trash',
           handler: () => {
             this.deleteTask(taskDetail)
           }
         },
         {
           text: 'キャンセル',
-          icon: 'close',
           role: 'cancel',
-          handler: () => {
-            console.log('キャンセル');
-          }
         }
       ]
     });
