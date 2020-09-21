@@ -24,7 +24,9 @@ export class LoginPage implements OnInit {
   }
 
   login() {
-    this.logic.sendLoginInfo(this.loginForm.get('email').value, this.loginForm.get('password').value).subscribe(() => {
+    const email = this.loginForm.get('email').value;
+    const password = this.loginForm.get('password').value;
+    this.logic.sendLoginInfo(email, password).subscribe(() => {
       this.router.navigate(['']);
     })
   }

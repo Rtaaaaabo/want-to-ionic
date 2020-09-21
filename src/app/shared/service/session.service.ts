@@ -47,4 +47,11 @@ export class SessionService {
   fetchCurrentUser(): Observable<any> {
     return from(Auth.currentAuthenticatedUser());
   }
+
+  signOut() {
+    return from(Auth.signOut()).subscribe(() => {
+      this.loggedIn.next(false);
+      this.router.navigate(['/login']);
+    })
+  }
 }

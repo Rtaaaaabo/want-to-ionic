@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActionSheetController } from '@ionic/angular';
 
 @Component({
   selector: 'app-setting',
@@ -7,9 +8,34 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SettingPage implements OnInit {
 
-  constructor() { }
+  constructor(
+    private actionSheetCtrl: ActionSheetController
+  ) { }
 
   ngOnInit() {
+  }
+
+  async confirmLogout() {
+    const logoutActionSheet = await this.actionSheetCtrl.create({
+      cssClass: 'my-custom-class',
+      buttons: [
+        {
+          text: 'ログアウト',
+          role: 'destructive',
+          handler: () => {
+            this.actionLogout()
+          }
+        },
+        {
+          text: 'キャンセル',
+          role: 'cancel',
+        }
+      ]
+    });
+  }
+
+  actionLogout() {
+    console.log('Logout');
   }
 
 }

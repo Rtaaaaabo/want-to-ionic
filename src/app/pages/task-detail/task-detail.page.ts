@@ -5,7 +5,7 @@ import { ModalController, ActionSheetController, ToastController, IonContent, Pl
 import { from, Observable } from 'rxjs';
 import { TaskDetailLogicService } from './logic/task-detail-logic.service';
 import { AddTaskModalComponent } from 'src/app/shared/component/modal/add-task-modal/add-task-modal.component';
-import { flatMap, tap, map, filter, isEmpty } from 'rxjs/operators';
+import { flatMap, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-task-detail',
