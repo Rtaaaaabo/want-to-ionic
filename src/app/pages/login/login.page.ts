@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { LoginLogicService } from './logic/login-logic.service';
+import { LoginLogic } from './logic/login-logic.service';
 
 
 @Component({
@@ -16,7 +16,7 @@ export class LoginPage implements OnInit {
   })
 
   constructor(
-    private logic: LoginLogicService,
+    private logic: LoginLogic,
     private readonly router: Router
   ) { }
 

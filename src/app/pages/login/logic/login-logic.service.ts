@@ -6,7 +6,7 @@ import { catchError } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
-export class LoginLogicService {
+export class LoginLogic {
 
   constructor(
     private sessionService: SessionService
