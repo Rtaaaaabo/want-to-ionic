@@ -41,7 +41,8 @@ export class SessionService {
   }
 
   userLogin(email, password): Observable<void> {
-    return from(Auth.signIn(email, password)).pipe(tap(() => this.loggedIn.next(true)));
+    return from(Auth.signIn(email, password))
+      .pipe(tap(() => this.loggedIn.next(true)));
   }
 
   fetchCurrentUser(): Observable<any> {
@@ -49,9 +50,11 @@ export class SessionService {
   }
 
   signOut() {
-    return from(Auth.signOut()).subscribe(() => {
-      this.loggedIn.next(false);
-      this.router.navigate(['/login']);
-    })
+    return from(Auth.signOut())
+      .pipe(tap(() => this.loggedIn.next(false)));
+    // return from(Auth.signOut()).pipe(tap() => {
+    //   this.loggedIn.next(false);
+    //   this.router.navigate(['/login']);
+    // })
   }
 }

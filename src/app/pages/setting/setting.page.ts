@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ActionSheetController } from '@ionic/angular';
+import { SettingLogic } from './logic/setting-logic.service';
+
 
 @Component({
   selector: 'app-setting',
@@ -9,7 +12,9 @@ import { ActionSheetController } from '@ionic/angular';
 export class SettingPage implements OnInit {
 
   constructor(
-    private actionSheetCtrl: ActionSheetController
+    private actionSheetCtrl: ActionSheetController,
+    private logic: SettingLogic,
+    private router: Router,
   ) { }
 
   ngOnInit() {
@@ -32,10 +37,11 @@ export class SettingPage implements OnInit {
         }
       ]
     });
+    return logoutActionSheet.present();
   }
 
   actionLogout() {
-    console.log('Logout');
+    this.logic.signOut().subscribe(() => this.router.navigate(['/login']));
   }
 
 }
