@@ -23,12 +23,16 @@ export class LoginPage implements OnInit {
   ngOnInit() {
   }
 
-  login() {
+  login(): void {
     const email = this.loginForm.get('email').value;
     const password = this.loginForm.get('password').value;
     this.logic.sendLoginInfo(email, password).subscribe(() => {
       this.router.navigate(['']);
     })
+  }
+
+  navigateToSignUp(): void {
+    this.router.navigate(['/signup']);
   }
 
 }

@@ -1,6 +1,11 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>新規登録</ion-title>
+    <ion-buttons slot="start">
+      <ion-button (click)="goBackToLogin()">
+        <ion-icon name="chevron-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -36,11 +41,6 @@
       [disabled]="signupForm.invalid"
       expand="block"
       >登録</ion-button
-    >
-  </div>
-  <div class="text-center">
-    <ion-button (click)="goBackToLogin()" fill="outline"
-      >ログインする</ion-button
     >
   </div>
 </ion-content>
