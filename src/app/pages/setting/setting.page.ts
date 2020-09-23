@@ -44,4 +44,8 @@ export class SettingPage implements OnInit {
     this.logic.signOut().subscribe(() => this.router.navigate(['/login']));
   }
 
+  presentEditModal() {
+
+  }
+
 }
