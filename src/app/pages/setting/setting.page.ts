@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ActionSheetController } from '@ionic/angular';
+import { ActionSheetController, ModalController } from '@ionic/angular';
 import { SettingLogic } from './logic/setting-logic.service';
-
+import { EditProfileModalComponent } from '../../shared/component/modal/edit-profile-modal/edit-profile-modal.component';
+import { from } from 'rxjs';
 
 @Component({
   selector: 'app-setting',
@@ -15,6 +16,7 @@ export class SettingPage implements OnInit {
     private actionSheetCtrl: ActionSheetController,
     private logic: SettingLogic,
     private router: Router,
+    private modalCtrl: ModalController,
   ) { }
 
   ngOnInit() {
@@ -44,8 +46,12 @@ export class SettingPage implements OnInit {
     this.logic.signOut().subscribe(() => this.router.navigate(['/login']));
   }
 
-  presentEditModal() {
-
+  async presentEditModal(): Promise<void> {
+    const modal = await this.modalCtrl.create({
+      component: EditProfileModalComponent,
+    });
+    const observable = from(modal.onDidDismiss());
+    return modal.present();
   }
 
 }
