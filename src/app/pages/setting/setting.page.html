@@ -5,7 +5,28 @@
 </ion-header>
 
 <ion-content>
-  <ion-list>
-    <ion-item (click)="confirmLogout()">ログアウト</ion-item>
-  </ion-list>
+  <ion-item>
+    <ion-avatar class="profile-icon">
+      <img src="../../../assets/svg/anonymous.svg" />
+    </ion-avatar>
+    <ion-label class="margin-left">
+      <h1>中川拓</h1>
+      <p>開発本部所属</p>
+      <a>編集</a>
+    </ion-label>
+  </ion-item>
+  <!-- <ion-card>
+    <ion-card-content>
+      <p>test</p>
+      <ion-list>
+        <ion-item> TEST </ion-item>
+        <ion-item> TEST </ion-item>
+        <ion-item> TEST </ion-item>
+        <ion-item lines="none"> TEST </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card> -->
+  <ion-item lines="none" color="danger" (click)="confirmLogout()"
+    >ログアウト</ion-item
+  >
 </ion-content>
