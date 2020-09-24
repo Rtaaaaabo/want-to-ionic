@@ -208,6 +208,9 @@ export type CreateUserInput = {
   email: string;
   companyID: string;
   username: string;
+  tel?: string | null;
+  positionName?: string | null;
+  iconImage?: string | null;
   registered?: boolean | null;
   authority?: string | null;
 };
@@ -216,6 +219,9 @@ export type ModelUserConditionInput = {
   email?: ModelStringInput | null;
   companyID?: ModelIDInput | null;
   username?: ModelStringInput | null;
+  tel?: ModelStringInput | null;
+  positionName?: ModelStringInput | null;
+  iconImage?: ModelStringInput | null;
   registered?: ModelBooleanInput | null;
   authority?: ModelStringInput | null;
   and?: Array<ModelUserConditionInput | null> | null;
@@ -228,6 +234,9 @@ export type UpdateUserInput = {
   email?: string | null;
   companyID?: string | null;
   username?: string | null;
+  tel?: string | null;
+  positionName?: string | null;
+  iconImage?: string | null;
   registered?: boolean | null;
   authority?: string | null;
 };
@@ -286,6 +295,9 @@ export type ModelUserFilterInput = {
   email?: ModelStringInput | null;
   companyID?: ModelIDInput | null;
   username?: ModelStringInput | null;
+  tel?: ModelStringInput | null;
+  positionName?: ModelStringInput | null;
+  iconImage?: ModelStringInput | null;
   registered?: ModelBooleanInput | null;
   authority?: ModelStringInput | null;
   and?: Array<ModelUserFilterInput | null> | null;
@@ -319,6 +331,9 @@ export type CreateCompanyMutation = {
       email: string;
       companyID: string;
       username: string;
+      tel: string | null;
+      positionName: string | null;
+      iconImage: string | null;
       registered: boolean | null;
       authority: string | null;
       createdAt: string;
@@ -356,6 +371,9 @@ export type UpdateCompanyMutation = {
       email: string;
       companyID: string;
       username: string;
+      tel: string | null;
+      positionName: string | null;
+      iconImage: string | null;
       registered: boolean | null;
       authority: string | null;
       createdAt: string;
@@ -393,6 +411,9 @@ export type DeleteCompanyMutation = {
       email: string;
       companyID: string;
       username: string;
+      tel: string | null;
+      positionName: string | null;
+      iconImage: string | null;
       registered: boolean | null;
       authority: string | null;
       createdAt: string;
@@ -416,6 +437,9 @@ export type CreateRoomMutation = {
     email: string;
     companyID: string;
     username: string;
+    tel: string | null;
+    positionName: string | null;
+    iconImage: string | null;
     registered: boolean | null;
     authority: string | null;
     company: {
@@ -478,6 +502,9 @@ export type UpdateRoomMutation = {
     email: string;
     companyID: string;
     username: string;
+    tel: string | null;
+    positionName: string | null;
+    iconImage: string | null;
     registered: boolean | null;
     authority: string | null;
     company: {
@@ -540,6 +567,9 @@ export type DeleteRoomMutation = {
     email: string;
     companyID: string;
     username: string;
+    tel: string | null;
+    positionName: string | null;
+    iconImage: string | null;
     registered: boolean | null;
     authority: string | null;
     company: {
@@ -607,6 +637,9 @@ export type CreateTaskMutation = {
     email: string;
     companyID: string;
     username: string;
+    tel: string | null;
+    positionName: string | null;
+    iconImage: string | null;
     registered: boolean | null;
     authority: string | null;
     company: {
@@ -632,6 +665,9 @@ export type CreateTaskMutation = {
       email: string;
       companyID: string;
       username: string;
+      tel: string | null;
+      positionName: string | null;
+      iconImage: string | null;
       registered: boolean | null;
       authority: string | null;
       createdAt: string;
@@ -685,6 +721,9 @@ export type UpdateTaskMutation = {
     email: string;
     companyID: string;
     username: string;
+    tel: string | null;
+    positionName: string | null;
+    iconImage: string | null;
     registered: boolean | null;
     authority: string | null;
     company: {
@@ -710,6 +749,9 @@ export type UpdateTaskMutation = {
       email: string;
       companyID: string;
       username: string;
+      tel: string | null;
+      positionName: string | null;
+      iconImage: string | null;
       registered: boolean | null;
       authority: string | null;
       createdAt: string;
@@ -763,6 +805,9 @@ export type DeleteTaskMutation = {
     email: string;
     companyID: string;
     username: string;
+    tel: string | null;
+    positionName: string | null;
+    iconImage: string | null;
     registered: boolean | null;
     authority: string | null;
     company: {
@@ -788,6 +833,9 @@ export type DeleteTaskMutation = {
       email: string;
       companyID: string;
       username: string;
+      tel: string | null;
+      positionName: string | null;
+      iconImage: string | null;
       registered: boolean | null;
       authority: string | null;
       createdAt: string;
@@ -834,6 +882,9 @@ export type CreateMessageMutation = {
     email: string;
     companyID: string;
     username: string;
+    tel: string | null;
+    positionName: string | null;
+    iconImage: string | null;
     registered: boolean | null;
     authority: string | null;
     company: {
@@ -867,6 +918,9 @@ export type CreateMessageMutation = {
       email: string;
       companyID: string;
       username: string;
+      tel: string | null;
+      positionName: string | null;
+      iconImage: string | null;
       registered: boolean | null;
       authority: string | null;
       createdAt: string;
@@ -900,6 +954,9 @@ export type UpdateMessageMutation = {
     email: string;
     companyID: string;
     username: string;
+    tel: string | null;
+    positionName: string | null;
+    iconImage: string | null;
     registered: boolean | null;
     authority: string | null;
     company: {
@@ -933,6 +990,9 @@ export type UpdateMessageMutation = {
       email: string;
       companyID: string;
       username: string;
+      tel: string | null;
+      positionName: string | null;
+      iconImage: string | null;
       registered: boolean | null;
       authority: string | null;
       createdAt: string;
@@ -966,6 +1026,9 @@ export type DeleteMessageMutation = {
     email: string;
     companyID: string;
     username: string;
+    tel: string | null;
+    positionName: string | null;
+    iconImage: string | null;
     registered: boolean | null;
     authority: string | null;
     company: {
@@ -999,6 +1062,9 @@ export type DeleteMessageMutation = {
       email: string;
       companyID: string;
       username: string;
+      tel: string | null;
+      positionName: string | null;
+      iconImage: string | null;
       registered: boolean | null;
       authority: string | null;
       createdAt: string;
@@ -1028,6 +1094,9 @@ export type CreateUserMutation = {
   email: string;
   companyID: string;
   username: string;
+  tel: string | null;
+  positionName: string | null;
+  iconImage: string | null;
   registered: boolean | null;
   authority: string | null;
   company: {
@@ -1056,6 +1125,9 @@ export type UpdateUserMutation = {
   email: string;
   companyID: string;
   username: string;
+  tel: string | null;
+  positionName: string | null;
+  iconImage: string | null;
   registered: boolean | null;
   authority: string | null;
   company: {
@@ -1084,6 +1156,9 @@ export type DeleteUserMutation = {
   email: string;
   companyID: string;
   username: string;
+  tel: string | null;
+  positionName: string | null;
+  iconImage: string | null;
   registered: boolean | null;
   authority: string | null;
   company: {
@@ -1132,6 +1207,9 @@ export type GetCompanyQuery = {
       email: string;
       companyID: string;
       username: string;
+      tel: string | null;
+      positionName: string | null;
+      iconImage: string | null;
       registered: boolean | null;
       authority: string | null;
       createdAt: string;
@@ -1176,6 +1254,9 @@ export type GetRoomQuery = {
     email: string;
     companyID: string;
     username: string;
+    tel: string | null;
+    positionName: string | null;
+    iconImage: string | null;
     registered: boolean | null;
     authority: string | null;
     company: {
@@ -1240,6 +1321,9 @@ export type ListRoomsQuery = {
       email: string;
       companyID: string;
       username: string;
+      tel: string | null;
+      positionName: string | null;
+      iconImage: string | null;
       registered: boolean | null;
       authority: string | null;
       createdAt: string;
@@ -1280,6 +1364,9 @@ export type GetTaskQuery = {
     email: string;
     companyID: string;
     username: string;
+    tel: string | null;
+    positionName: string | null;
+    iconImage: string | null;
     registered: boolean | null;
     authority: string | null;
     company: {
@@ -1305,6 +1392,9 @@ export type GetTaskQuery = {
       email: string;
       companyID: string;
       username: string;
+      tel: string | null;
+      positionName: string | null;
+      iconImage: string | null;
       registered: boolean | null;
       authority: string | null;
       createdAt: string;
@@ -1360,6 +1450,9 @@ export type ListTasksQuery = {
       email: string;
       companyID: string;
       username: string;
+      tel: string | null;
+      positionName: string | null;
+      iconImage: string | null;
       registered: boolean | null;
       authority: string | null;
       createdAt: string;
@@ -1393,6 +1486,9 @@ export type GetMessageQuery = {
     email: string;
     companyID: string;
     username: string;
+    tel: string | null;
+    positionName: string | null;
+    iconImage: string | null;
     registered: boolean | null;
     authority: string | null;
     company: {
@@ -1426,6 +1522,9 @@ export type GetMessageQuery = {
       email: string;
       companyID: string;
       username: string;
+      tel: string | null;
+      positionName: string | null;
+      iconImage: string | null;
       registered: boolean | null;
       authority: string | null;
       createdAt: string;
@@ -1461,6 +1560,9 @@ export type ListMessagesQuery = {
       email: string;
       companyID: string;
       username: string;
+      tel: string | null;
+      positionName: string | null;
+      iconImage: string | null;
       registered: boolean | null;
       authority: string | null;
       createdAt: string;
@@ -1493,6 +1595,9 @@ export type GetUserQuery = {
   email: string;
   companyID: string;
   username: string;
+  tel: string | null;
+  positionName: string | null;
+  iconImage: string | null;
   registered: boolean | null;
   authority: string | null;
   company: {
@@ -1523,6 +1628,9 @@ export type ListUsersQuery = {
     email: string;
     companyID: string;
     username: string;
+    tel: string | null;
+    positionName: string | null;
+    iconImage: string | null;
     registered: boolean | null;
     authority: string | null;
     company: {
@@ -1565,6 +1673,9 @@ export type OnCreateCompanySubscription = {
       email: string;
       companyID: string;
       username: string;
+      tel: string | null;
+      positionName: string | null;
+      iconImage: string | null;
       registered: boolean | null;
       authority: string | null;
       createdAt: string;
@@ -1602,6 +1713,9 @@ export type OnUpdateCompanySubscription = {
       email: string;
       companyID: string;
       username: string;
+      tel: string | null;
+      positionName: string | null;
+      iconImage: string | null;
       registered: boolean | null;
       authority: string | null;
       createdAt: string;
@@ -1639,6 +1753,9 @@ export type OnDeleteCompanySubscription = {
       email: string;
       companyID: string;
       username: string;
+      tel: string | null;
+      positionName: string | null;
+      iconImage: string | null;
       registered: boolean | null;
       authority: string | null;
       createdAt: string;
@@ -1662,6 +1779,9 @@ export type OnCreateRoomSubscription = {
     email: string;
     companyID: string;
     username: string;
+    tel: string | null;
+    positionName: string | null;
+    iconImage: string | null;
     registered: boolean | null;
     authority: string | null;
     company: {
@@ -1724,6 +1844,9 @@ export type OnUpdateRoomSubscription = {
     email: string;
     companyID: string;
     username: string;
+    tel: string | null;
+    positionName: string | null;
+    iconImage: string | null;
     registered: boolean | null;
     authority: string | null;
     company: {
@@ -1786,6 +1909,9 @@ export type OnDeleteRoomSubscription = {
     email: string;
     companyID: string;
     username: string;
+    tel: string | null;
+    positionName: string | null;
+    iconImage: string | null;
     registered: boolean | null;
     authority: string | null;
     company: {
@@ -1853,6 +1979,9 @@ export type OnCreateTaskSubscription = {
     email: string;
     companyID: string;
     username: string;
+    tel: string | null;
+    positionName: string | null;
+    iconImage: string | null;
     registered: boolean | null;
     authority: string | null;
     company: {
@@ -1878,6 +2007,9 @@ export type OnCreateTaskSubscription = {
       email: string;
       companyID: string;
       username: string;
+      tel: string | null;
+      positionName: string | null;
+      iconImage: string | null;
       registered: boolean | null;
       authority: string | null;
       createdAt: string;
@@ -1931,6 +2063,9 @@ export type OnUpdateTaskSubscription = {
     email: string;
     companyID: string;
     username: string;
+    tel: string | null;
+    positionName: string | null;
+    iconImage: string | null;
     registered: boolean | null;
     authority: string | null;
     company: {
@@ -1956,6 +2091,9 @@ export type OnUpdateTaskSubscription = {
       email: string;
       companyID: string;
       username: string;
+      tel: string | null;
+      positionName: string | null;
+      iconImage: string | null;
       registered: boolean | null;
       authority: string | null;
       createdAt: string;
@@ -2009,6 +2147,9 @@ export type OnDeleteTaskSubscription = {
     email: string;
     companyID: string;
     username: string;
+    tel: string | null;
+    positionName: string | null;
+    iconImage: string | null;
     registered: boolean | null;
     authority: string | null;
     company: {
@@ -2034,6 +2175,9 @@ export type OnDeleteTaskSubscription = {
       email: string;
       companyID: string;
       username: string;
+      tel: string | null;
+      positionName: string | null;
+      iconImage: string | null;
       registered: boolean | null;
       authority: string | null;
       createdAt: string;
@@ -2080,6 +2224,9 @@ export type OnCreateMessageSubscription = {
     email: string;
     companyID: string;
     username: string;
+    tel: string | null;
+    positionName: string | null;
+    iconImage: string | null;
     registered: boolean | null;
     authority: string | null;
     company: {
@@ -2113,6 +2260,9 @@ export type OnCreateMessageSubscription = {
       email: string;
       companyID: string;
       username: string;
+      tel: string | null;
+      positionName: string | null;
+      iconImage: string | null;
       registered: boolean | null;
       authority: string | null;
       createdAt: string;
@@ -2146,6 +2296,9 @@ export type OnUpdateMessageSubscription = {
     email: string;
     companyID: string;
     username: string;
+    tel: string | null;
+    positionName: string | null;
+    iconImage: string | null;
     registered: boolean | null;
     authority: string | null;
     company: {
@@ -2179,6 +2332,9 @@ export type OnUpdateMessageSubscription = {
       email: string;
       companyID: string;
       username: string;
+      tel: string | null;
+      positionName: string | null;
+      iconImage: string | null;
       registered: boolean | null;
       authority: string | null;
       createdAt: string;
@@ -2212,6 +2368,9 @@ export type OnDeleteMessageSubscription = {
     email: string;
     companyID: string;
     username: string;
+    tel: string | null;
+    positionName: string | null;
+    iconImage: string | null;
     registered: boolean | null;
     authority: string | null;
     company: {
@@ -2245,6 +2404,9 @@ export type OnDeleteMessageSubscription = {
       email: string;
       companyID: string;
       username: string;
+      tel: string | null;
+      positionName: string | null;
+      iconImage: string | null;
       registered: boolean | null;
       authority: string | null;
       createdAt: string;
@@ -2274,6 +2436,9 @@ export type OnCreateUserSubscription = {
   email: string;
   companyID: string;
   username: string;
+  tel: string | null;
+  positionName: string | null;
+  iconImage: string | null;
   registered: boolean | null;
   authority: string | null;
   company: {
@@ -2302,6 +2467,9 @@ export type OnUpdateUserSubscription = {
   email: string;
   companyID: string;
   username: string;
+  tel: string | null;
+  positionName: string | null;
+  iconImage: string | null;
   registered: boolean | null;
   authority: string | null;
   company: {
@@ -2330,6 +2498,9 @@ export type OnDeleteUserSubscription = {
   email: string;
   companyID: string;
   username: string;
+  tel: string | null;
+  positionName: string | null;
+  iconImage: string | null;
   registered: boolean | null;
   authority: string | null;
   company: {
@@ -2387,6 +2558,9 @@ export class APIService {
               email
               companyID
               username
+              tel
+              positionName
+              iconImage
               registered
               authority
               createdAt
@@ -2440,6 +2614,9 @@ export class APIService {
               email
               companyID
               username
+              tel
+              positionName
+              iconImage
               registered
               authority
               createdAt
@@ -2493,6 +2670,9 @@ export class APIService {
               email
               companyID
               username
+              tel
+              positionName
+              iconImage
               registered
               authority
               createdAt
@@ -2532,6 +2712,9 @@ export class APIService {
             email
             companyID
             username
+            tel
+            positionName
+            iconImage
             registered
             authority
             company {
@@ -2610,6 +2793,9 @@ export class APIService {
             email
             companyID
             username
+            tel
+            positionName
+            iconImage
             registered
             authority
             company {
@@ -2688,6 +2874,9 @@ export class APIService {
             email
             companyID
             username
+            tel
+            positionName
+            iconImage
             registered
             authority
             company {
@@ -2771,6 +2960,9 @@ export class APIService {
             email
             companyID
             username
+            tel
+            positionName
+            iconImage
             registered
             authority
             company {
@@ -2796,6 +2988,9 @@ export class APIService {
               email
               companyID
               username
+              tel
+              positionName
+              iconImage
               registered
               authority
               createdAt
@@ -2865,6 +3060,9 @@ export class APIService {
             email
             companyID
             username
+            tel
+            positionName
+            iconImage
             registered
             authority
             company {
@@ -2890,6 +3088,9 @@ export class APIService {
               email
               companyID
               username
+              tel
+              positionName
+              iconImage
               registered
               authority
               createdAt
@@ -2959,6 +3160,9 @@ export class APIService {
             email
             companyID
             username
+            tel
+            positionName
+            iconImage
             registered
             authority
             company {
@@ -2984,6 +3188,9 @@ export class APIService {
               email
               companyID
               username
+              tel
+              positionName
+              iconImage
               registered
               authority
               createdAt
@@ -3046,6 +3253,9 @@ export class APIService {
             email
             companyID
             username
+            tel
+            positionName
+            iconImage
             registered
             authority
             company {
@@ -3079,6 +3289,9 @@ export class APIService {
               email
               companyID
               username
+              tel
+              positionName
+              iconImage
               registered
               authority
               createdAt
@@ -3128,6 +3341,9 @@ export class APIService {
             email
             companyID
             username
+            tel
+            positionName
+            iconImage
             registered
             authority
             company {
@@ -3161,6 +3377,9 @@ export class APIService {
               email
               companyID
               username
+              tel
+              positionName
+              iconImage
               registered
               authority
               createdAt
@@ -3210,6 +3429,9 @@ export class APIService {
             email
             companyID
             username
+            tel
+            positionName
+            iconImage
             registered
             authority
             company {
@@ -3243,6 +3465,9 @@ export class APIService {
               email
               companyID
               username
+              tel
+              positionName
+              iconImage
               registered
               authority
               createdAt
@@ -3288,6 +3513,9 @@ export class APIService {
           email
           companyID
           username
+          tel
+          positionName
+          iconImage
           registered
           authority
           company {
@@ -3332,6 +3560,9 @@ export class APIService {
           email
           companyID
           username
+          tel
+          positionName
+          iconImage
           registered
           authority
           company {
@@ -3376,6 +3607,9 @@ export class APIService {
           email
           companyID
           username
+          tel
+          positionName
+          iconImage
           registered
           authority
           company {
@@ -3437,6 +3671,9 @@ export class APIService {
               email
               companyID
               username
+              tel
+              positionName
+              iconImage
               registered
               authority
               createdAt
@@ -3512,6 +3749,9 @@ export class APIService {
             email
             companyID
             username
+            tel
+            positionName
+            iconImage
             registered
             authority
             company {
@@ -3590,6 +3830,9 @@ export class APIService {
               email
               companyID
               username
+              tel
+              positionName
+              iconImage
               registered
               authority
               createdAt
@@ -3647,6 +3890,9 @@ export class APIService {
             email
             companyID
             username
+            tel
+            positionName
+            iconImage
             registered
             authority
             company {
@@ -3672,6 +3918,9 @@ export class APIService {
               email
               companyID
               username
+              tel
+              positionName
+              iconImage
               registered
               authority
               createdAt
@@ -3741,6 +3990,9 @@ export class APIService {
               email
               companyID
               username
+              tel
+              positionName
+              iconImage
               registered
               authority
               createdAt
@@ -3791,6 +4043,9 @@ export class APIService {
             email
             companyID
             username
+            tel
+            positionName
+            iconImage
             registered
             authority
             company {
@@ -3824,6 +4079,9 @@ export class APIService {
               email
               companyID
               username
+              tel
+              positionName
+              iconImage
               registered
               authority
               createdAt
@@ -3873,6 +4131,9 @@ export class APIService {
               email
               companyID
               username
+              tel
+              positionName
+              iconImage
               registered
               authority
               createdAt
@@ -3922,6 +4183,9 @@ export class APIService {
           email
           companyID
           username
+          tel
+          positionName
+          iconImage
           registered
           authority
           company {
@@ -3966,6 +4230,9 @@ export class APIService {
             email
             companyID
             username
+            tel
+            positionName
+            iconImage
             registered
             authority
             company {
@@ -4028,6 +4295,9 @@ export class APIService {
               email
               companyID
               username
+              tel
+              positionName
+              iconImage
               registered
               authority
               createdAt
@@ -4073,6 +4343,9 @@ export class APIService {
               email
               companyID
               username
+              tel
+              positionName
+              iconImage
               registered
               authority
               createdAt
@@ -4118,6 +4391,9 @@ export class APIService {
               email
               companyID
               username
+              tel
+              positionName
+              iconImage
               registered
               authority
               createdAt
@@ -4147,6 +4423,9 @@ export class APIService {
             email
             companyID
             username
+            tel
+            positionName
+            iconImage
             registered
             authority
             company {
@@ -4215,6 +4494,9 @@ export class APIService {
             email
             companyID
             username
+            tel
+            positionName
+            iconImage
             registered
             authority
             company {
@@ -4283,6 +4565,9 @@ export class APIService {
             email
             companyID
             username
+            tel
+            positionName
+            iconImage
             registered
             authority
             company {
@@ -4356,6 +4641,9 @@ export class APIService {
             email
             companyID
             username
+            tel
+            positionName
+            iconImage
             registered
             authority
             company {
@@ -4381,6 +4669,9 @@ export class APIService {
               email
               companyID
               username
+              tel
+              positionName
+              iconImage
               registered
               authority
               createdAt
@@ -4440,6 +4731,9 @@ export class APIService {
             email
             companyID
             username
+            tel
+            positionName
+            iconImage
             registered
             authority
             company {
@@ -4465,6 +4759,9 @@ export class APIService {
               email
               companyID
               username
+              tel
+              positionName
+              iconImage
               registered
               authority
               createdAt
@@ -4524,6 +4821,9 @@ export class APIService {
             email
             companyID
             username
+            tel
+            positionName
+            iconImage
             registered
             authority
             company {
@@ -4549,6 +4849,9 @@ export class APIService {
               email
               companyID
               username
+              tel
+              positionName
+              iconImage
               registered
               authority
               createdAt
@@ -4603,6 +4906,9 @@ export class APIService {
             email
             companyID
             username
+            tel
+            positionName
+            iconImage
             registered
             authority
             company {
@@ -4636,6 +4942,9 @@ export class APIService {
               email
               companyID
               username
+              tel
+              positionName
+              iconImage
               registered
               authority
               createdAt
@@ -4677,6 +4986,9 @@ export class APIService {
             email
             companyID
             username
+            tel
+            positionName
+            iconImage
             registered
             authority
             company {
@@ -4710,6 +5022,9 @@ export class APIService {
               email
               companyID
               username
+              tel
+              positionName
+              iconImage
               registered
               authority
               createdAt
@@ -4751,6 +5066,9 @@ export class APIService {
             email
             companyID
             username
+            tel
+            positionName
+            iconImage
             registered
             authority
             company {
@@ -4784,6 +5102,9 @@ export class APIService {
               email
               companyID
               username
+              tel
+              positionName
+              iconImage
               registered
               authority
               createdAt
@@ -4819,6 +5140,9 @@ export class APIService {
           email
           companyID
           username
+          tel
+          positionName
+          iconImage
           registered
           authority
           company {
@@ -4853,6 +5177,9 @@ export class APIService {
           email
           companyID
           username
+          tel
+          positionName
+          iconImage
           registered
           authority
           company {
@@ -4887,6 +5214,9 @@ export class APIService {
           email
           companyID
           username
+          tel
+          positionName
+          iconImage
           registered
           authority
           company {

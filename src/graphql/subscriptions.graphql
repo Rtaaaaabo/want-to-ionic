@@ -21,6 +21,9 @@ subscription OnCreateCompany {
         email
         companyID
         username
+        tel
+        positionName
+        iconImage
         registered
         authority
         createdAt
@@ -54,6 +57,9 @@ subscription OnUpdateCompany {
         email
         companyID
         username
+        tel
+        positionName
+        iconImage
         registered
         authority
         createdAt
@@ -87,6 +93,9 @@ subscription OnDeleteCompany {
         email
         companyID
         username
+        tel
+        positionName
+        iconImage
         registered
         authority
         createdAt
@@ -109,6 +118,9 @@ subscription OnCreateRoom {
       email
       companyID
       username
+      tel
+      positionName
+      iconImage
       registered
       authority
       company {
@@ -164,6 +176,9 @@ subscription OnUpdateRoom {
       email
       companyID
       username
+      tel
+      positionName
+      iconImage
       registered
       authority
       company {
@@ -219,6 +234,9 @@ subscription OnDeleteRoom {
       email
       companyID
       username
+      tel
+      positionName
+      iconImage
       registered
       authority
       company {
@@ -279,6 +297,9 @@ subscription OnCreateTask {
       email
       companyID
       username
+      tel
+      positionName
+      iconImage
       registered
       authority
       company {
@@ -301,6 +322,9 @@ subscription OnCreateTask {
         email
         companyID
         username
+        tel
+        positionName
+        iconImage
         registered
         authority
         createdAt
@@ -349,6 +373,9 @@ subscription OnUpdateTask {
       email
       companyID
       username
+      tel
+      positionName
+      iconImage
       registered
       authority
       company {
@@ -371,6 +398,9 @@ subscription OnUpdateTask {
         email
         companyID
         username
+        tel
+        positionName
+        iconImage
         registered
         authority
         createdAt
@@ -419,6 +449,9 @@ subscription OnDeleteTask {
       email
       companyID
       username
+      tel
+      positionName
+      iconImage
       registered
       authority
       company {
@@ -441,6 +474,9 @@ subscription OnDeleteTask {
         email
         companyID
         username
+        tel
+        positionName
+        iconImage
         registered
         authority
         createdAt
@@ -482,6 +518,9 @@ subscription OnCreateMessage {
       email
       companyID
       username
+      tel
+      positionName
+      iconImage
       registered
       authority
       company {
@@ -512,6 +551,9 @@ subscription OnCreateMessage {
         email
         companyID
         username
+        tel
+        positionName
+        iconImage
         registered
         authority
         createdAt
@@ -542,6 +584,9 @@ subscription OnUpdateMessage {
       email
       companyID
       username
+      tel
+      positionName
+      iconImage
       registered
       authority
       company {
@@ -572,6 +617,9 @@ subscription OnUpdateMessage {
         email
         companyID
         username
+        tel
+        positionName
+        iconImage
         registered
         authority
         createdAt
@@ -602,6 +650,9 @@ subscription OnDeleteMessage {
       email
       companyID
       username
+      tel
+      positionName
+      iconImage
       registered
       authority
       company {
@@ -632,6 +683,9 @@ subscription OnDeleteMessage {
         email
         companyID
         username
+        tel
+        positionName
+        iconImage
         registered
         authority
         createdAt
@@ -659,6 +713,9 @@ subscription OnCreateUser {
     email
     companyID
     username
+    tel
+    positionName
+    iconImage
     registered
     authority
     company {
@@ -684,6 +741,9 @@ subscription OnUpdateUser {
     email
     companyID
     username
+    tel
+    positionName
+    iconImage
     registered
     authority
     company {
@@ -709,6 +769,9 @@ subscription OnDeleteUser {
     email
     companyID
     username
+    tel
+    positionName
+    iconImage
     registered
     authority
     company {

@@ -21,6 +21,9 @@ query GetCompany($id: ID!) {
         email
         companyID
         username
+        tel
+        positionName
+        iconImage
         registered
         authority
         createdAt
@@ -65,6 +68,9 @@ query GetRoom($id: ID!) {
       email
       companyID
       username
+      tel
+      positionName
+      iconImage
       registered
       authority
       company {
@@ -125,6 +131,9 @@ query ListRooms(
         email
         companyID
         username
+        tel
+        positionName
+        iconImage
         registered
         authority
         createdAt
@@ -162,6 +171,9 @@ query GetTask($id: ID!) {
       email
       companyID
       username
+      tel
+      positionName
+      iconImage
       registered
       authority
       company {
@@ -184,6 +196,9 @@ query GetTask($id: ID!) {
         email
         companyID
         username
+        tel
+        positionName
+        iconImage
         registered
         authority
         createdAt
@@ -237,6 +252,9 @@ query ListTasks(
         email
         companyID
         username
+        tel
+        positionName
+        iconImage
         registered
         authority
         createdAt
@@ -267,6 +285,9 @@ query GetMessage($id: ID!) {
       email
       companyID
       username
+      tel
+      positionName
+      iconImage
       registered
       authority
       company {
@@ -297,6 +318,9 @@ query GetMessage($id: ID!) {
         email
         companyID
         username
+        tel
+        positionName
+        iconImage
         registered
         authority
         createdAt
@@ -332,6 +356,9 @@ query ListMessages(
         email
         companyID
         username
+        tel
+        positionName
+        iconImage
         registered
         authority
         createdAt
@@ -363,6 +390,9 @@ query GetUser($id: ID!) {
     email
     companyID
     username
+    tel
+    positionName
+    iconImage
     registered
     authority
     company {
@@ -393,6 +423,9 @@ query ListUsers(
       email
       companyID
       username
+      tel
+      positionName
+      iconImage
       registered
       authority
       company {

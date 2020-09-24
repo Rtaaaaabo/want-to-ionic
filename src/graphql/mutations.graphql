@@ -24,6 +24,9 @@ mutation CreateCompany(
         email
         companyID
         username
+        tel
+        positionName
+        iconImage
         registered
         authority
         createdAt
@@ -60,6 +63,9 @@ mutation UpdateCompany(
         email
         companyID
         username
+        tel
+        positionName
+        iconImage
         registered
         authority
         createdAt
@@ -96,6 +102,9 @@ mutation DeleteCompany(
         email
         companyID
         username
+        tel
+        positionName
+        iconImage
         registered
         authority
         createdAt
@@ -121,6 +130,9 @@ mutation CreateRoom(
       email
       companyID
       username
+      tel
+      positionName
+      iconImage
       registered
       authority
       company {
@@ -179,6 +191,9 @@ mutation UpdateRoom(
       email
       companyID
       username
+      tel
+      positionName
+      iconImage
       registered
       authority
       company {
@@ -237,6 +252,9 @@ mutation DeleteRoom(
       email
       companyID
       username
+      tel
+      positionName
+      iconImage
       registered
       authority
       company {
@@ -300,6 +318,9 @@ mutation CreateTask(
       email
       companyID
       username
+      tel
+      positionName
+      iconImage
       registered
       authority
       company {
@@ -322,6 +343,9 @@ mutation CreateTask(
         email
         companyID
         username
+        tel
+        positionName
+        iconImage
         registered
         authority
         createdAt
@@ -373,6 +397,9 @@ mutation UpdateTask(
       email
       companyID
       username
+      tel
+      positionName
+      iconImage
       registered
       authority
       company {
@@ -395,6 +422,9 @@ mutation UpdateTask(
         email
         companyID
         username
+        tel
+        positionName
+        iconImage
         registered
         authority
         createdAt
@@ -446,6 +476,9 @@ mutation DeleteTask(
       email
       companyID
       username
+      tel
+      positionName
+      iconImage
       registered
       authority
       company {
@@ -468,6 +501,9 @@ mutation DeleteTask(
         email
         companyID
         username
+        tel
+        positionName
+        iconImage
         registered
         authority
         createdAt
@@ -512,6 +548,9 @@ mutation CreateMessage(
       email
       companyID
       username
+      tel
+      positionName
+      iconImage
       registered
       authority
       company {
@@ -542,6 +581,9 @@ mutation CreateMessage(
         email
         companyID
         username
+        tel
+        positionName
+        iconImage
         registered
         authority
         createdAt
@@ -575,6 +617,9 @@ mutation UpdateMessage(
       email
       companyID
       username
+      tel
+      positionName
+      iconImage
       registered
       authority
       company {
@@ -605,6 +650,9 @@ mutation UpdateMessage(
         email
         companyID
         username
+        tel
+        positionName
+        iconImage
         registered
         authority
         createdAt
@@ -638,6 +686,9 @@ mutation DeleteMessage(
       email
       companyID
       username
+      tel
+      positionName
+      iconImage
       registered
       authority
       company {
@@ -668,6 +719,9 @@ mutation DeleteMessage(
         email
         companyID
         username
+        tel
+        positionName
+        iconImage
         registered
         authority
         createdAt
@@ -698,6 +752,9 @@ mutation CreateUser(
     email
     companyID
     username
+    tel
+    positionName
+    iconImage
     registered
     authority
     company {
@@ -726,6 +783,9 @@ mutation UpdateUser(
     email
     companyID
     username
+    tel
+    positionName
+    iconImage
     registered
     authority
     company {
@@ -754,6 +814,9 @@ mutation DeleteUser(
     email
     companyID
     username
+    tel
+    positionName
+    iconImage
     registered
     authority
     company {

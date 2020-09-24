@@ -46,6 +46,9 @@ type User @model @key(name: "byCompany", fields: ["companyID"]) {
   email: String!
   companyID: ID!
   username: String!
+  tel: String
+  positionName: String
+  iconImage: String
   registered: Boolean
   authority: String
   company: Company! @connection(fields: ["companyID"])
