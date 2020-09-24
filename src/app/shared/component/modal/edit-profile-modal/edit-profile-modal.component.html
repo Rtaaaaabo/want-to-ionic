@@ -3,14 +3,64 @@
     <ion-title>プロフィールの編集</ion-title>
     <ion-buttons slot="start">
       <ion-button (click)="dismissModal()">
-        <ion-icon slot="icon-only" name="close=outline"></ion-icon>
+        <ion-icon slot="icon-only" name="close-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
     <ion-buttons slot="end">
-      <ion-button (click)="saveProfile()">保存</ion-button>
+      <ion-button [disabled]="editProfile.invalid" (click)="saveProfile()"
+        >保存</ion-button
+      >
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <div class="center">di</div>
+  <div class="card">
+    <div class="header">
+      <div class="avatar">
+        <img src="../../../../../assets//svg/anonymous.svg" alt="" />
+      </div>
+    </div>
+  </div>
+  <div class="center"></div>
+
+  <div class="card-body">
+    <div class="user-meta ion-text-center">
+      <form [formGroup]="editProfile">
+        <ion-list>
+          <ion-item>
+            <ion-label>名前</ion-label>
+            <ion-input
+              formControlName="name"
+              placeholder="名前を追加"
+              type="text"
+            ></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label>役職</ion-label>
+            <ion-input
+              formControlName="positionName"
+              placeholder="役職や職種、ポジションなどを追加"
+              type="text"
+            ></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label>E-mail</ion-label>
+            <ion-input
+              formControlName="email"
+              placeholder="メールアドレスを追加"
+              type="text"
+            ></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label>電話番号</ion-label>
+            <ion-input
+              formControlName="tel"
+              placeholder="電話番号を追加"
+              type="text"
+            ></ion-input>
+          </ion-item>
+        </ion-list>
+      </form>
+    </div>
+  </div>
 </ion-content>
