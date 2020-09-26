@@ -52,9 +52,5 @@ export class SessionService {
   signOut() {
     return from(Auth.signOut())
       .pipe(tap(() => this.loggedIn.next(false)));
-    // return from(Auth.signOut()).pipe(tap() => {
-    //   this.loggedIn.next(false);
-    //   this.router.navigate(['/login']);
-    // })
   }
 }

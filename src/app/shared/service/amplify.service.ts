@@ -2926,6 +2926,7 @@ export class AmplifyService {
     )) as any;
     return <DeleteMessageMutation>response.data.deleteMessage;
   }
+
   async CreateUser(
     input: CreateUserInput,
     condition?: ModelUserConditionInput
@@ -2937,24 +2938,11 @@ export class AmplifyService {
           email
           companyID
           username
+          tel
+          positionName
+          iconImage
           registered
           authority
-          company {
-            __typename
-            id
-            name
-            domain
-            room {
-              __typename
-              nextToken
-            }
-            members {
-              __typename
-              nextToken
-            }
-            createdAt
-            updatedAt
-          }
           createdAt
           updatedAt
         }
@@ -2970,6 +2958,7 @@ export class AmplifyService {
     )) as any;
     return <CreateUserMutation>response.data.createUser;
   }
+
   async UpdateUser(
     input: UpdateUserInput,
     condition?: ModelUserConditionInput

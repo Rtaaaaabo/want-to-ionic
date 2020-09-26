@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { SignupLogicService } from './logic/signup-logic.service';
 import { InterfaceSignup } from '../../interfaces/signup.interface';
+import { catchError, flatMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-signup',
@@ -35,9 +36,11 @@ export class SignupPage implements OnInit {
 
   onSubmit() {
     const value: InterfaceSignup = this.signupForm.value;
-    this.logic.entrySignupUser(value).subscribe(() => {
-      this.router.navigate(['/confirm'], { state: { data: { email: value.email } } });
-    })
+    this.logic.entrySignupUser(value)
+      // .pipe(flatMap((data) => this.logic.createUser(data, value, 'taku-nakagawa-cloud')))
+      .subscribe(() => {
+        this.router.navigate(['/confirm'], { state: { data: { email: value.email } } });
+      })
     if (this.signupForm.invalid) {
       return;
     }
