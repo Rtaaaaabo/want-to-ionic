@@ -36,7 +36,7 @@ export class SessionService {
     return from(Auth.confirmSignUp(username, code));
   }
 
-  resendConfurmNumbseForSignup(username): Observable<string> {
+  resendConfirmNumberForSignUp(username): Observable<string> {
     return from(Auth.resendSignUp(username));
   }
 

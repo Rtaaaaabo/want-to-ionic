@@ -16,6 +16,6 @@ export class ConfirmLogicService {
   }
 
   resendConfirm(username): Observable<string> {
-    return this.sessionService.resendConfurmNumbseForSignup(username);
+    return this.sessionService.resendConfirmNumberForSignUp(username);
   }
 }

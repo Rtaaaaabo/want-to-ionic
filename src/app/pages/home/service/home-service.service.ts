@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AmplifyService, ModelRoomFilterInput, ListRoomsQuery } from '../../../shared/service/amplify.service';
+import { AmplifyService, ModelRoomFilterInput, ListRoomsQuery, ModelUserFilterInput } from '../../../shared/service/amplify.service';
 import { from, Observable } from 'rxjs';
 
 @Injectable({
@@ -8,6 +8,15 @@ import { from, Observable } from 'rxjs';
 export class HomeService {
 
   constructor(private amplifyService: AmplifyService) { }
+
+  checkRegistrationUser(email: string): Observable<any> {
+    const filterContent: ModelUserFilterInput = {
+      email: {
+        eq: `${email}`
+      }
+    }
+    return from(this.amplifyService.ListUsers(filterContent));
+  }
 
   createRoom(content): Observable<any> {
     return from(this.amplifyService.CreateRoom(content));
