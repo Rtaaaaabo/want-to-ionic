@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
@@ -14,13 +14,22 @@ export class EditProfileModalComponent implements OnInit {
     positionName: new FormControl(''),
     email: new FormControl('', [Validators.email]),
     tel: new FormControl(''),
-  })
+  });
+  @Input() status: string;
+  title: string;
 
   constructor(
     private modalCtrl: ModalController,
-  ) { }
+  ) {
+  }
 
-  ngOnInit() { }
+  ngOnInit() {
+    if (this.status === 'new') {
+      this.title = 'プロフィールの作成'
+    } else {
+      this.title = 'プロフィールの編集'
+    }
+  }
 
   dismissModal() {
     this.modalCtrl.dismiss();

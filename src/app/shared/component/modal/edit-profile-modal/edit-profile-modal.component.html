@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>プロフィールの編集</ion-title>
-    <ion-buttons slot="start">
+    <ion-title>{{ title }}</ion-title>
+    <ion-buttons *ngIf="status !== 'new'" slot="start">
       <ion-button (click)="dismissModal()">
         <ion-icon slot="icon-only" name="close-outline"></ion-icon>
       </ion-button>
