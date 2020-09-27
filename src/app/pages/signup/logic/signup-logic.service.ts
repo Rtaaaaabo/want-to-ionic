@@ -45,7 +45,6 @@ export class SignupLogicService {
       registered: false,
       authority: 'member',
     }
-    console.log(createUser);
     return from(this.amplifyService.CreateUser(createUser));
   }
 }

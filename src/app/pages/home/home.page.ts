@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { flatMap } from 'rxjs/operators';
+import { filter, flatMap } from 'rxjs/operators';
 import { HomeLogicService } from './logic/home-logic.service';
 
 @Component({
@@ -12,9 +12,11 @@ export class HomePage implements OnInit {
   constructor(private logic: HomeLogicService) { }
 
   ngOnInit() {
-    this.logic.fetchCurrentUser()
-      .pipe(flatMap((email) => this.logic.checkRegistrationUser(email)))
-      .subscribe(({ items }) => console.log(items));
+    this.logic.fetchCurrentUser().subscribe((data) => console.log(data));
+    // .pipe(flatMap((data) => this.logic.checkRegistrationUser(data)))
+    // .pipe(filter(({items}) => items.length === 0))
+    // .pipe(flatMap(() => this.logic.))
+    // .subscribe(({ items }) => console.log(items));
   }
 
 }

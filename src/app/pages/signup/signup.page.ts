@@ -13,7 +13,7 @@ import { catchError, flatMap } from 'rxjs/operators';
 })
 export class SignupPage implements OnInit {
   signupForm = new FormGroup({
-    username: new FormControl('', [Validators.required]),
+    // username: new FormControl('', [Validators.required]),
     email: new FormControl('', [Validators.required, Validators.email]),
     passwordform: new FormControl('', [Validators.required, Validators.minLength(8)]),
     confirmPasswordform: new FormControl('', [Validators.required, Validators.minLength(8)])
@@ -37,7 +37,6 @@ export class SignupPage implements OnInit {
   onSubmit() {
     const value: InterfaceSignup = this.signupForm.value;
     this.logic.entrySignupUser(value)
-      // .pipe(flatMap((data) => this.logic.createUser(data, value, 'taku-nakagawa-cloud')))
       .subscribe(() => {
         this.router.navigate(['/confirm'], { state: { data: { email: value.email } } });
       })
