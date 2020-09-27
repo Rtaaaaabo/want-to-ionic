@@ -12,7 +12,7 @@ import { catchError, flatMap } from 'rxjs/operators';
   styleUrls: ['./signup.page.scss'],
 })
 export class SignupPage implements OnInit {
-  signupForm = new FormGroup({
+  signUpForm = new FormGroup({
     // username: new FormControl('', [Validators.required]),
     email: new FormControl('', [Validators.required, Validators.email]),
     passwordform: new FormControl('', [Validators.required, Validators.minLength(8)]),
@@ -35,12 +35,12 @@ export class SignupPage implements OnInit {
   }
 
   onSubmit() {
-    const value: InterfaceSignup = this.signupForm.value;
+    const value: InterfaceSignup = this.signUpForm.value;
     this.logic.entrySignupUser(value)
       .subscribe(() => {
         this.router.navigate(['/confirm'], { state: { data: { email: value.email } } });
       })
-    if (this.signupForm.invalid) {
+    if (this.signUpForm.invalid) {
       return;
     }
   }
