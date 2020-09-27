@@ -22,7 +22,7 @@ export class HomeLogicService {
 
   fetchCurrentUser(): Observable<string> {
     return this.sessionService.fetchCurrentUser()
-    // .pipe(map((res) => res.attributes.email));
+      .pipe(map((res) => res.attributes.email));
   }
 
   createRoom(content): Observable<any> {

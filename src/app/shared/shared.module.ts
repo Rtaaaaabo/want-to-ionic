@@ -7,12 +7,14 @@ import { AddTaskModalComponent } from './component/modal/add-task-modal/add-task
 import { SessionService } from './service/session.service';
 import { SharedLogicService } from './logic/shared-logic.service';
 import { DeleteTaskModalComponent } from './component/modal/delete-task-modal/delete-task-modal.component';
+import { RegisterUserModalComponent } from './component/modal/register-user-modal/register-user-modal.component';
 
 @NgModule({
   declarations: [
     AddRoomModalComponent,
     AddTaskModalComponent,
     DeleteTaskModalComponent,
+    RegisterUserModalComponent,
   ],
   imports: [
     CommonModule,
@@ -23,11 +25,13 @@ import { DeleteTaskModalComponent } from './component/modal/delete-task-modal/de
     AddRoomModalComponent,
     AddTaskModalComponent,
     DeleteTaskModalComponent,
+    RegisterUserModalComponent,
   ],
   exports: [
     AddRoomModalComponent,
     AddTaskModalComponent,
     DeleteTaskModalComponent,
+    RegisterUserModalComponent,
   ],
   providers: [
     SessionService,
