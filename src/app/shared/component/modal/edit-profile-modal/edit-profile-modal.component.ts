@@ -8,16 +8,16 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
   styleUrls: ['./edit-profile-modal.component.scss'],
 })
 export class EditProfileModalComponent implements OnInit {
-  @Input() status: string;
-  @Input() email: string;
-  title: string;
   editProfileForm = new FormGroup({
     iconImage: new FormControl(''),
     userName: new FormControl('', [Validators.required]),
     positionName: new FormControl(''),
-    targetEmail: new FormControl('testtes', [Validators.email]),
+    targetEmail: new FormControl('', [Validators.required, Validators.email]),
     tel: new FormControl(''),
   });
+  @Input() status: string;
+  @Input() email: string;
+  title: string;
 
   constructor(
     private modalCtrl: ModalController,
