@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { filter, flatMap } from 'rxjs/operators';
+import { filter, flatMap, map } from 'rxjs/operators';
 import { EditProfileModalComponent } from 'src/app/shared/component/modal/edit-profile-modal/edit-profile-modal.component';
 import { HomeLogicService } from './logic/home-logic.service';
 
@@ -10,6 +10,7 @@ import { HomeLogicService } from './logic/home-logic.service';
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit {
+  email: string;
 
   constructor(
     private logic: HomeLogicService,
@@ -18,17 +19,18 @@ export class HomePage implements OnInit {
 
   ngOnInit() {
     this.logic.fetchCurrentUser()
+      .pipe(map(email => this.email = email))
       .pipe(flatMap((email) => this.logic.checkRegistrationUser(email)))
       .pipe(filter(({ items }) => items.length === 0))
       .subscribe(() => this.presentRegistrationUser());
-    // .subscribe(data => console.log(data));
   }
 
   async presentRegistrationUser() {
     const modal = await this.modalCtrl.create({
       component: EditProfileModalComponent,
       componentProps: {
-        'status': 'new'
+        'status': 'new',
+        'email': this.email
       },
     })
     return modal.present();

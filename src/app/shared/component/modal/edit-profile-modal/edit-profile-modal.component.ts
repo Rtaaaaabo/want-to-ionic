@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
@@ -8,27 +8,36 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
   styleUrls: ['./edit-profile-modal.component.scss'],
 })
 export class EditProfileModalComponent implements OnInit {
-  editProfile = new FormGroup({
+  @Input() status: string;
+  @Input() email: string;
+  title: string;
+  editProfileForm = new FormGroup({
     iconImage: new FormControl(''),
-    name: new FormControl('', [Validators.required]),
+    userName: new FormControl('', [Validators.required]),
     positionName: new FormControl(''),
-    email: new FormControl('', [Validators.email]),
+    targetEmail: new FormControl('testtes', [Validators.email]),
     tel: new FormControl(''),
   });
-  @Input() status: string;
-  title: string;
 
   constructor(
     private modalCtrl: ModalController,
   ) {
+
   }
 
   ngOnInit() {
     if (this.status === 'new') {
+      this.editProfileForm.patchValue({
+        targetEmail: this.email
+      });
       this.title = 'プロフィールの作成'
     } else {
       this.title = 'プロフィールの編集'
     }
+  }
+
+  saveProfile() {
+    console.log(this.editProfileForm);
   }
 
   dismissModal() {

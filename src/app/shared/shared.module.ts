@@ -28,6 +28,7 @@ import { DeleteTaskModalComponent } from './component/modal/delete-task-modal/de
     AddRoomModalComponent,
     AddTaskModalComponent,
     DeleteTaskModalComponent,
+    ReactiveFormsModule,
   ],
   providers: [
     SessionService,
