@@ -3436,22 +3436,6 @@ export class AmplifyService {
           username
           registered
           authority
-          company {
-            __typename
-            id
-            name
-            domain
-            room {
-              __typename
-              nextToken
-            }
-            members {
-              __typename
-              nextToken
-            }
-            createdAt
-            updatedAt
-          }
           createdAt
           updatedAt
         }

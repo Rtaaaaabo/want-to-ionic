@@ -5,6 +5,12 @@ import { v4 as uuid } from 'uuid';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
+interface Attribute {
+  email: string,
+  email_verified: boolean,
+  sub: string,
+};
+
 @Injectable({
   providedIn: 'root',
 })
@@ -16,13 +22,13 @@ export class HomeLogicService {
   ) { }
 
 
-  checkRegistrationUser(email: string): Observable<any> {
-    return this.homeService.checkRegistrationUser(email);
+  checkRegistrationUser(attribute: Attribute): Observable<any> {
+    return this.homeService.checkRegistrationUser(attribute.email);
   }
 
-  fetchCurrentUser(): Observable<string> {
+  fetchCurrentUser(): Observable<Attribute> {
     return this.sessionService.fetchCurrentUser()
-      .pipe(map((res) => res.attributes.email));
+      .pipe(map((res) => res.attributes));
   }
 
   createRoom(content): Observable<any> {

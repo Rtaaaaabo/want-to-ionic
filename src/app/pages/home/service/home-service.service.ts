@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AmplifyService, ModelRoomFilterInput, ListRoomsQuery, ModelUserFilterInput, CreateUserInput } from '../../../shared/service/amplify.service';
+import { AmplifyService, ModelRoomFilterInput, ListRoomsQuery, ModelUserFilterInput } from '../../../shared/service/amplify.service';
 import { from, Observable } from 'rxjs';
 
 @Injectable({

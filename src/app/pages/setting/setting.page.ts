@@ -20,6 +20,7 @@ export class SettingPage implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.logic.fetchCurrentUser().subscribe(data => console.log(data));
   }
 
   async confirmLogout() {
