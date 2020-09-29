@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { filter, flatMap, map } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { catchError, filter, flatMap, map } from 'rxjs/operators';
 import { EditProfileModalComponent } from 'src/app/shared/component/modal/edit-profile-modal/edit-profile-modal.component';
 import { HomeLogicService } from './logic/home-logic.service';
 
@@ -21,8 +22,13 @@ export class HomePage implements OnInit {
     this.logic.fetchCurrentUser()
       .pipe(map(email => this.email = email))
       .pipe(flatMap((email) => this.logic.checkRegistrationUser(email)))
-      .pipe(filter(({ items }) => items.length === 0))
-      .subscribe(() => this.presentRegistrationUser());
+      .pipe(filter(({ items }) => items.length === 0), catchError(() => of('Already')))
+      .subscribe((data) => {
+        if (data === 'Already') {
+          return;
+        }
+        this.presentRegistrationUser()
+      });
   }
 
   async presentRegistrationUser() {
