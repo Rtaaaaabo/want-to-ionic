@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { HomeLogicService } from '../../../../pages/home/logic/home-logic.service';
 
 @Component({
   selector: 'app-edit-profile-modal',
@@ -21,9 +22,8 @@ export class EditProfileModalComponent implements OnInit {
 
   constructor(
     private modalCtrl: ModalController,
-  ) {
-
-  }
+    private logic: HomeLogicService,
+  ) { }
 
   ngOnInit() {
     if (this.status === 'new') {
@@ -37,7 +37,9 @@ export class EditProfileModalComponent implements OnInit {
   }
 
   saveProfile() {
-    console.log(this.editProfileForm);
+    this.logic.createUser(this.editProfileForm).subscribe(() => {
+      this.modalCtrl.dismiss();
+    })
   }
 
   dismissModal() {

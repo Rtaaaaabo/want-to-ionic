@@ -35,6 +35,19 @@ export class HomeLogicService {
     return this.homeService.createRoom(requestContent);
   }
 
+  createUser(formContent): Observable<any> {
+    const requestContent = {
+      id: `${uuid()}`,
+      companyID: 'takuCloudCom',
+      email: formContent.get('targetEmail').value,
+      username: formContent.get('userName').value,
+      positionName: formContent.get('positionName').value,
+      tel: formContent.get('tel').value,
+      iconImage: formContent.get('iconImage').value,
+    };
+    return this.homeService.createUser(requestContent);
+  }
+
   listRoom(companyId: string): Observable<any> {
     return this.homeService.fetchRoomList(companyId).pipe(map((result) => result.items));
   }
