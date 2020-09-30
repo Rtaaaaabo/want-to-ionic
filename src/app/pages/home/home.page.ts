@@ -45,7 +45,8 @@ export class HomePage implements OnInit {
       component: EditProfileModalComponent,
       componentProps: {
         'status': 'new',
-        'email': this.email
+        'email': this.email,
+        'userId': this.attributes.sub,
       },
     })
     return modal.present();

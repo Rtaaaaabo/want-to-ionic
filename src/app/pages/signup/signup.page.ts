@@ -12,7 +12,6 @@ import { InterfaceSignup } from '../../interfaces/signup.interface';
 })
 export class SignupPage implements OnInit {
   signUpForm = new FormGroup({
-    // username: new FormControl('', [Validators.required]),
     email: new FormControl('', [Validators.required, Validators.email]),
     passwordform: new FormControl('', [Validators.required, Validators.minLength(8)]),
     confirmPasswordform: new FormControl('', [Validators.required, Validators.minLength(8)])

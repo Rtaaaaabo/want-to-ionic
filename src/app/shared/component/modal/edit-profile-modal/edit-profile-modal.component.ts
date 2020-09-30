@@ -10,6 +10,7 @@ import { HomeLogicService } from '../../../../pages/home/logic/home-logic.servic
 })
 export class EditProfileModalComponent implements OnInit {
   editProfileForm = new FormGroup({
+    id: new FormControl(''),
     iconImage: new FormControl(''),
     userName: new FormControl('', [Validators.required]),
     positionName: new FormControl(''),
@@ -18,6 +19,7 @@ export class EditProfileModalComponent implements OnInit {
   });
   @Input() status: string;
   @Input() email: string;
+  @Input() userId: string;
   title: string;
 
   constructor(
@@ -28,11 +30,12 @@ export class EditProfileModalComponent implements OnInit {
   ngOnInit() {
     if (this.status === 'new') {
       this.editProfileForm.patchValue({
+        id: this.userId,
         targetEmail: this.email
       });
-      this.title = 'プロフィールの作成'
+      this.title = 'プロフィールの作成';
     } else {
-      this.title = 'プロフィールの編集'
+      this.title = 'プロフィールの編集';
     }
   }
 
