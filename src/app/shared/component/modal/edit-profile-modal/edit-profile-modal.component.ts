@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { HomeLogicService } from '../../../../pages/home/logic/home-logic.service';
+import { ImagePicker } from '@ionic-native/image-picker/ngx';
 
 @Component({
   selector: 'app-edit-profile-modal',
@@ -27,6 +28,7 @@ export class EditProfileModalComponent implements OnInit {
   constructor(
     private modalCtrl: ModalController,
     private logic: HomeLogicService,
+    private imagePicker: ImagePicker,
   ) { }
 
   ngOnInit() {
@@ -36,7 +38,6 @@ export class EditProfileModalComponent implements OnInit {
         targetEmail: this.email
       });
       this.title = 'プロフィールの作成';
-      console.log(this.editProfileForm.value);
     } else {
       this.editProfileForm.patchValue({
         id: this.user.id,
@@ -57,6 +58,19 @@ export class EditProfileModalComponent implements OnInit {
 
   dismissModal() {
     this.modalCtrl.dismiss();
+  }
+
+  pickerImage() {
+    const options = {
+      maximumImagesCount: 1,
+      width: 400,
+      height: 400,
+      quality: 30,
+      outputType: 0,
+    }
+    this.imagePicker.getPictures(options).then((result) => {
+      console.log(result);
+    })
   }
 
 }
