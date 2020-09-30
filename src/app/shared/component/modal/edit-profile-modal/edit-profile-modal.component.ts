@@ -22,6 +22,8 @@ export class EditProfileModalComponent implements OnInit {
   @Input() userId: string;
   title: string;
 
+  @Input() user;
+
   constructor(
     private modalCtrl: ModalController,
     private logic: HomeLogicService,
@@ -34,7 +36,15 @@ export class EditProfileModalComponent implements OnInit {
         targetEmail: this.email
       });
       this.title = 'プロフィールの作成';
+      console.log(this.editProfileForm.value);
     } else {
+      this.editProfileForm.patchValue({
+        id: this.user.id,
+        targetEmail: this.user.email,
+        userName: this.user.username,
+        positionName: this.user.positionName,
+        tel: this.user.tel,
+      })
       this.title = 'プロフィールの編集';
     }
   }

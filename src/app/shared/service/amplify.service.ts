@@ -3438,6 +3438,7 @@ export class AmplifyService {
           authority
           createdAt
           updatedAt
+          positionName
         }
       }`;
     const gqlAPIServiceArguments: any = {

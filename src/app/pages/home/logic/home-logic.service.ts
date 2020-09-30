@@ -43,7 +43,7 @@ export class HomeLogicService {
 
   createUser(formContent): Observable<any> {
     const requestContent = {
-      id: formContent.get('id'),
+      id: formContent.get('id').value,
       companyID: 'takuCloudCom',
       email: formContent.get('targetEmail').value,
       username: formContent.get('userName').value,
@@ -51,6 +51,7 @@ export class HomeLogicService {
       tel: formContent.get('tel').value,
       iconImage: formContent.get('iconImage').value,
     };
+    console.log(`requestContent: ${requestContent}`);
     return this.homeService.createUser(requestContent);
   }
 

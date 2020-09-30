@@ -10,8 +10,8 @@
       <img src="../../../assets/svg/anonymous.svg" />
     </ion-avatar>
     <ion-label class="margin-left">
-      <h1>中川拓</h1>
-      <p>開発本部所属</p>
+      <h2>{{ user?.username }}</h2>
+      <p>{{ user?.positionName }}</p>
       <a (click)="presentEditModal()">編集</a>
     </ion-label>
   </ion-item>
@@ -26,7 +26,11 @@
       </ion-list>
     </ion-card-content>
   </ion-card> -->
-  <ion-item lines="none" color="danger" (click)="confirmLogout()"
+  <ion-item
+    class="logout-line"
+    lines="none"
+    color="danger"
+    (click)="confirmLogout()"
     >ログアウト</ion-item
   >
 </ion-content>

@@ -4,6 +4,21 @@ import { ActionSheetController, ModalController } from '@ionic/angular';
 import { SettingLogic } from './logic/setting-logic.service';
 import { EditProfileModalComponent } from '../../shared/component/modal/edit-profile-modal/edit-profile-modal.component';
 import { from } from 'rxjs';
+import { flatMap } from 'rxjs/operators';
+
+// interface User
+interface OwnUser {
+  authority: string;
+  companyID: string;
+  createdAt: string;
+  positionName: string;
+  email: string;
+  id: string;
+  registered?: boolean
+  updatedAt: string;
+  username: string;
+  __typename: string;
+}
 
 @Component({
   selector: 'app-setting',
@@ -11,6 +26,8 @@ import { from } from 'rxjs';
   styleUrls: ['./setting.page.scss'],
 })
 export class SettingPage implements OnInit {
+
+  user: OwnUser;
 
   constructor(
     private actionSheetCtrl: ActionSheetController,
@@ -20,7 +37,12 @@ export class SettingPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.logic.fetchCurrentUser().subscribe(data => console.log(data));
+    this.logic.fetchCurrentUser()
+      .pipe(flatMap((result) => this.logic.fetchUserInfo(result.username)))
+      .subscribe((data) => {
+        console.log(data);
+        this.user = data;
+      });
   }
 
   async confirmLogout() {
@@ -50,6 +72,10 @@ export class SettingPage implements OnInit {
   async presentEditModal(): Promise<void> {
     const modal = await this.modalCtrl.create({
       component: EditProfileModalComponent,
+      componentProps: {
+        status: 'already',
+        user: this.user,
+      }
     });
     const observable = from(modal.onDidDismiss());
     return modal.present();
