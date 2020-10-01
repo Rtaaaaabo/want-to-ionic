@@ -3,6 +3,9 @@ import { ModalController } from '@ionic/angular';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { HomeLogicService } from '../../../../pages/home/logic/home-logic.service';
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
+import { Plugins, CameraResultType } from '@capacitor/core';
+
+const { Camera } = Plugins;
 
 @Component({
   selector: 'app-edit-profile-modal',
@@ -60,17 +63,24 @@ export class EditProfileModalComponent implements OnInit {
     this.modalCtrl.dismiss();
   }
 
-  pickerImage() {
-    const options = {
-      maximumImagesCount: 1,
-      width: 400,
-      height: 400,
-      quality: 30,
-      outputType: 0,
-    }
-    this.imagePicker.getPictures(options).then((result) => {
-      console.log(result);
-    })
+  async pickerImage() {
+    const image = await Camera.getPhoto({
+      quality: 50,
+      allowEditing: true,
+      resultType: CameraResultType.Uri
+    });
+    image.webPath;
+    // imageElement.src = imageUrl
+    // const options = {
+    //   maximumImagesCount: 1,
+    //   width: 400,
+    //   height: 400,
+    //   quality: 30,
+    //   outputType: 0,
+    // }
+    // this.imagePicker.getPictures(options).then((result) => {
+    //   console.log(result);
+    // })
   }
 
 }
