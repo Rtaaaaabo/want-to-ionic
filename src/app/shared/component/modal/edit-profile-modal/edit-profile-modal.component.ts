@@ -70,17 +70,6 @@ export class EditProfileModalComponent implements OnInit {
       resultType: CameraResultType.Uri
     });
     image.webPath;
-    // imageElement.src = imageUrl
-    // const options = {
-    //   maximumImagesCount: 1,
-    //   width: 400,
-    //   height: 400,
-    //   quality: 30,
-    //   outputType: 0,
-    // }
-    // this.imagePicker.getPictures(options).then((result) => {
-    //   console.log(result);
-    // })
   }
 
 }
