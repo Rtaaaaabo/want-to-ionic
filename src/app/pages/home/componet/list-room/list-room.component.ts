@@ -35,7 +35,7 @@ export class ListRoomComponent implements OnInit {
     const observable = from(modal.onDidDismiss());
     observable
       .pipe(flatMap(({ data }) => this.homeLogic.createRoom(data)))
-      .pipe(flatMap(() => this.homeLogic.listRoom('takuCloudCom')))
+      .pipe(flatMap(() => this.homeLogic.listRoom(companyId)))
       .subscribe((response) => {
         this.roomList = response;
       })
