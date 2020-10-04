@@ -1,6 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-
-import { OwnTaskLogic } from './own-task.service';
+import { OwnTaskLogic } from './own-task.logic';
 
 describe('OwnTaskService', () => {
   let logic: OwnTaskLogic;
