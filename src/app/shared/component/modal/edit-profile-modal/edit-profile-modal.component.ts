@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { HomeLogicService } from '../../../../pages/home/logic/home-logic.service';
+import { HomeLogicService } from '../../../../pages/home/logic/home-logic.logic';
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
 
 @Component({

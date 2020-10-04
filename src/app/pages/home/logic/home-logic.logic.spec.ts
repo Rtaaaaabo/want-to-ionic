@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { HomeLogicService } from './home-logic.service';
+import { HomeLogicService } from './home-logic.logic';
 
 describe('HomeLogicService', () => {
   let service: HomeLogicService;

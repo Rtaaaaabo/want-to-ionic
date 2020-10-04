@@ -6,7 +6,7 @@ import { SharedModule } from '../../shared/shared.module';
 import { HomePage } from './home.page';
 import { ListRoomComponent } from './componet/list-room/list-room.component';
 import { HomeService } from './service/home-service.service';
-import { HomeLogicService } from './logic/home-logic.service';
+import { HomeLogicService } from './logic/home-logic.logic';
 
 @NgModule({
   imports: [

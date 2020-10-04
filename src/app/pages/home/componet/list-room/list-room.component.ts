@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { AddRoomModalComponent } from '../../../../shared/component/modal/add-room-modal/add-room-modal.component';
-import { HomeLogicService } from '../../logic/home-logic.service';
+import { HomeLogicService } from '../../logic/home-logic.logic';
 import { from } from 'rxjs';
 import { flatMap } from 'rxjs/operators';
 

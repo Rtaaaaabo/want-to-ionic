@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { ConfirmLogicService } from './logic/confirm-logic.service';
+import { ConfirmLogic } from './logic/confirm-logic.logic';
 
 @Component({
   selector: 'app-confirm',
@@ -16,7 +16,7 @@ export class ConfirmPage implements OnInit {
   });
 
   constructor(
-    private logic: ConfirmLogicService,
+    private logic: ConfirmLogic,
     private router: Router,
   ) {
   }

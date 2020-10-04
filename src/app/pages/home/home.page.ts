@@ -4,7 +4,7 @@ import { of } from 'rxjs';
 import { catchError, filter, flatMap, map } from 'rxjs/operators';
 import { EditProfileModalComponent } from 'src/app/shared/component/modal/edit-profile-modal/edit-profile-modal.component';
 
-import { HomeLogicService } from './logic/home-logic.service';
+import { HomeLogicService } from './logic/home-logic.logic';
 
 @Component({
   selector: 'app-home',

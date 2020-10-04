@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class ConfirmLogicService {
+export class ConfirmLogic {
 
   constructor(
     private sessionService: SessionService,
