@@ -6,6 +6,19 @@ type Company @model {
   members: [User] @connection(keyName: "byCompany", fields: ["id"])
 }
 
+type User @model @key(name: "byCompany", fields: ["companyID"]) {
+  id: ID!
+  email: String!
+  companyID: ID!
+  username: String!
+  tel: String
+  positionName: String
+  iconImage: String
+  registered: Boolean
+  authority: String
+  company: Company! @connection(fields: ["companyID"])
+}
+
 type Room @model @key(name: "byCompany", fields: ["companyID"]) {
   id: ID!
   companyID: ID!
@@ -41,17 +54,4 @@ type Message @model @key(name: "byTask", fields: ["taskID"]) {
   createdAt: AWSDateTime
   isSent: Boolean
   task: Task! @connection(fields: ["taskID"])
-}
-
-type User @model @key(name: "byCompany", fields: ["companyID"]) {
-  id: ID!
-  email: String!
-  companyID: ID!
-  username: String!
-  tel: String
-  positionName: String
-  iconImage: String
-  registered: Boolean
-  authority: String
-  company: Company! @connection(fields: ["companyID"])
 }
