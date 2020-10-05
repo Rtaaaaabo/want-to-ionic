@@ -117,6 +117,7 @@ export type CreateTaskInput = {
   roomID: string;
   title: string;
   description?: string | null;
+  chargePersonID?: string | null;
   scheduleDate?: string | null;
   priority?: number | null;
   status?: number | null;
@@ -128,6 +129,7 @@ export type ModelTaskConditionInput = {
   roomID?: ModelIDInput | null;
   title?: ModelStringInput | null;
   description?: ModelStringInput | null;
+  chargePersonID?: ModelIDInput | null;
   scheduleDate?: ModelStringInput | null;
   priority?: ModelIntInput | null;
   status?: ModelIntInput | null;
@@ -155,6 +157,7 @@ export type UpdateTaskInput = {
   roomID?: string | null;
   title?: string | null;
   description?: string | null;
+  chargePersonID?: string | null;
   scheduleDate?: string | null;
   priority?: number | null;
   status?: number | null;
@@ -269,6 +272,7 @@ export type ModelTaskFilterInput = {
   roomID?: ModelIDInput | null;
   title?: ModelStringInput | null;
   description?: ModelStringInput | null;
+  chargePersonID?: ModelIDInput | null;
   scheduleDate?: ModelStringInput | null;
   priority?: ModelIntInput | null;
   status?: ModelIntInput | null;
@@ -477,6 +481,7 @@ export type CreateRoomMutation = {
       roomID: string;
       title: string;
       description: string | null;
+      chargePersonID: string | null;
       scheduleDate: string | null;
       priority: number | null;
       status: number | null;
@@ -542,6 +547,7 @@ export type UpdateRoomMutation = {
       roomID: string;
       title: string;
       description: string | null;
+      chargePersonID: string | null;
       scheduleDate: string | null;
       priority: number | null;
       status: number | null;
@@ -607,6 +613,7 @@ export type DeleteRoomMutation = {
       roomID: string;
       title: string;
       description: string | null;
+      chargePersonID: string | null;
       scheduleDate: string | null;
       priority: number | null;
       status: number | null;
@@ -626,6 +633,7 @@ export type CreateTaskMutation = {
   roomID: string;
   title: string;
   description: string | null;
+  chargePersonID: string | null;
   scheduleDate: string | null;
   priority: number | null;
   status: number | null;
@@ -710,6 +718,7 @@ export type UpdateTaskMutation = {
   roomID: string;
   title: string;
   description: string | null;
+  chargePersonID: string | null;
   scheduleDate: string | null;
   priority: number | null;
   status: number | null;
@@ -794,6 +803,7 @@ export type DeleteTaskMutation = {
   roomID: string;
   title: string;
   description: string | null;
+  chargePersonID: string | null;
   scheduleDate: string | null;
   priority: number | null;
   status: number | null;
@@ -907,6 +917,7 @@ export type CreateMessageMutation = {
     roomID: string;
     title: string;
     description: string | null;
+    chargePersonID: string | null;
     scheduleDate: string | null;
     priority: number | null;
     status: number | null;
@@ -979,6 +990,7 @@ export type UpdateMessageMutation = {
     roomID: string;
     title: string;
     description: string | null;
+    chargePersonID: string | null;
     scheduleDate: string | null;
     priority: number | null;
     status: number | null;
@@ -1051,6 +1063,7 @@ export type DeleteMessageMutation = {
     roomID: string;
     title: string;
     description: string | null;
+    chargePersonID: string | null;
     scheduleDate: string | null;
     priority: number | null;
     status: number | null;
@@ -1294,6 +1307,7 @@ export type GetRoomQuery = {
       roomID: string;
       title: string;
       description: string | null;
+      chargePersonID: string | null;
       scheduleDate: string | null;
       priority: number | null;
       status: number | null;
@@ -1353,6 +1367,7 @@ export type GetTaskQuery = {
   roomID: string;
   title: string;
   description: string | null;
+  chargePersonID: string | null;
   scheduleDate: string | null;
   priority: number | null;
   status: number | null;
@@ -1439,6 +1454,7 @@ export type ListTasksQuery = {
     roomID: string;
     title: string;
     description: string | null;
+    chargePersonID: string | null;
     scheduleDate: string | null;
     priority: number | null;
     status: number | null;
@@ -1511,6 +1527,7 @@ export type GetMessageQuery = {
     roomID: string;
     title: string;
     description: string | null;
+    chargePersonID: string | null;
     scheduleDate: string | null;
     priority: number | null;
     status: number | null;
@@ -1577,6 +1594,7 @@ export type ListMessagesQuery = {
       roomID: string;
       title: string;
       description: string | null;
+      chargePersonID: string | null;
       scheduleDate: string | null;
       priority: number | null;
       status: number | null;
@@ -1819,6 +1837,7 @@ export type OnCreateRoomSubscription = {
       roomID: string;
       title: string;
       description: string | null;
+      chargePersonID: string | null;
       scheduleDate: string | null;
       priority: number | null;
       status: number | null;
@@ -1884,6 +1903,7 @@ export type OnUpdateRoomSubscription = {
       roomID: string;
       title: string;
       description: string | null;
+      chargePersonID: string | null;
       scheduleDate: string | null;
       priority: number | null;
       status: number | null;
@@ -1949,6 +1969,7 @@ export type OnDeleteRoomSubscription = {
       roomID: string;
       title: string;
       description: string | null;
+      chargePersonID: string | null;
       scheduleDate: string | null;
       priority: number | null;
       status: number | null;
@@ -1968,6 +1989,7 @@ export type OnCreateTaskSubscription = {
   roomID: string;
   title: string;
   description: string | null;
+  chargePersonID: string | null;
   scheduleDate: string | null;
   priority: number | null;
   status: number | null;
@@ -2052,6 +2074,7 @@ export type OnUpdateTaskSubscription = {
   roomID: string;
   title: string;
   description: string | null;
+  chargePersonID: string | null;
   scheduleDate: string | null;
   priority: number | null;
   status: number | null;
@@ -2136,6 +2159,7 @@ export type OnDeleteTaskSubscription = {
   roomID: string;
   title: string;
   description: string | null;
+  chargePersonID: string | null;
   scheduleDate: string | null;
   priority: number | null;
   status: number | null;
@@ -2249,6 +2273,7 @@ export type OnCreateMessageSubscription = {
     roomID: string;
     title: string;
     description: string | null;
+    chargePersonID: string | null;
     scheduleDate: string | null;
     priority: number | null;
     status: number | null;
@@ -2321,6 +2346,7 @@ export type OnUpdateMessageSubscription = {
     roomID: string;
     title: string;
     description: string | null;
+    chargePersonID: string | null;
     scheduleDate: string | null;
     priority: number | null;
     status: number | null;
@@ -2393,6 +2419,7 @@ export type OnDeleteMessageSubscription = {
     roomID: string;
     title: string;
     description: string | null;
+    chargePersonID: string | null;
     scheduleDate: string | null;
     priority: number | null;
     status: number | null;
@@ -2752,6 +2779,7 @@ export class APIService {
               roomID
               title
               description
+              chargePersonID
               scheduleDate
               priority
               status
@@ -2833,6 +2861,7 @@ export class APIService {
               roomID
               title
               description
+              chargePersonID
               scheduleDate
               priority
               status
@@ -2914,6 +2943,7 @@ export class APIService {
               roomID
               title
               description
+              chargePersonID
               scheduleDate
               priority
               status
@@ -2949,6 +2979,7 @@ export class APIService {
           roomID
           title
           description
+          chargePersonID
           scheduleDate
           priority
           status
@@ -3049,6 +3080,7 @@ export class APIService {
           roomID
           title
           description
+          chargePersonID
           scheduleDate
           priority
           status
@@ -3149,6 +3181,7 @@ export class APIService {
           roomID
           title
           description
+          chargePersonID
           scheduleDate
           priority
           status
@@ -3278,6 +3311,7 @@ export class APIService {
             roomID
             title
             description
+            chargePersonID
             scheduleDate
             priority
             status
@@ -3366,6 +3400,7 @@ export class APIService {
             roomID
             title
             description
+            chargePersonID
             scheduleDate
             priority
             status
@@ -3454,6 +3489,7 @@ export class APIService {
             roomID
             title
             description
+            chargePersonID
             scheduleDate
             priority
             status
@@ -3789,6 +3825,7 @@ export class APIService {
               roomID
               title
               description
+              chargePersonID
               scheduleDate
               priority
               status
@@ -3879,6 +3916,7 @@ export class APIService {
           roomID
           title
           description
+          chargePersonID
           scheduleDate
           priority
           status
@@ -3979,6 +4017,7 @@ export class APIService {
             roomID
             title
             description
+            chargePersonID
             scheduleDate
             priority
             status
@@ -4068,6 +4107,7 @@ export class APIService {
             roomID
             title
             description
+            chargePersonID
             scheduleDate
             priority
             status
@@ -4148,6 +4188,7 @@ export class APIService {
               roomID
               title
               description
+              chargePersonID
               scheduleDate
               priority
               status
@@ -4463,6 +4504,7 @@ export class APIService {
               roomID
               title
               description
+              chargePersonID
               scheduleDate
               priority
               status
@@ -4534,6 +4576,7 @@ export class APIService {
               roomID
               title
               description
+              chargePersonID
               scheduleDate
               priority
               status
@@ -4605,6 +4648,7 @@ export class APIService {
               roomID
               title
               description
+              chargePersonID
               scheduleDate
               priority
               status
@@ -4630,6 +4674,7 @@ export class APIService {
           roomID
           title
           description
+          chargePersonID
           scheduleDate
           priority
           status
@@ -4720,6 +4765,7 @@ export class APIService {
           roomID
           title
           description
+          chargePersonID
           scheduleDate
           priority
           status
@@ -4810,6 +4856,7 @@ export class APIService {
           roomID
           title
           description
+          chargePersonID
           scheduleDate
           priority
           status
@@ -4931,6 +4978,7 @@ export class APIService {
             roomID
             title
             description
+            chargePersonID
             scheduleDate
             priority
             status
@@ -5011,6 +5059,7 @@ export class APIService {
             roomID
             title
             description
+            chargePersonID
             scheduleDate
             priority
             status
@@ -5091,6 +5140,7 @@ export class APIService {
             roomID
             title
             description
+            chargePersonID
             scheduleDate
             priority
             status

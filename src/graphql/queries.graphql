@@ -103,6 +103,7 @@ query GetRoom($id: ID!) {
         roomID
         title
         description
+        chargePersonID
         scheduleDate
         priority
         status
@@ -162,6 +163,7 @@ query GetTask($id: ID!) {
     roomID
     title
     description
+    chargePersonID
     scheduleDate
     priority
     status
@@ -243,6 +245,7 @@ query ListTasks(
       roomID
       title
       description
+      chargePersonID
       scheduleDate
       priority
       status
@@ -309,6 +312,7 @@ query GetMessage($id: ID!) {
       roomID
       title
       description
+      chargePersonID
       scheduleDate
       priority
       status
@@ -373,6 +377,7 @@ query ListMessages(
         roomID
         title
         description
+        chargePersonID
         scheduleDate
         priority
         status

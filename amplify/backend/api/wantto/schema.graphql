@@ -19,6 +19,7 @@ type Room @model @key(name: "byCompany", fields: ["companyID"]) {
 type Task @model @key(name: "byRoom", fields: ["roomID"]) {
   id: ID!
   authorID: ID!
+  chargePersonID: ID
   roomID: ID!
   title: String!
   description: String
@@ -27,6 +28,7 @@ type Task @model @key(name: "byRoom", fields: ["roomID"]) {
   status: Int
   createdAt: AWSDateTime
   members: [User]
+  chargePerson: User @connection(fields: "chargePersonID")
   room: Room! @connection(fields: ["roomID"])
   messages: [Message] @connection(keyName: "byTask", fields: ["id"])
 }

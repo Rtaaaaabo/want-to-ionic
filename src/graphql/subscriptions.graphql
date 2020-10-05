@@ -153,6 +153,7 @@ subscription OnCreateRoom {
         roomID
         title
         description
+        chargePersonID
         scheduleDate
         priority
         status
@@ -211,6 +212,7 @@ subscription OnUpdateRoom {
         roomID
         title
         description
+        chargePersonID
         scheduleDate
         priority
         status
@@ -269,6 +271,7 @@ subscription OnDeleteRoom {
         roomID
         title
         description
+        chargePersonID
         scheduleDate
         priority
         status
@@ -288,6 +291,7 @@ subscription OnCreateTask {
     roomID
     title
     description
+    chargePersonID
     scheduleDate
     priority
     status
@@ -364,6 +368,7 @@ subscription OnUpdateTask {
     roomID
     title
     description
+    chargePersonID
     scheduleDate
     priority
     status
@@ -440,6 +445,7 @@ subscription OnDeleteTask {
     roomID
     title
     description
+    chargePersonID
     scheduleDate
     priority
     status
@@ -542,6 +548,7 @@ subscription OnCreateMessage {
       roomID
       title
       description
+      chargePersonID
       scheduleDate
       priority
       status
@@ -608,6 +615,7 @@ subscription OnUpdateMessage {
       roomID
       title
       description
+      chargePersonID
       scheduleDate
       priority
       status
@@ -674,6 +682,7 @@ subscription OnDeleteMessage {
       roomID
       title
       description
+      chargePersonID
       scheduleDate
       priority
       status
