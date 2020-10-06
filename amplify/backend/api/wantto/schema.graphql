@@ -2,34 +2,21 @@ type Company @model {
   id: ID!
   name: String!
   domain: String!
-  room: [Room] @connection(keyName: "byCompany", fields: ["id"])
-  members: [User] @connection(keyName: "byCompany", fields: ["id"])
+  room: [Room] @connection(name: "CompanyRoom")
+  members: [User] @connection(name: "CompanyMembers")
 }
 
-type User @model @key(name: "byCompany", fields: ["companyID"]) {
-  id: ID!
-  email: String!
-  companyID: ID!
-  username: String!
-  tel: String
-  positionName: String
-  iconImage: String
-  registered: Boolean
-  authority: String
-  company: Company! @connection(fields: ["companyID"])
-}
-
-type Room @model @key(name: "byCompany", fields: ["companyID"]) {
+type Room @model {
   id: ID!
   companyID: ID!
+  company: Company! @connection(name: "CompanyRoom", fields: ["companyID"])
   name: String!
   description: String!
-  members: [User]
-  company: Company! @connection(fields: ["companyID"])
-  tasks: [Task] @connection(keyName: "byRoom", fields: ["id"])
+  tasks: [Task] @connection(name: "RoomTask", fields: ["id"])
+  members: [User] @connection(name: "RoomMembers")
 }
 
-type Task @model @key(name: "byRoom", fields: ["roomID"]) {
+type Task @model {
   id: ID!
   authorID: ID!
   chargePersonID: ID
@@ -40,18 +27,34 @@ type Task @model @key(name: "byRoom", fields: ["roomID"]) {
   priority: Int
   status: Int
   createdAt: AWSDateTime
-  members: [User]
-  chargePerson: User @connection(fields: "chargePersonID")
-  room: Room! @connection(fields: ["roomID"])
-  messages: [Message] @connection(keyName: "byTask", fields: ["id"])
+  members: [User] @connection(name: "TaskMembers")
+  chargePerson: User
+    @connection(name: "chargeTaskMember", fields: ["chargePersonID"])
+  room: Room! @connection(name: "RoomTask", fields: ["roomID"])
+  messages: [Message] @connection(name: "TaskMessages", fields: ["id"])
 }
 
-type Message @model @key(name: "byTask", fields: ["taskID"]) {
+type Message @model {
   id: ID!
   taskID: ID!
   author: User
   content: String!
   createdAt: AWSDateTime
   isSent: Boolean
-  task: Task! @connection(fields: ["taskID"])
+  task: Task! @connection(name: "TaskMessages", fields: ["taskID"])
+}
+
+type User @model {
+  id: ID!
+  email: String!
+  companyID: ID!
+  username: String!
+  tel: String
+  positionName: String
+  iconImage: String
+  registered: Boolean
+  authority: String
+  roomMembers: [Room] @connection(name: "RoomMembers")
+  chargeTasks: [Task] @connection(name: "chargeTaskMember", fields: ["id"])
+  company: Company! @connection(name: "CompanyRoom", fields: ["companyID"])
 }
