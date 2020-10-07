@@ -3,17 +3,17 @@ type Company @model {
   name: String!
   domain: String!
   room: [Room] @connection(name: "CompanyRoom")
-  members: [User] @connection(name: "CompanyMembers")
+  companyMembers: [User] @connection(name: "CompanyMembers")
 }
 
 type Room @model {
   id: ID!
+  name: String!
   companyID: ID!
   company: Company! @connection(name: "CompanyRoom", fields: ["companyID"])
-  name: String!
   description: String!
   tasks: [Task] @connection(name: "RoomTask", fields: ["id"])
-  members: [User] @connection(name: "RoomMembers")
+  roomMembers: [User] @connection(name: "RoomMembers", fields: ["id"])
 }
 
 type Task @model {
@@ -27,9 +27,9 @@ type Task @model {
   priority: Int
   status: Int
   createdAt: AWSDateTime
-  members: [User] @connection(name: "TaskMembers")
+  taskMembers: [User] @connection(name: "TaskMembers")
   chargePerson: User
-    @connection(name: "chargeTaskMember", fields: ["chargePersonID"])
+    @connection(name: "chargeMember", fields: ["chargePersonID"])
   room: Room! @connection(name: "RoomTask", fields: ["roomID"])
   messages: [Message] @connection(name: "TaskMessages", fields: ["id"])
 }
@@ -54,7 +54,8 @@ type User @model {
   iconImage: String
   registered: Boolean
   authority: String
-  roomMembers: [Room] @connection(name: "RoomMembers")
-  chargeTasks: [Task] @connection(name: "chargeTaskMember", fields: ["id"])
-  company: Company! @connection(name: "CompanyRoom", fields: ["companyID"])
+  company: Company! @connection(name: "CompanyMembers", fields: ["companyID"])
+  task: Task @connection(name: "TaskMembers")
+  chargeTask: [Task] @connection(name: "chargeMember")
+  room: Room @connection(name: "RoomMembers")
 }
