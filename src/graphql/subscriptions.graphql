@@ -7,20 +7,20 @@ subscription OnCreateCompany {
     room {
       items {
         id
-        companyID
         name
+        companyID
         description
         createdAt
         updatedAt
       }
       nextToken
     }
-    members {
+    companyMembers {
       items {
         id
+        username
         email
         companyID
-        username
         tel
         positionName
         iconImage
@@ -43,20 +43,20 @@ subscription OnUpdateCompany {
     room {
       items {
         id
-        companyID
         name
+        companyID
         description
         createdAt
         updatedAt
       }
       nextToken
     }
-    members {
+    companyMembers {
       items {
         id
+        username
         email
         companyID
-        username
         tel
         positionName
         iconImage
@@ -79,20 +79,20 @@ subscription OnDeleteCompany {
     room {
       items {
         id
-        companyID
         name
+        companyID
         description
         createdAt
         updatedAt
       }
       nextToken
     }
-    members {
+    companyMembers {
       items {
         id
+        username
         email
         companyID
-        username
         tel
         positionName
         iconImage
@@ -107,32 +107,17 @@ subscription OnDeleteCompany {
     updatedAt
   }
 }
-subscription OnCreateRoom {
-  onCreateRoom {
+subscription OnCreateUser {
+  onCreateUser {
     id
+    username
+    email
     companyID
-    name
-    description
-    members {
-      id
-      email
-      companyID
-      username
-      tel
-      positionName
-      iconImage
-      registered
-      authority
-      company {
-        id
-        name
-        domain
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
+    tel
+    positionName
+    iconImage
+    registered
+    authority
     company {
       id
       name
@@ -140,7 +125,86 @@ subscription OnCreateRoom {
       room {
         nextToken
       }
-      members {
+      companyMembers {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    createdAt
+    updatedAt
+  }
+}
+subscription OnUpdateUser {
+  onUpdateUser {
+    id
+    username
+    email
+    companyID
+    tel
+    positionName
+    iconImage
+    registered
+    authority
+    company {
+      id
+      name
+      domain
+      room {
+        nextToken
+      }
+      companyMembers {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    createdAt
+    updatedAt
+  }
+}
+subscription OnDeleteUser {
+  onDeleteUser {
+    id
+    username
+    email
+    companyID
+    tel
+    positionName
+    iconImage
+    registered
+    authority
+    company {
+      id
+      name
+      domain
+      room {
+        nextToken
+      }
+      companyMembers {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    createdAt
+    updatedAt
+  }
+}
+subscription OnCreateRoom {
+  onCreateRoom {
+    id
+    name
+    companyID
+    description
+    company {
+      id
+      name
+      domain
+      room {
+        nextToken
+      }
+      companyMembers {
         nextToken
       }
       createdAt
@@ -150,10 +214,10 @@ subscription OnCreateRoom {
       items {
         id
         authorID
+        chargePersonID
         roomID
         title
         description
-        chargePersonID
         scheduleDate
         priority
         status
@@ -169,29 +233,9 @@ subscription OnCreateRoom {
 subscription OnUpdateRoom {
   onUpdateRoom {
     id
-    companyID
     name
+    companyID
     description
-    members {
-      id
-      email
-      companyID
-      username
-      tel
-      positionName
-      iconImage
-      registered
-      authority
-      company {
-        id
-        name
-        domain
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
     company {
       id
       name
@@ -199,7 +243,7 @@ subscription OnUpdateRoom {
       room {
         nextToken
       }
-      members {
+      companyMembers {
         nextToken
       }
       createdAt
@@ -209,10 +253,10 @@ subscription OnUpdateRoom {
       items {
         id
         authorID
+        chargePersonID
         roomID
         title
         description
-        chargePersonID
         scheduleDate
         priority
         status
@@ -228,29 +272,9 @@ subscription OnUpdateRoom {
 subscription OnDeleteRoom {
   onDeleteRoom {
     id
-    companyID
     name
+    companyID
     description
-    members {
-      id
-      email
-      companyID
-      username
-      tel
-      positionName
-      iconImage
-      registered
-      authority
-      company {
-        id
-        name
-        domain
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
     company {
       id
       name
@@ -258,7 +282,7 @@ subscription OnDeleteRoom {
       room {
         nextToken
       }
-      members {
+      companyMembers {
         nextToken
       }
       createdAt
@@ -268,10 +292,10 @@ subscription OnDeleteRoom {
       items {
         id
         authorID
+        chargePersonID
         roomID
         title
         description
-        chargePersonID
         scheduleDate
         priority
         status
@@ -288,52 +312,19 @@ subscription OnCreateTask {
   onCreateTask {
     id
     authorID
+    chargePersonID
     roomID
     title
     description
-    chargePersonID
     scheduleDate
     priority
     status
     createdAt
-    members {
-      id
-      email
-      companyID
-      username
-      tel
-      positionName
-      iconImage
-      registered
-      authority
-      company {
-        id
-        name
-        domain
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
     room {
       id
-      companyID
       name
+      companyID
       description
-      members {
-        id
-        email
-        companyID
-        username
-        tel
-        positionName
-        iconImage
-        registered
-        authority
-        createdAt
-        updatedAt
-      }
       company {
         id
         name
@@ -365,52 +356,19 @@ subscription OnUpdateTask {
   onUpdateTask {
     id
     authorID
+    chargePersonID
     roomID
     title
     description
-    chargePersonID
     scheduleDate
     priority
     status
     createdAt
-    members {
-      id
-      email
-      companyID
-      username
-      tel
-      positionName
-      iconImage
-      registered
-      authority
-      company {
-        id
-        name
-        domain
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
     room {
       id
-      companyID
       name
+      companyID
       description
-      members {
-        id
-        email
-        companyID
-        username
-        tel
-        positionName
-        iconImage
-        registered
-        authority
-        createdAt
-        updatedAt
-      }
       company {
         id
         name
@@ -442,52 +400,19 @@ subscription OnDeleteTask {
   onDeleteTask {
     id
     authorID
+    chargePersonID
     roomID
     title
     description
-    chargePersonID
     scheduleDate
     priority
     status
     createdAt
-    members {
-      id
-      email
-      companyID
-      username
-      tel
-      positionName
-      iconImage
-      registered
-      authority
-      company {
-        id
-        name
-        domain
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
     room {
       id
-      companyID
       name
+      companyID
       description
-      members {
-        id
-        email
-        companyID
-        username
-        tel
-        positionName
-        iconImage
-        registered
-        authority
-        createdAt
-        updatedAt
-      }
       company {
         id
         name
@@ -521,9 +446,9 @@ subscription OnCreateMessage {
     taskID
     author {
       id
+      username
       email
       companyID
-      username
       tel
       positionName
       iconImage
@@ -545,31 +470,18 @@ subscription OnCreateMessage {
     task {
       id
       authorID
+      chargePersonID
       roomID
       title
       description
-      chargePersonID
       scheduleDate
       priority
       status
       createdAt
-      members {
-        id
-        email
-        companyID
-        username
-        tel
-        positionName
-        iconImage
-        registered
-        authority
-        createdAt
-        updatedAt
-      }
       room {
         id
-        companyID
         name
+        companyID
         description
         createdAt
         updatedAt
@@ -588,9 +500,9 @@ subscription OnUpdateMessage {
     taskID
     author {
       id
+      username
       email
       companyID
-      username
       tel
       positionName
       iconImage
@@ -612,31 +524,18 @@ subscription OnUpdateMessage {
     task {
       id
       authorID
+      chargePersonID
       roomID
       title
       description
-      chargePersonID
       scheduleDate
       priority
       status
       createdAt
-      members {
-        id
-        email
-        companyID
-        username
-        tel
-        positionName
-        iconImage
-        registered
-        authority
-        createdAt
-        updatedAt
-      }
       room {
         id
-        companyID
         name
+        companyID
         description
         createdAt
         updatedAt
@@ -655,9 +554,9 @@ subscription OnDeleteMessage {
     taskID
     author {
       id
+      username
       email
       companyID
-      username
       tel
       positionName
       iconImage
@@ -679,31 +578,18 @@ subscription OnDeleteMessage {
     task {
       id
       authorID
+      chargePersonID
       roomID
       title
       description
-      chargePersonID
       scheduleDate
       priority
       status
       createdAt
-      members {
-        id
-        email
-        companyID
-        username
-        tel
-        positionName
-        iconImage
-        registered
-        authority
-        createdAt
-        updatedAt
-      }
       room {
         id
-        companyID
         name
+        companyID
         description
         createdAt
         updatedAt
@@ -713,90 +599,6 @@ subscription OnDeleteMessage {
       }
       updatedAt
     }
-    updatedAt
-  }
-}
-subscription OnCreateUser {
-  onCreateUser {
-    id
-    email
-    companyID
-    username
-    tel
-    positionName
-    iconImage
-    registered
-    authority
-    company {
-      id
-      name
-      domain
-      room {
-        nextToken
-      }
-      members {
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-    createdAt
-    updatedAt
-  }
-}
-subscription OnUpdateUser {
-  onUpdateUser {
-    id
-    email
-    companyID
-    username
-    tel
-    positionName
-    iconImage
-    registered
-    authority
-    company {
-      id
-      name
-      domain
-      room {
-        nextToken
-      }
-      members {
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-    createdAt
-    updatedAt
-  }
-}
-subscription OnDeleteUser {
-  onDeleteUser {
-    id
-    email
-    companyID
-    username
-    tel
-    positionName
-    iconImage
-    registered
-    authority
-    company {
-      id
-      name
-      domain
-      room {
-        nextToken
-      }
-      members {
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-    createdAt
     updatedAt
   }
 }

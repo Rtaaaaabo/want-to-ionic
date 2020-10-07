@@ -10,20 +10,20 @@ mutation CreateCompany(
     room {
       items {
         id
-        companyID
         name
+        companyID
         description
         createdAt
         updatedAt
       }
       nextToken
     }
-    members {
+    companyMembers {
       items {
         id
+        username
         email
         companyID
-        username
         tel
         positionName
         iconImage
@@ -49,20 +49,20 @@ mutation UpdateCompany(
     room {
       items {
         id
-        companyID
         name
+        companyID
         description
         createdAt
         updatedAt
       }
       nextToken
     }
-    members {
+    companyMembers {
       items {
         id
+        username
         email
         companyID
-        username
         tel
         positionName
         iconImage
@@ -88,20 +88,20 @@ mutation DeleteCompany(
     room {
       items {
         id
-        companyID
         name
+        companyID
         description
         createdAt
         updatedAt
       }
       nextToken
     }
-    members {
+    companyMembers {
       items {
         id
+        username
         email
         companyID
-        username
         tel
         positionName
         iconImage
@@ -116,35 +116,20 @@ mutation DeleteCompany(
     updatedAt
   }
 }
-mutation CreateRoom(
-  $input: CreateRoomInput!
-  $condition: ModelRoomConditionInput
+mutation CreateUser(
+  $input: CreateUserInput!
+  $condition: ModelUserConditionInput
 ) {
-  createRoom(input: $input, condition: $condition) {
+  createUser(input: $input, condition: $condition) {
     id
+    username
+    email
     companyID
-    name
-    description
-    members {
-      id
-      email
-      companyID
-      username
-      tel
-      positionName
-      iconImage
-      registered
-      authority
-      company {
-        id
-        name
-        domain
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
+    tel
+    positionName
+    iconImage
+    registered
+    authority
     company {
       id
       name
@@ -152,7 +137,95 @@ mutation CreateRoom(
       room {
         nextToken
       }
-      members {
+      companyMembers {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    createdAt
+    updatedAt
+  }
+}
+mutation UpdateUser(
+  $input: UpdateUserInput!
+  $condition: ModelUserConditionInput
+) {
+  updateUser(input: $input, condition: $condition) {
+    id
+    username
+    email
+    companyID
+    tel
+    positionName
+    iconImage
+    registered
+    authority
+    company {
+      id
+      name
+      domain
+      room {
+        nextToken
+      }
+      companyMembers {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    createdAt
+    updatedAt
+  }
+}
+mutation DeleteUser(
+  $input: DeleteUserInput!
+  $condition: ModelUserConditionInput
+) {
+  deleteUser(input: $input, condition: $condition) {
+    id
+    username
+    email
+    companyID
+    tel
+    positionName
+    iconImage
+    registered
+    authority
+    company {
+      id
+      name
+      domain
+      room {
+        nextToken
+      }
+      companyMembers {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    createdAt
+    updatedAt
+  }
+}
+mutation CreateRoom(
+  $input: CreateRoomInput!
+  $condition: ModelRoomConditionInput
+) {
+  createRoom(input: $input, condition: $condition) {
+    id
+    name
+    companyID
+    description
+    company {
+      id
+      name
+      domain
+      room {
+        nextToken
+      }
+      companyMembers {
         nextToken
       }
       createdAt
@@ -162,10 +235,10 @@ mutation CreateRoom(
       items {
         id
         authorID
+        chargePersonID
         roomID
         title
         description
-        chargePersonID
         scheduleDate
         priority
         status
@@ -184,29 +257,9 @@ mutation UpdateRoom(
 ) {
   updateRoom(input: $input, condition: $condition) {
     id
-    companyID
     name
+    companyID
     description
-    members {
-      id
-      email
-      companyID
-      username
-      tel
-      positionName
-      iconImage
-      registered
-      authority
-      company {
-        id
-        name
-        domain
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
     company {
       id
       name
@@ -214,7 +267,7 @@ mutation UpdateRoom(
       room {
         nextToken
       }
-      members {
+      companyMembers {
         nextToken
       }
       createdAt
@@ -224,10 +277,10 @@ mutation UpdateRoom(
       items {
         id
         authorID
+        chargePersonID
         roomID
         title
         description
-        chargePersonID
         scheduleDate
         priority
         status
@@ -246,29 +299,9 @@ mutation DeleteRoom(
 ) {
   deleteRoom(input: $input, condition: $condition) {
     id
-    companyID
     name
+    companyID
     description
-    members {
-      id
-      email
-      companyID
-      username
-      tel
-      positionName
-      iconImage
-      registered
-      authority
-      company {
-        id
-        name
-        domain
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
     company {
       id
       name
@@ -276,7 +309,7 @@ mutation DeleteRoom(
       room {
         nextToken
       }
-      members {
+      companyMembers {
         nextToken
       }
       createdAt
@@ -286,10 +319,10 @@ mutation DeleteRoom(
       items {
         id
         authorID
+        chargePersonID
         roomID
         title
         description
-        chargePersonID
         scheduleDate
         priority
         status
@@ -309,52 +342,19 @@ mutation CreateTask(
   createTask(input: $input, condition: $condition) {
     id
     authorID
+    chargePersonID
     roomID
     title
     description
-    chargePersonID
     scheduleDate
     priority
     status
     createdAt
-    members {
-      id
-      email
-      companyID
-      username
-      tel
-      positionName
-      iconImage
-      registered
-      authority
-      company {
-        id
-        name
-        domain
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
     room {
       id
-      companyID
       name
+      companyID
       description
-      members {
-        id
-        email
-        companyID
-        username
-        tel
-        positionName
-        iconImage
-        registered
-        authority
-        createdAt
-        updatedAt
-      }
       company {
         id
         name
@@ -389,52 +389,19 @@ mutation UpdateTask(
   updateTask(input: $input, condition: $condition) {
     id
     authorID
+    chargePersonID
     roomID
     title
     description
-    chargePersonID
     scheduleDate
     priority
     status
     createdAt
-    members {
-      id
-      email
-      companyID
-      username
-      tel
-      positionName
-      iconImage
-      registered
-      authority
-      company {
-        id
-        name
-        domain
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
     room {
       id
-      companyID
       name
+      companyID
       description
-      members {
-        id
-        email
-        companyID
-        username
-        tel
-        positionName
-        iconImage
-        registered
-        authority
-        createdAt
-        updatedAt
-      }
       company {
         id
         name
@@ -469,52 +436,19 @@ mutation DeleteTask(
   deleteTask(input: $input, condition: $condition) {
     id
     authorID
+    chargePersonID
     roomID
     title
     description
-    chargePersonID
     scheduleDate
     priority
     status
     createdAt
-    members {
-      id
-      email
-      companyID
-      username
-      tel
-      positionName
-      iconImage
-      registered
-      authority
-      company {
-        id
-        name
-        domain
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
     room {
       id
-      companyID
       name
+      companyID
       description
-      members {
-        id
-        email
-        companyID
-        username
-        tel
-        positionName
-        iconImage
-        registered
-        authority
-        createdAt
-        updatedAt
-      }
       company {
         id
         name
@@ -551,9 +485,9 @@ mutation CreateMessage(
     taskID
     author {
       id
+      username
       email
       companyID
-      username
       tel
       positionName
       iconImage
@@ -575,31 +509,18 @@ mutation CreateMessage(
     task {
       id
       authorID
+      chargePersonID
       roomID
       title
       description
-      chargePersonID
       scheduleDate
       priority
       status
       createdAt
-      members {
-        id
-        email
-        companyID
-        username
-        tel
-        positionName
-        iconImage
-        registered
-        authority
-        createdAt
-        updatedAt
-      }
       room {
         id
-        companyID
         name
+        companyID
         description
         createdAt
         updatedAt
@@ -621,9 +542,9 @@ mutation UpdateMessage(
     taskID
     author {
       id
+      username
       email
       companyID
-      username
       tel
       positionName
       iconImage
@@ -645,31 +566,18 @@ mutation UpdateMessage(
     task {
       id
       authorID
+      chargePersonID
       roomID
       title
       description
-      chargePersonID
       scheduleDate
       priority
       status
       createdAt
-      members {
-        id
-        email
-        companyID
-        username
-        tel
-        positionName
-        iconImage
-        registered
-        authority
-        createdAt
-        updatedAt
-      }
       room {
         id
-        companyID
         name
+        companyID
         description
         createdAt
         updatedAt
@@ -691,9 +599,9 @@ mutation DeleteMessage(
     taskID
     author {
       id
+      username
       email
       companyID
-      username
       tel
       positionName
       iconImage
@@ -715,31 +623,18 @@ mutation DeleteMessage(
     task {
       id
       authorID
+      chargePersonID
       roomID
       title
       description
-      chargePersonID
       scheduleDate
       priority
       status
       createdAt
-      members {
-        id
-        email
-        companyID
-        username
-        tel
-        positionName
-        iconImage
-        registered
-        authority
-        createdAt
-        updatedAt
-      }
       room {
         id
-        companyID
         name
+        companyID
         description
         createdAt
         updatedAt
@@ -749,99 +644,6 @@ mutation DeleteMessage(
       }
       updatedAt
     }
-    updatedAt
-  }
-}
-mutation CreateUser(
-  $input: CreateUserInput!
-  $condition: ModelUserConditionInput
-) {
-  createUser(input: $input, condition: $condition) {
-    id
-    email
-    companyID
-    username
-    tel
-    positionName
-    iconImage
-    registered
-    authority
-    company {
-      id
-      name
-      domain
-      room {
-        nextToken
-      }
-      members {
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-    createdAt
-    updatedAt
-  }
-}
-mutation UpdateUser(
-  $input: UpdateUserInput!
-  $condition: ModelUserConditionInput
-) {
-  updateUser(input: $input, condition: $condition) {
-    id
-    email
-    companyID
-    username
-    tel
-    positionName
-    iconImage
-    registered
-    authority
-    company {
-      id
-      name
-      domain
-      room {
-        nextToken
-      }
-      members {
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-    createdAt
-    updatedAt
-  }
-}
-mutation DeleteUser(
-  $input: DeleteUserInput!
-  $condition: ModelUserConditionInput
-) {
-  deleteUser(input: $input, condition: $condition) {
-    id
-    email
-    companyID
-    username
-    tel
-    positionName
-    iconImage
-    registered
-    authority
-    company {
-      id
-      name
-      domain
-      room {
-        nextToken
-      }
-      members {
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-    createdAt
     updatedAt
   }
 }

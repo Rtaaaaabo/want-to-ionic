@@ -68,20 +68,30 @@ export type DeleteCompanyInput = {
   id?: string | null;
 };
 
-export type CreateRoomInput = {
+export type CreateUserInput = {
   id?: string | null;
+  username: string;
+  email: string;
   companyID: string;
-  name: string;
-  description: string;
+  tel?: string | null;
+  positionName?: string | null;
+  iconImage?: string | null;
+  registered?: boolean | null;
+  authority?: string | null;
 };
 
-export type ModelRoomConditionInput = {
+export type ModelUserConditionInput = {
+  username?: ModelStringInput | null;
+  email?: ModelStringInput | null;
   companyID?: ModelIDInput | null;
-  name?: ModelStringInput | null;
-  description?: ModelStringInput | null;
-  and?: Array<ModelRoomConditionInput | null> | null;
-  or?: Array<ModelRoomConditionInput | null> | null;
-  not?: ModelRoomConditionInput | null;
+  tel?: ModelStringInput | null;
+  positionName?: ModelStringInput | null;
+  iconImage?: ModelStringInput | null;
+  registered?: ModelBooleanInput | null;
+  authority?: ModelStringInput | null;
+  and?: Array<ModelUserConditionInput | null> | null;
+  or?: Array<ModelUserConditionInput | null> | null;
+  not?: ModelUserConditionInput | null;
 };
 
 export type ModelIDInput = {
@@ -100,10 +110,49 @@ export type ModelIDInput = {
   size?: ModelSizeInput | null;
 };
 
+export type ModelBooleanInput = {
+  ne?: boolean | null;
+  eq?: boolean | null;
+  attributeExists?: boolean | null;
+  attributeType?: ModelAttributeTypes | null;
+};
+
+export type UpdateUserInput = {
+  id: string;
+  username?: string | null;
+  email?: string | null;
+  companyID?: string | null;
+  tel?: string | null;
+  positionName?: string | null;
+  iconImage?: string | null;
+  registered?: boolean | null;
+  authority?: string | null;
+};
+
+export type DeleteUserInput = {
+  id?: string | null;
+};
+
+export type CreateRoomInput = {
+  id?: string | null;
+  name: string;
+  companyID: string;
+  description: string;
+};
+
+export type ModelRoomConditionInput = {
+  name?: ModelStringInput | null;
+  companyID?: ModelIDInput | null;
+  description?: ModelStringInput | null;
+  and?: Array<ModelRoomConditionInput | null> | null;
+  or?: Array<ModelRoomConditionInput | null> | null;
+  not?: ModelRoomConditionInput | null;
+};
+
 export type UpdateRoomInput = {
   id: string;
-  companyID?: string | null;
   name?: string | null;
+  companyID?: string | null;
   description?: string | null;
 };
 
@@ -114,10 +163,10 @@ export type DeleteRoomInput = {
 export type CreateTaskInput = {
   id?: string | null;
   authorID: string;
+  chargePersonID?: string | null;
   roomID: string;
   title: string;
   description?: string | null;
-  chargePersonID?: string | null;
   scheduleDate?: string | null;
   priority?: number | null;
   status?: number | null;
@@ -126,10 +175,10 @@ export type CreateTaskInput = {
 
 export type ModelTaskConditionInput = {
   authorID?: ModelIDInput | null;
+  chargePersonID?: ModelIDInput | null;
   roomID?: ModelIDInput | null;
   title?: ModelStringInput | null;
   description?: ModelStringInput | null;
-  chargePersonID?: ModelIDInput | null;
   scheduleDate?: ModelStringInput | null;
   priority?: ModelIntInput | null;
   status?: ModelIntInput | null;
@@ -154,10 +203,10 @@ export type ModelIntInput = {
 export type UpdateTaskInput = {
   id: string;
   authorID?: string | null;
+  chargePersonID?: string | null;
   roomID?: string | null;
   title?: string | null;
   description?: string | null;
-  chargePersonID?: string | null;
   scheduleDate?: string | null;
   priority?: number | null;
   status?: number | null;
@@ -186,13 +235,6 @@ export type ModelMessageConditionInput = {
   not?: ModelMessageConditionInput | null;
 };
 
-export type ModelBooleanInput = {
-  ne?: boolean | null;
-  eq?: boolean | null;
-  attributeExists?: boolean | null;
-  attributeType?: ModelAttributeTypes | null;
-};
-
 export type UpdateMessageInput = {
   id: string;
   taskID?: string | null;
@@ -205,48 +247,6 @@ export type DeleteMessageInput = {
   id?: string | null;
 };
 
-export type CreateUserInput = {
-  id?: string | null;
-  email: string;
-  companyID: string;
-  username: string;
-  tel?: string | null;
-  positionName?: string | null;
-  iconImage?: string | null;
-  registered?: boolean | null;
-  authority?: string | null;
-};
-
-export type ModelUserConditionInput = {
-  email?: ModelStringInput | null;
-  companyID?: ModelIDInput | null;
-  username?: ModelStringInput | null;
-  tel?: ModelStringInput | null;
-  positionName?: ModelStringInput | null;
-  iconImage?: ModelStringInput | null;
-  registered?: ModelBooleanInput | null;
-  authority?: ModelStringInput | null;
-  and?: Array<ModelUserConditionInput | null> | null;
-  or?: Array<ModelUserConditionInput | null> | null;
-  not?: ModelUserConditionInput | null;
-};
-
-export type UpdateUserInput = {
-  id: string;
-  email?: string | null;
-  companyID?: string | null;
-  username?: string | null;
-  tel?: string | null;
-  positionName?: string | null;
-  iconImage?: string | null;
-  registered?: boolean | null;
-  authority?: string | null;
-};
-
-export type DeleteUserInput = {
-  id?: string | null;
-};
-
 export type ModelCompanyFilterInput = {
   id?: ModelIDInput | null;
   name?: ModelStringInput | null;
@@ -256,10 +256,25 @@ export type ModelCompanyFilterInput = {
   not?: ModelCompanyFilterInput | null;
 };
 
+export type ModelUserFilterInput = {
+  id?: ModelIDInput | null;
+  username?: ModelStringInput | null;
+  email?: ModelStringInput | null;
+  companyID?: ModelIDInput | null;
+  tel?: ModelStringInput | null;
+  positionName?: ModelStringInput | null;
+  iconImage?: ModelStringInput | null;
+  registered?: ModelBooleanInput | null;
+  authority?: ModelStringInput | null;
+  and?: Array<ModelUserFilterInput | null> | null;
+  or?: Array<ModelUserFilterInput | null> | null;
+  not?: ModelUserFilterInput | null;
+};
+
 export type ModelRoomFilterInput = {
   id?: ModelIDInput | null;
-  companyID?: ModelIDInput | null;
   name?: ModelStringInput | null;
+  companyID?: ModelIDInput | null;
   description?: ModelStringInput | null;
   and?: Array<ModelRoomFilterInput | null> | null;
   or?: Array<ModelRoomFilterInput | null> | null;
@@ -269,10 +284,10 @@ export type ModelRoomFilterInput = {
 export type ModelTaskFilterInput = {
   id?: ModelIDInput | null;
   authorID?: ModelIDInput | null;
+  chargePersonID?: ModelIDInput | null;
   roomID?: ModelIDInput | null;
   title?: ModelStringInput | null;
   description?: ModelStringInput | null;
-  chargePersonID?: ModelIDInput | null;
   scheduleDate?: ModelStringInput | null;
   priority?: ModelIntInput | null;
   status?: ModelIntInput | null;
@@ -293,21 +308,6 @@ export type ModelMessageFilterInput = {
   not?: ModelMessageFilterInput | null;
 };
 
-export type ModelUserFilterInput = {
-  id?: ModelIDInput | null;
-  email?: ModelStringInput | null;
-  companyID?: ModelIDInput | null;
-  username?: ModelStringInput | null;
-  tel?: ModelStringInput | null;
-  positionName?: ModelStringInput | null;
-  iconImage?: ModelStringInput | null;
-  registered?: ModelBooleanInput | null;
-  authority?: ModelStringInput | null;
-  and?: Array<ModelUserFilterInput | null> | null;
-  or?: Array<ModelUserFilterInput | null> | null;
-  not?: ModelUserFilterInput | null;
-};
-
 export type CreateCompanyMutation = {
   __typename: "Company";
   id: string;
@@ -318,22 +318,22 @@ export type CreateCompanyMutation = {
     items: Array<{
       __typename: "Room";
       id: string;
-      companyID: string;
       name: string;
+      companyID: string;
       description: string;
       createdAt: string;
       updatedAt: string;
     } | null> | null;
     nextToken: string | null;
   } | null;
-  members: {
+  companyMembers: {
     __typename: "ModelUserConnection";
     items: Array<{
       __typename: "User";
       id: string;
+      username: string;
       email: string;
       companyID: string;
-      username: string;
       tel: string | null;
       positionName: string | null;
       iconImage: string | null;
@@ -358,22 +358,22 @@ export type UpdateCompanyMutation = {
     items: Array<{
       __typename: "Room";
       id: string;
-      companyID: string;
       name: string;
+      companyID: string;
       description: string;
       createdAt: string;
       updatedAt: string;
     } | null> | null;
     nextToken: string | null;
   } | null;
-  members: {
+  companyMembers: {
     __typename: "ModelUserConnection";
     items: Array<{
       __typename: "User";
       id: string;
+      username: string;
       email: string;
       companyID: string;
-      username: string;
       tel: string | null;
       positionName: string | null;
       iconImage: string | null;
@@ -398,22 +398,22 @@ export type DeleteCompanyMutation = {
     items: Array<{
       __typename: "Room";
       id: string;
-      companyID: string;
       name: string;
+      companyID: string;
       description: string;
       createdAt: string;
       updatedAt: string;
     } | null> | null;
     nextToken: string | null;
   } | null;
-  members: {
+  companyMembers: {
     __typename: "ModelUserConnection";
     items: Array<{
       __typename: "User";
       id: string;
+      username: string;
       email: string;
       companyID: string;
-      username: string;
       tel: string | null;
       positionName: string | null;
       iconImage: string | null;
@@ -428,34 +428,17 @@ export type DeleteCompanyMutation = {
   updatedAt: string;
 };
 
-export type CreateRoomMutation = {
-  __typename: "Room";
+export type CreateUserMutation = {
+  __typename: "User";
   id: string;
+  username: string;
+  email: string;
   companyID: string;
-  name: string;
-  description: string;
-  members: Array<{
-    __typename: "User";
-    id: string;
-    email: string;
-    companyID: string;
-    username: string;
-    tel: string | null;
-    positionName: string | null;
-    iconImage: string | null;
-    registered: boolean | null;
-    authority: string | null;
-    company: {
-      __typename: "Company";
-      id: string;
-      name: string;
-      domain: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    createdAt: string;
-    updatedAt: string;
-  } | null> | null;
+  tel: string | null;
+  positionName: string | null;
+  iconImage: string | null;
+  registered: boolean | null;
+  authority: string | null;
   company: {
     __typename: "Company";
     id: string;
@@ -465,7 +448,95 @@ export type CreateRoomMutation = {
       __typename: "ModelRoomConnection";
       nextToken: string | null;
     } | null;
-    members: {
+    companyMembers: {
+      __typename: "ModelUserConnection";
+      nextToken: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+  };
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type UpdateUserMutation = {
+  __typename: "User";
+  id: string;
+  username: string;
+  email: string;
+  companyID: string;
+  tel: string | null;
+  positionName: string | null;
+  iconImage: string | null;
+  registered: boolean | null;
+  authority: string | null;
+  company: {
+    __typename: "Company";
+    id: string;
+    name: string;
+    domain: string;
+    room: {
+      __typename: "ModelRoomConnection";
+      nextToken: string | null;
+    } | null;
+    companyMembers: {
+      __typename: "ModelUserConnection";
+      nextToken: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+  };
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type DeleteUserMutation = {
+  __typename: "User";
+  id: string;
+  username: string;
+  email: string;
+  companyID: string;
+  tel: string | null;
+  positionName: string | null;
+  iconImage: string | null;
+  registered: boolean | null;
+  authority: string | null;
+  company: {
+    __typename: "Company";
+    id: string;
+    name: string;
+    domain: string;
+    room: {
+      __typename: "ModelRoomConnection";
+      nextToken: string | null;
+    } | null;
+    companyMembers: {
+      __typename: "ModelUserConnection";
+      nextToken: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+  };
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type CreateRoomMutation = {
+  __typename: "Room";
+  id: string;
+  name: string;
+  companyID: string;
+  description: string;
+  company: {
+    __typename: "Company";
+    id: string;
+    name: string;
+    domain: string;
+    room: {
+      __typename: "ModelRoomConnection";
+      nextToken: string | null;
+    } | null;
+    companyMembers: {
       __typename: "ModelUserConnection";
       nextToken: string | null;
     } | null;
@@ -478,10 +549,10 @@ export type CreateRoomMutation = {
       __typename: "Task";
       id: string;
       authorID: string;
+      chargePersonID: string | null;
       roomID: string;
       title: string;
       description: string | null;
-      chargePersonID: string | null;
       scheduleDate: string | null;
       priority: number | null;
       status: number | null;
@@ -497,31 +568,9 @@ export type CreateRoomMutation = {
 export type UpdateRoomMutation = {
   __typename: "Room";
   id: string;
-  companyID: string;
   name: string;
+  companyID: string;
   description: string;
-  members: Array<{
-    __typename: "User";
-    id: string;
-    email: string;
-    companyID: string;
-    username: string;
-    tel: string | null;
-    positionName: string | null;
-    iconImage: string | null;
-    registered: boolean | null;
-    authority: string | null;
-    company: {
-      __typename: "Company";
-      id: string;
-      name: string;
-      domain: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    createdAt: string;
-    updatedAt: string;
-  } | null> | null;
   company: {
     __typename: "Company";
     id: string;
@@ -531,7 +580,7 @@ export type UpdateRoomMutation = {
       __typename: "ModelRoomConnection";
       nextToken: string | null;
     } | null;
-    members: {
+    companyMembers: {
       __typename: "ModelUserConnection";
       nextToken: string | null;
     } | null;
@@ -544,10 +593,10 @@ export type UpdateRoomMutation = {
       __typename: "Task";
       id: string;
       authorID: string;
+      chargePersonID: string | null;
       roomID: string;
       title: string;
       description: string | null;
-      chargePersonID: string | null;
       scheduleDate: string | null;
       priority: number | null;
       status: number | null;
@@ -563,31 +612,9 @@ export type UpdateRoomMutation = {
 export type DeleteRoomMutation = {
   __typename: "Room";
   id: string;
-  companyID: string;
   name: string;
+  companyID: string;
   description: string;
-  members: Array<{
-    __typename: "User";
-    id: string;
-    email: string;
-    companyID: string;
-    username: string;
-    tel: string | null;
-    positionName: string | null;
-    iconImage: string | null;
-    registered: boolean | null;
-    authority: string | null;
-    company: {
-      __typename: "Company";
-      id: string;
-      name: string;
-      domain: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    createdAt: string;
-    updatedAt: string;
-  } | null> | null;
   company: {
     __typename: "Company";
     id: string;
@@ -597,7 +624,7 @@ export type DeleteRoomMutation = {
       __typename: "ModelRoomConnection";
       nextToken: string | null;
     } | null;
-    members: {
+    companyMembers: {
       __typename: "ModelUserConnection";
       nextToken: string | null;
     } | null;
@@ -610,10 +637,10 @@ export type DeleteRoomMutation = {
       __typename: "Task";
       id: string;
       authorID: string;
+      chargePersonID: string | null;
       roomID: string;
       title: string;
       description: string | null;
-      chargePersonID: string | null;
       scheduleDate: string | null;
       priority: number | null;
       status: number | null;
@@ -630,56 +657,20 @@ export type CreateTaskMutation = {
   __typename: "Task";
   id: string;
   authorID: string;
+  chargePersonID: string | null;
   roomID: string;
   title: string;
   description: string | null;
-  chargePersonID: string | null;
   scheduleDate: string | null;
   priority: number | null;
   status: number | null;
   createdAt: string | null;
-  members: Array<{
-    __typename: "User";
-    id: string;
-    email: string;
-    companyID: string;
-    username: string;
-    tel: string | null;
-    positionName: string | null;
-    iconImage: string | null;
-    registered: boolean | null;
-    authority: string | null;
-    company: {
-      __typename: "Company";
-      id: string;
-      name: string;
-      domain: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    createdAt: string;
-    updatedAt: string;
-  } | null> | null;
   room: {
     __typename: "Room";
     id: string;
-    companyID: string;
     name: string;
+    companyID: string;
     description: string;
-    members: Array<{
-      __typename: "User";
-      id: string;
-      email: string;
-      companyID: string;
-      username: string;
-      tel: string | null;
-      positionName: string | null;
-      iconImage: string | null;
-      registered: boolean | null;
-      authority: string | null;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
     company: {
       __typename: "Company";
       id: string;
@@ -715,56 +706,20 @@ export type UpdateTaskMutation = {
   __typename: "Task";
   id: string;
   authorID: string;
+  chargePersonID: string | null;
   roomID: string;
   title: string;
   description: string | null;
-  chargePersonID: string | null;
   scheduleDate: string | null;
   priority: number | null;
   status: number | null;
   createdAt: string | null;
-  members: Array<{
-    __typename: "User";
-    id: string;
-    email: string;
-    companyID: string;
-    username: string;
-    tel: string | null;
-    positionName: string | null;
-    iconImage: string | null;
-    registered: boolean | null;
-    authority: string | null;
-    company: {
-      __typename: "Company";
-      id: string;
-      name: string;
-      domain: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    createdAt: string;
-    updatedAt: string;
-  } | null> | null;
   room: {
     __typename: "Room";
     id: string;
-    companyID: string;
     name: string;
+    companyID: string;
     description: string;
-    members: Array<{
-      __typename: "User";
-      id: string;
-      email: string;
-      companyID: string;
-      username: string;
-      tel: string | null;
-      positionName: string | null;
-      iconImage: string | null;
-      registered: boolean | null;
-      authority: string | null;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
     company: {
       __typename: "Company";
       id: string;
@@ -800,56 +755,20 @@ export type DeleteTaskMutation = {
   __typename: "Task";
   id: string;
   authorID: string;
+  chargePersonID: string | null;
   roomID: string;
   title: string;
   description: string | null;
-  chargePersonID: string | null;
   scheduleDate: string | null;
   priority: number | null;
   status: number | null;
   createdAt: string | null;
-  members: Array<{
-    __typename: "User";
-    id: string;
-    email: string;
-    companyID: string;
-    username: string;
-    tel: string | null;
-    positionName: string | null;
-    iconImage: string | null;
-    registered: boolean | null;
-    authority: string | null;
-    company: {
-      __typename: "Company";
-      id: string;
-      name: string;
-      domain: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    createdAt: string;
-    updatedAt: string;
-  } | null> | null;
   room: {
     __typename: "Room";
     id: string;
-    companyID: string;
     name: string;
+    companyID: string;
     description: string;
-    members: Array<{
-      __typename: "User";
-      id: string;
-      email: string;
-      companyID: string;
-      username: string;
-      tel: string | null;
-      positionName: string | null;
-      iconImage: string | null;
-      registered: boolean | null;
-      authority: string | null;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
     company: {
       __typename: "Company";
       id: string;
@@ -888,9 +807,9 @@ export type CreateMessageMutation = {
   author: {
     __typename: "User";
     id: string;
+    username: string;
     email: string;
     companyID: string;
-    username: string;
     tel: string | null;
     positionName: string | null;
     iconImage: string | null;
@@ -914,33 +833,19 @@ export type CreateMessageMutation = {
     __typename: "Task";
     id: string;
     authorID: string;
+    chargePersonID: string | null;
     roomID: string;
     title: string;
     description: string | null;
-    chargePersonID: string | null;
     scheduleDate: string | null;
     priority: number | null;
     status: number | null;
     createdAt: string | null;
-    members: Array<{
-      __typename: "User";
-      id: string;
-      email: string;
-      companyID: string;
-      username: string;
-      tel: string | null;
-      positionName: string | null;
-      iconImage: string | null;
-      registered: boolean | null;
-      authority: string | null;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
     room: {
       __typename: "Room";
       id: string;
-      companyID: string;
       name: string;
+      companyID: string;
       description: string;
       createdAt: string;
       updatedAt: string;
@@ -961,9 +866,9 @@ export type UpdateMessageMutation = {
   author: {
     __typename: "User";
     id: string;
+    username: string;
     email: string;
     companyID: string;
-    username: string;
     tel: string | null;
     positionName: string | null;
     iconImage: string | null;
@@ -987,33 +892,19 @@ export type UpdateMessageMutation = {
     __typename: "Task";
     id: string;
     authorID: string;
+    chargePersonID: string | null;
     roomID: string;
     title: string;
     description: string | null;
-    chargePersonID: string | null;
     scheduleDate: string | null;
     priority: number | null;
     status: number | null;
     createdAt: string | null;
-    members: Array<{
-      __typename: "User";
-      id: string;
-      email: string;
-      companyID: string;
-      username: string;
-      tel: string | null;
-      positionName: string | null;
-      iconImage: string | null;
-      registered: boolean | null;
-      authority: string | null;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
     room: {
       __typename: "Room";
       id: string;
-      companyID: string;
       name: string;
+      companyID: string;
       description: string;
       createdAt: string;
       updatedAt: string;
@@ -1034,9 +925,9 @@ export type DeleteMessageMutation = {
   author: {
     __typename: "User";
     id: string;
+    username: string;
     email: string;
     companyID: string;
-    username: string;
     tel: string | null;
     positionName: string | null;
     iconImage: string | null;
@@ -1060,33 +951,19 @@ export type DeleteMessageMutation = {
     __typename: "Task";
     id: string;
     authorID: string;
+    chargePersonID: string | null;
     roomID: string;
     title: string;
     description: string | null;
-    chargePersonID: string | null;
     scheduleDate: string | null;
     priority: number | null;
     status: number | null;
     createdAt: string | null;
-    members: Array<{
-      __typename: "User";
-      id: string;
-      email: string;
-      companyID: string;
-      username: string;
-      tel: string | null;
-      positionName: string | null;
-      iconImage: string | null;
-      registered: boolean | null;
-      authority: string | null;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
     room: {
       __typename: "Room";
       id: string;
-      companyID: string;
       name: string;
+      companyID: string;
       description: string;
       createdAt: string;
       updatedAt: string;
@@ -1100,99 +977,6 @@ export type DeleteMessageMutation = {
   updatedAt: string;
 };
 
-export type CreateUserMutation = {
-  __typename: "User";
-  id: string;
-  email: string;
-  companyID: string;
-  username: string;
-  tel: string | null;
-  positionName: string | null;
-  iconImage: string | null;
-  registered: boolean | null;
-  authority: string | null;
-  company: {
-    __typename: "Company";
-    id: string;
-    name: string;
-    domain: string;
-    room: {
-      __typename: "ModelRoomConnection";
-      nextToken: string | null;
-    } | null;
-    members: {
-      __typename: "ModelUserConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  };
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type UpdateUserMutation = {
-  __typename: "User";
-  id: string;
-  email: string;
-  companyID: string;
-  username: string;
-  tel: string | null;
-  positionName: string | null;
-  iconImage: string | null;
-  registered: boolean | null;
-  authority: string | null;
-  company: {
-    __typename: "Company";
-    id: string;
-    name: string;
-    domain: string;
-    room: {
-      __typename: "ModelRoomConnection";
-      nextToken: string | null;
-    } | null;
-    members: {
-      __typename: "ModelUserConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  };
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type DeleteUserMutation = {
-  __typename: "User";
-  id: string;
-  email: string;
-  companyID: string;
-  username: string;
-  tel: string | null;
-  positionName: string | null;
-  iconImage: string | null;
-  registered: boolean | null;
-  authority: string | null;
-  company: {
-    __typename: "Company";
-    id: string;
-    name: string;
-    domain: string;
-    room: {
-      __typename: "ModelRoomConnection";
-      nextToken: string | null;
-    } | null;
-    members: {
-      __typename: "ModelUserConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  };
-  createdAt: string;
-  updatedAt: string;
-};
-
 export type GetCompanyQuery = {
   __typename: "Company";
   id: string;
@@ -1203,22 +987,22 @@ export type GetCompanyQuery = {
     items: Array<{
       __typename: "Room";
       id: string;
-      companyID: string;
       name: string;
+      companyID: string;
       description: string;
       createdAt: string;
       updatedAt: string;
     } | null> | null;
     nextToken: string | null;
   } | null;
-  members: {
+  companyMembers: {
     __typename: "ModelUserConnection";
     items: Array<{
       __typename: "User";
       id: string;
+      username: string;
       email: string;
       companyID: string;
-      username: string;
       tel: string | null;
       positionName: string | null;
       iconImage: string | null;
@@ -1244,7 +1028,7 @@ export type ListCompanysQuery = {
       __typename: "ModelRoomConnection";
       nextToken: string | null;
     } | null;
-    members: {
+    companyMembers: {
       __typename: "ModelUserConnection";
       nextToken: string | null;
     } | null;
@@ -1254,18 +1038,45 @@ export type ListCompanysQuery = {
   nextToken: string | null;
 };
 
-export type GetRoomQuery = {
-  __typename: "Room";
+export type GetUserQuery = {
+  __typename: "User";
   id: string;
+  username: string;
+  email: string;
   companyID: string;
-  name: string;
-  description: string;
-  members: Array<{
+  tel: string | null;
+  positionName: string | null;
+  iconImage: string | null;
+  registered: boolean | null;
+  authority: string | null;
+  company: {
+    __typename: "Company";
+    id: string;
+    name: string;
+    domain: string;
+    room: {
+      __typename: "ModelRoomConnection";
+      nextToken: string | null;
+    } | null;
+    companyMembers: {
+      __typename: "ModelUserConnection";
+      nextToken: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+  };
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type ListUsersQuery = {
+  __typename: "ModelUserConnection";
+  items: Array<{
     __typename: "User";
     id: string;
+    username: string;
     email: string;
     companyID: string;
-    username: string;
     tel: string | null;
     positionName: string | null;
     iconImage: string | null;
@@ -1282,6 +1093,15 @@ export type GetRoomQuery = {
     createdAt: string;
     updatedAt: string;
   } | null> | null;
+  nextToken: string | null;
+};
+
+export type GetRoomQuery = {
+  __typename: "Room";
+  id: string;
+  name: string;
+  companyID: string;
+  description: string;
   company: {
     __typename: "Company";
     id: string;
@@ -1291,7 +1111,7 @@ export type GetRoomQuery = {
       __typename: "ModelRoomConnection";
       nextToken: string | null;
     } | null;
-    members: {
+    companyMembers: {
       __typename: "ModelUserConnection";
       nextToken: string | null;
     } | null;
@@ -1304,10 +1124,10 @@ export type GetRoomQuery = {
       __typename: "Task";
       id: string;
       authorID: string;
+      chargePersonID: string | null;
       roomID: string;
       title: string;
       description: string | null;
-      chargePersonID: string | null;
       scheduleDate: string | null;
       priority: number | null;
       status: number | null;
@@ -1325,23 +1145,9 @@ export type ListRoomsQuery = {
   items: Array<{
     __typename: "Room";
     id: string;
-    companyID: string;
     name: string;
+    companyID: string;
     description: string;
-    members: Array<{
-      __typename: "User";
-      id: string;
-      email: string;
-      companyID: string;
-      username: string;
-      tel: string | null;
-      positionName: string | null;
-      iconImage: string | null;
-      registered: boolean | null;
-      authority: string | null;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
     company: {
       __typename: "Company";
       id: string;
@@ -1364,56 +1170,20 @@ export type GetTaskQuery = {
   __typename: "Task";
   id: string;
   authorID: string;
+  chargePersonID: string | null;
   roomID: string;
   title: string;
   description: string | null;
-  chargePersonID: string | null;
   scheduleDate: string | null;
   priority: number | null;
   status: number | null;
   createdAt: string | null;
-  members: Array<{
-    __typename: "User";
-    id: string;
-    email: string;
-    companyID: string;
-    username: string;
-    tel: string | null;
-    positionName: string | null;
-    iconImage: string | null;
-    registered: boolean | null;
-    authority: string | null;
-    company: {
-      __typename: "Company";
-      id: string;
-      name: string;
-      domain: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    createdAt: string;
-    updatedAt: string;
-  } | null> | null;
   room: {
     __typename: "Room";
     id: string;
-    companyID: string;
     name: string;
+    companyID: string;
     description: string;
-    members: Array<{
-      __typename: "User";
-      id: string;
-      email: string;
-      companyID: string;
-      username: string;
-      tel: string | null;
-      positionName: string | null;
-      iconImage: string | null;
-      registered: boolean | null;
-      authority: string | null;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
     company: {
       __typename: "Company";
       id: string;
@@ -1451,33 +1221,19 @@ export type ListTasksQuery = {
     __typename: "Task";
     id: string;
     authorID: string;
+    chargePersonID: string | null;
     roomID: string;
     title: string;
     description: string | null;
-    chargePersonID: string | null;
     scheduleDate: string | null;
     priority: number | null;
     status: number | null;
     createdAt: string | null;
-    members: Array<{
-      __typename: "User";
-      id: string;
-      email: string;
-      companyID: string;
-      username: string;
-      tel: string | null;
-      positionName: string | null;
-      iconImage: string | null;
-      registered: boolean | null;
-      authority: string | null;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
     room: {
       __typename: "Room";
       id: string;
-      companyID: string;
       name: string;
+      companyID: string;
       description: string;
       createdAt: string;
       updatedAt: string;
@@ -1498,9 +1254,9 @@ export type GetMessageQuery = {
   author: {
     __typename: "User";
     id: string;
+    username: string;
     email: string;
     companyID: string;
-    username: string;
     tel: string | null;
     positionName: string | null;
     iconImage: string | null;
@@ -1524,33 +1280,19 @@ export type GetMessageQuery = {
     __typename: "Task";
     id: string;
     authorID: string;
+    chargePersonID: string | null;
     roomID: string;
     title: string;
     description: string | null;
-    chargePersonID: string | null;
     scheduleDate: string | null;
     priority: number | null;
     status: number | null;
     createdAt: string | null;
-    members: Array<{
-      __typename: "User";
-      id: string;
-      email: string;
-      companyID: string;
-      username: string;
-      tel: string | null;
-      positionName: string | null;
-      iconImage: string | null;
-      registered: boolean | null;
-      authority: string | null;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
     room: {
       __typename: "Room";
       id: string;
-      companyID: string;
       name: string;
+      companyID: string;
       description: string;
       createdAt: string;
       updatedAt: string;
@@ -1573,9 +1315,9 @@ export type ListMessagesQuery = {
     author: {
       __typename: "User";
       id: string;
+      username: string;
       email: string;
       companyID: string;
-      username: string;
       tel: string | null;
       positionName: string | null;
       iconImage: string | null;
@@ -1591,74 +1333,16 @@ export type ListMessagesQuery = {
       __typename: "Task";
       id: string;
       authorID: string;
+      chargePersonID: string | null;
       roomID: string;
       title: string;
       description: string | null;
-      chargePersonID: string | null;
       scheduleDate: string | null;
       priority: number | null;
       status: number | null;
       createdAt: string | null;
       updatedAt: string;
     };
-    updatedAt: string;
-  } | null> | null;
-  nextToken: string | null;
-};
-
-export type GetUserQuery = {
-  __typename: "User";
-  id: string;
-  email: string;
-  companyID: string;
-  username: string;
-  tel: string | null;
-  positionName: string | null;
-  iconImage: string | null;
-  registered: boolean | null;
-  authority: string | null;
-  company: {
-    __typename: "Company";
-    id: string;
-    name: string;
-    domain: string;
-    room: {
-      __typename: "ModelRoomConnection";
-      nextToken: string | null;
-    } | null;
-    members: {
-      __typename: "ModelUserConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  };
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type ListUsersQuery = {
-  __typename: "ModelUserConnection";
-  items: Array<{
-    __typename: "User";
-    id: string;
-    email: string;
-    companyID: string;
-    username: string;
-    tel: string | null;
-    positionName: string | null;
-    iconImage: string | null;
-    registered: boolean | null;
-    authority: string | null;
-    company: {
-      __typename: "Company";
-      id: string;
-      name: string;
-      domain: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    createdAt: string;
     updatedAt: string;
   } | null> | null;
   nextToken: string | null;
@@ -1674,22 +1358,22 @@ export type OnCreateCompanySubscription = {
     items: Array<{
       __typename: "Room";
       id: string;
-      companyID: string;
       name: string;
+      companyID: string;
       description: string;
       createdAt: string;
       updatedAt: string;
     } | null> | null;
     nextToken: string | null;
   } | null;
-  members: {
+  companyMembers: {
     __typename: "ModelUserConnection";
     items: Array<{
       __typename: "User";
       id: string;
+      username: string;
       email: string;
       companyID: string;
-      username: string;
       tel: string | null;
       positionName: string | null;
       iconImage: string | null;
@@ -1714,22 +1398,22 @@ export type OnUpdateCompanySubscription = {
     items: Array<{
       __typename: "Room";
       id: string;
-      companyID: string;
       name: string;
+      companyID: string;
       description: string;
       createdAt: string;
       updatedAt: string;
     } | null> | null;
     nextToken: string | null;
   } | null;
-  members: {
+  companyMembers: {
     __typename: "ModelUserConnection";
     items: Array<{
       __typename: "User";
       id: string;
+      username: string;
       email: string;
       companyID: string;
-      username: string;
       tel: string | null;
       positionName: string | null;
       iconImage: string | null;
@@ -1754,22 +1438,22 @@ export type OnDeleteCompanySubscription = {
     items: Array<{
       __typename: "Room";
       id: string;
-      companyID: string;
       name: string;
+      companyID: string;
       description: string;
       createdAt: string;
       updatedAt: string;
     } | null> | null;
     nextToken: string | null;
   } | null;
-  members: {
+  companyMembers: {
     __typename: "ModelUserConnection";
     items: Array<{
       __typename: "User";
       id: string;
+      username: string;
       email: string;
       companyID: string;
-      username: string;
       tel: string | null;
       positionName: string | null;
       iconImage: string | null;
@@ -1784,34 +1468,17 @@ export type OnDeleteCompanySubscription = {
   updatedAt: string;
 };
 
-export type OnCreateRoomSubscription = {
-  __typename: "Room";
+export type OnCreateUserSubscription = {
+  __typename: "User";
   id: string;
+  username: string;
+  email: string;
   companyID: string;
-  name: string;
-  description: string;
-  members: Array<{
-    __typename: "User";
-    id: string;
-    email: string;
-    companyID: string;
-    username: string;
-    tel: string | null;
-    positionName: string | null;
-    iconImage: string | null;
-    registered: boolean | null;
-    authority: string | null;
-    company: {
-      __typename: "Company";
-      id: string;
-      name: string;
-      domain: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    createdAt: string;
-    updatedAt: string;
-  } | null> | null;
+  tel: string | null;
+  positionName: string | null;
+  iconImage: string | null;
+  registered: boolean | null;
+  authority: string | null;
   company: {
     __typename: "Company";
     id: string;
@@ -1821,7 +1488,95 @@ export type OnCreateRoomSubscription = {
       __typename: "ModelRoomConnection";
       nextToken: string | null;
     } | null;
-    members: {
+    companyMembers: {
+      __typename: "ModelUserConnection";
+      nextToken: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+  };
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type OnUpdateUserSubscription = {
+  __typename: "User";
+  id: string;
+  username: string;
+  email: string;
+  companyID: string;
+  tel: string | null;
+  positionName: string | null;
+  iconImage: string | null;
+  registered: boolean | null;
+  authority: string | null;
+  company: {
+    __typename: "Company";
+    id: string;
+    name: string;
+    domain: string;
+    room: {
+      __typename: "ModelRoomConnection";
+      nextToken: string | null;
+    } | null;
+    companyMembers: {
+      __typename: "ModelUserConnection";
+      nextToken: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+  };
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type OnDeleteUserSubscription = {
+  __typename: "User";
+  id: string;
+  username: string;
+  email: string;
+  companyID: string;
+  tel: string | null;
+  positionName: string | null;
+  iconImage: string | null;
+  registered: boolean | null;
+  authority: string | null;
+  company: {
+    __typename: "Company";
+    id: string;
+    name: string;
+    domain: string;
+    room: {
+      __typename: "ModelRoomConnection";
+      nextToken: string | null;
+    } | null;
+    companyMembers: {
+      __typename: "ModelUserConnection";
+      nextToken: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+  };
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type OnCreateRoomSubscription = {
+  __typename: "Room";
+  id: string;
+  name: string;
+  companyID: string;
+  description: string;
+  company: {
+    __typename: "Company";
+    id: string;
+    name: string;
+    domain: string;
+    room: {
+      __typename: "ModelRoomConnection";
+      nextToken: string | null;
+    } | null;
+    companyMembers: {
       __typename: "ModelUserConnection";
       nextToken: string | null;
     } | null;
@@ -1834,10 +1589,10 @@ export type OnCreateRoomSubscription = {
       __typename: "Task";
       id: string;
       authorID: string;
+      chargePersonID: string | null;
       roomID: string;
       title: string;
       description: string | null;
-      chargePersonID: string | null;
       scheduleDate: string | null;
       priority: number | null;
       status: number | null;
@@ -1853,31 +1608,9 @@ export type OnCreateRoomSubscription = {
 export type OnUpdateRoomSubscription = {
   __typename: "Room";
   id: string;
-  companyID: string;
   name: string;
+  companyID: string;
   description: string;
-  members: Array<{
-    __typename: "User";
-    id: string;
-    email: string;
-    companyID: string;
-    username: string;
-    tel: string | null;
-    positionName: string | null;
-    iconImage: string | null;
-    registered: boolean | null;
-    authority: string | null;
-    company: {
-      __typename: "Company";
-      id: string;
-      name: string;
-      domain: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    createdAt: string;
-    updatedAt: string;
-  } | null> | null;
   company: {
     __typename: "Company";
     id: string;
@@ -1887,7 +1620,7 @@ export type OnUpdateRoomSubscription = {
       __typename: "ModelRoomConnection";
       nextToken: string | null;
     } | null;
-    members: {
+    companyMembers: {
       __typename: "ModelUserConnection";
       nextToken: string | null;
     } | null;
@@ -1900,10 +1633,10 @@ export type OnUpdateRoomSubscription = {
       __typename: "Task";
       id: string;
       authorID: string;
+      chargePersonID: string | null;
       roomID: string;
       title: string;
       description: string | null;
-      chargePersonID: string | null;
       scheduleDate: string | null;
       priority: number | null;
       status: number | null;
@@ -1919,31 +1652,9 @@ export type OnUpdateRoomSubscription = {
 export type OnDeleteRoomSubscription = {
   __typename: "Room";
   id: string;
-  companyID: string;
   name: string;
+  companyID: string;
   description: string;
-  members: Array<{
-    __typename: "User";
-    id: string;
-    email: string;
-    companyID: string;
-    username: string;
-    tel: string | null;
-    positionName: string | null;
-    iconImage: string | null;
-    registered: boolean | null;
-    authority: string | null;
-    company: {
-      __typename: "Company";
-      id: string;
-      name: string;
-      domain: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    createdAt: string;
-    updatedAt: string;
-  } | null> | null;
   company: {
     __typename: "Company";
     id: string;
@@ -1953,7 +1664,7 @@ export type OnDeleteRoomSubscription = {
       __typename: "ModelRoomConnection";
       nextToken: string | null;
     } | null;
-    members: {
+    companyMembers: {
       __typename: "ModelUserConnection";
       nextToken: string | null;
     } | null;
@@ -1966,10 +1677,10 @@ export type OnDeleteRoomSubscription = {
       __typename: "Task";
       id: string;
       authorID: string;
+      chargePersonID: string | null;
       roomID: string;
       title: string;
       description: string | null;
-      chargePersonID: string | null;
       scheduleDate: string | null;
       priority: number | null;
       status: number | null;
@@ -1986,56 +1697,20 @@ export type OnCreateTaskSubscription = {
   __typename: "Task";
   id: string;
   authorID: string;
+  chargePersonID: string | null;
   roomID: string;
   title: string;
   description: string | null;
-  chargePersonID: string | null;
   scheduleDate: string | null;
   priority: number | null;
   status: number | null;
   createdAt: string | null;
-  members: Array<{
-    __typename: "User";
-    id: string;
-    email: string;
-    companyID: string;
-    username: string;
-    tel: string | null;
-    positionName: string | null;
-    iconImage: string | null;
-    registered: boolean | null;
-    authority: string | null;
-    company: {
-      __typename: "Company";
-      id: string;
-      name: string;
-      domain: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    createdAt: string;
-    updatedAt: string;
-  } | null> | null;
   room: {
     __typename: "Room";
     id: string;
-    companyID: string;
     name: string;
+    companyID: string;
     description: string;
-    members: Array<{
-      __typename: "User";
-      id: string;
-      email: string;
-      companyID: string;
-      username: string;
-      tel: string | null;
-      positionName: string | null;
-      iconImage: string | null;
-      registered: boolean | null;
-      authority: string | null;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
     company: {
       __typename: "Company";
       id: string;
@@ -2071,56 +1746,20 @@ export type OnUpdateTaskSubscription = {
   __typename: "Task";
   id: string;
   authorID: string;
+  chargePersonID: string | null;
   roomID: string;
   title: string;
   description: string | null;
-  chargePersonID: string | null;
   scheduleDate: string | null;
   priority: number | null;
   status: number | null;
   createdAt: string | null;
-  members: Array<{
-    __typename: "User";
-    id: string;
-    email: string;
-    companyID: string;
-    username: string;
-    tel: string | null;
-    positionName: string | null;
-    iconImage: string | null;
-    registered: boolean | null;
-    authority: string | null;
-    company: {
-      __typename: "Company";
-      id: string;
-      name: string;
-      domain: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    createdAt: string;
-    updatedAt: string;
-  } | null> | null;
   room: {
     __typename: "Room";
     id: string;
-    companyID: string;
     name: string;
+    companyID: string;
     description: string;
-    members: Array<{
-      __typename: "User";
-      id: string;
-      email: string;
-      companyID: string;
-      username: string;
-      tel: string | null;
-      positionName: string | null;
-      iconImage: string | null;
-      registered: boolean | null;
-      authority: string | null;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
     company: {
       __typename: "Company";
       id: string;
@@ -2156,56 +1795,20 @@ export type OnDeleteTaskSubscription = {
   __typename: "Task";
   id: string;
   authorID: string;
+  chargePersonID: string | null;
   roomID: string;
   title: string;
   description: string | null;
-  chargePersonID: string | null;
   scheduleDate: string | null;
   priority: number | null;
   status: number | null;
   createdAt: string | null;
-  members: Array<{
-    __typename: "User";
-    id: string;
-    email: string;
-    companyID: string;
-    username: string;
-    tel: string | null;
-    positionName: string | null;
-    iconImage: string | null;
-    registered: boolean | null;
-    authority: string | null;
-    company: {
-      __typename: "Company";
-      id: string;
-      name: string;
-      domain: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    createdAt: string;
-    updatedAt: string;
-  } | null> | null;
   room: {
     __typename: "Room";
     id: string;
-    companyID: string;
     name: string;
+    companyID: string;
     description: string;
-    members: Array<{
-      __typename: "User";
-      id: string;
-      email: string;
-      companyID: string;
-      username: string;
-      tel: string | null;
-      positionName: string | null;
-      iconImage: string | null;
-      registered: boolean | null;
-      authority: string | null;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
     company: {
       __typename: "Company";
       id: string;
@@ -2244,9 +1847,9 @@ export type OnCreateMessageSubscription = {
   author: {
     __typename: "User";
     id: string;
+    username: string;
     email: string;
     companyID: string;
-    username: string;
     tel: string | null;
     positionName: string | null;
     iconImage: string | null;
@@ -2270,33 +1873,19 @@ export type OnCreateMessageSubscription = {
     __typename: "Task";
     id: string;
     authorID: string;
+    chargePersonID: string | null;
     roomID: string;
     title: string;
     description: string | null;
-    chargePersonID: string | null;
     scheduleDate: string | null;
     priority: number | null;
     status: number | null;
     createdAt: string | null;
-    members: Array<{
-      __typename: "User";
-      id: string;
-      email: string;
-      companyID: string;
-      username: string;
-      tel: string | null;
-      positionName: string | null;
-      iconImage: string | null;
-      registered: boolean | null;
-      authority: string | null;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
     room: {
       __typename: "Room";
       id: string;
-      companyID: string;
       name: string;
+      companyID: string;
       description: string;
       createdAt: string;
       updatedAt: string;
@@ -2317,9 +1906,9 @@ export type OnUpdateMessageSubscription = {
   author: {
     __typename: "User";
     id: string;
+    username: string;
     email: string;
     companyID: string;
-    username: string;
     tel: string | null;
     positionName: string | null;
     iconImage: string | null;
@@ -2343,33 +1932,19 @@ export type OnUpdateMessageSubscription = {
     __typename: "Task";
     id: string;
     authorID: string;
+    chargePersonID: string | null;
     roomID: string;
     title: string;
     description: string | null;
-    chargePersonID: string | null;
     scheduleDate: string | null;
     priority: number | null;
     status: number | null;
     createdAt: string | null;
-    members: Array<{
-      __typename: "User";
-      id: string;
-      email: string;
-      companyID: string;
-      username: string;
-      tel: string | null;
-      positionName: string | null;
-      iconImage: string | null;
-      registered: boolean | null;
-      authority: string | null;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
     room: {
       __typename: "Room";
       id: string;
-      companyID: string;
       name: string;
+      companyID: string;
       description: string;
       createdAt: string;
       updatedAt: string;
@@ -2390,9 +1965,9 @@ export type OnDeleteMessageSubscription = {
   author: {
     __typename: "User";
     id: string;
+    username: string;
     email: string;
     companyID: string;
-    username: string;
     tel: string | null;
     positionName: string | null;
     iconImage: string | null;
@@ -2416,33 +1991,19 @@ export type OnDeleteMessageSubscription = {
     __typename: "Task";
     id: string;
     authorID: string;
+    chargePersonID: string | null;
     roomID: string;
     title: string;
     description: string | null;
-    chargePersonID: string | null;
     scheduleDate: string | null;
     priority: number | null;
     status: number | null;
     createdAt: string | null;
-    members: Array<{
-      __typename: "User";
-      id: string;
-      email: string;
-      companyID: string;
-      username: string;
-      tel: string | null;
-      positionName: string | null;
-      iconImage: string | null;
-      registered: boolean | null;
-      authority: string | null;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
     room: {
       __typename: "Room";
       id: string;
-      companyID: string;
       name: string;
+      companyID: string;
       description: string;
       createdAt: string;
       updatedAt: string;
@@ -2453,99 +2014,6 @@ export type OnDeleteMessageSubscription = {
     } | null;
     updatedAt: string;
   };
-  updatedAt: string;
-};
-
-export type OnCreateUserSubscription = {
-  __typename: "User";
-  id: string;
-  email: string;
-  companyID: string;
-  username: string;
-  tel: string | null;
-  positionName: string | null;
-  iconImage: string | null;
-  registered: boolean | null;
-  authority: string | null;
-  company: {
-    __typename: "Company";
-    id: string;
-    name: string;
-    domain: string;
-    room: {
-      __typename: "ModelRoomConnection";
-      nextToken: string | null;
-    } | null;
-    members: {
-      __typename: "ModelUserConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  };
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type OnUpdateUserSubscription = {
-  __typename: "User";
-  id: string;
-  email: string;
-  companyID: string;
-  username: string;
-  tel: string | null;
-  positionName: string | null;
-  iconImage: string | null;
-  registered: boolean | null;
-  authority: string | null;
-  company: {
-    __typename: "Company";
-    id: string;
-    name: string;
-    domain: string;
-    room: {
-      __typename: "ModelRoomConnection";
-      nextToken: string | null;
-    } | null;
-    members: {
-      __typename: "ModelUserConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  };
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type OnDeleteUserSubscription = {
-  __typename: "User";
-  id: string;
-  email: string;
-  companyID: string;
-  username: string;
-  tel: string | null;
-  positionName: string | null;
-  iconImage: string | null;
-  registered: boolean | null;
-  authority: string | null;
-  company: {
-    __typename: "Company";
-    id: string;
-    name: string;
-    domain: string;
-    room: {
-      __typename: "ModelRoomConnection";
-      nextToken: string | null;
-    } | null;
-    members: {
-      __typename: "ModelUserConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  };
-  createdAt: string;
   updatedAt: string;
 };
 
@@ -2568,22 +2036,22 @@ export class APIService {
             items {
               __typename
               id
-              companyID
               name
+              companyID
               description
               createdAt
               updatedAt
             }
             nextToken
           }
-          members {
+          companyMembers {
             __typename
             items {
               __typename
               id
+              username
               email
               companyID
-              username
               tel
               positionName
               iconImage
@@ -2624,22 +2092,22 @@ export class APIService {
             items {
               __typename
               id
-              companyID
               name
+              companyID
               description
               createdAt
               updatedAt
             }
             nextToken
           }
-          members {
+          companyMembers {
             __typename
             items {
               __typename
               id
+              username
               email
               companyID
-              username
               tel
               positionName
               iconImage
@@ -2680,22 +2148,22 @@ export class APIService {
             items {
               __typename
               id
-              companyID
               name
+              companyID
               description
               createdAt
               updatedAt
             }
             nextToken
           }
-          members {
+          companyMembers {
             __typename
             items {
               __typename
               id
+              username
               email
               companyID
-              username
               tel
               positionName
               iconImage
@@ -2721,39 +2189,22 @@ export class APIService {
     )) as any;
     return <DeleteCompanyMutation>response.data.deleteCompany;
   }
-  async CreateRoom(
-    input: CreateRoomInput,
-    condition?: ModelRoomConditionInput
-  ): Promise<CreateRoomMutation> {
-    const statement = `mutation CreateRoom($input: CreateRoomInput!, $condition: ModelRoomConditionInput) {
-        createRoom(input: $input, condition: $condition) {
+  async CreateUser(
+    input: CreateUserInput,
+    condition?: ModelUserConditionInput
+  ): Promise<CreateUserMutation> {
+    const statement = `mutation CreateUser($input: CreateUserInput!, $condition: ModelUserConditionInput) {
+        createUser(input: $input, condition: $condition) {
           __typename
           id
+          username
+          email
           companyID
-          name
-          description
-          members {
-            __typename
-            id
-            email
-            companyID
-            username
-            tel
-            positionName
-            iconImage
-            registered
-            authority
-            company {
-              __typename
-              id
-              name
-              domain
-              createdAt
-              updatedAt
-            }
-            createdAt
-            updatedAt
-          }
+          tel
+          positionName
+          iconImage
+          registered
+          authority
           company {
             __typename
             id
@@ -2763,7 +2214,143 @@ export class APIService {
               __typename
               nextToken
             }
-            members {
+            companyMembers {
+              __typename
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          createdAt
+          updatedAt
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      input
+    };
+    if (condition) {
+      gqlAPIServiceArguments.condition = condition;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <CreateUserMutation>response.data.createUser;
+  }
+  async UpdateUser(
+    input: UpdateUserInput,
+    condition?: ModelUserConditionInput
+  ): Promise<UpdateUserMutation> {
+    const statement = `mutation UpdateUser($input: UpdateUserInput!, $condition: ModelUserConditionInput) {
+        updateUser(input: $input, condition: $condition) {
+          __typename
+          id
+          username
+          email
+          companyID
+          tel
+          positionName
+          iconImage
+          registered
+          authority
+          company {
+            __typename
+            id
+            name
+            domain
+            room {
+              __typename
+              nextToken
+            }
+            companyMembers {
+              __typename
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          createdAt
+          updatedAt
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      input
+    };
+    if (condition) {
+      gqlAPIServiceArguments.condition = condition;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <UpdateUserMutation>response.data.updateUser;
+  }
+  async DeleteUser(
+    input: DeleteUserInput,
+    condition?: ModelUserConditionInput
+  ): Promise<DeleteUserMutation> {
+    const statement = `mutation DeleteUser($input: DeleteUserInput!, $condition: ModelUserConditionInput) {
+        deleteUser(input: $input, condition: $condition) {
+          __typename
+          id
+          username
+          email
+          companyID
+          tel
+          positionName
+          iconImage
+          registered
+          authority
+          company {
+            __typename
+            id
+            name
+            domain
+            room {
+              __typename
+              nextToken
+            }
+            companyMembers {
+              __typename
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          createdAt
+          updatedAt
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      input
+    };
+    if (condition) {
+      gqlAPIServiceArguments.condition = condition;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <DeleteUserMutation>response.data.deleteUser;
+  }
+  async CreateRoom(
+    input: CreateRoomInput,
+    condition?: ModelRoomConditionInput
+  ): Promise<CreateRoomMutation> {
+    const statement = `mutation CreateRoom($input: CreateRoomInput!, $condition: ModelRoomConditionInput) {
+        createRoom(input: $input, condition: $condition) {
+          __typename
+          id
+          name
+          companyID
+          description
+          company {
+            __typename
+            id
+            name
+            domain
+            room {
+              __typename
+              nextToken
+            }
+            companyMembers {
               __typename
               nextToken
             }
@@ -2776,10 +2363,10 @@ export class APIService {
               __typename
               id
               authorID
+              chargePersonID
               roomID
               title
               description
-              chargePersonID
               scheduleDate
               priority
               status
@@ -2811,31 +2398,9 @@ export class APIService {
         updateRoom(input: $input, condition: $condition) {
           __typename
           id
-          companyID
           name
+          companyID
           description
-          members {
-            __typename
-            id
-            email
-            companyID
-            username
-            tel
-            positionName
-            iconImage
-            registered
-            authority
-            company {
-              __typename
-              id
-              name
-              domain
-              createdAt
-              updatedAt
-            }
-            createdAt
-            updatedAt
-          }
           company {
             __typename
             id
@@ -2845,7 +2410,7 @@ export class APIService {
               __typename
               nextToken
             }
-            members {
+            companyMembers {
               __typename
               nextToken
             }
@@ -2858,10 +2423,10 @@ export class APIService {
               __typename
               id
               authorID
+              chargePersonID
               roomID
               title
               description
-              chargePersonID
               scheduleDate
               priority
               status
@@ -2893,31 +2458,9 @@ export class APIService {
         deleteRoom(input: $input, condition: $condition) {
           __typename
           id
-          companyID
           name
+          companyID
           description
-          members {
-            __typename
-            id
-            email
-            companyID
-            username
-            tel
-            positionName
-            iconImage
-            registered
-            authority
-            company {
-              __typename
-              id
-              name
-              domain
-              createdAt
-              updatedAt
-            }
-            createdAt
-            updatedAt
-          }
           company {
             __typename
             id
@@ -2927,7 +2470,7 @@ export class APIService {
               __typename
               nextToken
             }
-            members {
+            companyMembers {
               __typename
               nextToken
             }
@@ -2940,10 +2483,10 @@ export class APIService {
               __typename
               id
               authorID
+              chargePersonID
               roomID
               title
               description
-              chargePersonID
               scheduleDate
               priority
               status
@@ -2976,56 +2519,20 @@ export class APIService {
           __typename
           id
           authorID
+          chargePersonID
           roomID
           title
           description
-          chargePersonID
           scheduleDate
           priority
           status
           createdAt
-          members {
-            __typename
-            id
-            email
-            companyID
-            username
-            tel
-            positionName
-            iconImage
-            registered
-            authority
-            company {
-              __typename
-              id
-              name
-              domain
-              createdAt
-              updatedAt
-            }
-            createdAt
-            updatedAt
-          }
           room {
             __typename
             id
-            companyID
             name
+            companyID
             description
-            members {
-              __typename
-              id
-              email
-              companyID
-              username
-              tel
-              positionName
-              iconImage
-              registered
-              authority
-              createdAt
-              updatedAt
-            }
             company {
               __typename
               id
@@ -3077,56 +2584,20 @@ export class APIService {
           __typename
           id
           authorID
+          chargePersonID
           roomID
           title
           description
-          chargePersonID
           scheduleDate
           priority
           status
           createdAt
-          members {
-            __typename
-            id
-            email
-            companyID
-            username
-            tel
-            positionName
-            iconImage
-            registered
-            authority
-            company {
-              __typename
-              id
-              name
-              domain
-              createdAt
-              updatedAt
-            }
-            createdAt
-            updatedAt
-          }
           room {
             __typename
             id
-            companyID
             name
+            companyID
             description
-            members {
-              __typename
-              id
-              email
-              companyID
-              username
-              tel
-              positionName
-              iconImage
-              registered
-              authority
-              createdAt
-              updatedAt
-            }
             company {
               __typename
               id
@@ -3178,56 +2649,20 @@ export class APIService {
           __typename
           id
           authorID
+          chargePersonID
           roomID
           title
           description
-          chargePersonID
           scheduleDate
           priority
           status
           createdAt
-          members {
-            __typename
-            id
-            email
-            companyID
-            username
-            tel
-            positionName
-            iconImage
-            registered
-            authority
-            company {
-              __typename
-              id
-              name
-              domain
-              createdAt
-              updatedAt
-            }
-            createdAt
-            updatedAt
-          }
           room {
             __typename
             id
-            companyID
             name
+            companyID
             description
-            members {
-              __typename
-              id
-              email
-              companyID
-              username
-              tel
-              positionName
-              iconImage
-              registered
-              authority
-              createdAt
-              updatedAt
-            }
             company {
               __typename
               id
@@ -3282,9 +2717,9 @@ export class APIService {
           author {
             __typename
             id
+            username
             email
             companyID
-            username
             tel
             positionName
             iconImage
@@ -3308,33 +2743,19 @@ export class APIService {
             __typename
             id
             authorID
+            chargePersonID
             roomID
             title
             description
-            chargePersonID
             scheduleDate
             priority
             status
             createdAt
-            members {
-              __typename
-              id
-              email
-              companyID
-              username
-              tel
-              positionName
-              iconImage
-              registered
-              authority
-              createdAt
-              updatedAt
-            }
             room {
               __typename
               id
-              companyID
               name
+              companyID
               description
               createdAt
               updatedAt
@@ -3371,9 +2792,9 @@ export class APIService {
           author {
             __typename
             id
+            username
             email
             companyID
-            username
             tel
             positionName
             iconImage
@@ -3397,33 +2818,19 @@ export class APIService {
             __typename
             id
             authorID
+            chargePersonID
             roomID
             title
             description
-            chargePersonID
             scheduleDate
             priority
             status
             createdAt
-            members {
-              __typename
-              id
-              email
-              companyID
-              username
-              tel
-              positionName
-              iconImage
-              registered
-              authority
-              createdAt
-              updatedAt
-            }
             room {
               __typename
               id
-              companyID
               name
+              companyID
               description
               createdAt
               updatedAt
@@ -3460,9 +2867,9 @@ export class APIService {
           author {
             __typename
             id
+            username
             email
             companyID
-            username
             tel
             positionName
             iconImage
@@ -3486,33 +2893,19 @@ export class APIService {
             __typename
             id
             authorID
+            chargePersonID
             roomID
             title
             description
-            chargePersonID
             scheduleDate
             priority
             status
             createdAt
-            members {
-              __typename
-              id
-              email
-              companyID
-              username
-              tel
-              positionName
-              iconImage
-              registered
-              authority
-              createdAt
-              updatedAt
-            }
             room {
               __typename
               id
-              companyID
               name
+              companyID
               description
               createdAt
               updatedAt
@@ -3537,147 +2930,6 @@ export class APIService {
     )) as any;
     return <DeleteMessageMutation>response.data.deleteMessage;
   }
-  async CreateUser(
-    input: CreateUserInput,
-    condition?: ModelUserConditionInput
-  ): Promise<CreateUserMutation> {
-    const statement = `mutation CreateUser($input: CreateUserInput!, $condition: ModelUserConditionInput) {
-        createUser(input: $input, condition: $condition) {
-          __typename
-          id
-          email
-          companyID
-          username
-          tel
-          positionName
-          iconImage
-          registered
-          authority
-          company {
-            __typename
-            id
-            name
-            domain
-            room {
-              __typename
-              nextToken
-            }
-            members {
-              __typename
-              nextToken
-            }
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      input
-    };
-    if (condition) {
-      gqlAPIServiceArguments.condition = condition;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <CreateUserMutation>response.data.createUser;
-  }
-  async UpdateUser(
-    input: UpdateUserInput,
-    condition?: ModelUserConditionInput
-  ): Promise<UpdateUserMutation> {
-    const statement = `mutation UpdateUser($input: UpdateUserInput!, $condition: ModelUserConditionInput) {
-        updateUser(input: $input, condition: $condition) {
-          __typename
-          id
-          email
-          companyID
-          username
-          tel
-          positionName
-          iconImage
-          registered
-          authority
-          company {
-            __typename
-            id
-            name
-            domain
-            room {
-              __typename
-              nextToken
-            }
-            members {
-              __typename
-              nextToken
-            }
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      input
-    };
-    if (condition) {
-      gqlAPIServiceArguments.condition = condition;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <UpdateUserMutation>response.data.updateUser;
-  }
-  async DeleteUser(
-    input: DeleteUserInput,
-    condition?: ModelUserConditionInput
-  ): Promise<DeleteUserMutation> {
-    const statement = `mutation DeleteUser($input: DeleteUserInput!, $condition: ModelUserConditionInput) {
-        deleteUser(input: $input, condition: $condition) {
-          __typename
-          id
-          email
-          companyID
-          username
-          tel
-          positionName
-          iconImage
-          registered
-          authority
-          company {
-            __typename
-            id
-            name
-            domain
-            room {
-              __typename
-              nextToken
-            }
-            members {
-              __typename
-              nextToken
-            }
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      input
-    };
-    if (condition) {
-      gqlAPIServiceArguments.condition = condition;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <DeleteUserMutation>response.data.deleteUser;
-  }
   async GetCompany(id: string): Promise<GetCompanyQuery> {
     const statement = `query GetCompany($id: ID!) {
         getCompany(id: $id) {
@@ -3690,22 +2942,22 @@ export class APIService {
             items {
               __typename
               id
-              companyID
               name
+              companyID
               description
               createdAt
               updatedAt
             }
             nextToken
           }
-          members {
+          companyMembers {
             __typename
             items {
               __typename
               id
+              username
               email
               companyID
-              username
               tel
               positionName
               iconImage
@@ -3745,7 +2997,7 @@ export class APIService {
               __typename
               nextToken
             }
-            members {
+            companyMembers {
               __typename
               nextToken
             }
@@ -3770,20 +3022,61 @@ export class APIService {
     )) as any;
     return <ListCompanysQuery>response.data.listCompanys;
   }
-  async GetRoom(id: string): Promise<GetRoomQuery> {
-    const statement = `query GetRoom($id: ID!) {
-        getRoom(id: $id) {
+  async GetUser(id: string): Promise<GetUserQuery> {
+    const statement = `query GetUser($id: ID!) {
+        getUser(id: $id) {
           __typename
           id
+          username
+          email
           companyID
-          name
-          description
-          members {
+          tel
+          positionName
+          iconImage
+          registered
+          authority
+          company {
             __typename
             id
+            name
+            domain
+            room {
+              __typename
+              nextToken
+            }
+            companyMembers {
+              __typename
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          createdAt
+          updatedAt
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      id
+    };
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <GetUserQuery>response.data.getUser;
+  }
+  async ListUsers(
+    filter?: ModelUserFilterInput,
+    limit?: number,
+    nextToken?: string
+  ): Promise<ListUsersQuery> {
+    const statement = `query ListUsers($filter: ModelUserFilterInput, $limit: Int, $nextToken: String) {
+        listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
+          __typename
+          items {
+            __typename
+            id
+            username
             email
             companyID
-            username
             tel
             positionName
             iconImage
@@ -3800,6 +3093,32 @@ export class APIService {
             createdAt
             updatedAt
           }
+          nextToken
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {};
+    if (filter) {
+      gqlAPIServiceArguments.filter = filter;
+    }
+    if (limit) {
+      gqlAPIServiceArguments.limit = limit;
+    }
+    if (nextToken) {
+      gqlAPIServiceArguments.nextToken = nextToken;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <ListUsersQuery>response.data.listUsers;
+  }
+  async GetRoom(id: string): Promise<GetRoomQuery> {
+    const statement = `query GetRoom($id: ID!) {
+        getRoom(id: $id) {
+          __typename
+          id
+          name
+          companyID
+          description
           company {
             __typename
             id
@@ -3809,7 +3128,7 @@ export class APIService {
               __typename
               nextToken
             }
-            members {
+            companyMembers {
               __typename
               nextToken
             }
@@ -3822,10 +3141,10 @@ export class APIService {
               __typename
               id
               authorID
+              chargePersonID
               roomID
               title
               description
-              chargePersonID
               scheduleDate
               priority
               status
@@ -3857,23 +3176,9 @@ export class APIService {
           items {
             __typename
             id
-            companyID
             name
+            companyID
             description
-            members {
-              __typename
-              id
-              email
-              companyID
-              username
-              tel
-              positionName
-              iconImage
-              registered
-              authority
-              createdAt
-              updatedAt
-            }
             company {
               __typename
               id
@@ -3913,56 +3218,20 @@ export class APIService {
           __typename
           id
           authorID
+          chargePersonID
           roomID
           title
           description
-          chargePersonID
           scheduleDate
           priority
           status
           createdAt
-          members {
-            __typename
-            id
-            email
-            companyID
-            username
-            tel
-            positionName
-            iconImage
-            registered
-            authority
-            company {
-              __typename
-              id
-              name
-              domain
-              createdAt
-              updatedAt
-            }
-            createdAt
-            updatedAt
-          }
           room {
             __typename
             id
-            companyID
             name
+            companyID
             description
-            members {
-              __typename
-              id
-              email
-              companyID
-              username
-              tel
-              positionName
-              iconImage
-              registered
-              authority
-              createdAt
-              updatedAt
-            }
             company {
               __typename
               id
@@ -4014,33 +3283,19 @@ export class APIService {
             __typename
             id
             authorID
+            chargePersonID
             roomID
             title
             description
-            chargePersonID
             scheduleDate
             priority
             status
             createdAt
-            members {
-              __typename
-              id
-              email
-              companyID
-              username
-              tel
-              positionName
-              iconImage
-              registered
-              authority
-              createdAt
-              updatedAt
-            }
             room {
               __typename
               id
-              companyID
               name
+              companyID
               description
               createdAt
               updatedAt
@@ -4078,9 +3333,9 @@ export class APIService {
           author {
             __typename
             id
+            username
             email
             companyID
-            username
             tel
             positionName
             iconImage
@@ -4104,33 +3359,19 @@ export class APIService {
             __typename
             id
             authorID
+            chargePersonID
             roomID
             title
             description
-            chargePersonID
             scheduleDate
             priority
             status
             createdAt
-            members {
-              __typename
-              id
-              email
-              companyID
-              username
-              tel
-              positionName
-              iconImage
-              registered
-              authority
-              createdAt
-              updatedAt
-            }
             room {
               __typename
               id
-              companyID
               name
+              companyID
               description
               createdAt
               updatedAt
@@ -4167,9 +3408,9 @@ export class APIService {
             author {
               __typename
               id
+              username
               email
               companyID
-              username
               tel
               positionName
               iconImage
@@ -4185,10 +3426,10 @@ export class APIService {
               __typename
               id
               authorID
+              chargePersonID
               roomID
               title
               description
-              chargePersonID
               scheduleDate
               priority
               status
@@ -4215,95 +3456,6 @@ export class APIService {
     )) as any;
     return <ListMessagesQuery>response.data.listMessages;
   }
-  async GetUser(id: string): Promise<GetUserQuery> {
-    const statement = `query GetUser($id: ID!) {
-        getUser(id: $id) {
-          __typename
-          id
-          email
-          companyID
-          username
-          tel
-          positionName
-          iconImage
-          registered
-          authority
-          company {
-            __typename
-            id
-            name
-            domain
-            room {
-              __typename
-              nextToken
-            }
-            members {
-              __typename
-              nextToken
-            }
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      id
-    };
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <GetUserQuery>response.data.getUser;
-  }
-  async ListUsers(
-    filter?: ModelUserFilterInput,
-    limit?: number,
-    nextToken?: string
-  ): Promise<ListUsersQuery> {
-    const statement = `query ListUsers($filter: ModelUserFilterInput, $limit: Int, $nextToken: String) {
-        listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
-          __typename
-          items {
-            __typename
-            id
-            email
-            companyID
-            username
-            tel
-            positionName
-            iconImage
-            registered
-            authority
-            company {
-              __typename
-              id
-              name
-              domain
-              createdAt
-              updatedAt
-            }
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {};
-    if (filter) {
-      gqlAPIServiceArguments.filter = filter;
-    }
-    if (limit) {
-      gqlAPIServiceArguments.limit = limit;
-    }
-    if (nextToken) {
-      gqlAPIServiceArguments.nextToken = nextToken;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <ListUsersQuery>response.data.listUsers;
-  }
   OnCreateCompanyListener: Observable<
     OnCreateCompanySubscription
   > = API.graphql(
@@ -4319,22 +3471,22 @@ export class APIService {
             items {
               __typename
               id
-              companyID
               name
+              companyID
               description
               createdAt
               updatedAt
             }
             nextToken
           }
-          members {
+          companyMembers {
             __typename
             items {
               __typename
               id
+              username
               email
               companyID
-              username
               tel
               positionName
               iconImage
@@ -4367,22 +3519,22 @@ export class APIService {
             items {
               __typename
               id
-              companyID
               name
+              companyID
               description
               createdAt
               updatedAt
             }
             nextToken
           }
-          members {
+          companyMembers {
             __typename
             items {
               __typename
               id
+              username
               email
               companyID
-              username
               tel
               positionName
               iconImage
@@ -4415,22 +3567,22 @@ export class APIService {
             items {
               __typename
               id
-              companyID
               name
+              companyID
               description
               createdAt
               updatedAt
             }
             nextToken
           }
-          members {
+          companyMembers {
             __typename
             items {
               __typename
               id
+              username
               email
               companyID
-              username
               tel
               positionName
               iconImage
@@ -4448,37 +3600,20 @@ export class APIService {
     )
   ) as Observable<OnDeleteCompanySubscription>;
 
-  OnCreateRoomListener: Observable<OnCreateRoomSubscription> = API.graphql(
+  OnCreateUserListener: Observable<OnCreateUserSubscription> = API.graphql(
     graphqlOperation(
-      `subscription OnCreateRoom {
-        onCreateRoom {
+      `subscription OnCreateUser {
+        onCreateUser {
           __typename
           id
+          username
+          email
           companyID
-          name
-          description
-          members {
-            __typename
-            id
-            email
-            companyID
-            username
-            tel
-            positionName
-            iconImage
-            registered
-            authority
-            company {
-              __typename
-              id
-              name
-              domain
-              createdAt
-              updatedAt
-            }
-            createdAt
-            updatedAt
-          }
+          tel
+          positionName
+          iconImage
+          registered
+          authority
           company {
             __typename
             id
@@ -4488,7 +3623,113 @@ export class APIService {
               __typename
               nextToken
             }
-            members {
+            companyMembers {
+              __typename
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          createdAt
+          updatedAt
+        }
+      }`
+    )
+  ) as Observable<OnCreateUserSubscription>;
+
+  OnUpdateUserListener: Observable<OnUpdateUserSubscription> = API.graphql(
+    graphqlOperation(
+      `subscription OnUpdateUser {
+        onUpdateUser {
+          __typename
+          id
+          username
+          email
+          companyID
+          tel
+          positionName
+          iconImage
+          registered
+          authority
+          company {
+            __typename
+            id
+            name
+            domain
+            room {
+              __typename
+              nextToken
+            }
+            companyMembers {
+              __typename
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          createdAt
+          updatedAt
+        }
+      }`
+    )
+  ) as Observable<OnUpdateUserSubscription>;
+
+  OnDeleteUserListener: Observable<OnDeleteUserSubscription> = API.graphql(
+    graphqlOperation(
+      `subscription OnDeleteUser {
+        onDeleteUser {
+          __typename
+          id
+          username
+          email
+          companyID
+          tel
+          positionName
+          iconImage
+          registered
+          authority
+          company {
+            __typename
+            id
+            name
+            domain
+            room {
+              __typename
+              nextToken
+            }
+            companyMembers {
+              __typename
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          createdAt
+          updatedAt
+        }
+      }`
+    )
+  ) as Observable<OnDeleteUserSubscription>;
+
+  OnCreateRoomListener: Observable<OnCreateRoomSubscription> = API.graphql(
+    graphqlOperation(
+      `subscription OnCreateRoom {
+        onCreateRoom {
+          __typename
+          id
+          name
+          companyID
+          description
+          company {
+            __typename
+            id
+            name
+            domain
+            room {
+              __typename
+              nextToken
+            }
+            companyMembers {
               __typename
               nextToken
             }
@@ -4501,10 +3742,10 @@ export class APIService {
               __typename
               id
               authorID
+              chargePersonID
               roomID
               title
               description
-              chargePersonID
               scheduleDate
               priority
               status
@@ -4526,31 +3767,9 @@ export class APIService {
         onUpdateRoom {
           __typename
           id
-          companyID
           name
+          companyID
           description
-          members {
-            __typename
-            id
-            email
-            companyID
-            username
-            tel
-            positionName
-            iconImage
-            registered
-            authority
-            company {
-              __typename
-              id
-              name
-              domain
-              createdAt
-              updatedAt
-            }
-            createdAt
-            updatedAt
-          }
           company {
             __typename
             id
@@ -4560,7 +3779,7 @@ export class APIService {
               __typename
               nextToken
             }
-            members {
+            companyMembers {
               __typename
               nextToken
             }
@@ -4573,10 +3792,10 @@ export class APIService {
               __typename
               id
               authorID
+              chargePersonID
               roomID
               title
               description
-              chargePersonID
               scheduleDate
               priority
               status
@@ -4598,31 +3817,9 @@ export class APIService {
         onDeleteRoom {
           __typename
           id
-          companyID
           name
+          companyID
           description
-          members {
-            __typename
-            id
-            email
-            companyID
-            username
-            tel
-            positionName
-            iconImage
-            registered
-            authority
-            company {
-              __typename
-              id
-              name
-              domain
-              createdAt
-              updatedAt
-            }
-            createdAt
-            updatedAt
-          }
           company {
             __typename
             id
@@ -4632,7 +3829,7 @@ export class APIService {
               __typename
               nextToken
             }
-            members {
+            companyMembers {
               __typename
               nextToken
             }
@@ -4645,10 +3842,10 @@ export class APIService {
               __typename
               id
               authorID
+              chargePersonID
               roomID
               title
               description
-              chargePersonID
               scheduleDate
               priority
               status
@@ -4671,56 +3868,20 @@ export class APIService {
           __typename
           id
           authorID
+          chargePersonID
           roomID
           title
           description
-          chargePersonID
           scheduleDate
           priority
           status
           createdAt
-          members {
-            __typename
-            id
-            email
-            companyID
-            username
-            tel
-            positionName
-            iconImage
-            registered
-            authority
-            company {
-              __typename
-              id
-              name
-              domain
-              createdAt
-              updatedAt
-            }
-            createdAt
-            updatedAt
-          }
           room {
             __typename
             id
-            companyID
             name
+            companyID
             description
-            members {
-              __typename
-              id
-              email
-              companyID
-              username
-              tel
-              positionName
-              iconImage
-              registered
-              authority
-              createdAt
-              updatedAt
-            }
             company {
               __typename
               id
@@ -4762,56 +3923,20 @@ export class APIService {
           __typename
           id
           authorID
+          chargePersonID
           roomID
           title
           description
-          chargePersonID
           scheduleDate
           priority
           status
           createdAt
-          members {
-            __typename
-            id
-            email
-            companyID
-            username
-            tel
-            positionName
-            iconImage
-            registered
-            authority
-            company {
-              __typename
-              id
-              name
-              domain
-              createdAt
-              updatedAt
-            }
-            createdAt
-            updatedAt
-          }
           room {
             __typename
             id
-            companyID
             name
+            companyID
             description
-            members {
-              __typename
-              id
-              email
-              companyID
-              username
-              tel
-              positionName
-              iconImage
-              registered
-              authority
-              createdAt
-              updatedAt
-            }
             company {
               __typename
               id
@@ -4853,56 +3978,20 @@ export class APIService {
           __typename
           id
           authorID
+          chargePersonID
           roomID
           title
           description
-          chargePersonID
           scheduleDate
           priority
           status
           createdAt
-          members {
-            __typename
-            id
-            email
-            companyID
-            username
-            tel
-            positionName
-            iconImage
-            registered
-            authority
-            company {
-              __typename
-              id
-              name
-              domain
-              createdAt
-              updatedAt
-            }
-            createdAt
-            updatedAt
-          }
           room {
             __typename
             id
-            companyID
             name
+            companyID
             description
-            members {
-              __typename
-              id
-              email
-              companyID
-              username
-              tel
-              positionName
-              iconImage
-              registered
-              authority
-              createdAt
-              updatedAt
-            }
             company {
               __typename
               id
@@ -4949,9 +4038,9 @@ export class APIService {
           author {
             __typename
             id
+            username
             email
             companyID
-            username
             tel
             positionName
             iconImage
@@ -4975,33 +4064,19 @@ export class APIService {
             __typename
             id
             authorID
+            chargePersonID
             roomID
             title
             description
-            chargePersonID
             scheduleDate
             priority
             status
             createdAt
-            members {
-              __typename
-              id
-              email
-              companyID
-              username
-              tel
-              positionName
-              iconImage
-              registered
-              authority
-              createdAt
-              updatedAt
-            }
             room {
               __typename
               id
-              companyID
               name
+              companyID
               description
               createdAt
               updatedAt
@@ -5030,9 +4105,9 @@ export class APIService {
           author {
             __typename
             id
+            username
             email
             companyID
-            username
             tel
             positionName
             iconImage
@@ -5056,33 +4131,19 @@ export class APIService {
             __typename
             id
             authorID
+            chargePersonID
             roomID
             title
             description
-            chargePersonID
             scheduleDate
             priority
             status
             createdAt
-            members {
-              __typename
-              id
-              email
-              companyID
-              username
-              tel
-              positionName
-              iconImage
-              registered
-              authority
-              createdAt
-              updatedAt
-            }
             room {
               __typename
               id
-              companyID
               name
+              companyID
               description
               createdAt
               updatedAt
@@ -5111,9 +4172,9 @@ export class APIService {
           author {
             __typename
             id
+            username
             email
             companyID
-            username
             tel
             positionName
             iconImage
@@ -5137,33 +4198,19 @@ export class APIService {
             __typename
             id
             authorID
+            chargePersonID
             roomID
             title
             description
-            chargePersonID
             scheduleDate
             priority
             status
             createdAt
-            members {
-              __typename
-              id
-              email
-              companyID
-              username
-              tel
-              positionName
-              iconImage
-              registered
-              authority
-              createdAt
-              updatedAt
-            }
             room {
               __typename
               id
-              companyID
               name
+              companyID
               description
               createdAt
               updatedAt
@@ -5179,115 +4226,4 @@ export class APIService {
       }`
     )
   ) as Observable<OnDeleteMessageSubscription>;
-
-  OnCreateUserListener: Observable<OnCreateUserSubscription> = API.graphql(
-    graphqlOperation(
-      `subscription OnCreateUser {
-        onCreateUser {
-          __typename
-          id
-          email
-          companyID
-          username
-          tel
-          positionName
-          iconImage
-          registered
-          authority
-          company {
-            __typename
-            id
-            name
-            domain
-            room {
-              __typename
-              nextToken
-            }
-            members {
-              __typename
-              nextToken
-            }
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-        }
-      }`
-    )
-  ) as Observable<OnCreateUserSubscription>;
-
-  OnUpdateUserListener: Observable<OnUpdateUserSubscription> = API.graphql(
-    graphqlOperation(
-      `subscription OnUpdateUser {
-        onUpdateUser {
-          __typename
-          id
-          email
-          companyID
-          username
-          tel
-          positionName
-          iconImage
-          registered
-          authority
-          company {
-            __typename
-            id
-            name
-            domain
-            room {
-              __typename
-              nextToken
-            }
-            members {
-              __typename
-              nextToken
-            }
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-        }
-      }`
-    )
-  ) as Observable<OnUpdateUserSubscription>;
-
-  OnDeleteUserListener: Observable<OnDeleteUserSubscription> = API.graphql(
-    graphqlOperation(
-      `subscription OnDeleteUser {
-        onDeleteUser {
-          __typename
-          id
-          email
-          companyID
-          username
-          tel
-          positionName
-          iconImage
-          registered
-          authority
-          company {
-            __typename
-            id
-            name
-            domain
-            room {
-              __typename
-              nextToken
-            }
-            members {
-              __typename
-              nextToken
-            }
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-        }
-      }`
-    )
-  ) as Observable<OnDeleteUserSubscription>;
 }

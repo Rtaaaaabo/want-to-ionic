@@ -2,21 +2,33 @@ type Company @model {
   id: ID!
   name: String!
   domain: String!
-  room: [Room] @connection(name: "CompanyRoom")
-  companyMembers: [User] @connection(name: "CompanyMembers")
+  room: [Room] @connection(keyName: "byCompany", fields: ["id"])
+  companyMembers: [User] @connection(keyName: "byCompany", fields: ["id"])
 }
 
-type Room @model {
+type User @model @key(name: "byCompany", fields: ["companyID"]) {
+  id: ID!
+  username: String!
+  email: String!
+  companyID: ID!
+  tel: String
+  positionName: String
+  iconImage: String
+  registered: Boolean
+  authority: String
+  company: Company! @connection(fields: ["companyID"])
+}
+
+type Room @model @key(name: "byCompany", fields: ["companyID"]) {
   id: ID!
   name: String!
   companyID: ID!
-  company: Company! @connection(name: "CompanyRoom", fields: ["companyID"])
   description: String!
-  tasks: [Task] @connection(name: "RoomTask", fields: ["id"])
-  roomMembers: [User] @connection(name: "RoomMembers", fields: ["id"])
+  company: Company! @connection(fields: ["companyID"])
+  tasks: [Task] @connection(name: "byRoom", fields: ["id"])
 }
 
-type Task @model {
+type Task @model @key(name: "byRoom", fields: ["roomID"]) {
   id: ID!
   authorID: ID!
   chargePersonID: ID
@@ -27,35 +39,17 @@ type Task @model {
   priority: Int
   status: Int
   createdAt: AWSDateTime
-  taskMembers: [User] @connection(name: "TaskMembers")
-  chargePerson: User
-    @connection(name: "chargeMember", fields: ["chargePersonID"])
-  room: Room! @connection(name: "RoomTask", fields: ["roomID"])
-  messages: [Message] @connection(name: "TaskMessages", fields: ["id"])
+  room: Room! @connection(fields: ["roomID"])
+  messages: [Message] @connection(keyName: "byTask", fields: ["id"])
+  # chargePerson: User @connection(name: "chargeMember", fields: ["chargePersonID"])
 }
 
-type Message @model {
+type Message @model @key(name: "byTask", fields: ["taskID"]) {
   id: ID!
   taskID: ID!
   author: User
   content: String!
   createdAt: AWSDateTime
   isSent: Boolean
-  task: Task! @connection(name: "TaskMessages", fields: ["taskID"])
-}
-
-type User @model {
-  id: ID!
-  username: String!
-  email: String!
-  companyID: ID!
-  tel: String
-  positionName: String
-  iconImage: String
-  registered: Boolean
-  authority: String
-  company: Company! @connection(name: "CompanyMembers", fields: ["companyID"])
-  task: Task @connection(name: "TaskMembers")
-  chargeTask: [Task] @connection(name: "chargeMember")
-  room: Room @connection(name: "RoomMembers")
+  task: Task! @connection(fields: ["taskID"])
 }
