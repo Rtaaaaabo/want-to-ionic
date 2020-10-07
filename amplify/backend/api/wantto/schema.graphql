@@ -46,9 +46,9 @@ type Message @model {
 
 type User @model {
   id: ID!
+  username: String!
   email: String!
   companyID: ID!
-  username: String!
   tel: String
   positionName: String
   iconImage: String
