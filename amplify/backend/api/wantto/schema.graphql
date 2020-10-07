@@ -17,6 +17,30 @@ type User @model @key(name: "byCompany", fields: ["companyID"]) {
   registered: Boolean
   authority: String
   company: Company! @connection(fields: ["companyID"])
+  room: [RoomGroup] @connection(keyName: "byUser", fields: ["id"])
+  task: [TaskGroup] @connection(keyName: "byUser", fields: ["id"])
+}
+
+type RoomGroup
+  @model
+  @key(name: "byRoom", fields: ["roomID"])
+  @key(name: "byUser", fields: ["userID"]) {
+  id: ID!
+  roomID: ID!
+  userID: ID!
+  room: Room @connection(fields: ["roomID"])
+  user: User @connection(fields: ["userID"])
+}
+
+type TaskGroup
+  @model
+  @key(name: "byTask", fields: ["taskID"])
+  @key(name: "byUser", fields: ["userID"]) {
+  id: ID!
+  taskID: ID!
+  userID: ID!
+  task: Task @connection(fields: ["taskID"])
+  user: User @connection(fields: ["userID"])
 }
 
 type Room @model @key(name: "byCompany", fields: ["companyID"]) {
