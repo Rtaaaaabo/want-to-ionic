@@ -116,147 +116,6 @@ mutation DeleteCompany(
     updatedAt
   }
 }
-mutation CreateTask(
-  $input: CreateTaskInput!
-  $condition: ModelTaskConditionInput
-) {
-  createTask(input: $input, condition: $condition) {
-    id
-    authorID
-    roomID
-    chargePersonID
-    title
-    room {
-      id
-      name
-      companyID
-      description
-      company {
-        id
-        name
-        domain
-        createdAt
-        updatedAt
-      }
-      tasks {
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-    description
-    scheduleDate
-    priority
-    status
-    createdAt
-    messages {
-      items {
-        id
-        taskID
-        content
-        createdAt
-        isSent
-        updatedAt
-      }
-      nextToken
-    }
-    updatedAt
-  }
-}
-mutation UpdateTask(
-  $input: UpdateTaskInput!
-  $condition: ModelTaskConditionInput
-) {
-  updateTask(input: $input, condition: $condition) {
-    id
-    authorID
-    roomID
-    chargePersonID
-    title
-    room {
-      id
-      name
-      companyID
-      description
-      company {
-        id
-        name
-        domain
-        createdAt
-        updatedAt
-      }
-      tasks {
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-    description
-    scheduleDate
-    priority
-    status
-    createdAt
-    messages {
-      items {
-        id
-        taskID
-        content
-        createdAt
-        isSent
-        updatedAt
-      }
-      nextToken
-    }
-    updatedAt
-  }
-}
-mutation DeleteTask(
-  $input: DeleteTaskInput!
-  $condition: ModelTaskConditionInput
-) {
-  deleteTask(input: $input, condition: $condition) {
-    id
-    authorID
-    roomID
-    chargePersonID
-    title
-    room {
-      id
-      name
-      companyID
-      description
-      company {
-        id
-        name
-        domain
-        createdAt
-        updatedAt
-      }
-      tasks {
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-    description
-    scheduleDate
-    priority
-    status
-    createdAt
-    messages {
-      items {
-        id
-        taskID
-        content
-        createdAt
-        isSent
-        updatedAt
-      }
-      nextToken
-    }
-    updatedAt
-  }
-}
 mutation CreateUser(
   $input: CreateUserInput!
   $condition: ModelUserConditionInput
@@ -440,6 +299,9 @@ mutation CreateTaskGroup(
       messages {
         nextToken
       }
+      users {
+        nextToken
+      }
       updatedAt
     }
     user {
@@ -500,6 +362,9 @@ mutation UpdateTaskGroup(
       status
       createdAt
       messages {
+        nextToken
+      }
+      users {
         nextToken
       }
       updatedAt
@@ -564,6 +429,9 @@ mutation DeleteTaskGroup(
       messages {
         nextToken
       }
+      users {
+        nextToken
+      }
       updatedAt
     }
     user {
@@ -596,6 +464,186 @@ mutation DeleteTaskGroup(
     updatedAt
   }
 }
+mutation CreateTask(
+  $input: CreateTaskInput!
+  $condition: ModelTaskConditionInput
+) {
+  createTask(input: $input, condition: $condition) {
+    id
+    authorID
+    roomID
+    chargePersonID
+    title
+    room {
+      id
+      name
+      companyID
+      description
+      company {
+        id
+        name
+        domain
+        createdAt
+        updatedAt
+      }
+      tasks {
+        nextToken
+      }
+      users {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    description
+    scheduleDate
+    priority
+    status
+    createdAt
+    messages {
+      items {
+        id
+        taskID
+        content
+        createdAt
+        isSent
+        updatedAt
+      }
+      nextToken
+    }
+    users {
+      items {
+        id
+        taskID
+        userID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    updatedAt
+  }
+}
+mutation UpdateTask(
+  $input: UpdateTaskInput!
+  $condition: ModelTaskConditionInput
+) {
+  updateTask(input: $input, condition: $condition) {
+    id
+    authorID
+    roomID
+    chargePersonID
+    title
+    room {
+      id
+      name
+      companyID
+      description
+      company {
+        id
+        name
+        domain
+        createdAt
+        updatedAt
+      }
+      tasks {
+        nextToken
+      }
+      users {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    description
+    scheduleDate
+    priority
+    status
+    createdAt
+    messages {
+      items {
+        id
+        taskID
+        content
+        createdAt
+        isSent
+        updatedAt
+      }
+      nextToken
+    }
+    users {
+      items {
+        id
+        taskID
+        userID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    updatedAt
+  }
+}
+mutation DeleteTask(
+  $input: DeleteTaskInput!
+  $condition: ModelTaskConditionInput
+) {
+  deleteTask(input: $input, condition: $condition) {
+    id
+    authorID
+    roomID
+    chargePersonID
+    title
+    room {
+      id
+      name
+      companyID
+      description
+      company {
+        id
+        name
+        domain
+        createdAt
+        updatedAt
+      }
+      tasks {
+        nextToken
+      }
+      users {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    description
+    scheduleDate
+    priority
+    status
+    createdAt
+    messages {
+      items {
+        id
+        taskID
+        content
+        createdAt
+        isSent
+        updatedAt
+      }
+      nextToken
+    }
+    users {
+      items {
+        id
+        taskID
+        userID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    updatedAt
+  }
+}
 mutation CreateRoomGroup(
   $input: CreateRoomGroupInput!
   $condition: ModelRoomGroupConditionInput
@@ -617,6 +665,9 @@ mutation CreateRoomGroup(
         updatedAt
       }
       tasks {
+        nextToken
+      }
+      users {
         nextToken
       }
       createdAt
@@ -675,6 +726,9 @@ mutation UpdateRoomGroup(
       tasks {
         nextToken
       }
+      users {
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -729,6 +783,9 @@ mutation DeleteRoomGroup(
         updatedAt
       }
       tasks {
+        nextToken
+      }
+      users {
         nextToken
       }
       createdAt
@@ -802,6 +859,16 @@ mutation CreateRoom(
       }
       nextToken
     }
+    users {
+      items {
+        id
+        roomID
+        userID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
     createdAt
     updatedAt
   }
@@ -844,6 +911,16 @@ mutation UpdateRoom(
       }
       nextToken
     }
+    users {
+      items {
+        id
+        roomID
+        userID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
     createdAt
     updatedAt
   }
@@ -881,6 +958,16 @@ mutation DeleteRoom(
         scheduleDate
         priority
         status
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    users {
+      items {
+        id
+        roomID
+        userID
         createdAt
         updatedAt
       }
@@ -948,6 +1035,9 @@ mutation CreateMessage(
       messages {
         nextToken
       }
+      users {
+        nextToken
+      }
       updatedAt
     }
     updatedAt
@@ -1011,6 +1101,9 @@ mutation UpdateMessage(
       messages {
         nextToken
       }
+      users {
+        nextToken
+      }
       updatedAt
     }
     updatedAt
@@ -1072,6 +1165,9 @@ mutation DeleteMessage(
       status
       createdAt
       messages {
+        nextToken
+      }
+      users {
         nextToken
       }
       updatedAt

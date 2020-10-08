@@ -107,138 +107,6 @@ subscription OnDeleteCompany {
     updatedAt
   }
 }
-subscription OnCreateTask {
-  onCreateTask {
-    id
-    authorID
-    roomID
-    chargePersonID
-    title
-    room {
-      id
-      name
-      companyID
-      description
-      company {
-        id
-        name
-        domain
-        createdAt
-        updatedAt
-      }
-      tasks {
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-    description
-    scheduleDate
-    priority
-    status
-    createdAt
-    messages {
-      items {
-        id
-        taskID
-        content
-        createdAt
-        isSent
-        updatedAt
-      }
-      nextToken
-    }
-    updatedAt
-  }
-}
-subscription OnUpdateTask {
-  onUpdateTask {
-    id
-    authorID
-    roomID
-    chargePersonID
-    title
-    room {
-      id
-      name
-      companyID
-      description
-      company {
-        id
-        name
-        domain
-        createdAt
-        updatedAt
-      }
-      tasks {
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-    description
-    scheduleDate
-    priority
-    status
-    createdAt
-    messages {
-      items {
-        id
-        taskID
-        content
-        createdAt
-        isSent
-        updatedAt
-      }
-      nextToken
-    }
-    updatedAt
-  }
-}
-subscription OnDeleteTask {
-  onDeleteTask {
-    id
-    authorID
-    roomID
-    chargePersonID
-    title
-    room {
-      id
-      name
-      companyID
-      description
-      company {
-        id
-        name
-        domain
-        createdAt
-        updatedAt
-      }
-      tasks {
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-    description
-    scheduleDate
-    priority
-    status
-    createdAt
-    messages {
-      items {
-        id
-        taskID
-        content
-        createdAt
-        isSent
-        updatedAt
-      }
-      nextToken
-    }
-    updatedAt
-  }
-}
 subscription OnCreateUser {
   onCreateUser {
     id
@@ -410,6 +278,9 @@ subscription OnCreateTaskGroup {
       messages {
         nextToken
       }
+      users {
+        nextToken
+      }
       updatedAt
     }
     user {
@@ -467,6 +338,9 @@ subscription OnUpdateTaskGroup {
       status
       createdAt
       messages {
+        nextToken
+      }
+      users {
         nextToken
       }
       updatedAt
@@ -528,6 +402,9 @@ subscription OnDeleteTaskGroup {
       messages {
         nextToken
       }
+      users {
+        nextToken
+      }
       updatedAt
     }
     user {
@@ -560,6 +437,177 @@ subscription OnDeleteTaskGroup {
     updatedAt
   }
 }
+subscription OnCreateTask {
+  onCreateTask {
+    id
+    authorID
+    roomID
+    chargePersonID
+    title
+    room {
+      id
+      name
+      companyID
+      description
+      company {
+        id
+        name
+        domain
+        createdAt
+        updatedAt
+      }
+      tasks {
+        nextToken
+      }
+      users {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    description
+    scheduleDate
+    priority
+    status
+    createdAt
+    messages {
+      items {
+        id
+        taskID
+        content
+        createdAt
+        isSent
+        updatedAt
+      }
+      nextToken
+    }
+    users {
+      items {
+        id
+        taskID
+        userID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    updatedAt
+  }
+}
+subscription OnUpdateTask {
+  onUpdateTask {
+    id
+    authorID
+    roomID
+    chargePersonID
+    title
+    room {
+      id
+      name
+      companyID
+      description
+      company {
+        id
+        name
+        domain
+        createdAt
+        updatedAt
+      }
+      tasks {
+        nextToken
+      }
+      users {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    description
+    scheduleDate
+    priority
+    status
+    createdAt
+    messages {
+      items {
+        id
+        taskID
+        content
+        createdAt
+        isSent
+        updatedAt
+      }
+      nextToken
+    }
+    users {
+      items {
+        id
+        taskID
+        userID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    updatedAt
+  }
+}
+subscription OnDeleteTask {
+  onDeleteTask {
+    id
+    authorID
+    roomID
+    chargePersonID
+    title
+    room {
+      id
+      name
+      companyID
+      description
+      company {
+        id
+        name
+        domain
+        createdAt
+        updatedAt
+      }
+      tasks {
+        nextToken
+      }
+      users {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    description
+    scheduleDate
+    priority
+    status
+    createdAt
+    messages {
+      items {
+        id
+        taskID
+        content
+        createdAt
+        isSent
+        updatedAt
+      }
+      nextToken
+    }
+    users {
+      items {
+        id
+        taskID
+        userID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    updatedAt
+  }
+}
 subscription OnCreateRoomGroup {
   onCreateRoomGroup {
     id
@@ -578,6 +626,9 @@ subscription OnCreateRoomGroup {
         updatedAt
       }
       tasks {
+        nextToken
+      }
+      users {
         nextToken
       }
       createdAt
@@ -633,6 +684,9 @@ subscription OnUpdateRoomGroup {
       tasks {
         nextToken
       }
+      users {
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -684,6 +738,9 @@ subscription OnDeleteRoomGroup {
         updatedAt
       }
       tasks {
+        nextToken
+      }
+      users {
         nextToken
       }
       createdAt
@@ -754,6 +811,16 @@ subscription OnCreateRoom {
       }
       nextToken
     }
+    users {
+      items {
+        id
+        roomID
+        userID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
     createdAt
     updatedAt
   }
@@ -793,6 +860,16 @@ subscription OnUpdateRoom {
       }
       nextToken
     }
+    users {
+      items {
+        id
+        roomID
+        userID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
     createdAt
     updatedAt
   }
@@ -827,6 +904,16 @@ subscription OnDeleteRoom {
         scheduleDate
         priority
         status
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    users {
+      items {
+        id
+        roomID
+        userID
         createdAt
         updatedAt
       }
@@ -891,6 +978,9 @@ subscription OnCreateMessage {
       messages {
         nextToken
       }
+      users {
+        nextToken
+      }
       updatedAt
     }
     updatedAt
@@ -951,6 +1041,9 @@ subscription OnUpdateMessage {
       messages {
         nextToken
       }
+      users {
+        nextToken
+      }
       updatedAt
     }
     updatedAt
@@ -1009,6 +1102,9 @@ subscription OnDeleteMessage {
       status
       createdAt
       messages {
+        nextToken
+      }
+      users {
         nextToken
       }
       updatedAt

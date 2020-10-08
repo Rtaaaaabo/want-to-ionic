@@ -6,21 +6,6 @@ type Company @model {
   companyMembers: [User] @connection(keyName: "byCompany", fields: ["id"])
 }
 
-type Task @model @key(name: "byRoom", fields: ["roomID"]) {
-  id: ID!
-  authorID: ID!
-  roomID: ID!
-  chargePersonID: ID
-  title: String!
-  room: Room! @connection(fields: ["roomID"])
-  description: String
-  scheduleDate: AWSDateTime
-  priority: Int
-  status: Int
-  createdAt: AWSDateTime
-  messages: [Message] @connection(keyName: "byTask", fields: ["id"])
-}
-
 type User @model @key(name: "byCompany", fields: ["companyID"]) {
   id: ID!
   username: String!
@@ -37,17 +22,6 @@ type User @model @key(name: "byCompany", fields: ["companyID"]) {
   # chargeTask: [ChargeTaskGroup] @connection(keyName: "byUser", fields: ["id"])
 }
 
-# type ChargeTaskGroup
-#   @model
-#   @key(name: "byUser", fields: ["chargePersonID"])
-#   @key(name: "byTask", fields: ["taskID"]) {
-#   id: ID!
-#   chargePersonID: ID!
-#   taskID: ID!
-#   user: User @connection(fields: ["userID"])
-#   task: Task @connection(fields: ["chargePersonID"])
-# }
-
 type TaskGroup
   @model
   @key(name: "byTask", fields: ["taskID"])
@@ -58,6 +32,33 @@ type TaskGroup
   task: Task @connection(fields: ["taskID"])
   user: User @connection(fields: ["userID"])
 }
+
+type Task @model @key(name: "byRoom", fields: ["roomID"]) {
+  id: ID!
+  authorID: ID!
+  roomID: ID!
+  chargePersonID: ID
+  title: String!
+  room: Room! @connection(fields: ["roomID"])
+  description: String
+  scheduleDate: AWSDateTime
+  priority: Int
+  status: Int
+  createdAt: AWSDateTime
+  messages: [Message] @connection(keyName: "byTask", fields: ["id"])
+  users: [TaskGroup] @connection(keyName: "byTask", fields: ["id"])
+}
+
+# type ChargeTaskGroup
+#   @model
+#   @key(name: "byUser", fields: ["chargePersonID"])
+#   @key(name: "byTask", fields: ["taskID"]) {
+#   id: ID!
+#   chargePersonID: ID!
+#   taskID: ID!
+#   user: User @connection(fields: ["userID"])
+#   task: Task @connection(fields: ["chargePersonID"])
+# }
 
 type RoomGroup
   @model
@@ -77,6 +78,7 @@ type Room @model @key(name: "byCompany", fields: ["companyID"]) {
   description: String!
   company: Company! @connection(fields: ["companyID"])
   tasks: [Task] @connection(name: "byRoom", fields: ["id"])
+  users: [RoomGroup] @connection(keyName: "byRoom", fields: ["id"])
 }
 
 type Message @model @key(name: "byTask", fields: ["taskID"]) {
