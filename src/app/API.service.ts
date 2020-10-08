@@ -161,7 +161,7 @@ export type CreateTaskInput = {
   id?: string | null;
   authorID: string;
   roomID: string;
-  chargePersonID?: string | null;
+  chargePersonID: string;
   title: string;
   description?: string | null;
   scheduleDate?: string | null;
@@ -545,6 +545,24 @@ export type CreateUserMutation = {
     } | null> | null;
     nextToken: string | null;
   } | null;
+  chargeTask: {
+    __typename: "ModelTaskConnection";
+    items: Array<{
+      __typename: "Task";
+      id: string;
+      authorID: string;
+      roomID: string;
+      chargePersonID: string;
+      title: string;
+      description: string | null;
+      scheduleDate: string | null;
+      priority: number | null;
+      status: number | null;
+      createdAt: string | null;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
   createdAt: string;
   updatedAt: string;
 };
@@ -596,6 +614,24 @@ export type UpdateUserMutation = {
       taskID: string;
       userID: string;
       createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
+  chargeTask: {
+    __typename: "ModelTaskConnection";
+    items: Array<{
+      __typename: "Task";
+      id: string;
+      authorID: string;
+      roomID: string;
+      chargePersonID: string;
+      title: string;
+      description: string | null;
+      scheduleDate: string | null;
+      priority: number | null;
+      status: number | null;
+      createdAt: string | null;
       updatedAt: string;
     } | null> | null;
     nextToken: string | null;
@@ -655,6 +691,24 @@ export type DeleteUserMutation = {
     } | null> | null;
     nextToken: string | null;
   } | null;
+  chargeTask: {
+    __typename: "ModelTaskConnection";
+    items: Array<{
+      __typename: "Task";
+      id: string;
+      authorID: string;
+      roomID: string;
+      chargePersonID: string;
+      title: string;
+      description: string | null;
+      scheduleDate: string | null;
+      priority: number | null;
+      status: number | null;
+      createdAt: string | null;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
   createdAt: string;
   updatedAt: string;
 };
@@ -669,7 +723,7 @@ export type CreateTaskGroupMutation = {
     id: string;
     authorID: string;
     roomID: string;
-    chargePersonID: string | null;
+    chargePersonID: string;
     title: string;
     room: {
       __typename: "Room";
@@ -692,6 +746,20 @@ export type CreateTaskGroupMutation = {
     users: {
       __typename: "ModelTaskGroupConnection";
       nextToken: string | null;
+    } | null;
+    chargePerson: {
+      __typename: "User";
+      id: string;
+      username: string;
+      email: string;
+      companyID: string;
+      tel: string | null;
+      positionName: string | null;
+      iconImage: string | null;
+      registered: boolean | null;
+      authority: string | null;
+      createdAt: string;
+      updatedAt: string;
     } | null;
     updatedAt: string;
   } | null;
@@ -720,6 +788,10 @@ export type CreateTaskGroupMutation = {
     } | null;
     task: {
       __typename: "ModelTaskGroupConnection";
+      nextToken: string | null;
+    } | null;
+    chargeTask: {
+      __typename: "ModelTaskConnection";
       nextToken: string | null;
     } | null;
     createdAt: string;
@@ -739,7 +811,7 @@ export type UpdateTaskGroupMutation = {
     id: string;
     authorID: string;
     roomID: string;
-    chargePersonID: string | null;
+    chargePersonID: string;
     title: string;
     room: {
       __typename: "Room";
@@ -762,6 +834,20 @@ export type UpdateTaskGroupMutation = {
     users: {
       __typename: "ModelTaskGroupConnection";
       nextToken: string | null;
+    } | null;
+    chargePerson: {
+      __typename: "User";
+      id: string;
+      username: string;
+      email: string;
+      companyID: string;
+      tel: string | null;
+      positionName: string | null;
+      iconImage: string | null;
+      registered: boolean | null;
+      authority: string | null;
+      createdAt: string;
+      updatedAt: string;
     } | null;
     updatedAt: string;
   } | null;
@@ -790,6 +876,10 @@ export type UpdateTaskGroupMutation = {
     } | null;
     task: {
       __typename: "ModelTaskGroupConnection";
+      nextToken: string | null;
+    } | null;
+    chargeTask: {
+      __typename: "ModelTaskConnection";
       nextToken: string | null;
     } | null;
     createdAt: string;
@@ -809,7 +899,7 @@ export type DeleteTaskGroupMutation = {
     id: string;
     authorID: string;
     roomID: string;
-    chargePersonID: string | null;
+    chargePersonID: string;
     title: string;
     room: {
       __typename: "Room";
@@ -832,6 +922,20 @@ export type DeleteTaskGroupMutation = {
     users: {
       __typename: "ModelTaskGroupConnection";
       nextToken: string | null;
+    } | null;
+    chargePerson: {
+      __typename: "User";
+      id: string;
+      username: string;
+      email: string;
+      companyID: string;
+      tel: string | null;
+      positionName: string | null;
+      iconImage: string | null;
+      registered: boolean | null;
+      authority: string | null;
+      createdAt: string;
+      updatedAt: string;
     } | null;
     updatedAt: string;
   } | null;
@@ -862,6 +966,10 @@ export type DeleteTaskGroupMutation = {
       __typename: "ModelTaskGroupConnection";
       nextToken: string | null;
     } | null;
+    chargeTask: {
+      __typename: "ModelTaskConnection";
+      nextToken: string | null;
+    } | null;
     createdAt: string;
     updatedAt: string;
   } | null;
@@ -874,7 +982,7 @@ export type CreateTaskMutation = {
   id: string;
   authorID: string;
   roomID: string;
-  chargePersonID: string | null;
+  chargePersonID: string;
   title: string;
   room: {
     __typename: "Room";
@@ -930,6 +1038,40 @@ export type CreateTaskMutation = {
       updatedAt: string;
     } | null> | null;
     nextToken: string | null;
+  } | null;
+  chargePerson: {
+    __typename: "User";
+    id: string;
+    username: string;
+    email: string;
+    companyID: string;
+    tel: string | null;
+    positionName: string | null;
+    iconImage: string | null;
+    registered: boolean | null;
+    authority: string | null;
+    company: {
+      __typename: "Company";
+      id: string;
+      name: string;
+      domain: string;
+      createdAt: string;
+      updatedAt: string;
+    };
+    room: {
+      __typename: "ModelRoomGroupConnection";
+      nextToken: string | null;
+    } | null;
+    task: {
+      __typename: "ModelTaskGroupConnection";
+      nextToken: string | null;
+    } | null;
+    chargeTask: {
+      __typename: "ModelTaskConnection";
+      nextToken: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
   } | null;
   updatedAt: string;
 };
@@ -939,7 +1081,7 @@ export type UpdateTaskMutation = {
   id: string;
   authorID: string;
   roomID: string;
-  chargePersonID: string | null;
+  chargePersonID: string;
   title: string;
   room: {
     __typename: "Room";
@@ -995,6 +1137,40 @@ export type UpdateTaskMutation = {
       updatedAt: string;
     } | null> | null;
     nextToken: string | null;
+  } | null;
+  chargePerson: {
+    __typename: "User";
+    id: string;
+    username: string;
+    email: string;
+    companyID: string;
+    tel: string | null;
+    positionName: string | null;
+    iconImage: string | null;
+    registered: boolean | null;
+    authority: string | null;
+    company: {
+      __typename: "Company";
+      id: string;
+      name: string;
+      domain: string;
+      createdAt: string;
+      updatedAt: string;
+    };
+    room: {
+      __typename: "ModelRoomGroupConnection";
+      nextToken: string | null;
+    } | null;
+    task: {
+      __typename: "ModelTaskGroupConnection";
+      nextToken: string | null;
+    } | null;
+    chargeTask: {
+      __typename: "ModelTaskConnection";
+      nextToken: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
   } | null;
   updatedAt: string;
 };
@@ -1004,7 +1180,7 @@ export type DeleteTaskMutation = {
   id: string;
   authorID: string;
   roomID: string;
-  chargePersonID: string | null;
+  chargePersonID: string;
   title: string;
   room: {
     __typename: "Room";
@@ -1060,6 +1236,40 @@ export type DeleteTaskMutation = {
       updatedAt: string;
     } | null> | null;
     nextToken: string | null;
+  } | null;
+  chargePerson: {
+    __typename: "User";
+    id: string;
+    username: string;
+    email: string;
+    companyID: string;
+    tel: string | null;
+    positionName: string | null;
+    iconImage: string | null;
+    registered: boolean | null;
+    authority: string | null;
+    company: {
+      __typename: "Company";
+      id: string;
+      name: string;
+      domain: string;
+      createdAt: string;
+      updatedAt: string;
+    };
+    room: {
+      __typename: "ModelRoomGroupConnection";
+      nextToken: string | null;
+    } | null;
+    task: {
+      __typename: "ModelTaskGroupConnection";
+      nextToken: string | null;
+    } | null;
+    chargeTask: {
+      __typename: "ModelTaskConnection";
+      nextToken: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
   } | null;
   updatedAt: string;
 };
@@ -1119,6 +1329,10 @@ export type CreateRoomGroupMutation = {
     } | null;
     task: {
       __typename: "ModelTaskGroupConnection";
+      nextToken: string | null;
+    } | null;
+    chargeTask: {
+      __typename: "ModelTaskConnection";
       nextToken: string | null;
     } | null;
     createdAt: string;
@@ -1185,6 +1399,10 @@ export type UpdateRoomGroupMutation = {
       __typename: "ModelTaskGroupConnection";
       nextToken: string | null;
     } | null;
+    chargeTask: {
+      __typename: "ModelTaskConnection";
+      nextToken: string | null;
+    } | null;
     createdAt: string;
     updatedAt: string;
   } | null;
@@ -1249,6 +1467,10 @@ export type DeleteRoomGroupMutation = {
       __typename: "ModelTaskGroupConnection";
       nextToken: string | null;
     } | null;
+    chargeTask: {
+      __typename: "ModelTaskConnection";
+      nextToken: string | null;
+    } | null;
     createdAt: string;
     updatedAt: string;
   } | null;
@@ -1285,7 +1507,7 @@ export type CreateRoomMutation = {
       id: string;
       authorID: string;
       roomID: string;
-      chargePersonID: string | null;
+      chargePersonID: string;
       title: string;
       description: string | null;
       scheduleDate: string | null;
@@ -1341,7 +1563,7 @@ export type UpdateRoomMutation = {
       id: string;
       authorID: string;
       roomID: string;
-      chargePersonID: string | null;
+      chargePersonID: string;
       title: string;
       description: string | null;
       scheduleDate: string | null;
@@ -1397,7 +1619,7 @@ export type DeleteRoomMutation = {
       id: string;
       authorID: string;
       roomID: string;
-      chargePersonID: string | null;
+      chargePersonID: string;
       title: string;
       description: string | null;
       scheduleDate: string | null;
@@ -1455,6 +1677,10 @@ export type CreateMessageMutation = {
       __typename: "ModelTaskGroupConnection";
       nextToken: string | null;
     } | null;
+    chargeTask: {
+      __typename: "ModelTaskConnection";
+      nextToken: string | null;
+    } | null;
     createdAt: string;
     updatedAt: string;
   } | null;
@@ -1466,7 +1692,7 @@ export type CreateMessageMutation = {
     id: string;
     authorID: string;
     roomID: string;
-    chargePersonID: string | null;
+    chargePersonID: string;
     title: string;
     room: {
       __typename: "Room";
@@ -1489,6 +1715,20 @@ export type CreateMessageMutation = {
     users: {
       __typename: "ModelTaskGroupConnection";
       nextToken: string | null;
+    } | null;
+    chargePerson: {
+      __typename: "User";
+      id: string;
+      username: string;
+      email: string;
+      companyID: string;
+      tel: string | null;
+      positionName: string | null;
+      iconImage: string | null;
+      registered: boolean | null;
+      authority: string | null;
+      createdAt: string;
+      updatedAt: string;
     } | null;
     updatedAt: string;
   };
@@ -1526,6 +1766,10 @@ export type UpdateMessageMutation = {
       __typename: "ModelTaskGroupConnection";
       nextToken: string | null;
     } | null;
+    chargeTask: {
+      __typename: "ModelTaskConnection";
+      nextToken: string | null;
+    } | null;
     createdAt: string;
     updatedAt: string;
   } | null;
@@ -1537,7 +1781,7 @@ export type UpdateMessageMutation = {
     id: string;
     authorID: string;
     roomID: string;
-    chargePersonID: string | null;
+    chargePersonID: string;
     title: string;
     room: {
       __typename: "Room";
@@ -1560,6 +1804,20 @@ export type UpdateMessageMutation = {
     users: {
       __typename: "ModelTaskGroupConnection";
       nextToken: string | null;
+    } | null;
+    chargePerson: {
+      __typename: "User";
+      id: string;
+      username: string;
+      email: string;
+      companyID: string;
+      tel: string | null;
+      positionName: string | null;
+      iconImage: string | null;
+      registered: boolean | null;
+      authority: string | null;
+      createdAt: string;
+      updatedAt: string;
     } | null;
     updatedAt: string;
   };
@@ -1597,6 +1855,10 @@ export type DeleteMessageMutation = {
       __typename: "ModelTaskGroupConnection";
       nextToken: string | null;
     } | null;
+    chargeTask: {
+      __typename: "ModelTaskConnection";
+      nextToken: string | null;
+    } | null;
     createdAt: string;
     updatedAt: string;
   } | null;
@@ -1608,7 +1870,7 @@ export type DeleteMessageMutation = {
     id: string;
     authorID: string;
     roomID: string;
-    chargePersonID: string | null;
+    chargePersonID: string;
     title: string;
     room: {
       __typename: "Room";
@@ -1631,6 +1893,20 @@ export type DeleteMessageMutation = {
     users: {
       __typename: "ModelTaskGroupConnection";
       nextToken: string | null;
+    } | null;
+    chargePerson: {
+      __typename: "User";
+      id: string;
+      username: string;
+      email: string;
+      companyID: string;
+      tel: string | null;
+      positionName: string | null;
+      iconImage: string | null;
+      registered: boolean | null;
+      authority: string | null;
+      createdAt: string;
+      updatedAt: string;
     } | null;
     updatedAt: string;
   };
@@ -1749,6 +2025,24 @@ export type GetUserQuery = {
     } | null> | null;
     nextToken: string | null;
   } | null;
+  chargeTask: {
+    __typename: "ModelTaskConnection";
+    items: Array<{
+      __typename: "Task";
+      id: string;
+      authorID: string;
+      roomID: string;
+      chargePersonID: string;
+      title: string;
+      description: string | null;
+      scheduleDate: string | null;
+      priority: number | null;
+      status: number | null;
+      createdAt: string | null;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
   createdAt: string;
   updatedAt: string;
 };
@@ -1782,6 +2076,10 @@ export type ListUsersQuery = {
       __typename: "ModelTaskGroupConnection";
       nextToken: string | null;
     } | null;
+    chargeTask: {
+      __typename: "ModelTaskConnection";
+      nextToken: string | null;
+    } | null;
     createdAt: string;
     updatedAt: string;
   } | null> | null;
@@ -1798,7 +2096,7 @@ export type GetTaskGroupQuery = {
     id: string;
     authorID: string;
     roomID: string;
-    chargePersonID: string | null;
+    chargePersonID: string;
     title: string;
     room: {
       __typename: "Room";
@@ -1821,6 +2119,20 @@ export type GetTaskGroupQuery = {
     users: {
       __typename: "ModelTaskGroupConnection";
       nextToken: string | null;
+    } | null;
+    chargePerson: {
+      __typename: "User";
+      id: string;
+      username: string;
+      email: string;
+      companyID: string;
+      tel: string | null;
+      positionName: string | null;
+      iconImage: string | null;
+      registered: boolean | null;
+      authority: string | null;
+      createdAt: string;
+      updatedAt: string;
     } | null;
     updatedAt: string;
   } | null;
@@ -1851,6 +2163,10 @@ export type GetTaskGroupQuery = {
       __typename: "ModelTaskGroupConnection";
       nextToken: string | null;
     } | null;
+    chargeTask: {
+      __typename: "ModelTaskConnection";
+      nextToken: string | null;
+    } | null;
     createdAt: string;
     updatedAt: string;
   } | null;
@@ -1870,7 +2186,7 @@ export type ListTaskGroupsQuery = {
       id: string;
       authorID: string;
       roomID: string;
-      chargePersonID: string | null;
+      chargePersonID: string;
       title: string;
       description: string | null;
       scheduleDate: string | null;
@@ -1904,7 +2220,7 @@ export type GetTaskQuery = {
   id: string;
   authorID: string;
   roomID: string;
-  chargePersonID: string | null;
+  chargePersonID: string;
   title: string;
   room: {
     __typename: "Room";
@@ -1961,6 +2277,40 @@ export type GetTaskQuery = {
     } | null> | null;
     nextToken: string | null;
   } | null;
+  chargePerson: {
+    __typename: "User";
+    id: string;
+    username: string;
+    email: string;
+    companyID: string;
+    tel: string | null;
+    positionName: string | null;
+    iconImage: string | null;
+    registered: boolean | null;
+    authority: string | null;
+    company: {
+      __typename: "Company";
+      id: string;
+      name: string;
+      domain: string;
+      createdAt: string;
+      updatedAt: string;
+    };
+    room: {
+      __typename: "ModelRoomGroupConnection";
+      nextToken: string | null;
+    } | null;
+    task: {
+      __typename: "ModelTaskGroupConnection";
+      nextToken: string | null;
+    } | null;
+    chargeTask: {
+      __typename: "ModelTaskConnection";
+      nextToken: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
   updatedAt: string;
 };
 
@@ -1971,7 +2321,7 @@ export type ListTasksQuery = {
     id: string;
     authorID: string;
     roomID: string;
-    chargePersonID: string | null;
+    chargePersonID: string;
     title: string;
     room: {
       __typename: "Room";
@@ -1994,6 +2344,20 @@ export type ListTasksQuery = {
     users: {
       __typename: "ModelTaskGroupConnection";
       nextToken: string | null;
+    } | null;
+    chargePerson: {
+      __typename: "User";
+      id: string;
+      username: string;
+      email: string;
+      companyID: string;
+      tel: string | null;
+      positionName: string | null;
+      iconImage: string | null;
+      registered: boolean | null;
+      authority: string | null;
+      createdAt: string;
+      updatedAt: string;
     } | null;
     updatedAt: string;
   } | null> | null;
@@ -2055,6 +2419,10 @@ export type GetRoomGroupQuery = {
     } | null;
     task: {
       __typename: "ModelTaskGroupConnection";
+      nextToken: string | null;
+    } | null;
+    chargeTask: {
+      __typename: "ModelTaskConnection";
       nextToken: string | null;
     } | null;
     createdAt: string;
@@ -2129,7 +2497,7 @@ export type GetRoomQuery = {
       id: string;
       authorID: string;
       roomID: string;
-      chargePersonID: string | null;
+      chargePersonID: string;
       title: string;
       description: string | null;
       scheduleDate: string | null;
@@ -2217,6 +2585,10 @@ export type GetMessageQuery = {
       __typename: "ModelTaskGroupConnection";
       nextToken: string | null;
     } | null;
+    chargeTask: {
+      __typename: "ModelTaskConnection";
+      nextToken: string | null;
+    } | null;
     createdAt: string;
     updatedAt: string;
   } | null;
@@ -2228,7 +2600,7 @@ export type GetMessageQuery = {
     id: string;
     authorID: string;
     roomID: string;
-    chargePersonID: string | null;
+    chargePersonID: string;
     title: string;
     room: {
       __typename: "Room";
@@ -2251,6 +2623,20 @@ export type GetMessageQuery = {
     users: {
       __typename: "ModelTaskGroupConnection";
       nextToken: string | null;
+    } | null;
+    chargePerson: {
+      __typename: "User";
+      id: string;
+      username: string;
+      email: string;
+      companyID: string;
+      tel: string | null;
+      positionName: string | null;
+      iconImage: string | null;
+      registered: boolean | null;
+      authority: string | null;
+      createdAt: string;
+      updatedAt: string;
     } | null;
     updatedAt: string;
   };
@@ -2285,7 +2671,7 @@ export type ListMessagesQuery = {
       id: string;
       authorID: string;
       roomID: string;
-      chargePersonID: string | null;
+      chargePersonID: string;
       title: string;
       description: string | null;
       scheduleDate: string | null;
@@ -2470,6 +2856,24 @@ export type OnCreateUserSubscription = {
     } | null> | null;
     nextToken: string | null;
   } | null;
+  chargeTask: {
+    __typename: "ModelTaskConnection";
+    items: Array<{
+      __typename: "Task";
+      id: string;
+      authorID: string;
+      roomID: string;
+      chargePersonID: string;
+      title: string;
+      description: string | null;
+      scheduleDate: string | null;
+      priority: number | null;
+      status: number | null;
+      createdAt: string | null;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
   createdAt: string;
   updatedAt: string;
 };
@@ -2521,6 +2925,24 @@ export type OnUpdateUserSubscription = {
       taskID: string;
       userID: string;
       createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
+  chargeTask: {
+    __typename: "ModelTaskConnection";
+    items: Array<{
+      __typename: "Task";
+      id: string;
+      authorID: string;
+      roomID: string;
+      chargePersonID: string;
+      title: string;
+      description: string | null;
+      scheduleDate: string | null;
+      priority: number | null;
+      status: number | null;
+      createdAt: string | null;
       updatedAt: string;
     } | null> | null;
     nextToken: string | null;
@@ -2580,6 +3002,24 @@ export type OnDeleteUserSubscription = {
     } | null> | null;
     nextToken: string | null;
   } | null;
+  chargeTask: {
+    __typename: "ModelTaskConnection";
+    items: Array<{
+      __typename: "Task";
+      id: string;
+      authorID: string;
+      roomID: string;
+      chargePersonID: string;
+      title: string;
+      description: string | null;
+      scheduleDate: string | null;
+      priority: number | null;
+      status: number | null;
+      createdAt: string | null;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
   createdAt: string;
   updatedAt: string;
 };
@@ -2594,7 +3034,7 @@ export type OnCreateTaskGroupSubscription = {
     id: string;
     authorID: string;
     roomID: string;
-    chargePersonID: string | null;
+    chargePersonID: string;
     title: string;
     room: {
       __typename: "Room";
@@ -2617,6 +3057,20 @@ export type OnCreateTaskGroupSubscription = {
     users: {
       __typename: "ModelTaskGroupConnection";
       nextToken: string | null;
+    } | null;
+    chargePerson: {
+      __typename: "User";
+      id: string;
+      username: string;
+      email: string;
+      companyID: string;
+      tel: string | null;
+      positionName: string | null;
+      iconImage: string | null;
+      registered: boolean | null;
+      authority: string | null;
+      createdAt: string;
+      updatedAt: string;
     } | null;
     updatedAt: string;
   } | null;
@@ -2645,6 +3099,10 @@ export type OnCreateTaskGroupSubscription = {
     } | null;
     task: {
       __typename: "ModelTaskGroupConnection";
+      nextToken: string | null;
+    } | null;
+    chargeTask: {
+      __typename: "ModelTaskConnection";
       nextToken: string | null;
     } | null;
     createdAt: string;
@@ -2664,7 +3122,7 @@ export type OnUpdateTaskGroupSubscription = {
     id: string;
     authorID: string;
     roomID: string;
-    chargePersonID: string | null;
+    chargePersonID: string;
     title: string;
     room: {
       __typename: "Room";
@@ -2687,6 +3145,20 @@ export type OnUpdateTaskGroupSubscription = {
     users: {
       __typename: "ModelTaskGroupConnection";
       nextToken: string | null;
+    } | null;
+    chargePerson: {
+      __typename: "User";
+      id: string;
+      username: string;
+      email: string;
+      companyID: string;
+      tel: string | null;
+      positionName: string | null;
+      iconImage: string | null;
+      registered: boolean | null;
+      authority: string | null;
+      createdAt: string;
+      updatedAt: string;
     } | null;
     updatedAt: string;
   } | null;
@@ -2715,6 +3187,10 @@ export type OnUpdateTaskGroupSubscription = {
     } | null;
     task: {
       __typename: "ModelTaskGroupConnection";
+      nextToken: string | null;
+    } | null;
+    chargeTask: {
+      __typename: "ModelTaskConnection";
       nextToken: string | null;
     } | null;
     createdAt: string;
@@ -2734,7 +3210,7 @@ export type OnDeleteTaskGroupSubscription = {
     id: string;
     authorID: string;
     roomID: string;
-    chargePersonID: string | null;
+    chargePersonID: string;
     title: string;
     room: {
       __typename: "Room";
@@ -2757,6 +3233,20 @@ export type OnDeleteTaskGroupSubscription = {
     users: {
       __typename: "ModelTaskGroupConnection";
       nextToken: string | null;
+    } | null;
+    chargePerson: {
+      __typename: "User";
+      id: string;
+      username: string;
+      email: string;
+      companyID: string;
+      tel: string | null;
+      positionName: string | null;
+      iconImage: string | null;
+      registered: boolean | null;
+      authority: string | null;
+      createdAt: string;
+      updatedAt: string;
     } | null;
     updatedAt: string;
   } | null;
@@ -2787,6 +3277,10 @@ export type OnDeleteTaskGroupSubscription = {
       __typename: "ModelTaskGroupConnection";
       nextToken: string | null;
     } | null;
+    chargeTask: {
+      __typename: "ModelTaskConnection";
+      nextToken: string | null;
+    } | null;
     createdAt: string;
     updatedAt: string;
   } | null;
@@ -2799,7 +3293,7 @@ export type OnCreateTaskSubscription = {
   id: string;
   authorID: string;
   roomID: string;
-  chargePersonID: string | null;
+  chargePersonID: string;
   title: string;
   room: {
     __typename: "Room";
@@ -2855,6 +3349,40 @@ export type OnCreateTaskSubscription = {
       updatedAt: string;
     } | null> | null;
     nextToken: string | null;
+  } | null;
+  chargePerson: {
+    __typename: "User";
+    id: string;
+    username: string;
+    email: string;
+    companyID: string;
+    tel: string | null;
+    positionName: string | null;
+    iconImage: string | null;
+    registered: boolean | null;
+    authority: string | null;
+    company: {
+      __typename: "Company";
+      id: string;
+      name: string;
+      domain: string;
+      createdAt: string;
+      updatedAt: string;
+    };
+    room: {
+      __typename: "ModelRoomGroupConnection";
+      nextToken: string | null;
+    } | null;
+    task: {
+      __typename: "ModelTaskGroupConnection";
+      nextToken: string | null;
+    } | null;
+    chargeTask: {
+      __typename: "ModelTaskConnection";
+      nextToken: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
   } | null;
   updatedAt: string;
 };
@@ -2864,7 +3392,7 @@ export type OnUpdateTaskSubscription = {
   id: string;
   authorID: string;
   roomID: string;
-  chargePersonID: string | null;
+  chargePersonID: string;
   title: string;
   room: {
     __typename: "Room";
@@ -2920,6 +3448,40 @@ export type OnUpdateTaskSubscription = {
       updatedAt: string;
     } | null> | null;
     nextToken: string | null;
+  } | null;
+  chargePerson: {
+    __typename: "User";
+    id: string;
+    username: string;
+    email: string;
+    companyID: string;
+    tel: string | null;
+    positionName: string | null;
+    iconImage: string | null;
+    registered: boolean | null;
+    authority: string | null;
+    company: {
+      __typename: "Company";
+      id: string;
+      name: string;
+      domain: string;
+      createdAt: string;
+      updatedAt: string;
+    };
+    room: {
+      __typename: "ModelRoomGroupConnection";
+      nextToken: string | null;
+    } | null;
+    task: {
+      __typename: "ModelTaskGroupConnection";
+      nextToken: string | null;
+    } | null;
+    chargeTask: {
+      __typename: "ModelTaskConnection";
+      nextToken: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
   } | null;
   updatedAt: string;
 };
@@ -2929,7 +3491,7 @@ export type OnDeleteTaskSubscription = {
   id: string;
   authorID: string;
   roomID: string;
-  chargePersonID: string | null;
+  chargePersonID: string;
   title: string;
   room: {
     __typename: "Room";
@@ -2985,6 +3547,40 @@ export type OnDeleteTaskSubscription = {
       updatedAt: string;
     } | null> | null;
     nextToken: string | null;
+  } | null;
+  chargePerson: {
+    __typename: "User";
+    id: string;
+    username: string;
+    email: string;
+    companyID: string;
+    tel: string | null;
+    positionName: string | null;
+    iconImage: string | null;
+    registered: boolean | null;
+    authority: string | null;
+    company: {
+      __typename: "Company";
+      id: string;
+      name: string;
+      domain: string;
+      createdAt: string;
+      updatedAt: string;
+    };
+    room: {
+      __typename: "ModelRoomGroupConnection";
+      nextToken: string | null;
+    } | null;
+    task: {
+      __typename: "ModelTaskGroupConnection";
+      nextToken: string | null;
+    } | null;
+    chargeTask: {
+      __typename: "ModelTaskConnection";
+      nextToken: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
   } | null;
   updatedAt: string;
 };
@@ -3044,6 +3640,10 @@ export type OnCreateRoomGroupSubscription = {
     } | null;
     task: {
       __typename: "ModelTaskGroupConnection";
+      nextToken: string | null;
+    } | null;
+    chargeTask: {
+      __typename: "ModelTaskConnection";
       nextToken: string | null;
     } | null;
     createdAt: string;
@@ -3110,6 +3710,10 @@ export type OnUpdateRoomGroupSubscription = {
       __typename: "ModelTaskGroupConnection";
       nextToken: string | null;
     } | null;
+    chargeTask: {
+      __typename: "ModelTaskConnection";
+      nextToken: string | null;
+    } | null;
     createdAt: string;
     updatedAt: string;
   } | null;
@@ -3174,6 +3778,10 @@ export type OnDeleteRoomGroupSubscription = {
       __typename: "ModelTaskGroupConnection";
       nextToken: string | null;
     } | null;
+    chargeTask: {
+      __typename: "ModelTaskConnection";
+      nextToken: string | null;
+    } | null;
     createdAt: string;
     updatedAt: string;
   } | null;
@@ -3210,7 +3818,7 @@ export type OnCreateRoomSubscription = {
       id: string;
       authorID: string;
       roomID: string;
-      chargePersonID: string | null;
+      chargePersonID: string;
       title: string;
       description: string | null;
       scheduleDate: string | null;
@@ -3266,7 +3874,7 @@ export type OnUpdateRoomSubscription = {
       id: string;
       authorID: string;
       roomID: string;
-      chargePersonID: string | null;
+      chargePersonID: string;
       title: string;
       description: string | null;
       scheduleDate: string | null;
@@ -3322,7 +3930,7 @@ export type OnDeleteRoomSubscription = {
       id: string;
       authorID: string;
       roomID: string;
-      chargePersonID: string | null;
+      chargePersonID: string;
       title: string;
       description: string | null;
       scheduleDate: string | null;
@@ -3380,6 +3988,10 @@ export type OnCreateMessageSubscription = {
       __typename: "ModelTaskGroupConnection";
       nextToken: string | null;
     } | null;
+    chargeTask: {
+      __typename: "ModelTaskConnection";
+      nextToken: string | null;
+    } | null;
     createdAt: string;
     updatedAt: string;
   } | null;
@@ -3391,7 +4003,7 @@ export type OnCreateMessageSubscription = {
     id: string;
     authorID: string;
     roomID: string;
-    chargePersonID: string | null;
+    chargePersonID: string;
     title: string;
     room: {
       __typename: "Room";
@@ -3414,6 +4026,20 @@ export type OnCreateMessageSubscription = {
     users: {
       __typename: "ModelTaskGroupConnection";
       nextToken: string | null;
+    } | null;
+    chargePerson: {
+      __typename: "User";
+      id: string;
+      username: string;
+      email: string;
+      companyID: string;
+      tel: string | null;
+      positionName: string | null;
+      iconImage: string | null;
+      registered: boolean | null;
+      authority: string | null;
+      createdAt: string;
+      updatedAt: string;
     } | null;
     updatedAt: string;
   };
@@ -3451,6 +4077,10 @@ export type OnUpdateMessageSubscription = {
       __typename: "ModelTaskGroupConnection";
       nextToken: string | null;
     } | null;
+    chargeTask: {
+      __typename: "ModelTaskConnection";
+      nextToken: string | null;
+    } | null;
     createdAt: string;
     updatedAt: string;
   } | null;
@@ -3462,7 +4092,7 @@ export type OnUpdateMessageSubscription = {
     id: string;
     authorID: string;
     roomID: string;
-    chargePersonID: string | null;
+    chargePersonID: string;
     title: string;
     room: {
       __typename: "Room";
@@ -3485,6 +4115,20 @@ export type OnUpdateMessageSubscription = {
     users: {
       __typename: "ModelTaskGroupConnection";
       nextToken: string | null;
+    } | null;
+    chargePerson: {
+      __typename: "User";
+      id: string;
+      username: string;
+      email: string;
+      companyID: string;
+      tel: string | null;
+      positionName: string | null;
+      iconImage: string | null;
+      registered: boolean | null;
+      authority: string | null;
+      createdAt: string;
+      updatedAt: string;
     } | null;
     updatedAt: string;
   };
@@ -3522,6 +4166,10 @@ export type OnDeleteMessageSubscription = {
       __typename: "ModelTaskGroupConnection";
       nextToken: string | null;
     } | null;
+    chargeTask: {
+      __typename: "ModelTaskConnection";
+      nextToken: string | null;
+    } | null;
     createdAt: string;
     updatedAt: string;
   } | null;
@@ -3533,7 +4181,7 @@ export type OnDeleteMessageSubscription = {
     id: string;
     authorID: string;
     roomID: string;
-    chargePersonID: string | null;
+    chargePersonID: string;
     title: string;
     room: {
       __typename: "Room";
@@ -3556,6 +4204,20 @@ export type OnDeleteMessageSubscription = {
     users: {
       __typename: "ModelTaskGroupConnection";
       nextToken: string | null;
+    } | null;
+    chargePerson: {
+      __typename: "User";
+      id: string;
+      username: string;
+      email: string;
+      companyID: string;
+      tel: string | null;
+      positionName: string | null;
+      iconImage: string | null;
+      registered: boolean | null;
+      authority: string | null;
+      createdAt: string;
+      updatedAt: string;
     } | null;
     updatedAt: string;
   };
@@ -3790,6 +4452,24 @@ export class APIService {
             }
             nextToken
           }
+          chargeTask {
+            __typename
+            items {
+              __typename
+              id
+              authorID
+              roomID
+              chargePersonID
+              title
+              description
+              scheduleDate
+              priority
+              status
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
           createdAt
           updatedAt
         }
@@ -3856,6 +4536,24 @@ export class APIService {
               id
               taskID
               userID
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          chargeTask {
+            __typename
+            items {
+              __typename
+              id
+              authorID
+              roomID
+              chargePersonID
+              title
+              description
+              scheduleDate
+              priority
+              status
               createdAt
               updatedAt
             }
@@ -3932,6 +4630,24 @@ export class APIService {
             }
             nextToken
           }
+          chargeTask {
+            __typename
+            items {
+              __typename
+              id
+              authorID
+              roomID
+              chargePersonID
+              title
+              description
+              scheduleDate
+              priority
+              status
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
           createdAt
           updatedAt
         }
@@ -3986,6 +4702,20 @@ export class APIService {
               __typename
               nextToken
             }
+            chargePerson {
+              __typename
+              id
+              username
+              email
+              companyID
+              tel
+              positionName
+              iconImage
+              registered
+              authority
+              createdAt
+              updatedAt
+            }
             updatedAt
           }
           user {
@@ -4012,6 +4742,10 @@ export class APIService {
               nextToken
             }
             task {
+              __typename
+              nextToken
+            }
+            chargeTask {
               __typename
               nextToken
             }
@@ -4072,6 +4806,20 @@ export class APIService {
               __typename
               nextToken
             }
+            chargePerson {
+              __typename
+              id
+              username
+              email
+              companyID
+              tel
+              positionName
+              iconImage
+              registered
+              authority
+              createdAt
+              updatedAt
+            }
             updatedAt
           }
           user {
@@ -4098,6 +4846,10 @@ export class APIService {
               nextToken
             }
             task {
+              __typename
+              nextToken
+            }
+            chargeTask {
               __typename
               nextToken
             }
@@ -4158,6 +4910,20 @@ export class APIService {
               __typename
               nextToken
             }
+            chargePerson {
+              __typename
+              id
+              username
+              email
+              companyID
+              tel
+              positionName
+              iconImage
+              registered
+              authority
+              createdAt
+              updatedAt
+            }
             updatedAt
           }
           user {
@@ -4184,6 +4950,10 @@ export class APIService {
               nextToken
             }
             task {
+              __typename
+              nextToken
+            }
+            chargeTask {
               __typename
               nextToken
             }
@@ -4272,6 +5042,40 @@ export class APIService {
             }
             nextToken
           }
+          chargePerson {
+            __typename
+            id
+            username
+            email
+            companyID
+            tel
+            positionName
+            iconImage
+            registered
+            authority
+            company {
+              __typename
+              id
+              name
+              domain
+              createdAt
+              updatedAt
+            }
+            room {
+              __typename
+              nextToken
+            }
+            task {
+              __typename
+              nextToken
+            }
+            chargeTask {
+              __typename
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
           updatedAt
         }
       }`;
@@ -4352,6 +5156,40 @@ export class APIService {
               updatedAt
             }
             nextToken
+          }
+          chargePerson {
+            __typename
+            id
+            username
+            email
+            companyID
+            tel
+            positionName
+            iconImage
+            registered
+            authority
+            company {
+              __typename
+              id
+              name
+              domain
+              createdAt
+              updatedAt
+            }
+            room {
+              __typename
+              nextToken
+            }
+            task {
+              __typename
+              nextToken
+            }
+            chargeTask {
+              __typename
+              nextToken
+            }
+            createdAt
+            updatedAt
           }
           updatedAt
         }
@@ -4434,6 +5272,40 @@ export class APIService {
             }
             nextToken
           }
+          chargePerson {
+            __typename
+            id
+            username
+            email
+            companyID
+            tel
+            positionName
+            iconImage
+            registered
+            authority
+            company {
+              __typename
+              id
+              name
+              domain
+              createdAt
+              updatedAt
+            }
+            room {
+              __typename
+              nextToken
+            }
+            task {
+              __typename
+              nextToken
+            }
+            chargeTask {
+              __typename
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
           updatedAt
         }
       }`;
@@ -4507,6 +5379,10 @@ export class APIService {
               nextToken
             }
             task {
+              __typename
+              nextToken
+            }
+            chargeTask {
               __typename
               nextToken
             }
@@ -4590,6 +5466,10 @@ export class APIService {
               __typename
               nextToken
             }
+            chargeTask {
+              __typename
+              nextToken
+            }
             createdAt
             updatedAt
           }
@@ -4667,6 +5547,10 @@ export class APIService {
               nextToken
             }
             task {
+              __typename
+              nextToken
+            }
+            chargeTask {
               __typename
               nextToken
             }
@@ -4940,6 +5824,10 @@ export class APIService {
               __typename
               nextToken
             }
+            chargeTask {
+              __typename
+              nextToken
+            }
             createdAt
             updatedAt
           }
@@ -4974,6 +5862,20 @@ export class APIService {
             users {
               __typename
               nextToken
+            }
+            chargePerson {
+              __typename
+              id
+              username
+              email
+              companyID
+              tel
+              positionName
+              iconImage
+              registered
+              authority
+              createdAt
+              updatedAt
             }
             updatedAt
           }
@@ -5027,6 +5929,10 @@ export class APIService {
               __typename
               nextToken
             }
+            chargeTask {
+              __typename
+              nextToken
+            }
             createdAt
             updatedAt
           }
@@ -5061,6 +5967,20 @@ export class APIService {
             users {
               __typename
               nextToken
+            }
+            chargePerson {
+              __typename
+              id
+              username
+              email
+              companyID
+              tel
+              positionName
+              iconImage
+              registered
+              authority
+              createdAt
+              updatedAt
             }
             updatedAt
           }
@@ -5114,6 +6034,10 @@ export class APIService {
               __typename
               nextToken
             }
+            chargeTask {
+              __typename
+              nextToken
+            }
             createdAt
             updatedAt
           }
@@ -5148,6 +6072,20 @@ export class APIService {
             users {
               __typename
               nextToken
+            }
+            chargePerson {
+              __typename
+              id
+              username
+              email
+              companyID
+              tel
+              positionName
+              iconImage
+              registered
+              authority
+              createdAt
+              updatedAt
             }
             updatedAt
           }
@@ -5310,6 +6248,24 @@ export class APIService {
             }
             nextToken
           }
+          chargeTask {
+            __typename
+            items {
+              __typename
+              id
+              authorID
+              roomID
+              chargePersonID
+              title
+              description
+              scheduleDate
+              priority
+              status
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
           createdAt
           updatedAt
         }
@@ -5354,6 +6310,10 @@ export class APIService {
               nextToken
             }
             task {
+              __typename
+              nextToken
+            }
+            chargeTask {
               __typename
               nextToken
             }
@@ -5414,6 +6374,20 @@ export class APIService {
               __typename
               nextToken
             }
+            chargePerson {
+              __typename
+              id
+              username
+              email
+              companyID
+              tel
+              positionName
+              iconImage
+              registered
+              authority
+              createdAt
+              updatedAt
+            }
             updatedAt
           }
           user {
@@ -5440,6 +6414,10 @@ export class APIService {
               nextToken
             }
             task {
+              __typename
+              nextToken
+            }
+            chargeTask {
               __typename
               nextToken
             }
@@ -5584,6 +6562,40 @@ export class APIService {
             }
             nextToken
           }
+          chargePerson {
+            __typename
+            id
+            username
+            email
+            companyID
+            tel
+            positionName
+            iconImage
+            registered
+            authority
+            company {
+              __typename
+              id
+              name
+              domain
+              createdAt
+              updatedAt
+            }
+            room {
+              __typename
+              nextToken
+            }
+            task {
+              __typename
+              nextToken
+            }
+            chargeTask {
+              __typename
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
           updatedAt
         }
       }`;
@@ -5631,6 +6643,20 @@ export class APIService {
             users {
               __typename
               nextToken
+            }
+            chargePerson {
+              __typename
+              id
+              username
+              email
+              companyID
+              tel
+              positionName
+              iconImage
+              registered
+              authority
+              createdAt
+              updatedAt
             }
             updatedAt
           }
@@ -5708,6 +6734,10 @@ export class APIService {
               nextToken
             }
             task {
+              __typename
+              nextToken
+            }
+            chargeTask {
               __typename
               nextToken
             }
@@ -5933,6 +6963,10 @@ export class APIService {
               __typename
               nextToken
             }
+            chargeTask {
+              __typename
+              nextToken
+            }
             createdAt
             updatedAt
           }
@@ -5967,6 +7001,20 @@ export class APIService {
             users {
               __typename
               nextToken
+            }
+            chargePerson {
+              __typename
+              id
+              username
+              email
+              companyID
+              tel
+              positionName
+              iconImage
+              registered
+              authority
+              createdAt
+              updatedAt
             }
             updatedAt
           }
@@ -6242,6 +7290,24 @@ export class APIService {
             }
             nextToken
           }
+          chargeTask {
+            __typename
+            items {
+              __typename
+              id
+              authorID
+              roomID
+              chargePersonID
+              title
+              description
+              scheduleDate
+              priority
+              status
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
           createdAt
           updatedAt
         }
@@ -6298,6 +7364,24 @@ export class APIService {
               id
               taskID
               userID
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          chargeTask {
+            __typename
+            items {
+              __typename
+              id
+              authorID
+              roomID
+              chargePersonID
+              title
+              description
+              scheduleDate
+              priority
+              status
               createdAt
               updatedAt
             }
@@ -6364,6 +7448,24 @@ export class APIService {
             }
             nextToken
           }
+          chargeTask {
+            __typename
+            items {
+              __typename
+              id
+              authorID
+              roomID
+              chargePersonID
+              title
+              description
+              scheduleDate
+              priority
+              status
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
           createdAt
           updatedAt
         }
@@ -6410,6 +7512,20 @@ export class APIService {
               __typename
               nextToken
             }
+            chargePerson {
+              __typename
+              id
+              username
+              email
+              companyID
+              tel
+              positionName
+              iconImage
+              registered
+              authority
+              createdAt
+              updatedAt
+            }
             updatedAt
           }
           user {
@@ -6436,6 +7552,10 @@ export class APIService {
               nextToken
             }
             task {
+              __typename
+              nextToken
+            }
+            chargeTask {
               __typename
               nextToken
             }
@@ -6488,6 +7608,20 @@ export class APIService {
               __typename
               nextToken
             }
+            chargePerson {
+              __typename
+              id
+              username
+              email
+              companyID
+              tel
+              positionName
+              iconImage
+              registered
+              authority
+              createdAt
+              updatedAt
+            }
             updatedAt
           }
           user {
@@ -6514,6 +7648,10 @@ export class APIService {
               nextToken
             }
             task {
+              __typename
+              nextToken
+            }
+            chargeTask {
               __typename
               nextToken
             }
@@ -6566,6 +7704,20 @@ export class APIService {
               __typename
               nextToken
             }
+            chargePerson {
+              __typename
+              id
+              username
+              email
+              companyID
+              tel
+              positionName
+              iconImage
+              registered
+              authority
+              createdAt
+              updatedAt
+            }
             updatedAt
           }
           user {
@@ -6592,6 +7744,10 @@ export class APIService {
               nextToken
             }
             task {
+              __typename
+              nextToken
+            }
+            chargeTask {
               __typename
               nextToken
             }
@@ -6670,6 +7826,40 @@ export class APIService {
             }
             nextToken
           }
+          chargePerson {
+            __typename
+            id
+            username
+            email
+            companyID
+            tel
+            positionName
+            iconImage
+            registered
+            authority
+            company {
+              __typename
+              id
+              name
+              domain
+              createdAt
+              updatedAt
+            }
+            room {
+              __typename
+              nextToken
+            }
+            task {
+              __typename
+              nextToken
+            }
+            chargeTask {
+              __typename
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
           updatedAt
         }
       }`
@@ -6740,6 +7930,40 @@ export class APIService {
               updatedAt
             }
             nextToken
+          }
+          chargePerson {
+            __typename
+            id
+            username
+            email
+            companyID
+            tel
+            positionName
+            iconImage
+            registered
+            authority
+            company {
+              __typename
+              id
+              name
+              domain
+              createdAt
+              updatedAt
+            }
+            room {
+              __typename
+              nextToken
+            }
+            task {
+              __typename
+              nextToken
+            }
+            chargeTask {
+              __typename
+              nextToken
+            }
+            createdAt
+            updatedAt
           }
           updatedAt
         }
@@ -6812,6 +8036,40 @@ export class APIService {
             }
             nextToken
           }
+          chargePerson {
+            __typename
+            id
+            username
+            email
+            companyID
+            tel
+            positionName
+            iconImage
+            registered
+            authority
+            company {
+              __typename
+              id
+              name
+              domain
+              createdAt
+              updatedAt
+            }
+            room {
+              __typename
+              nextToken
+            }
+            task {
+              __typename
+              nextToken
+            }
+            chargeTask {
+              __typename
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
           updatedAt
         }
       }`
@@ -6877,6 +8135,10 @@ export class APIService {
               nextToken
             }
             task {
+              __typename
+              nextToken
+            }
+            chargeTask {
               __typename
               nextToken
             }
@@ -6952,6 +8214,10 @@ export class APIService {
               __typename
               nextToken
             }
+            chargeTask {
+              __typename
+              nextToken
+            }
             createdAt
             updatedAt
           }
@@ -7021,6 +8287,10 @@ export class APIService {
               nextToken
             }
             task {
+              __typename
+              nextToken
+            }
+            chargeTask {
               __typename
               nextToken
             }
@@ -7256,6 +8526,10 @@ export class APIService {
               __typename
               nextToken
             }
+            chargeTask {
+              __typename
+              nextToken
+            }
             createdAt
             updatedAt
           }
@@ -7290,6 +8564,20 @@ export class APIService {
             users {
               __typename
               nextToken
+            }
+            chargePerson {
+              __typename
+              id
+              username
+              email
+              companyID
+              tel
+              positionName
+              iconImage
+              registered
+              authority
+              createdAt
+              updatedAt
             }
             updatedAt
           }
@@ -7335,6 +8623,10 @@ export class APIService {
               __typename
               nextToken
             }
+            chargeTask {
+              __typename
+              nextToken
+            }
             createdAt
             updatedAt
           }
@@ -7369,6 +8661,20 @@ export class APIService {
             users {
               __typename
               nextToken
+            }
+            chargePerson {
+              __typename
+              id
+              username
+              email
+              companyID
+              tel
+              positionName
+              iconImage
+              registered
+              authority
+              createdAt
+              updatedAt
             }
             updatedAt
           }
@@ -7414,6 +8720,10 @@ export class APIService {
               __typename
               nextToken
             }
+            chargeTask {
+              __typename
+              nextToken
+            }
             createdAt
             updatedAt
           }
@@ -7448,6 +8758,20 @@ export class APIService {
             users {
               __typename
               nextToken
+            }
+            chargePerson {
+              __typename
+              id
+              username
+              email
+              companyID
+              tel
+              positionName
+              iconImage
+              registered
+              authority
+              createdAt
+              updatedAt
             }
             updatedAt
           }

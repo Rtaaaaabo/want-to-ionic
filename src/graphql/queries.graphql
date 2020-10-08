@@ -101,6 +101,22 @@ query GetUser($id: ID!) {
       }
       nextToken
     }
+    chargeTask {
+      items {
+        id
+        authorID
+        roomID
+        chargePersonID
+        title
+        description
+        scheduleDate
+        priority
+        status
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
     createdAt
     updatedAt
   }
@@ -132,6 +148,9 @@ query ListUsers(
         nextToken
       }
       task {
+        nextToken
+      }
+      chargeTask {
         nextToken
       }
       createdAt
@@ -170,6 +189,19 @@ query GetTaskGroup($id: ID!) {
       users {
         nextToken
       }
+      chargePerson {
+        id
+        username
+        email
+        companyID
+        tel
+        positionName
+        iconImage
+        registered
+        authority
+        createdAt
+        updatedAt
+      }
       updatedAt
     }
     user {
@@ -193,6 +225,9 @@ query GetTaskGroup($id: ID!) {
         nextToken
       }
       task {
+        nextToken
+      }
+      chargeTask {
         nextToken
       }
       createdAt
@@ -298,6 +333,35 @@ query GetTask($id: ID!) {
       }
       nextToken
     }
+    chargePerson {
+      id
+      username
+      email
+      companyID
+      tel
+      positionName
+      iconImage
+      registered
+      authority
+      company {
+        id
+        name
+        domain
+        createdAt
+        updatedAt
+      }
+      room {
+        nextToken
+      }
+      task {
+        nextToken
+      }
+      chargeTask {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
     updatedAt
   }
 }
@@ -331,6 +395,19 @@ query ListTasks(
       }
       users {
         nextToken
+      }
+      chargePerson {
+        id
+        username
+        email
+        companyID
+        tel
+        positionName
+        iconImage
+        registered
+        authority
+        createdAt
+        updatedAt
       }
       updatedAt
     }
@@ -384,6 +461,9 @@ query GetRoomGroup($id: ID!) {
         nextToken
       }
       task {
+        nextToken
+      }
+      chargeTask {
         nextToken
       }
       createdAt
@@ -536,6 +616,9 @@ query GetMessage($id: ID!) {
       task {
         nextToken
       }
+      chargeTask {
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -566,6 +649,19 @@ query GetMessage($id: ID!) {
       }
       users {
         nextToken
+      }
+      chargePerson {
+        id
+        username
+        email
+        companyID
+        tel
+        positionName
+        iconImage
+        registered
+        authority
+        createdAt
+        updatedAt
       }
       updatedAt
     }

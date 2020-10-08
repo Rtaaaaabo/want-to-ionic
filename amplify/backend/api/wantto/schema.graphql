@@ -19,7 +19,7 @@ type User @model @key(name: "byCompany", fields: ["companyID"]) {
   company: Company! @connection(fields: ["companyID"])
   room: [RoomGroup] @connection(keyName: "byUser", fields: ["id"])
   task: [TaskGroup] @connection(keyName: "byUser", fields: ["id"])
-  # chargeTask: [ChargeTaskGroup] @connection(keyName: "byUser", fields: ["id"])
+  chargeTask: [Task] @connection(keyName: "byUser", fields: ["id"])
 }
 
 type TaskGroup
@@ -33,22 +33,14 @@ type TaskGroup
   user: User @connection(fields: ["userID"])
 }
 
-# type ChargeTaskGroup
-#   @model
-#   @key(name: "byTask", fields: ["chargePersonID"])
-#   @key(name: "byUser", fields: ["userID"]) {
-#   id: ID!
-#   chargePersonID: ID!
-#   userID: ID!
-#   chargeTask: Task @connection(fields: ["chargePersonID"])
-#   user: User @connection(fields: ["userID"])
-# }
-
-type Task @model @key(name: "byRoom", fields: ["roomID"]) {
+type Task
+  @model
+  @key(name: "byRoom", fields: ["roomID"])
+  @key(name: "byUser", fields: ["chargePersonID"]) {
   id: ID!
   authorID: ID!
   roomID: ID!
-  chargePersonID: ID
+  chargePersonID: ID!
   title: String!
   room: Room! @connection(fields: ["roomID"])
   description: String
@@ -58,7 +50,7 @@ type Task @model @key(name: "byRoom", fields: ["roomID"]) {
   createdAt: AWSDateTime
   messages: [Message] @connection(keyName: "byTask", fields: ["id"])
   users: [TaskGroup] @connection(keyName: "byTask", fields: ["id"])
-  # chargePerson: [ChargeTaskGroup] @connection(keyName: "byTask", fields: ["chargePersonID"])
+  chargePerson: User @connection(fields: ["chargePersonID"])
 }
 
 type RoomGroup

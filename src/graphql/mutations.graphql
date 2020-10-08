@@ -163,6 +163,22 @@ mutation CreateUser(
       }
       nextToken
     }
+    chargeTask {
+      items {
+        id
+        authorID
+        roomID
+        chargePersonID
+        title
+        description
+        scheduleDate
+        priority
+        status
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
     createdAt
     updatedAt
   }
@@ -209,6 +225,22 @@ mutation UpdateUser(
         id
         taskID
         userID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    chargeTask {
+      items {
+        id
+        authorID
+        roomID
+        chargePersonID
+        title
+        description
+        scheduleDate
+        priority
+        status
         createdAt
         updatedAt
       }
@@ -265,6 +297,22 @@ mutation DeleteUser(
       }
       nextToken
     }
+    chargeTask {
+      items {
+        id
+        authorID
+        roomID
+        chargePersonID
+        title
+        description
+        scheduleDate
+        priority
+        status
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
     createdAt
     updatedAt
   }
@@ -302,6 +350,19 @@ mutation CreateTaskGroup(
       users {
         nextToken
       }
+      chargePerson {
+        id
+        username
+        email
+        companyID
+        tel
+        positionName
+        iconImage
+        registered
+        authority
+        createdAt
+        updatedAt
+      }
       updatedAt
     }
     user {
@@ -325,6 +386,9 @@ mutation CreateTaskGroup(
         nextToken
       }
       task {
+        nextToken
+      }
+      chargeTask {
         nextToken
       }
       createdAt
@@ -367,6 +431,19 @@ mutation UpdateTaskGroup(
       users {
         nextToken
       }
+      chargePerson {
+        id
+        username
+        email
+        companyID
+        tel
+        positionName
+        iconImage
+        registered
+        authority
+        createdAt
+        updatedAt
+      }
       updatedAt
     }
     user {
@@ -390,6 +467,9 @@ mutation UpdateTaskGroup(
         nextToken
       }
       task {
+        nextToken
+      }
+      chargeTask {
         nextToken
       }
       createdAt
@@ -432,6 +512,19 @@ mutation DeleteTaskGroup(
       users {
         nextToken
       }
+      chargePerson {
+        id
+        username
+        email
+        companyID
+        tel
+        positionName
+        iconImage
+        registered
+        authority
+        createdAt
+        updatedAt
+      }
       updatedAt
     }
     user {
@@ -455,6 +548,9 @@ mutation DeleteTaskGroup(
         nextToken
       }
       task {
+        nextToken
+      }
+      chargeTask {
         nextToken
       }
       createdAt
@@ -521,6 +617,35 @@ mutation CreateTask(
       }
       nextToken
     }
+    chargePerson {
+      id
+      username
+      email
+      companyID
+      tel
+      positionName
+      iconImage
+      registered
+      authority
+      company {
+        id
+        name
+        domain
+        createdAt
+        updatedAt
+      }
+      room {
+        nextToken
+      }
+      task {
+        nextToken
+      }
+      chargeTask {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
     updatedAt
   }
 }
@@ -580,6 +705,35 @@ mutation UpdateTask(
         updatedAt
       }
       nextToken
+    }
+    chargePerson {
+      id
+      username
+      email
+      companyID
+      tel
+      positionName
+      iconImage
+      registered
+      authority
+      company {
+        id
+        name
+        domain
+        createdAt
+        updatedAt
+      }
+      room {
+        nextToken
+      }
+      task {
+        nextToken
+      }
+      chargeTask {
+        nextToken
+      }
+      createdAt
+      updatedAt
     }
     updatedAt
   }
@@ -641,6 +795,35 @@ mutation DeleteTask(
       }
       nextToken
     }
+    chargePerson {
+      id
+      username
+      email
+      companyID
+      tel
+      positionName
+      iconImage
+      registered
+      authority
+      company {
+        id
+        name
+        domain
+        createdAt
+        updatedAt
+      }
+      room {
+        nextToken
+      }
+      task {
+        nextToken
+      }
+      chargeTask {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
     updatedAt
   }
 }
@@ -694,6 +877,9 @@ mutation CreateRoomGroup(
         nextToken
       }
       task {
+        nextToken
+      }
+      chargeTask {
         nextToken
       }
       createdAt
@@ -755,6 +941,9 @@ mutation UpdateRoomGroup(
       task {
         nextToken
       }
+      chargeTask {
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -812,6 +1001,9 @@ mutation DeleteRoomGroup(
         nextToken
       }
       task {
+        nextToken
+      }
+      chargeTask {
         nextToken
       }
       createdAt
@@ -1007,6 +1199,9 @@ mutation CreateMessage(
       task {
         nextToken
       }
+      chargeTask {
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -1037,6 +1232,19 @@ mutation CreateMessage(
       }
       users {
         nextToken
+      }
+      chargePerson {
+        id
+        username
+        email
+        companyID
+        tel
+        positionName
+        iconImage
+        registered
+        authority
+        createdAt
+        updatedAt
       }
       updatedAt
     }
@@ -1073,6 +1281,9 @@ mutation UpdateMessage(
       task {
         nextToken
       }
+      chargeTask {
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -1103,6 +1314,19 @@ mutation UpdateMessage(
       }
       users {
         nextToken
+      }
+      chargePerson {
+        id
+        username
+        email
+        companyID
+        tel
+        positionName
+        iconImage
+        registered
+        authority
+        createdAt
+        updatedAt
       }
       updatedAt
     }
@@ -1139,6 +1363,9 @@ mutation DeleteMessage(
       task {
         nextToken
       }
+      chargeTask {
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -1169,6 +1396,19 @@ mutation DeleteMessage(
       }
       users {
         nextToken
+      }
+      chargePerson {
+        id
+        username
+        email
+        companyID
+        tel
+        positionName
+        iconImage
+        registered
+        authority
+        createdAt
+        updatedAt
       }
       updatedAt
     }

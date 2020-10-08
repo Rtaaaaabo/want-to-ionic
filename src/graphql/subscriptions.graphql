@@ -151,6 +151,22 @@ subscription OnCreateUser {
       }
       nextToken
     }
+    chargeTask {
+      items {
+        id
+        authorID
+        roomID
+        chargePersonID
+        title
+        description
+        scheduleDate
+        priority
+        status
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
     createdAt
     updatedAt
   }
@@ -194,6 +210,22 @@ subscription OnUpdateUser {
         id
         taskID
         userID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    chargeTask {
+      items {
+        id
+        authorID
+        roomID
+        chargePersonID
+        title
+        description
+        scheduleDate
+        priority
+        status
         createdAt
         updatedAt
       }
@@ -247,6 +279,22 @@ subscription OnDeleteUser {
       }
       nextToken
     }
+    chargeTask {
+      items {
+        id
+        authorID
+        roomID
+        chargePersonID
+        title
+        description
+        scheduleDate
+        priority
+        status
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
     createdAt
     updatedAt
   }
@@ -281,6 +329,19 @@ subscription OnCreateTaskGroup {
       users {
         nextToken
       }
+      chargePerson {
+        id
+        username
+        email
+        companyID
+        tel
+        positionName
+        iconImage
+        registered
+        authority
+        createdAt
+        updatedAt
+      }
       updatedAt
     }
     user {
@@ -304,6 +365,9 @@ subscription OnCreateTaskGroup {
         nextToken
       }
       task {
+        nextToken
+      }
+      chargeTask {
         nextToken
       }
       createdAt
@@ -343,6 +407,19 @@ subscription OnUpdateTaskGroup {
       users {
         nextToken
       }
+      chargePerson {
+        id
+        username
+        email
+        companyID
+        tel
+        positionName
+        iconImage
+        registered
+        authority
+        createdAt
+        updatedAt
+      }
       updatedAt
     }
     user {
@@ -366,6 +443,9 @@ subscription OnUpdateTaskGroup {
         nextToken
       }
       task {
+        nextToken
+      }
+      chargeTask {
         nextToken
       }
       createdAt
@@ -405,6 +485,19 @@ subscription OnDeleteTaskGroup {
       users {
         nextToken
       }
+      chargePerson {
+        id
+        username
+        email
+        companyID
+        tel
+        positionName
+        iconImage
+        registered
+        authority
+        createdAt
+        updatedAt
+      }
       updatedAt
     }
     user {
@@ -428,6 +521,9 @@ subscription OnDeleteTaskGroup {
         nextToken
       }
       task {
+        nextToken
+      }
+      chargeTask {
         nextToken
       }
       createdAt
@@ -491,6 +587,35 @@ subscription OnCreateTask {
       }
       nextToken
     }
+    chargePerson {
+      id
+      username
+      email
+      companyID
+      tel
+      positionName
+      iconImage
+      registered
+      authority
+      company {
+        id
+        name
+        domain
+        createdAt
+        updatedAt
+      }
+      room {
+        nextToken
+      }
+      task {
+        nextToken
+      }
+      chargeTask {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
     updatedAt
   }
 }
@@ -547,6 +672,35 @@ subscription OnUpdateTask {
         updatedAt
       }
       nextToken
+    }
+    chargePerson {
+      id
+      username
+      email
+      companyID
+      tel
+      positionName
+      iconImage
+      registered
+      authority
+      company {
+        id
+        name
+        domain
+        createdAt
+        updatedAt
+      }
+      room {
+        nextToken
+      }
+      task {
+        nextToken
+      }
+      chargeTask {
+        nextToken
+      }
+      createdAt
+      updatedAt
     }
     updatedAt
   }
@@ -605,6 +759,35 @@ subscription OnDeleteTask {
       }
       nextToken
     }
+    chargePerson {
+      id
+      username
+      email
+      companyID
+      tel
+      positionName
+      iconImage
+      registered
+      authority
+      company {
+        id
+        name
+        domain
+        createdAt
+        updatedAt
+      }
+      room {
+        nextToken
+      }
+      task {
+        nextToken
+      }
+      chargeTask {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
     updatedAt
   }
 }
@@ -655,6 +838,9 @@ subscription OnCreateRoomGroup {
         nextToken
       }
       task {
+        nextToken
+      }
+      chargeTask {
         nextToken
       }
       createdAt
@@ -713,6 +899,9 @@ subscription OnUpdateRoomGroup {
       task {
         nextToken
       }
+      chargeTask {
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -767,6 +956,9 @@ subscription OnDeleteRoomGroup {
         nextToken
       }
       task {
+        nextToken
+      }
+      chargeTask {
         nextToken
       }
       createdAt
@@ -950,6 +1142,9 @@ subscription OnCreateMessage {
       task {
         nextToken
       }
+      chargeTask {
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -980,6 +1175,19 @@ subscription OnCreateMessage {
       }
       users {
         nextToken
+      }
+      chargePerson {
+        id
+        username
+        email
+        companyID
+        tel
+        positionName
+        iconImage
+        registered
+        authority
+        createdAt
+        updatedAt
       }
       updatedAt
     }
@@ -1013,6 +1221,9 @@ subscription OnUpdateMessage {
       task {
         nextToken
       }
+      chargeTask {
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -1043,6 +1254,19 @@ subscription OnUpdateMessage {
       }
       users {
         nextToken
+      }
+      chargePerson {
+        id
+        username
+        email
+        companyID
+        tel
+        positionName
+        iconImage
+        registered
+        authority
+        createdAt
+        updatedAt
       }
       updatedAt
     }
@@ -1076,6 +1300,9 @@ subscription OnDeleteMessage {
       task {
         nextToken
       }
+      chargeTask {
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -1106,6 +1333,19 @@ subscription OnDeleteMessage {
       }
       users {
         nextToken
+      }
+      chargePerson {
+        id
+        username
+        email
+        companyID
+        tel
+        positionName
+        iconImage
+        registered
+        authority
+        createdAt
+        updatedAt
       }
       updatedAt
     }
