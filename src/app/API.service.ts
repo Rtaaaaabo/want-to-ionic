@@ -68,6 +68,79 @@ export type DeleteCompanyInput = {
   id?: string | null;
 };
 
+export type CreateTaskInput = {
+  id?: string | null;
+  authorID: string;
+  roomID: string;
+  chargePersonID?: string | null;
+  title: string;
+  description?: string | null;
+  scheduleDate?: string | null;
+  priority?: number | null;
+  status?: number | null;
+  createdAt?: string | null;
+};
+
+export type ModelTaskConditionInput = {
+  authorID?: ModelIDInput | null;
+  roomID?: ModelIDInput | null;
+  chargePersonID?: ModelIDInput | null;
+  title?: ModelStringInput | null;
+  description?: ModelStringInput | null;
+  scheduleDate?: ModelStringInput | null;
+  priority?: ModelIntInput | null;
+  status?: ModelIntInput | null;
+  createdAt?: ModelStringInput | null;
+  and?: Array<ModelTaskConditionInput | null> | null;
+  or?: Array<ModelTaskConditionInput | null> | null;
+  not?: ModelTaskConditionInput | null;
+};
+
+export type ModelIDInput = {
+  ne?: string | null;
+  eq?: string | null;
+  le?: string | null;
+  lt?: string | null;
+  ge?: string | null;
+  gt?: string | null;
+  contains?: string | null;
+  notContains?: string | null;
+  between?: Array<string | null> | null;
+  beginsWith?: string | null;
+  attributeExists?: boolean | null;
+  attributeType?: ModelAttributeTypes | null;
+  size?: ModelSizeInput | null;
+};
+
+export type ModelIntInput = {
+  ne?: number | null;
+  eq?: number | null;
+  le?: number | null;
+  lt?: number | null;
+  ge?: number | null;
+  gt?: number | null;
+  between?: Array<number | null> | null;
+  attributeExists?: boolean | null;
+  attributeType?: ModelAttributeTypes | null;
+};
+
+export type UpdateTaskInput = {
+  id: string;
+  authorID?: string | null;
+  roomID?: string | null;
+  chargePersonID?: string | null;
+  title?: string | null;
+  description?: string | null;
+  scheduleDate?: string | null;
+  priority?: number | null;
+  status?: number | null;
+  createdAt?: string | null;
+};
+
+export type DeleteTaskInput = {
+  id?: string | null;
+};
+
 export type CreateUserInput = {
   id?: string | null;
   username: string;
@@ -94,22 +167,6 @@ export type ModelUserConditionInput = {
   not?: ModelUserConditionInput | null;
 };
 
-export type ModelIDInput = {
-  ne?: string | null;
-  eq?: string | null;
-  le?: string | null;
-  lt?: string | null;
-  ge?: string | null;
-  gt?: string | null;
-  contains?: string | null;
-  notContains?: string | null;
-  between?: Array<string | null> | null;
-  beginsWith?: string | null;
-  attributeExists?: boolean | null;
-  attributeType?: ModelAttributeTypes | null;
-  size?: ModelSizeInput | null;
-};
-
 export type ModelBooleanInput = {
   ne?: boolean | null;
   eq?: boolean | null;
@@ -130,30 +187,6 @@ export type UpdateUserInput = {
 };
 
 export type DeleteUserInput = {
-  id?: string | null;
-};
-
-export type CreateRoomGroupInput = {
-  id?: string | null;
-  roomID: string;
-  userID: string;
-};
-
-export type ModelRoomGroupConditionInput = {
-  roomID?: ModelIDInput | null;
-  userID?: ModelIDInput | null;
-  and?: Array<ModelRoomGroupConditionInput | null> | null;
-  or?: Array<ModelRoomGroupConditionInput | null> | null;
-  not?: ModelRoomGroupConditionInput | null;
-};
-
-export type UpdateRoomGroupInput = {
-  id: string;
-  roomID?: string | null;
-  userID?: string | null;
-};
-
-export type DeleteRoomGroupInput = {
   id?: string | null;
 };
 
@@ -181,6 +214,30 @@ export type DeleteTaskGroupInput = {
   id?: string | null;
 };
 
+export type CreateRoomGroupInput = {
+  id?: string | null;
+  roomID: string;
+  userID: string;
+};
+
+export type ModelRoomGroupConditionInput = {
+  roomID?: ModelIDInput | null;
+  userID?: ModelIDInput | null;
+  and?: Array<ModelRoomGroupConditionInput | null> | null;
+  or?: Array<ModelRoomGroupConditionInput | null> | null;
+  not?: ModelRoomGroupConditionInput | null;
+};
+
+export type UpdateRoomGroupInput = {
+  id: string;
+  roomID?: string | null;
+  userID?: string | null;
+};
+
+export type DeleteRoomGroupInput = {
+  id?: string | null;
+};
+
 export type CreateRoomInput = {
   id?: string | null;
   name: string;
@@ -205,63 +262,6 @@ export type UpdateRoomInput = {
 };
 
 export type DeleteRoomInput = {
-  id?: string | null;
-};
-
-export type CreateTaskInput = {
-  id?: string | null;
-  authorID: string;
-  chargePersonID?: string | null;
-  roomID: string;
-  title: string;
-  description?: string | null;
-  scheduleDate?: string | null;
-  priority?: number | null;
-  status?: number | null;
-  createdAt?: string | null;
-};
-
-export type ModelTaskConditionInput = {
-  authorID?: ModelIDInput | null;
-  chargePersonID?: ModelIDInput | null;
-  roomID?: ModelIDInput | null;
-  title?: ModelStringInput | null;
-  description?: ModelStringInput | null;
-  scheduleDate?: ModelStringInput | null;
-  priority?: ModelIntInput | null;
-  status?: ModelIntInput | null;
-  createdAt?: ModelStringInput | null;
-  and?: Array<ModelTaskConditionInput | null> | null;
-  or?: Array<ModelTaskConditionInput | null> | null;
-  not?: ModelTaskConditionInput | null;
-};
-
-export type ModelIntInput = {
-  ne?: number | null;
-  eq?: number | null;
-  le?: number | null;
-  lt?: number | null;
-  ge?: number | null;
-  gt?: number | null;
-  between?: Array<number | null> | null;
-  attributeExists?: boolean | null;
-  attributeType?: ModelAttributeTypes | null;
-};
-
-export type UpdateTaskInput = {
-  id: string;
-  authorID?: string | null;
-  chargePersonID?: string | null;
-  roomID?: string | null;
-  title?: string | null;
-  description?: string | null;
-  scheduleDate?: string | null;
-  priority?: number | null;
-  status?: number | null;
-  createdAt?: string | null;
-};
-
-export type DeleteTaskInput = {
   id?: string | null;
 };
 
@@ -304,6 +304,22 @@ export type ModelCompanyFilterInput = {
   not?: ModelCompanyFilterInput | null;
 };
 
+export type ModelTaskFilterInput = {
+  id?: ModelIDInput | null;
+  authorID?: ModelIDInput | null;
+  roomID?: ModelIDInput | null;
+  chargePersonID?: ModelIDInput | null;
+  title?: ModelStringInput | null;
+  description?: ModelStringInput | null;
+  scheduleDate?: ModelStringInput | null;
+  priority?: ModelIntInput | null;
+  status?: ModelIntInput | null;
+  createdAt?: ModelStringInput | null;
+  and?: Array<ModelTaskFilterInput | null> | null;
+  or?: Array<ModelTaskFilterInput | null> | null;
+  not?: ModelTaskFilterInput | null;
+};
+
 export type ModelUserFilterInput = {
   id?: ModelIDInput | null;
   username?: ModelStringInput | null;
@@ -319,15 +335,6 @@ export type ModelUserFilterInput = {
   not?: ModelUserFilterInput | null;
 };
 
-export type ModelRoomGroupFilterInput = {
-  id?: ModelIDInput | null;
-  roomID?: ModelIDInput | null;
-  userID?: ModelIDInput | null;
-  and?: Array<ModelRoomGroupFilterInput | null> | null;
-  or?: Array<ModelRoomGroupFilterInput | null> | null;
-  not?: ModelRoomGroupFilterInput | null;
-};
-
 export type ModelTaskGroupFilterInput = {
   id?: ModelIDInput | null;
   taskID?: ModelIDInput | null;
@@ -335,6 +342,15 @@ export type ModelTaskGroupFilterInput = {
   and?: Array<ModelTaskGroupFilterInput | null> | null;
   or?: Array<ModelTaskGroupFilterInput | null> | null;
   not?: ModelTaskGroupFilterInput | null;
+};
+
+export type ModelRoomGroupFilterInput = {
+  id?: ModelIDInput | null;
+  roomID?: ModelIDInput | null;
+  userID?: ModelIDInput | null;
+  and?: Array<ModelRoomGroupFilterInput | null> | null;
+  or?: Array<ModelRoomGroupFilterInput | null> | null;
+  not?: ModelRoomGroupFilterInput | null;
 };
 
 export type ModelRoomFilterInput = {
@@ -345,22 +361,6 @@ export type ModelRoomFilterInput = {
   and?: Array<ModelRoomFilterInput | null> | null;
   or?: Array<ModelRoomFilterInput | null> | null;
   not?: ModelRoomFilterInput | null;
-};
-
-export type ModelTaskFilterInput = {
-  id?: ModelIDInput | null;
-  authorID?: ModelIDInput | null;
-  chargePersonID?: ModelIDInput | null;
-  roomID?: ModelIDInput | null;
-  title?: ModelStringInput | null;
-  description?: ModelStringInput | null;
-  scheduleDate?: ModelStringInput | null;
-  priority?: ModelIntInput | null;
-  status?: ModelIntInput | null;
-  createdAt?: ModelStringInput | null;
-  and?: Array<ModelTaskFilterInput | null> | null;
-  or?: Array<ModelTaskFilterInput | null> | null;
-  not?: ModelTaskFilterInput | null;
 };
 
 export type ModelMessageFilterInput = {
@@ -491,6 +491,153 @@ export type DeleteCompanyMutation = {
     nextToken: string | null;
   } | null;
   createdAt: string;
+  updatedAt: string;
+};
+
+export type CreateTaskMutation = {
+  __typename: "Task";
+  id: string;
+  authorID: string;
+  roomID: string;
+  chargePersonID: string | null;
+  title: string;
+  room: {
+    __typename: "Room";
+    id: string;
+    name: string;
+    companyID: string;
+    description: string;
+    company: {
+      __typename: "Company";
+      id: string;
+      name: string;
+      domain: string;
+      createdAt: string;
+      updatedAt: string;
+    };
+    tasks: {
+      __typename: "ModelTaskConnection";
+      nextToken: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+  };
+  description: string | null;
+  scheduleDate: string | null;
+  priority: number | null;
+  status: number | null;
+  createdAt: string | null;
+  messages: {
+    __typename: "ModelMessageConnection";
+    items: Array<{
+      __typename: "Message";
+      id: string;
+      taskID: string;
+      content: string;
+      createdAt: string | null;
+      isSent: boolean | null;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
+  updatedAt: string;
+};
+
+export type UpdateTaskMutation = {
+  __typename: "Task";
+  id: string;
+  authorID: string;
+  roomID: string;
+  chargePersonID: string | null;
+  title: string;
+  room: {
+    __typename: "Room";
+    id: string;
+    name: string;
+    companyID: string;
+    description: string;
+    company: {
+      __typename: "Company";
+      id: string;
+      name: string;
+      domain: string;
+      createdAt: string;
+      updatedAt: string;
+    };
+    tasks: {
+      __typename: "ModelTaskConnection";
+      nextToken: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+  };
+  description: string | null;
+  scheduleDate: string | null;
+  priority: number | null;
+  status: number | null;
+  createdAt: string | null;
+  messages: {
+    __typename: "ModelMessageConnection";
+    items: Array<{
+      __typename: "Message";
+      id: string;
+      taskID: string;
+      content: string;
+      createdAt: string | null;
+      isSent: boolean | null;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
+  updatedAt: string;
+};
+
+export type DeleteTaskMutation = {
+  __typename: "Task";
+  id: string;
+  authorID: string;
+  roomID: string;
+  chargePersonID: string | null;
+  title: string;
+  room: {
+    __typename: "Room";
+    id: string;
+    name: string;
+    companyID: string;
+    description: string;
+    company: {
+      __typename: "Company";
+      id: string;
+      name: string;
+      domain: string;
+      createdAt: string;
+      updatedAt: string;
+    };
+    tasks: {
+      __typename: "ModelTaskConnection";
+      nextToken: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+  };
+  description: string | null;
+  scheduleDate: string | null;
+  priority: number | null;
+  status: number | null;
+  createdAt: string | null;
+  messages: {
+    __typename: "ModelMessageConnection";
+    items: Array<{
+      __typename: "Message";
+      id: string;
+      taskID: string;
+      content: string;
+      createdAt: string | null;
+      isSent: boolean | null;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
   updatedAt: string;
 };
 
@@ -654,6 +801,204 @@ export type DeleteUserMutation = {
       updatedAt: string;
     } | null> | null;
     nextToken: string | null;
+  } | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type CreateTaskGroupMutation = {
+  __typename: "TaskGroup";
+  id: string;
+  taskID: string;
+  userID: string;
+  task: {
+    __typename: "Task";
+    id: string;
+    authorID: string;
+    roomID: string;
+    chargePersonID: string | null;
+    title: string;
+    room: {
+      __typename: "Room";
+      id: string;
+      name: string;
+      companyID: string;
+      description: string;
+      createdAt: string;
+      updatedAt: string;
+    };
+    description: string | null;
+    scheduleDate: string | null;
+    priority: number | null;
+    status: number | null;
+    createdAt: string | null;
+    messages: {
+      __typename: "ModelMessageConnection";
+      nextToken: string | null;
+    } | null;
+    updatedAt: string;
+  } | null;
+  user: {
+    __typename: "User";
+    id: string;
+    username: string;
+    email: string;
+    companyID: string;
+    tel: string | null;
+    positionName: string | null;
+    iconImage: string | null;
+    registered: boolean | null;
+    authority: string | null;
+    company: {
+      __typename: "Company";
+      id: string;
+      name: string;
+      domain: string;
+      createdAt: string;
+      updatedAt: string;
+    };
+    room: {
+      __typename: "ModelRoomGroupConnection";
+      nextToken: string | null;
+    } | null;
+    task: {
+      __typename: "ModelTaskGroupConnection";
+      nextToken: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type UpdateTaskGroupMutation = {
+  __typename: "TaskGroup";
+  id: string;
+  taskID: string;
+  userID: string;
+  task: {
+    __typename: "Task";
+    id: string;
+    authorID: string;
+    roomID: string;
+    chargePersonID: string | null;
+    title: string;
+    room: {
+      __typename: "Room";
+      id: string;
+      name: string;
+      companyID: string;
+      description: string;
+      createdAt: string;
+      updatedAt: string;
+    };
+    description: string | null;
+    scheduleDate: string | null;
+    priority: number | null;
+    status: number | null;
+    createdAt: string | null;
+    messages: {
+      __typename: "ModelMessageConnection";
+      nextToken: string | null;
+    } | null;
+    updatedAt: string;
+  } | null;
+  user: {
+    __typename: "User";
+    id: string;
+    username: string;
+    email: string;
+    companyID: string;
+    tel: string | null;
+    positionName: string | null;
+    iconImage: string | null;
+    registered: boolean | null;
+    authority: string | null;
+    company: {
+      __typename: "Company";
+      id: string;
+      name: string;
+      domain: string;
+      createdAt: string;
+      updatedAt: string;
+    };
+    room: {
+      __typename: "ModelRoomGroupConnection";
+      nextToken: string | null;
+    } | null;
+    task: {
+      __typename: "ModelTaskGroupConnection";
+      nextToken: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type DeleteTaskGroupMutation = {
+  __typename: "TaskGroup";
+  id: string;
+  taskID: string;
+  userID: string;
+  task: {
+    __typename: "Task";
+    id: string;
+    authorID: string;
+    roomID: string;
+    chargePersonID: string | null;
+    title: string;
+    room: {
+      __typename: "Room";
+      id: string;
+      name: string;
+      companyID: string;
+      description: string;
+      createdAt: string;
+      updatedAt: string;
+    };
+    description: string | null;
+    scheduleDate: string | null;
+    priority: number | null;
+    status: number | null;
+    createdAt: string | null;
+    messages: {
+      __typename: "ModelMessageConnection";
+      nextToken: string | null;
+    } | null;
+    updatedAt: string;
+  } | null;
+  user: {
+    __typename: "User";
+    id: string;
+    username: string;
+    email: string;
+    companyID: string;
+    tel: string | null;
+    positionName: string | null;
+    iconImage: string | null;
+    registered: boolean | null;
+    authority: string | null;
+    company: {
+      __typename: "Company";
+      id: string;
+      name: string;
+      domain: string;
+      createdAt: string;
+      updatedAt: string;
+    };
+    room: {
+      __typename: "ModelRoomGroupConnection";
+      nextToken: string | null;
+    } | null;
+    task: {
+      __typename: "ModelTaskGroupConnection";
+      nextToken: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
   } | null;
   createdAt: string;
   updatedAt: string;
@@ -839,204 +1184,6 @@ export type DeleteRoomGroupMutation = {
   updatedAt: string;
 };
 
-export type CreateTaskGroupMutation = {
-  __typename: "TaskGroup";
-  id: string;
-  taskID: string;
-  userID: string;
-  task: {
-    __typename: "Task";
-    id: string;
-    authorID: string;
-    chargePersonID: string | null;
-    roomID: string;
-    title: string;
-    description: string | null;
-    scheduleDate: string | null;
-    priority: number | null;
-    status: number | null;
-    createdAt: string | null;
-    room: {
-      __typename: "Room";
-      id: string;
-      name: string;
-      companyID: string;
-      description: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    messages: {
-      __typename: "ModelMessageConnection";
-      nextToken: string | null;
-    } | null;
-    updatedAt: string;
-  } | null;
-  user: {
-    __typename: "User";
-    id: string;
-    username: string;
-    email: string;
-    companyID: string;
-    tel: string | null;
-    positionName: string | null;
-    iconImage: string | null;
-    registered: boolean | null;
-    authority: string | null;
-    company: {
-      __typename: "Company";
-      id: string;
-      name: string;
-      domain: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    room: {
-      __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
-    } | null;
-    task: {
-      __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type UpdateTaskGroupMutation = {
-  __typename: "TaskGroup";
-  id: string;
-  taskID: string;
-  userID: string;
-  task: {
-    __typename: "Task";
-    id: string;
-    authorID: string;
-    chargePersonID: string | null;
-    roomID: string;
-    title: string;
-    description: string | null;
-    scheduleDate: string | null;
-    priority: number | null;
-    status: number | null;
-    createdAt: string | null;
-    room: {
-      __typename: "Room";
-      id: string;
-      name: string;
-      companyID: string;
-      description: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    messages: {
-      __typename: "ModelMessageConnection";
-      nextToken: string | null;
-    } | null;
-    updatedAt: string;
-  } | null;
-  user: {
-    __typename: "User";
-    id: string;
-    username: string;
-    email: string;
-    companyID: string;
-    tel: string | null;
-    positionName: string | null;
-    iconImage: string | null;
-    registered: boolean | null;
-    authority: string | null;
-    company: {
-      __typename: "Company";
-      id: string;
-      name: string;
-      domain: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    room: {
-      __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
-    } | null;
-    task: {
-      __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type DeleteTaskGroupMutation = {
-  __typename: "TaskGroup";
-  id: string;
-  taskID: string;
-  userID: string;
-  task: {
-    __typename: "Task";
-    id: string;
-    authorID: string;
-    chargePersonID: string | null;
-    roomID: string;
-    title: string;
-    description: string | null;
-    scheduleDate: string | null;
-    priority: number | null;
-    status: number | null;
-    createdAt: string | null;
-    room: {
-      __typename: "Room";
-      id: string;
-      name: string;
-      companyID: string;
-      description: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    messages: {
-      __typename: "ModelMessageConnection";
-      nextToken: string | null;
-    } | null;
-    updatedAt: string;
-  } | null;
-  user: {
-    __typename: "User";
-    id: string;
-    username: string;
-    email: string;
-    companyID: string;
-    tel: string | null;
-    positionName: string | null;
-    iconImage: string | null;
-    registered: boolean | null;
-    authority: string | null;
-    company: {
-      __typename: "Company";
-      id: string;
-      name: string;
-      domain: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    room: {
-      __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
-    } | null;
-    task: {
-      __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
-  createdAt: string;
-  updatedAt: string;
-};
-
 export type CreateRoomMutation = {
   __typename: "Room";
   id: string;
@@ -1065,8 +1212,8 @@ export type CreateRoomMutation = {
       __typename: "Task";
       id: string;
       authorID: string;
-      chargePersonID: string | null;
       roomID: string;
+      chargePersonID: string | null;
       title: string;
       description: string | null;
       scheduleDate: string | null;
@@ -1109,8 +1256,8 @@ export type UpdateRoomMutation = {
       __typename: "Task";
       id: string;
       authorID: string;
-      chargePersonID: string | null;
       roomID: string;
+      chargePersonID: string | null;
       title: string;
       description: string | null;
       scheduleDate: string | null;
@@ -1153,8 +1300,8 @@ export type DeleteRoomMutation = {
       __typename: "Task";
       id: string;
       authorID: string;
-      chargePersonID: string | null;
       roomID: string;
+      chargePersonID: string | null;
       title: string;
       description: string | null;
       scheduleDate: string | null;
@@ -1166,153 +1313,6 @@ export type DeleteRoomMutation = {
     nextToken: string | null;
   } | null;
   createdAt: string;
-  updatedAt: string;
-};
-
-export type CreateTaskMutation = {
-  __typename: "Task";
-  id: string;
-  authorID: string;
-  chargePersonID: string | null;
-  roomID: string;
-  title: string;
-  description: string | null;
-  scheduleDate: string | null;
-  priority: number | null;
-  status: number | null;
-  createdAt: string | null;
-  room: {
-    __typename: "Room";
-    id: string;
-    name: string;
-    companyID: string;
-    description: string;
-    company: {
-      __typename: "Company";
-      id: string;
-      name: string;
-      domain: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    tasks: {
-      __typename: "ModelTaskConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  };
-  messages: {
-    __typename: "ModelMessageConnection";
-    items: Array<{
-      __typename: "Message";
-      id: string;
-      taskID: string;
-      content: string;
-      createdAt: string | null;
-      isSent: boolean | null;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  updatedAt: string;
-};
-
-export type UpdateTaskMutation = {
-  __typename: "Task";
-  id: string;
-  authorID: string;
-  chargePersonID: string | null;
-  roomID: string;
-  title: string;
-  description: string | null;
-  scheduleDate: string | null;
-  priority: number | null;
-  status: number | null;
-  createdAt: string | null;
-  room: {
-    __typename: "Room";
-    id: string;
-    name: string;
-    companyID: string;
-    description: string;
-    company: {
-      __typename: "Company";
-      id: string;
-      name: string;
-      domain: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    tasks: {
-      __typename: "ModelTaskConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  };
-  messages: {
-    __typename: "ModelMessageConnection";
-    items: Array<{
-      __typename: "Message";
-      id: string;
-      taskID: string;
-      content: string;
-      createdAt: string | null;
-      isSent: boolean | null;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  updatedAt: string;
-};
-
-export type DeleteTaskMutation = {
-  __typename: "Task";
-  id: string;
-  authorID: string;
-  chargePersonID: string | null;
-  roomID: string;
-  title: string;
-  description: string | null;
-  scheduleDate: string | null;
-  priority: number | null;
-  status: number | null;
-  createdAt: string | null;
-  room: {
-    __typename: "Room";
-    id: string;
-    name: string;
-    companyID: string;
-    description: string;
-    company: {
-      __typename: "Company";
-      id: string;
-      name: string;
-      domain: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    tasks: {
-      __typename: "ModelTaskConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  };
-  messages: {
-    __typename: "ModelMessageConnection";
-    items: Array<{
-      __typename: "Message";
-      id: string;
-      taskID: string;
-      content: string;
-      createdAt: string | null;
-      isSent: boolean | null;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
   updatedAt: string;
 };
 
@@ -1357,14 +1357,9 @@ export type CreateMessageMutation = {
     __typename: "Task";
     id: string;
     authorID: string;
-    chargePersonID: string | null;
     roomID: string;
+    chargePersonID: string | null;
     title: string;
-    description: string | null;
-    scheduleDate: string | null;
-    priority: number | null;
-    status: number | null;
-    createdAt: string | null;
     room: {
       __typename: "Room";
       id: string;
@@ -1374,6 +1369,11 @@ export type CreateMessageMutation = {
       createdAt: string;
       updatedAt: string;
     };
+    description: string | null;
+    scheduleDate: string | null;
+    priority: number | null;
+    status: number | null;
+    createdAt: string | null;
     messages: {
       __typename: "ModelMessageConnection";
       nextToken: string | null;
@@ -1424,14 +1424,9 @@ export type UpdateMessageMutation = {
     __typename: "Task";
     id: string;
     authorID: string;
-    chargePersonID: string | null;
     roomID: string;
+    chargePersonID: string | null;
     title: string;
-    description: string | null;
-    scheduleDate: string | null;
-    priority: number | null;
-    status: number | null;
-    createdAt: string | null;
     room: {
       __typename: "Room";
       id: string;
@@ -1441,6 +1436,11 @@ export type UpdateMessageMutation = {
       createdAt: string;
       updatedAt: string;
     };
+    description: string | null;
+    scheduleDate: string | null;
+    priority: number | null;
+    status: number | null;
+    createdAt: string | null;
     messages: {
       __typename: "ModelMessageConnection";
       nextToken: string | null;
@@ -1491,14 +1491,9 @@ export type DeleteMessageMutation = {
     __typename: "Task";
     id: string;
     authorID: string;
-    chargePersonID: string | null;
     roomID: string;
+    chargePersonID: string | null;
     title: string;
-    description: string | null;
-    scheduleDate: string | null;
-    priority: number | null;
-    status: number | null;
-    createdAt: string | null;
     room: {
       __typename: "Room";
       id: string;
@@ -1508,6 +1503,11 @@ export type DeleteMessageMutation = {
       createdAt: string;
       updatedAt: string;
     };
+    description: string | null;
+    scheduleDate: string | null;
+    priority: number | null;
+    status: number | null;
+    createdAt: string | null;
     messages: {
       __typename: "ModelMessageConnection";
       nextToken: string | null;
@@ -1573,6 +1573,87 @@ export type ListCompanysQuery = {
       nextToken: string | null;
     } | null;
     createdAt: string;
+    updatedAt: string;
+  } | null> | null;
+  nextToken: string | null;
+};
+
+export type GetTaskQuery = {
+  __typename: "Task";
+  id: string;
+  authorID: string;
+  roomID: string;
+  chargePersonID: string | null;
+  title: string;
+  room: {
+    __typename: "Room";
+    id: string;
+    name: string;
+    companyID: string;
+    description: string;
+    company: {
+      __typename: "Company";
+      id: string;
+      name: string;
+      domain: string;
+      createdAt: string;
+      updatedAt: string;
+    };
+    tasks: {
+      __typename: "ModelTaskConnection";
+      nextToken: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+  };
+  description: string | null;
+  scheduleDate: string | null;
+  priority: number | null;
+  status: number | null;
+  createdAt: string | null;
+  messages: {
+    __typename: "ModelMessageConnection";
+    items: Array<{
+      __typename: "Message";
+      id: string;
+      taskID: string;
+      content: string;
+      createdAt: string | null;
+      isSent: boolean | null;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
+  updatedAt: string;
+};
+
+export type ListTasksQuery = {
+  __typename: "ModelTaskConnection";
+  items: Array<{
+    __typename: "Task";
+    id: string;
+    authorID: string;
+    roomID: string;
+    chargePersonID: string | null;
+    title: string;
+    room: {
+      __typename: "Room";
+      id: string;
+      name: string;
+      companyID: string;
+      description: string;
+      createdAt: string;
+      updatedAt: string;
+    };
+    description: string | null;
+    scheduleDate: string | null;
+    priority: number | null;
+    status: number | null;
+    createdAt: string | null;
+    messages: {
+      __typename: "ModelMessageConnection";
+      nextToken: string | null;
+    } | null;
     updatedAt: string;
   } | null> | null;
   nextToken: string | null;
@@ -1661,6 +1742,113 @@ export type ListUsersQuery = {
     task: {
       __typename: "ModelTaskGroupConnection";
       nextToken: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+  } | null> | null;
+  nextToken: string | null;
+};
+
+export type GetTaskGroupQuery = {
+  __typename: "TaskGroup";
+  id: string;
+  taskID: string;
+  userID: string;
+  task: {
+    __typename: "Task";
+    id: string;
+    authorID: string;
+    roomID: string;
+    chargePersonID: string | null;
+    title: string;
+    room: {
+      __typename: "Room";
+      id: string;
+      name: string;
+      companyID: string;
+      description: string;
+      createdAt: string;
+      updatedAt: string;
+    };
+    description: string | null;
+    scheduleDate: string | null;
+    priority: number | null;
+    status: number | null;
+    createdAt: string | null;
+    messages: {
+      __typename: "ModelMessageConnection";
+      nextToken: string | null;
+    } | null;
+    updatedAt: string;
+  } | null;
+  user: {
+    __typename: "User";
+    id: string;
+    username: string;
+    email: string;
+    companyID: string;
+    tel: string | null;
+    positionName: string | null;
+    iconImage: string | null;
+    registered: boolean | null;
+    authority: string | null;
+    company: {
+      __typename: "Company";
+      id: string;
+      name: string;
+      domain: string;
+      createdAt: string;
+      updatedAt: string;
+    };
+    room: {
+      __typename: "ModelRoomGroupConnection";
+      nextToken: string | null;
+    } | null;
+    task: {
+      __typename: "ModelTaskGroupConnection";
+      nextToken: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type ListTaskGroupsQuery = {
+  __typename: "ModelTaskGroupConnection";
+  items: Array<{
+    __typename: "TaskGroup";
+    id: string;
+    taskID: string;
+    userID: string;
+    task: {
+      __typename: "Task";
+      id: string;
+      authorID: string;
+      roomID: string;
+      chargePersonID: string | null;
+      title: string;
+      description: string | null;
+      scheduleDate: string | null;
+      priority: number | null;
+      status: number | null;
+      createdAt: string | null;
+      updatedAt: string;
+    } | null;
+    user: {
+      __typename: "User";
+      id: string;
+      username: string;
+      email: string;
+      companyID: string;
+      tel: string | null;
+      positionName: string | null;
+      iconImage: string | null;
+      registered: boolean | null;
+      authority: string | null;
+      createdAt: string;
+      updatedAt: string;
     } | null;
     createdAt: string;
     updatedAt: string;
@@ -1764,113 +1952,6 @@ export type ListRoomGroupsQuery = {
   nextToken: string | null;
 };
 
-export type GetTaskGroupQuery = {
-  __typename: "TaskGroup";
-  id: string;
-  taskID: string;
-  userID: string;
-  task: {
-    __typename: "Task";
-    id: string;
-    authorID: string;
-    chargePersonID: string | null;
-    roomID: string;
-    title: string;
-    description: string | null;
-    scheduleDate: string | null;
-    priority: number | null;
-    status: number | null;
-    createdAt: string | null;
-    room: {
-      __typename: "Room";
-      id: string;
-      name: string;
-      companyID: string;
-      description: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    messages: {
-      __typename: "ModelMessageConnection";
-      nextToken: string | null;
-    } | null;
-    updatedAt: string;
-  } | null;
-  user: {
-    __typename: "User";
-    id: string;
-    username: string;
-    email: string;
-    companyID: string;
-    tel: string | null;
-    positionName: string | null;
-    iconImage: string | null;
-    registered: boolean | null;
-    authority: string | null;
-    company: {
-      __typename: "Company";
-      id: string;
-      name: string;
-      domain: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    room: {
-      __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
-    } | null;
-    task: {
-      __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type ListTaskGroupsQuery = {
-  __typename: "ModelTaskGroupConnection";
-  items: Array<{
-    __typename: "TaskGroup";
-    id: string;
-    taskID: string;
-    userID: string;
-    task: {
-      __typename: "Task";
-      id: string;
-      authorID: string;
-      chargePersonID: string | null;
-      roomID: string;
-      title: string;
-      description: string | null;
-      scheduleDate: string | null;
-      priority: number | null;
-      status: number | null;
-      createdAt: string | null;
-      updatedAt: string;
-    } | null;
-    user: {
-      __typename: "User";
-      id: string;
-      username: string;
-      email: string;
-      companyID: string;
-      tel: string | null;
-      positionName: string | null;
-      iconImage: string | null;
-      registered: boolean | null;
-      authority: string | null;
-      createdAt: string;
-      updatedAt: string;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null> | null;
-  nextToken: string | null;
-};
-
 export type GetRoomQuery = {
   __typename: "Room";
   id: string;
@@ -1899,8 +1980,8 @@ export type GetRoomQuery = {
       __typename: "Task";
       id: string;
       authorID: string;
-      chargePersonID: string | null;
       roomID: string;
+      chargePersonID: string | null;
       title: string;
       description: string | null;
       scheduleDate: string | null;
@@ -1936,87 +2017,6 @@ export type ListRoomsQuery = {
       nextToken: string | null;
     } | null;
     createdAt: string;
-    updatedAt: string;
-  } | null> | null;
-  nextToken: string | null;
-};
-
-export type GetTaskQuery = {
-  __typename: "Task";
-  id: string;
-  authorID: string;
-  chargePersonID: string | null;
-  roomID: string;
-  title: string;
-  description: string | null;
-  scheduleDate: string | null;
-  priority: number | null;
-  status: number | null;
-  createdAt: string | null;
-  room: {
-    __typename: "Room";
-    id: string;
-    name: string;
-    companyID: string;
-    description: string;
-    company: {
-      __typename: "Company";
-      id: string;
-      name: string;
-      domain: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    tasks: {
-      __typename: "ModelTaskConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  };
-  messages: {
-    __typename: "ModelMessageConnection";
-    items: Array<{
-      __typename: "Message";
-      id: string;
-      taskID: string;
-      content: string;
-      createdAt: string | null;
-      isSent: boolean | null;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  updatedAt: string;
-};
-
-export type ListTasksQuery = {
-  __typename: "ModelTaskConnection";
-  items: Array<{
-    __typename: "Task";
-    id: string;
-    authorID: string;
-    chargePersonID: string | null;
-    roomID: string;
-    title: string;
-    description: string | null;
-    scheduleDate: string | null;
-    priority: number | null;
-    status: number | null;
-    createdAt: string | null;
-    room: {
-      __typename: "Room";
-      id: string;
-      name: string;
-      companyID: string;
-      description: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    messages: {
-      __typename: "ModelMessageConnection";
-      nextToken: string | null;
-    } | null;
     updatedAt: string;
   } | null> | null;
   nextToken: string | null;
@@ -2063,14 +2063,9 @@ export type GetMessageQuery = {
     __typename: "Task";
     id: string;
     authorID: string;
-    chargePersonID: string | null;
     roomID: string;
+    chargePersonID: string | null;
     title: string;
-    description: string | null;
-    scheduleDate: string | null;
-    priority: number | null;
-    status: number | null;
-    createdAt: string | null;
     room: {
       __typename: "Room";
       id: string;
@@ -2080,6 +2075,11 @@ export type GetMessageQuery = {
       createdAt: string;
       updatedAt: string;
     };
+    description: string | null;
+    scheduleDate: string | null;
+    priority: number | null;
+    status: number | null;
+    createdAt: string | null;
     messages: {
       __typename: "ModelMessageConnection";
       nextToken: string | null;
@@ -2116,8 +2116,8 @@ export type ListMessagesQuery = {
       __typename: "Task";
       id: string;
       authorID: string;
-      chargePersonID: string | null;
       roomID: string;
+      chargePersonID: string | null;
       title: string;
       description: string | null;
       scheduleDate: string | null;
@@ -2248,6 +2248,153 @@ export type OnDeleteCompanySubscription = {
     nextToken: string | null;
   } | null;
   createdAt: string;
+  updatedAt: string;
+};
+
+export type OnCreateTaskSubscription = {
+  __typename: "Task";
+  id: string;
+  authorID: string;
+  roomID: string;
+  chargePersonID: string | null;
+  title: string;
+  room: {
+    __typename: "Room";
+    id: string;
+    name: string;
+    companyID: string;
+    description: string;
+    company: {
+      __typename: "Company";
+      id: string;
+      name: string;
+      domain: string;
+      createdAt: string;
+      updatedAt: string;
+    };
+    tasks: {
+      __typename: "ModelTaskConnection";
+      nextToken: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+  };
+  description: string | null;
+  scheduleDate: string | null;
+  priority: number | null;
+  status: number | null;
+  createdAt: string | null;
+  messages: {
+    __typename: "ModelMessageConnection";
+    items: Array<{
+      __typename: "Message";
+      id: string;
+      taskID: string;
+      content: string;
+      createdAt: string | null;
+      isSent: boolean | null;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
+  updatedAt: string;
+};
+
+export type OnUpdateTaskSubscription = {
+  __typename: "Task";
+  id: string;
+  authorID: string;
+  roomID: string;
+  chargePersonID: string | null;
+  title: string;
+  room: {
+    __typename: "Room";
+    id: string;
+    name: string;
+    companyID: string;
+    description: string;
+    company: {
+      __typename: "Company";
+      id: string;
+      name: string;
+      domain: string;
+      createdAt: string;
+      updatedAt: string;
+    };
+    tasks: {
+      __typename: "ModelTaskConnection";
+      nextToken: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+  };
+  description: string | null;
+  scheduleDate: string | null;
+  priority: number | null;
+  status: number | null;
+  createdAt: string | null;
+  messages: {
+    __typename: "ModelMessageConnection";
+    items: Array<{
+      __typename: "Message";
+      id: string;
+      taskID: string;
+      content: string;
+      createdAt: string | null;
+      isSent: boolean | null;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
+  updatedAt: string;
+};
+
+export type OnDeleteTaskSubscription = {
+  __typename: "Task";
+  id: string;
+  authorID: string;
+  roomID: string;
+  chargePersonID: string | null;
+  title: string;
+  room: {
+    __typename: "Room";
+    id: string;
+    name: string;
+    companyID: string;
+    description: string;
+    company: {
+      __typename: "Company";
+      id: string;
+      name: string;
+      domain: string;
+      createdAt: string;
+      updatedAt: string;
+    };
+    tasks: {
+      __typename: "ModelTaskConnection";
+      nextToken: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+  };
+  description: string | null;
+  scheduleDate: string | null;
+  priority: number | null;
+  status: number | null;
+  createdAt: string | null;
+  messages: {
+    __typename: "ModelMessageConnection";
+    items: Array<{
+      __typename: "Message";
+      id: string;
+      taskID: string;
+      content: string;
+      createdAt: string | null;
+      isSent: boolean | null;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
   updatedAt: string;
 };
 
@@ -2411,6 +2558,204 @@ export type OnDeleteUserSubscription = {
       updatedAt: string;
     } | null> | null;
     nextToken: string | null;
+  } | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type OnCreateTaskGroupSubscription = {
+  __typename: "TaskGroup";
+  id: string;
+  taskID: string;
+  userID: string;
+  task: {
+    __typename: "Task";
+    id: string;
+    authorID: string;
+    roomID: string;
+    chargePersonID: string | null;
+    title: string;
+    room: {
+      __typename: "Room";
+      id: string;
+      name: string;
+      companyID: string;
+      description: string;
+      createdAt: string;
+      updatedAt: string;
+    };
+    description: string | null;
+    scheduleDate: string | null;
+    priority: number | null;
+    status: number | null;
+    createdAt: string | null;
+    messages: {
+      __typename: "ModelMessageConnection";
+      nextToken: string | null;
+    } | null;
+    updatedAt: string;
+  } | null;
+  user: {
+    __typename: "User";
+    id: string;
+    username: string;
+    email: string;
+    companyID: string;
+    tel: string | null;
+    positionName: string | null;
+    iconImage: string | null;
+    registered: boolean | null;
+    authority: string | null;
+    company: {
+      __typename: "Company";
+      id: string;
+      name: string;
+      domain: string;
+      createdAt: string;
+      updatedAt: string;
+    };
+    room: {
+      __typename: "ModelRoomGroupConnection";
+      nextToken: string | null;
+    } | null;
+    task: {
+      __typename: "ModelTaskGroupConnection";
+      nextToken: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type OnUpdateTaskGroupSubscription = {
+  __typename: "TaskGroup";
+  id: string;
+  taskID: string;
+  userID: string;
+  task: {
+    __typename: "Task";
+    id: string;
+    authorID: string;
+    roomID: string;
+    chargePersonID: string | null;
+    title: string;
+    room: {
+      __typename: "Room";
+      id: string;
+      name: string;
+      companyID: string;
+      description: string;
+      createdAt: string;
+      updatedAt: string;
+    };
+    description: string | null;
+    scheduleDate: string | null;
+    priority: number | null;
+    status: number | null;
+    createdAt: string | null;
+    messages: {
+      __typename: "ModelMessageConnection";
+      nextToken: string | null;
+    } | null;
+    updatedAt: string;
+  } | null;
+  user: {
+    __typename: "User";
+    id: string;
+    username: string;
+    email: string;
+    companyID: string;
+    tel: string | null;
+    positionName: string | null;
+    iconImage: string | null;
+    registered: boolean | null;
+    authority: string | null;
+    company: {
+      __typename: "Company";
+      id: string;
+      name: string;
+      domain: string;
+      createdAt: string;
+      updatedAt: string;
+    };
+    room: {
+      __typename: "ModelRoomGroupConnection";
+      nextToken: string | null;
+    } | null;
+    task: {
+      __typename: "ModelTaskGroupConnection";
+      nextToken: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type OnDeleteTaskGroupSubscription = {
+  __typename: "TaskGroup";
+  id: string;
+  taskID: string;
+  userID: string;
+  task: {
+    __typename: "Task";
+    id: string;
+    authorID: string;
+    roomID: string;
+    chargePersonID: string | null;
+    title: string;
+    room: {
+      __typename: "Room";
+      id: string;
+      name: string;
+      companyID: string;
+      description: string;
+      createdAt: string;
+      updatedAt: string;
+    };
+    description: string | null;
+    scheduleDate: string | null;
+    priority: number | null;
+    status: number | null;
+    createdAt: string | null;
+    messages: {
+      __typename: "ModelMessageConnection";
+      nextToken: string | null;
+    } | null;
+    updatedAt: string;
+  } | null;
+  user: {
+    __typename: "User";
+    id: string;
+    username: string;
+    email: string;
+    companyID: string;
+    tel: string | null;
+    positionName: string | null;
+    iconImage: string | null;
+    registered: boolean | null;
+    authority: string | null;
+    company: {
+      __typename: "Company";
+      id: string;
+      name: string;
+      domain: string;
+      createdAt: string;
+      updatedAt: string;
+    };
+    room: {
+      __typename: "ModelRoomGroupConnection";
+      nextToken: string | null;
+    } | null;
+    task: {
+      __typename: "ModelTaskGroupConnection";
+      nextToken: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
   } | null;
   createdAt: string;
   updatedAt: string;
@@ -2596,204 +2941,6 @@ export type OnDeleteRoomGroupSubscription = {
   updatedAt: string;
 };
 
-export type OnCreateTaskGroupSubscription = {
-  __typename: "TaskGroup";
-  id: string;
-  taskID: string;
-  userID: string;
-  task: {
-    __typename: "Task";
-    id: string;
-    authorID: string;
-    chargePersonID: string | null;
-    roomID: string;
-    title: string;
-    description: string | null;
-    scheduleDate: string | null;
-    priority: number | null;
-    status: number | null;
-    createdAt: string | null;
-    room: {
-      __typename: "Room";
-      id: string;
-      name: string;
-      companyID: string;
-      description: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    messages: {
-      __typename: "ModelMessageConnection";
-      nextToken: string | null;
-    } | null;
-    updatedAt: string;
-  } | null;
-  user: {
-    __typename: "User";
-    id: string;
-    username: string;
-    email: string;
-    companyID: string;
-    tel: string | null;
-    positionName: string | null;
-    iconImage: string | null;
-    registered: boolean | null;
-    authority: string | null;
-    company: {
-      __typename: "Company";
-      id: string;
-      name: string;
-      domain: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    room: {
-      __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
-    } | null;
-    task: {
-      __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type OnUpdateTaskGroupSubscription = {
-  __typename: "TaskGroup";
-  id: string;
-  taskID: string;
-  userID: string;
-  task: {
-    __typename: "Task";
-    id: string;
-    authorID: string;
-    chargePersonID: string | null;
-    roomID: string;
-    title: string;
-    description: string | null;
-    scheduleDate: string | null;
-    priority: number | null;
-    status: number | null;
-    createdAt: string | null;
-    room: {
-      __typename: "Room";
-      id: string;
-      name: string;
-      companyID: string;
-      description: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    messages: {
-      __typename: "ModelMessageConnection";
-      nextToken: string | null;
-    } | null;
-    updatedAt: string;
-  } | null;
-  user: {
-    __typename: "User";
-    id: string;
-    username: string;
-    email: string;
-    companyID: string;
-    tel: string | null;
-    positionName: string | null;
-    iconImage: string | null;
-    registered: boolean | null;
-    authority: string | null;
-    company: {
-      __typename: "Company";
-      id: string;
-      name: string;
-      domain: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    room: {
-      __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
-    } | null;
-    task: {
-      __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type OnDeleteTaskGroupSubscription = {
-  __typename: "TaskGroup";
-  id: string;
-  taskID: string;
-  userID: string;
-  task: {
-    __typename: "Task";
-    id: string;
-    authorID: string;
-    chargePersonID: string | null;
-    roomID: string;
-    title: string;
-    description: string | null;
-    scheduleDate: string | null;
-    priority: number | null;
-    status: number | null;
-    createdAt: string | null;
-    room: {
-      __typename: "Room";
-      id: string;
-      name: string;
-      companyID: string;
-      description: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    messages: {
-      __typename: "ModelMessageConnection";
-      nextToken: string | null;
-    } | null;
-    updatedAt: string;
-  } | null;
-  user: {
-    __typename: "User";
-    id: string;
-    username: string;
-    email: string;
-    companyID: string;
-    tel: string | null;
-    positionName: string | null;
-    iconImage: string | null;
-    registered: boolean | null;
-    authority: string | null;
-    company: {
-      __typename: "Company";
-      id: string;
-      name: string;
-      domain: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    room: {
-      __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
-    } | null;
-    task: {
-      __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
-  createdAt: string;
-  updatedAt: string;
-};
-
 export type OnCreateRoomSubscription = {
   __typename: "Room";
   id: string;
@@ -2822,8 +2969,8 @@ export type OnCreateRoomSubscription = {
       __typename: "Task";
       id: string;
       authorID: string;
-      chargePersonID: string | null;
       roomID: string;
+      chargePersonID: string | null;
       title: string;
       description: string | null;
       scheduleDate: string | null;
@@ -2866,8 +3013,8 @@ export type OnUpdateRoomSubscription = {
       __typename: "Task";
       id: string;
       authorID: string;
-      chargePersonID: string | null;
       roomID: string;
+      chargePersonID: string | null;
       title: string;
       description: string | null;
       scheduleDate: string | null;
@@ -2910,8 +3057,8 @@ export type OnDeleteRoomSubscription = {
       __typename: "Task";
       id: string;
       authorID: string;
-      chargePersonID: string | null;
       roomID: string;
+      chargePersonID: string | null;
       title: string;
       description: string | null;
       scheduleDate: string | null;
@@ -2923,153 +3070,6 @@ export type OnDeleteRoomSubscription = {
     nextToken: string | null;
   } | null;
   createdAt: string;
-  updatedAt: string;
-};
-
-export type OnCreateTaskSubscription = {
-  __typename: "Task";
-  id: string;
-  authorID: string;
-  chargePersonID: string | null;
-  roomID: string;
-  title: string;
-  description: string | null;
-  scheduleDate: string | null;
-  priority: number | null;
-  status: number | null;
-  createdAt: string | null;
-  room: {
-    __typename: "Room";
-    id: string;
-    name: string;
-    companyID: string;
-    description: string;
-    company: {
-      __typename: "Company";
-      id: string;
-      name: string;
-      domain: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    tasks: {
-      __typename: "ModelTaskConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  };
-  messages: {
-    __typename: "ModelMessageConnection";
-    items: Array<{
-      __typename: "Message";
-      id: string;
-      taskID: string;
-      content: string;
-      createdAt: string | null;
-      isSent: boolean | null;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  updatedAt: string;
-};
-
-export type OnUpdateTaskSubscription = {
-  __typename: "Task";
-  id: string;
-  authorID: string;
-  chargePersonID: string | null;
-  roomID: string;
-  title: string;
-  description: string | null;
-  scheduleDate: string | null;
-  priority: number | null;
-  status: number | null;
-  createdAt: string | null;
-  room: {
-    __typename: "Room";
-    id: string;
-    name: string;
-    companyID: string;
-    description: string;
-    company: {
-      __typename: "Company";
-      id: string;
-      name: string;
-      domain: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    tasks: {
-      __typename: "ModelTaskConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  };
-  messages: {
-    __typename: "ModelMessageConnection";
-    items: Array<{
-      __typename: "Message";
-      id: string;
-      taskID: string;
-      content: string;
-      createdAt: string | null;
-      isSent: boolean | null;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  updatedAt: string;
-};
-
-export type OnDeleteTaskSubscription = {
-  __typename: "Task";
-  id: string;
-  authorID: string;
-  chargePersonID: string | null;
-  roomID: string;
-  title: string;
-  description: string | null;
-  scheduleDate: string | null;
-  priority: number | null;
-  status: number | null;
-  createdAt: string | null;
-  room: {
-    __typename: "Room";
-    id: string;
-    name: string;
-    companyID: string;
-    description: string;
-    company: {
-      __typename: "Company";
-      id: string;
-      name: string;
-      domain: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    tasks: {
-      __typename: "ModelTaskConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  };
-  messages: {
-    __typename: "ModelMessageConnection";
-    items: Array<{
-      __typename: "Message";
-      id: string;
-      taskID: string;
-      content: string;
-      createdAt: string | null;
-      isSent: boolean | null;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
   updatedAt: string;
 };
 
@@ -3114,14 +3114,9 @@ export type OnCreateMessageSubscription = {
     __typename: "Task";
     id: string;
     authorID: string;
-    chargePersonID: string | null;
     roomID: string;
+    chargePersonID: string | null;
     title: string;
-    description: string | null;
-    scheduleDate: string | null;
-    priority: number | null;
-    status: number | null;
-    createdAt: string | null;
     room: {
       __typename: "Room";
       id: string;
@@ -3131,6 +3126,11 @@ export type OnCreateMessageSubscription = {
       createdAt: string;
       updatedAt: string;
     };
+    description: string | null;
+    scheduleDate: string | null;
+    priority: number | null;
+    status: number | null;
+    createdAt: string | null;
     messages: {
       __typename: "ModelMessageConnection";
       nextToken: string | null;
@@ -3181,14 +3181,9 @@ export type OnUpdateMessageSubscription = {
     __typename: "Task";
     id: string;
     authorID: string;
-    chargePersonID: string | null;
     roomID: string;
+    chargePersonID: string | null;
     title: string;
-    description: string | null;
-    scheduleDate: string | null;
-    priority: number | null;
-    status: number | null;
-    createdAt: string | null;
     room: {
       __typename: "Room";
       id: string;
@@ -3198,6 +3193,11 @@ export type OnUpdateMessageSubscription = {
       createdAt: string;
       updatedAt: string;
     };
+    description: string | null;
+    scheduleDate: string | null;
+    priority: number | null;
+    status: number | null;
+    createdAt: string | null;
     messages: {
       __typename: "ModelMessageConnection";
       nextToken: string | null;
@@ -3248,14 +3248,9 @@ export type OnDeleteMessageSubscription = {
     __typename: "Task";
     id: string;
     authorID: string;
-    chargePersonID: string | null;
     roomID: string;
+    chargePersonID: string | null;
     title: string;
-    description: string | null;
-    scheduleDate: string | null;
-    priority: number | null;
-    status: number | null;
-    createdAt: string | null;
     room: {
       __typename: "Room";
       id: string;
@@ -3265,6 +3260,11 @@ export type OnDeleteMessageSubscription = {
       createdAt: string;
       updatedAt: string;
     };
+    description: string | null;
+    scheduleDate: string | null;
+    priority: number | null;
+    status: number | null;
+    createdAt: string | null;
     messages: {
       __typename: "ModelMessageConnection";
       nextToken: string | null;
@@ -3445,6 +3445,201 @@ export class APIService {
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
     return <DeleteCompanyMutation>response.data.deleteCompany;
+  }
+  async CreateTask(
+    input: CreateTaskInput,
+    condition?: ModelTaskConditionInput
+  ): Promise<CreateTaskMutation> {
+    const statement = `mutation CreateTask($input: CreateTaskInput!, $condition: ModelTaskConditionInput) {
+        createTask(input: $input, condition: $condition) {
+          __typename
+          id
+          authorID
+          roomID
+          chargePersonID
+          title
+          room {
+            __typename
+            id
+            name
+            companyID
+            description
+            company {
+              __typename
+              id
+              name
+              domain
+              createdAt
+              updatedAt
+            }
+            tasks {
+              __typename
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          description
+          scheduleDate
+          priority
+          status
+          createdAt
+          messages {
+            __typename
+            items {
+              __typename
+              id
+              taskID
+              content
+              createdAt
+              isSent
+              updatedAt
+            }
+            nextToken
+          }
+          updatedAt
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      input
+    };
+    if (condition) {
+      gqlAPIServiceArguments.condition = condition;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <CreateTaskMutation>response.data.createTask;
+  }
+  async UpdateTask(
+    input: UpdateTaskInput,
+    condition?: ModelTaskConditionInput
+  ): Promise<UpdateTaskMutation> {
+    const statement = `mutation UpdateTask($input: UpdateTaskInput!, $condition: ModelTaskConditionInput) {
+        updateTask(input: $input, condition: $condition) {
+          __typename
+          id
+          authorID
+          roomID
+          chargePersonID
+          title
+          room {
+            __typename
+            id
+            name
+            companyID
+            description
+            company {
+              __typename
+              id
+              name
+              domain
+              createdAt
+              updatedAt
+            }
+            tasks {
+              __typename
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          description
+          scheduleDate
+          priority
+          status
+          createdAt
+          messages {
+            __typename
+            items {
+              __typename
+              id
+              taskID
+              content
+              createdAt
+              isSent
+              updatedAt
+            }
+            nextToken
+          }
+          updatedAt
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      input
+    };
+    if (condition) {
+      gqlAPIServiceArguments.condition = condition;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <UpdateTaskMutation>response.data.updateTask;
+  }
+  async DeleteTask(
+    input: DeleteTaskInput,
+    condition?: ModelTaskConditionInput
+  ): Promise<DeleteTaskMutation> {
+    const statement = `mutation DeleteTask($input: DeleteTaskInput!, $condition: ModelTaskConditionInput) {
+        deleteTask(input: $input, condition: $condition) {
+          __typename
+          id
+          authorID
+          roomID
+          chargePersonID
+          title
+          room {
+            __typename
+            id
+            name
+            companyID
+            description
+            company {
+              __typename
+              id
+              name
+              domain
+              createdAt
+              updatedAt
+            }
+            tasks {
+              __typename
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          description
+          scheduleDate
+          priority
+          status
+          createdAt
+          messages {
+            __typename
+            items {
+              __typename
+              id
+              taskID
+              content
+              createdAt
+              isSent
+              updatedAt
+            }
+            nextToken
+          }
+          updatedAt
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      input
+    };
+    if (condition) {
+      gqlAPIServiceArguments.condition = condition;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <DeleteTaskMutation>response.data.deleteTask;
   }
   async CreateUser(
     input: CreateUserInput,
@@ -3658,6 +3853,252 @@ export class APIService {
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
     return <DeleteUserMutation>response.data.deleteUser;
+  }
+  async CreateTaskGroup(
+    input: CreateTaskGroupInput,
+    condition?: ModelTaskGroupConditionInput
+  ): Promise<CreateTaskGroupMutation> {
+    const statement = `mutation CreateTaskGroup($input: CreateTaskGroupInput!, $condition: ModelTaskGroupConditionInput) {
+        createTaskGroup(input: $input, condition: $condition) {
+          __typename
+          id
+          taskID
+          userID
+          task {
+            __typename
+            id
+            authorID
+            roomID
+            chargePersonID
+            title
+            room {
+              __typename
+              id
+              name
+              companyID
+              description
+              createdAt
+              updatedAt
+            }
+            description
+            scheduleDate
+            priority
+            status
+            createdAt
+            messages {
+              __typename
+              nextToken
+            }
+            updatedAt
+          }
+          user {
+            __typename
+            id
+            username
+            email
+            companyID
+            tel
+            positionName
+            iconImage
+            registered
+            authority
+            company {
+              __typename
+              id
+              name
+              domain
+              createdAt
+              updatedAt
+            }
+            room {
+              __typename
+              nextToken
+            }
+            task {
+              __typename
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          createdAt
+          updatedAt
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      input
+    };
+    if (condition) {
+      gqlAPIServiceArguments.condition = condition;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <CreateTaskGroupMutation>response.data.createTaskGroup;
+  }
+  async UpdateTaskGroup(
+    input: UpdateTaskGroupInput,
+    condition?: ModelTaskGroupConditionInput
+  ): Promise<UpdateTaskGroupMutation> {
+    const statement = `mutation UpdateTaskGroup($input: UpdateTaskGroupInput!, $condition: ModelTaskGroupConditionInput) {
+        updateTaskGroup(input: $input, condition: $condition) {
+          __typename
+          id
+          taskID
+          userID
+          task {
+            __typename
+            id
+            authorID
+            roomID
+            chargePersonID
+            title
+            room {
+              __typename
+              id
+              name
+              companyID
+              description
+              createdAt
+              updatedAt
+            }
+            description
+            scheduleDate
+            priority
+            status
+            createdAt
+            messages {
+              __typename
+              nextToken
+            }
+            updatedAt
+          }
+          user {
+            __typename
+            id
+            username
+            email
+            companyID
+            tel
+            positionName
+            iconImage
+            registered
+            authority
+            company {
+              __typename
+              id
+              name
+              domain
+              createdAt
+              updatedAt
+            }
+            room {
+              __typename
+              nextToken
+            }
+            task {
+              __typename
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          createdAt
+          updatedAt
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      input
+    };
+    if (condition) {
+      gqlAPIServiceArguments.condition = condition;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <UpdateTaskGroupMutation>response.data.updateTaskGroup;
+  }
+  async DeleteTaskGroup(
+    input: DeleteTaskGroupInput,
+    condition?: ModelTaskGroupConditionInput
+  ): Promise<DeleteTaskGroupMutation> {
+    const statement = `mutation DeleteTaskGroup($input: DeleteTaskGroupInput!, $condition: ModelTaskGroupConditionInput) {
+        deleteTaskGroup(input: $input, condition: $condition) {
+          __typename
+          id
+          taskID
+          userID
+          task {
+            __typename
+            id
+            authorID
+            roomID
+            chargePersonID
+            title
+            room {
+              __typename
+              id
+              name
+              companyID
+              description
+              createdAt
+              updatedAt
+            }
+            description
+            scheduleDate
+            priority
+            status
+            createdAt
+            messages {
+              __typename
+              nextToken
+            }
+            updatedAt
+          }
+          user {
+            __typename
+            id
+            username
+            email
+            companyID
+            tel
+            positionName
+            iconImage
+            registered
+            authority
+            company {
+              __typename
+              id
+              name
+              domain
+              createdAt
+              updatedAt
+            }
+            room {
+              __typename
+              nextToken
+            }
+            task {
+              __typename
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          createdAt
+          updatedAt
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      input
+    };
+    if (condition) {
+      gqlAPIServiceArguments.condition = condition;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <DeleteTaskGroupMutation>response.data.deleteTaskGroup;
   }
   async CreateRoomGroup(
     input: CreateRoomGroupInput,
@@ -3887,252 +4328,6 @@ export class APIService {
     )) as any;
     return <DeleteRoomGroupMutation>response.data.deleteRoomGroup;
   }
-  async CreateTaskGroup(
-    input: CreateTaskGroupInput,
-    condition?: ModelTaskGroupConditionInput
-  ): Promise<CreateTaskGroupMutation> {
-    const statement = `mutation CreateTaskGroup($input: CreateTaskGroupInput!, $condition: ModelTaskGroupConditionInput) {
-        createTaskGroup(input: $input, condition: $condition) {
-          __typename
-          id
-          taskID
-          userID
-          task {
-            __typename
-            id
-            authorID
-            chargePersonID
-            roomID
-            title
-            description
-            scheduleDate
-            priority
-            status
-            createdAt
-            room {
-              __typename
-              id
-              name
-              companyID
-              description
-              createdAt
-              updatedAt
-            }
-            messages {
-              __typename
-              nextToken
-            }
-            updatedAt
-          }
-          user {
-            __typename
-            id
-            username
-            email
-            companyID
-            tel
-            positionName
-            iconImage
-            registered
-            authority
-            company {
-              __typename
-              id
-              name
-              domain
-              createdAt
-              updatedAt
-            }
-            room {
-              __typename
-              nextToken
-            }
-            task {
-              __typename
-              nextToken
-            }
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      input
-    };
-    if (condition) {
-      gqlAPIServiceArguments.condition = condition;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <CreateTaskGroupMutation>response.data.createTaskGroup;
-  }
-  async UpdateTaskGroup(
-    input: UpdateTaskGroupInput,
-    condition?: ModelTaskGroupConditionInput
-  ): Promise<UpdateTaskGroupMutation> {
-    const statement = `mutation UpdateTaskGroup($input: UpdateTaskGroupInput!, $condition: ModelTaskGroupConditionInput) {
-        updateTaskGroup(input: $input, condition: $condition) {
-          __typename
-          id
-          taskID
-          userID
-          task {
-            __typename
-            id
-            authorID
-            chargePersonID
-            roomID
-            title
-            description
-            scheduleDate
-            priority
-            status
-            createdAt
-            room {
-              __typename
-              id
-              name
-              companyID
-              description
-              createdAt
-              updatedAt
-            }
-            messages {
-              __typename
-              nextToken
-            }
-            updatedAt
-          }
-          user {
-            __typename
-            id
-            username
-            email
-            companyID
-            tel
-            positionName
-            iconImage
-            registered
-            authority
-            company {
-              __typename
-              id
-              name
-              domain
-              createdAt
-              updatedAt
-            }
-            room {
-              __typename
-              nextToken
-            }
-            task {
-              __typename
-              nextToken
-            }
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      input
-    };
-    if (condition) {
-      gqlAPIServiceArguments.condition = condition;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <UpdateTaskGroupMutation>response.data.updateTaskGroup;
-  }
-  async DeleteTaskGroup(
-    input: DeleteTaskGroupInput,
-    condition?: ModelTaskGroupConditionInput
-  ): Promise<DeleteTaskGroupMutation> {
-    const statement = `mutation DeleteTaskGroup($input: DeleteTaskGroupInput!, $condition: ModelTaskGroupConditionInput) {
-        deleteTaskGroup(input: $input, condition: $condition) {
-          __typename
-          id
-          taskID
-          userID
-          task {
-            __typename
-            id
-            authorID
-            chargePersonID
-            roomID
-            title
-            description
-            scheduleDate
-            priority
-            status
-            createdAt
-            room {
-              __typename
-              id
-              name
-              companyID
-              description
-              createdAt
-              updatedAt
-            }
-            messages {
-              __typename
-              nextToken
-            }
-            updatedAt
-          }
-          user {
-            __typename
-            id
-            username
-            email
-            companyID
-            tel
-            positionName
-            iconImage
-            registered
-            authority
-            company {
-              __typename
-              id
-              name
-              domain
-              createdAt
-              updatedAt
-            }
-            room {
-              __typename
-              nextToken
-            }
-            task {
-              __typename
-              nextToken
-            }
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      input
-    };
-    if (condition) {
-      gqlAPIServiceArguments.condition = condition;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <DeleteTaskGroupMutation>response.data.deleteTaskGroup;
-  }
   async CreateRoom(
     input: CreateRoomInput,
     condition?: ModelRoomConditionInput
@@ -4166,8 +4361,8 @@ export class APIService {
               __typename
               id
               authorID
-              chargePersonID
               roomID
+              chargePersonID
               title
               description
               scheduleDate
@@ -4226,8 +4421,8 @@ export class APIService {
               __typename
               id
               authorID
-              chargePersonID
               roomID
+              chargePersonID
               title
               description
               scheduleDate
@@ -4286,8 +4481,8 @@ export class APIService {
               __typename
               id
               authorID
-              chargePersonID
               roomID
+              chargePersonID
               title
               description
               scheduleDate
@@ -4312,201 +4507,6 @@ export class APIService {
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
     return <DeleteRoomMutation>response.data.deleteRoom;
-  }
-  async CreateTask(
-    input: CreateTaskInput,
-    condition?: ModelTaskConditionInput
-  ): Promise<CreateTaskMutation> {
-    const statement = `mutation CreateTask($input: CreateTaskInput!, $condition: ModelTaskConditionInput) {
-        createTask(input: $input, condition: $condition) {
-          __typename
-          id
-          authorID
-          chargePersonID
-          roomID
-          title
-          description
-          scheduleDate
-          priority
-          status
-          createdAt
-          room {
-            __typename
-            id
-            name
-            companyID
-            description
-            company {
-              __typename
-              id
-              name
-              domain
-              createdAt
-              updatedAt
-            }
-            tasks {
-              __typename
-              nextToken
-            }
-            createdAt
-            updatedAt
-          }
-          messages {
-            __typename
-            items {
-              __typename
-              id
-              taskID
-              content
-              createdAt
-              isSent
-              updatedAt
-            }
-            nextToken
-          }
-          updatedAt
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      input
-    };
-    if (condition) {
-      gqlAPIServiceArguments.condition = condition;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <CreateTaskMutation>response.data.createTask;
-  }
-  async UpdateTask(
-    input: UpdateTaskInput,
-    condition?: ModelTaskConditionInput
-  ): Promise<UpdateTaskMutation> {
-    const statement = `mutation UpdateTask($input: UpdateTaskInput!, $condition: ModelTaskConditionInput) {
-        updateTask(input: $input, condition: $condition) {
-          __typename
-          id
-          authorID
-          chargePersonID
-          roomID
-          title
-          description
-          scheduleDate
-          priority
-          status
-          createdAt
-          room {
-            __typename
-            id
-            name
-            companyID
-            description
-            company {
-              __typename
-              id
-              name
-              domain
-              createdAt
-              updatedAt
-            }
-            tasks {
-              __typename
-              nextToken
-            }
-            createdAt
-            updatedAt
-          }
-          messages {
-            __typename
-            items {
-              __typename
-              id
-              taskID
-              content
-              createdAt
-              isSent
-              updatedAt
-            }
-            nextToken
-          }
-          updatedAt
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      input
-    };
-    if (condition) {
-      gqlAPIServiceArguments.condition = condition;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <UpdateTaskMutation>response.data.updateTask;
-  }
-  async DeleteTask(
-    input: DeleteTaskInput,
-    condition?: ModelTaskConditionInput
-  ): Promise<DeleteTaskMutation> {
-    const statement = `mutation DeleteTask($input: DeleteTaskInput!, $condition: ModelTaskConditionInput) {
-        deleteTask(input: $input, condition: $condition) {
-          __typename
-          id
-          authorID
-          chargePersonID
-          roomID
-          title
-          description
-          scheduleDate
-          priority
-          status
-          createdAt
-          room {
-            __typename
-            id
-            name
-            companyID
-            description
-            company {
-              __typename
-              id
-              name
-              domain
-              createdAt
-              updatedAt
-            }
-            tasks {
-              __typename
-              nextToken
-            }
-            createdAt
-            updatedAt
-          }
-          messages {
-            __typename
-            items {
-              __typename
-              id
-              taskID
-              content
-              createdAt
-              isSent
-              updatedAt
-            }
-            nextToken
-          }
-          updatedAt
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      input
-    };
-    if (condition) {
-      gqlAPIServiceArguments.condition = condition;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <DeleteTaskMutation>response.data.deleteTask;
   }
   async CreateMessage(
     input: CreateMessageInput,
@@ -4554,14 +4554,9 @@ export class APIService {
             __typename
             id
             authorID
-            chargePersonID
             roomID
+            chargePersonID
             title
-            description
-            scheduleDate
-            priority
-            status
-            createdAt
             room {
               __typename
               id
@@ -4571,6 +4566,11 @@ export class APIService {
               createdAt
               updatedAt
             }
+            description
+            scheduleDate
+            priority
+            status
+            createdAt
             messages {
               __typename
               nextToken
@@ -4637,14 +4637,9 @@ export class APIService {
             __typename
             id
             authorID
-            chargePersonID
             roomID
+            chargePersonID
             title
-            description
-            scheduleDate
-            priority
-            status
-            createdAt
             room {
               __typename
               id
@@ -4654,6 +4649,11 @@ export class APIService {
               createdAt
               updatedAt
             }
+            description
+            scheduleDate
+            priority
+            status
+            createdAt
             messages {
               __typename
               nextToken
@@ -4720,14 +4720,9 @@ export class APIService {
             __typename
             id
             authorID
-            chargePersonID
             roomID
+            chargePersonID
             title
-            description
-            scheduleDate
-            priority
-            status
-            createdAt
             room {
               __typename
               id
@@ -4737,6 +4732,11 @@ export class APIService {
               createdAt
               updatedAt
             }
+            description
+            scheduleDate
+            priority
+            status
+            createdAt
             messages {
               __typename
               nextToken
@@ -4848,6 +4848,118 @@ export class APIService {
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
     return <ListCompanysQuery>response.data.listCompanys;
+  }
+  async GetTask(id: string): Promise<GetTaskQuery> {
+    const statement = `query GetTask($id: ID!) {
+        getTask(id: $id) {
+          __typename
+          id
+          authorID
+          roomID
+          chargePersonID
+          title
+          room {
+            __typename
+            id
+            name
+            companyID
+            description
+            company {
+              __typename
+              id
+              name
+              domain
+              createdAt
+              updatedAt
+            }
+            tasks {
+              __typename
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          description
+          scheduleDate
+          priority
+          status
+          createdAt
+          messages {
+            __typename
+            items {
+              __typename
+              id
+              taskID
+              content
+              createdAt
+              isSent
+              updatedAt
+            }
+            nextToken
+          }
+          updatedAt
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      id
+    };
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <GetTaskQuery>response.data.getTask;
+  }
+  async ListTasks(
+    filter?: ModelTaskFilterInput,
+    limit?: number,
+    nextToken?: string
+  ): Promise<ListTasksQuery> {
+    const statement = `query ListTasks($filter: ModelTaskFilterInput, $limit: Int, $nextToken: String) {
+        listTasks(filter: $filter, limit: $limit, nextToken: $nextToken) {
+          __typename
+          items {
+            __typename
+            id
+            authorID
+            roomID
+            chargePersonID
+            title
+            room {
+              __typename
+              id
+              name
+              companyID
+              description
+              createdAt
+              updatedAt
+            }
+            description
+            scheduleDate
+            priority
+            status
+            createdAt
+            messages {
+              __typename
+              nextToken
+            }
+            updatedAt
+          }
+          nextToken
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {};
+    if (filter) {
+      gqlAPIServiceArguments.filter = filter;
+    }
+    if (limit) {
+      gqlAPIServiceArguments.limit = limit;
+    }
+    if (nextToken) {
+      gqlAPIServiceArguments.nextToken = nextToken;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <ListTasksQuery>response.data.listTasks;
   }
   async GetUser(id: string): Promise<GetUserQuery> {
     const statement = `query GetUser($id: ID!) {
@@ -4969,6 +5081,144 @@ export class APIService {
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
     return <ListUsersQuery>response.data.listUsers;
+  }
+  async GetTaskGroup(id: string): Promise<GetTaskGroupQuery> {
+    const statement = `query GetTaskGroup($id: ID!) {
+        getTaskGroup(id: $id) {
+          __typename
+          id
+          taskID
+          userID
+          task {
+            __typename
+            id
+            authorID
+            roomID
+            chargePersonID
+            title
+            room {
+              __typename
+              id
+              name
+              companyID
+              description
+              createdAt
+              updatedAt
+            }
+            description
+            scheduleDate
+            priority
+            status
+            createdAt
+            messages {
+              __typename
+              nextToken
+            }
+            updatedAt
+          }
+          user {
+            __typename
+            id
+            username
+            email
+            companyID
+            tel
+            positionName
+            iconImage
+            registered
+            authority
+            company {
+              __typename
+              id
+              name
+              domain
+              createdAt
+              updatedAt
+            }
+            room {
+              __typename
+              nextToken
+            }
+            task {
+              __typename
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          createdAt
+          updatedAt
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      id
+    };
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <GetTaskGroupQuery>response.data.getTaskGroup;
+  }
+  async ListTaskGroups(
+    filter?: ModelTaskGroupFilterInput,
+    limit?: number,
+    nextToken?: string
+  ): Promise<ListTaskGroupsQuery> {
+    const statement = `query ListTaskGroups($filter: ModelTaskGroupFilterInput, $limit: Int, $nextToken: String) {
+        listTaskGroups(filter: $filter, limit: $limit, nextToken: $nextToken) {
+          __typename
+          items {
+            __typename
+            id
+            taskID
+            userID
+            task {
+              __typename
+              id
+              authorID
+              roomID
+              chargePersonID
+              title
+              description
+              scheduleDate
+              priority
+              status
+              createdAt
+              updatedAt
+            }
+            user {
+              __typename
+              id
+              username
+              email
+              companyID
+              tel
+              positionName
+              iconImage
+              registered
+              authority
+              createdAt
+              updatedAt
+            }
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {};
+    if (filter) {
+      gqlAPIServiceArguments.filter = filter;
+    }
+    if (limit) {
+      gqlAPIServiceArguments.limit = limit;
+    }
+    if (nextToken) {
+      gqlAPIServiceArguments.nextToken = nextToken;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <ListTaskGroupsQuery>response.data.listTaskGroups;
   }
   async GetRoomGroup(id: string): Promise<GetRoomGroupQuery> {
     const statement = `query GetRoomGroup($id: ID!) {
@@ -5097,144 +5347,6 @@ export class APIService {
     )) as any;
     return <ListRoomGroupsQuery>response.data.listRoomGroups;
   }
-  async GetTaskGroup(id: string): Promise<GetTaskGroupQuery> {
-    const statement = `query GetTaskGroup($id: ID!) {
-        getTaskGroup(id: $id) {
-          __typename
-          id
-          taskID
-          userID
-          task {
-            __typename
-            id
-            authorID
-            chargePersonID
-            roomID
-            title
-            description
-            scheduleDate
-            priority
-            status
-            createdAt
-            room {
-              __typename
-              id
-              name
-              companyID
-              description
-              createdAt
-              updatedAt
-            }
-            messages {
-              __typename
-              nextToken
-            }
-            updatedAt
-          }
-          user {
-            __typename
-            id
-            username
-            email
-            companyID
-            tel
-            positionName
-            iconImage
-            registered
-            authority
-            company {
-              __typename
-              id
-              name
-              domain
-              createdAt
-              updatedAt
-            }
-            room {
-              __typename
-              nextToken
-            }
-            task {
-              __typename
-              nextToken
-            }
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      id
-    };
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <GetTaskGroupQuery>response.data.getTaskGroup;
-  }
-  async ListTaskGroups(
-    filter?: ModelTaskGroupFilterInput,
-    limit?: number,
-    nextToken?: string
-  ): Promise<ListTaskGroupsQuery> {
-    const statement = `query ListTaskGroups($filter: ModelTaskGroupFilterInput, $limit: Int, $nextToken: String) {
-        listTaskGroups(filter: $filter, limit: $limit, nextToken: $nextToken) {
-          __typename
-          items {
-            __typename
-            id
-            taskID
-            userID
-            task {
-              __typename
-              id
-              authorID
-              chargePersonID
-              roomID
-              title
-              description
-              scheduleDate
-              priority
-              status
-              createdAt
-              updatedAt
-            }
-            user {
-              __typename
-              id
-              username
-              email
-              companyID
-              tel
-              positionName
-              iconImage
-              registered
-              authority
-              createdAt
-              updatedAt
-            }
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {};
-    if (filter) {
-      gqlAPIServiceArguments.filter = filter;
-    }
-    if (limit) {
-      gqlAPIServiceArguments.limit = limit;
-    }
-    if (nextToken) {
-      gqlAPIServiceArguments.nextToken = nextToken;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <ListTaskGroupsQuery>response.data.listTaskGroups;
-  }
   async GetRoom(id: string): Promise<GetRoomQuery> {
     const statement = `query GetRoom($id: ID!) {
         getRoom(id: $id) {
@@ -5265,8 +5377,8 @@ export class APIService {
               __typename
               id
               authorID
-              chargePersonID
               roomID
+              chargePersonID
               title
               description
               scheduleDate
@@ -5336,118 +5448,6 @@ export class APIService {
     )) as any;
     return <ListRoomsQuery>response.data.listRooms;
   }
-  async GetTask(id: string): Promise<GetTaskQuery> {
-    const statement = `query GetTask($id: ID!) {
-        getTask(id: $id) {
-          __typename
-          id
-          authorID
-          chargePersonID
-          roomID
-          title
-          description
-          scheduleDate
-          priority
-          status
-          createdAt
-          room {
-            __typename
-            id
-            name
-            companyID
-            description
-            company {
-              __typename
-              id
-              name
-              domain
-              createdAt
-              updatedAt
-            }
-            tasks {
-              __typename
-              nextToken
-            }
-            createdAt
-            updatedAt
-          }
-          messages {
-            __typename
-            items {
-              __typename
-              id
-              taskID
-              content
-              createdAt
-              isSent
-              updatedAt
-            }
-            nextToken
-          }
-          updatedAt
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      id
-    };
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <GetTaskQuery>response.data.getTask;
-  }
-  async ListTasks(
-    filter?: ModelTaskFilterInput,
-    limit?: number,
-    nextToken?: string
-  ): Promise<ListTasksQuery> {
-    const statement = `query ListTasks($filter: ModelTaskFilterInput, $limit: Int, $nextToken: String) {
-        listTasks(filter: $filter, limit: $limit, nextToken: $nextToken) {
-          __typename
-          items {
-            __typename
-            id
-            authorID
-            chargePersonID
-            roomID
-            title
-            description
-            scheduleDate
-            priority
-            status
-            createdAt
-            room {
-              __typename
-              id
-              name
-              companyID
-              description
-              createdAt
-              updatedAt
-            }
-            messages {
-              __typename
-              nextToken
-            }
-            updatedAt
-          }
-          nextToken
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {};
-    if (filter) {
-      gqlAPIServiceArguments.filter = filter;
-    }
-    if (limit) {
-      gqlAPIServiceArguments.limit = limit;
-    }
-    if (nextToken) {
-      gqlAPIServiceArguments.nextToken = nextToken;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <ListTasksQuery>response.data.listTasks;
-  }
   async GetMessage(id: string): Promise<GetMessageQuery> {
     const statement = `query GetMessage($id: ID!) {
         getMessage(id: $id) {
@@ -5491,14 +5491,9 @@ export class APIService {
             __typename
             id
             authorID
-            chargePersonID
             roomID
+            chargePersonID
             title
-            description
-            scheduleDate
-            priority
-            status
-            createdAt
             room {
               __typename
               id
@@ -5508,6 +5503,11 @@ export class APIService {
               createdAt
               updatedAt
             }
+            description
+            scheduleDate
+            priority
+            status
+            createdAt
             messages {
               __typename
               nextToken
@@ -5558,8 +5558,8 @@ export class APIService {
               __typename
               id
               authorID
-              chargePersonID
               roomID
+              chargePersonID
               title
               description
               scheduleDate
@@ -5731,6 +5731,171 @@ export class APIService {
       }`
     )
   ) as Observable<OnDeleteCompanySubscription>;
+
+  OnCreateTaskListener: Observable<OnCreateTaskSubscription> = API.graphql(
+    graphqlOperation(
+      `subscription OnCreateTask {
+        onCreateTask {
+          __typename
+          id
+          authorID
+          roomID
+          chargePersonID
+          title
+          room {
+            __typename
+            id
+            name
+            companyID
+            description
+            company {
+              __typename
+              id
+              name
+              domain
+              createdAt
+              updatedAt
+            }
+            tasks {
+              __typename
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          description
+          scheduleDate
+          priority
+          status
+          createdAt
+          messages {
+            __typename
+            items {
+              __typename
+              id
+              taskID
+              content
+              createdAt
+              isSent
+              updatedAt
+            }
+            nextToken
+          }
+          updatedAt
+        }
+      }`
+    )
+  ) as Observable<OnCreateTaskSubscription>;
+
+  OnUpdateTaskListener: Observable<OnUpdateTaskSubscription> = API.graphql(
+    graphqlOperation(
+      `subscription OnUpdateTask {
+        onUpdateTask {
+          __typename
+          id
+          authorID
+          roomID
+          chargePersonID
+          title
+          room {
+            __typename
+            id
+            name
+            companyID
+            description
+            company {
+              __typename
+              id
+              name
+              domain
+              createdAt
+              updatedAt
+            }
+            tasks {
+              __typename
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          description
+          scheduleDate
+          priority
+          status
+          createdAt
+          messages {
+            __typename
+            items {
+              __typename
+              id
+              taskID
+              content
+              createdAt
+              isSent
+              updatedAt
+            }
+            nextToken
+          }
+          updatedAt
+        }
+      }`
+    )
+  ) as Observable<OnUpdateTaskSubscription>;
+
+  OnDeleteTaskListener: Observable<OnDeleteTaskSubscription> = API.graphql(
+    graphqlOperation(
+      `subscription OnDeleteTask {
+        onDeleteTask {
+          __typename
+          id
+          authorID
+          roomID
+          chargePersonID
+          title
+          room {
+            __typename
+            id
+            name
+            companyID
+            description
+            company {
+              __typename
+              id
+              name
+              domain
+              createdAt
+              updatedAt
+            }
+            tasks {
+              __typename
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          description
+          scheduleDate
+          priority
+          status
+          createdAt
+          messages {
+            __typename
+            items {
+              __typename
+              id
+              taskID
+              content
+              createdAt
+              isSent
+              updatedAt
+            }
+            nextToken
+          }
+          updatedAt
+        }
+      }`
+    )
+  ) as Observable<OnDeleteTaskSubscription>;
 
   OnCreateUserListener: Observable<OnCreateUserSubscription> = API.graphql(
     graphqlOperation(
@@ -5914,6 +6079,228 @@ export class APIService {
       }`
     )
   ) as Observable<OnDeleteUserSubscription>;
+
+  OnCreateTaskGroupListener: Observable<
+    OnCreateTaskGroupSubscription
+  > = API.graphql(
+    graphqlOperation(
+      `subscription OnCreateTaskGroup {
+        onCreateTaskGroup {
+          __typename
+          id
+          taskID
+          userID
+          task {
+            __typename
+            id
+            authorID
+            roomID
+            chargePersonID
+            title
+            room {
+              __typename
+              id
+              name
+              companyID
+              description
+              createdAt
+              updatedAt
+            }
+            description
+            scheduleDate
+            priority
+            status
+            createdAt
+            messages {
+              __typename
+              nextToken
+            }
+            updatedAt
+          }
+          user {
+            __typename
+            id
+            username
+            email
+            companyID
+            tel
+            positionName
+            iconImage
+            registered
+            authority
+            company {
+              __typename
+              id
+              name
+              domain
+              createdAt
+              updatedAt
+            }
+            room {
+              __typename
+              nextToken
+            }
+            task {
+              __typename
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          createdAt
+          updatedAt
+        }
+      }`
+    )
+  ) as Observable<OnCreateTaskGroupSubscription>;
+
+  OnUpdateTaskGroupListener: Observable<
+    OnUpdateTaskGroupSubscription
+  > = API.graphql(
+    graphqlOperation(
+      `subscription OnUpdateTaskGroup {
+        onUpdateTaskGroup {
+          __typename
+          id
+          taskID
+          userID
+          task {
+            __typename
+            id
+            authorID
+            roomID
+            chargePersonID
+            title
+            room {
+              __typename
+              id
+              name
+              companyID
+              description
+              createdAt
+              updatedAt
+            }
+            description
+            scheduleDate
+            priority
+            status
+            createdAt
+            messages {
+              __typename
+              nextToken
+            }
+            updatedAt
+          }
+          user {
+            __typename
+            id
+            username
+            email
+            companyID
+            tel
+            positionName
+            iconImage
+            registered
+            authority
+            company {
+              __typename
+              id
+              name
+              domain
+              createdAt
+              updatedAt
+            }
+            room {
+              __typename
+              nextToken
+            }
+            task {
+              __typename
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          createdAt
+          updatedAt
+        }
+      }`
+    )
+  ) as Observable<OnUpdateTaskGroupSubscription>;
+
+  OnDeleteTaskGroupListener: Observable<
+    OnDeleteTaskGroupSubscription
+  > = API.graphql(
+    graphqlOperation(
+      `subscription OnDeleteTaskGroup {
+        onDeleteTaskGroup {
+          __typename
+          id
+          taskID
+          userID
+          task {
+            __typename
+            id
+            authorID
+            roomID
+            chargePersonID
+            title
+            room {
+              __typename
+              id
+              name
+              companyID
+              description
+              createdAt
+              updatedAt
+            }
+            description
+            scheduleDate
+            priority
+            status
+            createdAt
+            messages {
+              __typename
+              nextToken
+            }
+            updatedAt
+          }
+          user {
+            __typename
+            id
+            username
+            email
+            companyID
+            tel
+            positionName
+            iconImage
+            registered
+            authority
+            company {
+              __typename
+              id
+              name
+              domain
+              createdAt
+              updatedAt
+            }
+            room {
+              __typename
+              nextToken
+            }
+            task {
+              __typename
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          createdAt
+          updatedAt
+        }
+      }`
+    )
+  ) as Observable<OnDeleteTaskGroupSubscription>;
 
   OnCreateRoomGroupListener: Observable<
     OnCreateRoomGroupSubscription
@@ -6119,228 +6506,6 @@ export class APIService {
     )
   ) as Observable<OnDeleteRoomGroupSubscription>;
 
-  OnCreateTaskGroupListener: Observable<
-    OnCreateTaskGroupSubscription
-  > = API.graphql(
-    graphqlOperation(
-      `subscription OnCreateTaskGroup {
-        onCreateTaskGroup {
-          __typename
-          id
-          taskID
-          userID
-          task {
-            __typename
-            id
-            authorID
-            chargePersonID
-            roomID
-            title
-            description
-            scheduleDate
-            priority
-            status
-            createdAt
-            room {
-              __typename
-              id
-              name
-              companyID
-              description
-              createdAt
-              updatedAt
-            }
-            messages {
-              __typename
-              nextToken
-            }
-            updatedAt
-          }
-          user {
-            __typename
-            id
-            username
-            email
-            companyID
-            tel
-            positionName
-            iconImage
-            registered
-            authority
-            company {
-              __typename
-              id
-              name
-              domain
-              createdAt
-              updatedAt
-            }
-            room {
-              __typename
-              nextToken
-            }
-            task {
-              __typename
-              nextToken
-            }
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-        }
-      }`
-    )
-  ) as Observable<OnCreateTaskGroupSubscription>;
-
-  OnUpdateTaskGroupListener: Observable<
-    OnUpdateTaskGroupSubscription
-  > = API.graphql(
-    graphqlOperation(
-      `subscription OnUpdateTaskGroup {
-        onUpdateTaskGroup {
-          __typename
-          id
-          taskID
-          userID
-          task {
-            __typename
-            id
-            authorID
-            chargePersonID
-            roomID
-            title
-            description
-            scheduleDate
-            priority
-            status
-            createdAt
-            room {
-              __typename
-              id
-              name
-              companyID
-              description
-              createdAt
-              updatedAt
-            }
-            messages {
-              __typename
-              nextToken
-            }
-            updatedAt
-          }
-          user {
-            __typename
-            id
-            username
-            email
-            companyID
-            tel
-            positionName
-            iconImage
-            registered
-            authority
-            company {
-              __typename
-              id
-              name
-              domain
-              createdAt
-              updatedAt
-            }
-            room {
-              __typename
-              nextToken
-            }
-            task {
-              __typename
-              nextToken
-            }
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-        }
-      }`
-    )
-  ) as Observable<OnUpdateTaskGroupSubscription>;
-
-  OnDeleteTaskGroupListener: Observable<
-    OnDeleteTaskGroupSubscription
-  > = API.graphql(
-    graphqlOperation(
-      `subscription OnDeleteTaskGroup {
-        onDeleteTaskGroup {
-          __typename
-          id
-          taskID
-          userID
-          task {
-            __typename
-            id
-            authorID
-            chargePersonID
-            roomID
-            title
-            description
-            scheduleDate
-            priority
-            status
-            createdAt
-            room {
-              __typename
-              id
-              name
-              companyID
-              description
-              createdAt
-              updatedAt
-            }
-            messages {
-              __typename
-              nextToken
-            }
-            updatedAt
-          }
-          user {
-            __typename
-            id
-            username
-            email
-            companyID
-            tel
-            positionName
-            iconImage
-            registered
-            authority
-            company {
-              __typename
-              id
-              name
-              domain
-              createdAt
-              updatedAt
-            }
-            room {
-              __typename
-              nextToken
-            }
-            task {
-              __typename
-              nextToken
-            }
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-        }
-      }`
-    )
-  ) as Observable<OnDeleteTaskGroupSubscription>;
-
   OnCreateRoomListener: Observable<OnCreateRoomSubscription> = API.graphql(
     graphqlOperation(
       `subscription OnCreateRoom {
@@ -6372,8 +6537,8 @@ export class APIService {
               __typename
               id
               authorID
-              chargePersonID
               roomID
+              chargePersonID
               title
               description
               scheduleDate
@@ -6422,8 +6587,8 @@ export class APIService {
               __typename
               id
               authorID
-              chargePersonID
               roomID
+              chargePersonID
               title
               description
               scheduleDate
@@ -6472,8 +6637,8 @@ export class APIService {
               __typename
               id
               authorID
-              chargePersonID
               roomID
+              chargePersonID
               title
               description
               scheduleDate
@@ -6490,171 +6655,6 @@ export class APIService {
       }`
     )
   ) as Observable<OnDeleteRoomSubscription>;
-
-  OnCreateTaskListener: Observable<OnCreateTaskSubscription> = API.graphql(
-    graphqlOperation(
-      `subscription OnCreateTask {
-        onCreateTask {
-          __typename
-          id
-          authorID
-          chargePersonID
-          roomID
-          title
-          description
-          scheduleDate
-          priority
-          status
-          createdAt
-          room {
-            __typename
-            id
-            name
-            companyID
-            description
-            company {
-              __typename
-              id
-              name
-              domain
-              createdAt
-              updatedAt
-            }
-            tasks {
-              __typename
-              nextToken
-            }
-            createdAt
-            updatedAt
-          }
-          messages {
-            __typename
-            items {
-              __typename
-              id
-              taskID
-              content
-              createdAt
-              isSent
-              updatedAt
-            }
-            nextToken
-          }
-          updatedAt
-        }
-      }`
-    )
-  ) as Observable<OnCreateTaskSubscription>;
-
-  OnUpdateTaskListener: Observable<OnUpdateTaskSubscription> = API.graphql(
-    graphqlOperation(
-      `subscription OnUpdateTask {
-        onUpdateTask {
-          __typename
-          id
-          authorID
-          chargePersonID
-          roomID
-          title
-          description
-          scheduleDate
-          priority
-          status
-          createdAt
-          room {
-            __typename
-            id
-            name
-            companyID
-            description
-            company {
-              __typename
-              id
-              name
-              domain
-              createdAt
-              updatedAt
-            }
-            tasks {
-              __typename
-              nextToken
-            }
-            createdAt
-            updatedAt
-          }
-          messages {
-            __typename
-            items {
-              __typename
-              id
-              taskID
-              content
-              createdAt
-              isSent
-              updatedAt
-            }
-            nextToken
-          }
-          updatedAt
-        }
-      }`
-    )
-  ) as Observable<OnUpdateTaskSubscription>;
-
-  OnDeleteTaskListener: Observable<OnDeleteTaskSubscription> = API.graphql(
-    graphqlOperation(
-      `subscription OnDeleteTask {
-        onDeleteTask {
-          __typename
-          id
-          authorID
-          chargePersonID
-          roomID
-          title
-          description
-          scheduleDate
-          priority
-          status
-          createdAt
-          room {
-            __typename
-            id
-            name
-            companyID
-            description
-            company {
-              __typename
-              id
-              name
-              domain
-              createdAt
-              updatedAt
-            }
-            tasks {
-              __typename
-              nextToken
-            }
-            createdAt
-            updatedAt
-          }
-          messages {
-            __typename
-            items {
-              __typename
-              id
-              taskID
-              content
-              createdAt
-              isSent
-              updatedAt
-            }
-            nextToken
-          }
-          updatedAt
-        }
-      }`
-    )
-  ) as Observable<OnDeleteTaskSubscription>;
 
   OnCreateMessageListener: Observable<
     OnCreateMessageSubscription
@@ -6702,14 +6702,9 @@ export class APIService {
             __typename
             id
             authorID
-            chargePersonID
             roomID
+            chargePersonID
             title
-            description
-            scheduleDate
-            priority
-            status
-            createdAt
             room {
               __typename
               id
@@ -6719,6 +6714,11 @@ export class APIService {
               createdAt
               updatedAt
             }
+            description
+            scheduleDate
+            priority
+            status
+            createdAt
             messages {
               __typename
               nextToken
@@ -6777,14 +6777,9 @@ export class APIService {
             __typename
             id
             authorID
-            chargePersonID
             roomID
+            chargePersonID
             title
-            description
-            scheduleDate
-            priority
-            status
-            createdAt
             room {
               __typename
               id
@@ -6794,6 +6789,11 @@ export class APIService {
               createdAt
               updatedAt
             }
+            description
+            scheduleDate
+            priority
+            status
+            createdAt
             messages {
               __typename
               nextToken
@@ -6852,14 +6852,9 @@ export class APIService {
             __typename
             id
             authorID
-            chargePersonID
             roomID
+            chargePersonID
             title
-            description
-            scheduleDate
-            priority
-            status
-            createdAt
             room {
               __typename
               id
@@ -6869,6 +6864,11 @@ export class APIService {
               createdAt
               updatedAt
             }
+            description
+            scheduleDate
+            priority
+            status
+            createdAt
             messages {
               __typename
               nextToken

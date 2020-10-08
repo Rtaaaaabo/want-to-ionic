@@ -6,6 +6,21 @@ type Company @model {
   companyMembers: [User] @connection(keyName: "byCompany", fields: ["id"])
 }
 
+type Task @model @key(name: "byRoom", fields: ["roomID"]) {
+  id: ID!
+  authorID: ID!
+  roomID: ID!
+  chargePersonID: ID
+  title: String!
+  room: Room! @connection(fields: ["roomID"])
+  description: String
+  scheduleDate: AWSDateTime
+  priority: Int
+  status: Int
+  createdAt: AWSDateTime
+  messages: [Message] @connection(keyName: "byTask", fields: ["id"])
+}
+
 type User @model @key(name: "byCompany", fields: ["companyID"]) {
   id: ID!
   username: String!
@@ -19,6 +34,29 @@ type User @model @key(name: "byCompany", fields: ["companyID"]) {
   company: Company! @connection(fields: ["companyID"])
   room: [RoomGroup] @connection(keyName: "byUser", fields: ["id"])
   task: [TaskGroup] @connection(keyName: "byUser", fields: ["id"])
+  # chargeTask: [ChargeTaskGroup] @connection(keyName: "byUser", fields: ["id"])
+}
+
+# type ChargeTaskGroup
+#   @model
+#   @key(name: "byUser", fields: ["chargePersonID"])
+#   @key(name: "byTask", fields: ["taskID"]) {
+#   id: ID!
+#   chargePersonID: ID!
+#   taskID: ID!
+#   user: User @connection(fields: ["userID"])
+#   task: Task @connection(fields: ["chargePersonID"])
+# }
+
+type TaskGroup
+  @model
+  @key(name: "byTask", fields: ["taskID"])
+  @key(name: "byUser", fields: ["userID"]) {
+  id: ID!
+  taskID: ID!
+  userID: ID!
+  task: Task @connection(fields: ["taskID"])
+  user: User @connection(fields: ["userID"])
 }
 
 type RoomGroup
@@ -32,17 +70,6 @@ type RoomGroup
   user: User @connection(fields: ["userID"])
 }
 
-type TaskGroup
-  @model
-  @key(name: "byTask", fields: ["taskID"])
-  @key(name: "byUser", fields: ["userID"]) {
-  id: ID!
-  taskID: ID!
-  userID: ID!
-  task: Task @connection(fields: ["taskID"])
-  user: User @connection(fields: ["userID"])
-}
-
 type Room @model @key(name: "byCompany", fields: ["companyID"]) {
   id: ID!
   name: String!
@@ -50,22 +77,6 @@ type Room @model @key(name: "byCompany", fields: ["companyID"]) {
   description: String!
   company: Company! @connection(fields: ["companyID"])
   tasks: [Task] @connection(name: "byRoom", fields: ["id"])
-}
-
-type Task @model @key(name: "byRoom", fields: ["roomID"]) {
-  id: ID!
-  authorID: ID!
-  chargePersonID: ID
-  roomID: ID!
-  title: String!
-  description: String
-  scheduleDate: AWSDateTime
-  priority: Int
-  status: Int
-  createdAt: AWSDateTime
-  room: Room! @connection(fields: ["roomID"])
-  messages: [Message] @connection(keyName: "byTask", fields: ["id"])
-  # chargePerson: User @connection(name: "chargeMember", fields: ["chargePersonID"])
 }
 
 type Message @model @key(name: "byTask", fields: ["taskID"]) {
