@@ -33,6 +33,17 @@ type TaskGroup
   user: User @connection(fields: ["userID"])
 }
 
+# type ChargeTaskGroup
+#   @model
+#   @key(name: "byTask", fields: ["chargePersonID"])
+#   @key(name: "byUser", fields: ["userID"]) {
+#   id: ID!
+#   chargePersonID: ID!
+#   userID: ID!
+#   chargeTask: Task @connection(fields: ["chargePersonID"])
+#   user: User @connection(fields: ["userID"])
+# }
+
 type Task @model @key(name: "byRoom", fields: ["roomID"]) {
   id: ID!
   authorID: ID!
@@ -47,18 +58,8 @@ type Task @model @key(name: "byRoom", fields: ["roomID"]) {
   createdAt: AWSDateTime
   messages: [Message] @connection(keyName: "byTask", fields: ["id"])
   users: [TaskGroup] @connection(keyName: "byTask", fields: ["id"])
+  # chargePerson: [ChargeTaskGroup] @connection(keyName: "byTask", fields: ["chargePersonID"])
 }
-
-# type ChargeTaskGroup
-#   @model
-#   @key(name: "byUser", fields: ["chargePersonID"])
-#   @key(name: "byTask", fields: ["taskID"]) {
-#   id: ID!
-#   chargePersonID: ID!
-#   taskID: ID!
-#   user: User @connection(fields: ["userID"])
-#   task: Task @connection(fields: ["chargePersonID"])
-# }
 
 type RoomGroup
   @model
