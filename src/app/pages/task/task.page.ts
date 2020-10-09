@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ModalController, ToastController, ActionSheetController } from '@ionic/angular';
-import { from, of } from 'rxjs';
-import { flatMap, catchError, tap } from 'rxjs/operators';
+import { from } from 'rxjs';
+import { flatMap, tap } from 'rxjs/operators';
 import { GetRoomQuery } from 'src/app/shared/service/amplify.service';
 import { AddTaskModalComponent } from '../../shared/component/modal/add-task-modal/add-task-modal.component';
 import { DeleteTaskModalComponent } from '../../shared/component/modal/delete-task-modal/delete-task-modal.component';
-import { TaskLogicService } from './logic/task-logic.service';
+import { TaskLogic } from './logic/task.logic';
 
 @Component({
   selector: 'app-task',
@@ -28,7 +28,7 @@ export class TaskPage implements OnInit {
     private modalCtrl: ModalController,
     private route: ActivatedRoute,
     private location: Location,
-    private logic: TaskLogicService,
+    private logic: TaskLogic,
     private toastCtrl: ToastController,
     private actionSheetCtrl: ActionSheetController,
   ) { }

@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { TaskLogicService } from './task-logic.service';
+import { TaskLogic } from './task.logic';
 
 describe('TaskLogicService', () => {
-  let service: TaskLogicService;
+  let service: TaskLogic;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(TaskLogicService);
+    service = TestBed.inject(TaskLogic);
   });
 
   it('should be created', () => {

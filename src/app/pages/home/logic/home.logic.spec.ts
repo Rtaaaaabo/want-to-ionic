@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { HomeLogicService } from './home-logic.logic';
+import { HomeLogic } from './home.logic';
 
 describe('HomeLogicService', () => {
-  let service: HomeLogicService;
+  let service: HomeLogic;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(HomeLogicService);
+    service = TestBed.inject(HomeLogic);
   });
 
   it('should be created', () => {

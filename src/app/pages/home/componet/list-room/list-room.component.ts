@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { AddRoomModalComponent } from '../../../../shared/component/modal/add-room-modal/add-room-modal.component';
-import { HomeLogicService } from '../../logic/home-logic.logic';
+import { HomeLogic } from '../../logic/home.logic';
 import { from } from 'rxjs';
 import { flatMap } from 'rxjs/operators';
 
@@ -17,7 +17,7 @@ export class ListRoomComponent implements OnInit {
 
   constructor(
     private modalCtrl: ModalController,
-    private homeLogic: HomeLogicService,
+    private homeLogic: HomeLogic,
     private router: Router,
   ) { }
 

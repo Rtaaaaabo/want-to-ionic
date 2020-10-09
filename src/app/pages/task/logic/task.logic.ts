@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { TaskServiceService } from '../service/task-service.service';
+import { TaskService } from '../service/task.service';
 import { Observable, of } from 'rxjs';
 import { map, filter, flatMap, mergeMap, toArray } from 'rxjs/operators';
 import { GetRoomQuery } from 'src/app/shared/service/amplify.service';
@@ -9,10 +9,10 @@ import { v4 as uuid } from 'uuid';
 @Injectable({
   providedIn: 'root'
 })
-export class TaskLogicService {
+export class TaskLogic {
 
   constructor(
-    private taskService: TaskServiceService,
+    private taskService: TaskService,
     private sessionService: SessionService,
   ) { }
 

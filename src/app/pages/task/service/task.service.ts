@@ -5,7 +5,7 @@ import { Observable, from } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class TaskServiceService {
+export class TaskService {
 
   constructor(
     private amplifyService: AmplifyService

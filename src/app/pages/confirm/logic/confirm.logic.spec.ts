@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { ConfirmLogic } from './confirm-logic.logic';
+import { ConfirmLogic } from './confirm.logic';
 
 describe('ConfirmLogic', () => {
   let logic: ConfirmLogic;

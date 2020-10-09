@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { ConfirmLogic } from './logic/confirm-logic.logic';
+import { ConfirmLogic } from './logic/confirm.logic';
 
 @Component({
   selector: 'app-confirm',

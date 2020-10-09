@@ -14,7 +14,7 @@ interface Attribute {
 @Injectable({
   providedIn: 'root',
 })
-export class HomeLogicService {
+export class HomeLogic {
 
   constructor(
     private homeService: HomeService,

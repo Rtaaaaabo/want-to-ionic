@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { HomeLogicService } from '../../../../pages/home/logic/home-logic.logic';
+import { HomeLogic } from '../../../../pages/home/logic/home.logic';
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
 
 @Component({
@@ -27,7 +27,7 @@ export class EditProfileModalComponent implements OnInit {
 
   constructor(
     private modalCtrl: ModalController,
-    private logic: HomeLogicService,
+    private logic: HomeLogic,
     private imagePicker: ImagePicker,
   ) { }
 

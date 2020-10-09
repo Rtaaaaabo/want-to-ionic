@@ -4,7 +4,7 @@ import { of } from 'rxjs';
 import { catchError, filter, flatMap, map } from 'rxjs/operators';
 import { EditProfileModalComponent } from 'src/app/shared/component/modal/edit-profile-modal/edit-profile-modal.component';
 
-import { HomeLogicService } from './logic/home-logic.logic';
+import { HomeLogic } from './logic/home.logic';
 
 @Component({
   selector: 'app-home',
@@ -21,7 +21,7 @@ export class HomePage implements OnInit {
   }
 
   constructor(
-    private logic: HomeLogicService,
+    private logic: HomeLogic,
     private modalCtrl: ModalController,
   ) { }
 
