@@ -5,6 +5,7 @@ import { map, filter, flatMap, mergeMap, toArray } from 'rxjs/operators';
 import { GetRoomQuery } from 'src/app/shared/service/amplify.service';
 import { SessionService } from '../../../shared/service/session.service';
 import { v4 as uuid } from 'uuid';
+import { CurrentUserInfo } from '../interface/current-user-info.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -20,8 +21,8 @@ export class TaskLogic {
     return this.taskService.fetchRoomInfo(roomId);
   }
 
-  fetchCurrentUserInfo(): Observable<string> {
-    return this.sessionService.fetchCurrentUser().pipe(map((res) => res.attributes.email));
+  fetchCurrentUserInfo(): Observable<CurrentUserInfo> {
+    return this.sessionService.fetchCurrentUser().pipe(map((res) => res.attributes));
   }
 
   createTaskToRoom(dismissData, roomId, email): Observable<any> {

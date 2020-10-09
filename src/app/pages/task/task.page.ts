@@ -8,6 +8,7 @@ import { GetRoomQuery } from 'src/app/shared/service/amplify.service';
 import { AddTaskModalComponent } from '../../shared/component/modal/add-task-modal/add-task-modal.component';
 import { DeleteTaskModalComponent } from '../../shared/component/modal/delete-task-modal/delete-task-modal.component';
 import { TaskLogic } from './logic/task.logic';
+import { CurrentUserInfo } from './interface/current-user-info.interface';
 
 @Component({
   selector: 'app-task',
@@ -17,6 +18,7 @@ import { TaskLogic } from './logic/task.logic';
 export class TaskPage implements OnInit {
   room = {} as GetRoomQuery;
   roomId: string;
+  userId: string;
   userEmail: string;
   taskActiveItems;
   taskDoneItems;
@@ -45,7 +47,10 @@ export class TaskPage implements OnInit {
       .subscribe((roomInfo: GetRoomQuery) => {
         this.room = roomInfo;
       });
-    this.logic.fetchCurrentUserInfo().subscribe((email) => this.userEmail = email);
+    this.logic.fetchCurrentUserInfo().subscribe((attributes: CurrentUserInfo) => {
+      this.userEmail = attributes.email;
+      this.userId = attributes.sub;
+    });
     this.logic.fetchActiveTaskPerRoom(this.roomId)
       .subscribe((items) => {
         this.taskActiveItems = items;
@@ -68,7 +73,7 @@ export class TaskPage implements OnInit {
   async presentAddTask() {
     const modal = await this.modalCtrl.create({
       component: AddTaskModalComponent,
-      componentProps: { room: this.room },
+      componentProps: { room: this.room, userId: this.userId },
     });
     const dismissObservable = from(modal.onDidDismiss());
     dismissObservable
