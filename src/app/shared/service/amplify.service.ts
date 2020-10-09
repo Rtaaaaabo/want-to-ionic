@@ -3428,19 +3428,21 @@ export class AmplifyService {
   }
   async GetUser(id: string): Promise<GetUserQuery> {
     const statement = `query GetUser($id: ID!) {
-        getUser(id: $id) {
-          __typename
-          id
-          email
-          companyID
-          username
-          registered
-          authority
-          createdAt
-          updatedAt
-          positionName
-        }
-      }`;
+      getUser(id: $id) {
+        __typename
+        id
+        username
+        email
+        companyID
+        tel
+        positionName
+        iconImage
+        registered
+        authority
+        createdAt
+        updatedAt
+      }
+    }`;
     const gqlAPIServiceArguments: any = {
       id
     };

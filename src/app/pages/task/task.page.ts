@@ -3,7 +3,7 @@ import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ModalController, ToastController, ActionSheetController } from '@ionic/angular';
 import { from } from 'rxjs';
-import { flatMap, tap } from 'rxjs/operators';
+import { flatMap, tap, map } from 'rxjs/operators';
 import { GetRoomQuery } from 'src/app/shared/service/amplify.service';
 import { AddTaskModalComponent } from '../../shared/component/modal/add-task-modal/add-task-modal.component';
 import { DeleteTaskModalComponent } from '../../shared/component/modal/delete-task-modal/delete-task-modal.component';
@@ -47,10 +47,15 @@ export class TaskPage implements OnInit {
       .subscribe((roomInfo: GetRoomQuery) => {
         this.room = roomInfo;
       });
-    this.logic.fetchCurrentUserInfo().subscribe((attributes: CurrentUserInfo) => {
-      this.userEmail = attributes.email;
-      this.userId = attributes.sub;
-    });
+    this.logic.fetchCurrentUserInfo()
+      .pipe(map((res: CurrentUserInfo) => { this.userEmail = res.email; this.userId = res.sub }))
+      .pipe(flatMap(() => this.logic.fetchUserInfoFromAmplify(this.userId)))
+      .subscribe((result) => {
+        console.log(result);
+
+        // this.userEmail = attributes.email;
+        // this.userId = attributes.sub;
+      });
     this.logic.fetchActiveTaskPerRoom(this.roomId)
       .subscribe((items) => {
         this.taskActiveItems = items;
@@ -73,7 +78,7 @@ export class TaskPage implements OnInit {
   async presentAddTask() {
     const modal = await this.modalCtrl.create({
       component: AddTaskModalComponent,
-      componentProps: { room: this.room, userId: this.userId },
+      componentProps: { room: this.room, userName: this.userId },
     });
     const dismissObservable = from(modal.onDidDismiss());
     dismissObservable

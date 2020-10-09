@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AmplifyService, GetRoomQuery, ListTasksQuery } from '../../../shared/service/amplify.service';
+import { AmplifyService, GetRoomQuery, GetUserQuery, ListTasksQuery } from '../../../shared/service/amplify.service';
 import { Observable, from } from 'rxjs';
 
 @Injectable({
@@ -29,5 +29,9 @@ export class TaskService {
 
   deleteTaskItem(content): Observable<any> {
     return from(this.amplifyService.DeleteTask(content));
+  }
+
+  fetchUserInfo(userId: string): Observable<GetUserQuery> {
+    return from(this.amplifyService.GetUser(userId));
   }
 }

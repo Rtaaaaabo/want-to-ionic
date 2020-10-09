@@ -12,6 +12,7 @@ export class AddTaskModalComponent implements OnInit {
   taskForm = new FormGroup({
     nameItem: new FormControl('', [Validators.required]),
     descriptionItem: new FormControl(''),
+    chargePersonName: new FormControl(''),
     scheduleDateItem: new FormControl(''),
   });
 

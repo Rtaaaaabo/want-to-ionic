@@ -83,4 +83,8 @@ export class TaskLogic {
     }
     return this.taskService.deleteTaskItem(content);
   }
+
+  fetchUserInfoFromAmplify(userId: string): Observable<any> {
+    return this.taskService.fetchUserInfo(userId);
+  }
 }
