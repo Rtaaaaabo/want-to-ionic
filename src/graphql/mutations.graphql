@@ -10,20 +10,20 @@ mutation CreateCompany(
     room {
       items {
         id
-        companyID
         name
+        companyID
         description
         createdAt
         updatedAt
       }
       nextToken
     }
-    members {
+    companyMembers {
       items {
         id
+        username
         email
         companyID
-        username
         tel
         positionName
         iconImage
@@ -49,20 +49,20 @@ mutation UpdateCompany(
     room {
       items {
         id
-        companyID
         name
+        companyID
         description
         createdAt
         updatedAt
       }
       nextToken
     }
-    members {
+    companyMembers {
       items {
         id
+        username
         email
         companyID
-        username
         tel
         positionName
         iconImage
@@ -88,20 +88,20 @@ mutation DeleteCompany(
     room {
       items {
         id
-        companyID
         name
+        companyID
         description
         createdAt
         updatedAt
       }
       nextToken
     }
-    members {
+    companyMembers {
       items {
         id
+        username
         email
         companyID
-        username
         tel
         positionName
         iconImage
@@ -116,20 +116,260 @@ mutation DeleteCompany(
     updatedAt
   }
 }
-mutation CreateRoom(
-  $input: CreateRoomInput!
-  $condition: ModelRoomConditionInput
+mutation CreateUser(
+  $input: CreateUserInput!
+  $condition: ModelUserConditionInput
 ) {
-  createRoom(input: $input, condition: $condition) {
+  createUser(input: $input, condition: $condition) {
     id
+    username
+    email
     companyID
-    name
-    description
-    members {
+    tel
+    positionName
+    iconImage
+    registered
+    authority
+    company {
       id
+      name
+      domain
+      room {
+        nextToken
+      }
+      companyMembers {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    room {
+      items {
+        id
+        roomID
+        userID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    task {
+      items {
+        id
+        taskID
+        userID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    chargeTask {
+      items {
+        id
+        authorID
+        roomID
+        chargePersonID
+        title
+        description
+        scheduleDate
+        priority
+        status
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+  }
+}
+mutation UpdateUser(
+  $input: UpdateUserInput!
+  $condition: ModelUserConditionInput
+) {
+  updateUser(input: $input, condition: $condition) {
+    id
+    username
+    email
+    companyID
+    tel
+    positionName
+    iconImage
+    registered
+    authority
+    company {
+      id
+      name
+      domain
+      room {
+        nextToken
+      }
+      companyMembers {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    room {
+      items {
+        id
+        roomID
+        userID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    task {
+      items {
+        id
+        taskID
+        userID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    chargeTask {
+      items {
+        id
+        authorID
+        roomID
+        chargePersonID
+        title
+        description
+        scheduleDate
+        priority
+        status
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+  }
+}
+mutation DeleteUser(
+  $input: DeleteUserInput!
+  $condition: ModelUserConditionInput
+) {
+  deleteUser(input: $input, condition: $condition) {
+    id
+    username
+    email
+    companyID
+    tel
+    positionName
+    iconImage
+    registered
+    authority
+    company {
+      id
+      name
+      domain
+      room {
+        nextToken
+      }
+      companyMembers {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    room {
+      items {
+        id
+        roomID
+        userID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    task {
+      items {
+        id
+        taskID
+        userID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    chargeTask {
+      items {
+        id
+        authorID
+        roomID
+        chargePersonID
+        title
+        description
+        scheduleDate
+        priority
+        status
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+  }
+}
+mutation CreateTaskGroup(
+  $input: CreateTaskGroupInput!
+  $condition: ModelTaskGroupConditionInput
+) {
+  createTaskGroup(input: $input, condition: $condition) {
+    id
+    taskID
+    userID
+    task {
+      id
+      authorID
+      roomID
+      chargePersonID
+      title
+      room {
+        id
+        name
+        companyID
+        description
+        createdAt
+        updatedAt
+      }
+      description
+      scheduleDate
+      priority
+      status
+      createdAt
+      messages {
+        nextToken
+      }
+      users {
+        nextToken
+      }
+      chargePerson {
+        id
+        username
+        email
+        companyID
+        tel
+        positionName
+        iconImage
+        registered
+        authority
+        createdAt
+        updatedAt
+      }
+      updatedAt
+    }
+    user {
+      id
+      username
       email
       companyID
-      username
       tel
       positionName
       iconImage
@@ -142,9 +382,646 @@ mutation CreateRoom(
         createdAt
         updatedAt
       }
+      room {
+        nextToken
+      }
+      task {
+        nextToken
+      }
+      chargeTask {
+        nextToken
+      }
       createdAt
       updatedAt
     }
+    createdAt
+    updatedAt
+  }
+}
+mutation UpdateTaskGroup(
+  $input: UpdateTaskGroupInput!
+  $condition: ModelTaskGroupConditionInput
+) {
+  updateTaskGroup(input: $input, condition: $condition) {
+    id
+    taskID
+    userID
+    task {
+      id
+      authorID
+      roomID
+      chargePersonID
+      title
+      room {
+        id
+        name
+        companyID
+        description
+        createdAt
+        updatedAt
+      }
+      description
+      scheduleDate
+      priority
+      status
+      createdAt
+      messages {
+        nextToken
+      }
+      users {
+        nextToken
+      }
+      chargePerson {
+        id
+        username
+        email
+        companyID
+        tel
+        positionName
+        iconImage
+        registered
+        authority
+        createdAt
+        updatedAt
+      }
+      updatedAt
+    }
+    user {
+      id
+      username
+      email
+      companyID
+      tel
+      positionName
+      iconImage
+      registered
+      authority
+      company {
+        id
+        name
+        domain
+        createdAt
+        updatedAt
+      }
+      room {
+        nextToken
+      }
+      task {
+        nextToken
+      }
+      chargeTask {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    createdAt
+    updatedAt
+  }
+}
+mutation DeleteTaskGroup(
+  $input: DeleteTaskGroupInput!
+  $condition: ModelTaskGroupConditionInput
+) {
+  deleteTaskGroup(input: $input, condition: $condition) {
+    id
+    taskID
+    userID
+    task {
+      id
+      authorID
+      roomID
+      chargePersonID
+      title
+      room {
+        id
+        name
+        companyID
+        description
+        createdAt
+        updatedAt
+      }
+      description
+      scheduleDate
+      priority
+      status
+      createdAt
+      messages {
+        nextToken
+      }
+      users {
+        nextToken
+      }
+      chargePerson {
+        id
+        username
+        email
+        companyID
+        tel
+        positionName
+        iconImage
+        registered
+        authority
+        createdAt
+        updatedAt
+      }
+      updatedAt
+    }
+    user {
+      id
+      username
+      email
+      companyID
+      tel
+      positionName
+      iconImage
+      registered
+      authority
+      company {
+        id
+        name
+        domain
+        createdAt
+        updatedAt
+      }
+      room {
+        nextToken
+      }
+      task {
+        nextToken
+      }
+      chargeTask {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    createdAt
+    updatedAt
+  }
+}
+mutation CreateTask(
+  $input: CreateTaskInput!
+  $condition: ModelTaskConditionInput
+) {
+  createTask(input: $input, condition: $condition) {
+    id
+    authorID
+    roomID
+    chargePersonID
+    title
+    room {
+      id
+      name
+      companyID
+      description
+      company {
+        id
+        name
+        domain
+        createdAt
+        updatedAt
+      }
+      tasks {
+        nextToken
+      }
+      users {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    description
+    scheduleDate
+    priority
+    status
+    createdAt
+    messages {
+      items {
+        id
+        taskID
+        content
+        createdAt
+        isSent
+        updatedAt
+      }
+      nextToken
+    }
+    users {
+      items {
+        id
+        taskID
+        userID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    chargePerson {
+      id
+      username
+      email
+      companyID
+      tel
+      positionName
+      iconImage
+      registered
+      authority
+      company {
+        id
+        name
+        domain
+        createdAt
+        updatedAt
+      }
+      room {
+        nextToken
+      }
+      task {
+        nextToken
+      }
+      chargeTask {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    updatedAt
+  }
+}
+mutation UpdateTask(
+  $input: UpdateTaskInput!
+  $condition: ModelTaskConditionInput
+) {
+  updateTask(input: $input, condition: $condition) {
+    id
+    authorID
+    roomID
+    chargePersonID
+    title
+    room {
+      id
+      name
+      companyID
+      description
+      company {
+        id
+        name
+        domain
+        createdAt
+        updatedAt
+      }
+      tasks {
+        nextToken
+      }
+      users {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    description
+    scheduleDate
+    priority
+    status
+    createdAt
+    messages {
+      items {
+        id
+        taskID
+        content
+        createdAt
+        isSent
+        updatedAt
+      }
+      nextToken
+    }
+    users {
+      items {
+        id
+        taskID
+        userID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    chargePerson {
+      id
+      username
+      email
+      companyID
+      tel
+      positionName
+      iconImage
+      registered
+      authority
+      company {
+        id
+        name
+        domain
+        createdAt
+        updatedAt
+      }
+      room {
+        nextToken
+      }
+      task {
+        nextToken
+      }
+      chargeTask {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    updatedAt
+  }
+}
+mutation DeleteTask(
+  $input: DeleteTaskInput!
+  $condition: ModelTaskConditionInput
+) {
+  deleteTask(input: $input, condition: $condition) {
+    id
+    authorID
+    roomID
+    chargePersonID
+    title
+    room {
+      id
+      name
+      companyID
+      description
+      company {
+        id
+        name
+        domain
+        createdAt
+        updatedAt
+      }
+      tasks {
+        nextToken
+      }
+      users {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    description
+    scheduleDate
+    priority
+    status
+    createdAt
+    messages {
+      items {
+        id
+        taskID
+        content
+        createdAt
+        isSent
+        updatedAt
+      }
+      nextToken
+    }
+    users {
+      items {
+        id
+        taskID
+        userID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    chargePerson {
+      id
+      username
+      email
+      companyID
+      tel
+      positionName
+      iconImage
+      registered
+      authority
+      company {
+        id
+        name
+        domain
+        createdAt
+        updatedAt
+      }
+      room {
+        nextToken
+      }
+      task {
+        nextToken
+      }
+      chargeTask {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    updatedAt
+  }
+}
+mutation CreateRoomGroup(
+  $input: CreateRoomGroupInput!
+  $condition: ModelRoomGroupConditionInput
+) {
+  createRoomGroup(input: $input, condition: $condition) {
+    id
+    roomID
+    userID
+    room {
+      id
+      name
+      companyID
+      description
+      company {
+        id
+        name
+        domain
+        createdAt
+        updatedAt
+      }
+      tasks {
+        nextToken
+      }
+      users {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    user {
+      id
+      username
+      email
+      companyID
+      tel
+      positionName
+      iconImage
+      registered
+      authority
+      company {
+        id
+        name
+        domain
+        createdAt
+        updatedAt
+      }
+      room {
+        nextToken
+      }
+      task {
+        nextToken
+      }
+      chargeTask {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    createdAt
+    updatedAt
+  }
+}
+mutation UpdateRoomGroup(
+  $input: UpdateRoomGroupInput!
+  $condition: ModelRoomGroupConditionInput
+) {
+  updateRoomGroup(input: $input, condition: $condition) {
+    id
+    roomID
+    userID
+    room {
+      id
+      name
+      companyID
+      description
+      company {
+        id
+        name
+        domain
+        createdAt
+        updatedAt
+      }
+      tasks {
+        nextToken
+      }
+      users {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    user {
+      id
+      username
+      email
+      companyID
+      tel
+      positionName
+      iconImage
+      registered
+      authority
+      company {
+        id
+        name
+        domain
+        createdAt
+        updatedAt
+      }
+      room {
+        nextToken
+      }
+      task {
+        nextToken
+      }
+      chargeTask {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    createdAt
+    updatedAt
+  }
+}
+mutation DeleteRoomGroup(
+  $input: DeleteRoomGroupInput!
+  $condition: ModelRoomGroupConditionInput
+) {
+  deleteRoomGroup(input: $input, condition: $condition) {
+    id
+    roomID
+    userID
+    room {
+      id
+      name
+      companyID
+      description
+      company {
+        id
+        name
+        domain
+        createdAt
+        updatedAt
+      }
+      tasks {
+        nextToken
+      }
+      users {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    user {
+      id
+      username
+      email
+      companyID
+      tel
+      positionName
+      iconImage
+      registered
+      authority
+      company {
+        id
+        name
+        domain
+        createdAt
+        updatedAt
+      }
+      room {
+        nextToken
+      }
+      task {
+        nextToken
+      }
+      chargeTask {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    createdAt
+    updatedAt
+  }
+}
+mutation CreateRoom(
+  $input: CreateRoomInput!
+  $condition: ModelRoomConditionInput
+) {
+  createRoom(input: $input, condition: $condition) {
+    id
+    name
+    companyID
+    description
     company {
       id
       name
@@ -152,7 +1029,7 @@ mutation CreateRoom(
       room {
         nextToken
       }
-      members {
+      companyMembers {
         nextToken
       }
       createdAt
@@ -163,12 +1040,22 @@ mutation CreateRoom(
         id
         authorID
         roomID
+        chargePersonID
         title
         description
-        chargePersonID
         scheduleDate
         priority
         status
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    users {
+      items {
+        id
+        roomID
+        userID
         createdAt
         updatedAt
       }
@@ -184,29 +1071,9 @@ mutation UpdateRoom(
 ) {
   updateRoom(input: $input, condition: $condition) {
     id
-    companyID
     name
+    companyID
     description
-    members {
-      id
-      email
-      companyID
-      username
-      tel
-      positionName
-      iconImage
-      registered
-      authority
-      company {
-        id
-        name
-        domain
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
     company {
       id
       name
@@ -214,7 +1081,7 @@ mutation UpdateRoom(
       room {
         nextToken
       }
-      members {
+      companyMembers {
         nextToken
       }
       createdAt
@@ -225,12 +1092,22 @@ mutation UpdateRoom(
         id
         authorID
         roomID
+        chargePersonID
         title
         description
-        chargePersonID
         scheduleDate
         priority
         status
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    users {
+      items {
+        id
+        roomID
+        userID
         createdAt
         updatedAt
       }
@@ -246,29 +1123,9 @@ mutation DeleteRoom(
 ) {
   deleteRoom(input: $input, condition: $condition) {
     id
-    companyID
     name
+    companyID
     description
-    members {
-      id
-      email
-      companyID
-      username
-      tel
-      positionName
-      iconImage
-      registered
-      authority
-      company {
-        id
-        name
-        domain
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
     company {
       id
       name
@@ -276,7 +1133,7 @@ mutation DeleteRoom(
       room {
         nextToken
       }
-      members {
+      companyMembers {
         nextToken
       }
       createdAt
@@ -287,9 +1144,9 @@ mutation DeleteRoom(
         id
         authorID
         roomID
+        chargePersonID
         title
         description
-        chargePersonID
         scheduleDate
         priority
         status
@@ -298,247 +1155,17 @@ mutation DeleteRoom(
       }
       nextToken
     }
-    createdAt
-    updatedAt
-  }
-}
-mutation CreateTask(
-  $input: CreateTaskInput!
-  $condition: ModelTaskConditionInput
-) {
-  createTask(input: $input, condition: $condition) {
-    id
-    authorID
-    roomID
-    title
-    description
-    chargePersonID
-    scheduleDate
-    priority
-    status
-    createdAt
-    members {
-      id
-      email
-      companyID
-      username
-      tel
-      positionName
-      iconImage
-      registered
-      authority
-      company {
-        id
-        name
-        domain
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
-    room {
-      id
-      companyID
-      name
-      description
-      members {
-        id
-        email
-        companyID
-        username
-        tel
-        positionName
-        iconImage
-        registered
-        authority
-        createdAt
-        updatedAt
-      }
-      company {
-        id
-        name
-        domain
-        createdAt
-        updatedAt
-      }
-      tasks {
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-    messages {
+    users {
       items {
         id
-        taskID
-        content
+        roomID
+        userID
         createdAt
-        isSent
         updatedAt
       }
       nextToken
     }
-    updatedAt
-  }
-}
-mutation UpdateTask(
-  $input: UpdateTaskInput!
-  $condition: ModelTaskConditionInput
-) {
-  updateTask(input: $input, condition: $condition) {
-    id
-    authorID
-    roomID
-    title
-    description
-    chargePersonID
-    scheduleDate
-    priority
-    status
     createdAt
-    members {
-      id
-      email
-      companyID
-      username
-      tel
-      positionName
-      iconImage
-      registered
-      authority
-      company {
-        id
-        name
-        domain
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
-    room {
-      id
-      companyID
-      name
-      description
-      members {
-        id
-        email
-        companyID
-        username
-        tel
-        positionName
-        iconImage
-        registered
-        authority
-        createdAt
-        updatedAt
-      }
-      company {
-        id
-        name
-        domain
-        createdAt
-        updatedAt
-      }
-      tasks {
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-    messages {
-      items {
-        id
-        taskID
-        content
-        createdAt
-        isSent
-        updatedAt
-      }
-      nextToken
-    }
-    updatedAt
-  }
-}
-mutation DeleteTask(
-  $input: DeleteTaskInput!
-  $condition: ModelTaskConditionInput
-) {
-  deleteTask(input: $input, condition: $condition) {
-    id
-    authorID
-    roomID
-    title
-    description
-    chargePersonID
-    scheduleDate
-    priority
-    status
-    createdAt
-    members {
-      id
-      email
-      companyID
-      username
-      tel
-      positionName
-      iconImage
-      registered
-      authority
-      company {
-        id
-        name
-        domain
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
-    room {
-      id
-      companyID
-      name
-      description
-      members {
-        id
-        email
-        companyID
-        username
-        tel
-        positionName
-        iconImage
-        registered
-        authority
-        createdAt
-        updatedAt
-      }
-      company {
-        id
-        name
-        domain
-        createdAt
-        updatedAt
-      }
-      tasks {
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-    messages {
-      items {
-        id
-        taskID
-        content
-        createdAt
-        isSent
-        updatedAt
-      }
-      nextToken
-    }
     updatedAt
   }
 }
@@ -551,9 +1178,9 @@ mutation CreateMessage(
     taskID
     author {
       id
+      username
       email
       companyID
-      username
       tel
       positionName
       iconImage
@@ -566,6 +1193,15 @@ mutation CreateMessage(
         createdAt
         updatedAt
       }
+      room {
+        nextToken
+      }
+      task {
+        nextToken
+      }
+      chargeTask {
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -576,18 +1212,32 @@ mutation CreateMessage(
       id
       authorID
       roomID
-      title
-      description
       chargePersonID
+      title
+      room {
+        id
+        name
+        companyID
+        description
+        createdAt
+        updatedAt
+      }
+      description
       scheduleDate
       priority
       status
       createdAt
-      members {
+      messages {
+        nextToken
+      }
+      users {
+        nextToken
+      }
+      chargePerson {
         id
+        username
         email
         companyID
-        username
         tel
         positionName
         iconImage
@@ -595,17 +1245,6 @@ mutation CreateMessage(
         authority
         createdAt
         updatedAt
-      }
-      room {
-        id
-        companyID
-        name
-        description
-        createdAt
-        updatedAt
-      }
-      messages {
-        nextToken
       }
       updatedAt
     }
@@ -621,9 +1260,9 @@ mutation UpdateMessage(
     taskID
     author {
       id
+      username
       email
       companyID
-      username
       tel
       positionName
       iconImage
@@ -636,6 +1275,15 @@ mutation UpdateMessage(
         createdAt
         updatedAt
       }
+      room {
+        nextToken
+      }
+      task {
+        nextToken
+      }
+      chargeTask {
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -646,18 +1294,32 @@ mutation UpdateMessage(
       id
       authorID
       roomID
-      title
-      description
       chargePersonID
+      title
+      room {
+        id
+        name
+        companyID
+        description
+        createdAt
+        updatedAt
+      }
+      description
       scheduleDate
       priority
       status
       createdAt
-      members {
+      messages {
+        nextToken
+      }
+      users {
+        nextToken
+      }
+      chargePerson {
         id
+        username
         email
         companyID
-        username
         tel
         positionName
         iconImage
@@ -665,17 +1327,6 @@ mutation UpdateMessage(
         authority
         createdAt
         updatedAt
-      }
-      room {
-        id
-        companyID
-        name
-        description
-        createdAt
-        updatedAt
-      }
-      messages {
-        nextToken
       }
       updatedAt
     }
@@ -691,9 +1342,9 @@ mutation DeleteMessage(
     taskID
     author {
       id
+      username
       email
       companyID
-      username
       tel
       positionName
       iconImage
@@ -706,6 +1357,15 @@ mutation DeleteMessage(
         createdAt
         updatedAt
       }
+      room {
+        nextToken
+      }
+      task {
+        nextToken
+      }
+      chargeTask {
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -716,18 +1376,32 @@ mutation DeleteMessage(
       id
       authorID
       roomID
-      title
-      description
       chargePersonID
+      title
+      room {
+        id
+        name
+        companyID
+        description
+        createdAt
+        updatedAt
+      }
+      description
       scheduleDate
       priority
       status
       createdAt
-      members {
+      messages {
+        nextToken
+      }
+      users {
+        nextToken
+      }
+      chargePerson {
         id
+        username
         email
         companyID
-        username
         tel
         positionName
         iconImage
@@ -736,112 +1410,8 @@ mutation DeleteMessage(
         createdAt
         updatedAt
       }
-      room {
-        id
-        companyID
-        name
-        description
-        createdAt
-        updatedAt
-      }
-      messages {
-        nextToken
-      }
       updatedAt
     }
-    updatedAt
-  }
-}
-mutation CreateUser(
-  $input: CreateUserInput!
-  $condition: ModelUserConditionInput
-) {
-  createUser(input: $input, condition: $condition) {
-    id
-    email
-    companyID
-    username
-    tel
-    positionName
-    iconImage
-    registered
-    authority
-    company {
-      id
-      name
-      domain
-      room {
-        nextToken
-      }
-      members {
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-    createdAt
-    updatedAt
-  }
-}
-mutation UpdateUser(
-  $input: UpdateUserInput!
-  $condition: ModelUserConditionInput
-) {
-  updateUser(input: $input, condition: $condition) {
-    id
-    email
-    companyID
-    username
-    tel
-    positionName
-    iconImage
-    registered
-    authority
-    company {
-      id
-      name
-      domain
-      room {
-        nextToken
-      }
-      members {
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-    createdAt
-    updatedAt
-  }
-}
-mutation DeleteUser(
-  $input: DeleteUserInput!
-  $condition: ModelUserConditionInput
-) {
-  deleteUser(input: $input, condition: $condition) {
-    id
-    email
-    companyID
-    username
-    tel
-    positionName
-    iconImage
-    registered
-    authority
-    company {
-      id
-      name
-      domain
-      room {
-        nextToken
-      }
-      members {
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-    createdAt
     updatedAt
   }
 }

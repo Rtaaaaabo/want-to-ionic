@@ -7,20 +7,20 @@ query GetCompany($id: ID!) {
     room {
       items {
         id
-        companyID
         name
+        companyID
         description
         createdAt
         updatedAt
       }
       nextToken
     }
-    members {
+    companyMembers {
       items {
         id
+        username
         email
         companyID
-        username
         tel
         positionName
         iconImage
@@ -48,7 +48,7 @@ query ListCompanys(
       room {
         nextToken
       }
-      members {
+      companyMembers {
         nextToken
       }
       createdAt
@@ -57,17 +57,81 @@ query ListCompanys(
     nextToken
   }
 }
-query GetRoom($id: ID!) {
-  getRoom(id: $id) {
+query GetUser($id: ID!) {
+  getUser(id: $id) {
     id
+    username
+    email
     companyID
-    name
-    description
-    members {
+    tel
+    positionName
+    iconImage
+    registered
+    authority
+    company {
       id
+      name
+      domain
+      room {
+        nextToken
+      }
+      companyMembers {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    room {
+      items {
+        id
+        roomID
+        userID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    task {
+      items {
+        id
+        taskID
+        userID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    chargeTask {
+      items {
+        id
+        authorID
+        roomID
+        chargePersonID
+        title
+        description
+        scheduleDate
+        priority
+        status
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+  }
+}
+query ListUsers(
+  $filter: ModelUserFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      username
       email
       companyID
-      username
       tel
       positionName
       iconImage
@@ -80,9 +144,378 @@ query GetRoom($id: ID!) {
         createdAt
         updatedAt
       }
+      room {
+        nextToken
+      }
+      task {
+        nextToken
+      }
+      chargeTask {
+        nextToken
+      }
       createdAt
       updatedAt
     }
+    nextToken
+  }
+}
+query GetTaskGroup($id: ID!) {
+  getTaskGroup(id: $id) {
+    id
+    taskID
+    userID
+    task {
+      id
+      authorID
+      roomID
+      chargePersonID
+      title
+      room {
+        id
+        name
+        companyID
+        description
+        createdAt
+        updatedAt
+      }
+      description
+      scheduleDate
+      priority
+      status
+      createdAt
+      messages {
+        nextToken
+      }
+      users {
+        nextToken
+      }
+      chargePerson {
+        id
+        username
+        email
+        companyID
+        tel
+        positionName
+        iconImage
+        registered
+        authority
+        createdAt
+        updatedAt
+      }
+      updatedAt
+    }
+    user {
+      id
+      username
+      email
+      companyID
+      tel
+      positionName
+      iconImage
+      registered
+      authority
+      company {
+        id
+        name
+        domain
+        createdAt
+        updatedAt
+      }
+      room {
+        nextToken
+      }
+      task {
+        nextToken
+      }
+      chargeTask {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    createdAt
+    updatedAt
+  }
+}
+query ListTaskGroups(
+  $filter: ModelTaskGroupFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listTaskGroups(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      taskID
+      userID
+      task {
+        id
+        authorID
+        roomID
+        chargePersonID
+        title
+        description
+        scheduleDate
+        priority
+        status
+        createdAt
+        updatedAt
+      }
+      user {
+        id
+        username
+        email
+        companyID
+        tel
+        positionName
+        iconImage
+        registered
+        authority
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+    nextToken
+  }
+}
+query GetTask($id: ID!) {
+  getTask(id: $id) {
+    id
+    authorID
+    roomID
+    chargePersonID
+    title
+    room {
+      id
+      name
+      companyID
+      description
+      company {
+        id
+        name
+        domain
+        createdAt
+        updatedAt
+      }
+      tasks {
+        nextToken
+      }
+      users {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    description
+    scheduleDate
+    priority
+    status
+    createdAt
+    messages {
+      items {
+        id
+        taskID
+        content
+        createdAt
+        isSent
+        updatedAt
+      }
+      nextToken
+    }
+    users {
+      items {
+        id
+        taskID
+        userID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    chargePerson {
+      id
+      username
+      email
+      companyID
+      tel
+      positionName
+      iconImage
+      registered
+      authority
+      company {
+        id
+        name
+        domain
+        createdAt
+        updatedAt
+      }
+      room {
+        nextToken
+      }
+      task {
+        nextToken
+      }
+      chargeTask {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    updatedAt
+  }
+}
+query ListTasks(
+  $filter: ModelTaskFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listTasks(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      authorID
+      roomID
+      chargePersonID
+      title
+      room {
+        id
+        name
+        companyID
+        description
+        createdAt
+        updatedAt
+      }
+      description
+      scheduleDate
+      priority
+      status
+      createdAt
+      messages {
+        nextToken
+      }
+      users {
+        nextToken
+      }
+      chargePerson {
+        id
+        username
+        email
+        companyID
+        tel
+        positionName
+        iconImage
+        registered
+        authority
+        createdAt
+        updatedAt
+      }
+      updatedAt
+    }
+    nextToken
+  }
+}
+query GetRoomGroup($id: ID!) {
+  getRoomGroup(id: $id) {
+    id
+    roomID
+    userID
+    room {
+      id
+      name
+      companyID
+      description
+      company {
+        id
+        name
+        domain
+        createdAt
+        updatedAt
+      }
+      tasks {
+        nextToken
+      }
+      users {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    user {
+      id
+      username
+      email
+      companyID
+      tel
+      positionName
+      iconImage
+      registered
+      authority
+      company {
+        id
+        name
+        domain
+        createdAt
+        updatedAt
+      }
+      room {
+        nextToken
+      }
+      task {
+        nextToken
+      }
+      chargeTask {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    createdAt
+    updatedAt
+  }
+}
+query ListRoomGroups(
+  $filter: ModelRoomGroupFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listRoomGroups(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      roomID
+      userID
+      room {
+        id
+        name
+        companyID
+        description
+        createdAt
+        updatedAt
+      }
+      user {
+        id
+        username
+        email
+        companyID
+        tel
+        positionName
+        iconImage
+        registered
+        authority
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+    nextToken
+  }
+}
+query GetRoom($id: ID!) {
+  getRoom(id: $id) {
+    id
+    name
+    companyID
+    description
     company {
       id
       name
@@ -90,7 +523,7 @@ query GetRoom($id: ID!) {
       room {
         nextToken
       }
-      members {
+      companyMembers {
         nextToken
       }
       createdAt
@@ -101,12 +534,22 @@ query GetRoom($id: ID!) {
         id
         authorID
         roomID
+        chargePersonID
         title
         description
-        chargePersonID
         scheduleDate
         priority
         status
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    users {
+      items {
+        id
+        roomID
+        userID
         createdAt
         updatedAt
       }
@@ -124,22 +567,9 @@ query ListRooms(
   listRooms(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       id
-      companyID
       name
+      companyID
       description
-      members {
-        id
-        email
-        companyID
-        username
-        tel
-        positionName
-        iconImage
-        registered
-        authority
-        createdAt
-        updatedAt
-      }
       company {
         id
         name
@@ -150,130 +580,10 @@ query ListRooms(
       tasks {
         nextToken
       }
-      createdAt
-      updatedAt
-    }
-    nextToken
-  }
-}
-query GetTask($id: ID!) {
-  getTask(id: $id) {
-    id
-    authorID
-    roomID
-    title
-    description
-    chargePersonID
-    scheduleDate
-    priority
-    status
-    createdAt
-    members {
-      id
-      email
-      companyID
-      username
-      tel
-      positionName
-      iconImage
-      registered
-      authority
-      company {
-        id
-        name
-        domain
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
-    room {
-      id
-      companyID
-      name
-      description
-      members {
-        id
-        email
-        companyID
-        username
-        tel
-        positionName
-        iconImage
-        registered
-        authority
-        createdAt
-        updatedAt
-      }
-      company {
-        id
-        name
-        domain
-        createdAt
-        updatedAt
-      }
-      tasks {
+      users {
         nextToken
       }
       createdAt
-      updatedAt
-    }
-    messages {
-      items {
-        id
-        taskID
-        content
-        createdAt
-        isSent
-        updatedAt
-      }
-      nextToken
-    }
-    updatedAt
-  }
-}
-query ListTasks(
-  $filter: ModelTaskFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  listTasks(filter: $filter, limit: $limit, nextToken: $nextToken) {
-    items {
-      id
-      authorID
-      roomID
-      title
-      description
-      chargePersonID
-      scheduleDate
-      priority
-      status
-      createdAt
-      members {
-        id
-        email
-        companyID
-        username
-        tel
-        positionName
-        iconImage
-        registered
-        authority
-        createdAt
-        updatedAt
-      }
-      room {
-        id
-        companyID
-        name
-        description
-        createdAt
-        updatedAt
-      }
-      messages {
-        nextToken
-      }
       updatedAt
     }
     nextToken
@@ -285,9 +595,9 @@ query GetMessage($id: ID!) {
     taskID
     author {
       id
+      username
       email
       companyID
-      username
       tel
       positionName
       iconImage
@@ -300,6 +610,15 @@ query GetMessage($id: ID!) {
         createdAt
         updatedAt
       }
+      room {
+        nextToken
+      }
+      task {
+        nextToken
+      }
+      chargeTask {
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -310,18 +629,32 @@ query GetMessage($id: ID!) {
       id
       authorID
       roomID
-      title
-      description
       chargePersonID
+      title
+      room {
+        id
+        name
+        companyID
+        description
+        createdAt
+        updatedAt
+      }
+      description
       scheduleDate
       priority
       status
       createdAt
-      members {
+      messages {
+        nextToken
+      }
+      users {
+        nextToken
+      }
+      chargePerson {
         id
+        username
         email
         companyID
-        username
         tel
         positionName
         iconImage
@@ -329,17 +662,6 @@ query GetMessage($id: ID!) {
         authority
         createdAt
         updatedAt
-      }
-      room {
-        id
-        companyID
-        name
-        description
-        createdAt
-        updatedAt
-      }
-      messages {
-        nextToken
       }
       updatedAt
     }
@@ -357,9 +679,9 @@ query ListMessages(
       taskID
       author {
         id
+        username
         email
         companyID
-        username
         tel
         positionName
         iconImage
@@ -375,72 +697,15 @@ query ListMessages(
         id
         authorID
         roomID
+        chargePersonID
         title
         description
-        chargePersonID
         scheduleDate
         priority
         status
         createdAt
         updatedAt
       }
-      updatedAt
-    }
-    nextToken
-  }
-}
-query GetUser($id: ID!) {
-  getUser(id: $id) {
-    id
-    email
-    companyID
-    username
-    tel
-    positionName
-    iconImage
-    registered
-    authority
-    company {
-      id
-      name
-      domain
-      room {
-        nextToken
-      }
-      members {
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-    createdAt
-    updatedAt
-  }
-}
-query ListUsers(
-  $filter: ModelUserFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
-    items {
-      id
-      email
-      companyID
-      username
-      tel
-      positionName
-      iconImage
-      registered
-      authority
-      company {
-        id
-        name
-        domain
-        createdAt
-        updatedAt
-      }
-      createdAt
       updatedAt
     }
     nextToken
