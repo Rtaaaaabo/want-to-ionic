@@ -105,8 +105,6 @@ export class TaskPage implements OnInit {
   }
 
   navigateToTaskDetail(task, segment): void {
-    console.log('task: ', task);
-    console.log('segment', segment);
     this.router.navigate(['task-detail', `${task.id}`, `${segment}`])
   }
 
@@ -148,10 +146,13 @@ export class TaskPage implements OnInit {
   }
 
   deleteTask(task) {
-    console.log(task);
     this.logic.deleteTaskItem(task.id)
       .pipe(flatMap(() => this.logic.fetchActiveTaskPerRoom(this.roomId)))
       .subscribe((result) => this.taskActiveItems = result);
+  }
+
+  presentAddPersonToTask() {
+    console.log('presentAddPersonToTask')
   }
 
 }

@@ -7,6 +7,9 @@
       </ion-button>
     </ion-buttons>
     <ion-buttons *ngIf="segment === 'active'" slot="end">
+      <ion-button (click)="presentAddPersonToTask()">
+        <ion-icon *ngIf="!isReorder" name="people-circle"></ion-icon>
+      </ion-button>
       <ion-button (click)="sortTaskItem()">
         <ion-icon *ngIf="!isReorder" name="swap-vertical-sharp"></ion-icon>
         <ion-icon *ngIf="isReorder" name="checkmark-outline"></ion-icon>
