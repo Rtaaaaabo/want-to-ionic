@@ -34,4 +34,8 @@ export class TaskService {
   fetchUserInfo(userId: string): Observable<GetUserQuery> {
     return from(this.amplifyService.GetUser(userId));
   }
+
+  fetchCompanyMember(content): Observable<any> {
+    return from(this.amplifyService.ListUsers(content));
+  }
 }

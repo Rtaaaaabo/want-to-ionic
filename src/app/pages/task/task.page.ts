@@ -6,7 +6,6 @@ import { from } from 'rxjs';
 import { flatMap, tap, map } from 'rxjs/operators';
 import { GetRoomQuery } from 'src/app/shared/service/amplify.service';
 import { AddTaskModalComponent } from '../../shared/component/modal/add-task-modal/add-task-modal.component';
-import { DeleteTaskModalComponent } from '../../shared/component/modal/delete-task-modal/delete-task-modal.component';
 import { TaskLogic } from './logic/task.logic';
 import { CurrentUserInfo } from './interface/current-user-info.interface';
 import { AddPersonModalComponent } from 'src/app/shared/component/modal/add-person-modal/add-person-modal.component';
@@ -26,6 +25,8 @@ export class TaskPage implements OnInit {
   isReorder: boolean;
   segment;
 
+  user;
+
   constructor(
     private router: Router,
     private modalCtrl: ModalController,
@@ -37,7 +38,6 @@ export class TaskPage implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
   }
 
   ionViewWillEnter() {
@@ -51,10 +51,10 @@ export class TaskPage implements OnInit {
     this.logic.fetchCurrentUserInfo()
       .pipe(map((res: CurrentUserInfo) => { this.userEmail = res.email; this.userId = res.sub }))
       .pipe(flatMap(() => this.logic.fetchUserInfoFromAmplify(this.userId)))
-      .subscribe((result) => {
-        console.log(result);
-        // this.userEmail = attributes.email;
-        // this.userId = attributes.sub;
+      .pipe(map((user) => this.user = user))
+      .pipe(flatMap(() => this.logic.fetchCompanyMember(this.user.companyID)))
+      .subscribe((members) => {
+        console.log(members);
       });
     this.logic.fetchActiveTaskPerRoom(this.roomId)
       .subscribe((items) => {

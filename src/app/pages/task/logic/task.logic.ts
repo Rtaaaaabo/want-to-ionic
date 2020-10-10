@@ -87,4 +87,14 @@ export class TaskLogic {
   fetchUserInfoFromAmplify(userId: string): Observable<any> {
     return this.taskService.fetchUserInfo(userId);
   }
+
+  fetchCompanyMember(companyId: string): Observable<any> {
+    const filterContent = {
+      companyID: {
+        eq: `${companyId}`
+      }
+    }
+    return this.taskService.fetchCompanyMember(filterContent);
+  }
+
 }

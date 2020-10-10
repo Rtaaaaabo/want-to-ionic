@@ -3461,30 +3461,25 @@ export class AmplifyService {
     nextToken?: string
   ): Promise<ListUsersQuery> {
     const statement = `query ListUsers($filter: ModelUserFilterInput, $limit: Int, $nextToken: String) {
-        listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
+        __typename
+        items {
           __typename
-          items {
-            __typename
-            id
-            email
-            companyID
-            username
-            registered
-            authority
-            company {
-              __typename
-              id
-              name
-              domain
-              createdAt
-              updatedAt
-            }
-            createdAt
-            updatedAt
-          }
-          nextToken
+          id
+          username
+          email
+          companyID
+          tel
+          positionName
+          iconImage
+          registered
+          authority
+          createdAt
+          updatedAt
         }
-      }`;
+        nextToken
+      }
+    }`;
     const gqlAPIServiceArguments: any = {};
     if (filter) {
       gqlAPIServiceArguments.filter = filter;
