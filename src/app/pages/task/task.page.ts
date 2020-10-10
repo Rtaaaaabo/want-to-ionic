@@ -9,6 +9,7 @@ import { AddTaskModalComponent } from '../../shared/component/modal/add-task-mod
 import { DeleteTaskModalComponent } from '../../shared/component/modal/delete-task-modal/delete-task-modal.component';
 import { TaskLogic } from './logic/task.logic';
 import { CurrentUserInfo } from './interface/current-user-info.interface';
+import { AddPersonModalComponent } from 'src/app/shared/component/modal/add-person-modal/add-person-modal.component';
 
 @Component({
   selector: 'app-task',
@@ -52,7 +53,6 @@ export class TaskPage implements OnInit {
       .pipe(flatMap(() => this.logic.fetchUserInfoFromAmplify(this.userId)))
       .subscribe((result) => {
         console.log(result);
-
         // this.userEmail = attributes.email;
         // this.userId = attributes.sub;
       });
@@ -151,8 +151,11 @@ export class TaskPage implements OnInit {
       .subscribe((result) => this.taskActiveItems = result);
   }
 
-  presentAddPersonToTask() {
-    console.log('presentAddPersonToTask')
+  async presentAddPersonToTask() {
+    const modal = await this.modalCtrl.create({
+      component: AddPersonModalComponent,
+    })
+    return modal.present()
   }
 
 }
