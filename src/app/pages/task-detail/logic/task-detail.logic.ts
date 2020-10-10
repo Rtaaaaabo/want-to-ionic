@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
 import { AmplifyService, OnCreateMessageSubscription } from '../../../shared/service/amplify.service';
-import { TaskDetailServiceService } from '../service/task-detail-service.service';
+import { TaskDetailService } from '../service/task-detail.service';
 import { Observable, from } from 'rxjs';
 import { v4 as uuid } from 'uuid';
 
 @Injectable({
   providedIn: 'root'
 })
-export class TaskDetailLogicService {
+export class TaskDetailLogic {
 
   constructor(
-    private taskDetailService: TaskDetailServiceService,
+    private taskDetailService: TaskDetailService,
   ) { }
 
   fetchAnyTask(taskId: string): Observable<any> {

@@ -3,7 +3,7 @@ import { Location, ViewportScroller } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { ModalController, ActionSheetController, ToastController, IonContent, Platform } from '@ionic/angular';
 import { from, Observable } from 'rxjs';
-import { TaskDetailLogicService } from './logic/task-detail-logic.service';
+import { TaskDetailLogic } from './logic/task-detail.logic';
 import { AddTaskModalComponent } from 'src/app/shared/component/modal/add-task-modal/add-task-modal.component';
 import { flatMap, tap } from 'rxjs/operators';
 
@@ -27,7 +27,7 @@ export class TaskDetailPage implements OnInit {
 
   constructor(
     private location: Location,
-    private logic: TaskDetailLogicService,
+    private logic: TaskDetailLogic,
     private route: ActivatedRoute,
     private scroll: ViewportScroller,
     private modalCtrl: ModalController,
