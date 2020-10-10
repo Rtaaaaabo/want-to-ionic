@@ -17,12 +17,13 @@ export class AddTaskModalComponent implements OnInit {
   });
 
   userId: string;
-  room;
-  taskDetail;
-
   minYear: string = '';
   maxYear: string = '';
   currentIsoString: string;
+
+  room;
+  taskDetail;
+  userList;
 
   constructor(
     private modalCtrl: ModalController,
@@ -42,7 +43,7 @@ export class AddTaskModalComponent implements OnInit {
     this.currentIsoString = currentDate.toISOString();
     this.taskForm.patchValue({
       scheduleDateItem: this.currentIsoString
-    })
+    });
   }
 
   dismissModal(): void {
