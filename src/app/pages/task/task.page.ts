@@ -105,6 +105,8 @@ export class TaskPage implements OnInit {
   }
 
   navigateToTaskDetail(task, segment): void {
+    console.log('task: ', task);
+    console.log('segment', segment);
     this.router.navigate(['task-detail', `${task.id}`, `${segment}`])
   }
 

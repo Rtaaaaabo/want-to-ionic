@@ -16,6 +16,7 @@ export class TaskDetailService {
   }
 
   fetchMessagePerTask(filterInfo): Observable<any> {
+    console.log('fetchMessagePerTask', filterInfo);
     return from(this.amplifyService.ListMessages(filterInfo));
   }
 

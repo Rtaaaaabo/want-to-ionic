@@ -36,6 +36,12 @@ export class TaskDetailPage implements OnInit {
     private platform: Platform,
   ) {
     this.initializeApp()
+      // .pipe(flatMap(() => this.logic.onCreateMessageListener()))
+      // .pipe(flatMap(() => this.logic.fetchMessagePerTask(this.taskId)))
+      // .subscribe((result) => {
+      //   console.log(result);
+      //   this.message = result.items;
+      // })
       .subscribe(() => {
         this.logic.onCreateMessageListener()
           .subscribe(() => {

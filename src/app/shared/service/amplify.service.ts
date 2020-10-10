@@ -3373,44 +3373,48 @@ export class AmplifyService {
     nextToken?: string
   ): Promise<ListMessagesQuery> {
     const statement = `query ListMessages($filter: ModelMessageFilterInput, $limit: Int, $nextToken: String) {
-        listMessages(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      listMessages(filter: $filter, limit: $limit, nextToken: $nextToken) {
+        __typename
+        items {
           __typename
-          items {
+          id
+          taskID
+          author {
             __typename
             id
-            taskID
-            author {
-              __typename
-              id
-              email
-              companyID
-              username
-              registered
-              authority
-              createdAt
-              updatedAt
-            }
-            content
+            username
+            email
+            companyID
+            tel
+            positionName
+            iconImage
+            registered
+            authority
             createdAt
-            isSent
-            task {
-              __typename
-              id
-              authorID
-              roomID
-              title
-              description
-              scheduleDate
-              priority
-              status
-              createdAt
-              updatedAt
-            }
             updatedAt
           }
-          nextToken
+          content
+          createdAt
+          isSent
+          task {
+            __typename
+            id
+            authorID
+            roomID
+            chargePersonID
+            title
+            description
+            scheduleDate
+            priority
+            status
+            createdAt
+            updatedAt
+          }
+          updatedAt
         }
-      }`;
+        nextToken
+      }
+    }`;
     const gqlAPIServiceArguments: any = {};
     if (filter) {
       gqlAPIServiceArguments.filter = filter;
