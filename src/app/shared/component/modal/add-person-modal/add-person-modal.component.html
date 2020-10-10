@@ -8,3 +8,10 @@
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
+<ion-content>
+  <ion-list *ngFor="let member of members">
+    <ion-item>
+      {{ member.id }}
+    </ion-item>
+  </ion-list>
+</ion-content>

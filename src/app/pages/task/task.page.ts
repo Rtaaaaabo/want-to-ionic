@@ -26,6 +26,7 @@ export class TaskPage implements OnInit {
   segment;
 
   user;
+  members;
 
   constructor(
     private router: Router,
@@ -53,8 +54,9 @@ export class TaskPage implements OnInit {
       .pipe(flatMap(() => this.logic.fetchUserInfoFromAmplify(this.userId)))
       .pipe(map((user) => this.user = user))
       .pipe(flatMap(() => this.logic.fetchCompanyMember(this.user.companyID)))
-      .subscribe((members) => {
-        console.log(members);
+      .subscribe(({ items }) => {
+        console.log(items);
+        this.members = items;
       });
     this.logic.fetchActiveTaskPerRoom(this.roomId)
       .subscribe((items) => {
@@ -154,6 +156,7 @@ export class TaskPage implements OnInit {
   async presentAddPersonToTask() {
     const modal = await this.modalCtrl.create({
       component: AddPersonModalComponent,
+      componentProps: { members: this.members }
     })
     return modal.present()
   }

@@ -8,11 +8,15 @@ import { ModalController } from '@ionic/angular';
 })
 export class AddPersonModalComponent implements OnInit {
 
+  members
+
   constructor(
     private modalCtrl: ModalController,
   ) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    console.log(this.members);
+  }
 
   dismissModal(): void {
     this.modalCtrl.dismiss();
