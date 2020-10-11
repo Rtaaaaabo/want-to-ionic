@@ -4,7 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ModalController, ToastController, ActionSheetController } from '@ionic/angular';
 import { from } from 'rxjs';
 import { flatMap, tap, map } from 'rxjs/operators';
-import { GetRoomQuery } from 'src/app/shared/service/amplify.service';
+import { GetRoomQuery, ListUsersQuery } from 'src/app/shared/service/amplify.service';
 import { AddTaskModalComponent } from '../../shared/component/modal/add-task-modal/add-task-modal.component';
 import { TaskLogic } from './logic/task.logic';
 import { CurrentUserInfo } from './interface/current-user-info.interface';
@@ -26,7 +26,7 @@ export class TaskPage implements OnInit {
   segment;
 
   user;
-  members;
+  members: Array<ListUsersQuery>;
 
   constructor(
     private router: Router,
@@ -55,7 +55,6 @@ export class TaskPage implements OnInit {
       .pipe(map((user) => this.user = user))
       .pipe(flatMap(() => this.logic.fetchCompanyMember(this.user.companyID)))
       .subscribe(({ items }) => {
-        console.log(items);
         this.members = items;
       });
     this.logic.fetchActiveTaskPerRoom(this.roomId)
@@ -156,7 +155,7 @@ export class TaskPage implements OnInit {
   async presentAddPersonToTask() {
     const modal = await this.modalCtrl.create({
       component: AddPersonModalComponent,
-      componentProps: { members: this.members }
+      componentProps: { test: this.members }
     })
     return modal.present()
   }

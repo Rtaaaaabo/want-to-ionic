@@ -9,9 +9,7 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <ion-list *ngFor="let member of members">
-    <ion-item>
-      {{ member.id }}
-    </ion-item>
+  <ion-list>
+    <ion-item *ngFor="let member of members"> {{ member.id }} </ion-item>
   </ion-list>
 </ion-content>
