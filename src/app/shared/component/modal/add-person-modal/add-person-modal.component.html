@@ -6,6 +6,13 @@
         <ion-icon slot="icon-only" name="close-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button
+        [disabled]="arraySelectedPersonId.length === 0"
+        (click)="addPersonToTask()"
+        >追加</ion-button
+      >
+    </ion-buttons>
   </ion-toolbar>
   <ion-toolbar>
     <ion-searchbar
@@ -18,7 +25,11 @@
   <ion-list *ngFor="let member of members">
     <ion-item>
       <ion-label>{{ member.username }}</ion-label>
-      <ion-checkbox slot="start" class="member-check"></ion-checkbox>
+      <ion-checkbox
+        (ionChange)="changeCheckUser(member.id)"
+        slot="start"
+        class="member-check"
+      ></ion-checkbox>
     </ion-item>
   </ion-list>
 </ion-content>
