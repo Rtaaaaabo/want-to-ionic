@@ -15,6 +15,7 @@ export class AddPersonModalComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    console.log(this.members);
   }
 
   ngAfterViewInit(): void {

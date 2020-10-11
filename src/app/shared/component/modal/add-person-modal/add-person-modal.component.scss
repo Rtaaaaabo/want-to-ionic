@@ -1,0 +1,9 @@
+@media (prefers-color-scheme: dark) {
+    .member-check {
+        --border-radius: 0;
+        --border-style: 0;
+        --checkmark-color: #3880ff;
+        --background: #000000;
+        --background-checked: #000000;
+    }
+}
