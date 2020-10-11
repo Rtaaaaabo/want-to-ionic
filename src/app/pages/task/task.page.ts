@@ -155,7 +155,7 @@ export class TaskPage implements OnInit {
   async presentAddPersonToTask() {
     const modal = await this.modalCtrl.create({
       component: AddPersonModalComponent,
-      componentProps: { test: this.members }
+      componentProps: { members: this.members }
     })
     return modal.present()
   }
