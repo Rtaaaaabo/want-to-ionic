@@ -28,20 +28,17 @@ export class AddPersonModalComponent implements OnInit {
   }
 
   addPersonToTask(): void {
-    console.log('Add person to task');
+    this.modalCtrl.dismiss(this.arraySelectedPersonId);
   }
 
   changeCheckUser(memberId: string): void {
     const indexTargetId = this.arraySelectedPersonId.findIndex(item => item === memberId);
     console.log(indexTargetId);
     if (indexTargetId >= 0) {
-      console.log('Splice');
       this.arraySelectedPersonId.splice(indexTargetId, 1);
     } else {
-      console.log('Push');
       this.arraySelectedPersonId.push(memberId);
     }
-    console.log(this.arraySelectedPersonId);
   }
 
 }
