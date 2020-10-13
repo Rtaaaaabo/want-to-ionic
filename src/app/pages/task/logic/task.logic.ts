@@ -88,11 +88,14 @@ export class TaskLogic {
     return this.taskService.fetchUserInfo(userId);
   }
 
-  fetchCompanyMember(companyId: string, filterUser?: string): Observable<any> {
+  fetchCompanyMember(companyId: string, queryFilterUser?: string): Observable<any> {
     const filterContent = {
       companyID: {
         eq: `${companyId}`
       },
+      username: {
+        contains: queryFilterUser
+      }
     }
     return this.taskService.fetchCompanyMember(filterContent);
   }

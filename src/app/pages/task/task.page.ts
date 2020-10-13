@@ -23,10 +23,9 @@ export class TaskPage implements OnInit {
   taskActiveItems;
   taskDoneItems;
   isReorder: boolean;
-  segment;
-
-  user;
+  segment: string;
   members: Array<ListUsersQuery>;
+  user;
 
   constructor(
     private router: Router,
@@ -156,7 +155,7 @@ export class TaskPage implements OnInit {
   async presentAddPersonToTask() {
     const modal = await this.modalCtrl.create({
       component: AddPersonModalComponent,
-      componentProps: { members: this.members }
+      componentProps: { members: this.members, users: this.user }
     })
     return modal.present()
   }

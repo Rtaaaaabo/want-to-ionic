@@ -9,8 +9,9 @@ import { TaskLogic } from '../../logic/task.logic';
 })
 export class AddPersonModalComponent implements OnInit {
 
-  members;
   arraySelectedPersonId: Array<string>;
+  members;
+  users;
 
   constructor(
     private modalCtrl: ModalController,
@@ -42,7 +43,10 @@ export class AddPersonModalComponent implements OnInit {
   }
 
   searchPerson(ev) {
-    console.log('query string: ', ev.detail.value);
+    this.logic.fetchCompanyMember(this.users.companyID, ev.detail.value).subscribe(({ items }) => {
+      console.log(items);
+      this.members = items;
+    })
   }
 
 }
