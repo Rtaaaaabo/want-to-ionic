@@ -8,7 +8,7 @@ import { GetRoomQuery, ListUsersQuery } from 'src/app/shared/service/amplify.ser
 import { AddTaskModalComponent } from '../../shared/component/modal/add-task-modal/add-task-modal.component';
 import { TaskLogic } from './logic/task.logic';
 import { CurrentUserInfo } from './interface/current-user-info.interface';
-import { AddPersonModalComponent } from 'src/app/shared/component/modal/add-person-modal/add-person-modal.component';
+import { AddPersonModalComponent } from 'src/app/pages/task/component/add-person-modal/add-person-modal.component';
 
 @Component({
   selector: 'app-task',

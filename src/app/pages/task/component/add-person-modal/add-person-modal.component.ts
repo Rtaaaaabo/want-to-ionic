@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { TaskLogic } from '../../../../pages/task/logic/task.logic';
+import { TaskLogic } from '../../logic/task.logic';
 
 @Component({
   selector: 'app-add-person-modal',
@@ -42,7 +42,6 @@ export class AddPersonModalComponent implements OnInit {
   }
 
   searchPerson(ev) {
-
     console.log('query string: ', ev.detail.value);
   }
 
