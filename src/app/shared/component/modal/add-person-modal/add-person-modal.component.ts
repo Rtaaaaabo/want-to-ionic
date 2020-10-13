@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import { TaskLogic } from '../../../../pages/task/logic/task.logic';
 
 @Component({
   selector: 'app-add-person-modal',
@@ -13,11 +14,11 @@ export class AddPersonModalComponent implements OnInit {
 
   constructor(
     private modalCtrl: ModalController,
+    private logic: TaskLogic,
   ) { }
 
   ngOnInit(): void {
     this.arraySelectedPersonId = [];
-    console.log(this.members);
   }
 
   ngAfterViewInit(): void {
@@ -33,12 +34,16 @@ export class AddPersonModalComponent implements OnInit {
 
   changeCheckUser(memberId: string): void {
     const indexTargetId = this.arraySelectedPersonId.findIndex(item => item === memberId);
-    console.log(indexTargetId);
     if (indexTargetId >= 0) {
       this.arraySelectedPersonId.splice(indexTargetId, 1);
     } else {
       this.arraySelectedPersonId.push(memberId);
     }
+  }
+
+  searchPerson(ev) {
+
+    console.log('query string: ', ev.detail.value);
   }
 
 }
