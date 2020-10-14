@@ -43,10 +43,10 @@ export class AddPersonModalComponent implements OnInit {
   }
 
   searchPerson(ev) {
-    this.logic.fetchCompanyMember(this.users.companyID, ev.detail.value).subscribe(({ items }) => {
-      console.log(items);
-      this.members = items;
-    })
+    this.logic.fetchCompanyMember(this.users.companyID, ev.detail.value)
+      .subscribe(({ items }) => {
+        this.members = items;
+      })
   }
 
 }

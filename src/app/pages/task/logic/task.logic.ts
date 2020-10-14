@@ -26,6 +26,7 @@ export class TaskLogic {
   }
 
   createTaskToRoom(dismissData, roomId, email): Observable<any> {
+    console.log('dismissData: ', dismissData);
     const iosStringDate = (new Date()).toISOString();
     if (dismissData === undefined) {
       return of({});
@@ -43,6 +44,15 @@ export class TaskLogic {
       }
       return this.taskService.createTaskItem(content);
     }
+  }
+
+  createRoomGroup(userId, roomId): Observable<any> {
+    const content = {
+      id: `room-group${uuid()}`,
+      roomID: `${roomId}`,
+      userID: `${userId}`
+    }
+    return this.taskService.createRoomGroup(content);
   }
 
   fetchActiveTaskPerRoom(roomId): Observable<any> {

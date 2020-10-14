@@ -4,6 +4,7 @@
 import { Injectable } from "@angular/core";
 import API, { graphqlOperation } from "@aws-amplify/api";
 import { GraphQLResult } from "@aws-amplify/api/lib/types";
+import { CreateRoomGroupInput, CreateRoomGroupMutation } from 'src/app/API.service';
 import { Observable } from "zen-observable-ts";
 
 export type CreateCompanyInput = {
@@ -4388,4 +4389,42 @@ export class AmplifyService {
       }`
     )
   ) as Observable<OnDeleteUserSubscription>;
+
+  async CreateRoomGroup(
+    input: CreateRoomGroupInput,
+    condition?: ModelRoomConditionInput
+  ): Promise<CreateRoomGroupMutation> {
+    const statement = `mutation CreateRoomGroup($input: CreateRoomGroupInput!, $condition: ModelRoomGroupConditionInput) {
+        createRoomGroup(input: $input, condition: $condition) {
+          __typename
+          id
+          roomID
+          userID
+          room {
+            __typename
+            id
+            name
+            companyID
+            description
+            createdAt
+            updatedAt
+          }
+          createdAt
+          updatedAt
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      input
+    };
+    if (condition) {
+      gqlAPIServiceArguments.condition = condition;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <CreateRoomGroupMutation>response.data.createRoomGroup;
+  }
+
 }
+
+

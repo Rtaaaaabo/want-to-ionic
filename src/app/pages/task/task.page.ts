@@ -37,8 +37,7 @@ export class TaskPage implements OnInit {
     private actionSheetCtrl: ActionSheetController,
   ) { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 
   ionViewWillEnter() {
     this.isReorder = false;
@@ -152,11 +151,25 @@ export class TaskPage implements OnInit {
       .subscribe((result) => this.taskActiveItems = result);
   }
 
-  async presentAddPersonToTask() {
+  async presentAddPersonToRoom() {
     const modal = await this.modalCtrl.create({
       component: AddPersonModalComponent,
       componentProps: { members: this.members, users: this.user }
     })
+    modal.onDidDismiss().then(({ data }) => {
+      from(data)
+        .pipe(flatMap((userId) => this.logic.createRoomGroup(userId, this.roomId)))
+    })
+    // const dismissObservable = from(modal.onDidDismiss());
+
+    // dismissObservable
+    //   .pipe(map(({ data }) => from(data)))
+    //   // .pipe(flatMap((data) => this.logic.createTaskToRoom(data, this.roomId, this.userEmail)))
+    //   // .pipe(flatMap(() => this.logic.fetchActiveTaskPerRoom(this.roomId)))
+    //   .subscribe((result) => {
+    //     result.subscribe(data => console.log(data));
+    //     // console.log('result: ', result);
+    //   });
     return modal.present()
   }
 

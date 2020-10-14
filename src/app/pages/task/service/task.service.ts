@@ -19,6 +19,10 @@ export class TaskService {
     return from(this.amplifyService.CreateTask(content));
   }
 
+  createRoomGroup(content): Observable<any> {
+    return from(this.amplifyService.CreateRoomGroup(content));
+  }
+
   updateTaskItem(content): Observable<any> {
     return from(this.amplifyService.UpdateTask(content));
   }
