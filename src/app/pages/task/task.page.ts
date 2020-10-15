@@ -159,6 +159,7 @@ export class TaskPage implements OnInit {
     modal.onDidDismiss().then(({ data }) => {
       from(data)
         .pipe(flatMap((userId) => this.logic.createRoomGroup(userId, this.roomId)))
+        .subscribe(result => console.log(result));
     })
     // const dismissObservable = from(modal.onDidDismiss());
 

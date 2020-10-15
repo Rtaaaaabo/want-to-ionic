@@ -47,6 +47,7 @@ export class TaskLogic {
   }
 
   createRoomGroup(userId, roomId): Observable<any> {
+    console.log('taskLogic', userId);
     const content = {
       id: `room-group${uuid()}`,
       roomID: `${roomId}`,
