@@ -172,7 +172,7 @@ export class TaskPage implements OnInit {
         .subscribe(({ items }) => {
           console.log(items);
         });
-    })
+    });
     return modal.present()
   }
 
