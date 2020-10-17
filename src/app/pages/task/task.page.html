@@ -7,7 +7,8 @@
       </ion-button>
     </ion-buttons>
     <ion-buttons *ngIf="segment === 'active'" slot="end">
-      <ion-button (click)="presentAddPersonToRoom()">
+      <!-- <ion-button (click)="presentAddPersonToRoom()"> -->
+      <ion-button (click)="navigateToRoomMember()">
         <ion-icon *ngIf="!isReorder" name="people-outline"></ion-icon>
       </ion-button>
       <ion-button (click)="sortTaskItem()">

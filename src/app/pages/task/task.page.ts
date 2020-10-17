@@ -42,7 +42,7 @@ export class TaskPage implements OnInit {
   ngOnInit(): void {
   }
 
-  ionViewWillEnter() {
+  ionViewWillEnter(): void {
     this.isReorder = false;
     this.segment = 'active';
     this.roomId = this.route.snapshot.paramMap.get('id');
@@ -79,7 +79,7 @@ export class TaskPage implements OnInit {
     toast.present();
   }
 
-  async presentAddTask() {
+  async presentAddTask(): Promise<void> {
     const modal = await this.modalCtrl.create({
       component: AddTaskModalComponent,
       componentProps: { room: this.room, userName: this.userId },
@@ -129,7 +129,7 @@ export class TaskPage implements OnInit {
   }
 
 
-  async presentConfirmDelete(task) {
+  async presentConfirmDelete(task): Promise<void> {
     const actionSheet = await this.actionSheetCtrl.create({
       buttons: [
         {
@@ -150,13 +150,13 @@ export class TaskPage implements OnInit {
     return actionSheet.present();
   }
 
-  deleteTask(task) {
+  deleteTask(task): void {
     this.logic.deleteTaskItem(task.id)
       .pipe(flatMap(() => this.logic.fetchActiveTaskPerRoom(this.roomId)))
       .subscribe((result) => this.taskActiveItems = result);
   }
 
-  async presentAddPersonToRoom() {
+  async presentAddPersonToRoom(): Promise<void> {
     const modal = await this.modalCtrl.create({
       component: AddPersonModalComponent,
       componentProps: { members: this.companyMembers, users: this.user }
@@ -174,6 +174,10 @@ export class TaskPage implements OnInit {
         });
     });
     return modal.present()
+  }
+
+  navigateToRoomMember(): void {
+    this.router.navigate(['room-members', `${this.roomId}`])
   }
 
 }
