@@ -9,6 +9,7 @@ import { AddTaskModalComponent } from '../../shared/component/modal/add-task-mod
 import { TaskLogic } from './logic/task.logic';
 import { CurrentUserInfo } from './interface/current-user-info.interface';
 import { AddPersonModalComponent } from 'src/app/pages/task/component/add-person-modal/add-person-modal.component';
+import { ListRoomGroupsQuery } from 'src/app/API.service';
 
 @Component({
   selector: 'app-task',
@@ -24,7 +25,8 @@ export class TaskPage implements OnInit {
   taskDoneItems;
   isReorder: boolean;
   segment: string;
-  members: Array<ListUsersQuery>;
+  companyMembers: Array<ListUsersQuery>;
+  roomMembers: Array<ListRoomGroupsQuery>;
   user;
 
   constructor(
@@ -37,7 +39,8 @@ export class TaskPage implements OnInit {
     private actionSheetCtrl: ActionSheetController,
   ) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+  }
 
   ionViewWillEnter() {
     this.isReorder = false;
@@ -53,17 +56,19 @@ export class TaskPage implements OnInit {
       .pipe(map((user) => this.user = user))
       .pipe(flatMap(() => this.logic.fetchCompanyMember(this.user.companyID)))
       .subscribe(({ items }) => {
-        this.members = items;
+        this.companyMembers = items;
       });
     this.logic.fetchActiveTaskPerRoom(this.roomId)
       .subscribe((items) => {
         this.taskActiveItems = items;
       })
-
     this.logic.fetchDoneTaskPerRoom(this.roomId)
       .subscribe((items) => {
         this.taskDoneItems = items;
       })
+
+    this.logic.fetchMemberListOnRoom(this.roomId)
+      .subscribe(({ items }) => { this.roomMembers = items });
   }
 
   async presentDoneToast(): Promise<void> {
@@ -154,15 +159,18 @@ export class TaskPage implements OnInit {
   async presentAddPersonToRoom() {
     const modal = await this.modalCtrl.create({
       component: AddPersonModalComponent,
-      componentProps: { members: this.members, users: this.user }
+      componentProps: { members: this.companyMembers, users: this.user }
     })
     modal.onDidDismiss().then(({ data }) => {
+      if (data === undefined) {
+        return;
+      }
       from(data)
         .pipe(flatMap((userId) => this.logic.createRoomGroup(userId, this.roomId)),
           catchError((error) => error))
         .pipe(flatMap(() => this.logic.fetchMemberListOnRoom(this.roomId)))
-        .subscribe((result) => {
-          console.log(result);
+        .subscribe(({ items }) => {
+          console.log(items);
         });
     })
     return modal.present()
