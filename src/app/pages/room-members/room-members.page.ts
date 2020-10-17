@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-room-members',
@@ -7,9 +8,27 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RoomMembersPage implements OnInit {
 
-  constructor() { }
+  constructor(
+    private location: Location,
+  ) { }
 
   ngOnInit() {
+  }
+
+  goBackToRoom() {
+    this.location.back();
+  }
+
+  activeEditMode() {
+    console.log('activeEditMode');
+  }
+
+  searchRoomMembers(ev) {
+    console.log('searchRoomMembers');
+  }
+
+  addMemberOnRoom() {
+    console.log('addMemberOnRoom');
   }
 
 }

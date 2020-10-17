@@ -1,9 +1,27 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>room-members</ion-title>
+    <ion-title>メンバー</ion-title>
+    <ion-buttons slot="start">
+      <ion-button (click)="goBackToRoom()">
+        <ion-icon name="chevron-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="activeEditMode()">編集</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-searchbar
+      showCancelButton="button"
+      cancelButtonText="キャンセル"
+      (ionChange)="searchRoomMembers($event)"
+    ></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+  <ion-item (click)="addMemberOnRoom()">
+    <ion-icon name="add-outline"></ion-icon>
+    <ion-label>メンバーの追加</ion-label>
+  </ion-item>
 </ion-content>

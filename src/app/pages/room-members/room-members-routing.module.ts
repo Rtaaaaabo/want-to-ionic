@@ -5,7 +5,7 @@ import { RoomMembersPage } from './room-members.page';
 
 const routes: Routes = [
   {
-    path: '',
+    path: ':roomId',
     component: RoomMembersPage
   }
 ];
@@ -14,4 +14,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class RoomMembersPageRoutingModule {}
+export class RoomMembersPageRoutingModule { }
