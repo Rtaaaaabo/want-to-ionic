@@ -42,15 +42,18 @@ const routes: Routes = [
   },
   {
     path: 'task-detail',
-    loadChildren: () => import('./pages/task-detail/task-detail.module').then(m => m.TaskDetailPageModule)
+    loadChildren: () => import('./pages/task-detail/task-detail.module').then(m => m.TaskDetailPageModule),
+    canActivate: [AuthGuard],
   },
   {
     path: 'comment',
-    loadChildren: () => import('./pages/comment/comment.module').then(m => m.CommentPageModule)
+    loadChildren: () => import('./pages/comment/comment.module').then(m => m.CommentPageModule),
+    canActivate: [AuthGuard],
   },
   {
     path: 'room-members',
-    loadChildren: () => import('./pages/room-members/room-members.module').then( m => m.RoomMembersPageModule)
+    loadChildren: () => import('./pages/room-members/room-members.module').then(m => m.RoomMembersPageModule),
+    canActivate: [AuthGuard],
   }
 ];
 @NgModule({
