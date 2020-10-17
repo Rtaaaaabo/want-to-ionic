@@ -3,7 +3,7 @@ import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ModalController, ToastController, ActionSheetController } from '@ionic/angular';
 import { from } from 'rxjs';
-import { flatMap, tap, map } from 'rxjs/operators';
+import { flatMap, tap, map, catchError } from 'rxjs/operators';
 import { GetRoomQuery, ListUsersQuery } from 'src/app/shared/service/amplify.service';
 import { AddTaskModalComponent } from '../../shared/component/modal/add-task-modal/add-task-modal.component';
 import { TaskLogic } from './logic/task.logic';
@@ -158,11 +158,13 @@ export class TaskPage implements OnInit {
     })
     modal.onDidDismiss().then(({ data }) => {
       from(data)
-        .pipe(flatMap((userId) => this.logic.createRoomGroup(userId, this.roomId)))
-        .subscribe(result => console.log(result));
+        .pipe(flatMap((userId) => this.logic.createRoomGroup(userId, this.roomId)),
+          catchError((error) => error))
+        .subscribe((result) => {
+
+        });
     })
     // const dismissObservable = from(modal.onDidDismiss());
-
     // dismissObservable
     //   .pipe(map(({ data }) => from(data)))
     //   // .pipe(flatMap((data) => this.logic.createTaskToRoom(data, this.roomId, this.userEmail)))

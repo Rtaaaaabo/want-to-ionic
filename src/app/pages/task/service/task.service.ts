@@ -42,4 +42,8 @@ export class TaskService {
   fetchCompanyMember(content): Observable<any> {
     return from(this.amplifyService.ListUsers(content));
   }
+
+  fetchRoomMember(content): Observable<any> {
+    return from(this.amplifyService.ListRoomGroups(content));
+  }
 }

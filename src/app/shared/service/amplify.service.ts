@@ -4,7 +4,7 @@
 import { Injectable } from "@angular/core";
 import API, { graphqlOperation } from "@aws-amplify/api";
 import { GraphQLResult } from "@aws-amplify/api/lib/types";
-import { CreateRoomGroupInput, CreateRoomGroupMutation } from 'src/app/API.service';
+import { CreateRoomGroupInput, CreateRoomGroupMutation, ListRoomGroupsQuery, ModelRoomGroupFilterInput } from 'src/app/API.service';
 import { Observable } from "zen-observable-ts";
 
 export type CreateCompanyInput = {
@@ -4424,6 +4424,56 @@ export class AmplifyService {
     )) as any;
     return <CreateRoomGroupMutation>response.data.createRoomGroup;
   }
+
+  async ListRoomGroups(
+    filter?: ModelRoomGroupFilterInput,
+    limit?: number,
+    nextToken?: string
+  ): Promise<ListRoomGroupsQuery> {
+    const statement = `query ListRoomGroups($filter: ModelRoomGroupFilterInput, $limit: Int, $nextToken: String) {
+        listRoomGroups(filter: $filter, limit: $limit, nextToken: $nextToken) {
+          __typename
+          items {
+            __typename
+            id
+            roomID
+            userID
+            user {
+              __typename
+              id
+              username
+              email
+              companyID
+              tel
+              positionName
+              iconImage
+              registered
+              authority
+              createdAt
+              updatedAt
+            }
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {};
+    if (filter) {
+      gqlAPIServiceArguments.filter = filter;
+    }
+    if (limit) {
+      gqlAPIServiceArguments.limit = limit;
+    }
+    if (nextToken) {
+      gqlAPIServiceArguments.nextToken = nextToken;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <ListRoomGroupsQuery>response.data.listRoomGroups
+  }
+
 
 }
 
