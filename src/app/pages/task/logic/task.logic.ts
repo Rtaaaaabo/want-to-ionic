@@ -111,7 +111,7 @@ export class TaskLogic {
     return this.taskService.fetchCompanyMember(filterContent);
   }
 
-  fetchMemberListOnRoom(roomId): Observable<any> {
+  fetchMemberListOnRoom(roomId: string | number): Observable<any> {
     const filterContent = {
       roomID: {
         eq: `${roomId}`

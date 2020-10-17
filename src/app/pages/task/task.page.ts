@@ -160,19 +160,11 @@ export class TaskPage implements OnInit {
       from(data)
         .pipe(flatMap((userId) => this.logic.createRoomGroup(userId, this.roomId)),
           catchError((error) => error))
+        .pipe(flatMap(() => this.logic.fetchMemberListOnRoom(this.roomId)))
         .subscribe((result) => {
-
+          console.log(result);
         });
     })
-    // const dismissObservable = from(modal.onDidDismiss());
-    // dismissObservable
-    //   .pipe(map(({ data }) => from(data)))
-    //   // .pipe(flatMap((data) => this.logic.createTaskToRoom(data, this.roomId, this.userEmail)))
-    //   // .pipe(flatMap(() => this.logic.fetchActiveTaskPerRoom(this.roomId)))
-    //   .subscribe((result) => {
-    //     result.subscribe(data => console.log(data));
-    //     // console.log('result: ', result);
-    //   });
     return modal.present()
   }
 
