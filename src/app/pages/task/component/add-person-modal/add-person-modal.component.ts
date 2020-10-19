@@ -12,6 +12,7 @@ export class AddPersonModalComponent implements OnInit {
   arraySelectedPersonId: Array<string>;
   members;
   users;
+  companyId: string;
 
   constructor(
     private modalCtrl: ModalController,
@@ -43,7 +44,7 @@ export class AddPersonModalComponent implements OnInit {
   }
 
   searchPerson(ev) {
-    this.logic.fetchCompanyMember(this.users.companyID, ev.detail.value)
+    this.logic.fetchCompanyMember(this.companyId, ev.detail.value)
       .subscribe(({ items }) => {
         this.members = items;
       })

@@ -14,4 +14,8 @@ export class RoomMemberService {
   fetchCompanyMember(content): Observable<any> {
     return from(this.amplifyService.ListUsers(content));
   }
+
+  fetchRoomMember(filterContent): Observable<any> {
+    return from(this.amplifyService.ListRoomGroups(filterContent));
+  }
 }

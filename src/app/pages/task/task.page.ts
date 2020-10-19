@@ -162,12 +162,15 @@ export class TaskPage implements OnInit {
   async presentAddPersonToRoom(): Promise<void> {
     const modal = await this.modalCtrl.create({
       component: AddPersonModalComponent,
-      componentProps: { members: this.companyMembers, users: this.user }
+      componentProps: {
+        members: this.companyMembers,
+        users: this.user
+      }
     })
     modal.onDidDismiss().then(({ data }) => {
       if (data === undefined) {
         return;
-      }
+      };
       from(data)
         .pipe(flatMap((userId) => this.logic.createRoomGroup(userId, this.roomId)),
           catchError((error) => error))

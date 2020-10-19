@@ -23,4 +23,13 @@ export class RoomMembersLogic {
     }
     return this.roomMemberService.fetchCompanyMember(filterContent);
   };
+
+  fetchRoomMemberGroup(roomId: string): Observable<any> {
+    const filterContent = {
+      roomID: {
+        eq: `${roomId}`
+      }
+    }
+    return this.roomMemberService.fetchRoomMember(filterContent);
+  }
 }
