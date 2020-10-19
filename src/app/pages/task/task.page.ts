@@ -28,6 +28,7 @@ export class TaskPage implements OnInit {
   companyMembers: Array<ListUsersQuery>;
   roomMembers: Array<ListRoomGroupsQuery>;
   user;
+  companyId: number | string;
 
   constructor(
     private router: Router,
@@ -54,9 +55,11 @@ export class TaskPage implements OnInit {
       .pipe(map((res: CurrentUserInfo) => { this.userEmail = res.email; this.userId = res.sub }))
       .pipe(flatMap(() => this.logic.fetchUserInfoFromAmplify(this.userId)))
       .pipe(map((user) => this.user = user))
+      .pipe(map((user) => this.companyId = user.companyID))
       .pipe(flatMap(() => this.logic.fetchCompanyMember(this.user.companyID)))
       .subscribe(({ items }) => {
         this.companyMembers = items;
+        console.log(this.user);
       });
     this.logic.fetchActiveTaskPerRoom(this.roomId)
       .subscribe((items) => {
@@ -177,7 +180,7 @@ export class TaskPage implements OnInit {
   }
 
   navigateToRoomMember(): void {
-    this.router.navigate(['room-members', `${this.roomId}`])
+    this.router.navigate(['room-members', `${this.roomId}`, `${this.companyId}`]);
   }
 
 }

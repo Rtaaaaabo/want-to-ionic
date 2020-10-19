@@ -5,7 +5,7 @@ import { RoomMembersPage } from './room-members.page';
 
 const routes: Routes = [
   {
-    path: ':roomId',
+    path: ':roomId/:companyId',
     component: RoomMembersPage
   }
 ];
