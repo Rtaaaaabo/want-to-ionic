@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { v4 as uuid } from 'uuid';
 import { RoomMemberService } from '../service/room-member.service';
-
 
 @Injectable({
   providedIn: 'root'
@@ -31,5 +31,14 @@ export class RoomMembersLogic {
       }
     }
     return this.roomMemberService.fetchRoomMember(filterContent);
+  }
+
+  createUserRoomGroup(userId, roomId): Observable<any> {
+    const content = {
+      id: `user-room-group-${uuid()}`,
+      roomID: `${roomId}`,
+      userID: `${userId}`,
+    }
+    return this.roomMemberService.createUserRoomGroup(content);
   }
 }

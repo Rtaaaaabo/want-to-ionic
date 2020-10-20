@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { ModalController } from '@ionic/angular';
+import { from } from 'rxjs';
+import { catchError, flatMap } from 'rxjs/operators';
 import { RoomMembersLogic } from './logic/room-members.logic';
 import { AddPersonModalComponent } from '../task/component/add-person-modal/add-person-modal.component';
 
@@ -13,7 +15,7 @@ import { AddPersonModalComponent } from '../task/component/add-person-modal/add-
 })
 export class RoomMembersPage implements OnInit {
   companyId: number | string;
-  roomId: number | string;
+  roomId: string;
   roomMembers;
   companyMembers;
 
@@ -27,12 +29,16 @@ export class RoomMembersPage implements OnInit {
   ngOnInit() {
     this.companyId = this.route.snapshot.paramMap.get('companyId');
     this.roomId = this.route.snapshot.paramMap.get('roomId');
+    // Companyに所属しているMemberの情報を取得
     this.logic.fetchCompanyMember(this.companyId).subscribe(({ items }) => {
       this.companyMembers = items;
     });
-    this.logic.fetchRoomMemberGroup(this.roomId).subscribe(({ items }) => {
-      this.roomMembers = items;
-    })
+    // Roomに所属しているMemberの情報を取得
+    this.logic.fetchRoomMemberGroup(this.roomId)
+      .subscribe(({ items }) => {
+        console.log(items);
+        this.roomMembers = items;
+      })
   }
 
   goBackToRoom() {
@@ -55,6 +61,19 @@ export class RoomMembersPage implements OnInit {
         companyId: this.companyId,
       }
     });
+    modal.onDidDismiss().then(({ data }) => {
+      if (data === undefined) {
+        return;
+      };
+      from(data)
+        .pipe(flatMap((userId) => this.logic.createUserRoomGroup(userId, this.roomId)),
+          catchError((error) => error))
+        .pipe(flatMap(() => this.logic.
+          fetchRoomMemberGroup(this.roomId)))
+        .subscribe(({ items }) => {
+          this.roomMembers = items;
+        })
+    })
 
     return modal.present();
   }

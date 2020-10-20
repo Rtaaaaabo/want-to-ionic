@@ -18,4 +18,8 @@ export class RoomMemberService {
   fetchRoomMember(filterContent): Observable<any> {
     return from(this.amplifyService.ListRoomGroups(filterContent));
   }
+
+  createUserRoomGroup(filterContent): Observable<any> {
+    return from(this.amplifyService.CreateRoomGroup(filterContent));
+  }
 }

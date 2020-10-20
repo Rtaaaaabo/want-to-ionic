@@ -26,7 +26,6 @@ export class TaskLogic {
   }
 
   createTaskToRoom(dismissData, roomId, email): Observable<any> {
-    console.log('dismissData: ', dismissData);
     const iosStringDate = (new Date()).toISOString();
     if (dismissData === undefined) {
       return of({});
@@ -47,7 +46,6 @@ export class TaskLogic {
   }
 
   createRoomGroup(userId, roomId): Observable<any> {
-    console.log('taskLogic', userId);
     const content = {
       id: `room-group${uuid()}`,
       roomID: `${roomId}`,
