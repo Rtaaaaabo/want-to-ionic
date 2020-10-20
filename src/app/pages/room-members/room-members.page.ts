@@ -3,9 +3,10 @@ import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { from } from 'rxjs';
-import { catchError, flatMap } from 'rxjs/operators';
+import { catchError, filter, flatMap, map, mergeMap, tap } from 'rxjs/operators';
 import { RoomMembersLogic } from './logic/room-members.logic';
 import { AddPersonModalComponent } from '../task/component/add-person-modal/add-person-modal.component';
+import { InterfaceRoomMembers } from './interface/room-members.interface';
 
 
 @Component({
@@ -29,14 +30,21 @@ export class RoomMembersPage implements OnInit {
   ngOnInit() {
     this.companyId = this.route.snapshot.paramMap.get('companyId');
     this.roomId = this.route.snapshot.paramMap.get('roomId');
-    // Companyに所属しているMemberの情報を取得
-    this.logic.fetchCompanyMember(this.companyId).subscribe(({ items }) => {
-      this.companyMembers = items;
-    });
+    this.logic.fetchRoomMemberGroup(this.roomId)
+      .pipe(mergeMap(({ items }) => from(items).pipe(flatMap((data: InterfaceRoomMembers) => this.logic.fetchCompanyMember(this.companyId, data)))))
+      .subscribe(result => console.log(result));
+    // .pipe(flatMap(({ items }) => this.logic.fetchCompanyMember(this.companyId, items.user)))
+    // .subscribe(({ items }) => console.log(items));
+    // Companyに所属していてかつ 対象のRoomに所属していないMemberの情報を取得
+    // this.logic.fetchCompanyMember(this.companyId)
+    //   .subscribe(({ items }) => {
+    //     this.companyMembers = items;
+    //     console.log('Company Member', this.companyMembers);
+    //   });
+
     // Roomに所属しているMemberの情報を取得
     this.logic.fetchRoomMemberGroup(this.roomId)
       .subscribe(({ items }) => {
-        console.log(items);
         this.roomMembers = items;
       })
   }
@@ -74,8 +82,6 @@ export class RoomMembersPage implements OnInit {
           this.roomMembers = items;
         })
     })
-
     return modal.present();
   }
-
 }

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { v4 as uuid } from 'uuid';
 import { RoomMemberService } from '../service/room-member.service';
+import { InterfaceRoomMembers } from '../interface/room-members.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -12,13 +13,17 @@ export class RoomMembersLogic {
     private roomMemberService: RoomMemberService,
   ) { }
 
-  fetchCompanyMember(companyId: number | string, queryFilterUser?: string): Observable<any> {
+  fetchCompanyMember(companyId: number | string, queryFilterUser?: InterfaceRoomMembers): Observable<any> {
+    console.log('queryFilterUser', queryFilterUser);
     const filterContent = {
       companyID: {
         eq: `${companyId}`
       },
-      username: {
-        contains: queryFilterUser
+      // username: {
+      //   contains: queryFilterUser.user.username
+      // },
+      email: {
+        ne: queryFilterUser.user.email
       }
     }
     return this.roomMemberService.fetchCompanyMember(filterContent);
