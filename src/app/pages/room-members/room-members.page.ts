@@ -31,16 +31,15 @@ export class RoomMembersPage implements OnInit {
     this.companyId = this.route.snapshot.paramMap.get('companyId');
     this.roomId = this.route.snapshot.paramMap.get('roomId');
     this.logic.fetchRoomMemberGroup(this.roomId)
-      .pipe(mergeMap(({ items }) => from(items).pipe(flatMap((data: InterfaceRoomMembers) => this.logic.fetchCompanyMember(this.companyId, data)))))
+      .pipe(mergeMap(({ items }) =>
+        from(items)
+          .pipe(flatMap((data: InterfaceRoomMembers) =>
+            this.logic.fetchCompanyMember(this.companyId, data)))
+      ))
       .subscribe(({ items }) => {
+        console.log('Room Members: ', items);
         this.companyMembers = items;
       });
-
-    // Roomに所属しているMemberの情報を取得
-    this.logic.fetchRoomMemberGroup(this.roomId)
-      .subscribe(({ items }) => {
-        this.roomMembers = items;
-      })
   }
 
   goBackToRoom() {

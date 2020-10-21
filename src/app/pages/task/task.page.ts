@@ -59,7 +59,6 @@ export class TaskPage implements OnInit {
       .pipe(flatMap(() => this.logic.fetchCompanyMember(this.user.companyID)))
       .subscribe(({ items }) => {
         this.companyMembers = items;
-        console.log(this.user);
       });
     this.logic.fetchActiveTaskPerRoom(this.roomId)
       .subscribe((items) => {

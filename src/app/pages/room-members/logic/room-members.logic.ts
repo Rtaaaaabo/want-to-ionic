@@ -14,7 +14,7 @@ export class RoomMembersLogic {
   ) { }
 
   fetchCompanyMember(companyId: number | string, queryFilterUser?: InterfaceRoomMembers): Observable<any> {
-    console.log('queryFilterUser', queryFilterUser);
+    console.log('Fetch Company Members', queryFilterUser);
     const filterContent = {
       companyID: {
         eq: `${companyId}`
