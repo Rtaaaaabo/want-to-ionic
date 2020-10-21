@@ -31,10 +31,11 @@ export class RoomMembersPage implements OnInit {
     this.companyId = this.route.snapshot.paramMap.get('companyId');
     this.roomId = this.route.snapshot.paramMap.get('roomId');
     this.logic.fetchRoomMemberGroup(this.roomId)
-      .pipe(mergeMap(({ items }) =>
-        from(items)
-          .pipe(flatMap((data: InterfaceRoomMembers) =>
-            this.logic.fetchCompanyMember(this.companyId, data)))
+      .pipe(map(({ items }) => this.roomMembers = items))
+      .pipe(mergeMap((items) => from(items)
+        .pipe(flatMap((data: InterfaceRoomMembers) =>
+          this.logic.fetchCompanyMember(this.companyId, data)
+        ))
       ))
       .subscribe(({ items }) => {
         this.companyMembers = items;

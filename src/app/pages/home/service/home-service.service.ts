@@ -44,7 +44,6 @@ export class HomeService {
   }
 
   createUserRoomGroup(filterContent): Observable<any> {
-    console.log('filterContent', filterContent);
     return from(this.amplifyService.CreateRoomGroup(filterContent));
   }
 }

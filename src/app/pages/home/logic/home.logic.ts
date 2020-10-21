@@ -69,7 +69,6 @@ export class HomeLogic {
       roomID: `${roomId}`,
       userID: `${userId}`,
     }
-    console.log('Content', content);
     return this.homeService.createUserRoomGroup(content);
   }
 }
