@@ -22,7 +22,8 @@ export class TaskLogic {
   }
 
   fetchCurrentUserInfo(): Observable<CurrentUserInfo> {
-    return this.sessionService.fetchCurrentUser().pipe(map((res) => res.attributes));
+    return this.sessionService.fetchCurrentUser()
+      .pipe(map((res) => res.attributes));
   }
 
   createTaskToRoom(dismissData, roomId, email): Observable<any> {

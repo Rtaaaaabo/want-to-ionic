@@ -37,7 +37,6 @@ export class RoomMembersPage implements OnInit {
             this.logic.fetchCompanyMember(this.companyId, data)))
       ))
       .subscribe(({ items }) => {
-        console.log('Room Members: ', items);
         this.companyMembers = items;
       });
   }

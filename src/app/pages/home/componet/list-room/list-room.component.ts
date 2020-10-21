@@ -14,6 +14,7 @@ import { flatMap } from 'rxjs/operators';
 export class ListRoomComponent implements OnInit {
 
   roomList: Array<any>;
+  currentUserId: string;
 
   constructor(
     private modalCtrl: ModalController,
@@ -22,9 +23,13 @@ export class ListRoomComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.homeLogic.listRoom('takuCloudCom').subscribe((result) => {
-      this.roomList = result;
-    })
+    this.homeLogic.listRoom('takuCloudCom')
+      .subscribe((result) => {
+        this.roomList = result;
+      })
+    this.homeLogic.fetchCurrentUser().subscribe((data) => {
+      this.currentUserId = data.sub;
+    });
   }
 
   async presentAddRoomItem(companyId: string) {
@@ -35,6 +40,7 @@ export class ListRoomComponent implements OnInit {
     const observable = from(modal.onDidDismiss());
     observable
       .pipe(flatMap(({ data }) => this.homeLogic.createRoom(data)))
+      .pipe(flatMap((room) => this.homeLogic.createUserRoomGroup(this.currentUserId, room.id)))
       .pipe(flatMap(() => this.homeLogic.listRoom(companyId)))
       .subscribe((response) => {
         this.roomList = response;

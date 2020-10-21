@@ -62,4 +62,14 @@ export class HomeLogic {
   deleteRoomItem(roomId: string): Observable<any> {
     return this.homeService.deleteRoomItem(roomId);
   }
+
+  createUserRoomGroup(userId, roomId): Observable<any> {
+    const content = {
+      id: `user-room-group-${uuid()}`,
+      roomID: `${roomId}`,
+      userID: `${userId}`,
+    }
+    console.log('Content', content);
+    return this.homeService.createUserRoomGroup(content);
+  }
 }

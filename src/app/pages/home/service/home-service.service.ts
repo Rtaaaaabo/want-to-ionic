@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AmplifyService, ModelRoomFilterInput, ListRoomsQuery, ModelUserFilterInput } from '../../../shared/service/amplify.service';
 import { from, Observable } from 'rxjs';
+import { filter } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -40,5 +41,10 @@ export class HomeService {
       id: roomId
     }
     return from(this.amplifyService.DeleteRoom(requestContent));
+  }
+
+  createUserRoomGroup(filterContent): Observable<any> {
+    console.log('filterContent', filterContent);
+    return from(this.amplifyService.CreateRoomGroup(filterContent));
   }
 }
