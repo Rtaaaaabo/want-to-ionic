@@ -32,15 +32,9 @@ export class RoomMembersPage implements OnInit {
     this.roomId = this.route.snapshot.paramMap.get('roomId');
     this.logic.fetchRoomMemberGroup(this.roomId)
       .pipe(mergeMap(({ items }) => from(items).pipe(flatMap((data: InterfaceRoomMembers) => this.logic.fetchCompanyMember(this.companyId, data)))))
-      .subscribe(result => console.log(result));
-    // .pipe(flatMap(({ items }) => this.logic.fetchCompanyMember(this.companyId, items.user)))
-    // .subscribe(({ items }) => console.log(items));
-    // Companyに所属していてかつ 対象のRoomに所属していないMemberの情報を取得
-    // this.logic.fetchCompanyMember(this.companyId)
-    //   .subscribe(({ items }) => {
-    //     this.companyMembers = items;
-    //     console.log('Company Member', this.companyMembers);
-    //   });
+      .subscribe(({ items }) => {
+        this.companyMembers = items;
+      });
 
     // Roomに所属しているMemberの情報を取得
     this.logic.fetchRoomMemberGroup(this.roomId)
