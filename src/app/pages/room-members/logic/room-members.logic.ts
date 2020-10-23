@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { v4 as uuid } from 'uuid';
 import { RoomMemberService } from '../service/room-member.service';
 import { InterfaceRoomMembers } from '../interface/room-members.interface';
+import { filter, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -13,20 +14,30 @@ export class RoomMembersLogic {
     private roomMemberService: RoomMemberService,
   ) { }
 
-  fetchCompanyMember(companyId: number | string, queryFilterUser?: InterfaceRoomMembers): Observable<any> {
-    console.log('Fetch Company Members', queryFilterUser);
-    const filterContent = {
+  makeObjectForRoomCompanyMembers(roomMembers: Array<InterfaceRoomMembers>): any {
+    let referenceObject = {
+      and: {
+        id: {
+          ne: ""
+        }
+      }
+    };
+
+    let reference = referenceObject.and['and'] = {
+      id: { ne: "" }
+    }
+    console.log(referenceObject);
+  }
+
+  fetchCompanyMember(companyId: number | string, queryFilterUser?: Array<InterfaceRoomMembers>): Observable<any> {
+    const contentObject = {
       companyID: {
         eq: `${companyId}`
       },
-      // username: {
-      //   contains: queryFilterUser.user.username
-      // },
-      email: {
-        ne: queryFilterUser.user.email
-      }
     }
-    return this.roomMemberService.fetchCompanyMember(filterContent);
+    this.makeObjectForRoomCompanyMembers(queryFilterUser);
+    const filterObject = Object.assign(contentObject);
+    return this.roomMemberService.fetchCompanyMember(filterObject);
   };
 
   fetchRoomMemberGroup(roomId: string): Observable<any> {
@@ -35,7 +46,17 @@ export class RoomMembersLogic {
         eq: `${roomId}`
       }
     }
-    return this.roomMemberService.fetchRoomMember(filterContent);
+    return this.roomMemberService.fetchRoomMember(filterContent)
+      .pipe(map(({ items }) => items))
+  }
+
+  fetchNonAssignRoomMemberGroup(roomId?: string): Observable<any> {
+    // const filterContent = {
+    //   roomID: {
+    //     ne: `${roomId}`
+    //   }
+    // }
+    return this.roomMemberService.fetchRoomMember().pipe(map(({ items }) => items));
   }
 
   createUserRoomGroup(userId, roomId): Observable<any> {

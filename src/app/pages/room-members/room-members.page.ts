@@ -7,6 +7,7 @@ import { catchError, filter, flatMap, map, mergeMap, tap } from 'rxjs/operators'
 import { RoomMembersLogic } from './logic/room-members.logic';
 import { AddPersonModalComponent } from '../task/component/add-person-modal/add-person-modal.component';
 import { InterfaceRoomMembers } from './interface/room-members.interface';
+import { threadId } from 'worker_threads';
 
 
 @Component({
@@ -17,8 +18,8 @@ import { InterfaceRoomMembers } from './interface/room-members.interface';
 export class RoomMembersPage implements OnInit {
   companyId: number | string;
   roomId: string;
-  roomMembers;
-  companyMembers;
+  roomMembers = [];
+  companyMembers = [];
 
   constructor(
     private logic: RoomMembersLogic,
@@ -28,17 +29,17 @@ export class RoomMembersPage implements OnInit {
   ) { }
 
   ngOnInit() {
+    let roomMembers;
+    this.companyMembers = [];
     this.companyId = this.route.snapshot.paramMap.get('companyId');
     this.roomId = this.route.snapshot.paramMap.get('roomId');
     this.logic.fetchRoomMemberGroup(this.roomId)
-      .pipe(map(({ items }) => this.roomMembers = items))
-      .pipe(mergeMap((items) => from(items)
-        .pipe(flatMap((data: InterfaceRoomMembers) =>
-          this.logic.fetchCompanyMember(this.companyId, data)
-        ))
-      ))
-      .subscribe(({ items }) => {
-        this.companyMembers = items;
+      .pipe(map((items) => this.roomMembers = items))
+      .pipe(flatMap(() => this.logic.fetchNonAssignRoomMemberGroup()))
+      // .pipe(mergeMap(() => this.logic.fetchCompanyMember(this.companyId, roomMembers)))
+      .subscribe((result) => {
+        // this.roomMembers = result;
+        console.log(result);
       });
   }
 
@@ -63,16 +64,19 @@ export class RoomMembersPage implements OnInit {
       }
     });
     modal.onDidDismiss().then(({ data }) => {
+      console.log(data);
       if (data === undefined) {
         return;
       };
       from(data)
         .pipe(flatMap((userId) => this.logic.createUserRoomGroup(userId, this.roomId)),
           catchError((error) => error))
-        .pipe(flatMap(() => this.logic.
-          fetchRoomMemberGroup(this.roomId)))
-        .subscribe(({ items }) => {
-          this.roomMembers = items;
+        .pipe(flatMap(() => this.logic.fetchRoomMemberGroup(this.roomId)))
+        .subscribe((items) => {
+          this.roomMembers = [];
+          items.forEach((element) => {
+            this.roomMembers.push(element.user);
+          });
         })
     })
     return modal.present();
