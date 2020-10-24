@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { v4 as uuid } from 'uuid';
 import { RoomMemberService } from '../service/room-member.service';
 import { InterfaceRoomMembers } from '../interface/room-members.interface';
@@ -35,12 +35,14 @@ export class RoomMembersLogic {
         eq: `${companyId}`
       },
     }
-    this.makeObjectForRoomCompanyMembers(queryFilterUser);
-    const filterObject = Object.assign(contentObject);
-    return this.roomMemberService.fetchCompanyMember(filterObject);
+    if (queryFilterUser === undefined) {
+      return this.roomMemberService.fetchCompanyMember(contentObject);
+    } else {
+      return of({});
+    }
   };
 
-  fetchRoomMemberGroup(roomId: string): Observable<any> {
+  fetchRoomMemberGroup(roomId?: string): Observable<any> {
     const filterContent = {
       roomID: {
         eq: `${roomId}`

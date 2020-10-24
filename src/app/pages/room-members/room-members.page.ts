@@ -6,8 +6,6 @@ import { from } from 'rxjs';
 import { catchError, filter, flatMap, map, mergeMap, tap } from 'rxjs/operators';
 import { RoomMembersLogic } from './logic/room-members.logic';
 import { AddPersonModalComponent } from '../task/component/add-person-modal/add-person-modal.component';
-import { InterfaceRoomMembers } from './interface/room-members.interface';
-import { threadId } from 'worker_threads';
 
 
 @Component({
@@ -19,7 +17,7 @@ export class RoomMembersPage implements OnInit {
   companyId: number | string;
   roomId: string;
   roomMembers = [];
-  companyMembers = [];
+  notAssignMembers = [];
 
   constructor(
     private logic: RoomMembersLogic,
@@ -29,17 +27,26 @@ export class RoomMembersPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    let roomMembers;
-    this.companyMembers = [];
+    this.notAssignMembers = [];
     this.companyId = this.route.snapshot.paramMap.get('companyId');
     this.roomId = this.route.snapshot.paramMap.get('roomId');
     this.logic.fetchRoomMemberGroup(this.roomId)
       .pipe(map((items) => this.roomMembers = items))
-      .pipe(flatMap(() => this.logic.fetchNonAssignRoomMemberGroup()))
-      // .pipe(mergeMap(() => this.logic.fetchCompanyMember(this.companyId, roomMembers)))
-      .subscribe((result) => {
-        // this.roomMembers = result;
-        console.log(result);
+      .pipe(flatMap(() => this.logic.fetchCompanyMember(this.companyId)))
+      .subscribe(({ items }) => {
+        console.log('companyMembers', items);
+        console.log('roomMembers', this.roomMembers);
+        let roomUser = [];
+        for (let i = 0; i < this.roomMembers.length; i++) {
+          roomUser.push(this.roomMembers[i].user);
+        }
+        // items: Company Memberのリストを取得
+        const test = items.filter((o1) => {
+          return !roomUser.some((o2) => {
+            return o1.id === o2.id;
+          });
+        });
+        this.notAssignMembers = test;
       });
   }
 
@@ -59,7 +66,7 @@ export class RoomMembersPage implements OnInit {
     const modal = await this.modalCtrl.create({
       component: AddPersonModalComponent,
       componentProps: {
-        members: this.companyMembers,
+        members: this.notAssignMembers,
         companyId: this.companyId,
       }
     });
