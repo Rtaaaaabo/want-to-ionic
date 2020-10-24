@@ -6,6 +6,17 @@ type Company @model {
   companyMembers: [User] @connection(keyName: "byCompany", fields: ["id"])
 }
 
+# type companyGroup
+#   @model
+#   @key(name: "byCompany", fields: ["companyID"])
+#   @key(name: "byUser", fields: ["byUser"]) {
+#   id: ID!
+#   companyID: ID!
+#   userID: ID!
+#   company: Company @connection(fields: ["companyID"])
+#   user: User @connection(fields: ["userID"])
+# }
+
 type User @model @key(name: "byCompany", fields: ["companyID"]) {
   id: ID!
   username: String!
