@@ -104,6 +104,16 @@ export class TaskPage implements OnInit {
     this.isReorder = !this.isReorder;
   }
 
+  get isCheckFabButton(): boolean {
+    if (this.segment === 'active' && !this.isReorder) {
+      return true;
+    } else if (this.isReorder && this.segment === 'active') {
+      return false;
+    } else {
+      return false;
+    }
+  }
+
   reorderTask(ev): void {
     const itemMove = this.taskActiveItems.splice(ev.detail.from, 1)[0];
     this.taskActiveItems.splice(ev.detail.to, 0, itemMove);

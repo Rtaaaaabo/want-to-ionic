@@ -94,7 +94,7 @@
     </ion-reorder-group>
   </ion-list>
 </ion-content>
-<ion-fab *ngIf="segment === 'active'" vertical="bottom" horizontal="end">
+<ion-fab vertical="bottom" horizontal="end" *ngIf="isCheckFabButton">
   <ion-fab-button (click)="presentAddTask()">
     <ion-icon name="add-sharp"></ion-icon>
   </ion-fab-button>
