@@ -33,21 +33,25 @@ export class RoomMembersPage implements OnInit {
     this.logic.fetchRoomMemberGroup(this.roomId)
       .pipe(map((items) => this.roomMembers = items))
       .pipe(flatMap(() => this.logic.fetchCompanyMember(this.companyId)))
-      .subscribe(({ items }) => {
+      .subscribe(({ items }) => { // companyMembers
         console.log('companyMembers', items);
         console.log('roomMembers', this.roomMembers);
-        let roomUser = [];
-        for (let i = 0; i < this.roomMembers.length; i++) {
-          roomUser.push(this.roomMembers[i].user);
-        }
-        // items: Company Memberのリストを取得
-        const test = items.filter((o1) => {
-          return !roomUser.some((o2) => {
-            return o1.id === o2.id;
-          });
-        });
-        this.notAssignMembers = test;
+        this.checkNotAssignMember(items, this.roomMembers);
+
       });
+  }
+
+  checkNotAssignMember(companyMembers, roomMembers): Array<any> {
+    let roomUser = []
+    for (let i = 0; i < roomMembers.length; i++) {
+      roomUser.push(roomMembers[i].user);
+    }
+    this.notAssignMembers = [];
+    return companyMembers.filter((o1) => {
+      return !roomUser.some((o2) => {
+        return o1.id === o2.id;
+      });
+    });
   }
 
   goBackToRoom() {
@@ -80,9 +84,10 @@ export class RoomMembersPage implements OnInit {
           catchError((error) => error))
         .pipe(flatMap(() => this.logic.fetchRoomMemberGroup(this.roomId)))
         .subscribe((items) => {
+          this.notAssignMembers = [];
           this.roomMembers = [];
           items.forEach((element) => {
-            this.roomMembers.push(element.user);
+            this.roomMembers.push(element);
           });
         })
     })
