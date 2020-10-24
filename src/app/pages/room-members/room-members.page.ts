@@ -34,10 +34,7 @@ export class RoomMembersPage implements OnInit {
       .pipe(map((items) => this.roomMembers = items))
       .pipe(flatMap(() => this.logic.fetchCompanyMember(this.companyId)))
       .subscribe(({ items }) => { // companyMembers
-        console.log('companyMembers', items);
-        console.log('roomMembers', this.roomMembers);
-        this.checkNotAssignMember(items, this.roomMembers);
-
+        this.notAssignMembers = this.checkNotAssignMember(items, this.roomMembers);
       });
   }
 
@@ -83,12 +80,10 @@ export class RoomMembersPage implements OnInit {
         .pipe(flatMap((userId) => this.logic.createUserRoomGroup(userId, this.roomId)),
           catchError((error) => error))
         .pipe(flatMap(() => this.logic.fetchRoomMemberGroup(this.roomId)))
-        .subscribe((items) => {
-          this.notAssignMembers = [];
-          this.roomMembers = [];
-          items.forEach((element) => {
-            this.roomMembers.push(element);
-          });
+        .pipe(map((items) => this.roomMembers = items))
+        .pipe(flatMap(() => this.logic.fetchCompanyMember(this.companyId)))
+        .subscribe(({ items }) => { // companyMembers
+          this.notAssignMembers = this.checkNotAssignMember(items, this.roomMembers);
         })
     })
     return modal.present();
