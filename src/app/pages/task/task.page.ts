@@ -121,7 +121,7 @@ export class TaskPage implements OnInit {
     ev.detail.complete();
   }
 
-  navigateToTaskDetail(task, segment, isReorder): void {
+  navigateToTaskDetail(task, segment): void {
     this.router.navigate(['task-detail', `${task.id}`, `${segment}`])
   }
 

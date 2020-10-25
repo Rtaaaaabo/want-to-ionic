@@ -3200,35 +3200,28 @@ export class AmplifyService {
           authorID
           roomID
           title
-          description
-          scheduleDate
-          priority
-          status
-          createdAt
           room {
             __typename
             id
-            companyID
             name
+            companyID
             description
-            members {
-              __typename
-              id
-              email
-              companyID
-              username
-              registered
-              authority
-              createdAt
-              updatedAt
-            }
             tasks {
+              __typename
+              nextToken
+            }
+            users {
               __typename
               nextToken
             }
             createdAt
             updatedAt
           }
+          description
+          scheduleDate
+          priority
+          status
+          createdAt
           messages {
             __typename
             items {
@@ -3238,6 +3231,18 @@ export class AmplifyService {
               content
               createdAt
               isSent
+              updatedAt
+            }
+            nextToken
+          }
+          users {
+            __typename
+            items {
+              __typename
+              id
+              taskID
+              userID
+              createdAt
               updatedAt
             }
             nextToken
@@ -3374,48 +3379,48 @@ export class AmplifyService {
     nextToken?: string
   ): Promise<ListMessagesQuery> {
     const statement = `query ListMessages($filter: ModelMessageFilterInput, $limit: Int, $nextToken: String) {
-      listMessages(filter: $filter, limit: $limit, nextToken: $nextToken) {
-        __typename
-        items {
+        listMessages(filter: $filter, limit: $limit, nextToken: $nextToken) {
           __typename
-          id
-          taskID
-          author {
+          items {
             __typename
             id
-            username
-            email
-            companyID
-            tel
-            positionName
-            iconImage
-            registered
-            authority
+            taskID
+            author {
+              __typename
+              id
+              username
+              email
+              companyID
+              tel
+              positionName
+              iconImage
+              registered
+              authority
+              createdAt
+              updatedAt
+            }
+            content
             createdAt
+            isSent
+            task {
+              __typename
+              id
+              authorID
+              roomID
+              chargePersonID
+              title
+              description
+              scheduleDate
+              priority
+              status
+              createdAt
+              updatedAt
+            }
             updatedAt
           }
-          content
-          createdAt
-          isSent
-          task {
-            __typename
-            id
-            authorID
-            roomID
-            chargePersonID
-            title
-            description
-            scheduleDate
-            priority
-            status
-            createdAt
-            updatedAt
-          }
-          updatedAt
+          nextToken
         }
-        nextToken
-      }
-    }`;
+      }`;
     const gqlAPIServiceArguments: any = {};
     if (filter) {
       gqlAPIServiceArguments.filter = filter;
@@ -3431,6 +3436,7 @@ export class AmplifyService {
     )) as any;
     return <ListMessagesQuery>response.data.listMessages;
   }
+
   async GetUser(id: string): Promise<GetUserQuery> {
     const statement = `query GetUser($id: ID!) {
       getUser(id: $id) {
@@ -4087,13 +4093,49 @@ export class AmplifyService {
     )
   ) as Observable<OnDeleteTaskSubscription>;
 
-  OnCreateMessageListener: Observable<OnCreateMessageSubscription> = API.graphql(
+  OnCreateMessageListener: Observable<
+    OnCreateMessageSubscription
+  > = API.graphql(
     graphqlOperation(
       `subscription OnCreateMessage {
         onCreateMessage {
           __typename
           id
           taskID
+          author {
+            __typename
+            id
+            username
+            email
+            companyID
+            tel
+            positionName
+            iconImage
+            registered
+            authority
+            company {
+              __typename
+              id
+              name
+              domain
+              createdAt
+              updatedAt
+            }
+            room {
+              __typename
+              nextToken
+            }
+            task {
+              __typename
+              nextToken
+            }
+            chargeTask {
+              __typename
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
           content
           createdAt
           isSent
@@ -4103,32 +4145,25 @@ export class AmplifyService {
             authorID
             roomID
             title
+            room {
+              __typename
+              id
+              name
+              companyID
+              description
+              createdAt
+              updatedAt
+            }
             description
             scheduleDate
             priority
             status
             createdAt
-            members {
-              __typename
-              id
-              email
-              companyID
-              username
-              registered
-              authority
-              createdAt
-              updatedAt
-            }
-            room {
-              __typename
-              id
-              companyID
-              name
-              description
-              createdAt
-              updatedAt
-            }
             messages {
+              __typename
+              nextToken
+            }
+            users {
               __typename
               nextToken
             }
@@ -4139,7 +4174,6 @@ export class AmplifyService {
       }`
     )
   ) as Observable<OnCreateMessageSubscription>;
-
   OnUpdateMessageListener: Observable<
     OnUpdateMessageSubscription
   > = API.graphql(
