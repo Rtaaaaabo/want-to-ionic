@@ -40,8 +40,7 @@ export class TaskPage implements OnInit {
     private actionSheetCtrl: ActionSheetController,
   ) { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 
   ionViewWillEnter(): void {
     this.isReorder = false;
@@ -52,7 +51,10 @@ export class TaskPage implements OnInit {
         this.room = roomInfo;
       });
     this.logic.fetchCurrentUserInfo()
-      .pipe(map((res: CurrentUserInfo) => { this.userEmail = res.email; this.userId = res.sub }))
+      .pipe(map((res: CurrentUserInfo) => {
+        this.userEmail = res.email;
+        this.userId = res.sub;
+      }))
       .pipe(flatMap(() => this.logic.fetchUserInfoFromAmplify(this.userId)))
       .pipe(map((user) => this.user = user))
       .pipe(map((user) => this.companyId = user.companyID))
@@ -68,7 +70,6 @@ export class TaskPage implements OnInit {
       .subscribe((items) => {
         this.taskDoneItems = items;
       })
-
     this.logic.fetchMemberListOnRoom(this.roomId)
       .subscribe(({ items }) => { this.roomMembers = items });
   }
@@ -84,11 +85,11 @@ export class TaskPage implements OnInit {
   async presentAddTask(): Promise<void> {
     const modal = await this.modalCtrl.create({
       component: AddTaskModalComponent,
-      componentProps: { room: this.room, userName: this.userId },
+      componentProps: { room: this.room, userId: this.userId },
     });
     const dismissObservable = from(modal.onDidDismiss());
     dismissObservable
-      .pipe(flatMap(({ data }) => this.logic.createTaskToRoom(data, this.roomId, this.userEmail)))
+      .pipe(flatMap(({ data }) => this.logic.createTaskToRoom(data, this.roomId, this.userEmail, this.userId)))
       .pipe(flatMap(() => this.logic.fetchActiveTaskPerRoom(this.roomId)))
       .subscribe((items) => {
         this.taskActiveItems = items;
@@ -121,7 +122,6 @@ export class TaskPage implements OnInit {
   }
 
   navigateToTaskDetail(task, segment, isReorder): void {
-    console.log(isReorder);
     this.router.navigate(['task-detail', `${task.id}`, `${segment}`])
   }
 

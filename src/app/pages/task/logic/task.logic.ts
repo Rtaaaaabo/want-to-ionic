@@ -26,14 +26,15 @@ export class TaskLogic {
       .pipe(map((res) => res.attributes));
   }
 
-  createTaskToRoom(dismissData, roomId, email): Observable<any> {
+  createTaskToRoom(dismissData, roomId, email, userId): Observable<any> {
     const iosStringDate = (new Date()).toISOString();
     if (dismissData === undefined) {
       return of({});
     } else {
       const content = {
         id: `${uuid()}`,
-        authorID: `${email}`,
+        authorID: `${userId}`,
+        chargePersonID: `${userId}`,
         roomID: `${roomId}`,
         title: dismissData.nameItem,
         description: dismissData.descriptionItem,
@@ -42,6 +43,7 @@ export class TaskLogic {
         status: 0,
         priority: 1
       }
+      console.log(content);
       return this.taskService.createTaskItem(content);
     }
   }
