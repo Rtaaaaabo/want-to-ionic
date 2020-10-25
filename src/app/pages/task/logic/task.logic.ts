@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { TaskService } from '../service/task.service';
 import { Observable, of } from 'rxjs';
-import { map, filter, flatMap, mergeMap, toArray } from 'rxjs/operators';
+import { map, filter, mergeMap, toArray } from 'rxjs/operators';
 import { GetRoomQuery } from 'src/app/shared/service/amplify.service';
 import { SessionService } from '../../../shared/service/session.service';
 import { v4 as uuid } from 'uuid';
@@ -43,7 +43,6 @@ export class TaskLogic {
         status: 0,
         priority: 1
       }
-      console.log(content);
       return this.taskService.createTaskItem(content);
     }
   }
