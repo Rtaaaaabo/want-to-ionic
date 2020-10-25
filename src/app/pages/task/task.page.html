@@ -7,7 +7,6 @@
       </ion-button>
     </ion-buttons>
     <ion-buttons *ngIf="segment === 'active'" slot="end">
-      <!-- <ion-button (click)="presentAddPersonToRoom()"> -->
       <ion-button (click)="navigateToRoomMember()">
         <ion-icon *ngIf="!isReorder" name="people-outline"></ion-icon>
       </ion-button>
@@ -42,11 +41,11 @@
         >
           <ion-reorder *ngIf="isReorder">
             <ion-item class="card-background" lines="none">
-              <ion-avatar slot="start">
+              <!-- <ion-avatar slot="start">
                 <img
                   src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y"
                 />
-              </ion-avatar>
+              </ion-avatar> -->
               <ion-label>
                 <h2 class="task-title">{{ item.title }}</h2>
                 <p>{{item.description}}</p>
@@ -54,11 +53,11 @@
             </ion-item>
           </ion-reorder>
           <ion-item *ngIf="!isReorder" class="card-background" lines="none">
-            <ion-avatar slot="start">
+            <!-- <ion-avatar slot="start">
               <img
                 src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y"
               />
-            </ion-avatar>
+            </ion-avatar> -->
             <ion-label *ngIf="!isReorder">
               <h2 class="task-title">{{ item.title }}</h2>
               <p>{{item.description}}</p>
@@ -109,9 +108,9 @@
       >
         <ion-item class="card-background" lines="none">
           <ion-avatar slot="start">
-            <img
+            <!-- <img
               src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y"
-            />
+            /> -->
           </ion-avatar>
           <ion-label>
             <h2 class="task-title">{{ item.title }}</h2>
