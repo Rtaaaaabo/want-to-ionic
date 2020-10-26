@@ -51,11 +51,13 @@ export class TaskDetailPage implements OnInit {
     this.taskId = this.route.snapshot.paramMap.get('id');
     this.segment = this.route.snapshot.paramMap.get('segment');
     this.testHref = `task-detail/${this.taskId}#comment`;
+
     this.logic.fetchAnyTask(this.taskId).subscribe((data) => {
       this.taskDetail = data;
     });
     this.logic.fetchMessagePerTask(this.taskId).subscribe((data) => {
       this.message = data.items;
+      console.log(this.message);
     })
   }
 

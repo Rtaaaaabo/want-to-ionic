@@ -28,6 +28,7 @@ type User @model @key(name: "byCompany", fields: ["companyID"]) {
   registered: Boolean
   authority: String
   company: Company! @connection(fields: ["companyID"])
+  messages: [Message] @connection(keyName: "byUser", fields: ["id"])
   room: [RoomGroup] @connection(keyName: "byUser", fields: ["id"])
   task: [TaskGroup] @connection(keyName: "byUser", fields: ["id"])
   chargeTask: [Task] @connection(keyName: "byUser", fields: ["id"])
@@ -85,12 +86,16 @@ type Room @model @key(name: "byCompany", fields: ["companyID"]) {
   users: [RoomGroup] @connection(keyName: "byRoom", fields: ["id"])
 }
 
-type Message @model @key(name: "byTask", fields: ["taskID"]) {
+type Message
+  @model
+  @key(name: "byTask", fields: ["taskID"])
+  @key(name: "byUser", fields: ["authorID"]) {
   id: ID!
   taskID: ID!
-  author: User
+  authorID: ID!
   content: String!
   createdAt: AWSDateTime
   isSent: Boolean
+  author: User! @connection(fields: ["authorID"])
   task: Task! @connection(fields: ["taskID"])
 }
