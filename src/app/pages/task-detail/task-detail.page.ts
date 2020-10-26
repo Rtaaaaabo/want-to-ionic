@@ -6,6 +6,7 @@ import { from, Observable } from 'rxjs';
 import { TaskDetailLogic } from './logic/task-detail.logic';
 import { AddTaskModalComponent } from 'src/app/shared/component/modal/add-task-modal/add-task-modal.component';
 import { flatMap, tap } from 'rxjs/operators';
+import { CurrentUserInfo } from '../task/interface/current-user-info.interface';
 
 @Component({
   selector: 'app-task-detail',
@@ -19,11 +20,10 @@ export class TaskDetailPage implements OnInit {
   segment: string;
   taskDetail;
   link = "comment"
-  testHref;
   fragmentComment = '';
   newMsg: string = '';
   message;
-
+  userId: string;
 
   constructor(
     private location: Location,
@@ -50,19 +50,19 @@ export class TaskDetailPage implements OnInit {
   ngOnInit() {
     this.taskId = this.route.snapshot.paramMap.get('id');
     this.segment = this.route.snapshot.paramMap.get('segment');
-    this.testHref = `task-detail/${this.taskId}#comment`;
-
+    this.logic.fetchCurrentUserInfo().subscribe((res: CurrentUserInfo) => {
+      this.userId = res.sub;
+    });
     this.logic.fetchAnyTask(this.taskId).subscribe((data) => {
       this.taskDetail = data;
     });
     this.logic.fetchMessagePerTask(this.taskId).subscribe((data) => {
       this.message = data.items;
-      console.log(this.message);
-    })
+    });
   }
 
   sendMessage() {
-    this.logic.sendNewMessage(this.taskId, this.newMsg)
+    this.logic.sendNewMessage(this.taskId, this.newMsg, this.userId)
       .subscribe(() => this.newMsg = '');
   }
 
