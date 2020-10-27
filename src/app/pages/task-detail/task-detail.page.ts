@@ -5,7 +5,7 @@ import { ModalController, ActionSheetController, ToastController, IonContent, Pl
 import { from, Observable } from 'rxjs';
 import { TaskDetailLogic } from './logic/task-detail.logic';
 import { AddTaskModalComponent } from 'src/app/shared/component/modal/add-task-modal/add-task-modal.component';
-import { flatMap, tap } from 'rxjs/operators';
+import { filter, flatMap, tap } from 'rxjs/operators';
 import { CurrentUserInfo } from '../task/interface/current-user-info.interface';
 
 @Component({
@@ -53,9 +53,11 @@ export class TaskDetailPage implements OnInit {
     this.logic.fetchCurrentUserInfo().subscribe((res: CurrentUserInfo) => {
       this.userId = res.sub;
     });
-    this.logic.fetchAnyTask(this.taskId).subscribe((data) => {
-      this.taskDetail = data;
-    });
+    this.logic.fetchAnyTask(this.taskId)
+      .subscribe((data) => {
+        this.taskDetail = data;
+        console.log('taskDetail', this.taskDetail);
+      });
     this.logic.fetchMessagePerTask(this.taskId).subscribe((data) => {
       this.message = data.items;
       console.log(this.message);
@@ -94,10 +96,18 @@ export class TaskDetailPage implements OnInit {
       component: AddTaskModalComponent,
       componentProps: { taskDetail: taskDetail },
     });
+    const dismissObservable = from(modal.onDidDismiss());
+    dismissObservable
+      .pipe(filter(({ data }) => data !== undefined))
+      .pipe(flatMap(({ data }) => this.logic.updateTaskToRoom(data, this.taskId)))
+      .pipe(flatMap(() => this.logic.fetchAnyTask(this.taskId)))
+      .subscribe((data) => {
+        this.taskDetail = data;
+      })
     return modal.present();
   }
 
-  doneTask(taskDetail) {
+  doneTask(taskDetail): void {
     const presentToast = from(this.presentDoneToast());
     this.logic.updateTaskItem(taskDetail, 10)
       .pipe(flatMap(() => this.logic.fetchAnyTask(taskDetail.id)))
@@ -112,7 +122,6 @@ export class TaskDetailPage implements OnInit {
   }
 
   async presentActionSheet(taskDetail) {
-
     const activeActionSheet = await this.actionSheetCtrl.create({
       cssClass: 'my-custom-class',
       buttons: [

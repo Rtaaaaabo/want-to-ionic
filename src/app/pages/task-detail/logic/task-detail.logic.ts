@@ -57,4 +57,16 @@ export class TaskDetailLogic {
       .pipe(map((res) => res.attributes));
   }
 
+  updateTaskToRoom(dismissData, taskId): Observable<any> {
+    const iosStringDate = (new Date()).toISOString();
+    console.log(dismissData);
+    const content = {
+      id: `${taskId}`,
+      title: `${dismissData.nameItem}`,
+      description: `${dismissData.descriptionItem}`,
+      scheduleDate: `${dismissData.scheduleDateItem}`,
+    }
+    return this.taskDetailService.updateTaskItem(content);
+  }
+
 }
