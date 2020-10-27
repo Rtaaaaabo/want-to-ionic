@@ -268,6 +268,7 @@ export type DeleteRoomInput = {
 export type CreateMessageInput = {
   id?: string | null;
   taskID: string;
+  authorID: string;
   content: string;
   createdAt?: string | null;
   isSent?: boolean | null;
@@ -275,6 +276,7 @@ export type CreateMessageInput = {
 
 export type ModelMessageConditionInput = {
   taskID?: ModelIDInput | null;
+  authorID?: ModelIDInput | null;
   content?: ModelStringInput | null;
   createdAt?: ModelStringInput | null;
   isSent?: ModelBooleanInput | null;
@@ -286,6 +288,7 @@ export type ModelMessageConditionInput = {
 export type UpdateMessageInput = {
   id: string;
   taskID?: string | null;
+  authorID?: string | null;
   content?: string | null;
   createdAt?: string | null;
   isSent?: boolean | null;
@@ -366,6 +369,7 @@ export type ModelRoomFilterInput = {
 export type ModelMessageFilterInput = {
   id?: ModelIDInput | null;
   taskID?: ModelIDInput | null;
+  authorID?: ModelIDInput | null;
   content?: ModelStringInput | null;
   createdAt?: ModelStringInput | null;
   isSent?: ModelBooleanInput | null;
@@ -521,6 +525,20 @@ export type CreateUserMutation = {
     createdAt: string;
     updatedAt: string;
   };
+  messages: {
+    __typename: "ModelMessageConnection";
+    items: Array<{
+      __typename: "Message";
+      id: string;
+      taskID: string;
+      authorID: string;
+      content: string;
+      createdAt: string | null;
+      isSent: boolean | null;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
   room: {
     __typename: "ModelRoomGroupConnection";
     items: Array<{
@@ -594,6 +612,20 @@ export type UpdateUserMutation = {
     createdAt: string;
     updatedAt: string;
   };
+  messages: {
+    __typename: "ModelMessageConnection";
+    items: Array<{
+      __typename: "Message";
+      id: string;
+      taskID: string;
+      authorID: string;
+      content: string;
+      createdAt: string | null;
+      isSent: boolean | null;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
   room: {
     __typename: "ModelRoomGroupConnection";
     items: Array<{
@@ -667,6 +699,20 @@ export type DeleteUserMutation = {
     createdAt: string;
     updatedAt: string;
   };
+  messages: {
+    __typename: "ModelMessageConnection";
+    items: Array<{
+      __typename: "Message";
+      id: string;
+      taskID: string;
+      authorID: string;
+      content: string;
+      createdAt: string | null;
+      isSent: boolean | null;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
   room: {
     __typename: "ModelRoomGroupConnection";
     items: Array<{
@@ -782,6 +828,10 @@ export type CreateTaskGroupMutation = {
       createdAt: string;
       updatedAt: string;
     };
+    messages: {
+      __typename: "ModelMessageConnection";
+      nextToken: string | null;
+    } | null;
     room: {
       __typename: "ModelRoomGroupConnection";
       nextToken: string | null;
@@ -870,6 +920,10 @@ export type UpdateTaskGroupMutation = {
       createdAt: string;
       updatedAt: string;
     };
+    messages: {
+      __typename: "ModelMessageConnection";
+      nextToken: string | null;
+    } | null;
     room: {
       __typename: "ModelRoomGroupConnection";
       nextToken: string | null;
@@ -958,6 +1012,10 @@ export type DeleteTaskGroupMutation = {
       createdAt: string;
       updatedAt: string;
     };
+    messages: {
+      __typename: "ModelMessageConnection";
+      nextToken: string | null;
+    } | null;
     room: {
       __typename: "ModelRoomGroupConnection";
       nextToken: string | null;
@@ -1020,6 +1078,7 @@ export type CreateTaskMutation = {
       __typename: "Message";
       id: string;
       taskID: string;
+      authorID: string;
       content: string;
       createdAt: string | null;
       isSent: boolean | null;
@@ -1058,6 +1117,10 @@ export type CreateTaskMutation = {
       createdAt: string;
       updatedAt: string;
     };
+    messages: {
+      __typename: "ModelMessageConnection";
+      nextToken: string | null;
+    } | null;
     room: {
       __typename: "ModelRoomGroupConnection";
       nextToken: string | null;
@@ -1119,6 +1182,7 @@ export type UpdateTaskMutation = {
       __typename: "Message";
       id: string;
       taskID: string;
+      authorID: string;
       content: string;
       createdAt: string | null;
       isSent: boolean | null;
@@ -1157,6 +1221,10 @@ export type UpdateTaskMutation = {
       createdAt: string;
       updatedAt: string;
     };
+    messages: {
+      __typename: "ModelMessageConnection";
+      nextToken: string | null;
+    } | null;
     room: {
       __typename: "ModelRoomGroupConnection";
       nextToken: string | null;
@@ -1218,6 +1286,7 @@ export type DeleteTaskMutation = {
       __typename: "Message";
       id: string;
       taskID: string;
+      authorID: string;
       content: string;
       createdAt: string | null;
       isSent: boolean | null;
@@ -1256,6 +1325,10 @@ export type DeleteTaskMutation = {
       createdAt: string;
       updatedAt: string;
     };
+    messages: {
+      __typename: "ModelMessageConnection";
+      nextToken: string | null;
+    } | null;
     room: {
       __typename: "ModelRoomGroupConnection";
       nextToken: string | null;
@@ -1323,6 +1396,10 @@ export type CreateRoomGroupMutation = {
       createdAt: string;
       updatedAt: string;
     };
+    messages: {
+      __typename: "ModelMessageConnection";
+      nextToken: string | null;
+    } | null;
     room: {
       __typename: "ModelRoomGroupConnection";
       nextToken: string | null;
@@ -1391,6 +1468,10 @@ export type UpdateRoomGroupMutation = {
       createdAt: string;
       updatedAt: string;
     };
+    messages: {
+      __typename: "ModelMessageConnection";
+      nextToken: string | null;
+    } | null;
     room: {
       __typename: "ModelRoomGroupConnection";
       nextToken: string | null;
@@ -1459,6 +1540,10 @@ export type DeleteRoomGroupMutation = {
       createdAt: string;
       updatedAt: string;
     };
+    messages: {
+      __typename: "ModelMessageConnection";
+      nextToken: string | null;
+    } | null;
     room: {
       __typename: "ModelRoomGroupConnection";
       nextToken: string | null;
@@ -1650,6 +1735,10 @@ export type CreateMessageMutation = {
   __typename: "Message";
   id: string;
   taskID: string;
+  authorID: string;
+  content: string;
+  createdAt: string | null;
+  isSent: boolean | null;
   author: {
     __typename: "User";
     id: string;
@@ -1669,6 +1758,10 @@ export type CreateMessageMutation = {
       createdAt: string;
       updatedAt: string;
     };
+    messages: {
+      __typename: "ModelMessageConnection";
+      nextToken: string | null;
+    } | null;
     room: {
       __typename: "ModelRoomGroupConnection";
       nextToken: string | null;
@@ -1683,10 +1776,7 @@ export type CreateMessageMutation = {
     } | null;
     createdAt: string;
     updatedAt: string;
-  } | null;
-  content: string;
-  createdAt: string | null;
-  isSent: boolean | null;
+  };
   task: {
     __typename: "Task";
     id: string;
@@ -1739,6 +1829,10 @@ export type UpdateMessageMutation = {
   __typename: "Message";
   id: string;
   taskID: string;
+  authorID: string;
+  content: string;
+  createdAt: string | null;
+  isSent: boolean | null;
   author: {
     __typename: "User";
     id: string;
@@ -1758,6 +1852,10 @@ export type UpdateMessageMutation = {
       createdAt: string;
       updatedAt: string;
     };
+    messages: {
+      __typename: "ModelMessageConnection";
+      nextToken: string | null;
+    } | null;
     room: {
       __typename: "ModelRoomGroupConnection";
       nextToken: string | null;
@@ -1772,10 +1870,7 @@ export type UpdateMessageMutation = {
     } | null;
     createdAt: string;
     updatedAt: string;
-  } | null;
-  content: string;
-  createdAt: string | null;
-  isSent: boolean | null;
+  };
   task: {
     __typename: "Task";
     id: string;
@@ -1828,6 +1923,10 @@ export type DeleteMessageMutation = {
   __typename: "Message";
   id: string;
   taskID: string;
+  authorID: string;
+  content: string;
+  createdAt: string | null;
+  isSent: boolean | null;
   author: {
     __typename: "User";
     id: string;
@@ -1847,6 +1946,10 @@ export type DeleteMessageMutation = {
       createdAt: string;
       updatedAt: string;
     };
+    messages: {
+      __typename: "ModelMessageConnection";
+      nextToken: string | null;
+    } | null;
     room: {
       __typename: "ModelRoomGroupConnection";
       nextToken: string | null;
@@ -1861,10 +1964,7 @@ export type DeleteMessageMutation = {
     } | null;
     createdAt: string;
     updatedAt: string;
-  } | null;
-  content: string;
-  createdAt: string | null;
-  isSent: boolean | null;
+  };
   task: {
     __typename: "Task";
     id: string;
@@ -2001,6 +2101,20 @@ export type GetUserQuery = {
     createdAt: string;
     updatedAt: string;
   };
+  messages: {
+    __typename: "ModelMessageConnection";
+    items: Array<{
+      __typename: "Message";
+      id: string;
+      taskID: string;
+      authorID: string;
+      content: string;
+      createdAt: string | null;
+      isSent: boolean | null;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
   room: {
     __typename: "ModelRoomGroupConnection";
     items: Array<{
@@ -2068,6 +2182,10 @@ export type ListUsersQuery = {
       createdAt: string;
       updatedAt: string;
     };
+    messages: {
+      __typename: "ModelMessageConnection";
+      nextToken: string | null;
+    } | null;
     room: {
       __typename: "ModelRoomGroupConnection";
       nextToken: string | null;
@@ -2155,6 +2273,10 @@ export type GetTaskGroupQuery = {
       createdAt: string;
       updatedAt: string;
     };
+    messages: {
+      __typename: "ModelMessageConnection";
+      nextToken: string | null;
+    } | null;
     room: {
       __typename: "ModelRoomGroupConnection";
       nextToken: string | null;
@@ -2258,6 +2380,7 @@ export type GetTaskQuery = {
       __typename: "Message";
       id: string;
       taskID: string;
+      authorID: string;
       content: string;
       createdAt: string | null;
       isSent: boolean | null;
@@ -2296,6 +2419,10 @@ export type GetTaskQuery = {
       createdAt: string;
       updatedAt: string;
     };
+    messages: {
+      __typename: "ModelMessageConnection";
+      nextToken: string | null;
+    } | null;
     room: {
       __typename: "ModelRoomGroupConnection";
       nextToken: string | null;
@@ -2413,6 +2540,10 @@ export type GetRoomGroupQuery = {
       createdAt: string;
       updatedAt: string;
     };
+    messages: {
+      __typename: "ModelMessageConnection";
+      nextToken: string | null;
+    } | null;
     room: {
       __typename: "ModelRoomGroupConnection";
       nextToken: string | null;
@@ -2558,6 +2689,10 @@ export type GetMessageQuery = {
   __typename: "Message";
   id: string;
   taskID: string;
+  authorID: string;
+  content: string;
+  createdAt: string | null;
+  isSent: boolean | null;
   author: {
     __typename: "User";
     id: string;
@@ -2577,6 +2712,10 @@ export type GetMessageQuery = {
       createdAt: string;
       updatedAt: string;
     };
+    messages: {
+      __typename: "ModelMessageConnection";
+      nextToken: string | null;
+    } | null;
     room: {
       __typename: "ModelRoomGroupConnection";
       nextToken: string | null;
@@ -2591,10 +2730,7 @@ export type GetMessageQuery = {
     } | null;
     createdAt: string;
     updatedAt: string;
-  } | null;
-  content: string;
-  createdAt: string | null;
-  isSent: boolean | null;
+  };
   task: {
     __typename: "Task";
     id: string;
@@ -2649,6 +2785,10 @@ export type ListMessagesQuery = {
     __typename: "Message";
     id: string;
     taskID: string;
+    authorID: string;
+    content: string;
+    createdAt: string | null;
+    isSent: boolean | null;
     author: {
       __typename: "User";
       id: string;
@@ -2662,10 +2802,7 @@ export type ListMessagesQuery = {
       authority: string | null;
       createdAt: string;
       updatedAt: string;
-    } | null;
-    content: string;
-    createdAt: string | null;
-    isSent: boolean | null;
+    };
     task: {
       __typename: "Task";
       id: string;
@@ -2832,6 +2969,20 @@ export type OnCreateUserSubscription = {
     createdAt: string;
     updatedAt: string;
   };
+  messages: {
+    __typename: "ModelMessageConnection";
+    items: Array<{
+      __typename: "Message";
+      id: string;
+      taskID: string;
+      authorID: string;
+      content: string;
+      createdAt: string | null;
+      isSent: boolean | null;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
   room: {
     __typename: "ModelRoomGroupConnection";
     items: Array<{
@@ -2905,6 +3056,20 @@ export type OnUpdateUserSubscription = {
     createdAt: string;
     updatedAt: string;
   };
+  messages: {
+    __typename: "ModelMessageConnection";
+    items: Array<{
+      __typename: "Message";
+      id: string;
+      taskID: string;
+      authorID: string;
+      content: string;
+      createdAt: string | null;
+      isSent: boolean | null;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
   room: {
     __typename: "ModelRoomGroupConnection";
     items: Array<{
@@ -2978,6 +3143,20 @@ export type OnDeleteUserSubscription = {
     createdAt: string;
     updatedAt: string;
   };
+  messages: {
+    __typename: "ModelMessageConnection";
+    items: Array<{
+      __typename: "Message";
+      id: string;
+      taskID: string;
+      authorID: string;
+      content: string;
+      createdAt: string | null;
+      isSent: boolean | null;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
   room: {
     __typename: "ModelRoomGroupConnection";
     items: Array<{
@@ -3093,6 +3272,10 @@ export type OnCreateTaskGroupSubscription = {
       createdAt: string;
       updatedAt: string;
     };
+    messages: {
+      __typename: "ModelMessageConnection";
+      nextToken: string | null;
+    } | null;
     room: {
       __typename: "ModelRoomGroupConnection";
       nextToken: string | null;
@@ -3181,6 +3364,10 @@ export type OnUpdateTaskGroupSubscription = {
       createdAt: string;
       updatedAt: string;
     };
+    messages: {
+      __typename: "ModelMessageConnection";
+      nextToken: string | null;
+    } | null;
     room: {
       __typename: "ModelRoomGroupConnection";
       nextToken: string | null;
@@ -3269,6 +3456,10 @@ export type OnDeleteTaskGroupSubscription = {
       createdAt: string;
       updatedAt: string;
     };
+    messages: {
+      __typename: "ModelMessageConnection";
+      nextToken: string | null;
+    } | null;
     room: {
       __typename: "ModelRoomGroupConnection";
       nextToken: string | null;
@@ -3331,6 +3522,7 @@ export type OnCreateTaskSubscription = {
       __typename: "Message";
       id: string;
       taskID: string;
+      authorID: string;
       content: string;
       createdAt: string | null;
       isSent: boolean | null;
@@ -3369,6 +3561,10 @@ export type OnCreateTaskSubscription = {
       createdAt: string;
       updatedAt: string;
     };
+    messages: {
+      __typename: "ModelMessageConnection";
+      nextToken: string | null;
+    } | null;
     room: {
       __typename: "ModelRoomGroupConnection";
       nextToken: string | null;
@@ -3430,6 +3626,7 @@ export type OnUpdateTaskSubscription = {
       __typename: "Message";
       id: string;
       taskID: string;
+      authorID: string;
       content: string;
       createdAt: string | null;
       isSent: boolean | null;
@@ -3468,6 +3665,10 @@ export type OnUpdateTaskSubscription = {
       createdAt: string;
       updatedAt: string;
     };
+    messages: {
+      __typename: "ModelMessageConnection";
+      nextToken: string | null;
+    } | null;
     room: {
       __typename: "ModelRoomGroupConnection";
       nextToken: string | null;
@@ -3529,6 +3730,7 @@ export type OnDeleteTaskSubscription = {
       __typename: "Message";
       id: string;
       taskID: string;
+      authorID: string;
       content: string;
       createdAt: string | null;
       isSent: boolean | null;
@@ -3567,6 +3769,10 @@ export type OnDeleteTaskSubscription = {
       createdAt: string;
       updatedAt: string;
     };
+    messages: {
+      __typename: "ModelMessageConnection";
+      nextToken: string | null;
+    } | null;
     room: {
       __typename: "ModelRoomGroupConnection";
       nextToken: string | null;
@@ -3634,6 +3840,10 @@ export type OnCreateRoomGroupSubscription = {
       createdAt: string;
       updatedAt: string;
     };
+    messages: {
+      __typename: "ModelMessageConnection";
+      nextToken: string | null;
+    } | null;
     room: {
       __typename: "ModelRoomGroupConnection";
       nextToken: string | null;
@@ -3702,6 +3912,10 @@ export type OnUpdateRoomGroupSubscription = {
       createdAt: string;
       updatedAt: string;
     };
+    messages: {
+      __typename: "ModelMessageConnection";
+      nextToken: string | null;
+    } | null;
     room: {
       __typename: "ModelRoomGroupConnection";
       nextToken: string | null;
@@ -3770,6 +3984,10 @@ export type OnDeleteRoomGroupSubscription = {
       createdAt: string;
       updatedAt: string;
     };
+    messages: {
+      __typename: "ModelMessageConnection";
+      nextToken: string | null;
+    } | null;
     room: {
       __typename: "ModelRoomGroupConnection";
       nextToken: string | null;
@@ -3961,6 +4179,10 @@ export type OnCreateMessageSubscription = {
   __typename: "Message";
   id: string;
   taskID: string;
+  authorID: string;
+  content: string;
+  createdAt: string | null;
+  isSent: boolean | null;
   author: {
     __typename: "User";
     id: string;
@@ -3980,6 +4202,10 @@ export type OnCreateMessageSubscription = {
       createdAt: string;
       updatedAt: string;
     };
+    messages: {
+      __typename: "ModelMessageConnection";
+      nextToken: string | null;
+    } | null;
     room: {
       __typename: "ModelRoomGroupConnection";
       nextToken: string | null;
@@ -3994,10 +4220,7 @@ export type OnCreateMessageSubscription = {
     } | null;
     createdAt: string;
     updatedAt: string;
-  } | null;
-  content: string;
-  createdAt: string | null;
-  isSent: boolean | null;
+  };
   task: {
     __typename: "Task";
     id: string;
@@ -4050,6 +4273,10 @@ export type OnUpdateMessageSubscription = {
   __typename: "Message";
   id: string;
   taskID: string;
+  authorID: string;
+  content: string;
+  createdAt: string | null;
+  isSent: boolean | null;
   author: {
     __typename: "User";
     id: string;
@@ -4069,6 +4296,10 @@ export type OnUpdateMessageSubscription = {
       createdAt: string;
       updatedAt: string;
     };
+    messages: {
+      __typename: "ModelMessageConnection";
+      nextToken: string | null;
+    } | null;
     room: {
       __typename: "ModelRoomGroupConnection";
       nextToken: string | null;
@@ -4083,10 +4314,7 @@ export type OnUpdateMessageSubscription = {
     } | null;
     createdAt: string;
     updatedAt: string;
-  } | null;
-  content: string;
-  createdAt: string | null;
-  isSent: boolean | null;
+  };
   task: {
     __typename: "Task";
     id: string;
@@ -4139,6 +4367,10 @@ export type OnDeleteMessageSubscription = {
   __typename: "Message";
   id: string;
   taskID: string;
+  authorID: string;
+  content: string;
+  createdAt: string | null;
+  isSent: boolean | null;
   author: {
     __typename: "User";
     id: string;
@@ -4158,6 +4390,10 @@ export type OnDeleteMessageSubscription = {
       createdAt: string;
       updatedAt: string;
     };
+    messages: {
+      __typename: "ModelMessageConnection";
+      nextToken: string | null;
+    } | null;
     room: {
       __typename: "ModelRoomGroupConnection";
       nextToken: string | null;
@@ -4172,10 +4408,7 @@ export type OnDeleteMessageSubscription = {
     } | null;
     createdAt: string;
     updatedAt: string;
-  } | null;
-  content: string;
-  createdAt: string | null;
-  isSent: boolean | null;
+  };
   task: {
     __typename: "Task";
     id: string;
@@ -4428,6 +4661,20 @@ export class APIService {
             createdAt
             updatedAt
           }
+          messages {
+            __typename
+            items {
+              __typename
+              id
+              taskID
+              authorID
+              content
+              createdAt
+              isSent
+              updatedAt
+            }
+            nextToken
+          }
           room {
             __typename
             items {
@@ -4517,6 +4764,20 @@ export class APIService {
             createdAt
             updatedAt
           }
+          messages {
+            __typename
+            items {
+              __typename
+              id
+              taskID
+              authorID
+              content
+              createdAt
+              isSent
+              updatedAt
+            }
+            nextToken
+          }
           room {
             __typename
             items {
@@ -4605,6 +4866,20 @@ export class APIService {
             }
             createdAt
             updatedAt
+          }
+          messages {
+            __typename
+            items {
+              __typename
+              id
+              taskID
+              authorID
+              content
+              createdAt
+              isSent
+              updatedAt
+            }
+            nextToken
           }
           room {
             __typename
@@ -4737,6 +5012,10 @@ export class APIService {
               createdAt
               updatedAt
             }
+            messages {
+              __typename
+              nextToken
+            }
             room {
               __typename
               nextToken
@@ -4840,6 +5119,10 @@ export class APIService {
               domain
               createdAt
               updatedAt
+            }
+            messages {
+              __typename
+              nextToken
             }
             room {
               __typename
@@ -4945,6 +5228,10 @@ export class APIService {
               createdAt
               updatedAt
             }
+            messages {
+              __typename
+              nextToken
+            }
             room {
               __typename
               nextToken
@@ -5023,6 +5310,7 @@ export class APIService {
               __typename
               id
               taskID
+              authorID
               content
               createdAt
               isSent
@@ -5060,6 +5348,10 @@ export class APIService {
               domain
               createdAt
               updatedAt
+            }
+            messages {
+              __typename
+              nextToken
             }
             room {
               __typename
@@ -5138,6 +5430,7 @@ export class APIService {
               __typename
               id
               taskID
+              authorID
               content
               createdAt
               isSent
@@ -5175,6 +5468,10 @@ export class APIService {
               domain
               createdAt
               updatedAt
+            }
+            messages {
+              __typename
+              nextToken
             }
             room {
               __typename
@@ -5253,6 +5550,7 @@ export class APIService {
               __typename
               id
               taskID
+              authorID
               content
               createdAt
               isSent
@@ -5290,6 +5588,10 @@ export class APIService {
               domain
               createdAt
               updatedAt
+            }
+            messages {
+              __typename
+              nextToken
             }
             room {
               __typename
@@ -5373,6 +5675,10 @@ export class APIService {
               domain
               createdAt
               updatedAt
+            }
+            messages {
+              __typename
+              nextToken
             }
             room {
               __typename
@@ -5458,6 +5764,10 @@ export class APIService {
               createdAt
               updatedAt
             }
+            messages {
+              __typename
+              nextToken
+            }
             room {
               __typename
               nextToken
@@ -5541,6 +5851,10 @@ export class APIService {
               domain
               createdAt
               updatedAt
+            }
+            messages {
+              __typename
+              nextToken
             }
             room {
               __typename
@@ -5797,6 +6111,10 @@ export class APIService {
           __typename
           id
           taskID
+          authorID
+          content
+          createdAt
+          isSent
           author {
             __typename
             id
@@ -5816,6 +6134,10 @@ export class APIService {
               createdAt
               updatedAt
             }
+            messages {
+              __typename
+              nextToken
+            }
             room {
               __typename
               nextToken
@@ -5831,9 +6153,6 @@ export class APIService {
             createdAt
             updatedAt
           }
-          content
-          createdAt
-          isSent
           task {
             __typename
             id
@@ -5902,6 +6221,10 @@ export class APIService {
           __typename
           id
           taskID
+          authorID
+          content
+          createdAt
+          isSent
           author {
             __typename
             id
@@ -5921,6 +6244,10 @@ export class APIService {
               createdAt
               updatedAt
             }
+            messages {
+              __typename
+              nextToken
+            }
             room {
               __typename
               nextToken
@@ -5936,9 +6263,6 @@ export class APIService {
             createdAt
             updatedAt
           }
-          content
-          createdAt
-          isSent
           task {
             __typename
             id
@@ -6007,6 +6331,10 @@ export class APIService {
           __typename
           id
           taskID
+          authorID
+          content
+          createdAt
+          isSent
           author {
             __typename
             id
@@ -6026,6 +6354,10 @@ export class APIService {
               createdAt
               updatedAt
             }
+            messages {
+              __typename
+              nextToken
+            }
             room {
               __typename
               nextToken
@@ -6041,9 +6373,6 @@ export class APIService {
             createdAt
             updatedAt
           }
-          content
-          createdAt
-          isSent
           task {
             __typename
             id
@@ -6224,6 +6553,20 @@ export class APIService {
             createdAt
             updatedAt
           }
+          messages {
+            __typename
+            items {
+              __typename
+              id
+              taskID
+              authorID
+              content
+              createdAt
+              isSent
+              updatedAt
+            }
+            nextToken
+          }
           room {
             __typename
             items {
@@ -6304,6 +6647,10 @@ export class APIService {
               domain
               createdAt
               updatedAt
+            }
+            messages {
+              __typename
+              nextToken
             }
             room {
               __typename
@@ -6408,6 +6755,10 @@ export class APIService {
               domain
               createdAt
               updatedAt
+            }
+            messages {
+              __typename
+              nextToken
             }
             room {
               __typename
@@ -6543,6 +6894,7 @@ export class APIService {
               __typename
               id
               taskID
+              authorID
               content
               createdAt
               isSent
@@ -6580,6 +6932,10 @@ export class APIService {
               domain
               createdAt
               updatedAt
+            }
+            messages {
+              __typename
+              nextToken
             }
             room {
               __typename
@@ -6728,6 +7084,10 @@ export class APIService {
               domain
               createdAt
               updatedAt
+            }
+            messages {
+              __typename
+              nextToken
             }
             room {
               __typename
@@ -6936,6 +7296,10 @@ export class APIService {
           __typename
           id
           taskID
+          authorID
+          content
+          createdAt
+          isSent
           author {
             __typename
             id
@@ -6955,6 +7319,10 @@ export class APIService {
               createdAt
               updatedAt
             }
+            messages {
+              __typename
+              nextToken
+            }
             room {
               __typename
               nextToken
@@ -6970,9 +7338,6 @@ export class APIService {
             createdAt
             updatedAt
           }
-          content
-          createdAt
-          isSent
           task {
             __typename
             id
@@ -7041,6 +7406,10 @@ export class APIService {
             __typename
             id
             taskID
+            authorID
+            content
+            createdAt
+            isSent
             author {
               __typename
               id
@@ -7055,9 +7424,6 @@ export class APIService {
               createdAt
               updatedAt
             }
-            content
-            createdAt
-            isSent
             task {
               __typename
               id
@@ -7266,6 +7632,20 @@ export class APIService {
             createdAt
             updatedAt
           }
+          messages {
+            __typename
+            items {
+              __typename
+              id
+              taskID
+              authorID
+              content
+              createdAt
+              isSent
+              updatedAt
+            }
+            nextToken
+          }
           room {
             __typename
             items {
@@ -7345,6 +7725,20 @@ export class APIService {
             createdAt
             updatedAt
           }
+          messages {
+            __typename
+            items {
+              __typename
+              id
+              taskID
+              authorID
+              content
+              createdAt
+              isSent
+              updatedAt
+            }
+            nextToken
+          }
           room {
             __typename
             items {
@@ -7423,6 +7817,20 @@ export class APIService {
             }
             createdAt
             updatedAt
+          }
+          messages {
+            __typename
+            items {
+              __typename
+              id
+              taskID
+              authorID
+              content
+              createdAt
+              isSent
+              updatedAt
+            }
+            nextToken
           }
           room {
             __typename
@@ -7547,6 +7955,10 @@ export class APIService {
               createdAt
               updatedAt
             }
+            messages {
+              __typename
+              nextToken
+            }
             room {
               __typename
               nextToken
@@ -7642,6 +8054,10 @@ export class APIService {
               domain
               createdAt
               updatedAt
+            }
+            messages {
+              __typename
+              nextToken
             }
             room {
               __typename
@@ -7739,6 +8155,10 @@ export class APIService {
               createdAt
               updatedAt
             }
+            messages {
+              __typename
+              nextToken
+            }
             room {
               __typename
               nextToken
@@ -7807,6 +8227,7 @@ export class APIService {
               __typename
               id
               taskID
+              authorID
               content
               createdAt
               isSent
@@ -7844,6 +8265,10 @@ export class APIService {
               domain
               createdAt
               updatedAt
+            }
+            messages {
+              __typename
+              nextToken
             }
             room {
               __typename
@@ -7912,6 +8337,7 @@ export class APIService {
               __typename
               id
               taskID
+              authorID
               content
               createdAt
               isSent
@@ -7949,6 +8375,10 @@ export class APIService {
               domain
               createdAt
               updatedAt
+            }
+            messages {
+              __typename
+              nextToken
             }
             room {
               __typename
@@ -8017,6 +8447,7 @@ export class APIService {
               __typename
               id
               taskID
+              authorID
               content
               createdAt
               isSent
@@ -8054,6 +8485,10 @@ export class APIService {
               domain
               createdAt
               updatedAt
+            }
+            messages {
+              __typename
+              nextToken
             }
             room {
               __typename
@@ -8129,6 +8564,10 @@ export class APIService {
               domain
               createdAt
               updatedAt
+            }
+            messages {
+              __typename
+              nextToken
             }
             room {
               __typename
@@ -8206,6 +8645,10 @@ export class APIService {
               createdAt
               updatedAt
             }
+            messages {
+              __typename
+              nextToken
+            }
             room {
               __typename
               nextToken
@@ -8281,6 +8724,10 @@ export class APIService {
               domain
               createdAt
               updatedAt
+            }
+            messages {
+              __typename
+              nextToken
             }
             room {
               __typename
@@ -8499,6 +8946,10 @@ export class APIService {
           __typename
           id
           taskID
+          authorID
+          content
+          createdAt
+          isSent
           author {
             __typename
             id
@@ -8518,6 +8969,10 @@ export class APIService {
               createdAt
               updatedAt
             }
+            messages {
+              __typename
+              nextToken
+            }
             room {
               __typename
               nextToken
@@ -8533,9 +8988,6 @@ export class APIService {
             createdAt
             updatedAt
           }
-          content
-          createdAt
-          isSent
           task {
             __typename
             id
@@ -8596,6 +9048,10 @@ export class APIService {
           __typename
           id
           taskID
+          authorID
+          content
+          createdAt
+          isSent
           author {
             __typename
             id
@@ -8615,6 +9071,10 @@ export class APIService {
               createdAt
               updatedAt
             }
+            messages {
+              __typename
+              nextToken
+            }
             room {
               __typename
               nextToken
@@ -8630,9 +9090,6 @@ export class APIService {
             createdAt
             updatedAt
           }
-          content
-          createdAt
-          isSent
           task {
             __typename
             id
@@ -8693,6 +9150,10 @@ export class APIService {
           __typename
           id
           taskID
+          authorID
+          content
+          createdAt
+          isSent
           author {
             __typename
             id
@@ -8712,6 +9173,10 @@ export class APIService {
               createdAt
               updatedAt
             }
+            messages {
+              __typename
+              nextToken
+            }
             room {
               __typename
               nextToken
@@ -8727,9 +9192,6 @@ export class APIService {
             createdAt
             updatedAt
           }
-          content
-          createdAt
-          isSent
           task {
             __typename
             id
