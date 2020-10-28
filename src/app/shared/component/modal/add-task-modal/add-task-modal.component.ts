@@ -24,6 +24,8 @@ export class AddTaskModalComponent implements OnInit {
   room;
   taskDetail;
   userList;
+  roomMembers;
+
 
   constructor(
     private modalCtrl: ModalController,
@@ -37,6 +39,7 @@ export class AddTaskModalComponent implements OnInit {
       });
       this.room = this.taskDetail.room;
     }
+    console.log('roomMembers: ', this.roomMembers);
     const currentDate = new Date();
     this.minYear = (currentDate.getFullYear()).toString();
     this.maxYear = (currentDate.getFullYear() + 1).toString();
