@@ -71,7 +71,10 @@ export class TaskPage implements OnInit {
         this.taskDoneItems = items;
       })
     this.logic.fetchMemberListOnRoom(this.roomId)
-      .subscribe(({ items }) => { this.roomMembers = items });
+      .subscribe(({ items }) => {
+        this.roomMembers = items
+      });
+
   }
 
   async presentDoneToast(): Promise<void> {

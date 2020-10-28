@@ -5,6 +5,10 @@ import { Injectable } from "@angular/core";
 import API, { graphqlOperation, GraphQLResult } from "@aws-amplify/api-graphql";
 import { Observable } from "zen-observable-ts";
 
+export interface SubscriptionResponse<T> {
+  value: GraphQLResult<T>;
+}
+
 export type CreateCompanyInput = {
   id?: string | null;
   name: string;
@@ -7459,7 +7463,7 @@ export class APIService {
     return <ListMessagesQuery>response.data.listMessages;
   }
   OnCreateCompanyListener: Observable<
-    OnCreateCompanySubscription
+    SubscriptionResponse<OnCreateCompanySubscription>
   > = API.graphql(
     graphqlOperation(
       `subscription OnCreateCompany {
@@ -7504,10 +7508,10 @@ export class APIService {
         }
       }`
     )
-  ) as Observable<OnCreateCompanySubscription>;
+  ) as Observable<SubscriptionResponse<OnCreateCompanySubscription>>;
 
   OnUpdateCompanyListener: Observable<
-    OnUpdateCompanySubscription
+    SubscriptionResponse<OnUpdateCompanySubscription>
   > = API.graphql(
     graphqlOperation(
       `subscription OnUpdateCompany {
@@ -7552,10 +7556,10 @@ export class APIService {
         }
       }`
     )
-  ) as Observable<OnUpdateCompanySubscription>;
+  ) as Observable<SubscriptionResponse<OnUpdateCompanySubscription>>;
 
   OnDeleteCompanyListener: Observable<
-    OnDeleteCompanySubscription
+    SubscriptionResponse<OnDeleteCompanySubscription>
   > = API.graphql(
     graphqlOperation(
       `subscription OnDeleteCompany {
@@ -7600,9 +7604,11 @@ export class APIService {
         }
       }`
     )
-  ) as Observable<OnDeleteCompanySubscription>;
+  ) as Observable<SubscriptionResponse<OnDeleteCompanySubscription>>;
 
-  OnCreateUserListener: Observable<OnCreateUserSubscription> = API.graphql(
+  OnCreateUserListener: Observable<
+    SubscriptionResponse<OnCreateUserSubscription>
+  > = API.graphql(
     graphqlOperation(
       `subscription OnCreateUser {
         onCreateUser {
@@ -7693,9 +7699,11 @@ export class APIService {
         }
       }`
     )
-  ) as Observable<OnCreateUserSubscription>;
+  ) as Observable<SubscriptionResponse<OnCreateUserSubscription>>;
 
-  OnUpdateUserListener: Observable<OnUpdateUserSubscription> = API.graphql(
+  OnUpdateUserListener: Observable<
+    SubscriptionResponse<OnUpdateUserSubscription>
+  > = API.graphql(
     graphqlOperation(
       `subscription OnUpdateUser {
         onUpdateUser {
@@ -7786,9 +7794,11 @@ export class APIService {
         }
       }`
     )
-  ) as Observable<OnUpdateUserSubscription>;
+  ) as Observable<SubscriptionResponse<OnUpdateUserSubscription>>;
 
-  OnDeleteUserListener: Observable<OnDeleteUserSubscription> = API.graphql(
+  OnDeleteUserListener: Observable<
+    SubscriptionResponse<OnDeleteUserSubscription>
+  > = API.graphql(
     graphqlOperation(
       `subscription OnDeleteUser {
         onDeleteUser {
@@ -7879,10 +7889,10 @@ export class APIService {
         }
       }`
     )
-  ) as Observable<OnDeleteUserSubscription>;
+  ) as Observable<SubscriptionResponse<OnDeleteUserSubscription>>;
 
   OnCreateTaskGroupListener: Observable<
-    OnCreateTaskGroupSubscription
+    SubscriptionResponse<OnCreateTaskGroupSubscription>
   > = API.graphql(
     graphqlOperation(
       `subscription OnCreateTaskGroup {
@@ -7979,10 +7989,10 @@ export class APIService {
         }
       }`
     )
-  ) as Observable<OnCreateTaskGroupSubscription>;
+  ) as Observable<SubscriptionResponse<OnCreateTaskGroupSubscription>>;
 
   OnUpdateTaskGroupListener: Observable<
-    OnUpdateTaskGroupSubscription
+    SubscriptionResponse<OnUpdateTaskGroupSubscription>
   > = API.graphql(
     graphqlOperation(
       `subscription OnUpdateTaskGroup {
@@ -8079,10 +8089,10 @@ export class APIService {
         }
       }`
     )
-  ) as Observable<OnUpdateTaskGroupSubscription>;
+  ) as Observable<SubscriptionResponse<OnUpdateTaskGroupSubscription>>;
 
   OnDeleteTaskGroupListener: Observable<
-    OnDeleteTaskGroupSubscription
+    SubscriptionResponse<OnDeleteTaskGroupSubscription>
   > = API.graphql(
     graphqlOperation(
       `subscription OnDeleteTaskGroup {
@@ -8179,9 +8189,11 @@ export class APIService {
         }
       }`
     )
-  ) as Observable<OnDeleteTaskGroupSubscription>;
+  ) as Observable<SubscriptionResponse<OnDeleteTaskGroupSubscription>>;
 
-  OnCreateTaskListener: Observable<OnCreateTaskSubscription> = API.graphql(
+  OnCreateTaskListener: Observable<
+    SubscriptionResponse<OnCreateTaskSubscription>
+  > = API.graphql(
     graphqlOperation(
       `subscription OnCreateTask {
         onCreateTask {
@@ -8289,9 +8301,11 @@ export class APIService {
         }
       }`
     )
-  ) as Observable<OnCreateTaskSubscription>;
+  ) as Observable<SubscriptionResponse<OnCreateTaskSubscription>>;
 
-  OnUpdateTaskListener: Observable<OnUpdateTaskSubscription> = API.graphql(
+  OnUpdateTaskListener: Observable<
+    SubscriptionResponse<OnUpdateTaskSubscription>
+  > = API.graphql(
     graphqlOperation(
       `subscription OnUpdateTask {
         onUpdateTask {
@@ -8399,9 +8413,11 @@ export class APIService {
         }
       }`
     )
-  ) as Observable<OnUpdateTaskSubscription>;
+  ) as Observable<SubscriptionResponse<OnUpdateTaskSubscription>>;
 
-  OnDeleteTaskListener: Observable<OnDeleteTaskSubscription> = API.graphql(
+  OnDeleteTaskListener: Observable<
+    SubscriptionResponse<OnDeleteTaskSubscription>
+  > = API.graphql(
     graphqlOperation(
       `subscription OnDeleteTask {
         onDeleteTask {
@@ -8509,10 +8525,10 @@ export class APIService {
         }
       }`
     )
-  ) as Observable<OnDeleteTaskSubscription>;
+  ) as Observable<SubscriptionResponse<OnDeleteTaskSubscription>>;
 
   OnCreateRoomGroupListener: Observable<
-    OnCreateRoomGroupSubscription
+    SubscriptionResponse<OnCreateRoomGroupSubscription>
   > = API.graphql(
     graphqlOperation(
       `subscription OnCreateRoomGroup {
@@ -8589,10 +8605,10 @@ export class APIService {
         }
       }`
     )
-  ) as Observable<OnCreateRoomGroupSubscription>;
+  ) as Observable<SubscriptionResponse<OnCreateRoomGroupSubscription>>;
 
   OnUpdateRoomGroupListener: Observable<
-    OnUpdateRoomGroupSubscription
+    SubscriptionResponse<OnUpdateRoomGroupSubscription>
   > = API.graphql(
     graphqlOperation(
       `subscription OnUpdateRoomGroup {
@@ -8669,10 +8685,10 @@ export class APIService {
         }
       }`
     )
-  ) as Observable<OnUpdateRoomGroupSubscription>;
+  ) as Observable<SubscriptionResponse<OnUpdateRoomGroupSubscription>>;
 
   OnDeleteRoomGroupListener: Observable<
-    OnDeleteRoomGroupSubscription
+    SubscriptionResponse<OnDeleteRoomGroupSubscription>
   > = API.graphql(
     graphqlOperation(
       `subscription OnDeleteRoomGroup {
@@ -8749,9 +8765,11 @@ export class APIService {
         }
       }`
     )
-  ) as Observable<OnDeleteRoomGroupSubscription>;
+  ) as Observable<SubscriptionResponse<OnDeleteRoomGroupSubscription>>;
 
-  OnCreateRoomListener: Observable<OnCreateRoomSubscription> = API.graphql(
+  OnCreateRoomListener: Observable<
+    SubscriptionResponse<OnCreateRoomSubscription>
+  > = API.graphql(
     graphqlOperation(
       `subscription OnCreateRoom {
         onCreateRoom {
@@ -8811,9 +8829,11 @@ export class APIService {
         }
       }`
     )
-  ) as Observable<OnCreateRoomSubscription>;
+  ) as Observable<SubscriptionResponse<OnCreateRoomSubscription>>;
 
-  OnUpdateRoomListener: Observable<OnUpdateRoomSubscription> = API.graphql(
+  OnUpdateRoomListener: Observable<
+    SubscriptionResponse<OnUpdateRoomSubscription>
+  > = API.graphql(
     graphqlOperation(
       `subscription OnUpdateRoom {
         onUpdateRoom {
@@ -8873,9 +8893,11 @@ export class APIService {
         }
       }`
     )
-  ) as Observable<OnUpdateRoomSubscription>;
+  ) as Observable<SubscriptionResponse<OnUpdateRoomSubscription>>;
 
-  OnDeleteRoomListener: Observable<OnDeleteRoomSubscription> = API.graphql(
+  OnDeleteRoomListener: Observable<
+    SubscriptionResponse<OnDeleteRoomSubscription>
+  > = API.graphql(
     graphqlOperation(
       `subscription OnDeleteRoom {
         onDeleteRoom {
@@ -8935,10 +8957,10 @@ export class APIService {
         }
       }`
     )
-  ) as Observable<OnDeleteRoomSubscription>;
+  ) as Observable<SubscriptionResponse<OnDeleteRoomSubscription>>;
 
   OnCreateMessageListener: Observable<
-    OnCreateMessageSubscription
+    SubscriptionResponse<OnCreateMessageSubscription>
   > = API.graphql(
     graphqlOperation(
       `subscription OnCreateMessage {
@@ -9037,10 +9059,10 @@ export class APIService {
         }
       }`
     )
-  ) as Observable<OnCreateMessageSubscription>;
+  ) as Observable<SubscriptionResponse<OnCreateMessageSubscription>>;
 
   OnUpdateMessageListener: Observable<
-    OnUpdateMessageSubscription
+    SubscriptionResponse<OnUpdateMessageSubscription>
   > = API.graphql(
     graphqlOperation(
       `subscription OnUpdateMessage {
@@ -9139,10 +9161,10 @@ export class APIService {
         }
       }`
     )
-  ) as Observable<OnUpdateMessageSubscription>;
+  ) as Observable<SubscriptionResponse<OnUpdateMessageSubscription>>;
 
   OnDeleteMessageListener: Observable<
-    OnDeleteMessageSubscription
+    SubscriptionResponse<OnDeleteMessageSubscription>
   > = API.graphql(
     graphqlOperation(
       `subscription OnDeleteMessage {
@@ -9241,5 +9263,5 @@ export class APIService {
         }
       }`
     )
-  ) as Observable<OnDeleteMessageSubscription>;
+  ) as Observable<SubscriptionResponse<OnDeleteMessageSubscription>>;
 }
