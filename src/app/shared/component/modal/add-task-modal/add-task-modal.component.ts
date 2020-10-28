@@ -12,7 +12,7 @@ export class AddTaskModalComponent implements OnInit {
   taskForm = new FormGroup({
     nameItem: new FormControl('', [Validators.required]),
     descriptionItem: new FormControl(''),
-    chargePersonName: new FormControl(''),
+    chargePersonId: new FormControl(''),
     scheduleDateItem: new FormControl(''),
   });
 
@@ -39,7 +39,6 @@ export class AddTaskModalComponent implements OnInit {
       });
       this.room = this.taskDetail.room;
     }
-    console.log('roomMembers: ', this.roomMembers);
     const currentDate = new Date();
     this.minYear = (currentDate.getFullYear()).toString();
     this.maxYear = (currentDate.getFullYear() + 1).toString();
@@ -54,6 +53,7 @@ export class AddTaskModalComponent implements OnInit {
   }
 
   createTaskItem(): void {
+    console.log(this.taskForm.value);
     this.modalCtrl.dismiss(this.taskForm.value);
   }
 

@@ -21,10 +21,16 @@
     </ion-item>
     <ion-item>
       <ion-label>担当者</ion-label>
-      <ion-select *ngFor="let item of userList">
-        <ion-select-option [value]="item.value">{{
-          item.value
-        }}</ion-select-option>
+      <ion-select
+        formControlName="chargePersonId"
+        ok-text="決定"
+        cancel-text="キャンセル"
+      >
+        <ion-select-option
+          *ngFor="let item of roomMembers"
+          [value]="item.userID"
+          >{{ item.user.username }}</ion-select-option
+        >
       </ion-select>
     </ion-item>
     <ion-item>
