@@ -3290,6 +3290,18 @@ export class AmplifyService {
             priority
             status
             createdAt
+            chargePerson {
+              __typename
+              id
+              username
+              email
+              positionName
+              iconImage
+              registered
+              authority
+              createdAt
+              updatedAt
+            }
             updatedAt
           }
           nextToken

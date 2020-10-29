@@ -95,11 +95,11 @@ export class TaskPage implements OnInit {
     });
     const dismissObservable = from(modal.onDidDismiss());
     dismissObservable
-      // .pipe(flatMap(({ data }) => this.logic.createTaskToRoom(data, this.roomId, this.userEmail, this.userId)))
-      // .pipe(flatMap(() => this.logic.fetchActiveTaskPerRoom(this.roomId)))
-      .subscribe(({ data }) => {
-        console.log(data);
-        // this.taskActiveItems = items;
+      .pipe(flatMap(({ data }) => this.logic.createTaskToRoom(data, this.roomId, this.userEmail, this.userId)))
+      .pipe(flatMap(() => this.logic.fetchActiveTaskPerRoom(this.roomId)))
+      .subscribe((items) => {
+        console.log(items);
+        this.taskActiveItems = items;
       });
     return modal.present();
   }
