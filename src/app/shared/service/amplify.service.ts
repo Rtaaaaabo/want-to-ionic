@@ -2658,6 +2658,19 @@ export class AmplifyService {
           authorID
           roomID
           title
+          chargePerson {
+            __typename
+            id
+            username
+            email
+            companyID
+            tel
+            positionName
+            registered
+            authority
+            createdAt
+            updatedAt
+          }
           description
           scheduleDate
           priority

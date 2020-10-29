@@ -34,8 +34,8 @@ export class TaskLogic {
       const content = {
         id: `${uuid()}`,
         authorID: `${userId}`,
-        chargePersonID: `${userId}`,
         roomID: `${roomId}`,
+        chargePersonID: dismissData.chargePersonId,
         title: dismissData.nameItem,
         description: dismissData.descriptionItem,
         scheduleDate: dismissData.scheduleDateItem,

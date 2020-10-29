@@ -74,7 +74,6 @@ export class TaskPage implements OnInit {
       .subscribe(({ items }) => {
         this.roomMembers = items
       });
-
   }
 
   async presentDoneToast(): Promise<void> {
@@ -88,14 +87,19 @@ export class TaskPage implements OnInit {
   async presentAddTask(): Promise<void> {
     const modal = await this.modalCtrl.create({
       component: AddTaskModalComponent,
-      componentProps: { room: this.room, userId: this.userId, roomMembers: this.roomMembers },
+      componentProps: {
+        room: this.room,
+        userId: this.userId,
+        roomMembers: this.roomMembers
+      },
     });
     const dismissObservable = from(modal.onDidDismiss());
     dismissObservable
-      .pipe(flatMap(({ data }) => this.logic.createTaskToRoom(data, this.roomId, this.userEmail, this.userId)))
-      .pipe(flatMap(() => this.logic.fetchActiveTaskPerRoom(this.roomId)))
-      .subscribe((items) => {
-        this.taskActiveItems = items;
+      // .pipe(flatMap(({ data }) => this.logic.createTaskToRoom(data, this.roomId, this.userEmail, this.userId)))
+      // .pipe(flatMap(() => this.logic.fetchActiveTaskPerRoom(this.roomId)))
+      .subscribe(({ data }) => {
+        console.log(data);
+        // this.taskActiveItems = items;
       });
     return modal.present();
   }
@@ -142,7 +146,6 @@ export class TaskPage implements OnInit {
       .pipe(flatMap(() => this.logic.fetchActiveTaskPerRoom(this.roomId)))
       .pipe(tap(() => presentToast)).subscribe((data) => this.taskActiveItems = data);
   }
-
 
   async presentConfirmDelete(task): Promise<void> {
     const actionSheet = await this.actionSheetCtrl.create({

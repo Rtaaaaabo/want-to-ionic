@@ -32,6 +32,7 @@ export class AddTaskModalComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    console.log('userId', this.userId);
     if (this.taskDetail !== undefined) {
       this.taskForm.patchValue({
         nameItem: this.taskDetail.title,
@@ -44,8 +45,10 @@ export class AddTaskModalComponent implements OnInit {
     this.maxYear = (currentDate.getFullYear() + 1).toString();
     this.currentIsoString = currentDate.toISOString();
     this.taskForm.patchValue({
-      scheduleDateItem: this.currentIsoString
+      scheduleDateItem: this.currentIsoString,
+      chargePersonId: this.userId
     });
+    console.log(this.taskForm.value);
   }
 
   dismissModal(): void {
@@ -53,7 +56,6 @@ export class AddTaskModalComponent implements OnInit {
   }
 
   createTaskItem(): void {
-    console.log(this.taskForm.value);
     this.modalCtrl.dismiss(this.taskForm.value);
   }
 
