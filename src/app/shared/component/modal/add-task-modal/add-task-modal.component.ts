@@ -41,16 +41,16 @@ export class AddTaskModalComponent implements OnInit {
         scheduleDateItem: this.taskDetail.scheduleDateItem,
       });
       this.room = this.taskDetail.room;
+    } else {
+      const currentDate = new Date();
+      this.minYear = (currentDate.getFullYear()).toString();
+      this.maxYear = (currentDate.getFullYear() + 1).toString();
+      this.currentIsoString = currentDate.toISOString();
+      this.taskForm.patchValue({
+        scheduleDateItem: this.currentIsoString,
+        chargePersonId: this.userId
+      });
     }
-    const currentDate = new Date();
-    this.minYear = (currentDate.getFullYear()).toString();
-    this.maxYear = (currentDate.getFullYear() + 1).toString();
-    this.currentIsoString = currentDate.toISOString();
-    this.taskForm.patchValue({
-      scheduleDateItem: this.currentIsoString,
-      chargePersonId: this.userId
-    });
-    console.log(this.taskForm.value);
   }
 
   dismissModal(): void {

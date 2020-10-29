@@ -5,8 +5,9 @@ import { ModalController, ActionSheetController, ToastController, IonContent, Pl
 import { from, Observable } from 'rxjs';
 import { TaskDetailLogic } from './logic/task-detail.logic';
 import { AddTaskModalComponent } from 'src/app/shared/component/modal/add-task-modal/add-task-modal.component';
-import { filter, flatMap, tap } from 'rxjs/operators';
+import { filter, flatMap, tap, map } from 'rxjs/operators';
 import { CurrentUserInfo } from '../task/interface/current-user-info.interface';
+import { ListRoomGroupsQuery } from 'src/app/API.service';
 
 @Component({
   selector: 'app-task-detail',
@@ -24,6 +25,7 @@ export class TaskDetailPage implements OnInit {
   newMsg: string = '';
   message;
   userId: string;
+  roomMembers: Array<ListRoomGroupsQuery>;
 
   constructor(
     private location: Location,
@@ -54,9 +56,11 @@ export class TaskDetailPage implements OnInit {
       this.userId = res.sub;
     });
     this.logic.fetchAnyTask(this.taskId)
-      .subscribe((data) => {
-        this.taskDetail = data;
-        console.log('taskDetail', this.taskDetail);
+      .pipe(map((data) => this.taskDetail = data))
+      .pipe(flatMap(() => this.logic.fetchMemberListOnRoom(this.taskDetail.roomID)))
+      .subscribe(({ items }) => {
+        this.roomMembers = items;
+        console.log('roomMembers ', this.roomMembers);
       });
     this.logic.fetchMessagePerTask(this.taskId).subscribe((data) => {
       this.message = data.items;
@@ -93,7 +97,7 @@ export class TaskDetailPage implements OnInit {
   async presentModalEditTask(taskDetail) {
     const modal = await this.modalCtrl.create({
       component: AddTaskModalComponent,
-      componentProps: { taskDetail: taskDetail },
+      componentProps: { taskDetail: taskDetail, roomMembers: this.roomMembers },
     });
     const dismissObservable = from(modal.onDidDismiss());
     dismissObservable

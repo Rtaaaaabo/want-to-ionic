@@ -69,4 +69,13 @@ export class TaskDetailLogic {
     return this.taskDetailService.updateTaskItem(content);
   }
 
+  fetchMemberListOnRoom(roomId: string | number): Observable<any> {
+    const filterContent = {
+      roomID: {
+        eq: `${roomId}`
+      }
+    }
+    return this.taskDetailService.fetchRoomMember(filterContent);
+  }
+
 }

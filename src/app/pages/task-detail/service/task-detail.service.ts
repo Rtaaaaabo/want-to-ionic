@@ -30,4 +30,8 @@ export class TaskDetailService {
   onMessageListener() {
     return this.amplifyService.OnCreateMessageListener;
   }
+
+  fetchRoomMember(content): Observable<any> {
+    return from(this.amplifyService.ListRoomGroups(content));
+  }
 }
