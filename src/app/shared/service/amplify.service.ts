@@ -3260,6 +3260,23 @@ export class AmplifyService {
             }
             nextToken
           }
+          chargePerson {
+            __typename
+            id
+            username
+            email
+            companyID
+            positionName
+            iconImage
+            registered
+            authority
+            chargeTask {
+              __typename
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
           updatedAt
         }
       }`;

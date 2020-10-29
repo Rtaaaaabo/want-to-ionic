@@ -32,11 +32,13 @@ export class AddTaskModalComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log('userId', this.userId);
+    console.log('[taskDetail]Add task modal: ', this.taskDetail);
     if (this.taskDetail !== undefined) {
       this.taskForm.patchValue({
         nameItem: this.taskDetail.title,
         descriptionItem: this.taskDetail.description,
+        chargePersonId: this.taskDetail.chargePerson.id,
+        scheduleDateItem: this.taskDetail.scheduleDateItem,
       });
       this.room = this.taskDetail.room;
     }

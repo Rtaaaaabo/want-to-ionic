@@ -60,7 +60,6 @@ export class TaskDetailPage implements OnInit {
       });
     this.logic.fetchMessagePerTask(this.taskId).subscribe((data) => {
       this.message = data.items;
-      console.log(this.message);
     });
   }
 
