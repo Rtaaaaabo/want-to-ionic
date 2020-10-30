@@ -108,7 +108,7 @@ export class TaskPage implements OnInit {
     this.location.back();
   }
 
-  sortTaskItem(): void {
+  activeSortTaskItem(): void {
     this.isReorder = !this.isReorder;
   }
 
