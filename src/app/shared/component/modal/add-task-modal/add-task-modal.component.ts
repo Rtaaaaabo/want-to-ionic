@@ -36,7 +36,6 @@ export class AddTaskModalComponent implements OnInit {
     this.minYear = (currentDate.getFullYear()).toString();
     this.maxYear = (currentDate.getFullYear() + 1).toString();
     if (this.taskDetail !== undefined) {
-      console.log(this.taskDetail);
       this.taskForm.patchValue({
         nameItem: this.taskDetail.title,
         descriptionItem: this.taskDetail.description,
