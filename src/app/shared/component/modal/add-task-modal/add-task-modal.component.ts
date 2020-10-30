@@ -32,19 +32,20 @@ export class AddTaskModalComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log('[taskDetail]Add task modal: ', this.taskDetail);
+    const currentDate = new Date();
+    this.minYear = (currentDate.getFullYear()).toString();
+    this.maxYear = (currentDate.getFullYear() + 1).toString();
     if (this.taskDetail !== undefined) {
+      console.log(this.taskDetail);
       this.taskForm.patchValue({
         nameItem: this.taskDetail.title,
         descriptionItem: this.taskDetail.description,
         chargePersonId: this.taskDetail.chargePerson.id,
-        scheduleDateItem: this.taskDetail.scheduleDateItem,
+        scheduleDateItem: this.taskDetail.scheduleDate,
       });
       this.room = this.taskDetail.room;
     } else {
-      const currentDate = new Date();
-      this.minYear = (currentDate.getFullYear()).toString();
-      this.maxYear = (currentDate.getFullYear() + 1).toString();
+
       this.currentIsoString = currentDate.toISOString();
       this.taskForm.patchValue({
         scheduleDateItem: this.currentIsoString,
