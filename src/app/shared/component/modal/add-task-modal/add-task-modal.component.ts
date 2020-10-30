@@ -44,7 +44,6 @@ export class AddTaskModalComponent implements OnInit {
       });
       this.room = this.taskDetail.room;
     } else {
-
       this.currentIsoString = currentDate.toISOString();
       this.taskForm.patchValue({
         scheduleDateItem: this.currentIsoString,
