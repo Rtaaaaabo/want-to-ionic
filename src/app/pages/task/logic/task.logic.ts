@@ -6,6 +6,8 @@ import { SessionService } from '../../../shared/service/session.service';
 import { v4 as uuid } from 'uuid';
 import { TaskService } from '../service/task.service';
 import { CurrentUserInfo } from '../interface/current-user-info.interface';
+import { InterfaceTask } from 'src/app/interfaces/task.interface';
+
 
 @Injectable({
   providedIn: 'root'
@@ -41,7 +43,7 @@ export class TaskLogic {
         scheduleDate: dismissData.scheduleDateItem,
         createdAt: iosStringDate,
         status: 0,
-        priority: 1
+        priority: 0,  // AddTaskのときは一番最初に持ってくる
       }
       return this.taskService.createTaskItem(content);
     }
@@ -118,6 +120,13 @@ export class TaskLogic {
       }
     }
     return this.taskService.fetchRoomMember(filterContent);
+  }
+
+  compareTaskArray(a: InterfaceTask, b: InterfaceTask): number {
+    const priorityA = a.priority;
+    const priorityB = b.priority;
+    console.log(priorityA - priorityB);
+    return priorityA - priorityB;
   }
 
 }
