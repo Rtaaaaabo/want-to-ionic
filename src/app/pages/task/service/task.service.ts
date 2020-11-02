@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AmplifyService, GetRoomQuery, GetUserQuery, ListTasksQuery } from '../../../shared/service/amplify.service';
-import { Observable, from } from 'rxjs';
+import { Observable, from, of } from 'rxjs';
+import { InterfaceTask } from 'src/app/interfaces/task.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +25,14 @@ export class TaskService {
   }
 
   updateTaskItem(content): Observable<any> {
+    return from(this.amplifyService.UpdateTask(content));
+  }
+
+  updateTaskStatusItem(taskItem: InterfaceTask): Observable<any> {
+    const content = {
+      id: taskItem.id,
+      status: taskItem.status + 1,
+    }
     return from(this.amplifyService.UpdateTask(content));
   }
 

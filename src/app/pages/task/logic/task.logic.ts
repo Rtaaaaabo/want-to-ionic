@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { map, filter, mergeMap, toArray } from 'rxjs/operators';
+import { from, Observable, of } from 'rxjs';
+import { map, filter, mergeMap, toArray, flatMap } from 'rxjs/operators';
 import { GetRoomQuery } from 'src/app/shared/service/amplify.service';
 import { SessionService } from '../../../shared/service/session.service';
 import { v4 as uuid } from 'uuid';
@@ -43,7 +43,7 @@ export class TaskLogic {
         scheduleDate: dismissData.scheduleDateItem,
         createdAt: iosStringDate,
         status: 0,
-        priority: 0,  // AddTaskのときは一番最初に持ってくる
+        priority: 0,  // AddTaskのときは一番最初に持ってくるため
       }
       return this.taskService.createTaskItem(content);
     }
@@ -82,12 +82,17 @@ export class TaskLogic {
       .pipe(toArray());
   }
 
-  updateTaskItem(taskItem, status): Observable<any> {
+  updateDoneTaskItem(taskFormItem, status): Observable<any> {
     const content = {
-      id: taskItem.id,
+      id: taskFormItem.id,
       status: status,
     }
     return this.taskService.updateTaskItem(content);
+  }
+
+  updateStatusTaskItems(taskItems): Observable<any> {
+    return from(taskItems)
+      .pipe(flatMap((result: InterfaceTask) => this.taskService.updateTaskStatusItem(result)))
   }
 
   deleteTaskItem(taskId: string): Observable<any> {
@@ -125,7 +130,6 @@ export class TaskLogic {
   compareTaskArray(a: InterfaceTask, b: InterfaceTask): number {
     const priorityA = a.priority;
     const priorityB = b.priority;
-    console.log(priorityA - priorityB);
     return priorityA - priorityB;
   }
 

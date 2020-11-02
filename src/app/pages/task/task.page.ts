@@ -3,7 +3,7 @@ import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ModalController, ToastController, ActionSheetController } from '@ionic/angular';
 import { from } from 'rxjs';
-import { flatMap, tap, map, catchError } from 'rxjs/operators';
+import { flatMap, tap, map, catchError, toArray } from 'rxjs/operators';
 import { GetRoomQuery, ListUsersQuery } from 'src/app/shared/service/amplify.service';
 import { AddTaskModalComponent } from '../../shared/component/modal/add-task-modal/add-task-modal.component';
 import { TaskLogic } from './logic/task.logic';
@@ -29,6 +29,7 @@ export class TaskPage implements OnInit {
   roomMembers: Array<ListRoomGroupsQuery>;
   user;
   companyId: number | string;
+  dismissData;
 
   constructor(
     private router: Router,
@@ -65,7 +66,6 @@ export class TaskPage implements OnInit {
     this.logic.fetchActiveTaskPerRoom(this.roomId)
       .subscribe((items) => {
         this.taskActiveItems = items.sort(this.logic.compareTaskArray);
-        console.log('taskActiveItem', this.taskActiveItems);
       })
     this.logic.fetchDoneTaskPerRoom(this.roomId)
       .subscribe((items) => {
@@ -96,10 +96,14 @@ export class TaskPage implements OnInit {
     });
     const dismissObservable = from(modal.onDidDismiss());
     dismissObservable
-      .pipe(flatMap(({ data }) => this.logic.createTaskToRoom(data, this.roomId, this.userEmail, this.userId)))
+      .pipe(map(({ data }) => this.dismissData = data))
+      .pipe(flatMap(() => this.logic.fetchActiveTaskPerRoom(this.roomId)))
+      .pipe(flatMap((result) => this.logic.updateStatusTaskItems(result)))
+      .pipe(flatMap(() => this.logic.createTaskToRoom(this.dismissData, this.roomId, this.userEmail, this.userId)))
       .pipe(flatMap(() => this.logic.fetchActiveTaskPerRoom(this.roomId)))
       .subscribe((items) => {
-        this.taskActiveItems = items;
+        console.log('presentAddTask', items);
+        // this.taskActiveItems = items;
       });
     return modal.present();
   }
@@ -141,11 +145,15 @@ export class TaskPage implements OnInit {
     this.segment = ev.detail.value;
   }
 
-  doneTask(taskItem): void {
+  doneTask(taskFormItem): void {
     const presentToast = from(this.presentDoneToast());
-    this.logic.updateTaskItem(taskItem, 10)
+    this.logic.updateDoneTaskItem(taskFormItem, 10)
       .pipe(flatMap(() => this.logic.fetchActiveTaskPerRoom(this.roomId)))
       .pipe(tap(() => presentToast)).subscribe((data) => this.taskActiveItems = data);
+  }
+
+  updateStatusTask(taskItem): void {
+
   }
 
   async presentConfirmDelete(task): Promise<void> {
