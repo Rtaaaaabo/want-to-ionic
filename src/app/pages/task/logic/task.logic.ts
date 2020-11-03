@@ -93,6 +93,7 @@ export class TaskLogic {
   updateStatusTaskItems(taskItems): Observable<any> {
     return from(taskItems)
       .pipe(flatMap((result: InterfaceTask) => this.taskService.updateTaskStatusItem(result)))
+      .pipe(toArray());
   }
 
   deleteTaskItem(taskId: string): Observable<any> {

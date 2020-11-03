@@ -60,7 +60,6 @@ export class TaskDetailPage implements OnInit {
       .pipe(flatMap(() => this.logic.fetchMemberListOnRoom(this.taskDetail.roomID)))
       .subscribe(({ items }) => {
         this.roomMembers = items;
-        console.log('roomMembers ', this.roomMembers);
       });
     this.logic.fetchMessagePerTask(this.taskId).subscribe((data) => {
       this.message = data.items;
