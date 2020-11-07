@@ -66,7 +66,6 @@ export class TaskPage implements OnInit {
     this.logic.fetchActiveTaskPerRoom(this.roomId)
       .subscribe((items) => {
         this.taskActiveItems = items.sort(this.logic.compareTaskArray);
-        console.log('taskActiveItems', this.taskActiveItems);
       })
     this.logic.fetchDoneTaskPerRoom(this.roomId)
       .subscribe((items) => {
@@ -103,6 +102,7 @@ export class TaskPage implements OnInit {
       .pipe(flatMap(() => this.logic.createTaskToRoom(this.dismissData, this.roomId, this.userEmail, this.userId)))
       .pipe(flatMap(() => this.logic.fetchActiveTaskPerRoom(this.roomId)))
       .subscribe((items) => {
+        console.log(items);
         this.taskActiveItems = items;
       });
     return modal.present();
