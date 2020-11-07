@@ -9,6 +9,7 @@ import { AddTaskModalComponent } from './component/modal/add-task-modal/add-task
 import { DeleteTaskModalComponent } from './component/modal/delete-task-modal/delete-task-modal.component';
 import { EditProfileModalComponent } from './component/modal/edit-profile-modal/edit-profile-modal.component';
 import { AddPersonModalComponent } from '../pages/task/component/add-person-modal/add-person-modal.component';
+import { NoContentComponent } from './component/no-content/no-content.component';
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
 
 
@@ -19,6 +20,7 @@ import { ImagePicker } from '@ionic-native/image-picker/ngx';
     DeleteTaskModalComponent,
     EditProfileModalComponent,
     AddPersonModalComponent,
+    NoContentComponent,
   ],
   imports: [
     CommonModule,
@@ -39,6 +41,7 @@ import { ImagePicker } from '@ionic-native/image-picker/ngx';
     DeleteTaskModalComponent,
     EditProfileModalComponent,
     AddPersonModalComponent,
+    NoContentComponent,
     ReactiveFormsModule,
     FormsModule,
   ],
