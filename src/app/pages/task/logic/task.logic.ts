@@ -92,7 +92,8 @@ export class TaskLogic {
 
   updateStatusTaskItems(taskItems): Observable<any> {
     return from(taskItems)
-      .pipe(flatMap((result: InterfaceTask) => this.taskService.updateTaskStatusItem(result)))
+      .pipe(flatMap((result: InterfaceTask) =>
+        this.taskService.updateTaskStatusItem(result)))
       .pipe(toArray());
   }
 
@@ -131,6 +132,7 @@ export class TaskLogic {
   compareTaskArray(a: InterfaceTask, b: InterfaceTask): number {
     const priorityA = a.priority;
     const priorityB = b.priority;
+    console.log(priorityA);
     return priorityA - priorityB;
   }
 

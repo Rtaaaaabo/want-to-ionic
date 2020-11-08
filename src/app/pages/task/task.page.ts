@@ -98,7 +98,7 @@ export class TaskPage implements OnInit {
     dismissObservable
       .pipe(map(({ data }) => this.dismissData = data))
       .pipe(flatMap(() => this.logic.fetchActiveTaskPerRoom(this.roomId)))
-      .pipe(switchMap((val) => val.length !== 0 ? this.logic.updateStatusTaskItems(val) : of({})))
+      .pipe(switchMap((val) => val.length !== 0 ? this.logic.updateStatusTaskItems(val) : of(val)))
       .pipe(flatMap(() => this.logic.createTaskToRoom(this.dismissData, this.roomId, this.userEmail, this.userId)))
       .pipe(flatMap(() => this.logic.fetchActiveTaskPerRoom(this.roomId)))
       .subscribe((items) => {

@@ -54,7 +54,8 @@ export class ListRoomComponent implements OnInit {
 
   deleteRoom(roomId): void {
     this.homeLogic.deleteRoomItem(roomId)
-      .pipe(flatMap(() => this.homeLogic.listRoom('takuCloudCom')))
+      .pipe(flatMap(() =>
+        this.homeLogic.listRoom('takuCloudCom')))
       .subscribe((response) => {
         this.roomList = response;
       })

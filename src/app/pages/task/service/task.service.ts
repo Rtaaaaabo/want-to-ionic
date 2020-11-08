@@ -31,8 +31,9 @@ export class TaskService {
   updateTaskStatusItem(taskItem: InterfaceTask): Observable<any> {
     const content = {
       id: taskItem.id,
-      status: taskItem.status + 1,
+      priority: taskItem.priority + 1,
     }
+    console.log('target items', content);
     return from(this.amplifyService.UpdateTask(content));
   }
 
