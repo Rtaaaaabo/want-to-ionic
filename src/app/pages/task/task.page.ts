@@ -102,7 +102,7 @@ export class TaskPage implements OnInit {
       .pipe(flatMap(() => this.logic.createTaskToRoom(this.dismissData, this.roomId, this.userEmail, this.userId)))
       .pipe(flatMap(() => this.logic.fetchActiveTaskPerRoom(this.roomId)))
       .subscribe((items) => {
-        this.taskActiveItems = items;
+        this.taskActiveItems = items.sort(this.logic.compareTaskArray);
       });
     return modal.present();
   }
@@ -149,10 +149,6 @@ export class TaskPage implements OnInit {
     this.logic.updateDoneTaskItem(taskFormItem, 10)
       .pipe(flatMap(() => this.logic.fetchActiveTaskPerRoom(this.roomId)))
       .pipe(tap(() => presentToast)).subscribe((data) => this.taskActiveItems = data);
-  }
-
-  updateStatusTask(taskItem): void {
-
   }
 
   async presentConfirmDelete(task): Promise<void> {

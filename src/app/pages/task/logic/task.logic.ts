@@ -43,7 +43,7 @@ export class TaskLogic {
         scheduleDate: dismissData.scheduleDateItem,
         createdAt: iosStringDate,
         status: 0,
-        priority: 0,  // AddTaskのときは一番最初に持ってくるため
+        priority: 0,
       }
       return this.taskService.createTaskItem(content);
     }
@@ -91,6 +91,7 @@ export class TaskLogic {
   }
 
   updateStatusTaskItems(taskItems): Observable<any> {
+    console.log('taskItems', taskItems);
     return from(taskItems)
       .pipe(flatMap((result: InterfaceTask) =>
         this.taskService.updateTaskStatusItem(result)))
@@ -132,7 +133,6 @@ export class TaskLogic {
   compareTaskArray(a: InterfaceTask, b: InterfaceTask): number {
     const priorityA = a.priority;
     const priorityB = b.priority;
-    console.log(priorityA);
     return priorityA - priorityB;
   }
 
