@@ -58,7 +58,7 @@ export class TaskLogic {
     return this.taskService.createRoomGroup(content);
   }
 
-  fetchActiveTaskPerRoom(roomId): Observable<any> {
+  fetchActiveTaskPerRoom(roomId): Observable<Array<any>> {
     const filterContent = {
       roomID: {
         eq: `${roomId}`
