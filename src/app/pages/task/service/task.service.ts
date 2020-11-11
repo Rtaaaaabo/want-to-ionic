@@ -33,7 +33,14 @@ export class TaskService {
       id: taskItem.id,
       priority: taskItem.priority + 1,
     }
-    console.log('target items', content);
+    return from(this.amplifyService.UpdateTask(content));
+  }
+
+  updateTaskStatusForReorder(taskItem: InterfaceTask): Observable<any> {
+    const content = {
+      id: taskItem.id,
+      priority: taskItem.priority
+    }
     return from(this.amplifyService.UpdateTask(content));
   }
 

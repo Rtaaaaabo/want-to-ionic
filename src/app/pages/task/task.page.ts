@@ -3,7 +3,7 @@ import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ModalController, ToastController, ActionSheetController } from '@ionic/angular';
 import { from, of } from 'rxjs';
-import { flatMap, switchMap, tap, map, catchError } from 'rxjs/operators';
+import { flatMap, switchMap, tap, map, catchError, mergeMap } from 'rxjs/operators';
 import { GetRoomQuery, ListUsersQuery } from 'src/app/shared/service/amplify.service';
 import { AddTaskModalComponent } from '../../shared/component/modal/add-task-modal/add-task-modal.component';
 import { TaskLogic } from './logic/task.logic';
@@ -66,6 +66,7 @@ export class TaskPage implements OnInit {
     this.logic.fetchActiveTaskPerRoom(this.roomId)
       .subscribe((items) => {
         this.taskActiveItems = items.sort(this.logic.compareTaskArray);
+        console.log('taskActiveItems', this.taskActiveItems);
       })
     this.logic.fetchDoneTaskPerRoom(this.roomId)
       .subscribe((items) => {
@@ -97,10 +98,10 @@ export class TaskPage implements OnInit {
     const dismissObservable = from(modal.onDidDismiss());
     dismissObservable
       .pipe(map(({ data }) => this.dismissData = data))
-      .pipe(flatMap(() => this.logic.fetchActiveTaskPerRoom(this.roomId)))
-      .pipe(switchMap((val) => val.length !== 0 ? this.logic.updateStatusTaskItems(val) : of(val)))
-      .pipe(flatMap(() => this.logic.createTaskToRoom(this.dismissData, this.roomId, this.userEmail, this.userId)))
-      .pipe(flatMap(() => this.logic.fetchActiveTaskPerRoom(this.roomId)))
+      .pipe(mergeMap(() => this.logic.fetchActiveTaskPerRoom(this.roomId)))
+      .pipe(switchMap((arrayActiveItems) => arrayActiveItems.length !== 0 ? this.logic.updateStatusTaskItems(arrayActiveItems) : of(arrayActiveItems)))
+      .pipe(mergeMap(() => this.logic.createTaskToRoom(this.dismissData, this.roomId, this.userEmail, this.userId)))
+      .pipe(mergeMap(() => this.logic.fetchActiveTaskPerRoom(this.roomId)))
       .subscribe((items) => {
         this.taskActiveItems = items.sort(this.logic.compareTaskArray);
       });
@@ -129,7 +130,7 @@ export class TaskPage implements OnInit {
     const itemMove = this.taskActiveItems.splice(ev.detail.from, 1)[0];
     this.taskActiveItems.splice(ev.detail.to, 0, itemMove);
     ev.detail.complete();
-    console.log('Reorder item', ev);
+    this.logic.reorderStatusTaskItems(ev.detail, itemMove);
   }
 
   navigateToTaskDetail(task, segment): void {
@@ -137,7 +138,9 @@ export class TaskPage implements OnInit {
   }
 
   addCommentToTaskDetail(task): void {
-    this.router.navigate(['task-detail', `${task.id}`], { fragment: 'comment' })
+    this.router.navigate(['task-detail', `${task.id}`], {
+      fragment: 'comment'
+    })
   }
 
   segmentChanged(ev): void {

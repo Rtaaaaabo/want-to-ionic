@@ -91,11 +91,19 @@ export class TaskLogic {
   }
 
   updateStatusTaskItems(taskItems): Observable<any> {
-    console.log('taskItems', taskItems);
     return from(taskItems)
       .pipe(flatMap((result: InterfaceTask) =>
         this.taskService.updateTaskStatusItem(result)))
       .pipe(toArray());
+  }
+
+  reorderStatusTaskItems(reorderDetail: { from: number, to: number }, taskItem: InterfaceTask): void {
+    let targetItem: InterfaceTask;
+    if (reorderDetail.from < reorderDetail.to) {
+      console.log('taskItem from < to', taskItem);
+    } else if (reorderDetail.to < reorderDetail.from) {
+      console.log('taskItem from > to', taskItem);
+    }
   }
 
   deleteTaskItem(taskId: string): Observable<any> {
