@@ -97,12 +97,11 @@ export class TaskLogic {
       .pipe(toArray());
   }
 
-  reorderStatusTaskItems(reorderDetail: { from: number, to: number }, taskItem: InterfaceTask): void {
+  reorderStatusTaskItems(reorderDetail: { from: number, to: number }, taskItem: InterfaceTask, taskActiveItems): void {
+    console.log(taskActiveItems);
     let targetItem: InterfaceTask;
     if (reorderDetail.from < reorderDetail.to) {
-      console.log('taskItem from < to', taskItem);
     } else if (reorderDetail.to < reorderDetail.from) {
-      console.log('taskItem from > to', taskItem);
     }
   }
 

@@ -130,7 +130,7 @@ export class TaskPage implements OnInit {
     const itemMove = this.taskActiveItems.splice(ev.detail.from, 1)[0];
     this.taskActiveItems.splice(ev.detail.to, 0, itemMove);
     ev.detail.complete();
-    this.logic.reorderStatusTaskItems(ev.detail, itemMove);
+    this.logic.reorderStatusTaskItems(ev.detail, itemMove, this.taskActiveItems);
   }
 
   navigateToTaskDetail(task, segment): void {

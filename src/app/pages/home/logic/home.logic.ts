@@ -51,7 +51,6 @@ export class HomeLogic {
       tel: formContent.get('tel').value,
       iconImage: formContent.get('iconImage').value,
     };
-    console.log(`requestContent: ${requestContent}`);
     return this.homeService.createUser(requestContent);
   }
 
