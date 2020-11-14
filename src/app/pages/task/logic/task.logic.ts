@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { from, Observable, of } from 'rxjs';
-import { map, filter, mergeMap, toArray, flatMap } from 'rxjs/operators';
+import { from, merge, Observable, of } from 'rxjs';
+import { map, filter, mergeMap, toArray, flatMap, switchMap, skipWhile } from 'rxjs/operators';
 import { GetRoomQuery } from 'src/app/shared/service/amplify.service';
 import { SessionService } from '../../../shared/service/session.service';
 import { v4 as uuid } from 'uuid';
@@ -97,12 +97,31 @@ export class TaskLogic {
       .pipe(toArray());
   }
 
-  reorderStatusTaskItems(reorderDetail: { from: number, to: number }, taskItem: InterfaceTask, taskActiveItems): void {
-    console.log(taskActiveItems);
-    let targetItem: InterfaceTask;
-    if (reorderDetail.from < reorderDetail.to) {
-    } else if (reorderDetail.to < reorderDetail.from) {
+  reorderStatusTaskItems(reorderDetail: { from: number, to: number }, taskActiveItems: Array<InterfaceTask>): void {
+    const isFromGreaterTo = reorderDetail.from < reorderDetail.to;
+    const targetReorderItem = taskActiveItems.find(item => item.priority === reorderDetail.from);
+    if (isFromGreaterTo) {
+      const itemsActive = this.ToGreaterThanFrom(reorderDetail, targetReorderItem, taskActiveItems)
+    } else {
+      const itemsActive = this.fromGreaterThanTo(reorderDetail, targetReorderItem, taskActiveItems);
     }
+    // this.taskService.updateTaskStatusForReorder(targetReorderItem, reorderDetail.to)
+    //   .pipe(
+    //     switchMap(() =>
+    //       isFromGreaterTo ? this.reorderToGreaterThenFrom(reorderDetail, taskActiveItems) : this.updateToFrom(taskActiveItems, reorderDetail))
+    //   )
+    //   .subscribe((data) => {
+    //     console.log('taskActiveItems', data);
+    //   })
+  }
+
+  ToGreaterThanFrom(reorderDetail, targetReorderItem, activeItems): any {
+    return from(activeItems)
+      .pipe(skipWhile((item: InterfaceTask) => reorderDetail.from <= item.priority))
+  }
+
+  fromGreaterThanTo(reorderDetail, targetReorderItem, activeItems): Observable<any> {
+    return of({});
   }
 
   deleteTaskItem(taskId: string): Observable<any> {

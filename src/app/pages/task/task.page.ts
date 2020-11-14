@@ -66,7 +66,6 @@ export class TaskPage implements OnInit {
     this.logic.fetchActiveTaskPerRoom(this.roomId)
       .subscribe((items) => {
         this.taskActiveItems = items.sort(this.logic.compareTaskArray);
-        console.log('taskActiveItems', this.taskActiveItems);
       })
     this.logic.fetchDoneTaskPerRoom(this.roomId)
       .subscribe((items) => {
@@ -130,7 +129,7 @@ export class TaskPage implements OnInit {
     const itemMove = this.taskActiveItems.splice(ev.detail.from, 1)[0];
     this.taskActiveItems.splice(ev.detail.to, 0, itemMove);
     ev.detail.complete();
-    this.logic.reorderStatusTaskItems(ev.detail, itemMove, this.taskActiveItems);
+    this.logic.reorderStatusTaskItems(ev.detail, this.taskActiveItems);
   }
 
   navigateToTaskDetail(task, segment): void {

@@ -36,12 +36,22 @@ export class TaskService {
     return from(this.amplifyService.UpdateTask(content));
   }
 
-  updateTaskStatusForReorder(taskItem: InterfaceTask): Observable<any> {
+  updateTaskStatusForReorder(taskItem: InterfaceTask, reorderIndex: number): Observable<any> {
     const content = {
       id: taskItem.id,
-      priority: taskItem.priority
+      priority: reorderIndex
     }
     return from(this.amplifyService.UpdateTask(content));
+  }
+
+  updateFromTo(taskActiveItems): Observable<any> {
+    console.log('Service taskItems', taskActiveItems);
+    return of('taskActiveItems', taskActiveItems);
+  }
+
+  updateToFrom(taskActiveItems, reorderDetail): Observable<any> {
+    console.log('toFrom', taskActiveItems);
+    return of(taskActiveItems);
   }
 
   fetchTaskItemsPerRoom(content): Observable<ListTasksQuery> {
