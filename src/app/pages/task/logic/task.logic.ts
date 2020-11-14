@@ -101,7 +101,7 @@ export class TaskLogic {
     const isFromGreaterTo = reorderDetail.from < reorderDetail.to;
     const targetReorderItem = taskActiveItems.find(item => item.priority === reorderDetail.from);
     if (isFromGreaterTo) {
-      const itemsActive = this.ToGreaterThanFrom(reorderDetail, targetReorderItem, taskActiveItems)
+      const itemsActive = this.toGreaterThanFrom(reorderDetail, targetReorderItem, taskActiveItems)
     } else {
       const itemsActive = this.fromGreaterThanTo(reorderDetail, targetReorderItem, taskActiveItems);
     }
@@ -115,7 +115,7 @@ export class TaskLogic {
     //   })
   }
 
-  ToGreaterThanFrom(reorderDetail, targetReorderItem, activeItems): any {
+  toGreaterThanFrom(reorderDetail, targetReorderItem, activeItems): any {
     return from(activeItems)
       .pipe(skipWhile((item: InterfaceTask) => reorderDetail.from <= item.priority))
   }
