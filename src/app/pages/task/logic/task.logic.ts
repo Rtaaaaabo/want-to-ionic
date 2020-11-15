@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { from, merge, Observable, of } from 'rxjs';
-import { map, filter, mergeMap, toArray, flatMap, switchMap, skipWhile } from 'rxjs/operators';
+import { map, filter, mergeMap, toArray, flatMap, switchMap, skipWhile, takeWhile } from 'rxjs/operators';
 import { GetRoomQuery } from 'src/app/shared/service/amplify.service';
 import { SessionService } from '../../../shared/service/session.service';
 import { v4 as uuid } from 'uuid';
@@ -121,9 +121,9 @@ export class TaskLogic {
     console.log('active Items', activeItems);
     console.log('reorderDetail', reorderDetail);
     return from(activeItems)
-      .pipe(skipWhile((item: InterfaceTask) => reorderDetail.from < item.priority))
-      .pipe(skipWhile((item: InterfaceTask) => reorderDetail.to >= item.priority))
-      .pipe(toArray());
+      .pipe(filter((item: InterfaceTask) => (reorderDetail.from < item.priority)))
+      .pipe(filter((item: InterfaceTask) => (item.priority <= reorderDetail.to)))
+      .pipe(toArray())
   }
 
   fromGreaterThanTo(reorderDetail, targetReorderItem, activeItems): Observable<any> {
