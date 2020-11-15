@@ -101,10 +101,11 @@ export class TaskLogic {
     const isFromGreaterTo = reorderDetail.from < reorderDetail.to;
     const targetReorderItem = taskActiveItems.find(item => item.priority === reorderDetail.from);
     if (isFromGreaterTo) {
-      const itemsActive = this.toGreaterThanFrom(reorderDetail, targetReorderItem, taskActiveItems)
-      console.log('itemsActive', itemsActive);
+      this.toGreaterThanFrom(reorderDetail, targetReorderItem, taskActiveItems).subscribe((data) => {
+        console.log('subscribe data', data);
+      })
     } else {
-      const itemsActive = this.fromGreaterThanTo(reorderDetail, targetReorderItem, taskActiveItems);
+      this.fromGreaterThanTo(reorderDetail, targetReorderItem, taskActiveItems)
     }
     // this.taskService.updateTaskStatusForReorder(targetReorderItem, reorderDetail.to)
     //   .pipe(
@@ -116,15 +117,13 @@ export class TaskLogic {
     //   })
   }
 
-  toGreaterThanFrom(reorderDetail, targetReorderItem, activeItems): any {
+  toGreaterThanFrom(reorderDetail, targetReorderItem, activeItems): Observable<any> {
+    console.log('active Items', activeItems);
+    console.log('reorderDetail', reorderDetail);
     return from(activeItems)
       .pipe(skipWhile((item: InterfaceTask) => reorderDetail.from < item.priority))
       .pipe(skipWhile((item: InterfaceTask) => reorderDetail.to >= item.priority))
-      .pipe(toArray())
-      .subscribe((data) => {
-        console.log(data);
-        return data
-      });
+      .pipe(toArray());
   }
 
   fromGreaterThanTo(reorderDetail, targetReorderItem, activeItems): Observable<any> {
