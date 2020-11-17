@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ModalController, ToastController, ActionSheetController } from '@ionic/angular';
+import { ItemReorderEventDetail } from '@ionic/core';
+import { ModalController, ToastController, ActionSheetController, LoadingController } from '@ionic/angular';
 import { from, of } from 'rxjs';
-import { flatMap, switchMap, tap, map, catchError, mergeMap } from 'rxjs/operators';
+import { flatMap, switchMap, tap, map, catchError, concatMap, toArray, take } from 'rxjs/operators';
 import { GetRoomQuery, ListUsersQuery } from 'src/app/shared/service/amplify.service';
 import { AddTaskModalComponent } from '../../shared/component/modal/add-task-modal/add-task-modal.component';
 import { TaskLogic } from './logic/task.logic';
@@ -25,10 +26,10 @@ export class TaskPage implements OnInit {
   taskDoneItems;
   isReorder: boolean;
   segment: string;
+  companyId: number | string;
   companyMembers: Array<ListUsersQuery>;
   roomMembers: Array<ListRoomGroupsQuery>;
   user;
-  companyId: number | string;
   dismissData;
 
   constructor(
@@ -63,10 +64,10 @@ export class TaskPage implements OnInit {
       .subscribe(({ items }) => {
         this.companyMembers = items;
       });
-    this.logic.fetchActiveTaskPerRoom(this.roomId).subscribe((items) => {
-      this.taskActiveItems = items.sort(this.logic.compareTaskArray);
-      console.log('taskActiveItems', this.taskActiveItems);
-    })
+    this.logic.fetchActiveTaskPerRoom(this.roomId)
+      .subscribe((items) => {
+        this.taskActiveItems = items.sort(this.logic.compareTaskArray);
+      })
     this.logic.fetchDoneTaskPerRoom(this.roomId).subscribe((items) => {
       this.taskDoneItems = items;
     })
@@ -95,10 +96,10 @@ export class TaskPage implements OnInit {
     const dismissObservable = from(modal.onDidDismiss());
     dismissObservable
       .pipe(map(({ data }) => this.dismissData = data))
-      .pipe(mergeMap(() => this.logic.fetchActiveTaskPerRoom(this.roomId)))
+      .pipe(concatMap(() => this.logic.fetchActiveTaskPerRoom(this.roomId)))
       .pipe(switchMap((arrayActiveItems) => arrayActiveItems.length !== 0 ? this.logic.updateStatusTaskItems(arrayActiveItems) : of(arrayActiveItems)))
-      .pipe(mergeMap(() => this.logic.createTaskToRoom(this.dismissData, this.roomId, this.userEmail, this.userId)))
-      .pipe(mergeMap(() => this.logic.fetchActiveTaskPerRoom(this.roomId)))
+      .pipe(concatMap(() => this.logic.createTaskToRoom(this.dismissData, this.roomId, this.userEmail, this.userId)))
+      .pipe(concatMap(() => this.logic.fetchActiveTaskPerRoom(this.roomId)))
       .subscribe((items) => {
         this.taskActiveItems = items.sort(this.logic.compareTaskArray);
       });
@@ -116,21 +117,23 @@ export class TaskPage implements OnInit {
   get isCheckFabButton(): boolean {
     if (this.segment === 'active' && !this.isReorder) {
       return true;
-    } else if (this.isReorder && this.segment === 'active') {
+    } else if (this.segment === 'active' && this.isReorder) {
       return false;
     } else {
       return false;
     }
   }
 
-  reorderTask(ev): void {
+  reorderTask(ev: CustomEvent<ItemReorderEventDetail>): void {
     const itemMove = this.taskActiveItems.splice(ev.detail.from, 1)[0];
     this.taskActiveItems.splice(ev.detail.to, 0, itemMove);
     ev.detail.complete();
     this.logic.reorderStatusTaskItems(ev.detail, this.taskActiveItems)
-      .pipe(mergeMap(() => this.logic.fetchActiveTaskPerRoom(this.roomId)))
+      .pipe(concatMap(() => this.logic.fetchActiveTaskPerRoom(this.roomId)))
+      .pipe(take(1))
       .subscribe((items) => {
-        this.taskActiveItems = items.sort(this.logic.compareTaskArray);
+        console.log('[activeItems] ここは一回のみの実行', items);
+        this.taskActiveItems = items;
       })
   }
 
@@ -161,14 +164,12 @@ export class TaskPage implements OnInit {
         {
           text: '削除',
           role: 'destructive',
-          icon: 'trash',
           handler: () => {
             this.deleteTask(task)
           }
         },
         {
           text: 'キャンセル',
-          icon: 'close',
           role: 'cancel',
         }
       ]

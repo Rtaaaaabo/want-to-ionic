@@ -31,6 +31,7 @@ export class TaskService {
   }
 
   updateTaskStatusItem(taskItem: InterfaceTask): Observable<any> {
+    console.log('updateTaskStatusService');
     const content = {
       id: taskItem.id,
       priority: taskItem.priority + 1,
@@ -43,6 +44,7 @@ export class TaskService {
       id: taskItem.id,
       priority: taskItem.priority - 1
     }
+    console.log('[updateTaskStatusForReorder] ここは２回走って大丈夫！');
     return from(this.amplifyService.UpdateTask(content));
   }
 
