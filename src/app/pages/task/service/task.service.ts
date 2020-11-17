@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AmplifyService, GetRoomQuery, GetUserQuery, ListTasksQuery } from '../../../shared/service/amplify.service';
 import { Observable, from, of } from 'rxjs';
 import { InterfaceTask } from 'src/app/interfaces/task.interface';
+import { catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,8 @@ export class TaskService {
   }
 
   createTaskItem(content): Observable<any> {
-    return from(this.amplifyService.CreateTask(content));
+    return from(this.amplifyService.CreateTask(content))
+      .pipe(catchError(error => of(error)));
   }
 
   createRoomGroup(content): Observable<any> {

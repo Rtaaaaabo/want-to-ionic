@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { from, merge, Observable, of } from 'rxjs';
+import { from, Observable, of } from 'rxjs';
 import { map, filter, mergeMap, toArray, flatMap, switchMap, skipWhile, takeWhile } from 'rxjs/operators';
 import { GetRoomQuery } from 'src/app/shared/service/amplify.service';
 import { SessionService } from '../../../shared/service/session.service';
@@ -45,6 +45,7 @@ export class TaskLogic {
         status: 0,
         priority: 0,
       }
+      console.log('task content', content);
       return this.taskService.createTaskItem(content);
     }
   }
@@ -97,36 +98,41 @@ export class TaskLogic {
       .pipe(toArray());
   }
 
-  reorderStatusTaskItems(reorderDetail: { from: number, to: number }, taskActiveItems: Array<InterfaceTask>): void {
+  reorderStatusTaskItems(reorderDetail: { from: number, to: number }, taskActiveItems: Array<InterfaceTask>): Observable<any> {
     const isFromGreaterTo = reorderDetail.from < reorderDetail.to;
-    const targetReorderItem = taskActiveItems.find(item => item.priority === reorderDetail.from);
+    const targetReorderItem = taskActiveItems.find((item) => item.priority === reorderDetail.from);
+    console.log('targetReorderItem', targetReorderItem);
     if (isFromGreaterTo) {
-      this.taskService.updateTaskStatusItem(targetReorderItem)
-        .pipe(mergeMap(() => this.toGreaterThanFrom(reorderDetail, taskActiveItems)))
-        .pipe(mergeMap((result) => this.taskService.updateTaskStatusForReorder(result)))
-        .pipe(toArray())
-        .subscribe((data) => {
-          console.log(data);
-        });
+      return this.toGreaterThanFrom(reorderDetail, taskActiveItems)  // 対象Itemsをチェック
+        .pipe(mergeMap((result) => this.taskService.updateTaskStatusForReorder(result))) // 対象Itemsをマイナス１にする
+        .pipe(mergeMap(() => this.setTargetItemPriority(targetReorderItem, reorderDetail))) // ReorderしたItemのPriorityを変更する
     } else {
-      this.fromGreaterThanTo(reorderDetail, taskActiveItems)
-        .subscribe((data) => { console.log(data) });
+      return this.fromGreaterThanTo(reorderDetail, taskActiveItems)
+        .pipe(mergeMap((result) => this.taskService.updateTaskStatusItem(result)))
+        .pipe(mergeMap(() => this.setTargetItemPriority(targetReorderItem, reorderDetail)))
     }
   }
 
   toGreaterThanFrom(reorderDetail, activeItems): Observable<InterfaceTask> {
     return from(activeItems)
-      .pipe(filter((item: InterfaceTask) => (reorderDetail.from < item.priority)))
+      .pipe(filter((item: InterfaceTask) => (reorderDetail.from <= item.priority)))
       .pipe(filter((item: InterfaceTask) => (item.priority <= reorderDetail.to)))
   }
 
-
-
-  fromGreaterThanTo(reorderDetail, activeItems): Observable<Array<InterfaceTask>> {
+  fromGreaterThanTo(reorderDetail, activeItems): Observable<InterfaceTask> {
     return from(activeItems)
-      .pipe(filter((item: InterfaceTask) => (reorderDetail.to < item.priority)))
+      .pipe(filter((item: InterfaceTask) => (reorderDetail.to <= item.priority)))
       .pipe(filter((item: InterfaceTask) => (item.priority <= reorderDetail.from)))
-      .pipe(toArray());
+  }
+
+  setTargetItemPriority(targetReorderItem, reorderItem): Observable<any> {
+    const targetPriorityNumber = reorderItem.to;
+    const content = {
+      id: targetReorderItem.id,
+      priority: targetPriorityNumber,
+    }
+    console.log('setTargetItemPriority content', content);
+    return this.taskService.updateTaskItem(content);
   }
 
   deleteTaskItem(taskId: string): Observable<any> {

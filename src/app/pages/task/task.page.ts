@@ -63,18 +63,16 @@ export class TaskPage implements OnInit {
       .subscribe(({ items }) => {
         this.companyMembers = items;
       });
-    this.logic.fetchActiveTaskPerRoom(this.roomId)
-      .subscribe((items) => {
-        this.taskActiveItems = items.sort(this.logic.compareTaskArray);
-      })
-    this.logic.fetchDoneTaskPerRoom(this.roomId)
-      .subscribe((items) => {
-        this.taskDoneItems = items;
-      })
-    this.logic.fetchMemberListOnRoom(this.roomId)
-      .subscribe(({ items }) => {
-        this.roomMembers = items
-      });
+    this.logic.fetchActiveTaskPerRoom(this.roomId).subscribe((items) => {
+      this.taskActiveItems = items.sort(this.logic.compareTaskArray);
+      console.log('taskActiveItems', this.taskActiveItems);
+    })
+    this.logic.fetchDoneTaskPerRoom(this.roomId).subscribe((items) => {
+      this.taskDoneItems = items;
+    })
+    this.logic.fetchMemberListOnRoom(this.roomId).subscribe(({ items }) => {
+      this.roomMembers = items
+    });
   }
 
   async presentDoneToast(): Promise<void> {
@@ -129,7 +127,11 @@ export class TaskPage implements OnInit {
     const itemMove = this.taskActiveItems.splice(ev.detail.from, 1)[0];
     this.taskActiveItems.splice(ev.detail.to, 0, itemMove);
     ev.detail.complete();
-    this.logic.reorderStatusTaskItems(ev.detail, this.taskActiveItems);
+    this.logic.reorderStatusTaskItems(ev.detail, this.taskActiveItems)
+      .pipe(mergeMap(() => this.logic.fetchActiveTaskPerRoom(this.roomId)))
+      .subscribe((items) => {
+        this.taskActiveItems = items.sort(this.logic.compareTaskArray);
+      })
   }
 
   navigateToTaskDetail(task, segment): void {
