@@ -101,7 +101,6 @@ export class TaskLogic {
   reorderStatusTaskItems(reorderDetail: { from: number, to: number }, taskActiveItems: Array<InterfaceTask>): Observable<any> {
     const isFromGreaterTo = reorderDetail.from < reorderDetail.to;
     const targetReorderItem = taskActiveItems.find((item) => item.priority === reorderDetail.from);
-    console.log('targetReorderItem', targetReorderItem);
     if (isFromGreaterTo) {
       return this.toGreaterThanFrom(reorderDetail, taskActiveItems)  // 対象Itemsをチェック
         .pipe(mergeMap((result) => this.taskService.updateTaskStatusForReorder(result))) // 対象Itemsをマイナス１にする
