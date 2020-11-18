@@ -19,7 +19,7 @@ export class TaskService {
 
   createTaskItem(content): Observable<any> {
     return from(this.amplifyService.CreateTask(content))
-      .pipe(catchError(error => of(error)));
+      .pipe(catchError((error) => of(error)));
   }
 
   createRoomGroup(content): Observable<any> {
@@ -30,8 +30,7 @@ export class TaskService {
     return from(this.amplifyService.UpdateTask(content));
   }
 
-  updateTaskStatusItem(taskItem: InterfaceTask): Observable<any> {
-    console.log('updateTaskStatusService');
+  updateTaskStatusItem(taskItem): Observable<any> {
     const content = {
       id: taskItem.id,
       priority: taskItem.priority + 1,
@@ -44,17 +43,14 @@ export class TaskService {
       id: taskItem.id,
       priority: taskItem.priority - 1
     }
-    console.log('[updateTaskStatusForReorder] ここは２回走って大丈夫！');
     return from(this.amplifyService.UpdateTask(content));
   }
 
   updateFromTo(taskActiveItems): Observable<any> {
-    console.log('Service taskItems', taskActiveItems);
     return of('taskActiveItems', taskActiveItems);
   }
 
   updateToFrom(taskActiveItems, reorderDetail): Observable<any> {
-    console.log('toFrom', taskActiveItems);
     return of(taskActiveItems);
   }
 

@@ -28,7 +28,7 @@ export class TaskLogic {
       .pipe(map((res) => res.attributes));
   }
 
-  createTaskToRoom(dismissData, roomId, email, userId): Observable<any> {
+  createTaskToRoom(dismissData, roomId, userId): Observable<any> {
     const iosStringDate = (new Date()).toISOString();
     if (dismissData === undefined) {
       return of({});
@@ -37,15 +37,14 @@ export class TaskLogic {
         id: `${uuid()}`,
         authorID: `${userId}`,
         roomID: `${roomId}`,
-        chargePersonID: dismissData.chargePersonId,
-        title: dismissData.nameItem,
-        description: dismissData.descriptionItem,
-        scheduleDate: dismissData.scheduleDateItem,
-        createdAt: iosStringDate,
+        chargePersonID: `${dismissData.chargePersonId}`,
+        title: `${dismissData.nameItem}`,
+        description: `${dismissData.descriptionItem}`,
+        scheduleDate: `${dismissData.scheduleDateItem}`,
+        createdAt: `${iosStringDate}`,
         status: 0,
         priority: 0,
       }
-      console.log('task content', content);
       return this.taskService.createTaskItem(content);
     }
   }
@@ -65,9 +64,10 @@ export class TaskLogic {
         eq: `${roomId}`
       }
     }
+    console.log('fetchActiveTaskPerRoom', filterContent);
     return this.taskService.fetchTaskItemsPerRoom(filterContent)
       .pipe(concatMap((res) => res.items))
-      .pipe(filter(data => data.status < 10))
+      .pipe(filter((data) => data.status < 10))
       .pipe(toArray());
   }
 
@@ -93,28 +93,20 @@ export class TaskLogic {
 
   updateStatusTaskItems(taskItems): Observable<any> {
     return from(taskItems)
-      .pipe(flatMap((result: InterfaceTask) =>
+      .pipe(concatMap((result: InterfaceTask) =>
         this.taskService.updateTaskStatusItem(result)))
       .pipe(toArray());
   }
 
   reorderStatusTaskItems(reorderDetail: { from: number, to: number }, taskActiveItems: Array<InterfaceTask>): Observable<any> {
     const isFromGreaterTo = reorderDetail.from < reorderDetail.to;
-    const targetReorderItem = taskActiveItems.find((item) => item.priority === reorderDetail.from);
-    console.log('targetReorderItem', targetReorderItem);
     if (isFromGreaterTo) {
       return this.toGreaterThanFrom(reorderDetail, taskActiveItems)  // 対象Itemsをチェック
         .pipe(concatMap((result) => this.taskService.updateTaskStatusForReorder(result))) // 対象Itemsをマイナス１にする(サーバー側をUpdateするのみの処理でいいかと)
-      // .pipe(concatMap(() => this.setTargetItemPriority(targetReorderItem, reorderDetail))) // ReorderしたItemのPriorityを変更する
     } else {
       return this.fromGreaterThanTo(reorderDetail, taskActiveItems) // 対象Itemsをチェック
         .pipe(concatMap((result) => this.taskService.updateTaskStatusItem(result))) //対象Itemsをプラス1にする
-      // .pipe(concatMap(() => this.setTargetItemPriority(targetReorderItem, reorderDetail))) // ReorderしたItemのPriorityを Toの値に修正する
     }
-  }
-
-  updateReorderTargetItems(): Observable<any> {
-    return of({});
   }
 
   toGreaterThanFrom(reorderDetail, activeItems): Observable<InterfaceTask> {
@@ -128,6 +120,13 @@ export class TaskLogic {
       .pipe(filter((item: InterfaceTask) => (reorderDetail.to <= item.priority)))
       .pipe(filter((item: InterfaceTask) => (item.priority <= reorderDetail.from)))
   }
+
+  updateReorderTargetItems(reorderDetail: { from: number, to: number }, taskActiveItems: Array<InterfaceTask>): Observable<any> {
+    const targetReorderItem = taskActiveItems.find((item) => item.priority === reorderDetail.from);
+    return this.setTargetItemPriority(targetReorderItem, reorderDetail)
+  }
+
+
 
   setTargetItemPriority(targetReorderItem, reorderItem): Observable<any> {
     const targetPriorityNumber = reorderItem.to;

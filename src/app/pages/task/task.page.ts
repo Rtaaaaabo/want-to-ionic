@@ -67,6 +67,7 @@ export class TaskPage implements OnInit {
     this.logic.fetchActiveTaskPerRoom(this.roomId)
       .subscribe((items) => {
         this.taskActiveItems = items.sort(this.logic.compareTaskArray);
+        console.log(this.taskActiveItems);
       })
     this.logic.fetchDoneTaskPerRoom(this.roomId).subscribe((items) => {
       this.taskDoneItems = items;
@@ -96,11 +97,11 @@ export class TaskPage implements OnInit {
     const dismissObservable = from(modal.onDidDismiss());
     dismissObservable
       .pipe(map(({ data }) => this.dismissData = data))
-      .pipe(concatMap(() => this.logic.fetchActiveTaskPerRoom(this.roomId)))
-      .pipe(switchMap((arrayActiveItems) => arrayActiveItems.length !== 0 ? this.logic.updateStatusTaskItems(arrayActiveItems) : of(arrayActiveItems)))
-      .pipe(concatMap(() => this.logic.createTaskToRoom(this.dismissData, this.roomId, this.userEmail, this.userId)))
+      .pipe(switchMap(() => this.taskActiveItems.length !== 0 ? this.logic.updateStatusTaskItems(this.taskActiveItems) : of(this.taskActiveItems)))
+      .pipe(concatMap(() => this.logic.createTaskToRoom(this.dismissData, this.roomId, this.userId)))
       .pipe(concatMap(() => this.logic.fetchActiveTaskPerRoom(this.roomId)))
       .subscribe((items) => {
+        console.log(items);
         this.taskActiveItems = items.sort(this.logic.compareTaskArray);
       });
     return modal.present();
@@ -129,11 +130,12 @@ export class TaskPage implements OnInit {
     this.taskActiveItems.splice(ev.detail.to, 0, itemMove);
     ev.detail.complete();
     this.logic.reorderStatusTaskItems(ev.detail, this.taskActiveItems)
-      .pipe(concatMap(() => this.logic.fetchActiveTaskPerRoom(this.roomId)))
+      .pipe(concatMap(() => this.logic.updateReorderTargetItems(ev.detail, this.taskActiveItems)))
       .pipe(take(1))
+      .pipe(concatMap(() => this.logic.fetchActiveTaskPerRoom(this.roomId)))
       .subscribe((items) => {
-        console.log('[activeItems] ここは一回のみの実行', items);
         this.taskActiveItems = items;
+        console.log('task active items', this.taskActiveItems);
       })
   }
 
@@ -155,7 +157,8 @@ export class TaskPage implements OnInit {
     const presentToast = from(this.presentDoneToast());
     this.logic.updateDoneTaskItem(taskFormItem, 10)
       .pipe(flatMap(() => this.logic.fetchActiveTaskPerRoom(this.roomId)))
-      .pipe(tap(() => presentToast)).subscribe((data) => this.taskActiveItems = data);
+      .pipe(tap(() => presentToast))
+      .subscribe((data) => { this.taskActiveItems = data });
   }
 
   async presentConfirmDelete(task): Promise<void> {
