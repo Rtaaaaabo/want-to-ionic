@@ -49,24 +49,22 @@ export class TaskPage implements OnInit {
     this.isReorder = false;
     this.segment = 'active';
     this.roomId = this.route.snapshot.paramMap.get('id');
-    this.logic.fetchCurrentUserInfo()
-      .pipe(map((res: CurrentUserInfo) => {
-        this.userEmail = res.email;
-        this.userId = res.sub;
-      }))
-      .pipe(concatMap(() => this.logic.fetchUserInfoFromAmplify(this.userId)))
-      .pipe(map((user) => this.user = user))
-      .pipe(map((user) => this.companyId = user.companyID))
-      .pipe(concatMap(() => this.logic.fetchCompanyMember(this.user.companyID)))
-      .subscribe(({ items }) => {
-        this.companyMembers = items;
-      });
     forkJoin({
+      companyUser: this.logic.fetchCurrentUserInfo()
+        .pipe(map((res: CurrentUserInfo) => {
+          this.userEmail = res.email;
+          this.userId = res.sub;
+        }))
+        .pipe(concatMap(() => this.logic.fetchUserInfoFromAmplify(this.userId)))
+        .pipe(map((user) => this.user = user))
+        .pipe(map((user) => this.companyId = user.companyID))
+        .pipe(concatMap(() => this.logic.fetchCompanyMember(this.user.companyID))),
       activeTaskItems: this.logic.fetchActiveTaskPerRoom(this.roomId),
       doneTaskItems: this.logic.fetchDoneTaskPerRoom(this.roomId),
       room: this.logic.fetchRoomInfo(this.roomId),
       roomMembers: this.logic.fetchMemberListOnRoom(this.roomId),
     }).subscribe((data) => {
+      this.companyMembers = data.companyUser;
       this.taskActiveItems = data.activeTaskItems;
       this.taskDoneItems = data.doneTaskItems;
       this.room = data.room;
