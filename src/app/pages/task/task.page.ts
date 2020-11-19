@@ -28,8 +28,8 @@ export class TaskPage implements OnInit {
   isReorder: boolean;
   segment: string;
   companyId: number | string;
-  companyMembers: Array<ListUsersQuery>;
-  roomMembers: Array<ListRoomGroupsQuery>;
+  companyMembers: ListUsersQuery;
+  roomMembers: ListRoomGroupsQuery;
   user;
   dismissData: TaskFormModel;
   taskActiveItems;
@@ -70,7 +70,7 @@ export class TaskPage implements OnInit {
       this.taskActiveItems = data.activeTaskItems;
       this.taskDoneItems = data.doneTaskItems;
       this.room = data.room;
-      this.roomMembers = data.roomMembers.items;
+      this.roomMembers = data.roomMembers;
     });
   }
 

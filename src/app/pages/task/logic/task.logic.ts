@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { from, Observable, of } from 'rxjs';
 import { map, filter, mergeMap, toArray, flatMap, switchMap, skipWhile, takeWhile, concatMap, take } from 'rxjs/operators';
-import { CreateRoomGroupMutation, CreateTaskMutation, GetRoomQuery, ListTasksQuery } from 'src/app/shared/service/amplify.service';
+import { CreateRoomGroupMutation, CreateTaskMutation, DeleteTaskMutation, GetRoomQuery, GetUserQuery, ListRoomGroupsQuery, ListRoomsQuery, ListTasksQuery, ListUsersQuery, UpdateTaskMutation } from 'src/app/shared/service/amplify.service';
 import { SessionService } from '../../../shared/service/session.service';
 import { v4 as uuid } from 'uuid';
 import { TaskService } from '../service/task.service';
@@ -82,7 +82,7 @@ export class TaskLogic {
       .pipe(toArray());
   }
 
-  updateDoneTaskItem(taskFormItem, status): Observable<any> {
+  updateDoneTaskItem(taskFormItem, status): Observable<UpdateTaskMutation> {
     const content = {
       id: taskFormItem.id,
       status: status,
@@ -90,14 +90,14 @@ export class TaskLogic {
     return this.taskService.updateTaskItem(content);
   }
 
-  updateStatusTaskItems(taskItems): Observable<any> {
+  updateStatusTaskItems(taskItems): Observable<Array<UpdateTaskMutation>> {
     return from(taskItems)
       .pipe(concatMap((result: InterfaceTask) =>
         this.taskService.updateTaskStatusItem(result)))
       .pipe(toArray());
   }
 
-  reorderStatusTaskItems(reorderDetail: { from: number, to: number }, taskActiveItems: Array<InterfaceTask>): Observable<any> {
+  reorderStatusTaskItems(reorderDetail: { from: number, to: number }, taskActiveItems: Array<InterfaceTask>): Observable<UpdateTaskMutation> {
     const isFromGreaterTo = reorderDetail.from < reorderDetail.to;
     if (isFromGreaterTo) {
       return this.toGreaterThanFrom(reorderDetail, taskActiveItems)  // 対象Itemsをチェック
@@ -120,12 +120,12 @@ export class TaskLogic {
       .pipe(filter((item: InterfaceTask) => (item.priority <= reorderDetail.from)))
   }
 
-  updateReorderTargetItems(reorderDetail: { from: number, to: number }, taskActiveItems: Array<InterfaceTask>): Observable<any> {
+  updateReorderTargetItems(reorderDetail: { from: number, to: number }, taskActiveItems: Array<InterfaceTask>): Observable<UpdateTaskMutation> {
     const targetReorderItem = taskActiveItems.find((item) => item.priority === reorderDetail.from);
     return this.setTargetItemPriority(targetReorderItem, reorderDetail)
   }
 
-  setTargetItemPriority(targetReorderItem, reorderItem): Observable<any> {
+  setTargetItemPriority(targetReorderItem, reorderItem): Observable<UpdateTaskMutation> {
     const targetPriorityNumber = reorderItem.to;
     const content = {
       id: targetReorderItem.id,
@@ -134,18 +134,18 @@ export class TaskLogic {
     return this.taskService.updateTaskItem(content);
   }
 
-  deleteTaskItem(taskId: string): Observable<any> {
+  deleteTaskItem(taskId: string): Observable<DeleteTaskMutation> {
     const content = {
       id: `${taskId}`,
     }
     return this.taskService.deleteTaskItem(content);
   }
 
-  fetchUserInfoFromAmplify(userId: string): Observable<any> {
+  fetchUserInfoFromAmplify(userId: string): Observable<GetUserQuery> {
     return this.taskService.fetchUserInfo(userId);
   }
 
-  fetchCompanyMember(companyId: string, queryFilterUser?: string): Observable<any> {
+  fetchCompanyMember(companyId: string, queryFilterUser?: string): Observable<ListUsersQuery> {
     const filterContent = {
       companyID: {
         eq: `${companyId}`
@@ -157,7 +157,7 @@ export class TaskLogic {
     return this.taskService.fetchCompanyMember(filterContent);
   }
 
-  fetchMemberListOnRoom(roomId: string | number): Observable<any> {
+  fetchMemberListOnRoom(roomId: string | number): Observable<ListRoomGroupsQuery> {
     const filterContent = {
       roomID: {
         eq: `${roomId}`

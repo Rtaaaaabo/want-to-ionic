@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { ListRoomGroupsQuery } from 'src/app/shared/service/amplify.service';
 
 @Component({
   selector: 'app-add-task-modal',
@@ -20,11 +21,11 @@ export class AddTaskModalComponent implements OnInit {
   minYear: string = '';
   maxYear: string = '';
   currentIsoString: string;
+  roomMembers: ListRoomGroupsQuery;
 
   room;
   taskDetail;
   userList;
-  roomMembers;
 
 
   constructor(

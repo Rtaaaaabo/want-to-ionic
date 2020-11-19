@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import { ListUsersQuery } from 'src/app/shared/service/amplify.service';
 import { TaskLogic } from '../../logic/task.logic';
 
 @Component({
@@ -10,7 +11,7 @@ import { TaskLogic } from '../../logic/task.logic';
 export class AddPersonModalComponent implements OnInit {
 
   arraySelectedPersonId: Array<string>;
-  members;
+  companyMembers: ListUsersQuery;
   users;
   companyId: string;
 
@@ -45,8 +46,8 @@ export class AddPersonModalComponent implements OnInit {
 
   searchPerson(ev) {
     this.logic.fetchCompanyMember(this.companyId, ev.detail.value)
-      .subscribe(({ items }) => {
-        this.members = items;
+      .subscribe((items) => {
+        this.companyMembers = items;
       })
   }
 
