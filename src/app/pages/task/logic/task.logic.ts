@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { from, Observable, of } from 'rxjs';
 import { map, filter, mergeMap, toArray, flatMap, switchMap, skipWhile, takeWhile, concatMap, take } from 'rxjs/operators';
-import { GetRoomQuery } from 'src/app/shared/service/amplify.service';
+import { CreateRoomGroupMutation, CreateTaskMutation, GetRoomQuery, ListTasksQuery } from 'src/app/shared/service/amplify.service';
 import { SessionService } from '../../../shared/service/session.service';
 import { v4 as uuid } from 'uuid';
 import { TaskService } from '../service/task.service';
@@ -28,10 +28,10 @@ export class TaskLogic {
       .pipe(map((res) => res.attributes));
   }
 
-  createTaskToRoom(dismissData, roomId, userId): Observable<any> {
+  createTaskToRoom(dismissData, roomId, userId): Observable<CreateTaskMutation> {
     const iosStringDate = (new Date()).toISOString();
     if (dismissData === undefined) {
-      return of({});
+      return of();
     } else {
       const content = {
         id: `${uuid()}`,
@@ -49,7 +49,7 @@ export class TaskLogic {
     }
   }
 
-  createRoomGroup(userId, roomId): Observable<any> {
+  createRoomGroup(userId, roomId): Observable<CreateRoomGroupMutation> {
     const content = {
       id: `room-group${uuid()}`,
       roomID: `${roomId}`,
@@ -58,7 +58,7 @@ export class TaskLogic {
     return this.taskService.createRoomGroup(content);
   }
 
-  fetchActiveTaskPerRoom(roomId): Observable<Array<any>> {
+  fetchActiveTaskPerRoom(roomId): Observable<Array<InterfaceTask>> {
     const filterContent = {
       roomID: {
         eq: `${roomId}`
@@ -70,7 +70,7 @@ export class TaskLogic {
       .pipe(toArray());
   }
 
-  fetchDoneTaskPerRoom(roomId): Observable<any> {
+  fetchDoneTaskPerRoom(roomId): Observable<Array<InterfaceTask>> {
     const filterContent = {
       roomID: {
         eq: `${roomId}`

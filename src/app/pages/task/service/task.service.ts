@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AmplifyService, GetRoomQuery, GetUserQuery, ListTasksQuery } from '../../../shared/service/amplify.service';
+import { AmplifyService, CreateRoomGroupMutation, CreateTaskMutation, DeleteTaskMutation, GetRoomQuery, GetUserQuery, ListRoomGroupsQuery, ListTasksQuery, ListUsersQuery, UpdateTaskMutation } from '../../../shared/service/amplify.service';
 import { Observable, from, of } from 'rxjs';
 import { InterfaceTask } from 'src/app/interfaces/task.interface';
 import { catchError } from 'rxjs/operators';
@@ -17,20 +17,20 @@ export class TaskService {
     return from(this.amplifyService.GetRoom(roomId));
   }
 
-  createTaskItem(content): Observable<any> {
+  createTaskItem(content): Observable<CreateTaskMutation> {
     return from(this.amplifyService.CreateTask(content))
       .pipe(catchError((error) => of(error)));
   }
 
-  createRoomGroup(content): Observable<any> {
+  createRoomGroup(content): Observable<CreateRoomGroupMutation> {
     return from(this.amplifyService.CreateRoomGroup(content));
   }
 
-  updateTaskItem(content): Observable<any> {
+  updateTaskItem(content): Observable<UpdateTaskMutation> {
     return from(this.amplifyService.UpdateTask(content));
   }
 
-  updateTaskStatusItem(taskItem): Observable<any> {
+  updateTaskStatusItem(taskItem): Observable<UpdateTaskMutation> {
     const content = {
       id: taskItem.id,
       priority: taskItem.priority + 1,
@@ -38,12 +38,11 @@ export class TaskService {
     return from(this.amplifyService.UpdateTask(content));
   }
 
-  updateTaskStatusForReorder(taskItem: InterfaceTask): Observable<any> {
+  updateTaskStatusForReorder(taskItem: InterfaceTask): Observable<UpdateTaskMutation> {
     const content = {
       id: taskItem.id,
       priority: taskItem.priority - 1
     }
-    console.log('回数分通らなくては', content);
     return from(this.amplifyService.UpdateTask(content));
   }
 
@@ -59,7 +58,7 @@ export class TaskService {
     return from(this.amplifyService.ListTasks(content));
   }
 
-  deleteTaskItem(content): Observable<any> {
+  deleteTaskItem(content): Observable<DeleteTaskMutation> {
     return from(this.amplifyService.DeleteTask(content));
   }
 
@@ -67,11 +66,11 @@ export class TaskService {
     return from(this.amplifyService.GetUser(userId));
   }
 
-  fetchCompanyMember(content): Observable<any> {
+  fetchCompanyMember(content): Observable<ListUsersQuery> {
     return from(this.amplifyService.ListUsers(content));
   }
 
-  fetchRoomMember(content): Observable<any> {
+  fetchRoomMember(content): Observable<ListRoomGroupsQuery> {
     return from(this.amplifyService.ListRoomGroups(content));
   }
 }
