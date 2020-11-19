@@ -31,7 +31,7 @@ export class TaskPage implements OnInit {
   companyMembers: ListUsersQuery;
   roomMembers: ListRoomGroupsQuery;
   user: GetUserQuery;
-  dismissData: TaskFormModel;
+  taskFormData: TaskFormModel;
   taskActiveItems: Array<InterfaceTask>;
   taskDoneItems: Array<InterfaceTask>;
 
@@ -67,7 +67,7 @@ export class TaskPage implements OnInit {
       roomMembers: this.logic.fetchMemberListOnRoom(this.roomId),
     }).subscribe((data) => {
       this.companyMembers = data.companyUser;
-      this.taskActiveItems = data.activeTaskItems;
+      this.taskActiveItems = data.activeTaskItems.sort(this.logic.compareTaskArray);
       this.taskDoneItems = data.doneTaskItems;
       this.room = data.room;
       this.roomMembers = data.roomMembers;
@@ -93,13 +93,12 @@ export class TaskPage implements OnInit {
     });
     const dismissObservable = from(modal.onDidDismiss());
     dismissObservable
-      .pipe(map(({ data }) => this.dismissData = data))
+      .pipe(map(({ data }) => this.taskFormData = data))
       .pipe(switchMap(() => this.taskActiveItems.length !== 0 ? this.logic.updateStatusTaskItems(this.taskActiveItems) : of(this.taskActiveItems)))
-      .pipe(concatMap(() => this.logic.createTaskToRoom(this.dismissData, this.roomId, this.userId)))
+      .pipe(concatMap(() => this.logic.createTaskToRoom(this.taskFormData, this.roomId, this.userId)))
       .pipe(concatMap(() => this.logic.fetchActiveTaskPerRoom(this.roomId)))
       .subscribe((items) => {
-        console.log('Dismiss data', this.dismissData);
-        this.taskActiveItems = items.sort(this.logic.compareTaskArray);
+        this.taskActiveItems = items;
       });
     return modal.present();
   }

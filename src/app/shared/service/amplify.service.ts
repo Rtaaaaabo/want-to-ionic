@@ -4774,10 +4774,6 @@ export class AmplifyService {
             companyID
             tel
             positionName
-            registered
-            authority
-            createdAt
-            updatedAt
           }
           description
           scheduleDate

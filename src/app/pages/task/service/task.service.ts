@@ -1,25 +1,32 @@
-import { Injectable } from '@angular/core';
-import { AmplifyService, CreateRoomGroupMutation, CreateTaskMutation, DeleteTaskMutation, GetRoomQuery, GetUserQuery, ListRoomGroupsQuery, ListTasksQuery, ListUsersQuery, UpdateTaskMutation } from '../../../shared/service/amplify.service';
-import { Observable, from, of } from 'rxjs';
-import { InterfaceTask } from 'src/app/interfaces/task.interface';
-import { catchError } from 'rxjs/operators';
+import { Injectable } from "@angular/core";
+import {
+  AmplifyService,
+  CreateRoomGroupMutation,
+  CreateTaskMutation,
+  DeleteTaskMutation,
+  GetRoomQuery,
+  GetUserQuery,
+  ListRoomGroupsQuery,
+  ListTasksQuery,
+  ListUsersQuery,
+  UpdateTaskMutation,
+} from "../../../shared/service/amplify.service";
+import { Observable, from, of } from "rxjs";
+import { InterfaceTask } from "src/app/interfaces/task.interface";
+import { catchError } from "rxjs/operators";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class TaskService {
-
-  constructor(
-    private amplifyService: AmplifyService
-  ) { }
+  constructor(private amplifyService: AmplifyService) { }
 
   fetchRoomInfo(roomId: string): Observable<GetRoomQuery> {
     return from(this.amplifyService.GetRoom(roomId));
   }
 
   createTaskItem(content): Observable<CreateTaskMutation> {
-    return from(this.amplifyService.CreateTask(content))
-      .pipe(catchError((error) => of(error)));
+    return from(this.amplifyService.CreateTask(content));
   }
 
   createRoomGroup(content): Observable<CreateRoomGroupMutation> {
@@ -34,20 +41,23 @@ export class TaskService {
     const content = {
       id: taskItem.id,
       priority: taskItem.priority + 1,
-    }
+    };
+    console.log('Item文起動', content);
     return from(this.amplifyService.UpdateTask(content));
   }
 
-  updateTaskStatusForReorder(taskItem: InterfaceTask): Observable<UpdateTaskMutation> {
+  updateTaskStatusForReorder(
+    taskItem: InterfaceTask
+  ): Observable<UpdateTaskMutation> {
     const content = {
       id: taskItem.id,
-      priority: taskItem.priority - 1
-    }
+      priority: taskItem.priority - 1,
+    };
     return from(this.amplifyService.UpdateTask(content));
   }
 
   updateFromTo(taskActiveItems): Observable<any> {
-    return of('taskActiveItems', taskActiveItems);
+    return of("taskActiveItems", taskActiveItems);
   }
 
   updateToFrom(taskActiveItems, reorderDetail): Observable<any> {
