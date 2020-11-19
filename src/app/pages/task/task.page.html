@@ -34,7 +34,7 @@
       (ionItemReorder)="reorderTask($event)"
       [disabled]="!isReorder"
     >
-      <ion-card *ngFor="let item of taskActiveItems.items">
+      <ion-card *ngFor="let item of taskActiveItems">
         <ion-card-content
           class="task-card-content"
           (click)="navigateToTaskDetail(item, segment)"

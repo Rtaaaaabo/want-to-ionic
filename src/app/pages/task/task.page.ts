@@ -5,7 +5,7 @@ import { ItemReorderEventDetail } from '@ionic/core';
 import { ModalController, ToastController, ActionSheetController, LoadingController } from '@ionic/angular';
 import { forkJoin, from, of } from 'rxjs';
 import { flatMap, switchMap, tap, map, catchError, concatMap, toArray, take } from 'rxjs/operators';
-import { GetRoomQuery, ListTasksQuery, ListUsersQuery } from 'src/app/shared/service/amplify.service';
+import { GetRoomQuery, GetUserQuery, ListTasksQuery, ListUsersQuery } from 'src/app/shared/service/amplify.service';
 import { AddTaskModalComponent } from '../../shared/component/modal/add-task-modal/add-task-modal.component';
 import { TaskLogic } from './logic/task.logic';
 import { CurrentUserInfo } from './interface/current-user-info.interface';
@@ -30,10 +30,10 @@ export class TaskPage implements OnInit {
   companyId: number | string;
   companyMembers: ListUsersQuery;
   roomMembers: ListRoomGroupsQuery;
-  user;
+  user: GetUserQuery;
   dismissData: TaskFormModel;
-  taskActiveItems;
-  taskDoneItems;
+  taskActiveItems: Array<InterfaceTask>;
+  taskDoneItems: Array<InterfaceTask>;
 
   constructor(
     private router: Router,
