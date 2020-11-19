@@ -125,15 +125,12 @@ export class TaskLogic {
     return this.setTargetItemPriority(targetReorderItem, reorderDetail)
   }
 
-
-
   setTargetItemPriority(targetReorderItem, reorderItem): Observable<any> {
     const targetPriorityNumber = reorderItem.to;
     const content = {
       id: targetReorderItem.id,
       priority: targetPriorityNumber,
     }
-    console.log('setTargetItemPriority content', content);
     return this.taskService.updateTaskItem(content);
   }
 
