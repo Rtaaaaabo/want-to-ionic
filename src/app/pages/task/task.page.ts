@@ -5,13 +5,15 @@ import { ItemReorderEventDetail } from '@ionic/core';
 import { ModalController, ToastController, ActionSheetController, LoadingController } from '@ionic/angular';
 import { forkJoin, from, of } from 'rxjs';
 import { flatMap, switchMap, tap, map, catchError, concatMap, toArray, take } from 'rxjs/operators';
-import { GetRoomQuery, ListUsersQuery } from 'src/app/shared/service/amplify.service';
+import { GetRoomQuery, ListTasksQuery, ListUsersQuery } from 'src/app/shared/service/amplify.service';
 import { AddTaskModalComponent } from '../../shared/component/modal/add-task-modal/add-task-modal.component';
 import { TaskLogic } from './logic/task.logic';
 import { CurrentUserInfo } from './interface/current-user-info.interface';
 import { AddPersonModalComponent } from 'src/app/pages/task/component/add-person-modal/add-person-modal.component';
 import { ListRoomGroupsQuery } from 'src/app/API.service';
 import { InterfaceTask } from 'src/app/interfaces/task.interface';
+import { TaskFormModel } from 'src/app/shared/model/task-form.model';
+
 
 @Component({
   selector: 'app-task',
@@ -29,7 +31,7 @@ export class TaskPage implements OnInit {
   companyMembers: Array<ListUsersQuery>;
   roomMembers: Array<ListRoomGroupsQuery>;
   user;
-  dismissData;
+  dismissData: TaskFormModel;
   taskActiveItems;
   taskDoneItems;
 
@@ -68,7 +70,7 @@ export class TaskPage implements OnInit {
       this.taskActiveItems = data.activeTaskItems;
       this.taskDoneItems = data.doneTaskItems;
       this.room = data.room;
-      this.roomMembers = data.roomMembers;
+      this.roomMembers = data.roomMembers.items;
     });
   }
 
@@ -96,7 +98,7 @@ export class TaskPage implements OnInit {
       .pipe(concatMap(() => this.logic.createTaskToRoom(this.dismissData, this.roomId, this.userId)))
       .pipe(concatMap(() => this.logic.fetchActiveTaskPerRoom(this.roomId)))
       .subscribe((items) => {
-        console.log(items);
+        console.log('Dismiss data', this.dismissData);
         this.taskActiveItems = items.sort(this.logic.compareTaskArray);
       });
     return modal.present();
