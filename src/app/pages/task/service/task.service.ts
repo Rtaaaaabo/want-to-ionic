@@ -53,6 +53,7 @@ export class TaskService {
       id: taskItem.id,
       priority: taskItem.priority - 1,
     };
+    console.log('updateTaskStatusForReorder', content);
     return from(this.amplifyService.UpdateTask(content));
   }
 

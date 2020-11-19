@@ -149,7 +149,6 @@ export class TaskLogic {
   }
 
   toGreaterThanFrom(reorderDetail, activeItems): Observable<InterfaceTask> {
-    console.log(reorderDetail.from + " : " + reorderDetail.to);
     return from(activeItems).pipe(
       filter(
         (item: InterfaceTask) =>
@@ -229,7 +228,6 @@ export class TaskLogic {
   compareTaskArray(a: InterfaceTask, b: InterfaceTask): number {
     const priorityA = a.priority;
     const priorityB = b.priority;
-    console.log(priorityA - priorityB);
     return priorityA - priorityB;
   }
 }
