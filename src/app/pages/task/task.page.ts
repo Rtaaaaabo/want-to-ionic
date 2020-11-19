@@ -3,7 +3,7 @@ import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ItemReorderEventDetail } from '@ionic/core';
 import { ModalController, ToastController, ActionSheetController, LoadingController } from '@ionic/angular';
-import { from, of } from 'rxjs';
+import { forkJoin, from, of } from 'rxjs';
 import { flatMap, switchMap, tap, map, catchError, concatMap, toArray, take } from 'rxjs/operators';
 import { GetRoomQuery, ListUsersQuery } from 'src/app/shared/service/amplify.service';
 import { AddTaskModalComponent } from '../../shared/component/modal/add-task-modal/add-task-modal.component';
@@ -11,6 +11,7 @@ import { TaskLogic } from './logic/task.logic';
 import { CurrentUserInfo } from './interface/current-user-info.interface';
 import { AddPersonModalComponent } from 'src/app/pages/task/component/add-person-modal/add-person-modal.component';
 import { ListRoomGroupsQuery } from 'src/app/API.service';
+import { InterfaceTask } from 'src/app/interfaces/task.interface';
 
 @Component({
   selector: 'app-task',
@@ -22,8 +23,6 @@ export class TaskPage implements OnInit {
   roomId: string;
   userId: string;
   userEmail: string;
-  taskActiveItems;
-  taskDoneItems;
   isReorder: boolean;
   segment: string;
   companyId: number | string;
@@ -31,6 +30,8 @@ export class TaskPage implements OnInit {
   roomMembers: Array<ListRoomGroupsQuery>;
   user;
   dismissData;
+  taskActiveItems;
+  taskDoneItems;
 
   constructor(
     private router: Router,
@@ -48,32 +49,28 @@ export class TaskPage implements OnInit {
     this.isReorder = false;
     this.segment = 'active';
     this.roomId = this.route.snapshot.paramMap.get('id');
-    this.logic.fetchRoomInfo(this.roomId)
-      .subscribe((roomInfo: GetRoomQuery) => {
-        this.room = roomInfo;
-      });
     this.logic.fetchCurrentUserInfo()
       .pipe(map((res: CurrentUserInfo) => {
         this.userEmail = res.email;
         this.userId = res.sub;
       }))
-      .pipe(flatMap(() => this.logic.fetchUserInfoFromAmplify(this.userId)))
+      .pipe(concatMap(() => this.logic.fetchUserInfoFromAmplify(this.userId)))
       .pipe(map((user) => this.user = user))
       .pipe(map((user) => this.companyId = user.companyID))
-      .pipe(flatMap(() => this.logic.fetchCompanyMember(this.user.companyID)))
+      .pipe(concatMap(() => this.logic.fetchCompanyMember(this.user.companyID)))
       .subscribe(({ items }) => {
         this.companyMembers = items;
       });
-    this.logic.fetchActiveTaskPerRoom(this.roomId)
-      .subscribe((items) => {
-        this.taskActiveItems = items.sort(this.logic.compareTaskArray);
-        console.log(this.taskActiveItems);
-      })
-    this.logic.fetchDoneTaskPerRoom(this.roomId).subscribe((items) => {
-      this.taskDoneItems = items;
-    })
-    this.logic.fetchMemberListOnRoom(this.roomId).subscribe(({ items }) => {
-      this.roomMembers = items
+    forkJoin({
+      activeTaskItems: this.logic.fetchActiveTaskPerRoom(this.roomId),
+      doneTaskItems: this.logic.fetchDoneTaskPerRoom(this.roomId),
+      room: this.logic.fetchRoomInfo(this.roomId),
+      roomMembers: this.logic.fetchMemberListOnRoom(this.roomId),
+    }).subscribe((data) => {
+      this.taskActiveItems = data.activeTaskItems;
+      this.taskDoneItems = data.doneTaskItems;
+      this.room = data.room;
+      this.roomMembers = data.roomMembers;
     });
   }
 
@@ -134,8 +131,7 @@ export class TaskPage implements OnInit {
       .pipe(take(1))
       .pipe(concatMap(() => this.logic.fetchActiveTaskPerRoom(this.roomId)))
       .subscribe((items) => {
-        this.taskActiveItems = items;
-        console.log('task active items', this.taskActiveItems);
+        this.taskActiveItems = items.sort(this.logic.compareTaskArray);
       })
   }
 

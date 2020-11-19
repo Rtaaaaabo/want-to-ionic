@@ -43,6 +43,7 @@ export class TaskService {
       id: taskItem.id,
       priority: taskItem.priority - 1
     }
+    console.log('回数分通らなくては', content);
     return from(this.amplifyService.UpdateTask(content));
   }
 

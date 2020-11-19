@@ -64,7 +64,6 @@ export class TaskLogic {
         eq: `${roomId}`
       }
     }
-    console.log('fetchActiveTaskPerRoom', filterContent);
     return this.taskService.fetchTaskItemsPerRoom(filterContent)
       .pipe(concatMap((res) => res.items))
       .pipe(filter((data) => data.status < 10))
@@ -110,9 +109,9 @@ export class TaskLogic {
   }
 
   toGreaterThanFrom(reorderDetail, activeItems): Observable<InterfaceTask> {
+    console.log((reorderDetail.from + ' : ' + reorderDetail.to));
     return from(activeItems)
-      .pipe(filter((item: InterfaceTask) => (reorderDetail.from <= item.priority)))
-      .pipe(filter((item: InterfaceTask) => (item.priority <= reorderDetail.to)))
+      .pipe(filter((item: InterfaceTask) => (reorderDetail.from <= item.priority) && (item.priority <= reorderDetail.to)))
   }
 
   fromGreaterThanTo(reorderDetail, activeItems): Observable<InterfaceTask> {
