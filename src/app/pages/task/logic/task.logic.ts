@@ -3,14 +3,8 @@ import { from, Observable, of } from "rxjs";
 import {
   map,
   filter,
-  mergeMap,
   toArray,
-  flatMap,
-  switchMap,
-  skipWhile,
-  takeWhile,
   concatMap,
-  take,
 } from "rxjs/operators";
 import {
   CreateRoomGroupMutation,
@@ -19,8 +13,6 @@ import {
   GetRoomQuery,
   GetUserQuery,
   ListRoomGroupsQuery,
-  ListRoomsQuery,
-  ListTasksQuery,
   ListUsersQuery,
   UpdateTaskMutation,
 } from "src/app/shared/service/amplify.service";
@@ -55,7 +47,6 @@ export class TaskLogic {
     userId
   ): Observable<CreateTaskMutation> {
     const isoStringDate = new Date().toISOString();
-    console.log("createTaskToRoom dismissData", taskFormData);
     if (taskFormData === undefined) {
       return of();
     } else {

@@ -2,18 +2,17 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ItemReorderEventDetail } from '@ionic/core';
-import { ModalController, ToastController, ActionSheetController, LoadingController } from '@ionic/angular';
+import { ModalController, ToastController, ActionSheetController } from '@ionic/angular';
 import { forkJoin, from, of } from 'rxjs';
-import { flatMap, switchMap, tap, map, catchError, concatMap, toArray, take } from 'rxjs/operators';
-import { GetRoomQuery, GetUserQuery, ListTasksQuery, ListUsersQuery } from 'src/app/shared/service/amplify.service';
-import { AddTaskModalComponent } from '../../shared/component/modal/add-task-modal/add-task-modal.component';
+import { flatMap, switchMap, tap, map, catchError, concatMap, take } from 'rxjs/operators';
+import { GetRoomQuery, GetUserQuery, ListUsersQuery } from 'src/app/shared/service/amplify.service';
 import { TaskLogic } from './logic/task.logic';
 import { CurrentUserInfo } from './interface/current-user-info.interface';
 import { AddPersonModalComponent } from 'src/app/pages/task/component/add-person-modal/add-person-modal.component';
+import { AddTaskModalComponent } from '../../shared/component/modal/add-task-modal/add-task-modal.component';
 import { ListRoomGroupsQuery } from 'src/app/API.service';
 import { InterfaceTask } from 'src/app/interfaces/task.interface';
 import { TaskFormModel } from 'src/app/shared/model/task-form.model';
-
 
 @Component({
   selector: 'app-task',
@@ -68,7 +67,6 @@ export class TaskPage implements OnInit {
     }).subscribe((data) => {
       this.companyMembers = data.companyUser;
       this.taskActiveItems = data.activeTaskItems.sort(this.logic.compareTaskArray);
-      console.log('taskActiveItems', this.taskActiveItems);
       this.taskDoneItems = data.doneTaskItems;
       this.room = data.room;
       this.roomMembers = data.roomMembers;
@@ -95,10 +93,11 @@ export class TaskPage implements OnInit {
     const dismissObservable = from(modal.onDidDismiss());
     dismissObservable
       .pipe(map(({ data }) => this.taskFormData = data))
-      .pipe(switchMap(() => this.taskActiveItems.length !== 0 ? this.logic.updateStatusTaskItems(this.taskActiveItems) : of(this.taskActiveItems)))
+      .pipe(switchMap(() => this.taskActiveItems.length !== 0 ? this.logic.updateStatusTaskItems(this.taskActiveItems) : of(this.taskActiveItems))) // ActiveTaskの数を確認して、一つでもあったらPriorityを+1する
       .pipe(concatMap(() => this.logic.createTaskToRoom(this.taskFormData, this.roomId, this.userId)))
       .pipe(concatMap(() => this.logic.fetchActiveTaskPerRoom(this.roomId)))
       .subscribe((items) => {
+        console.log('[③ Page: task page]');
         this.taskActiveItems = items;
       });
     return modal.present();
