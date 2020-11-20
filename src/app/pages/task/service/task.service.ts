@@ -42,7 +42,6 @@ export class TaskService {
       id: taskItem.id,
       priority: taskItem.priority + 1,
     };
-    console.log('Item文起動', content);
     return from(this.amplifyService.UpdateTask(content));
   }
 
