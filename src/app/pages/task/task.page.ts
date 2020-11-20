@@ -125,7 +125,7 @@ export class TaskPage implements OnInit {
   reorderTask(ev: CustomEvent<ItemReorderEventDetail>): void {
     const itemMove = this.taskActiveItems.splice(ev.detail.from, 1)[0];
     this.taskActiveItems.splice(ev.detail.to, 0, itemMove);
-    ev.detail.complete();
+    ev.detail.complete(true);
     this.logic.reorderStatusTaskItems(ev.detail, this.taskActiveItems)
       .pipe(concatMap(() => this.logic.updateReorderTargetItems(ev.detail, this.taskActiveItems)))
       .pipe(take(1))
