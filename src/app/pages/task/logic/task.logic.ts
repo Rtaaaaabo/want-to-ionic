@@ -5,6 +5,7 @@ import {
   filter,
   toArray,
   concatMap,
+  findIndex,
 } from "rxjs/operators";
 import {
   CreateRoomGroupMutation,
@@ -119,24 +120,31 @@ export class TaskLogic {
       .pipe(toArray());
   }
 
-  reorderStatusTaskItems(
-    reorderDetail: { from: number; to: number },
-    taskActiveItems: Array<InterfaceTask>
-  ): Observable<UpdateTaskMutation> {
-    const isFromGreaterTo = reorderDetail.from < reorderDetail.to;
-    if (isFromGreaterTo) {
-      return this.toGreaterThanFrom(reorderDetail, taskActiveItems) // 対象Itemsをチェック
-        .pipe(
-          concatMap((result) =>
-            this.taskService.updateTaskStatusForReorder(result)
-          )
-        ); // 対象Itemsをマイナス１にする(サーバー側をUpdateするのみの処理でいいかと)
-    } else {
-      return this.fromGreaterThanTo(reorderDetail, taskActiveItems) // 対象Itemsをチェック
-        .pipe(
-          concatMap((result) => this.taskService.updateTaskStatusItem(result))
-        ); //対象Itemsをプラス1にする
-    }
+  // reorderStatusTaskItems(
+  //   reorderDetail: { from: number; to: number },
+  //   taskActiveItems: Array<InterfaceTask>
+  // ): Observable<UpdateTaskMutation> {
+  //   const isFromGreaterTo = reorderDetail.from < reorderDetail.to;
+  //   console.log('① [Logic: reorderStatusTaskItems]')
+  //   if (isFromGreaterTo) {
+  //     return this.toGreaterThanFrom(reorderDetail, taskActiveItems) // 対象Itemsをチェック
+  //       .pipe(
+  //         concatMap((result) =>
+  //           this.taskService.updateTaskStatusForReorder(result)
+  //         )
+  //       ); // 対象Itemsをマイナス１にする(サーバー側をUpdateするのみの処理でいいかと)
+  //   } else {
+  //     return this.fromGreaterThanTo(reorderDetail, taskActiveItems) // 対象Itemsをチェック
+  //       .pipe(
+  //         concatMap((result) => this.taskService.updateTaskStatusItem(result))
+  //       ); //対象Itemsをプラス1にする
+  //   }
+  // }
+
+  // 何番目に流れてきたものであるかを見るのが FindIndex
+  reorderStatusTaskItems(taskActiveItems: Array<InterfaceTask>): Observable<any> {
+    return from(taskActiveItems)
+      .pipe(findIndex((taskItem) => taskItem.id === 'dbbf8dbb-098d-4aa7-91dd-6fd58c143ec8'))
   }
 
   toGreaterThanFrom(reorderDetail, activeItems): Observable<InterfaceTask> {
@@ -164,6 +172,7 @@ export class TaskLogic {
     const targetReorderItem = taskActiveItems.find(
       (item) => item.priority === reorderDetail.from
     );
+    console.log('②[Logic: updateReorderTargetItems]', reorderDetail);
     return this.setTargetItemPriority(targetReorderItem, reorderDetail);
   }
 
@@ -176,6 +185,7 @@ export class TaskLogic {
       id: targetReorderItem.id,
       priority: targetPriorityNumber,
     };
+    console.log('③[Logic: setTargetItemPriority]', content);
     return this.taskService.updateTaskItem(content);
   }
 

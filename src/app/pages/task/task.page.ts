@@ -70,6 +70,7 @@ export class TaskPage implements OnInit {
       this.taskDoneItems = data.doneTaskItems;
       this.room = data.room;
       this.roomMembers = data.roomMembers;
+      console.log('taskActiveItem', this.taskActiveItems);
     });
   }
 
@@ -97,8 +98,7 @@ export class TaskPage implements OnInit {
       .pipe(concatMap(() => this.logic.createTaskToRoom(this.taskFormData, this.roomId, this.userId)))
       .pipe(concatMap(() => this.logic.fetchActiveTaskPerRoom(this.roomId)))
       .subscribe((items) => {
-        console.log('[③ Page: task page]');
-        this.taskActiveItems = items;
+        this.taskActiveItems = items.sort(this.logic.compareTaskArray);;
       });
     return modal.present();
   }
@@ -124,14 +124,20 @@ export class TaskPage implements OnInit {
   reorderTask(ev: CustomEvent<ItemReorderEventDetail>): void {
     const itemMove = this.taskActiveItems.splice(ev.detail.from, 1)[0];
     this.taskActiveItems.splice(ev.detail.to, 0, itemMove);
-    ev.detail.complete(true);
-    this.logic.reorderStatusTaskItems(ev.detail, this.taskActiveItems)
-      .pipe(concatMap(() => this.logic.updateReorderTargetItems(ev.detail, this.taskActiveItems)))
-      .pipe(take(1))
-      .pipe(concatMap(() => this.logic.fetchActiveTaskPerRoom(this.roomId)))
-      .subscribe((items) => {
-        this.taskActiveItems = items.sort(this.logic.compareTaskArray);
-      })
+    ev.detail.complete();
+    console.log('this.taskActive Reorder', this.taskActiveItems);
+
+    // Indexで更新させればいいのではないかな。
+
+    this.logic.reorderStatusTaskItems(this.taskActiveItems).subscribe(data => console.log('findIndex', data));
+
+    // this.logic.reorderStatusTaskItems(ev.detail, this.taskActiveItems)
+    //   .pipe(concatMap(() => this.logic.updateReorderTargetItems(ev.detail, this.taskActiveItems)))
+    //   .pipe(take(1))
+    //   .pipe(concatMap(() => this.logic.fetchActiveTaskPerRoom(this.roomId)))
+    //   .subscribe((items) => {
+    //     this.taskActiveItems = items.sort(this.logic.compareTaskArray);
+    //   })
   }
 
   navigateToTaskDetail(task, segment): void {
@@ -194,9 +200,9 @@ export class TaskPage implements OnInit {
         return;
       };
       from(data)
-        .pipe(flatMap((userId) => this.logic.createRoomGroup(userId, this.roomId)),
+        .pipe(concatMap((userId) => this.logic.createRoomGroup(userId, this.roomId)),
           catchError((error) => error))
-        .pipe(flatMap(() => this.logic.fetchMemberListOnRoom(this.roomId)))
+        .pipe(concatMap(() => this.logic.fetchMemberListOnRoom(this.roomId)))
         .subscribe(({ items }) => {
           console.log(items);
         });

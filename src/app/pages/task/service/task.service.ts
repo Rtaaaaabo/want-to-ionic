@@ -26,7 +26,6 @@ export class TaskService {
   }
 
   createTaskItem(content): Observable<CreateTaskMutation> {
-    console.log('[① Service: CreateTaskItem]', content);
     return from(this.amplifyService.CreateTask(content));
   }
 
@@ -35,6 +34,7 @@ export class TaskService {
   }
 
   updateTaskItem(content): Observable<UpdateTaskMutation> {
+    console.log('④ [Service: updateTaskItem]', content);
     return from(this.amplifyService.UpdateTask(content));
   }
 
@@ -65,7 +65,6 @@ export class TaskService {
   }
 
   fetchTaskItemsPerRoom(content): Observable<ListTasksQuery> {
-    console.log('[② Service: fetchTaskItemsPerRoom]',)
     return from(this.amplifyService.ListTasks(content));
   }
 
