@@ -11,9 +11,7 @@ import {
   ListUsersQuery,
   UpdateTaskMutation,
 } from "../../../shared/service/amplify.service";
-import { Observable, from, of } from "rxjs";
-import { InterfaceTask } from "src/app/interfaces/task.interface";
-import { catchError } from "rxjs/operators";
+import { Observable, from } from "rxjs";
 
 @Injectable({
   providedIn: "root",
@@ -34,7 +32,6 @@ export class TaskService {
   }
 
   updateTaskItem(content): Observable<UpdateTaskMutation> {
-    console.log('④ [Service: updateTaskItem]', content);
     return from(this.amplifyService.UpdateTask(content));
   }
 
@@ -54,14 +51,6 @@ export class TaskService {
       priority: targetItem.priority,
     };
     return from(this.amplifyService.UpdateTask(content));
-  }
-
-  updateFromTo(taskActiveItems): Observable<any> {
-    return of("taskActiveItems", taskActiveItems);
-  }
-
-  updateToFrom(taskActiveItems, reorderDetail): Observable<any> {
-    return of(taskActiveItems);
   }
 
   fetchTaskItemsPerRoom(content): Observable<ListTasksQuery> {

@@ -120,84 +120,18 @@ export class TaskLogic {
       .pipe(toArray());
   }
 
-  // reorderStatusTaskItems(
-  //   reorderDetail: { from: number; to: number },
-  //   taskActiveItems: Array<InterfaceTask>
-  // ): Observable<UpdateTaskMutation> {
-  //   const isFromGreaterTo = reorderDetail.from < reorderDetail.to;
-  //   console.log('① [Logic: reorderStatusTaskItems]')
-  //   if (isFromGreaterTo) {
-  //     return this.toGreaterThanFrom(reorderDetail, taskActiveItems) // 対象Itemsをチェック
-  //       .pipe(
-  //         concatMap((result) =>
-  //           this.taskService.updateTaskStatusForReorder(result)
-  //         )
-  //       ); // 対象Itemsをマイナス１にする(サーバー側をUpdateするのみの処理でいいかと)
-  //   } else {
-  //     return this.fromGreaterThanTo(reorderDetail, taskActiveItems) // 対象Itemsをチェック
-  //       .pipe(
-  //         concatMap((result) => this.taskService.updateTaskStatusItem(result))
-  //       ); //対象Itemsをプラス1にする
-  //   }
-  // }
-
   getIndexNewArray(taskActiveItems: Array<InterfaceTask>, taskActiveItem): Observable<number> {
     return from(taskActiveItems)
       .pipe(findIndex(taskItem => taskItem.id === taskActiveItem.id))
   }
 
   updateTaskItemPriority(indexArray: number, taskActiveItems: Array<InterfaceTask>): Observable<any> {
-    // 配列のIndexの値にPriorityを追加すればよいのでは
     const targetTaskItem = taskActiveItems[indexArray];
     const content = {
       id: targetTaskItem.id,
       priority: indexArray
     };
-    console.log('target content', content);
     return this.taskService.updateTaskStatusForReorder(content);
-    // return of();
-  }
-
-  toGreaterThanFrom(reorderDetail, activeItems): Observable<InterfaceTask> {
-    return from(activeItems).pipe(
-      filter(
-        (item: InterfaceTask) =>
-          reorderDetail.from <= item.priority &&
-          item.priority <= reorderDetail.to
-      )
-    );
-  }
-
-  fromGreaterThanTo(reorderDetail, activeItems): Observable<InterfaceTask> {
-    return from(activeItems)
-      .pipe(filter((item: InterfaceTask) => reorderDetail.to <= item.priority))
-      .pipe(
-        filter((item: InterfaceTask) => item.priority <= reorderDetail.from)
-      );
-  }
-
-  updateReorderTargetItems(
-    reorderDetail: { from: number; to: number },
-    taskActiveItems: Array<InterfaceTask>
-  ): Observable<UpdateTaskMutation> {
-    const targetReorderItem = taskActiveItems.find(
-      (item) => item.priority === reorderDetail.from
-    );
-    console.log('②[Logic: updateReorderTargetItems]', reorderDetail);
-    return this.setTargetItemPriority(targetReorderItem, reorderDetail);
-  }
-
-  setTargetItemPriority(
-    targetReorderItem,
-    reorderItem
-  ): Observable<UpdateTaskMutation> {
-    const targetPriorityNumber = reorderItem.to;
-    const content = {
-      id: targetReorderItem.id,
-      priority: targetPriorityNumber,
-    };
-    console.log('③[Logic: setTargetItemPriority]', content);
-    return this.taskService.updateTaskItem(content);
   }
 
   deleteTaskItem(taskId: string): Observable<DeleteTaskMutation> {
