@@ -130,16 +130,6 @@ export class TaskPage implements OnInit {
       .pipe(concatMap((taskActiveItem) => this.logic.getIndexNewArray(this.taskActiveItems, taskActiveItem)))
       .pipe(concatMap((indexArray: number) => this.logic.updateTaskItemPriority(indexArray, this.taskActiveItems)))
       .subscribe((data) => console.log(data));
-    // this.logic.reorderStatusTaskItems(this.taskActiveItems)
-    //   .subscribe((data) => console.log('findIndex', data));
-
-    // this.logic.reorderStatusTaskItems(ev.detail, this.taskActiveItems)
-    //   .pipe(concatMap(() => this.logic.updateReorderTargetItems(ev.detail, this.taskActiveItems)))
-    //   .pipe(take(1))
-    //   .pipe(concatMap(() => this.logic.fetchActiveTaskPerRoom(this.roomId)))
-    //   .subscribe((items) => {
-    //     this.taskActiveItems = items.sort(this.logic.compareTaskArray);
-    //   })
   }
 
   navigateToTaskDetail(task, segment): void {

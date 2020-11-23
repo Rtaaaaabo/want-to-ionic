@@ -147,12 +147,15 @@ export class TaskLogic {
   }
 
   updateTaskItemPriority(indexArray: number, taskActiveItems: Array<InterfaceTask>): Observable<any> {
-    console.log('indexArray', indexArray);
-    console.log('taskActiveItems', taskActiveItems);
-    return of();
-    // return from(taskActiveItems)
-    // .pipe(map((taskItem) => taskItem.priority = indexArray))
-    // .pipe(concatMap((taskItem) => this.taskService.updateTaskStatusForReorder(taskItem)))
+    // 配列のIndexの値にPriorityを追加すればよいのでは
+    const targetTaskItem = taskActiveItems[indexArray];
+    const content = {
+      id: targetTaskItem.id,
+      priority: indexArray
+    };
+    console.log('target content', content);
+    return this.taskService.updateTaskStatusForReorder(content);
+    // return of();
   }
 
   toGreaterThanFrom(reorderDetail, activeItems): Observable<InterfaceTask> {

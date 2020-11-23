@@ -47,11 +47,11 @@ export class TaskService {
   }
 
   updateTaskStatusForReorder(
-    taskItem: InterfaceTask
+    targetItem: { id: string, priority: number }
   ): Observable<UpdateTaskMutation> {
     const content = {
-      id: taskItem.id,
-      priority: taskItem.priority - 1,
+      id: targetItem.id,
+      priority: targetItem.priority,
     };
     return from(this.amplifyService.UpdateTask(content));
   }
