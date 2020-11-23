@@ -141,10 +141,18 @@ export class TaskLogic {
   //   }
   // }
 
-  // 何番目に流れてきたものであるかを見るのが FindIndex
-  reorderStatusTaskItems(taskActiveItems: Array<InterfaceTask>): Observable<any> {
+  getIndexNewArray(taskActiveItems: Array<InterfaceTask>, taskActiveItem): Observable<number> {
     return from(taskActiveItems)
-      .pipe(findIndex((taskItem) => taskItem.id === 'dbbf8dbb-098d-4aa7-91dd-6fd58c143ec8'))
+      .pipe(findIndex(taskItem => taskItem.id === taskActiveItem.id))
+  }
+
+  updateTaskItemPriority(indexArray: number, taskActiveItems: Array<InterfaceTask>): Observable<any> {
+    console.log('indexArray', indexArray);
+    console.log('taskActiveItems', taskActiveItems);
+    return of();
+    // return from(taskActiveItems)
+    // .pipe(map((taskItem) => taskItem.priority = indexArray))
+    // .pipe(concatMap((taskItem) => this.taskService.updateTaskStatusForReorder(taskItem)))
   }
 
   toGreaterThanFrom(reorderDetail, activeItems): Observable<InterfaceTask> {

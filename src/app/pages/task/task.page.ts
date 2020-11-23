@@ -125,11 +125,13 @@ export class TaskPage implements OnInit {
     const itemMove = this.taskActiveItems.splice(ev.detail.from, 1)[0];
     this.taskActiveItems.splice(ev.detail.to, 0, itemMove);
     ev.detail.complete();
-    console.log('this.taskActive Reorder', this.taskActiveItems);
-
     // Indexで更新させればいいのではないかな。
-
-    this.logic.reorderStatusTaskItems(this.taskActiveItems).subscribe(data => console.log('findIndex', data));
+    from(this.taskActiveItems)
+      .pipe(concatMap((taskActiveItem) => this.logic.getIndexNewArray(this.taskActiveItems, taskActiveItem)))
+      .pipe(concatMap((indexArray: number) => this.logic.updateTaskItemPriority(indexArray, this.taskActiveItems)))
+      .subscribe((data) => console.log(data));
+    // this.logic.reorderStatusTaskItems(this.taskActiveItems)
+    //   .subscribe((data) => console.log('findIndex', data));
 
     // this.logic.reorderStatusTaskItems(ev.detail, this.taskActiveItems)
     //   .pipe(concatMap(() => this.logic.updateReorderTargetItems(ev.detail, this.taskActiveItems)))
