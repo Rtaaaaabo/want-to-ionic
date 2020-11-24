@@ -94,9 +94,14 @@ export class TaskDetailPage implements OnInit {
   }
 
   async presentModalEditTask(taskDetail) {
+    console.log('taskDetail', taskDetail);
+    console.log('roomMembers', this.roomMembers);
     const modal = await this.modalCtrl.create({
       component: AddTaskModalComponent,
-      componentProps: { taskDetail: taskDetail, roomMembers: this.roomMembers },
+      componentProps: {
+        taskDetail: taskDetail,
+        roomMembers: this.roomMembers
+      },
     });
     const dismissObservable = from(modal.onDidDismiss());
     dismissObservable

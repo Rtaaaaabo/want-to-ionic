@@ -27,7 +27,7 @@
         cancel-text="キャンセル"
       >
         <ion-select-option
-          *ngFor="let item of roomMembers.items"
+          *ngFor="let item of roomMembers"
           [value]="item.userID"
           >{{ item.user.username }}</ion-select-option
         >
