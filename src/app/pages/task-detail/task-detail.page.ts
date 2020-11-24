@@ -2,10 +2,10 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Location, ViewportScroller } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { ModalController, ActionSheetController, ToastController, IonContent, Platform } from '@ionic/angular';
-import { from, Observable } from 'rxjs';
+import { from, Observable, of } from 'rxjs';
 import { TaskDetailLogic } from './logic/task-detail.logic';
 import { AddTaskModalComponent } from 'src/app/shared/component/modal/add-task-modal/add-task-modal.component';
-import { filter, flatMap, tap, map } from 'rxjs/operators';
+import { filter, tap, map, concatMap } from 'rxjs/operators';
 import { CurrentUserInfo } from '../task/interface/current-user-info.interface';
 import { ListRoomGroupsQuery } from 'src/app/API.service';
 
@@ -57,7 +57,7 @@ export class TaskDetailPage implements OnInit {
     });
     this.logic.fetchAnyTask(this.taskId)
       .pipe(map((data) => this.taskDetail = data))
-      .pipe(flatMap(() => this.logic.fetchMemberListOnRoom(this.taskDetail.roomID)))
+      .pipe(concatMap(() => this.logic.fetchMemberListOnRoom(this.taskDetail.roomID)))
       .subscribe(({ items }) => {
         this.roomMembers = items;
       });
@@ -101,8 +101,8 @@ export class TaskDetailPage implements OnInit {
     const dismissObservable = from(modal.onDidDismiss());
     dismissObservable
       .pipe(filter(({ data }) => data !== undefined))
-      .pipe(flatMap(({ data }) => this.logic.updateTaskToRoom(data, this.taskId)))
-      .pipe(flatMap(() => this.logic.fetchAnyTask(this.taskId)))
+      .pipe(concatMap(({ data }) => this.logic.updateTaskToRoom(data, this.taskId)))
+      .pipe(concatMap(() => this.logic.fetchAnyTask(this.taskId)))
       .subscribe((data) => {
         this.taskDetail = data;
       })
@@ -112,15 +112,20 @@ export class TaskDetailPage implements OnInit {
   doneTask(taskDetail): void {
     const presentToast = from(this.presentDoneToast());
     this.logic.updateTaskItem(taskDetail, 10)
-      .pipe(flatMap(() => this.logic.fetchAnyTask(taskDetail.id)))
+      .pipe(concatMap(() => this.logic.fetchAnyTask(taskDetail.id)))
       .pipe(tap(() => presentToast)).subscribe((data) => this.taskDetail = data);
   }
 
   moveTask(taskDetail) {
     const presentToast = from(this.presentMoveTask());
     this.logic.updateTaskItem(taskDetail, 0)
-      .pipe(flatMap(() => this.logic.fetchAnyTask(taskDetail.id)))
-      .pipe(tap(() => presentToast)).subscribe((data) => this.taskDetail = data);
+      .pipe(concatMap(() => this.logic.fetchAnyTask(taskDetail.id)))
+      .pipe(tap(() => presentToast))
+      .pipe(map((data) => this.taskDetail = data))
+      .pipe(concatMap(() => of()))    // ここにActiveTaskItemsのPriorityを変更する処理を入れる
+      .subscribe((data) => {
+        console.log(data);
+      });
   }
 
   async presentActionSheet(taskDetail) {
@@ -128,15 +133,15 @@ export class TaskDetailPage implements OnInit {
       cssClass: 'my-custom-class',
       buttons: [
         {
-          text: '完了',
-          handler: () => {
-            this.doneTask(taskDetail);
-          }
-        },
-        {
           text: '編集',
           handler: () => {
             this.presentModalEditTask(taskDetail)
+          }
+        },
+        {
+          text: '完了',
+          handler: () => {
+            this.doneTask(taskDetail);
           }
         },
         {
