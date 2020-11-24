@@ -43,15 +43,11 @@ export class RoomMembersPage implements OnInit {
   checkNotAssignMember(companyMembers, roomMembers): Array<any> {
     console.log('companyMembers', companyMembers);
     console.log('roomMembers', roomMembers);
-    return ['test'];
-    // for (let i = 0; i < roomMembers.length; i++) {
-    //   roomUser.push(roomMembers[i].user);
-    // }
-    // return companyMembers.filter((o1) => {
-    //   return !roomUser.some((o2) => {
-    //     return o1.id === o2.id;
-    //   });
-    // });
+    return companyMembers.filter((companyMember) => {
+      return !roomMembers.some((roomMember) => {
+        return companyMember.id === roomMember.id;
+      })
+    });
   }
 
   goBackToRoom() {
