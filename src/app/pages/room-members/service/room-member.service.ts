@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { from, Observable } from 'rxjs';
-import { AmplifyService } from '../../../shared/service/amplify.service';
+import { AmplifyService, ListRoomGroupsQuery } from '../../../shared/service/amplify.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,8 +15,7 @@ export class RoomMemberService {
     return from(this.amplifyService.ListUsers(content));
   }
 
-  fetchRoomMember(filterContent?): Observable<any> {
-
+  fetchRoomMember(filterContent?): Observable<ListRoomGroupsQuery> {
     return from(this.amplifyService.ListRoomGroups(filterContent));
   }
 

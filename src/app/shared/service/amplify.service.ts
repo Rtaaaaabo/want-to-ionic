@@ -2501,7 +2501,7 @@ export type GetRoomGroupQuery = {
   id: string;
   roomID: string;
   userID: string;
-  room: {
+  room?: {
     __typename: "Room";
     id: string;
     name: string;

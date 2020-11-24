@@ -3,7 +3,7 @@ import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { from } from 'rxjs';
-import { catchError, filter, flatMap, map, mergeMap, tap } from 'rxjs/operators';
+import { catchError, concatMap, map } from 'rxjs/operators';
 import { RoomMembersLogic } from './logic/room-members.logic';
 import { AddPersonModalComponent } from '../task/component/add-person-modal/add-person-modal.component';
 
@@ -31,24 +31,27 @@ export class RoomMembersPage implements OnInit {
     this.companyId = this.route.snapshot.paramMap.get('companyId');
     this.roomId = this.route.snapshot.paramMap.get('roomId');
     this.logic.fetchRoomMemberGroup(this.roomId)
+      .pipe(concatMap((result) => this.logic.setRoomMembers(result)))
       .pipe(map((items) => this.roomMembers = items))
-      .pipe(flatMap(() => this.logic.fetchCompanyMember(this.companyId)))
+      .pipe(concatMap(() => this.logic.fetchCompanyMember(this.companyId)))
       .subscribe(({ items }) => { // companyMembers
-        this.notAssignMembers = this.checkNotAssignMember(items, this.roomMembers);
+        const companyMembers = items;
+        this.notAssignMembers = this.checkNotAssignMember(companyMembers, this.roomMembers);
       });
   }
 
   checkNotAssignMember(companyMembers, roomMembers): Array<any> {
-    let roomUser = []
-    for (let i = 0; i < roomMembers.length; i++) {
-      roomUser.push(roomMembers[i].user);
-    }
-    this.notAssignMembers = [];
-    return companyMembers.filter((o1) => {
-      return !roomUser.some((o2) => {
-        return o1.id === o2.id;
-      });
-    });
+    console.log('companyMembers', companyMembers);
+    console.log('roomMembers', roomMembers);
+    return ['test'];
+    // for (let i = 0; i < roomMembers.length; i++) {
+    //   roomUser.push(roomMembers[i].user);
+    // }
+    // return companyMembers.filter((o1) => {
+    //   return !roomUser.some((o2) => {
+    //     return o1.id === o2.id;
+    //   });
+    // });
   }
 
   goBackToRoom() {
@@ -77,11 +80,11 @@ export class RoomMembersPage implements OnInit {
         return;
       };
       from(data)
-        .pipe(flatMap((userId) => this.logic.createUserRoomGroup(userId, this.roomId)),
+        .pipe(concatMap((userId) => this.logic.createUserRoomGroup(userId, this.roomId)),
           catchError((error) => error))
-        .pipe(flatMap(() => this.logic.fetchRoomMemberGroup(this.roomId)))
+        .pipe(concatMap(() => this.logic.fetchRoomMemberGroup(this.roomId)))
         .pipe(map((items) => this.roomMembers = items))
-        .pipe(flatMap(() => this.logic.fetchCompanyMember(this.companyId)))
+        .pipe(concatMap(() => this.logic.fetchCompanyMember(this.companyId)))
         .subscribe(({ items }) => { // companyMembers
           this.notAssignMembers = this.checkNotAssignMember(items, this.roomMembers);
         })

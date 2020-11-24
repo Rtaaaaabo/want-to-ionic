@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { from, Observable, of } from 'rxjs';
 import { v4 as uuid } from 'uuid';
 import { RoomMemberService } from '../service/room-member.service';
 import { InterfaceRoomMembers } from '../interface/room-members.interface';
-import { filter, map } from 'rxjs/operators';
+import { filter, map, toArray } from 'rxjs/operators';
+import { GetUserQuery, ListRoomGroupsQuery, ListRoomsQuery } from 'src/app/shared/service/amplify.service';
+import { GetRoomGroupQuery } from 'src/app/API.service';
+import { ListRoomMembersInfo, ListUserInfo } from '../models/room-members.model';
 
 @Injectable({
   providedIn: 'root'
@@ -42,23 +45,25 @@ export class RoomMembersLogic {
     }
   };
 
-  fetchRoomMemberGroup(roomId?: string): Observable<any> {
+  fetchRoomMemberGroup(roomId?: string): Observable<Array<ListRoomMembersInfo>> {
     const filterContent = {
       roomID: {
         eq: `${roomId}`
       }
     }
-    return this.roomMemberService.fetchRoomMember(filterContent)
-      .pipe(map(({ items }) => items))
+    return this.roomMemberService.fetchRoomMember(filterContent).pipe(map((result) => result.items));
+    // .pipe(map(({ items }) => items))
   }
 
   fetchNonAssignRoomMemberGroup(roomId?: string): Observable<any> {
-    // const filterContent = {
-    //   roomID: {
-    //     ne: `${roomId}`
-    //   }
-    // }
     return this.roomMemberService.fetchRoomMember().pipe(map(({ items }) => items));
+  }
+
+  setRoomMembers(items: Array<ListRoomMembersInfo>): Observable<Array<ListUserInfo>> {
+    console.log('ここで成形するればいいのか', items);
+    return from(items)
+      .pipe(map(result => result.user))
+      .pipe(toArray());
   }
 
   createUserRoomGroup(userId, roomId): Observable<any> {
