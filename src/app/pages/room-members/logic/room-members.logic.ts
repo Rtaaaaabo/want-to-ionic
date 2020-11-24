@@ -52,7 +52,6 @@ export class RoomMembersLogic {
       }
     }
     return this.roomMemberService.fetchRoomMember(filterContent).pipe(map((result) => result.items));
-    // .pipe(map(({ items }) => items))
   }
 
   fetchNonAssignRoomMemberGroup(roomId?: string): Observable<any> {
@@ -60,7 +59,6 @@ export class RoomMembersLogic {
   }
 
   setRoomMembers(items: Array<ListRoomMembersInfo>): Observable<Array<ListUserInfo>> {
-    console.log('ここで成形するればいいのか', items);
     return from(items)
       .pipe(map(result => result.user))
       .pipe(toArray());
