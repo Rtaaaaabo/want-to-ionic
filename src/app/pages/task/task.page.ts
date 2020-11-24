@@ -143,6 +143,9 @@ export class TaskPage implements OnInit {
 
   segmentChanged(ev): void {
     this.segment = ev.detail.value;
+    this.logic.fetchDoneTaskPerRoom(this.roomId).subscribe((data) => {
+      this.taskDoneItems = data;
+    })
   }
 
   doneTask(taskFormItem): void {
