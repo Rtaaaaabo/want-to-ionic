@@ -2,17 +2,19 @@
   <ion-toolbar>
     <ion-title> {{ room.name }} </ion-title>
     <ion-buttons slot="start">
-      <ion-button (click)="goBackToRoom()">
-        <ion-icon *ngIf="!isReorder" name="chevron-back-outline"></ion-icon>
+      <ion-button *ngIf="!isReorder" (click)="goBackToRoom()">
+        <ion-icon name="chevron-back-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
     <ion-buttons *ngIf="segment === 'active'" slot="end">
-      <ion-button (click)="navigateToRoomMember()">
-        <ion-icon *ngIf="!isReorder" name="people-outline"></ion-icon>
+      <ion-button *ngIf="!isReorder" (click)="navigateToRoomMember()">
+        <ion-icon name="people-outline"></ion-icon>
       </ion-button>
-      <ion-button (click)="activeSortTaskItem()">
-        <ion-icon *ngIf="!isReorder" name="swap-vertical-sharp"></ion-icon>
-        <ion-icon *ngIf="isReorder" name="checkmark-outline"></ion-icon>
+      <ion-button *ngIf="!isReorder" (click)="activeSortTaskItem()">
+        <ion-icon name="swap-vertical-sharp"></ion-icon>
+      </ion-button>
+      <ion-button *ngIf="isReorder" (click)="activeSortTaskItem()">
+        <ion-icon name="checkmark-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
