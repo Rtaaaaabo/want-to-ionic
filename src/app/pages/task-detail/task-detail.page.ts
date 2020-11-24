@@ -122,7 +122,7 @@ export class TaskDetailPage implements OnInit {
       .pipe(concatMap(() => this.logic.fetchAnyTask(taskDetail.id)))
       .pipe(tap(() => presentToast))
       .pipe(map((data) => this.taskDetail = data))
-      .pipe(concatMap(() => of()))    // ここにActiveTaskItemsのPriorityを変更する処理を入れる
+      // なにかあればここでPriorityを変更する処理入れる
       .subscribe((data) => {
         console.log(data);
       });

@@ -26,7 +26,7 @@ export class TaskDetailLogic {
         eq: `${taskId}`
       }
     }
-    return from(this.taskDetailService.fetchMessagePerTask(filterContent))
+    return this.taskDetailService.fetchMessagePerTask(filterContent);
   }
 
   updateTaskItem(taskItem, status): Observable<any> {
