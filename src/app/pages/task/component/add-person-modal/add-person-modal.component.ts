@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { map } from 'rxjs/operators';
-import { OwnTaskLogic } from 'src/app/pages/own-task/logic/own-task.logic';
 import { TaskLogic } from '../../logic/task.logic';
+import { MemberTask } from '../../model/task-member.model';
+
 
 @Component({
   selector: 'app-add-person-modal',
@@ -13,7 +14,7 @@ export class AddPersonModalComponent implements OnInit {
 
   arraySelectedPersonId: Array<string>;
   notAssignMembers;
-  members;
+  members: Array<MemberTask>;
   companyMembers;
   users;
   companyId: string;
@@ -38,16 +39,21 @@ export class AddPersonModalComponent implements OnInit {
     this.modalCtrl.dismiss(this.arraySelectedPersonId);
   }
 
-  changeCheckUser(memberId: string): void {
-    const indexTargetId = this.arraySelectedPersonId.findIndex(item => item === memberId);
+  changeCheckUser(member: MemberTask): void {
+    const indexTargetId = this.arraySelectedPersonId.findIndex(item => item === member.id);
+    const targetIndex = this.members.findIndex(item => item.id === member.id);
+    console.log('targetIndex', targetIndex);
     if (indexTargetId >= 0) {
       this.arraySelectedPersonId.splice(indexTargetId, 1);
+      this.members[targetIndex].checked = false;
     } else {
-      this.arraySelectedPersonId.push(memberId);
+      this.arraySelectedPersonId.push(member.id);
+      this.members[targetIndex].checked = true;
     }
+    console.log('members', this.members);
   }
 
-  inputSearch(ev) {
+  inputSearch(ev: CustomEvent) {
     if (ev.detail.value !== null) {
       this.logic.fetchCompanyMember(this.companyId, ev.detail.value)
         .pipe(map((result) => result.items))
@@ -61,6 +67,7 @@ export class AddPersonModalComponent implements OnInit {
           this.members = this.notAssignMembers;
         })
     }
+    console.log('arraySelectedPersonId', this.arraySelectedPersonId);
   }
 
   checkNotAssignMember(companyMembers, roomMembers): Array<any> {

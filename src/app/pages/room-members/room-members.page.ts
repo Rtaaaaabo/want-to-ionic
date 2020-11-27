@@ -71,7 +71,6 @@ export class RoomMembersPage implements OnInit {
       }
     });
     modal.onDidDismiss().then(({ data }) => {
-      console.log(data);
       if (data === undefined) {
         return;
       };
