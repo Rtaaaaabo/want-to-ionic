@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { map } from 'rxjs/operators';
-import { ListUserInfo } from 'src/app/pages/room-members/models/room-members.model';
-import { ListUsersQuery } from 'src/app/shared/service/amplify.service';
+import { OwnTaskLogic } from 'src/app/pages/own-task/logic/own-task.logic';
 import { TaskLogic } from '../../logic/task.logic';
 
 @Component({
@@ -13,8 +12,9 @@ import { TaskLogic } from '../../logic/task.logic';
 export class AddPersonModalComponent implements OnInit {
 
   arraySelectedPersonId: Array<string>;
-  companyMembers: ListUsersQuery;
-  members: ListUserInfo[];
+  notAssignMembers;
+  members;
+  companyMembers;
   users;
   companyId: string;
 
@@ -25,10 +25,10 @@ export class AddPersonModalComponent implements OnInit {
 
   ngOnInit(): void {
     this.arraySelectedPersonId = [];
+    this.members = this.notAssignMembers;
   }
 
-  ngAfterViewInit(): void {
-  }
+  ngAfterViewInit(): void { }
 
   dismissModal(): void {
     this.modalCtrl.dismiss();
@@ -47,12 +47,36 @@ export class AddPersonModalComponent implements OnInit {
     }
   }
 
-  searchPerson(ev) {
-    this.logic.fetchCompanyMember(this.companyId, ev.detail.value)
-      .pipe(map((result) => result.items))
-      .subscribe((items) => {
-        this.members = items;
+  inputSearch(ev) {
+    if (ev.detail.value !== null) {
+      this.logic.fetchCompanyMember(this.companyId, ev.detail.value)
+        .pipe(map((result) => result.items))
+        .subscribe((items) => {
+          this.members = this.checkNotAssignMember(this.notAssignMembers, items)
+        })
+    } else {
+      this.logic.fetchCompanyMember(this.companyId)
+        .pipe(map((result) => result.items))
+        .subscribe(() => {
+          this.members = this.notAssignMembers;
+        })
+    }
+  }
+
+  checkNotAssignMember(companyMembers, roomMembers): Array<any> {
+    return companyMembers.filter((companyMember) => {
+      return roomMembers.some((roomMember) => {
+        return companyMember.id === roomMember.id;
       })
+    });
+  }
+
+  cancelSearch(ev) {
+    console.log('cancelSearch', ev);
+  }
+
+  clearSearch(ev) {
+    console.log('clearSearch', ev);
   }
 
 }

@@ -3,7 +3,7 @@ import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { from } from 'rxjs';
-import { catchError, concatMap, map } from 'rxjs/operators';
+import { catchError, concatMap, filter, map } from 'rxjs/operators';
 import { RoomMembersLogic } from './logic/room-members.logic';
 import { AddPersonModalComponent } from '../task/component/add-person-modal/add-person-modal.component';
 
@@ -16,6 +16,7 @@ import { AddPersonModalComponent } from '../task/component/add-person-modal/add-
 export class RoomMembersPage implements OnInit {
   companyId: number | string;
   roomId: string;
+  companyMembers;
   roomMembers = [];
   notAssignMembers = [];
 
@@ -34,15 +35,13 @@ export class RoomMembersPage implements OnInit {
       .pipe(concatMap((result) => this.logic.setRoomMembers(result)))
       .pipe(map((items) => this.roomMembers = items))
       .pipe(concatMap(() => this.logic.fetchCompanyMember(this.companyId)))
-      .subscribe(({ items }) => { // companyMembers
-        const companyMembers = items;
-        this.notAssignMembers = this.checkNotAssignMember(companyMembers, this.roomMembers);
+      .subscribe(({ items }) => {
+        this.companyMembers = items;
+        this.notAssignMembers = this.checkNotAssignMember(this.companyMembers, this.roomMembers);
       });
   }
 
   checkNotAssignMember(companyMembers, roomMembers): Array<any> {
-    console.log('companyMembers', companyMembers);
-    console.log('roomMembers', roomMembers);
     return companyMembers.filter((companyMember) => {
       return !roomMembers.some((roomMember) => {
         return companyMember.id === roomMember.id;
@@ -66,7 +65,8 @@ export class RoomMembersPage implements OnInit {
     const modal = await this.modalCtrl.create({
       component: AddPersonModalComponent,
       componentProps: {
-        members: this.notAssignMembers,
+        notAssignMembers: this.notAssignMembers,
+        companyMembers: this.companyMembers,
         companyId: this.companyId,
       }
     });
@@ -81,7 +81,7 @@ export class RoomMembersPage implements OnInit {
         .pipe(concatMap(() => this.logic.fetchRoomMemberGroup(this.roomId)))
         .pipe(map((items) => this.roomMembers = items))
         .pipe(concatMap(() => this.logic.fetchCompanyMember(this.companyId)))
-        .subscribe(({ items }) => { // companyMembers
+        .subscribe(({ items }) => {
           this.notAssignMembers = this.checkNotAssignMember(items, this.roomMembers);
         })
     })
