@@ -3,7 +3,7 @@ import { from, Observable, of } from 'rxjs';
 import { v4 as uuid } from 'uuid';
 import { RoomMemberService } from '../service/room-member.service';
 import { InterfaceRoomMembers } from '../interface/room-members.interface';
-import { filter, map, toArray } from 'rxjs/operators';
+import { filter, map, toArray, concatMap } from 'rxjs/operators';
 import { GetUserQuery, ListRoomGroupsQuery, ListRoomsQuery } from 'src/app/shared/service/amplify.service';
 import { GetRoomGroupQuery } from 'src/app/API.service';
 import { ListRoomMembersInfo, ListUserInfo } from '../models/room-members.model';
@@ -54,6 +54,16 @@ export class RoomMembersLogic {
     return this.roomMemberService.fetchRoomMember(filterContent).pipe(map((result) => result.items));
   }
 
+  fetchRoomMembers(roomId: string): Observable<any> {
+    const filterContent = {
+      roomID: {
+        eq: `${roomId}`
+      }
+    }
+    console.log('[fetchRoomMemberGroup] これも２回実行されてしまう？');
+    return of({});
+  }
+
   fetchNonAssignRoomMemberGroup(roomId?: string): Observable<any> {
     return this.roomMemberService.fetchRoomMember().pipe(map(({ items }) => items));
   }
@@ -70,6 +80,13 @@ export class RoomMembersLogic {
       roomID: `${roomId}`,
       userID: `${userId}`,
     }
-    return this.roomMemberService.createUserRoomGroup(content);
+    console.log('[createUserRoomGroup] これは追加分、実行');
+    // return this.roomMemberService.createUserRoomGroup(content);
+    return of({});
+  }
+
+  addMembersToAnyRoom(arrayUserId: Array<string>, roomId): Observable<any> {
+    return from(arrayUserId)
+      .pipe(concatMap((userId) => this.createUserRoomGroup(userId, roomId)))
   }
 }

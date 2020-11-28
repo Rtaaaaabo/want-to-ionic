@@ -42,7 +42,6 @@ export class AddPersonModalComponent implements OnInit {
   changeCheckUser(member: MemberTask): void {
     const indexTargetId = this.arraySelectedPersonId.findIndex(item => item === member.id);
     const targetIndex = this.members.findIndex(item => item.id === member.id);
-    console.log('targetIndex', targetIndex);
     if (indexTargetId >= 0) {
       this.arraySelectedPersonId.splice(indexTargetId, 1);
       this.members[targetIndex].checked = false;
@@ -50,7 +49,6 @@ export class AddPersonModalComponent implements OnInit {
       this.arraySelectedPersonId.push(member.id);
       this.members[targetIndex].checked = true;
     }
-    console.log('members', this.members);
   }
 
   inputSearch(ev: CustomEvent) {
