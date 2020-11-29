@@ -4,7 +4,7 @@ import { ModalController } from '@ionic/angular';
 import { AddRoomModalComponent } from '../../../../shared/component/modal/add-room-modal/add-room-modal.component';
 import { HomeLogic } from '../../logic/home.logic';
 import { from } from 'rxjs';
-import { flatMap } from 'rxjs/operators';
+import { concatMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-list-room',
@@ -39,9 +39,9 @@ export class ListRoomComponent implements OnInit {
 
     const observable = from(modal.onDidDismiss());
     observable
-      .pipe(flatMap(({ data }) => this.homeLogic.createRoom(data)))
-      .pipe(flatMap((room) => this.homeLogic.createUserRoomGroup(this.currentUserId, room.id)))
-      .pipe(flatMap(() => this.homeLogic.listRoom(companyId)))
+      .pipe(concatMap(({ data }) => this.homeLogic.createRoom(data)))
+      .pipe(concatMap((room) => this.homeLogic.createUserRoomGroup(this.currentUserId, room.id)))
+      .pipe(concatMap(() => this.homeLogic.listRoom(companyId)))
       .subscribe((response) => {
         this.roomList = response;
       })
@@ -54,7 +54,7 @@ export class ListRoomComponent implements OnInit {
 
   deleteRoom(roomId): void {
     this.homeLogic.deleteRoomItem(roomId)
-      .pipe(flatMap(() =>
+      .pipe(concatMap(() =>
         this.homeLogic.listRoom('takuCloudCom')))
       .subscribe((response) => {
         this.roomList = response;
