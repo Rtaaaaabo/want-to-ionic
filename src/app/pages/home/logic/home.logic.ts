@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HomeService } from '../service/home-service.service';
+import { HomeService } from '../service/home.service';
 import { SessionService } from '../../../shared/service/session.service';
 import { v4 as uuid } from 'uuid';
 import { Observable } from 'rxjs';
