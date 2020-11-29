@@ -176,4 +176,18 @@ export class TaskLogic {
     const priorityB = b.priority;
     return priorityA - priorityB;
   }
+
+  createUserRoomGroup(userId: string, roomId: string): Observable<any> {
+    const content = {
+      id: `user-room-group-${uuid()}`,
+      roomID: `${roomId}`,
+      userID: `${userId}`,
+    }
+    return of({});
+  }
+
+  addMembersToAnyRoom(arrayUserId: Array<string>, roomId: string): Observable<any> {
+    return from(arrayUserId).pipe(concatMap((userId) => this.createUserRoomGroup(userId, roomId)))
+  }
+
 }

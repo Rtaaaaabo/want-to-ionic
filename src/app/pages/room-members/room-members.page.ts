@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { ModalController } from '@ionic/angular';
-import { from } from 'rxjs';
-import { catchError, concatMap, filter, map, take } from 'rxjs/operators';
+import { catchError, concatMap, endWith, filter, map, take } from 'rxjs/operators';
 import { RoomMembersLogic } from './logic/room-members.logic';
 import { AddPersonModalComponent } from '../task/component/add-person-modal/add-person-modal.component';
 
@@ -68,23 +67,21 @@ export class RoomMembersPage implements OnInit {
         notAssignMembers: this.notAssignMembers,
         companyMembers: this.companyMembers,
         companyId: this.companyId,
+        roomId: this.roomId,
       }
     });
     modal.onDidDismiss().then(({ data }) => {
-      if (data === undefined) {
+      if (data.result === 'dismiss') {
         return;
       };
-      this.logic.addMembersToAnyRoom(data, this.roomId)
-        // from(data).pipe(concatMap((userId) => this.logic.createUserRoomGroup(userId, this.roomId)))
-        // .pipe(concatMap(() => this.logic.fetchRoomMemberGroup(this.roomId)))
-        .pipe(concatMap(() => this.logic.fetchRoomMembers(this.roomId))).pipe(take(1))
-        // .pipe(map((items) => this.roomMembers = items))
-        // .pipe(concatMap(() => this.logic.fetchCompanyMember(this.companyId)))
-        .subscribe((data) => console.log(data));
-      // .subscribe(({ items }) => {
-      //   this.notAssignMembers = this.checkNotAssignMember(items, this.roomMembers);
-      //   console.log('notAssignMembers', this.notAssignMembers);
-      // })
+      console.log('dismiss data', data);
+      // this.logic.addMembersToAnyRoom(data, this.roomId)
+      //   //   .pipe(concatMap(() => this.logic.fetchRoomMembers(this.roomId))).pipe(take(1))
+      //   //   // .pipe(map((items) => this.roomMembers = items))
+      //   //   // .pipe(concatMap(() => this.logic.fetchCompanyMember(this.companyId)))
+      //   .subscribe((data) => {
+      //     console.log('[subscribe] これも一回だけ', data)
+      //   });
     })
     return modal.present();
   }

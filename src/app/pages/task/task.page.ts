@@ -4,7 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ItemReorderEventDetail } from '@ionic/core';
 import { ModalController, ToastController, ActionSheetController } from '@ionic/angular';
 import { forkJoin, from, of } from 'rxjs';
-import { flatMap, switchMap, tap, map, catchError, concatMap, take } from 'rxjs/operators';
+import { flatMap, switchMap, tap, map, catchError, concatMap } from 'rxjs/operators';
 import { GetRoomQuery, GetUserQuery, ListUsersQuery } from 'src/app/shared/service/amplify.service';
 import { TaskLogic } from './logic/task.logic';
 import { CurrentUserInfo } from './interface/current-user-info.interface';

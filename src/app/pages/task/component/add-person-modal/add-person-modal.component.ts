@@ -18,6 +18,7 @@ export class AddPersonModalComponent implements OnInit {
   companyMembers;
   users;
   companyId: string;
+  roomId: string;
 
   constructor(
     private modalCtrl: ModalController,
@@ -32,11 +33,14 @@ export class AddPersonModalComponent implements OnInit {
   ngAfterViewInit(): void { }
 
   dismissModal(): void {
-    this.modalCtrl.dismiss();
+    this.modalCtrl.dismiss({ result: 'dismiss' });
   }
 
   addPersonToTask(): void {
-    this.modalCtrl.dismiss(this.arraySelectedPersonId);
+    this.logic.addMembersToAnyRoom(this.arraySelectedPersonId, this.roomId)
+      .subscribe(() => {
+        this.modalCtrl.dismiss({ result: 'success' });
+      })
   }
 
   changeCheckUser(member: MemberTask): void {
@@ -65,7 +69,6 @@ export class AddPersonModalComponent implements OnInit {
           this.members = this.notAssignMembers;
         })
     }
-    console.log('arraySelectedPersonId', this.arraySelectedPersonId);
   }
 
   checkNotAssignMember(companyMembers, roomMembers): Array<any> {

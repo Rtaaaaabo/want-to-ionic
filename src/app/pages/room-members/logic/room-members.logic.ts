@@ -60,7 +60,7 @@ export class RoomMembersLogic {
         eq: `${roomId}`
       }
     }
-    console.log('[fetchRoomMemberGroup] これも２回実行されてしまう？');
+    console.log('[fetchRoomMemberGroup] これは一回だけの実行で。');
     return of({});
   }
 
@@ -80,13 +80,11 @@ export class RoomMembersLogic {
       roomID: `${roomId}`,
       userID: `${userId}`,
     }
-    console.log('[createUserRoomGroup] これは追加分、実行');
-    // return this.roomMemberService.createUserRoomGroup(content);
+    console.log('[createUserRoomGroup] これは追加分、実行', content);
     return of({});
   }
 
-  addMembersToAnyRoom(arrayUserId: Array<string>, roomId): Observable<any> {
-    return from(arrayUserId)
-      .pipe(concatMap((userId) => this.createUserRoomGroup(userId, roomId)))
+  addMembersToAnyRoom(userId: string, roomId: string): Observable<any> {
+    return this.createUserRoomGroup(userId, roomId);
   }
 }
