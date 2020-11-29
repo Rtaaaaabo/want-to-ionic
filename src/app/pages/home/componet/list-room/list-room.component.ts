@@ -55,13 +55,16 @@ export class ListRoomComponent implements OnInit {
   deleteRoom(roomId): void {
     // Roomの中にUserが自分しかいない場合はRoom自体削除する
     // Roomの中にUserが自分以外にいるならば、対象のRoomから抜ける
-
-    this.logic.deleteRoomItem(roomId)
-      .pipe(concatMap(() =>
-        this.logic.listRoom('takuCloudCom')))
-      .subscribe((response) => {
-        this.roomList = response;
+    this.logic.fetchRoomMembers(roomId, this.currentUserId)
+      .subscribe((result) => {
+        console.log('deleteRoom', result);
       })
+    // this.logic.deleteRoomItem(roomId)
+    //   .pipe(concatMap(() =>
+    //     this.logic.listRoom('takuCloudCom')))
+    //   .subscribe((response) => {
+    //     this.roomList = response;
+    //   })
   }
 
 }

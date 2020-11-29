@@ -4,6 +4,7 @@ import { SessionService } from '../../../shared/service/session.service';
 import { v4 as uuid } from 'uuid';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { ModelRoomGroupFilterInput } from 'src/app/shared/service/amplify.service';
 
 interface Attribute {
   email: string,
@@ -20,7 +21,6 @@ export class HomeLogic {
     private homeService: HomeService,
     private sessionService: SessionService,
   ) { }
-
 
   checkRegistrationUser(attribute: Attribute): Observable<any> {
     return this.homeService.checkRegistrationUser(attribute.email);
@@ -69,5 +69,17 @@ export class HomeLogic {
       userID: `${userId}`,
     }
     return this.homeService.createUserRoomGroup(content);
+  }
+
+  fetchRoomMembers(roomId: string, currentUserId: string): Observable<any> {
+    const filterContent: ModelRoomGroupFilterInput = {
+      roomID: {
+        eq: `${roomId}`
+      },
+      userID: {
+        ne: `${currentUserId}`
+      }
+    }
+    return this.homeService.fetchRoomMembers(filterContent).pipe(map((result) => result.items));
   }
 }

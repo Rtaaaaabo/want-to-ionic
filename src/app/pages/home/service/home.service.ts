@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AmplifyService, ModelRoomFilterInput, ListRoomsQuery, ModelUserFilterInput } from '../../../shared/service/amplify.service';
+import { AmplifyService, ModelRoomFilterInput, ListRoomsQuery, ModelUserFilterInput, ModelRoomGroupFilterInput } from '../../../shared/service/amplify.service';
 import { from, Observable } from 'rxjs';
 
 
@@ -45,5 +45,9 @@ export class HomeService {
 
   createUserRoomGroup(filterContent): Observable<any> {
     return from(this.amplifyService.CreateRoomGroup(filterContent));
+  }
+
+  fetchRoomMembers(filterContent: ModelRoomGroupFilterInput): Observable<any> {
+    return from(this.amplifyService.ListRoomGroups(filterContent));
   }
 }
