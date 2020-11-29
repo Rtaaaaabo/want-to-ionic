@@ -8,7 +8,6 @@ import { flatMap, switchMap, tap, map, catchError, concatMap } from 'rxjs/operat
 import { GetRoomQuery, GetUserQuery, ListUsersQuery } from 'src/app/shared/service/amplify.service';
 import { TaskLogic } from './logic/task.logic';
 import { CurrentUserInfo } from './interface/current-user-info.interface';
-import { AddPersonModalComponent } from 'src/app/pages/task/component/add-person-modal/add-person-modal.component';
 import { AddTaskModalComponent } from '../../shared/component/modal/add-task-modal/add-task-modal.component';
 import { ListRoomGroupsQuery } from 'src/app/API.service';
 import { InterfaceTask } from 'src/app/interfaces/task.interface';
@@ -70,7 +69,6 @@ export class TaskPage implements OnInit {
       this.taskDoneItems = data.doneTaskItems;
       this.room = data.room;
       this.roomMembers = data.roomMembers;
-      console.log(this.taskActiveItems);
     });
   }
 
@@ -179,29 +177,6 @@ export class TaskPage implements OnInit {
     this.logic.deleteTaskItem(task.id)
       .pipe(flatMap(() => this.logic.fetchActiveTaskPerRoom(this.roomId)))
       .subscribe((result) => this.taskActiveItems = result);
-  }
-
-  async presentAddPersonToRoom(): Promise<void> {
-    const modal = await this.modalCtrl.create({
-      component: AddPersonModalComponent,
-      componentProps: {
-        members: this.companyMembers,
-        users: this.user
-      }
-    })
-    modal.onDidDismiss().then(({ data }) => {
-      if (data === undefined) {
-        return;
-      };
-      from(data)
-        .pipe(concatMap((userId) => this.logic.createRoomGroup(userId, this.roomId)),
-          catchError((error) => error))
-        .pipe(concatMap(() => this.logic.fetchMemberListOnRoom(this.roomId)))
-        .subscribe(({ items }) => {
-          console.log(items);
-        });
-    });
-    return modal.present()
   }
 
   navigateToRoomMember(): void {
