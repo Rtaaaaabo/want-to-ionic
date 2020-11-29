@@ -18,16 +18,16 @@ export class ListRoomComponent implements OnInit {
 
   constructor(
     private modalCtrl: ModalController,
-    private homeLogic: HomeLogic,
+    private logic: HomeLogic,
     private router: Router,
   ) { }
 
   ngOnInit() {
-    this.homeLogic.listRoom('takuCloudCom')
+    this.logic.listRoom('takuCloudCom')
       .subscribe((result) => {
         this.roomList = result;
       })
-    this.homeLogic.fetchCurrentUser().subscribe((data) => {
+    this.logic.fetchCurrentUser().subscribe((data) => {
       this.currentUserId = data.sub;
     });
   }
@@ -39,9 +39,9 @@ export class ListRoomComponent implements OnInit {
 
     const observable = from(modal.onDidDismiss());
     observable
-      .pipe(concatMap(({ data }) => this.homeLogic.createRoom(data)))
-      .pipe(concatMap((room) => this.homeLogic.createUserRoomGroup(this.currentUserId, room.id)))
-      .pipe(concatMap(() => this.homeLogic.listRoom(companyId)))
+      .pipe(concatMap(({ data }) => this.logic.createRoom(data)))
+      .pipe(concatMap((room) => this.logic.createUserRoomGroup(this.currentUserId, room.id)))
+      .pipe(concatMap(() => this.logic.listRoom(companyId)))
       .subscribe((response) => {
         this.roomList = response;
       })
@@ -53,9 +53,12 @@ export class ListRoomComponent implements OnInit {
   }
 
   deleteRoom(roomId): void {
-    this.homeLogic.deleteRoomItem(roomId)
+    // Roomの中にUserが自分しかいない場合はRoom自体削除する
+    // Roomの中にUserが自分以外にいるならば、対象のRoomから抜ける
+
+    this.logic.deleteRoomItem(roomId)
       .pipe(concatMap(() =>
-        this.homeLogic.listRoom('takuCloudCom')))
+        this.logic.listRoom('takuCloudCom')))
       .subscribe((response) => {
         this.roomList = response;
       })
