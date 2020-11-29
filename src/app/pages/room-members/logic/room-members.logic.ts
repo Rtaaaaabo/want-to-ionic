@@ -60,8 +60,8 @@ export class RoomMembersLogic {
         eq: `${roomId}`
       }
     }
-    console.log('[fetchRoomMemberGroup] これは一回だけの実行で。');
-    return of({});
+    return this.roomMemberService.fetchRoomMember(filterContent)
+    // .pipe(map(({items}) => items.user.));
   }
 
   fetchNonAssignRoomMemberGroup(roomId?: string): Observable<any> {
@@ -72,19 +72,5 @@ export class RoomMembersLogic {
     return from(items)
       .pipe(map(result => result.user))
       .pipe(toArray());
-  }
-
-  createUserRoomGroup(userId, roomId): Observable<any> {
-    const content = {
-      id: `user-room-group-${uuid()}`,
-      roomID: `${roomId}`,
-      userID: `${userId}`,
-    }
-    console.log('[createUserRoomGroup] これは追加分、実行', content);
-    return of({});
-  }
-
-  addMembersToAnyRoom(userId: string, roomId: string): Observable<any> {
-    return this.createUserRoomGroup(userId, roomId);
   }
 }

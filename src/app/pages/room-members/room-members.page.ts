@@ -74,14 +74,12 @@ export class RoomMembersPage implements OnInit {
       if (data.result === 'dismiss') {
         return;
       };
-      console.log('dismiss data', data);
-      // this.logic.addMembersToAnyRoom(data, this.roomId)
-      //   //   .pipe(concatMap(() => this.logic.fetchRoomMembers(this.roomId))).pipe(take(1))
-      //   //   // .pipe(map((items) => this.roomMembers = items))
-      //   //   // .pipe(concatMap(() => this.logic.fetchCompanyMember(this.companyId)))
-      //   .subscribe((data) => {
-      //     console.log('[subscribe] これも一回だけ', data)
-      //   });
+      this.logic.fetchRoomMembers(this.roomId)
+        .pipe(concatMap(({ items }) => this.logic.setRoomMembers(items)))
+        .subscribe((items) => {
+          this.roomMembers = items;
+          this.notAssignMembers = this.checkNotAssignMember(this.companyMembers, this.roomMembers);
+        })
     })
     return modal.present();
   }

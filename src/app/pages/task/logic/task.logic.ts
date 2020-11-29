@@ -183,7 +183,7 @@ export class TaskLogic {
       roomID: `${roomId}`,
       userID: `${userId}`,
     }
-    return of({});
+    return this.taskService.createUserRoomGroup(content);
   }
 
   addMembersToAnyRoom(arrayUserId: Array<string>, roomId: string): Observable<any> {

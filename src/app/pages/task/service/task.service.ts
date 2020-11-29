@@ -72,4 +72,8 @@ export class TaskService {
   fetchRoomMember(content): Observable<ListRoomGroupsQuery> {
     return from(this.amplifyService.ListRoomGroups(content));
   }
+
+  createUserRoomGroup(filterContent): Observable<any> {
+    return from(this.amplifyService.CreateRoomGroup(filterContent));
+  }
 }
