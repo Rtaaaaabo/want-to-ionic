@@ -175,8 +175,10 @@ export class TaskPage implements OnInit {
 
   deleteTask(task): void {
     this.logic.deleteTaskItem(task.id)
-      .pipe(flatMap(() => this.logic.fetchActiveTaskPerRoom(this.roomId)))
-      .subscribe((result) => this.taskActiveItems = result);
+      .pipe(concatMap(() => this.logic.fetchActiveTaskPerRoom(this.roomId)))
+      .subscribe((result) => {
+        this.taskActiveItems = result
+      });
   }
 
   navigateToRoomMember(): void {
