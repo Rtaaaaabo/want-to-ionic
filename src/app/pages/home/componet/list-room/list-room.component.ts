@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { AddRoomModalComponent } from '../../../../shared/component/modal/add-room-modal/add-room-modal.component';
 import { HomeLogic } from '../../logic/home.logic';
-import { from } from 'rxjs';
+import { concat, from } from 'rxjs';
 import { concatMap } from 'rxjs/operators';
 
 @Component({
@@ -59,12 +59,14 @@ export class ListRoomComponent implements OnInit {
       .subscribe((result) => {
         console.log('deleteRoom', result);
       })
-    // this.logic.deleteRoomItem(roomId)
-    //   .pipe(concatMap(() =>
-    //     this.logic.listRoom('takuCloudCom')))
-    //   .subscribe((response) => {
-    //     this.roomList = response;
-    //   })
+  }
+
+  deleteRoomItem(roomId: string): void {
+    this.logic.deleteRoomItem(roomId)
+      .pipe(concatMap(() => this.logic.listRoom('takuCloudCom')))
+      .subscribe((res) => {
+        this.roomList = res;
+      })
   }
 
 }
