@@ -54,7 +54,7 @@ export class HomeLogic {
     return this.homeService.createUser(requestContent);
   }
 
-  listRoom(companyId: string): Observable<any> {
+  listRoom(companyId: string, currentUserId?: string): Observable<any> {
     return this.homeService.fetchRoomList(companyId).pipe(map((result) => result.items));
   }
 
@@ -98,7 +98,6 @@ export class HomeLogic {
         eq: meId,
       }
     }
-    console.log('filterContent', filterContent);
     return this.homeService.fetchRoomGroupsId(filterContent)
       .pipe(map(({ items }) => items[0].id));
   }

@@ -3,8 +3,8 @@ import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { AddRoomModalComponent } from '../../../../shared/component/modal/add-room-modal/add-room-modal.component';
 import { HomeLogic } from '../../logic/home.logic';
-import { concat, from, Observable, of } from 'rxjs';
-import { concatMap, switchMap } from 'rxjs/operators';
+import { forkJoin, from, Observable } from 'rxjs';
+import { concatMap, switchMap, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-list-room',
@@ -15,6 +15,7 @@ export class ListRoomComponent implements OnInit {
 
   roomList: Array<any>;
   currentUserId: string;
+  companyId = 'takuCloudCon';
 
   constructor(
     private modalCtrl: ModalController,
@@ -23,14 +24,13 @@ export class ListRoomComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.logic.listRoom('takuCloudCom')
-      .subscribe((result) => {
-        this.roomList = result;
+    this.logic.fetchCurrentUser()
+      .pipe(map((data) => this.currentUserId = data.sub))
+      .pipe(concatMap(() => this.logic.listRoom(this.companyId, this.currentUserId)))
+      .subscribe((data) => {
+        console.log('currentUserId', this.currentUserId);
+        this.roomList = data;
       })
-    this.logic.fetchCurrentUser().subscribe((data) => {
-      this.currentUserId = data.sub;
-      console.log('Current User ID', this.currentUserId);
-    });
   }
 
   async presentAddRoomItem(companyId: string) {

@@ -31,7 +31,7 @@ export class HomeService {
     const filterContent: ModelRoomFilterInput = {
       companyID: {
         eq: `${companyId}`
-      }
+      },
     }
     return from(this.amplifyService.ListRooms(filterContent));
   }
