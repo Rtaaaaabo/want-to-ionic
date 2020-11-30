@@ -26,9 +26,10 @@ export class ListRoomComponent implements OnInit {
   ngOnInit() {
     this.logic.fetchCurrentUser()
       .pipe(map((data) => this.currentUserId = data.sub))
-      .pipe(concatMap(() => this.logic.listRoom(this.companyId, this.currentUserId)))
+      .pipe((concatMap(() => this.logic.fetchRoomList(this.currentUserId))))
+      // .pipe(concatMap(() => this.logic.listRoom(this.companyId, this.currentUserId)))
       .subscribe((data) => {
-        console.log('currentUserId', this.currentUserId);
+        console.log(data);
         this.roomList = data;
       })
   }
@@ -42,7 +43,8 @@ export class ListRoomComponent implements OnInit {
     observable
       .pipe(concatMap(({ data }) => this.logic.createRoom(data)))
       .pipe(concatMap((room) => this.logic.createUserRoomGroup(this.currentUserId, room.id)))
-      .pipe(concatMap(() => this.logic.listRoom(companyId)))
+      .pipe(concatMap(() => this.logic.fetchRoomList(this.currentUserId)))
+      // .pipe(concatMap(() => this.logic.listRoom(companyId)))
       .subscribe((response) => {
         this.roomList = response;
       })
@@ -67,7 +69,8 @@ export class ListRoomComponent implements OnInit {
 
   deleteRoomItem(roomId: string): Observable<any> {
     return this.logic.deleteRoomItem(roomId)
-      .pipe(concatMap(() => this.logic.listRoom('takuCloudCom')))
+      .pipe(concatMap(() => this.logic.fetchRoomList(this.currentUserId)))
+    // .pipe(concatMap(() => this.logic.listRoom('takuCloudCom')))
     // SubscribeでRoomItemsにRoomListを代入する
   }
 

@@ -54,9 +54,15 @@ export class HomeLogic {
     return this.homeService.createUser(requestContent);
   }
 
-  listRoom(companyId: string, currentUserId?: string): Observable<any> {
-    return this.homeService.fetchRoomList(companyId).pipe(map((result) => result.items));
-  }
+  // listRoom(companyId: string, currentUserId?: string): Observable<any> {
+  //   const filterContent = {
+  //     companyID: {
+  //       eq: companyId
+  //     }
+  //   }
+  //   return this.homeService.fetchRoomList(filterContent)
+  //     .pipe(map((result) => result.items));
+  // }
 
   deleteRoomItem(roomId: string): Observable<any> {
     return this.homeService.deleteRoomItem(roomId);
@@ -100,5 +106,14 @@ export class HomeLogic {
     }
     return this.homeService.fetchRoomGroupsId(filterContent)
       .pipe(map(({ items }) => items[0].id));
+  }
+
+  fetchRoomList(currentUseId: string): Observable<any> {
+    const filterContent = {
+      userID: {
+        eq: currentUseId
+      }
+    }
+    return this.homeService.fetchRoomList(filterContent).pipe(map(({ items }) => items));
   }
 }
