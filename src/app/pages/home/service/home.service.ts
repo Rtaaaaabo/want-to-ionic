@@ -50,4 +50,15 @@ export class HomeService {
   fetchRoomMembers(filterContent: ModelRoomGroupFilterInput): Observable<any> {
     return from(this.amplifyService.ListRoomGroups(filterContent));
   }
+
+  fetchRoomGroupsId(filterContent: ModelRoomGroupFilterInput): Observable<any> {
+    return from(this.amplifyService.ListRoomGroups(filterContent));
+  }
+
+  deleteRoomGroupsItem(roomGroupId: string): Observable<any> {
+    const requestContent = {
+      id: roomGroupId
+    }
+    return from(this.amplifyService.DeleteRoomGroup(requestContent));
+  }
 }

@@ -6654,6 +6654,86 @@ export class AmplifyService {
     return <ListRoomGroupsQuery>response.data.listRoomGroups
   }
 
+  async DeleteRoomGroup(
+    input: DeleteRoomGroupInput,
+    condition?: ModelRoomGroupConditionInput
+  ): Promise<DeleteRoomGroupMutation> {
+    const statement = `mutation DeleteRoomGroup($input: DeleteRoomGroupInput!, $condition: ModelRoomGroupConditionInput) {
+        deleteRoomGroup(input: $input, condition: $condition) {
+          __typename
+          id
+          roomID
+          userID
+          room {
+            __typename
+            id
+            name
+            companyID
+            description
+            tasks {
+              __typename
+              nextToken
+            }
+            users {
+              __typename
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          user {
+            __typename
+            id
+            username
+            email
+            companyID
+            tel
+            positionName
+            iconImage
+            registered
+            authority
+            company {
+              __typename
+              id
+              name
+              domain
+              createdAt
+              updatedAt
+            }
+            messages {
+              __typename
+              nextToken
+            }
+            room {
+              __typename
+              nextToken
+            }
+            task {
+              __typename
+              nextToken
+            }
+            chargeTask {
+              __typename
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          createdAt
+          updatedAt
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      input
+    };
+    if (condition) {
+      gqlAPIServiceArguments.condition = condition;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <DeleteRoomGroupMutation>response.data.deleteRoomGroup;
+  }
 
 }
 

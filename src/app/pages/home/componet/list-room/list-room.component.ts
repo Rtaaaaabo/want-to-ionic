@@ -3,8 +3,8 @@ import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { AddRoomModalComponent } from '../../../../shared/component/modal/add-room-modal/add-room-modal.component';
 import { HomeLogic } from '../../logic/home.logic';
-import { concat, from } from 'rxjs';
-import { concatMap } from 'rxjs/operators';
+import { concat, from, Observable, of } from 'rxjs';
+import { concatMap, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-list-room',
@@ -29,6 +29,7 @@ export class ListRoomComponent implements OnInit {
       })
     this.logic.fetchCurrentUser().subscribe((data) => {
       this.currentUserId = data.sub;
+      console.log('Current User ID', this.currentUserId);
     });
   }
 
@@ -56,17 +57,22 @@ export class ListRoomComponent implements OnInit {
     // Roomの中にUserが自分しかいない場合はRoom自体削除する
     // Roomの中にUserが自分以外にいるならば、対象のRoomから抜ける
     this.logic.fetchRoomMembers(roomId, this.currentUserId)
+      .pipe(switchMap((data) => data.length === 0 ?
+        this.deleteRoomItem(roomId) : this.removeOwnFromRoom(roomId, this.currentUserId))
+      )
       .subscribe((result) => {
-        console.log('deleteRoom', result);
+        console.log(result);
       })
   }
 
-  deleteRoomItem(roomId: string): void {
-    this.logic.deleteRoomItem(roomId)
+  deleteRoomItem(roomId: string): Observable<any> {
+    return this.logic.deleteRoomItem(roomId)
       .pipe(concatMap(() => this.logic.listRoom('takuCloudCom')))
-      .subscribe((res) => {
-        this.roomList = res;
-      })
+    // SubscribeでRoomItemsにRoomListを代入する
   }
 
+  removeOwnFromRoom(roomId: string, currentUserId: string): Observable<any> {
+    return this.logic.removeMeFromRoom(roomId, currentUserId);
+    // SubscribeでRoomItemsにRoomListを代入する
+  }
 }
