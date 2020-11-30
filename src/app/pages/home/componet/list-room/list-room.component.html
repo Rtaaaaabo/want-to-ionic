@@ -5,11 +5,11 @@
       <ion-icon name="add-outline"></ion-icon>
     </ion-button>
   </ion-list-header>
-  <ion-item-sliding #slidingItem *ngFor="let room of roomList">
-    <ion-item (click)="navigateToTask(room)">
+  <ion-item-sliding #slidingItem *ngFor="let item of roomGroupsItems">
+    <ion-item (click)="navigateToTask(item.room)">
       <ion-label>
-        <h2>{{ room.name }}</h2>
-        <p>{{ room.describe }}</p>
+        <h2>{{ item.room.name }}</h2>
+        <p>{{ item.room.description }}</p>
       </ion-label>
     </ion-item>
     <ion-item-options side="end">
@@ -17,7 +17,7 @@
         <ion-icon
           slot="icon-only"
           name="trash"
-          (click)="deleteRoom(room.id)"
+          (click)="deleteRoom(item.room.id)"
         ></ion-icon>
       </ion-item-option>
     </ion-item-options>

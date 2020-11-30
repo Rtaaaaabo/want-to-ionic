@@ -5,6 +5,7 @@ import { AddRoomModalComponent } from '../../../../shared/component/modal/add-ro
 import { HomeLogic } from '../../logic/home.logic';
 import { forkJoin, from, Observable } from 'rxjs';
 import { concatMap, switchMap, map } from 'rxjs/operators';
+import { ResponseListRoomGroupsQueryItems } from '../../service/reponse/response.model';
 
 @Component({
   selector: 'app-list-room',
@@ -15,6 +16,7 @@ export class ListRoomComponent implements OnInit {
 
   roomList: Array<any>;
   currentUserId: string;
+  roomGroupsItems: Array<ResponseListRoomGroupsQueryItems>;
   companyId = 'takuCloudCon';
 
   constructor(
@@ -27,10 +29,8 @@ export class ListRoomComponent implements OnInit {
     this.logic.fetchCurrentUser()
       .pipe(map((data) => this.currentUserId = data.sub))
       .pipe((concatMap(() => this.logic.fetchRoomList(this.currentUserId))))
-      // .pipe(concatMap(() => this.logic.listRoom(this.companyId, this.currentUserId)))
-      .subscribe((data) => {
-        console.log(data);
-        this.roomList = data;
+      .subscribe((data: Array<ResponseListRoomGroupsQueryItems>) => {
+        this.roomGroupsItems = data;
       })
   }
 

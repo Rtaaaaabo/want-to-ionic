@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HomeService } from '../service/home.service';
 import { SessionService } from '../../../shared/service/session.service';
 import { v4 as uuid } from 'uuid';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { concatMap, map } from 'rxjs/operators';
 import { ModelRoomGroupFilterInput } from 'src/app/shared/service/amplify.service';
 
@@ -108,12 +108,13 @@ export class HomeLogic {
       .pipe(map(({ items }) => items[0].id));
   }
 
-  fetchRoomList(currentUseId: string): Observable<any> {
+  fetchRoomList(currentUseId: string): Observable<Array<any>> {
     const filterContent = {
       userID: {
         eq: currentUseId
       }
     }
-    return this.homeService.fetchRoomList(filterContent).pipe(map(({ items }) => items));
+    return this.homeService.fetchRoomList(filterContent)
+      .pipe(map(({ items }) => items));
   }
 }

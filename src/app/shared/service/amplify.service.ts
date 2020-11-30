@@ -6618,6 +6618,15 @@ export class AmplifyService {
             id
             roomID
             userID
+            room {
+              __typename
+              id
+              name
+              companyID
+              description
+              createdAt
+              updatedAt
+            }
             user {
               __typename
               id
@@ -6651,7 +6660,7 @@ export class AmplifyService {
     const response = (await API.graphql(
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
-    return <ListRoomGroupsQuery>response.data.listRoomGroups
+    return <ListRoomGroupsQuery>response.data.listRoomGroups;
   }
 
   async DeleteRoomGroup(
