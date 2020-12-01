@@ -3,8 +3,8 @@ import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { AddRoomModalComponent } from '../../../../shared/component/modal/add-room-modal/add-room-modal.component';
 import { HomeLogic } from '../../logic/home.logic';
-import { forkJoin, from, Observable } from 'rxjs';
-import { concatMap, switchMap, map } from 'rxjs/operators';
+import { from, Observable } from 'rxjs';
+import { concatMap, switchMap, map, filter } from 'rxjs/operators';
 import { ResponseListRoomGroupsQueryItems } from '../../service/reponse/response.model';
 
 @Component({
@@ -13,8 +13,6 @@ import { ResponseListRoomGroupsQueryItems } from '../../service/reponse/response
   styleUrls: ['./list-room.component.scss'],
 })
 export class ListRoomComponent implements OnInit {
-
-  roomList: Array<any>;
   currentUserId: string;
   roomGroupsItems: Array<ResponseListRoomGroupsQueryItems>;
   companyId = 'takuCloudCon';
@@ -29,9 +27,12 @@ export class ListRoomComponent implements OnInit {
     this.logic.fetchCurrentUser()
       .pipe(map((data) => this.currentUserId = data.sub))
       .pipe((concatMap(() => this.logic.fetchRoomList(this.currentUserId))))
-      .subscribe((data: Array<ResponseListRoomGroupsQueryItems>) => {
-        this.roomGroupsItems = data;
-      })
+    // .pipe(from(data).pipe(filter((data: ResponseListRoomGroupsQueryItems) => data.room !== null)))
+    // .pipe(from(data).pipe(filter(data => data.room == )))
+    // .subscribe((data: Array<ResponseListRoomGroupsQueryItems>) => {
+    //   this.roomGroupsItems = data;
+    //   console.log(this.roomGroupsItems);
+    // })
   }
 
   async presentAddRoomItem(companyId: string) {
@@ -44,9 +45,8 @@ export class ListRoomComponent implements OnInit {
       .pipe(concatMap(({ data }) => this.logic.createRoom(data)))
       .pipe(concatMap((room) => this.logic.createUserRoomGroup(this.currentUserId, room.id)))
       .pipe(concatMap(() => this.logic.fetchRoomList(this.currentUserId)))
-      // .pipe(concatMap(() => this.logic.listRoom(companyId)))
       .subscribe((response) => {
-        this.roomList = response;
+        this.roomGroupsItems = response;
       })
     return modal.present();
   }
@@ -56,8 +56,6 @@ export class ListRoomComponent implements OnInit {
   }
 
   deleteRoom(roomId): void {
-    // Roomの中にUserが自分しかいない場合はRoom自体削除する
-    // Roomの中にUserが自分以外にいるならば、対象のRoomから抜ける
     this.logic.fetchRoomMembers(roomId, this.currentUserId)
       .pipe(switchMap((data) => data.length === 0 ?
         this.deleteRoomItem(roomId) : this.removeOwnFromRoom(roomId, this.currentUserId))

@@ -13,7 +13,7 @@ export interface ResponseListRoomGroupsQueryItems {
         createdAt: string,
         updatedAt: string,
     },
-    user: {
+    user?: {
         __typename: string,
         id: string,
         username: string,
