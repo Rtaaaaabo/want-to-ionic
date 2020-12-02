@@ -44,7 +44,9 @@ export class ListRoomComponent implements OnInit {
       .pipe(concatMap(({ data }) => this.logic.createRoom(data)))
       .pipe(concatMap((room) => this.logic.createUserRoomGroup(this.currentUserId, room.id)))
       .pipe(concatMap(() => this.logic.fetchRoomList(this.currentUserId)))
+      .pipe(concatMap((data) => this.logic.setExitsRoom(data)))
       .subscribe((response) => {
+        console.log('presentAddRoomItem', response);
         this.roomGroupsItems = response;
       })
     return modal.present();
