@@ -2,9 +2,12 @@ import { Injectable } from '@angular/core';
 import { HomeService } from '../service/home.service';
 import { SessionService } from '../../../shared/service/session.service';
 import { v4 as uuid } from 'uuid';
-import { Observable } from 'rxjs';
-import { concatMap, map } from 'rxjs/operators';
+import { Observable, from } from 'rxjs';
+import { concatMap, map, filter, toArray } from 'rxjs/operators';
 import { ModelRoomGroupFilterInput } from 'src/app/shared/service/amplify.service';
+import { ResponseListRoomGroupsQueryItems } from '../service/reponse/response.model';
+
+
 
 interface Attribute {
   email: string,
@@ -54,16 +57,6 @@ export class HomeLogic {
     return this.homeService.createUser(requestContent);
   }
 
-  // listRoom(companyId: string, currentUserId?: string): Observable<any> {
-  //   const filterContent = {
-  //     companyID: {
-  //       eq: companyId
-  //     }
-  //   }
-  //   return this.homeService.fetchRoomList(filterContent)
-  //     .pipe(map((result) => result.items));
-  // }
-
   deleteRoomItem(roomId: string): Observable<any> {
     return this.homeService.deleteRoomItem(roomId);
   }
@@ -108,7 +101,7 @@ export class HomeLogic {
       .pipe(map(({ items }) => items[0].id));
   }
 
-  fetchRoomList(currentUseId: string): Observable<Array<any>> {
+  fetchRoomList(currentUseId: string): Observable<Array<ResponseListRoomGroupsQueryItems>> {
     const filterContent = {
       userID: {
         eq: currentUseId
@@ -116,5 +109,11 @@ export class HomeLogic {
     }
     return this.homeService.fetchRoomList(filterContent)
       .pipe(map(({ items }) => items));
+  }
+
+  setExitsRoom(data): Observable<any> {
+    return from(data).pipe(
+      filter((item: ResponseListRoomGroupsQueryItems) => item.room !== null)
+    ).pipe(toArray());
   }
 }

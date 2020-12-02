@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { AddRoomModalComponent } from '../../../../shared/component/modal/add-room-modal/add-room-modal.component';
 import { HomeLogic } from '../../logic/home.logic';
-import { from, Observable } from 'rxjs';
+import { concat, from, Observable } from 'rxjs';
 import { concatMap, switchMap, map, filter } from 'rxjs/operators';
 import { ResponseListRoomGroupsQueryItems } from '../../service/reponse/response.model';
 
@@ -27,12 +27,11 @@ export class ListRoomComponent implements OnInit {
     this.logic.fetchCurrentUser()
       .pipe(map((data) => this.currentUserId = data.sub))
       .pipe((concatMap(() => this.logic.fetchRoomList(this.currentUserId))))
-    // .pipe(from(data).pipe(filter((data: ResponseListRoomGroupsQueryItems) => data.room !== null)))
-    // .pipe(from(data).pipe(filter(data => data.room == )))
-    // .subscribe((data: Array<ResponseListRoomGroupsQueryItems>) => {
-    //   this.roomGroupsItems = data;
-    //   console.log(this.roomGroupsItems);
-    // })
+      .pipe(concatMap((data) => this.logic.setExitsRoom(data)))
+      .subscribe((data: Array<ResponseListRoomGroupsQueryItems>) => {
+        this.roomGroupsItems = data;
+        console.log('roomGroupsItems', this.roomGroupsItems);
+      })
   }
 
   async presentAddRoomItem(companyId: string) {

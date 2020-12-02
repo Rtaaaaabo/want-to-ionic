@@ -4,7 +4,7 @@ export interface ResponseListRoomGroupsQueryItems {
     id: string,
     roomID: string,
     userID: string,
-    room: {
+    room?: {
         __typename: string,
         id: string,
         name: string,
@@ -12,7 +12,7 @@ export interface ResponseListRoomGroupsQueryItems {
         description: string,
         createdAt: string,
         updatedAt: string,
-    },
+    } | null,
     user?: {
         __typename: string,
         id: string,
@@ -22,11 +22,11 @@ export interface ResponseListRoomGroupsQueryItems {
         tel: string,
         positionName: string,
         iconImage: string,
-        registered: null,
-        authority: null,
+        registered: boolean,
+        authority: string,
         createdAt: string,
         updatedAt: string,
-    },
+    } | null,
     createdAt: string,
     updatedAt: string,
     // }
