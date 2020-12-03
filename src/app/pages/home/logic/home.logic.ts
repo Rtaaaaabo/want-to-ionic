@@ -85,7 +85,7 @@ export class HomeLogic {
 
   removeMeFromRoom(roomId: string, meId: string): Observable<any> {
     return this.fetchRoomGroupsId(roomId, meId)
-      .pipe(concatMap((roomGroupId) => this.homeService.deleteRoomGroupsItem(roomGroupId)))
+      .pipe(concatMap((roomGroupId) => this.homeService.deleteRoomGroupsItem(roomGroupId)));
   }
 
   fetchRoomGroupsId(roomId: string, meId: string): Observable<string> {
@@ -111,9 +111,10 @@ export class HomeLogic {
       .pipe(map(({ items }) => items));
   }
 
-  setExitsRoom(data): Observable<any> {
-    return from(data).pipe(
-      filter((item: ResponseListRoomGroupsQueryItems) => item.room !== null)
-    ).pipe(toArray());
+  setExitsRoomAndUser(data): Observable<any> {
+    return from(data)
+      .pipe(filter((item: ResponseListRoomGroupsQueryItems) => item.room !== null))
+      .pipe(filter((item: ResponseListRoomGroupsQueryItems) => item.user !== null))
+      .pipe(toArray());
   }
 }

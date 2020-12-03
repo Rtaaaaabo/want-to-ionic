@@ -3,8 +3,8 @@ import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { AddRoomModalComponent } from '../../../../shared/component/modal/add-room-modal/add-room-modal.component';
 import { HomeLogic } from '../../logic/home.logic';
-import { concat, from, Observable } from 'rxjs';
-import { concatMap, switchMap, map, filter } from 'rxjs/operators';
+import { from, Observable } from 'rxjs';
+import { concatMap, switchMap, map } from 'rxjs/operators';
 import { ResponseListRoomGroupsQueryItems } from '../../service/reponse/response.model';
 
 @Component({
@@ -27,10 +27,9 @@ export class ListRoomComponent implements OnInit {
     this.logic.fetchCurrentUser()
       .pipe(map((data) => this.currentUserId = data.sub))
       .pipe((concatMap(() => this.logic.fetchRoomList(this.currentUserId))))
-      .pipe(concatMap((data) => this.logic.setExitsRoom(data)))
+      .pipe(concatMap((data) => this.logic.setExitsRoomAndUser(data)))
       .subscribe((data: Array<ResponseListRoomGroupsQueryItems>) => {
         this.roomGroupsItems = data;
-        console.log('roomGroupsItems', this.roomGroupsItems);
       })
   }
 
@@ -44,9 +43,8 @@ export class ListRoomComponent implements OnInit {
       .pipe(concatMap(({ data }) => this.logic.createRoom(data)))
       .pipe(concatMap((room) => this.logic.createUserRoomGroup(this.currentUserId, room.id)))
       .pipe(concatMap(() => this.logic.fetchRoomList(this.currentUserId)))
-      .pipe(concatMap((data) => this.logic.setExitsRoom(data)))
+      .pipe(concatMap((data) => this.logic.setExitsRoomAndUser(data)))
       .subscribe((response) => {
-        console.log('presentAddRoomItem', response);
         this.roomGroupsItems = response;
       })
     return modal.present();
@@ -61,20 +59,18 @@ export class ListRoomComponent implements OnInit {
       .pipe(switchMap((data) => data.length === 0 ?
         this.deleteRoomItem(roomId) : this.removeOwnFromRoom(roomId, this.currentUserId))
       )
+      .pipe(concatMap(() => this.logic.fetchRoomList(this.currentUserId)))
+      .pipe(concatMap((data) => this.logic.setExitsRoomAndUser(data)))
       .subscribe((result) => {
-        console.log(result);
+        this.roomGroupsItems = result;
       })
   }
 
   deleteRoomItem(roomId: string): Observable<any> {
     return this.logic.deleteRoomItem(roomId)
-      .pipe(concatMap(() => this.logic.fetchRoomList(this.currentUserId)))
-    // .pipe(concatMap(() => this.logic.listRoom('takuCloudCom')))
-    // SubscribeでRoomItemsにRoomListを代入する
   }
 
   removeOwnFromRoom(roomId: string, currentUserId: string): Observable<any> {
     return this.logic.removeMeFromRoom(roomId, currentUserId);
-    // SubscribeでRoomItemsにRoomListを代入する
   }
 }

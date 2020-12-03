@@ -6701,14 +6701,6 @@ export class AmplifyService {
             iconImage
             registered
             authority
-            company {
-              __typename
-              id
-              name
-              domain
-              createdAt
-              updatedAt
-            }
             messages {
               __typename
               nextToken
