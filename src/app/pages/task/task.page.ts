@@ -12,6 +12,7 @@ import { AddTaskModalComponent } from '../../shared/component/modal/add-task-mod
 import { ListRoomGroupsQuery } from 'src/app/API.service';
 import { InterfaceTask } from 'src/app/interfaces/task.interface';
 import { TaskFormModel } from 'src/app/shared/model/task-form.model';
+import { CompanyMembers } from './model/task-member.model';
 
 @Component({
   selector: 'app-task',
@@ -27,7 +28,7 @@ export class TaskPage implements OnInit {
   segment: string;
   companyId: number | string;
   companyMembers: ListUsersQuery;
-  roomMembers: ListRoomGroupsQuery;
+  roomMembers: Array<CompanyMembers>;
   user: GetUserQuery;
   taskFormData: TaskFormModel;
   taskActiveItems: Array<InterfaceTask>;
@@ -62,12 +63,13 @@ export class TaskPage implements OnInit {
       activeTaskItems: this.logic.fetchActiveTaskPerRoom(this.roomId),
       doneTaskItems: this.logic.fetchDoneTaskPerRoom(this.roomId),
       room: this.logic.fetchRoomInfo(this.roomId),
-      roomMembers: this.logic.fetchMemberListOnRoom(this.roomId),
+      roomMembers: this.logic.fetchMemberListOnRoom(this.roomId).pipe(map(({ items }) => items)),
     }).subscribe((data) => {
       this.companyMembers = data.companyUser;
       this.taskActiveItems = data.activeTaskItems.sort(this.logic.compareTaskArray);
       this.taskDoneItems = data.doneTaskItems;
       this.room = data.room;
+      console.log(data.roomMembers);
       this.roomMembers = data.roomMembers;
     });
   }
@@ -81,6 +83,7 @@ export class TaskPage implements OnInit {
   }
 
   async presentAddTask(): Promise<void> {
+    console.log('[ComponentProps] roomMembers', this.roomMembers);
     const modal = await this.modalCtrl.create({
       component: AddTaskModalComponent,
       componentProps: {
