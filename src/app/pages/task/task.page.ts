@@ -9,7 +9,6 @@ import { GetRoomQuery, GetUserQuery, ListUsersQuery } from 'src/app/shared/servi
 import { TaskLogic } from './logic/task.logic';
 import { CurrentUserInfo } from './interface/current-user-info.interface';
 import { AddTaskModalComponent } from '../../shared/component/modal/add-task-modal/add-task-modal.component';
-import { ListRoomGroupsQuery } from 'src/app/API.service';
 import { InterfaceTask } from 'src/app/interfaces/task.interface';
 import { TaskFormModel } from 'src/app/shared/model/task-form.model';
 import { CompanyMembers } from './model/task-member.model';

@@ -1,11 +1,8 @@
 import { Injectable } from '@angular/core';
 import { from, Observable, of } from 'rxjs';
-import { v4 as uuid } from 'uuid';
 import { RoomMemberService } from '../service/room-member.service';
 import { InterfaceRoomMembers } from '../interface/room-members.interface';
-import { filter, map, toArray, concatMap } from 'rxjs/operators';
-import { GetUserQuery, ListRoomGroupsQuery, ListRoomsQuery } from 'src/app/shared/service/amplify.service';
-import { GetRoomGroupQuery } from 'src/app/API.service';
+import { map, toArray } from 'rxjs/operators';
 import { ListRoomMembersInfo, ListUserInfo } from '../models/room-members.model';
 
 @Injectable({
@@ -61,7 +58,6 @@ export class RoomMembersLogic {
       }
     }
     return this.roomMemberService.fetchRoomMember(filterContent)
-    // .pipe(map(({items}) => items.user.));
   }
 
   fetchNonAssignRoomMemberGroup(roomId?: string): Observable<any> {
