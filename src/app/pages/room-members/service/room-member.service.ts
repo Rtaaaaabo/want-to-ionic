@@ -22,4 +22,8 @@ export class RoomMemberService {
   createUserRoomGroup(filterContent): Observable<any> {
     return from(this.amplifyService.CreateRoomGroup(filterContent));
   }
+
+  fetchCurrentUser(currentUserId: string): Observable<any> {
+    return from(this.amplifyService.GetUser(currentUserId))
+  }
 }

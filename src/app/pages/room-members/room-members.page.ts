@@ -13,6 +13,7 @@ import { AddPersonModalComponent } from '../task/component/add-person-modal/add-
   styleUrls: ['./room-members.page.scss'],
 })
 export class RoomMembersPage implements OnInit {
+  currentUserId: string;
   companyId: number | string;
   roomId: string;
   companyMembers;
@@ -30,8 +31,10 @@ export class RoomMembersPage implements OnInit {
     this.notAssignMembers = [];
     this.companyId = this.route.snapshot.paramMap.get('companyId');
     this.roomId = this.route.snapshot.paramMap.get('roomId');
-    this.logic.fetchRoomMemberGroup(this.roomId)
-      .pipe(concatMap((result) => this.logic.setRoomMembers(result)))
+    this.logic.fetchCurrentUserId()
+      .pipe(map((currentUserId) => this.currentUserId = currentUserId))
+      .pipe(concatMap(() => this.logic.fetchRoomMemberGroup(this.roomId,)))
+      .pipe(concatMap((result) => this.logic.setRoomMembers(result, this.currentUserId)))
       .pipe(map((members) => this.roomMembers = members))
       .pipe(concatMap(() => this.logic.fetchCompanyMember(this.companyId)))
       .subscribe(({ items }) => {
@@ -75,7 +78,7 @@ export class RoomMembersPage implements OnInit {
         return;
       };
       this.logic.fetchRoomMembers(this.roomId)
-        .pipe(concatMap(({ items }) => this.logic.setRoomMembers(items)))
+        .pipe(concatMap(({ items }) => this.logic.setRoomMembers(items, this.currentUserId)))
         .subscribe((items) => {
           this.roomMembers = items;
           this.notAssignMembers = this.checkNotAssignMember(this.companyMembers, this.roomMembers);
