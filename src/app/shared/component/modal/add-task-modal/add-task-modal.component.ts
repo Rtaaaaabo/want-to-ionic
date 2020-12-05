@@ -48,7 +48,7 @@ export class AddTaskModalComponent implements OnInit {
       this.currentIsoString = currentDate.toISOString();
       this.taskForm.patchValue({
         scheduleDateItem: this.currentIsoString,
-        chargePersonId: this.userId,      // 新規のみはここに来る
+        chargePersonId: this.userId,
       });
     }
   }

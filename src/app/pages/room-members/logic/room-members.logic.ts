@@ -10,6 +10,8 @@ import { ListRoomMembersInfo, ListUserInfo } from '../models/room-members.model'
 })
 export class RoomMembersLogic {
 
+
+
   constructor(
     private roomMemberService: RoomMemberService,
   ) { }
@@ -48,7 +50,8 @@ export class RoomMembersLogic {
         eq: `${roomId}`
       }
     }
-    return this.roomMemberService.fetchRoomMember(filterContent).pipe(map((result) => result.items));
+    return this.roomMemberService.fetchRoomMember(filterContent)
+      .pipe(map((result) => result.items));
   }
 
   fetchRoomMembers(roomId: string): Observable<any> {

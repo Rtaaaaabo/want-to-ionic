@@ -21,8 +21,8 @@ import { CompanyMembers } from './model/task-member.model';
 export class TaskPage implements OnInit {
   room = {} as GetRoomQuery;
   roomId: string;
-  userId: string;
-  userEmail: string;
+  currentUserId: string;
+  currentUserEmail: string;
   isReorder: boolean;
   segment: string;
   companyId: number | string;
@@ -52,10 +52,10 @@ export class TaskPage implements OnInit {
     forkJoin({
       companyUser: this.logic.fetchCurrentUserInfo()
         .pipe(map((res: CurrentUserInfo) => {
-          this.userEmail = res.email;
-          this.userId = res.sub;
+          this.currentUserEmail = res.email;
+          this.currentUserId = res.sub;
         }))
-        .pipe(concatMap(() => this.logic.fetchUserInfoFromAmplify(this.userId)))
+        .pipe(concatMap(() => this.logic.fetchUserInfoFromAmplify(this.currentUserId)))
         .pipe(map((user) => this.user = user))
         .pipe(map((user) => this.companyId = user.companyID))
         .pipe(concatMap(() => this.logic.fetchCompanyMember(this.user.companyID))),
@@ -82,20 +82,21 @@ export class TaskPage implements OnInit {
   }
 
   async presentAddTask(): Promise<void> {
-    console.log('[ComponentProps] roomMembers', this.roomMembers);
     const modal = await this.modalCtrl.create({
       component: AddTaskModalComponent,
       componentProps: {
         room: this.room,
-        userId: this.userId,
+        userId: this.currentUserId,
         roomMembers: this.roomMembers
       },
     });
     const dismissObservable = from(modal.onDidDismiss());
     dismissObservable
       .pipe(map(({ data }) => this.taskFormData = data))
-      .pipe(switchMap(() => this.taskActiveItems.length !== 0 ? this.logic.updateStatusTaskItems(this.taskActiveItems) : of(this.taskActiveItems))) // ActiveTaskの数を確認して、一つでもあったらPriorityを+1する
-      .pipe(concatMap(() => this.logic.createTaskToRoom(this.taskFormData, this.roomId, this.userId)))
+      .pipe(switchMap(() => this.taskActiveItems.length !== 0 ?
+        this.logic.updateStatusTaskItems(this.taskActiveItems) : of(this.taskActiveItems)
+      ))
+      .pipe(concatMap(() => this.logic.createTaskToRoom(this.taskFormData, this.roomId, this.currentUserId)))
       .pipe(concatMap(() => this.logic.fetchActiveTaskPerRoom(this.roomId)))
       .subscribe((items) => {
         this.taskActiveItems = items.sort(this.logic.compareTaskArray);;

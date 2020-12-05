@@ -32,7 +32,7 @@ export class RoomMembersPage implements OnInit {
     this.roomId = this.route.snapshot.paramMap.get('roomId');
     this.logic.fetchRoomMemberGroup(this.roomId)
       .pipe(concatMap((result) => this.logic.setRoomMembers(result)))
-      .pipe(map((items) => this.roomMembers = items))
+      .pipe(map((members) => this.roomMembers = members))
       .pipe(concatMap(() => this.logic.fetchCompanyMember(this.companyId)))
       .subscribe(({ items }) => {
         this.companyMembers = items;
