@@ -44,7 +44,6 @@ export class RoomMembersPage implements OnInit {
         this.companyMembers = items;
         this.roomMembers.unshift(this.currentUser);
         this.notAssignMembers = this.checkNotAssignMember(this.companyMembers, this.roomMembers);
-        console.log('roomMembers', this.roomMembers);
       });
   }
 

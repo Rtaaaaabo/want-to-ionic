@@ -18,21 +18,6 @@ export class RoomMembersLogic {
     private sessionService: SessionService,
   ) { }
 
-  makeObjectForRoomCompanyMembers(roomMembers: Array<InterfaceRoomMembers>): any {
-    let referenceObject = {
-      and: {
-        id: {
-          ne: ""
-        }
-      }
-    };
-
-    let reference = referenceObject.and['and'] = {
-      id: { ne: "" }
-    }
-    console.log(referenceObject);
-  }
-
   fetchCompanyMember(companyId: number | string, queryFilterUser?: Array<InterfaceRoomMembers>): Observable<any> {
     const contentObject = {
       companyID: {
