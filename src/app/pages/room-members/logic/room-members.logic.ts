@@ -2,10 +2,9 @@ import { Injectable } from '@angular/core';
 import { from, Observable, of } from 'rxjs';
 import { RoomMemberService } from '../service/room-member.service';
 import { InterfaceRoomMembers } from '../interface/room-members.interface';
-import { concatMap, filter, map, toArray } from 'rxjs/operators';
+import { filter, map, toArray } from 'rxjs/operators';
 import { ListRoomMembersInfo, ListUserInfo } from '../models/room-members.model';
 import { SessionService } from 'src/app/shared/service/session.service';
-import { CurrentUserInfo } from '../../task/interface/current-user-info.interface';
 
 
 @Injectable({
