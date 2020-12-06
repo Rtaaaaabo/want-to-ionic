@@ -43,13 +43,14 @@ export class RoomMembersLogic {
     const filterContent = {
       roomID: {
         eq: `${roomId}`
-      }
+      },
     }
     return this.roomMemberService.fetchRoomMember(filterContent)
   }
 
   fetchNonAssignRoomMemberGroup(roomId?: string): Observable<any> {
-    return this.roomMemberService.fetchRoomMember().pipe(map(({ items }) => items));
+    return this.roomMemberService.fetchRoomMember()
+      .pipe(map(({ items }) => items));
   }
 
   setRoomMembers(items: Array<ListRoomMembersInfo>, currentUserId: string): Observable<Array<ListUserInfo>> {
