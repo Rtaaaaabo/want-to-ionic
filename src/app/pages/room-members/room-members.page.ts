@@ -17,6 +17,7 @@ export class RoomMembersPage implements OnInit {
   companyId: number | string;
   roomId: string;
   companyMembers;
+  currentUser;
   roomMembers = [];
   notAssignMembers = [];
 
@@ -34,14 +35,16 @@ export class RoomMembersPage implements OnInit {
     this.logic.fetchCurrentUserId()
       .pipe(map((currentUserId) => this.currentUserId = currentUserId))
       .pipe(concatMap(() => this.logic.fetchCurrentUser(this.currentUserId)))
-      // .pipe(map((user) => this.))
-      .pipe(concatMap(() => this.logic.fetchRoomMemberGroup(this.roomId,)))
+      .pipe(map((result) => this.currentUser = result))
+      .pipe(concatMap(() => this.logic.fetchRoomMemberGroup(this.roomId)))
       .pipe(concatMap((result) => this.logic.setRoomMembers(result, this.currentUserId)))
       .pipe(map((members) => this.roomMembers = members))
       .pipe(concatMap(() => this.logic.fetchCompanyMember(this.companyId)))
       .subscribe(({ items }) => {
         this.companyMembers = items;
+        this.roomMembers.unshift(this.currentUser);
         this.notAssignMembers = this.checkNotAssignMember(this.companyMembers, this.roomMembers);
+        console.log('roomMembers', this.roomMembers);
       });
   }
 
