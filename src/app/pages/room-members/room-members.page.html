@@ -10,6 +10,7 @@
       <ion-button (click)="activeEditMode()">編集</ion-button>
     </ion-buttons>
   </ion-toolbar>
+
   <ion-toolbar>
     <ion-searchbar
       showCancelButton="button"
@@ -27,9 +28,9 @@
     <ion-label>メンバーの追加</ion-label>
   </ion-item>
   <ion-list>
-    <ion-list-header>
+    <ion-item-divider>
       <ion-label>メンバー</ion-label>
-    </ion-list-header>
+    </ion-item-divider>
     <ion-item *ngFor="let member of roomMembers">
       <ion-label>
         <h2>{{ member.username}}</h2>

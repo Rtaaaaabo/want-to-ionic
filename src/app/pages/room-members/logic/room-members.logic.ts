@@ -6,7 +6,6 @@ import { filter, map, toArray } from 'rxjs/operators';
 import { ListRoomMembersInfo, ListUserInfo } from '../models/room-members.model';
 import { SessionService } from 'src/app/shared/service/session.service';
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -40,7 +39,7 @@ export class RoomMembersLogic {
       .pipe(map((result) => result.items));
   }
 
-  fetchRoomMembers(roomId: string): Observable<any> {
+  fetchRoomMembers(roomId: string, queryFilterUserName?: string): Observable<any> {
     const filterContent = {
       roomID: {
         eq: `${roomId}`

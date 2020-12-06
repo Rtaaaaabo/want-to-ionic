@@ -26,7 +26,6 @@
   <ion-list *ngFor="let member of members">
     <ion-item>
       <ion-label>{{ member.username }}</ion-label>
-      <!-- Member.id が arraySelectedPersonId にあったらTrue -->
       <ion-checkbox
         (ionChange)="changeCheckUser(member)"
         [checked]="member.checked"

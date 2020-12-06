@@ -63,8 +63,21 @@ export class RoomMembersPage implements OnInit {
     console.log('activeEditMode');
   }
 
-  searchRoomMembers(ev) {
-    console.log('searchRoomMembers');
+  searchRoomMembers(ev: CustomEvent) {
+    const nameQuery = ev.detail.value;
+    if (nameQuery !== null) {
+      this.logic.fetchRoomMembers(this.roomId, nameQuery)
+        .pipe(map((result) => result.items))
+        .subscribe((items) => {
+          this.roomMembers = items;
+        })
+    } else {
+      this.logic.fetchRoomMembers(this.roomId)
+        .pipe(map((result) => result.items))
+        .subscribe(() => {
+          console.log('SearchBarがnullになったとき');
+        })
+    }
   }
 
   async addMemberOnRoom() {

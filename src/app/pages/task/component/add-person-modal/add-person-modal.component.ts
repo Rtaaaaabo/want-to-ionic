@@ -4,7 +4,6 @@ import { map } from 'rxjs/operators';
 import { TaskLogic } from '../../logic/task.logic';
 import { MemberTask } from '../../model/task-member.model';
 
-
 @Component({
   selector: 'app-add-person-modal',
   templateUrl: './add-person-modal.component.html',
@@ -30,8 +29,6 @@ export class AddPersonModalComponent implements OnInit {
     this.members = this.notAssignMembers;
   }
 
-  ngAfterViewInit(): void { }
-
   dismissModal(): void {
     this.modalCtrl.dismiss({ result: 'dismiss' });
   }
@@ -55,7 +52,7 @@ export class AddPersonModalComponent implements OnInit {
     }
   }
 
-  inputSearch(ev: CustomEvent) {
+  inputSearch(ev: CustomEvent): void {
     if (ev.detail.value !== null) {
       this.logic.fetchCompanyMember(this.companyId, ev.detail.value)
         .pipe(map((result) => result.items))
@@ -79,11 +76,11 @@ export class AddPersonModalComponent implements OnInit {
     });
   }
 
-  cancelSearch(ev) {
+  cancelSearch(ev): void {
     console.log('cancelSearch', ev);
   }
 
-  clearSearch(ev) {
+  clearSearch(ev): void {
     console.log('clearSearch', ev);
   }
 
