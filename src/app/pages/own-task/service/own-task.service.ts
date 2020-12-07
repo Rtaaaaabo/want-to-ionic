@@ -11,8 +11,7 @@ export class OwnTaskService {
     private amplifyService: AmplifyService,
   ) { }
 
-  // FilterContentには UserIdを入れる
-  fetchListRoomGroup(filterContent): Observable<any> {
-    return from(this.amplifyService.ListRoomGroups(filterContent));
+  fetchListTaskGroup(filterContent): Observable<any> {
+    return from(this.amplifyService.ListTaskGroups(filterContent));
   }
 }

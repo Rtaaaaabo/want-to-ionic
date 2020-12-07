@@ -19,13 +19,12 @@ export class OwnTaskLogic {
       .pipe(map((res) => res.attributes));
   }
 
-  fetchListRoomGroup(userId: string): Observable<any> {
+  fetchListTaskGroup(userId: string): Observable<any> {
     const filterContent = {
       userID: {
         eq: userId
       }
     }
-    console.log('filterContent', filterContent);
-    return this.ownTaskService.fetchListRoomGroup(filterContent);
+    return this.ownTaskService.fetchListTaskGroup(filterContent);
   }
 }
