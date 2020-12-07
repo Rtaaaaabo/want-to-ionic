@@ -1,14 +1,31 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { SessionService } from 'src/app/shared/service/session.service';
+import { OwnTaskService } from '../service/own-task.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OwnTaskLogic {
 
-  constructor() { }
+  constructor(
+    private ownTaskService: OwnTaskService,
+    private sessionService: SessionService,
+  ) { }
 
-  fetchRoomGroup(): Observable<any> {
-    return of({})
+  fetchCurrentUser(): Observable<any> {
+    return this.sessionService.fetchCurrentUser()
+      .pipe(map((res) => res.attributes));
+  }
+
+  fetchListRoomGroup(userId: string): Observable<any> {
+    const filterContent = {
+      userID: {
+        eq: userId
+      }
+    }
+    console.log('filterContent', filterContent);
+    return this.ownTaskService.fetchListRoomGroup(filterContent);
   }
 }
