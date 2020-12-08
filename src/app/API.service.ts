@@ -789,14 +789,6 @@ export type CreateTaskGroupMutation = {
     priority: number | null;
     status: number | null;
     createdAt: string | null;
-    messages: {
-      __typename: "ModelMessageConnection";
-      nextToken: string | null;
-    } | null;
-    users: {
-      __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
-    } | null;
     chargePerson: {
       __typename: "User";
       id: string;
@@ -810,6 +802,14 @@ export type CreateTaskGroupMutation = {
       authority: string | null;
       createdAt: string;
       updatedAt: string;
+    };
+    messages: {
+      __typename: "ModelMessageConnection";
+      nextToken: string | null;
+    } | null;
+    users: {
+      __typename: "ModelTaskGroupConnection";
+      nextToken: string | null;
     } | null;
     updatedAt: string;
   } | null;
@@ -881,14 +881,6 @@ export type UpdateTaskGroupMutation = {
     priority: number | null;
     status: number | null;
     createdAt: string | null;
-    messages: {
-      __typename: "ModelMessageConnection";
-      nextToken: string | null;
-    } | null;
-    users: {
-      __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
-    } | null;
     chargePerson: {
       __typename: "User";
       id: string;
@@ -902,6 +894,14 @@ export type UpdateTaskGroupMutation = {
       authority: string | null;
       createdAt: string;
       updatedAt: string;
+    };
+    messages: {
+      __typename: "ModelMessageConnection";
+      nextToken: string | null;
+    } | null;
+    users: {
+      __typename: "ModelTaskGroupConnection";
+      nextToken: string | null;
     } | null;
     updatedAt: string;
   } | null;
@@ -973,14 +973,6 @@ export type DeleteTaskGroupMutation = {
     priority: number | null;
     status: number | null;
     createdAt: string | null;
-    messages: {
-      __typename: "ModelMessageConnection";
-      nextToken: string | null;
-    } | null;
-    users: {
-      __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
-    } | null;
     chargePerson: {
       __typename: "User";
       id: string;
@@ -994,6 +986,14 @@ export type DeleteTaskGroupMutation = {
       authority: string | null;
       createdAt: string;
       updatedAt: string;
+    };
+    messages: {
+      __typename: "ModelMessageConnection";
+      nextToken: string | null;
+    } | null;
+    users: {
+      __typename: "ModelTaskGroupConnection";
+      nextToken: string | null;
     } | null;
     updatedAt: string;
   } | null;
@@ -1076,32 +1076,6 @@ export type CreateTaskMutation = {
   priority: number | null;
   status: number | null;
   createdAt: string | null;
-  messages: {
-    __typename: "ModelMessageConnection";
-    items: Array<{
-      __typename: "Message";
-      id: string;
-      taskID: string;
-      authorID: string;
-      content: string;
-      createdAt: string | null;
-      isSent: boolean | null;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  users: {
-    __typename: "ModelTaskGroupConnection";
-    items: Array<{
-      __typename: "TaskGroup";
-      id: string;
-      taskID: string;
-      userID: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
   chargePerson: {
     __typename: "User";
     id: string;
@@ -1139,6 +1113,32 @@ export type CreateTaskMutation = {
     } | null;
     createdAt: string;
     updatedAt: string;
+  };
+  messages: {
+    __typename: "ModelMessageConnection";
+    items: Array<{
+      __typename: "Message";
+      id: string;
+      taskID: string;
+      authorID: string;
+      content: string;
+      createdAt: string | null;
+      isSent: boolean | null;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
+  users: {
+    __typename: "ModelTaskGroupConnection";
+    items: Array<{
+      __typename: "TaskGroup";
+      id: string;
+      taskID: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
   } | null;
   updatedAt: string;
 };
@@ -1180,32 +1180,6 @@ export type UpdateTaskMutation = {
   priority: number | null;
   status: number | null;
   createdAt: string | null;
-  messages: {
-    __typename: "ModelMessageConnection";
-    items: Array<{
-      __typename: "Message";
-      id: string;
-      taskID: string;
-      authorID: string;
-      content: string;
-      createdAt: string | null;
-      isSent: boolean | null;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  users: {
-    __typename: "ModelTaskGroupConnection";
-    items: Array<{
-      __typename: "TaskGroup";
-      id: string;
-      taskID: string;
-      userID: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
   chargePerson: {
     __typename: "User";
     id: string;
@@ -1243,6 +1217,32 @@ export type UpdateTaskMutation = {
     } | null;
     createdAt: string;
     updatedAt: string;
+  };
+  messages: {
+    __typename: "ModelMessageConnection";
+    items: Array<{
+      __typename: "Message";
+      id: string;
+      taskID: string;
+      authorID: string;
+      content: string;
+      createdAt: string | null;
+      isSent: boolean | null;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
+  users: {
+    __typename: "ModelTaskGroupConnection";
+    items: Array<{
+      __typename: "TaskGroup";
+      id: string;
+      taskID: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
   } | null;
   updatedAt: string;
 };
@@ -1284,32 +1284,6 @@ export type DeleteTaskMutation = {
   priority: number | null;
   status: number | null;
   createdAt: string | null;
-  messages: {
-    __typename: "ModelMessageConnection";
-    items: Array<{
-      __typename: "Message";
-      id: string;
-      taskID: string;
-      authorID: string;
-      content: string;
-      createdAt: string | null;
-      isSent: boolean | null;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  users: {
-    __typename: "ModelTaskGroupConnection";
-    items: Array<{
-      __typename: "TaskGroup";
-      id: string;
-      taskID: string;
-      userID: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
   chargePerson: {
     __typename: "User";
     id: string;
@@ -1347,6 +1321,32 @@ export type DeleteTaskMutation = {
     } | null;
     createdAt: string;
     updatedAt: string;
+  };
+  messages: {
+    __typename: "ModelMessageConnection";
+    items: Array<{
+      __typename: "Message";
+      id: string;
+      taskID: string;
+      authorID: string;
+      content: string;
+      createdAt: string | null;
+      isSent: boolean | null;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
+  users: {
+    __typename: "ModelTaskGroupConnection";
+    items: Array<{
+      __typename: "TaskGroup";
+      id: string;
+      taskID: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
   } | null;
   updatedAt: string;
 };
@@ -1802,14 +1802,6 @@ export type CreateMessageMutation = {
     priority: number | null;
     status: number | null;
     createdAt: string | null;
-    messages: {
-      __typename: "ModelMessageConnection";
-      nextToken: string | null;
-    } | null;
-    users: {
-      __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
-    } | null;
     chargePerson: {
       __typename: "User";
       id: string;
@@ -1823,6 +1815,14 @@ export type CreateMessageMutation = {
       authority: string | null;
       createdAt: string;
       updatedAt: string;
+    };
+    messages: {
+      __typename: "ModelMessageConnection";
+      nextToken: string | null;
+    } | null;
+    users: {
+      __typename: "ModelTaskGroupConnection";
+      nextToken: string | null;
     } | null;
     updatedAt: string;
   };
@@ -1896,14 +1896,6 @@ export type UpdateMessageMutation = {
     priority: number | null;
     status: number | null;
     createdAt: string | null;
-    messages: {
-      __typename: "ModelMessageConnection";
-      nextToken: string | null;
-    } | null;
-    users: {
-      __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
-    } | null;
     chargePerson: {
       __typename: "User";
       id: string;
@@ -1917,6 +1909,14 @@ export type UpdateMessageMutation = {
       authority: string | null;
       createdAt: string;
       updatedAt: string;
+    };
+    messages: {
+      __typename: "ModelMessageConnection";
+      nextToken: string | null;
+    } | null;
+    users: {
+      __typename: "ModelTaskGroupConnection";
+      nextToken: string | null;
     } | null;
     updatedAt: string;
   };
@@ -1990,14 +1990,6 @@ export type DeleteMessageMutation = {
     priority: number | null;
     status: number | null;
     createdAt: string | null;
-    messages: {
-      __typename: "ModelMessageConnection";
-      nextToken: string | null;
-    } | null;
-    users: {
-      __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
-    } | null;
     chargePerson: {
       __typename: "User";
       id: string;
@@ -2011,6 +2003,14 @@ export type DeleteMessageMutation = {
       authority: string | null;
       createdAt: string;
       updatedAt: string;
+    };
+    messages: {
+      __typename: "ModelMessageConnection";
+      nextToken: string | null;
+    } | null;
+    users: {
+      __typename: "ModelTaskGroupConnection";
+      nextToken: string | null;
     } | null;
     updatedAt: string;
   };
@@ -2234,14 +2234,6 @@ export type GetTaskGroupQuery = {
     priority: number | null;
     status: number | null;
     createdAt: string | null;
-    messages: {
-      __typename: "ModelMessageConnection";
-      nextToken: string | null;
-    } | null;
-    users: {
-      __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
-    } | null;
     chargePerson: {
       __typename: "User";
       id: string;
@@ -2255,6 +2247,14 @@ export type GetTaskGroupQuery = {
       authority: string | null;
       createdAt: string;
       updatedAt: string;
+    };
+    messages: {
+      __typename: "ModelMessageConnection";
+      nextToken: string | null;
+    } | null;
+    users: {
+      __typename: "ModelTaskGroupConnection";
+      nextToken: string | null;
     } | null;
     updatedAt: string;
   } | null;
@@ -2378,32 +2378,6 @@ export type GetTaskQuery = {
   priority: number | null;
   status: number | null;
   createdAt: string | null;
-  messages: {
-    __typename: "ModelMessageConnection";
-    items: Array<{
-      __typename: "Message";
-      id: string;
-      taskID: string;
-      authorID: string;
-      content: string;
-      createdAt: string | null;
-      isSent: boolean | null;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  users: {
-    __typename: "ModelTaskGroupConnection";
-    items: Array<{
-      __typename: "TaskGroup";
-      id: string;
-      taskID: string;
-      userID: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
   chargePerson: {
     __typename: "User";
     id: string;
@@ -2441,6 +2415,32 @@ export type GetTaskQuery = {
     } | null;
     createdAt: string;
     updatedAt: string;
+  };
+  messages: {
+    __typename: "ModelMessageConnection";
+    items: Array<{
+      __typename: "Message";
+      id: string;
+      taskID: string;
+      authorID: string;
+      content: string;
+      createdAt: string | null;
+      isSent: boolean | null;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
+  users: {
+    __typename: "ModelTaskGroupConnection";
+    items: Array<{
+      __typename: "TaskGroup";
+      id: string;
+      taskID: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
   } | null;
   updatedAt: string;
 };
@@ -2468,14 +2468,6 @@ export type ListTasksQuery = {
     priority: number | null;
     status: number | null;
     createdAt: string | null;
-    messages: {
-      __typename: "ModelMessageConnection";
-      nextToken: string | null;
-    } | null;
-    users: {
-      __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
-    } | null;
     chargePerson: {
       __typename: "User";
       id: string;
@@ -2489,6 +2481,14 @@ export type ListTasksQuery = {
       authority: string | null;
       createdAt: string;
       updatedAt: string;
+    };
+    messages: {
+      __typename: "ModelMessageConnection";
+      nextToken: string | null;
+    } | null;
+    users: {
+      __typename: "ModelTaskGroupConnection";
+      nextToken: string | null;
     } | null;
     updatedAt: string;
   } | null> | null;
@@ -2756,14 +2756,6 @@ export type GetMessageQuery = {
     priority: number | null;
     status: number | null;
     createdAt: string | null;
-    messages: {
-      __typename: "ModelMessageConnection";
-      nextToken: string | null;
-    } | null;
-    users: {
-      __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
-    } | null;
     chargePerson: {
       __typename: "User";
       id: string;
@@ -2777,6 +2769,14 @@ export type GetMessageQuery = {
       authority: string | null;
       createdAt: string;
       updatedAt: string;
+    };
+    messages: {
+      __typename: "ModelMessageConnection";
+      nextToken: string | null;
+    } | null;
+    users: {
+      __typename: "ModelTaskGroupConnection";
+      nextToken: string | null;
     } | null;
     updatedAt: string;
   };
@@ -3233,14 +3233,6 @@ export type OnCreateTaskGroupSubscription = {
     priority: number | null;
     status: number | null;
     createdAt: string | null;
-    messages: {
-      __typename: "ModelMessageConnection";
-      nextToken: string | null;
-    } | null;
-    users: {
-      __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
-    } | null;
     chargePerson: {
       __typename: "User";
       id: string;
@@ -3254,6 +3246,14 @@ export type OnCreateTaskGroupSubscription = {
       authority: string | null;
       createdAt: string;
       updatedAt: string;
+    };
+    messages: {
+      __typename: "ModelMessageConnection";
+      nextToken: string | null;
+    } | null;
+    users: {
+      __typename: "ModelTaskGroupConnection";
+      nextToken: string | null;
     } | null;
     updatedAt: string;
   } | null;
@@ -3325,14 +3325,6 @@ export type OnUpdateTaskGroupSubscription = {
     priority: number | null;
     status: number | null;
     createdAt: string | null;
-    messages: {
-      __typename: "ModelMessageConnection";
-      nextToken: string | null;
-    } | null;
-    users: {
-      __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
-    } | null;
     chargePerson: {
       __typename: "User";
       id: string;
@@ -3346,6 +3338,14 @@ export type OnUpdateTaskGroupSubscription = {
       authority: string | null;
       createdAt: string;
       updatedAt: string;
+    };
+    messages: {
+      __typename: "ModelMessageConnection";
+      nextToken: string | null;
+    } | null;
+    users: {
+      __typename: "ModelTaskGroupConnection";
+      nextToken: string | null;
     } | null;
     updatedAt: string;
   } | null;
@@ -3417,14 +3417,6 @@ export type OnDeleteTaskGroupSubscription = {
     priority: number | null;
     status: number | null;
     createdAt: string | null;
-    messages: {
-      __typename: "ModelMessageConnection";
-      nextToken: string | null;
-    } | null;
-    users: {
-      __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
-    } | null;
     chargePerson: {
       __typename: "User";
       id: string;
@@ -3438,6 +3430,14 @@ export type OnDeleteTaskGroupSubscription = {
       authority: string | null;
       createdAt: string;
       updatedAt: string;
+    };
+    messages: {
+      __typename: "ModelMessageConnection";
+      nextToken: string | null;
+    } | null;
+    users: {
+      __typename: "ModelTaskGroupConnection";
+      nextToken: string | null;
     } | null;
     updatedAt: string;
   } | null;
@@ -3520,32 +3520,6 @@ export type OnCreateTaskSubscription = {
   priority: number | null;
   status: number | null;
   createdAt: string | null;
-  messages: {
-    __typename: "ModelMessageConnection";
-    items: Array<{
-      __typename: "Message";
-      id: string;
-      taskID: string;
-      authorID: string;
-      content: string;
-      createdAt: string | null;
-      isSent: boolean | null;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  users: {
-    __typename: "ModelTaskGroupConnection";
-    items: Array<{
-      __typename: "TaskGroup";
-      id: string;
-      taskID: string;
-      userID: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
   chargePerson: {
     __typename: "User";
     id: string;
@@ -3583,6 +3557,32 @@ export type OnCreateTaskSubscription = {
     } | null;
     createdAt: string;
     updatedAt: string;
+  };
+  messages: {
+    __typename: "ModelMessageConnection";
+    items: Array<{
+      __typename: "Message";
+      id: string;
+      taskID: string;
+      authorID: string;
+      content: string;
+      createdAt: string | null;
+      isSent: boolean | null;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
+  users: {
+    __typename: "ModelTaskGroupConnection";
+    items: Array<{
+      __typename: "TaskGroup";
+      id: string;
+      taskID: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
   } | null;
   updatedAt: string;
 };
@@ -3624,32 +3624,6 @@ export type OnUpdateTaskSubscription = {
   priority: number | null;
   status: number | null;
   createdAt: string | null;
-  messages: {
-    __typename: "ModelMessageConnection";
-    items: Array<{
-      __typename: "Message";
-      id: string;
-      taskID: string;
-      authorID: string;
-      content: string;
-      createdAt: string | null;
-      isSent: boolean | null;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  users: {
-    __typename: "ModelTaskGroupConnection";
-    items: Array<{
-      __typename: "TaskGroup";
-      id: string;
-      taskID: string;
-      userID: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
   chargePerson: {
     __typename: "User";
     id: string;
@@ -3687,6 +3661,32 @@ export type OnUpdateTaskSubscription = {
     } | null;
     createdAt: string;
     updatedAt: string;
+  };
+  messages: {
+    __typename: "ModelMessageConnection";
+    items: Array<{
+      __typename: "Message";
+      id: string;
+      taskID: string;
+      authorID: string;
+      content: string;
+      createdAt: string | null;
+      isSent: boolean | null;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
+  users: {
+    __typename: "ModelTaskGroupConnection";
+    items: Array<{
+      __typename: "TaskGroup";
+      id: string;
+      taskID: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
   } | null;
   updatedAt: string;
 };
@@ -3728,32 +3728,6 @@ export type OnDeleteTaskSubscription = {
   priority: number | null;
   status: number | null;
   createdAt: string | null;
-  messages: {
-    __typename: "ModelMessageConnection";
-    items: Array<{
-      __typename: "Message";
-      id: string;
-      taskID: string;
-      authorID: string;
-      content: string;
-      createdAt: string | null;
-      isSent: boolean | null;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  users: {
-    __typename: "ModelTaskGroupConnection";
-    items: Array<{
-      __typename: "TaskGroup";
-      id: string;
-      taskID: string;
-      userID: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
   chargePerson: {
     __typename: "User";
     id: string;
@@ -3791,6 +3765,32 @@ export type OnDeleteTaskSubscription = {
     } | null;
     createdAt: string;
     updatedAt: string;
+  };
+  messages: {
+    __typename: "ModelMessageConnection";
+    items: Array<{
+      __typename: "Message";
+      id: string;
+      taskID: string;
+      authorID: string;
+      content: string;
+      createdAt: string | null;
+      isSent: boolean | null;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
+  users: {
+    __typename: "ModelTaskGroupConnection";
+    items: Array<{
+      __typename: "TaskGroup";
+      id: string;
+      taskID: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
   } | null;
   updatedAt: string;
 };
@@ -4246,14 +4246,6 @@ export type OnCreateMessageSubscription = {
     priority: number | null;
     status: number | null;
     createdAt: string | null;
-    messages: {
-      __typename: "ModelMessageConnection";
-      nextToken: string | null;
-    } | null;
-    users: {
-      __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
-    } | null;
     chargePerson: {
       __typename: "User";
       id: string;
@@ -4267,6 +4259,14 @@ export type OnCreateMessageSubscription = {
       authority: string | null;
       createdAt: string;
       updatedAt: string;
+    };
+    messages: {
+      __typename: "ModelMessageConnection";
+      nextToken: string | null;
+    } | null;
+    users: {
+      __typename: "ModelTaskGroupConnection";
+      nextToken: string | null;
     } | null;
     updatedAt: string;
   };
@@ -4340,14 +4340,6 @@ export type OnUpdateMessageSubscription = {
     priority: number | null;
     status: number | null;
     createdAt: string | null;
-    messages: {
-      __typename: "ModelMessageConnection";
-      nextToken: string | null;
-    } | null;
-    users: {
-      __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
-    } | null;
     chargePerson: {
       __typename: "User";
       id: string;
@@ -4361,6 +4353,14 @@ export type OnUpdateMessageSubscription = {
       authority: string | null;
       createdAt: string;
       updatedAt: string;
+    };
+    messages: {
+      __typename: "ModelMessageConnection";
+      nextToken: string | null;
+    } | null;
+    users: {
+      __typename: "ModelTaskGroupConnection";
+      nextToken: string | null;
     } | null;
     updatedAt: string;
   };
@@ -4434,14 +4434,6 @@ export type OnDeleteMessageSubscription = {
     priority: number | null;
     status: number | null;
     createdAt: string | null;
-    messages: {
-      __typename: "ModelMessageConnection";
-      nextToken: string | null;
-    } | null;
-    users: {
-      __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
-    } | null;
     chargePerson: {
       __typename: "User";
       id: string;
@@ -4455,6 +4447,14 @@ export type OnDeleteMessageSubscription = {
       authority: string | null;
       createdAt: string;
       updatedAt: string;
+    };
+    messages: {
+      __typename: "ModelMessageConnection";
+      nextToken: string | null;
+    } | null;
+    users: {
+      __typename: "ModelTaskGroupConnection";
+      nextToken: string | null;
     } | null;
     updatedAt: string;
   };
@@ -4973,14 +4973,6 @@ export class APIService {
             priority
             status
             createdAt
-            messages {
-              __typename
-              nextToken
-            }
-            users {
-              __typename
-              nextToken
-            }
             chargePerson {
               __typename
               id
@@ -4994,6 +4986,14 @@ export class APIService {
               authority
               createdAt
               updatedAt
+            }
+            messages {
+              __typename
+              nextToken
+            }
+            users {
+              __typename
+              nextToken
             }
             updatedAt
           }
@@ -5081,14 +5081,6 @@ export class APIService {
             priority
             status
             createdAt
-            messages {
-              __typename
-              nextToken
-            }
-            users {
-              __typename
-              nextToken
-            }
             chargePerson {
               __typename
               id
@@ -5102,6 +5094,14 @@ export class APIService {
               authority
               createdAt
               updatedAt
+            }
+            messages {
+              __typename
+              nextToken
+            }
+            users {
+              __typename
+              nextToken
             }
             updatedAt
           }
@@ -5189,14 +5189,6 @@ export class APIService {
             priority
             status
             createdAt
-            messages {
-              __typename
-              nextToken
-            }
-            users {
-              __typename
-              nextToken
-            }
             chargePerson {
               __typename
               id
@@ -5210,6 +5202,14 @@ export class APIService {
               authority
               createdAt
               updatedAt
+            }
+            messages {
+              __typename
+              nextToken
+            }
+            users {
+              __typename
+              nextToken
             }
             updatedAt
           }
@@ -5308,32 +5308,6 @@ export class APIService {
           priority
           status
           createdAt
-          messages {
-            __typename
-            items {
-              __typename
-              id
-              taskID
-              authorID
-              content
-              createdAt
-              isSent
-              updatedAt
-            }
-            nextToken
-          }
-          users {
-            __typename
-            items {
-              __typename
-              id
-              taskID
-              userID
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
           chargePerson {
             __typename
             id
@@ -5371,6 +5345,32 @@ export class APIService {
             }
             createdAt
             updatedAt
+          }
+          messages {
+            __typename
+            items {
+              __typename
+              id
+              taskID
+              authorID
+              content
+              createdAt
+              isSent
+              updatedAt
+            }
+            nextToken
+          }
+          users {
+            __typename
+            items {
+              __typename
+              id
+              taskID
+              userID
+              createdAt
+              updatedAt
+            }
+            nextToken
           }
           updatedAt
         }
@@ -5428,32 +5428,6 @@ export class APIService {
           priority
           status
           createdAt
-          messages {
-            __typename
-            items {
-              __typename
-              id
-              taskID
-              authorID
-              content
-              createdAt
-              isSent
-              updatedAt
-            }
-            nextToken
-          }
-          users {
-            __typename
-            items {
-              __typename
-              id
-              taskID
-              userID
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
           chargePerson {
             __typename
             id
@@ -5491,6 +5465,32 @@ export class APIService {
             }
             createdAt
             updatedAt
+          }
+          messages {
+            __typename
+            items {
+              __typename
+              id
+              taskID
+              authorID
+              content
+              createdAt
+              isSent
+              updatedAt
+            }
+            nextToken
+          }
+          users {
+            __typename
+            items {
+              __typename
+              id
+              taskID
+              userID
+              createdAt
+              updatedAt
+            }
+            nextToken
           }
           updatedAt
         }
@@ -5548,32 +5548,6 @@ export class APIService {
           priority
           status
           createdAt
-          messages {
-            __typename
-            items {
-              __typename
-              id
-              taskID
-              authorID
-              content
-              createdAt
-              isSent
-              updatedAt
-            }
-            nextToken
-          }
-          users {
-            __typename
-            items {
-              __typename
-              id
-              taskID
-              userID
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
           chargePerson {
             __typename
             id
@@ -5611,6 +5585,32 @@ export class APIService {
             }
             createdAt
             updatedAt
+          }
+          messages {
+            __typename
+            items {
+              __typename
+              id
+              taskID
+              authorID
+              content
+              createdAt
+              isSent
+              updatedAt
+            }
+            nextToken
+          }
+          users {
+            __typename
+            items {
+              __typename
+              id
+              taskID
+              userID
+              createdAt
+              updatedAt
+            }
+            nextToken
           }
           updatedAt
         }
@@ -6178,14 +6178,6 @@ export class APIService {
             priority
             status
             createdAt
-            messages {
-              __typename
-              nextToken
-            }
-            users {
-              __typename
-              nextToken
-            }
             chargePerson {
               __typename
               id
@@ -6199,6 +6191,14 @@ export class APIService {
               authority
               createdAt
               updatedAt
+            }
+            messages {
+              __typename
+              nextToken
+            }
+            users {
+              __typename
+              nextToken
             }
             updatedAt
           }
@@ -6288,14 +6288,6 @@ export class APIService {
             priority
             status
             createdAt
-            messages {
-              __typename
-              nextToken
-            }
-            users {
-              __typename
-              nextToken
-            }
             chargePerson {
               __typename
               id
@@ -6309,6 +6301,14 @@ export class APIService {
               authority
               createdAt
               updatedAt
+            }
+            messages {
+              __typename
+              nextToken
+            }
+            users {
+              __typename
+              nextToken
             }
             updatedAt
           }
@@ -6398,14 +6398,6 @@ export class APIService {
             priority
             status
             createdAt
-            messages {
-              __typename
-              nextToken
-            }
-            users {
-              __typename
-              nextToken
-            }
             chargePerson {
               __typename
               id
@@ -6419,6 +6411,14 @@ export class APIService {
               authority
               createdAt
               updatedAt
+            }
+            messages {
+              __typename
+              nextToken
+            }
+            users {
+              __typename
+              nextToken
             }
             updatedAt
           }
@@ -6717,14 +6717,6 @@ export class APIService {
             priority
             status
             createdAt
-            messages {
-              __typename
-              nextToken
-            }
-            users {
-              __typename
-              nextToken
-            }
             chargePerson {
               __typename
               id
@@ -6738,6 +6730,14 @@ export class APIService {
               authority
               createdAt
               updatedAt
+            }
+            messages {
+              __typename
+              nextToken
+            }
+            users {
+              __typename
+              nextToken
             }
             updatedAt
           }
@@ -6892,32 +6892,6 @@ export class APIService {
           priority
           status
           createdAt
-          messages {
-            __typename
-            items {
-              __typename
-              id
-              taskID
-              authorID
-              content
-              createdAt
-              isSent
-              updatedAt
-            }
-            nextToken
-          }
-          users {
-            __typename
-            items {
-              __typename
-              id
-              taskID
-              userID
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
           chargePerson {
             __typename
             id
@@ -6955,6 +6929,32 @@ export class APIService {
             }
             createdAt
             updatedAt
+          }
+          messages {
+            __typename
+            items {
+              __typename
+              id
+              taskID
+              authorID
+              content
+              createdAt
+              isSent
+              updatedAt
+            }
+            nextToken
+          }
+          users {
+            __typename
+            items {
+              __typename
+              id
+              taskID
+              userID
+              createdAt
+              updatedAt
+            }
+            nextToken
           }
           updatedAt
         }
@@ -6996,14 +6996,6 @@ export class APIService {
             priority
             status
             createdAt
-            messages {
-              __typename
-              nextToken
-            }
-            users {
-              __typename
-              nextToken
-            }
             chargePerson {
               __typename
               id
@@ -7017,6 +7009,14 @@ export class APIService {
               authority
               createdAt
               updatedAt
+            }
+            messages {
+              __typename
+              nextToken
+            }
+            users {
+              __typename
+              nextToken
             }
             updatedAt
           }
@@ -7363,14 +7363,6 @@ export class APIService {
             priority
             status
             createdAt
-            messages {
-              __typename
-              nextToken
-            }
-            users {
-              __typename
-              nextToken
-            }
             chargePerson {
               __typename
               id
@@ -7384,6 +7376,14 @@ export class APIService {
               authority
               createdAt
               updatedAt
+            }
+            messages {
+              __typename
+              nextToken
+            }
+            users {
+              __typename
+              nextToken
             }
             updatedAt
           }
@@ -7922,14 +7922,6 @@ export class APIService {
             priority
             status
             createdAt
-            messages {
-              __typename
-              nextToken
-            }
-            users {
-              __typename
-              nextToken
-            }
             chargePerson {
               __typename
               id
@@ -7943,6 +7935,14 @@ export class APIService {
               authority
               createdAt
               updatedAt
+            }
+            messages {
+              __typename
+              nextToken
+            }
+            users {
+              __typename
+              nextToken
             }
             updatedAt
           }
@@ -8022,14 +8022,6 @@ export class APIService {
             priority
             status
             createdAt
-            messages {
-              __typename
-              nextToken
-            }
-            users {
-              __typename
-              nextToken
-            }
             chargePerson {
               __typename
               id
@@ -8043,6 +8035,14 @@ export class APIService {
               authority
               createdAt
               updatedAt
+            }
+            messages {
+              __typename
+              nextToken
+            }
+            users {
+              __typename
+              nextToken
             }
             updatedAt
           }
@@ -8122,14 +8122,6 @@ export class APIService {
             priority
             status
             createdAt
-            messages {
-              __typename
-              nextToken
-            }
-            users {
-              __typename
-              nextToken
-            }
             chargePerson {
               __typename
               id
@@ -8143,6 +8135,14 @@ export class APIService {
               authority
               createdAt
               updatedAt
+            }
+            messages {
+              __typename
+              nextToken
+            }
+            users {
+              __typename
+              nextToken
             }
             updatedAt
           }
@@ -8233,32 +8233,6 @@ export class APIService {
           priority
           status
           createdAt
-          messages {
-            __typename
-            items {
-              __typename
-              id
-              taskID
-              authorID
-              content
-              createdAt
-              isSent
-              updatedAt
-            }
-            nextToken
-          }
-          users {
-            __typename
-            items {
-              __typename
-              id
-              taskID
-              userID
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
           chargePerson {
             __typename
             id
@@ -8296,6 +8270,32 @@ export class APIService {
             }
             createdAt
             updatedAt
+          }
+          messages {
+            __typename
+            items {
+              __typename
+              id
+              taskID
+              authorID
+              content
+              createdAt
+              isSent
+              updatedAt
+            }
+            nextToken
+          }
+          users {
+            __typename
+            items {
+              __typename
+              id
+              taskID
+              userID
+              createdAt
+              updatedAt
+            }
+            nextToken
           }
           updatedAt
         }
@@ -8345,32 +8345,6 @@ export class APIService {
           priority
           status
           createdAt
-          messages {
-            __typename
-            items {
-              __typename
-              id
-              taskID
-              authorID
-              content
-              createdAt
-              isSent
-              updatedAt
-            }
-            nextToken
-          }
-          users {
-            __typename
-            items {
-              __typename
-              id
-              taskID
-              userID
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
           chargePerson {
             __typename
             id
@@ -8408,6 +8382,32 @@ export class APIService {
             }
             createdAt
             updatedAt
+          }
+          messages {
+            __typename
+            items {
+              __typename
+              id
+              taskID
+              authorID
+              content
+              createdAt
+              isSent
+              updatedAt
+            }
+            nextToken
+          }
+          users {
+            __typename
+            items {
+              __typename
+              id
+              taskID
+              userID
+              createdAt
+              updatedAt
+            }
+            nextToken
           }
           updatedAt
         }
@@ -8457,32 +8457,6 @@ export class APIService {
           priority
           status
           createdAt
-          messages {
-            __typename
-            items {
-              __typename
-              id
-              taskID
-              authorID
-              content
-              createdAt
-              isSent
-              updatedAt
-            }
-            nextToken
-          }
-          users {
-            __typename
-            items {
-              __typename
-              id
-              taskID
-              userID
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
           chargePerson {
             __typename
             id
@@ -8520,6 +8494,32 @@ export class APIService {
             }
             createdAt
             updatedAt
+          }
+          messages {
+            __typename
+            items {
+              __typename
+              id
+              taskID
+              authorID
+              content
+              createdAt
+              isSent
+              updatedAt
+            }
+            nextToken
+          }
+          users {
+            __typename
+            items {
+              __typename
+              id
+              taskID
+              userID
+              createdAt
+              updatedAt
+            }
+            nextToken
           }
           updatedAt
         }
@@ -9031,14 +9031,6 @@ export class APIService {
             priority
             status
             createdAt
-            messages {
-              __typename
-              nextToken
-            }
-            users {
-              __typename
-              nextToken
-            }
             chargePerson {
               __typename
               id
@@ -9052,6 +9044,14 @@ export class APIService {
               authority
               createdAt
               updatedAt
+            }
+            messages {
+              __typename
+              nextToken
+            }
+            users {
+              __typename
+              nextToken
             }
             updatedAt
           }
@@ -9133,14 +9133,6 @@ export class APIService {
             priority
             status
             createdAt
-            messages {
-              __typename
-              nextToken
-            }
-            users {
-              __typename
-              nextToken
-            }
             chargePerson {
               __typename
               id
@@ -9154,6 +9146,14 @@ export class APIService {
               authority
               createdAt
               updatedAt
+            }
+            messages {
+              __typename
+              nextToken
+            }
+            users {
+              __typename
+              nextToken
             }
             updatedAt
           }
@@ -9235,14 +9235,6 @@ export class APIService {
             priority
             status
             createdAt
-            messages {
-              __typename
-              nextToken
-            }
-            users {
-              __typename
-              nextToken
-            }
             chargePerson {
               __typename
               id
@@ -9256,6 +9248,14 @@ export class APIService {
               authority
               createdAt
               updatedAt
+            }
+            messages {
+              __typename
+              nextToken
+            }
+            users {
+              __typename
+              nextToken
             }
             updatedAt
           }

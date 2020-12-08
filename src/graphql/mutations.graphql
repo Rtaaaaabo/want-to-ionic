@@ -380,12 +380,6 @@ mutation CreateTaskGroup(
       priority
       status
       createdAt
-      messages {
-        nextToken
-      }
-      users {
-        nextToken
-      }
       chargePerson {
         id
         username
@@ -398,6 +392,12 @@ mutation CreateTaskGroup(
         authority
         createdAt
         updatedAt
+      }
+      messages {
+        nextToken
+      }
+      users {
+        nextToken
       }
       updatedAt
     }
@@ -464,12 +464,6 @@ mutation UpdateTaskGroup(
       priority
       status
       createdAt
-      messages {
-        nextToken
-      }
-      users {
-        nextToken
-      }
       chargePerson {
         id
         username
@@ -482,6 +476,12 @@ mutation UpdateTaskGroup(
         authority
         createdAt
         updatedAt
+      }
+      messages {
+        nextToken
+      }
+      users {
+        nextToken
       }
       updatedAt
     }
@@ -548,12 +548,6 @@ mutation DeleteTaskGroup(
       priority
       status
       createdAt
-      messages {
-        nextToken
-      }
-      users {
-        nextToken
-      }
       chargePerson {
         id
         username
@@ -566,6 +560,12 @@ mutation DeleteTaskGroup(
         authority
         createdAt
         updatedAt
+      }
+      messages {
+        nextToken
+      }
+      users {
+        nextToken
       }
       updatedAt
     }
@@ -641,28 +641,6 @@ mutation CreateTask(
     priority
     status
     createdAt
-    messages {
-      items {
-        id
-        taskID
-        authorID
-        content
-        createdAt
-        isSent
-        updatedAt
-      }
-      nextToken
-    }
-    users {
-      items {
-        id
-        taskID
-        userID
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
     chargePerson {
       id
       username
@@ -694,6 +672,28 @@ mutation CreateTask(
       }
       createdAt
       updatedAt
+    }
+    messages {
+      items {
+        id
+        taskID
+        authorID
+        content
+        createdAt
+        isSent
+        updatedAt
+      }
+      nextToken
+    }
+    users {
+      items {
+        id
+        taskID
+        userID
+        createdAt
+        updatedAt
+      }
+      nextToken
     }
     updatedAt
   }
@@ -734,28 +734,6 @@ mutation UpdateTask(
     priority
     status
     createdAt
-    messages {
-      items {
-        id
-        taskID
-        authorID
-        content
-        createdAt
-        isSent
-        updatedAt
-      }
-      nextToken
-    }
-    users {
-      items {
-        id
-        taskID
-        userID
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
     chargePerson {
       id
       username
@@ -787,6 +765,28 @@ mutation UpdateTask(
       }
       createdAt
       updatedAt
+    }
+    messages {
+      items {
+        id
+        taskID
+        authorID
+        content
+        createdAt
+        isSent
+        updatedAt
+      }
+      nextToken
+    }
+    users {
+      items {
+        id
+        taskID
+        userID
+        createdAt
+        updatedAt
+      }
+      nextToken
     }
     updatedAt
   }
@@ -827,28 +827,6 @@ mutation DeleteTask(
     priority
     status
     createdAt
-    messages {
-      items {
-        id
-        taskID
-        authorID
-        content
-        createdAt
-        isSent
-        updatedAt
-      }
-      nextToken
-    }
-    users {
-      items {
-        id
-        taskID
-        userID
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
     chargePerson {
       id
       username
@@ -880,6 +858,28 @@ mutation DeleteTask(
       }
       createdAt
       updatedAt
+    }
+    messages {
+      items {
+        id
+        taskID
+        authorID
+        content
+        createdAt
+        isSent
+        updatedAt
+      }
+      nextToken
+    }
+    users {
+      items {
+        id
+        taskID
+        userID
+        createdAt
+        updatedAt
+      }
+      nextToken
     }
     updatedAt
   }
@@ -1297,12 +1297,6 @@ mutation CreateMessage(
       priority
       status
       createdAt
-      messages {
-        nextToken
-      }
-      users {
-        nextToken
-      }
       chargePerson {
         id
         username
@@ -1315,6 +1309,12 @@ mutation CreateMessage(
         authority
         createdAt
         updatedAt
+      }
+      messages {
+        nextToken
+      }
+      users {
+        nextToken
       }
       updatedAt
     }
@@ -1383,12 +1383,6 @@ mutation UpdateMessage(
       priority
       status
       createdAt
-      messages {
-        nextToken
-      }
-      users {
-        nextToken
-      }
       chargePerson {
         id
         username
@@ -1401,6 +1395,12 @@ mutation UpdateMessage(
         authority
         createdAt
         updatedAt
+      }
+      messages {
+        nextToken
+      }
+      users {
+        nextToken
       }
       updatedAt
     }
@@ -1469,12 +1469,6 @@ mutation DeleteMessage(
       priority
       status
       createdAt
-      messages {
-        nextToken
-      }
-      users {
-        nextToken
-      }
       chargePerson {
         id
         username
@@ -1487,6 +1481,12 @@ mutation DeleteMessage(
         authority
         createdAt
         updatedAt
+      }
+      messages {
+        nextToken
+      }
+      users {
+        nextToken
       }
       updatedAt
     }

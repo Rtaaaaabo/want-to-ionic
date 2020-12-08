@@ -198,12 +198,6 @@ query GetTaskGroup($id: ID!) {
       priority
       status
       createdAt
-      messages {
-        nextToken
-      }
-      users {
-        nextToken
-      }
       chargePerson {
         id
         username
@@ -216,6 +210,12 @@ query GetTaskGroup($id: ID!) {
         authority
         createdAt
         updatedAt
+      }
+      messages {
+        nextToken
+      }
+      users {
+        nextToken
       }
       updatedAt
     }
@@ -330,28 +330,6 @@ query GetTask($id: ID!) {
     priority
     status
     createdAt
-    messages {
-      items {
-        id
-        taskID
-        authorID
-        content
-        createdAt
-        isSent
-        updatedAt
-      }
-      nextToken
-    }
-    users {
-      items {
-        id
-        taskID
-        userID
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
     chargePerson {
       id
       username
@@ -384,6 +362,28 @@ query GetTask($id: ID!) {
       createdAt
       updatedAt
     }
+    messages {
+      items {
+        id
+        taskID
+        authorID
+        content
+        createdAt
+        isSent
+        updatedAt
+      }
+      nextToken
+    }
+    users {
+      items {
+        id
+        taskID
+        userID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
     updatedAt
   }
 }
@@ -412,12 +412,6 @@ query ListTasks(
       priority
       status
       createdAt
-      messages {
-        nextToken
-      }
-      users {
-        nextToken
-      }
       chargePerson {
         id
         username
@@ -430,6 +424,12 @@ query ListTasks(
         authority
         createdAt
         updatedAt
+      }
+      messages {
+        nextToken
+      }
+      users {
+        nextToken
       }
       updatedAt
     }
@@ -673,12 +673,6 @@ query GetMessage($id: ID!) {
       priority
       status
       createdAt
-      messages {
-        nextToken
-      }
-      users {
-        nextToken
-      }
       chargePerson {
         id
         username
@@ -691,6 +685,12 @@ query GetMessage($id: ID!) {
         authority
         createdAt
         updatedAt
+      }
+      messages {
+        nextToken
+      }
+      users {
+        nextToken
       }
       updatedAt
     }

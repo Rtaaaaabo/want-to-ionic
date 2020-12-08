@@ -60,9 +60,9 @@ type Task
   priority: Int
   status: Int
   createdAt: AWSDateTime
+  chargePerson: User! @connection(fields: ["chargePersonID"])
   messages: [Message] @connection(keyName: "byTask", fields: ["id"])
   users: [TaskGroup] @connection(keyName: "byTask", fields: ["id"])
-  chargePerson: User @connection(fields: ["chargePersonID"])
 }
 
 type RoomGroup

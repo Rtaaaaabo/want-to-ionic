@@ -68,7 +68,6 @@ export class TaskPage implements OnInit {
       this.taskActiveItems = data.activeTaskItems.sort(this.logic.compareTaskArray);
       this.taskDoneItems = data.doneTaskItems;
       this.room = data.room;
-      console.log(data.roomMembers);
       this.roomMembers = data.roomMembers;
     });
   }

@@ -359,12 +359,6 @@ subscription OnCreateTaskGroup {
       priority
       status
       createdAt
-      messages {
-        nextToken
-      }
-      users {
-        nextToken
-      }
       chargePerson {
         id
         username
@@ -377,6 +371,12 @@ subscription OnCreateTaskGroup {
         authority
         createdAt
         updatedAt
+      }
+      messages {
+        nextToken
+      }
+      users {
+        nextToken
       }
       updatedAt
     }
@@ -440,12 +440,6 @@ subscription OnUpdateTaskGroup {
       priority
       status
       createdAt
-      messages {
-        nextToken
-      }
-      users {
-        nextToken
-      }
       chargePerson {
         id
         username
@@ -458,6 +452,12 @@ subscription OnUpdateTaskGroup {
         authority
         createdAt
         updatedAt
+      }
+      messages {
+        nextToken
+      }
+      users {
+        nextToken
       }
       updatedAt
     }
@@ -521,12 +521,6 @@ subscription OnDeleteTaskGroup {
       priority
       status
       createdAt
-      messages {
-        nextToken
-      }
-      users {
-        nextToken
-      }
       chargePerson {
         id
         username
@@ -539,6 +533,12 @@ subscription OnDeleteTaskGroup {
         authority
         createdAt
         updatedAt
+      }
+      messages {
+        nextToken
+      }
+      users {
+        nextToken
       }
       updatedAt
     }
@@ -611,28 +611,6 @@ subscription OnCreateTask {
     priority
     status
     createdAt
-    messages {
-      items {
-        id
-        taskID
-        authorID
-        content
-        createdAt
-        isSent
-        updatedAt
-      }
-      nextToken
-    }
-    users {
-      items {
-        id
-        taskID
-        userID
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
     chargePerson {
       id
       username
@@ -664,6 +642,28 @@ subscription OnCreateTask {
       }
       createdAt
       updatedAt
+    }
+    messages {
+      items {
+        id
+        taskID
+        authorID
+        content
+        createdAt
+        isSent
+        updatedAt
+      }
+      nextToken
+    }
+    users {
+      items {
+        id
+        taskID
+        userID
+        createdAt
+        updatedAt
+      }
+      nextToken
     }
     updatedAt
   }
@@ -701,28 +701,6 @@ subscription OnUpdateTask {
     priority
     status
     createdAt
-    messages {
-      items {
-        id
-        taskID
-        authorID
-        content
-        createdAt
-        isSent
-        updatedAt
-      }
-      nextToken
-    }
-    users {
-      items {
-        id
-        taskID
-        userID
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
     chargePerson {
       id
       username
@@ -754,6 +732,28 @@ subscription OnUpdateTask {
       }
       createdAt
       updatedAt
+    }
+    messages {
+      items {
+        id
+        taskID
+        authorID
+        content
+        createdAt
+        isSent
+        updatedAt
+      }
+      nextToken
+    }
+    users {
+      items {
+        id
+        taskID
+        userID
+        createdAt
+        updatedAt
+      }
+      nextToken
     }
     updatedAt
   }
@@ -791,28 +791,6 @@ subscription OnDeleteTask {
     priority
     status
     createdAt
-    messages {
-      items {
-        id
-        taskID
-        authorID
-        content
-        createdAt
-        isSent
-        updatedAt
-      }
-      nextToken
-    }
-    users {
-      items {
-        id
-        taskID
-        userID
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
     chargePerson {
       id
       username
@@ -844,6 +822,28 @@ subscription OnDeleteTask {
       }
       createdAt
       updatedAt
+    }
+    messages {
+      items {
+        id
+        taskID
+        authorID
+        content
+        createdAt
+        isSent
+        updatedAt
+      }
+      nextToken
+    }
+    users {
+      items {
+        id
+        taskID
+        userID
+        createdAt
+        updatedAt
+      }
+      nextToken
     }
     updatedAt
   }
@@ -1240,12 +1240,6 @@ subscription OnCreateMessage {
       priority
       status
       createdAt
-      messages {
-        nextToken
-      }
-      users {
-        nextToken
-      }
       chargePerson {
         id
         username
@@ -1258,6 +1252,12 @@ subscription OnCreateMessage {
         authority
         createdAt
         updatedAt
+      }
+      messages {
+        nextToken
+      }
+      users {
+        nextToken
       }
       updatedAt
     }
@@ -1323,12 +1323,6 @@ subscription OnUpdateMessage {
       priority
       status
       createdAt
-      messages {
-        nextToken
-      }
-      users {
-        nextToken
-      }
       chargePerson {
         id
         username
@@ -1341,6 +1335,12 @@ subscription OnUpdateMessage {
         authority
         createdAt
         updatedAt
+      }
+      messages {
+        nextToken
+      }
+      users {
+        nextToken
       }
       updatedAt
     }
@@ -1406,12 +1406,6 @@ subscription OnDeleteMessage {
       priority
       status
       createdAt
-      messages {
-        nextToken
-      }
-      users {
-        nextToken
-      }
       chargePerson {
         id
         username
@@ -1424,6 +1418,12 @@ subscription OnDeleteMessage {
         authority
         createdAt
         updatedAt
+      }
+      messages {
+        nextToken
+      }
+      users {
+        nextToken
       }
       updatedAt
     }
