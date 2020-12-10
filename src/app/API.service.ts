@@ -72,30 +72,18 @@ export type DeleteCompanyInput = {
   id?: string | null;
 };
 
-export type CreateUserInput = {
+export type CreateTaskGroupInput = {
   id?: string | null;
-  username: string;
-  email: string;
-  companyID: string;
-  tel?: string | null;
-  positionName?: string | null;
-  iconImage?: string | null;
-  registered?: boolean | null;
-  authority?: string | null;
+  taskID: string;
+  userID: string;
 };
 
-export type ModelUserConditionInput = {
-  username?: ModelStringInput | null;
-  email?: ModelStringInput | null;
-  companyID?: ModelIDInput | null;
-  tel?: ModelStringInput | null;
-  positionName?: ModelStringInput | null;
-  iconImage?: ModelStringInput | null;
-  registered?: ModelBooleanInput | null;
-  authority?: ModelStringInput | null;
-  and?: Array<ModelUserConditionInput | null> | null;
-  or?: Array<ModelUserConditionInput | null> | null;
-  not?: ModelUserConditionInput | null;
+export type ModelTaskGroupConditionInput = {
+  taskID?: ModelIDInput | null;
+  userID?: ModelIDInput | null;
+  and?: Array<ModelTaskGroupConditionInput | null> | null;
+  or?: Array<ModelTaskGroupConditionInput | null> | null;
+  not?: ModelTaskGroupConditionInput | null;
 };
 
 export type ModelIDInput = {
@@ -112,43 +100,6 @@ export type ModelIDInput = {
   attributeExists?: boolean | null;
   attributeType?: ModelAttributeTypes | null;
   size?: ModelSizeInput | null;
-};
-
-export type ModelBooleanInput = {
-  ne?: boolean | null;
-  eq?: boolean | null;
-  attributeExists?: boolean | null;
-  attributeType?: ModelAttributeTypes | null;
-};
-
-export type UpdateUserInput = {
-  id: string;
-  username?: string | null;
-  email?: string | null;
-  companyID?: string | null;
-  tel?: string | null;
-  positionName?: string | null;
-  iconImage?: string | null;
-  registered?: boolean | null;
-  authority?: string | null;
-};
-
-export type DeleteUserInput = {
-  id?: string | null;
-};
-
-export type CreateTaskGroupInput = {
-  id?: string | null;
-  taskID: string;
-  userID: string;
-};
-
-export type ModelTaskGroupConditionInput = {
-  taskID?: ModelIDInput | null;
-  userID?: ModelIDInput | null;
-  and?: Array<ModelTaskGroupConditionInput | null> | null;
-  or?: Array<ModelTaskGroupConditionInput | null> | null;
-  not?: ModelTaskGroupConditionInput | null;
 };
 
 export type UpdateTaskGroupInput = {
@@ -215,6 +166,55 @@ export type UpdateTaskInput = {
 };
 
 export type DeleteTaskInput = {
+  id?: string | null;
+};
+
+export type CreateUserInput = {
+  id?: string | null;
+  username: string;
+  email: string;
+  companyID: string;
+  tel?: string | null;
+  positionName?: string | null;
+  iconImage?: string | null;
+  registered?: boolean | null;
+  authority?: string | null;
+};
+
+export type ModelUserConditionInput = {
+  username?: ModelStringInput | null;
+  email?: ModelStringInput | null;
+  companyID?: ModelIDInput | null;
+  tel?: ModelStringInput | null;
+  positionName?: ModelStringInput | null;
+  iconImage?: ModelStringInput | null;
+  registered?: ModelBooleanInput | null;
+  authority?: ModelStringInput | null;
+  and?: Array<ModelUserConditionInput | null> | null;
+  or?: Array<ModelUserConditionInput | null> | null;
+  not?: ModelUserConditionInput | null;
+};
+
+export type ModelBooleanInput = {
+  ne?: boolean | null;
+  eq?: boolean | null;
+  attributeExists?: boolean | null;
+  attributeType?: ModelAttributeTypes | null;
+};
+
+export type UpdateUserInput = {
+  id: string;
+  username?: string | null;
+  email?: string | null;
+  companyID?: string | null;
+  tel?: string | null;
+  positionName?: string | null;
+  iconImage?: string | null;
+  registered?: boolean | null;
+  authority?: string | null;
+};
+
+export type DeleteUserInput = {
   id?: string | null;
 };
 
@@ -311,21 +311,6 @@ export type ModelCompanyFilterInput = {
   not?: ModelCompanyFilterInput | null;
 };
 
-export type ModelUserFilterInput = {
-  id?: ModelIDInput | null;
-  username?: ModelStringInput | null;
-  email?: ModelStringInput | null;
-  companyID?: ModelIDInput | null;
-  tel?: ModelStringInput | null;
-  positionName?: ModelStringInput | null;
-  iconImage?: ModelStringInput | null;
-  registered?: ModelBooleanInput | null;
-  authority?: ModelStringInput | null;
-  and?: Array<ModelUserFilterInput | null> | null;
-  or?: Array<ModelUserFilterInput | null> | null;
-  not?: ModelUserFilterInput | null;
-};
-
 export type ModelTaskGroupFilterInput = {
   id?: ModelIDInput | null;
   taskID?: ModelIDInput | null;
@@ -349,6 +334,21 @@ export type ModelTaskFilterInput = {
   and?: Array<ModelTaskFilterInput | null> | null;
   or?: Array<ModelTaskFilterInput | null> | null;
   not?: ModelTaskFilterInput | null;
+};
+
+export type ModelUserFilterInput = {
+  id?: ModelIDInput | null;
+  username?: ModelStringInput | null;
+  email?: ModelStringInput | null;
+  companyID?: ModelIDInput | null;
+  tel?: ModelStringInput | null;
+  positionName?: ModelStringInput | null;
+  iconImage?: ModelStringInput | null;
+  registered?: ModelBooleanInput | null;
+  authority?: ModelStringInput | null;
+  and?: Array<ModelUserFilterInput | null> | null;
+  or?: Array<ModelUserFilterInput | null> | null;
+  not?: ModelUserFilterInput | null;
 };
 
 export type ModelRoomGroupFilterInput = {
@@ -494,267 +494,6 @@ export type DeleteCompanyMutation = {
       registered: boolean | null;
       authority: string | null;
       createdAt: string;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type CreateUserMutation = {
-  __typename: "User";
-  id: string;
-  username: string;
-  email: string;
-  companyID: string;
-  tel: string | null;
-  positionName: string | null;
-  iconImage: string | null;
-  registered: boolean | null;
-  authority: string | null;
-  company: {
-    __typename: "Company";
-    id: string;
-    name: string;
-    domain: string;
-    room: {
-      __typename: "ModelRoomConnection";
-      nextToken: string | null;
-    } | null;
-    companyMembers: {
-      __typename: "ModelUserConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  };
-  messages: {
-    __typename: "ModelMessageConnection";
-    items: Array<{
-      __typename: "Message";
-      id: string;
-      taskID: string;
-      authorID: string;
-      content: string;
-      createdAt: string | null;
-      isSent: boolean | null;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  room: {
-    __typename: "ModelRoomGroupConnection";
-    items: Array<{
-      __typename: "RoomGroup";
-      id: string;
-      roomID: string;
-      userID: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  task: {
-    __typename: "ModelTaskGroupConnection";
-    items: Array<{
-      __typename: "TaskGroup";
-      id: string;
-      taskID: string;
-      userID: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  chargeTask: {
-    __typename: "ModelTaskConnection";
-    items: Array<{
-      __typename: "Task";
-      id: string;
-      authorID: string;
-      roomID: string;
-      chargePersonID: string;
-      title: string;
-      description: string | null;
-      scheduleDate: string | null;
-      priority: number | null;
-      status: number | null;
-      createdAt: string | null;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type UpdateUserMutation = {
-  __typename: "User";
-  id: string;
-  username: string;
-  email: string;
-  companyID: string;
-  tel: string | null;
-  positionName: string | null;
-  iconImage: string | null;
-  registered: boolean | null;
-  authority: string | null;
-  company: {
-    __typename: "Company";
-    id: string;
-    name: string;
-    domain: string;
-    room: {
-      __typename: "ModelRoomConnection";
-      nextToken: string | null;
-    } | null;
-    companyMembers: {
-      __typename: "ModelUserConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  };
-  messages: {
-    __typename: "ModelMessageConnection";
-    items: Array<{
-      __typename: "Message";
-      id: string;
-      taskID: string;
-      authorID: string;
-      content: string;
-      createdAt: string | null;
-      isSent: boolean | null;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  room: {
-    __typename: "ModelRoomGroupConnection";
-    items: Array<{
-      __typename: "RoomGroup";
-      id: string;
-      roomID: string;
-      userID: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  task: {
-    __typename: "ModelTaskGroupConnection";
-    items: Array<{
-      __typename: "TaskGroup";
-      id: string;
-      taskID: string;
-      userID: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  chargeTask: {
-    __typename: "ModelTaskConnection";
-    items: Array<{
-      __typename: "Task";
-      id: string;
-      authorID: string;
-      roomID: string;
-      chargePersonID: string;
-      title: string;
-      description: string | null;
-      scheduleDate: string | null;
-      priority: number | null;
-      status: number | null;
-      createdAt: string | null;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type DeleteUserMutation = {
-  __typename: "User";
-  id: string;
-  username: string;
-  email: string;
-  companyID: string;
-  tel: string | null;
-  positionName: string | null;
-  iconImage: string | null;
-  registered: boolean | null;
-  authority: string | null;
-  company: {
-    __typename: "Company";
-    id: string;
-    name: string;
-    domain: string;
-    room: {
-      __typename: "ModelRoomConnection";
-      nextToken: string | null;
-    } | null;
-    companyMembers: {
-      __typename: "ModelUserConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  };
-  messages: {
-    __typename: "ModelMessageConnection";
-    items: Array<{
-      __typename: "Message";
-      id: string;
-      taskID: string;
-      authorID: string;
-      content: string;
-      createdAt: string | null;
-      isSent: boolean | null;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  room: {
-    __typename: "ModelRoomGroupConnection";
-    items: Array<{
-      __typename: "RoomGroup";
-      id: string;
-      roomID: string;
-      userID: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  task: {
-    __typename: "ModelTaskGroupConnection";
-    items: Array<{
-      __typename: "TaskGroup";
-      id: string;
-      taskID: string;
-      userID: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  chargeTask: {
-    __typename: "ModelTaskConnection";
-    items: Array<{
-      __typename: "Task";
-      id: string;
-      authorID: string;
-      roomID: string;
-      chargePersonID: string;
-      title: string;
-      description: string | null;
-      scheduleDate: string | null;
-      priority: number | null;
-      status: number | null;
-      createdAt: string | null;
       updatedAt: string;
     } | null> | null;
     nextToken: string | null;
@@ -1348,6 +1087,267 @@ export type DeleteTaskMutation = {
     } | null> | null;
     nextToken: string | null;
   } | null;
+  updatedAt: string;
+};
+
+export type CreateUserMutation = {
+  __typename: "User";
+  id: string;
+  username: string;
+  email: string;
+  companyID: string;
+  tel: string | null;
+  positionName: string | null;
+  iconImage: string | null;
+  registered: boolean | null;
+  authority: string | null;
+  company: {
+    __typename: "Company";
+    id: string;
+    name: string;
+    domain: string;
+    room: {
+      __typename: "ModelRoomConnection";
+      nextToken: string | null;
+    } | null;
+    companyMembers: {
+      __typename: "ModelUserConnection";
+      nextToken: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+  };
+  messages: {
+    __typename: "ModelMessageConnection";
+    items: Array<{
+      __typename: "Message";
+      id: string;
+      taskID: string;
+      authorID: string;
+      content: string;
+      createdAt: string | null;
+      isSent: boolean | null;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
+  room: {
+    __typename: "ModelRoomGroupConnection";
+    items: Array<{
+      __typename: "RoomGroup";
+      id: string;
+      roomID: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
+  task: {
+    __typename: "ModelTaskGroupConnection";
+    items: Array<{
+      __typename: "TaskGroup";
+      id: string;
+      taskID: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
+  chargeTask: {
+    __typename: "ModelTaskConnection";
+    items: Array<{
+      __typename: "Task";
+      id: string;
+      authorID: string;
+      roomID: string;
+      chargePersonID: string;
+      title: string;
+      description: string | null;
+      scheduleDate: string | null;
+      priority: number | null;
+      status: number | null;
+      createdAt: string | null;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type UpdateUserMutation = {
+  __typename: "User";
+  id: string;
+  username: string;
+  email: string;
+  companyID: string;
+  tel: string | null;
+  positionName: string | null;
+  iconImage: string | null;
+  registered: boolean | null;
+  authority: string | null;
+  company: {
+    __typename: "Company";
+    id: string;
+    name: string;
+    domain: string;
+    room: {
+      __typename: "ModelRoomConnection";
+      nextToken: string | null;
+    } | null;
+    companyMembers: {
+      __typename: "ModelUserConnection";
+      nextToken: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+  };
+  messages: {
+    __typename: "ModelMessageConnection";
+    items: Array<{
+      __typename: "Message";
+      id: string;
+      taskID: string;
+      authorID: string;
+      content: string;
+      createdAt: string | null;
+      isSent: boolean | null;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
+  room: {
+    __typename: "ModelRoomGroupConnection";
+    items: Array<{
+      __typename: "RoomGroup";
+      id: string;
+      roomID: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
+  task: {
+    __typename: "ModelTaskGroupConnection";
+    items: Array<{
+      __typename: "TaskGroup";
+      id: string;
+      taskID: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
+  chargeTask: {
+    __typename: "ModelTaskConnection";
+    items: Array<{
+      __typename: "Task";
+      id: string;
+      authorID: string;
+      roomID: string;
+      chargePersonID: string;
+      title: string;
+      description: string | null;
+      scheduleDate: string | null;
+      priority: number | null;
+      status: number | null;
+      createdAt: string | null;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type DeleteUserMutation = {
+  __typename: "User";
+  id: string;
+  username: string;
+  email: string;
+  companyID: string;
+  tel: string | null;
+  positionName: string | null;
+  iconImage: string | null;
+  registered: boolean | null;
+  authority: string | null;
+  company: {
+    __typename: "Company";
+    id: string;
+    name: string;
+    domain: string;
+    room: {
+      __typename: "ModelRoomConnection";
+      nextToken: string | null;
+    } | null;
+    companyMembers: {
+      __typename: "ModelUserConnection";
+      nextToken: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+  };
+  messages: {
+    __typename: "ModelMessageConnection";
+    items: Array<{
+      __typename: "Message";
+      id: string;
+      taskID: string;
+      authorID: string;
+      content: string;
+      createdAt: string | null;
+      isSent: boolean | null;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
+  room: {
+    __typename: "ModelRoomGroupConnection";
+    items: Array<{
+      __typename: "RoomGroup";
+      id: string;
+      roomID: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
+  task: {
+    __typename: "ModelTaskGroupConnection";
+    items: Array<{
+      __typename: "TaskGroup";
+      id: string;
+      taskID: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
+  chargeTask: {
+    __typename: "ModelTaskConnection";
+    items: Array<{
+      __typename: "Task";
+      id: string;
+      authorID: string;
+      roomID: string;
+      chargePersonID: string;
+      title: string;
+      description: string | null;
+      scheduleDate: string | null;
+      priority: number | null;
+      status: number | null;
+      createdAt: string | null;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
+  createdAt: string;
   updatedAt: string;
 };
 
@@ -2078,136 +2078,6 @@ export type ListCompanysQuery = {
   nextToken: string | null;
 };
 
-export type GetUserQuery = {
-  __typename: "User";
-  id: string;
-  username: string;
-  email: string;
-  companyID: string;
-  tel: string | null;
-  positionName: string | null;
-  iconImage: string | null;
-  registered: boolean | null;
-  authority: string | null;
-  company: {
-    __typename: "Company";
-    id: string;
-    name: string;
-    domain: string;
-    room: {
-      __typename: "ModelRoomConnection";
-      nextToken: string | null;
-    } | null;
-    companyMembers: {
-      __typename: "ModelUserConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  };
-  messages: {
-    __typename: "ModelMessageConnection";
-    items: Array<{
-      __typename: "Message";
-      id: string;
-      taskID: string;
-      authorID: string;
-      content: string;
-      createdAt: string | null;
-      isSent: boolean | null;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  room: {
-    __typename: "ModelRoomGroupConnection";
-    items: Array<{
-      __typename: "RoomGroup";
-      id: string;
-      roomID: string;
-      userID: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  task: {
-    __typename: "ModelTaskGroupConnection";
-    items: Array<{
-      __typename: "TaskGroup";
-      id: string;
-      taskID: string;
-      userID: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  chargeTask: {
-    __typename: "ModelTaskConnection";
-    items: Array<{
-      __typename: "Task";
-      id: string;
-      authorID: string;
-      roomID: string;
-      chargePersonID: string;
-      title: string;
-      description: string | null;
-      scheduleDate: string | null;
-      priority: number | null;
-      status: number | null;
-      createdAt: string | null;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type ListUsersQuery = {
-  __typename: "ModelUserConnection";
-  items: Array<{
-    __typename: "User";
-    id: string;
-    username: string;
-    email: string;
-    companyID: string;
-    tel: string | null;
-    positionName: string | null;
-    iconImage: string | null;
-    registered: boolean | null;
-    authority: string | null;
-    company: {
-      __typename: "Company";
-      id: string;
-      name: string;
-      domain: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    messages: {
-      __typename: "ModelMessageConnection";
-      nextToken: string | null;
-    } | null;
-    room: {
-      __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
-    } | null;
-    task: {
-      __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
-    } | null;
-    chargeTask: {
-      __typename: "ModelTaskConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null> | null;
-  nextToken: string | null;
-};
-
 export type GetTaskGroupQuery = {
   __typename: "TaskGroup";
   id: string;
@@ -2490,6 +2360,136 @@ export type ListTasksQuery = {
       __typename: "ModelTaskGroupConnection";
       nextToken: string | null;
     } | null;
+    updatedAt: string;
+  } | null> | null;
+  nextToken: string | null;
+};
+
+export type GetUserQuery = {
+  __typename: "User";
+  id: string;
+  username: string;
+  email: string;
+  companyID: string;
+  tel: string | null;
+  positionName: string | null;
+  iconImage: string | null;
+  registered: boolean | null;
+  authority: string | null;
+  company: {
+    __typename: "Company";
+    id: string;
+    name: string;
+    domain: string;
+    room: {
+      __typename: "ModelRoomConnection";
+      nextToken: string | null;
+    } | null;
+    companyMembers: {
+      __typename: "ModelUserConnection";
+      nextToken: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+  };
+  messages: {
+    __typename: "ModelMessageConnection";
+    items: Array<{
+      __typename: "Message";
+      id: string;
+      taskID: string;
+      authorID: string;
+      content: string;
+      createdAt: string | null;
+      isSent: boolean | null;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
+  room: {
+    __typename: "ModelRoomGroupConnection";
+    items: Array<{
+      __typename: "RoomGroup";
+      id: string;
+      roomID: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
+  task: {
+    __typename: "ModelTaskGroupConnection";
+    items: Array<{
+      __typename: "TaskGroup";
+      id: string;
+      taskID: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
+  chargeTask: {
+    __typename: "ModelTaskConnection";
+    items: Array<{
+      __typename: "Task";
+      id: string;
+      authorID: string;
+      roomID: string;
+      chargePersonID: string;
+      title: string;
+      description: string | null;
+      scheduleDate: string | null;
+      priority: number | null;
+      status: number | null;
+      createdAt: string | null;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type ListUsersQuery = {
+  __typename: "ModelUserConnection";
+  items: Array<{
+    __typename: "User";
+    id: string;
+    username: string;
+    email: string;
+    companyID: string;
+    tel: string | null;
+    positionName: string | null;
+    iconImage: string | null;
+    registered: boolean | null;
+    authority: string | null;
+    company: {
+      __typename: "Company";
+      id: string;
+      name: string;
+      domain: string;
+      createdAt: string;
+      updatedAt: string;
+    };
+    messages: {
+      __typename: "ModelMessageConnection";
+      nextToken: string | null;
+    } | null;
+    room: {
+      __typename: "ModelRoomGroupConnection";
+      nextToken: string | null;
+    } | null;
+    task: {
+      __typename: "ModelTaskGroupConnection";
+      nextToken: string | null;
+    } | null;
+    chargeTask: {
+      __typename: "ModelTaskConnection";
+      nextToken: string | null;
+    } | null;
+    createdAt: string;
     updatedAt: string;
   } | null> | null;
   nextToken: string | null;
@@ -2938,267 +2938,6 @@ export type OnDeleteCompanySubscription = {
       registered: boolean | null;
       authority: string | null;
       createdAt: string;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type OnCreateUserSubscription = {
-  __typename: "User";
-  id: string;
-  username: string;
-  email: string;
-  companyID: string;
-  tel: string | null;
-  positionName: string | null;
-  iconImage: string | null;
-  registered: boolean | null;
-  authority: string | null;
-  company: {
-    __typename: "Company";
-    id: string;
-    name: string;
-    domain: string;
-    room: {
-      __typename: "ModelRoomConnection";
-      nextToken: string | null;
-    } | null;
-    companyMembers: {
-      __typename: "ModelUserConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  };
-  messages: {
-    __typename: "ModelMessageConnection";
-    items: Array<{
-      __typename: "Message";
-      id: string;
-      taskID: string;
-      authorID: string;
-      content: string;
-      createdAt: string | null;
-      isSent: boolean | null;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  room: {
-    __typename: "ModelRoomGroupConnection";
-    items: Array<{
-      __typename: "RoomGroup";
-      id: string;
-      roomID: string;
-      userID: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  task: {
-    __typename: "ModelTaskGroupConnection";
-    items: Array<{
-      __typename: "TaskGroup";
-      id: string;
-      taskID: string;
-      userID: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  chargeTask: {
-    __typename: "ModelTaskConnection";
-    items: Array<{
-      __typename: "Task";
-      id: string;
-      authorID: string;
-      roomID: string;
-      chargePersonID: string;
-      title: string;
-      description: string | null;
-      scheduleDate: string | null;
-      priority: number | null;
-      status: number | null;
-      createdAt: string | null;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type OnUpdateUserSubscription = {
-  __typename: "User";
-  id: string;
-  username: string;
-  email: string;
-  companyID: string;
-  tel: string | null;
-  positionName: string | null;
-  iconImage: string | null;
-  registered: boolean | null;
-  authority: string | null;
-  company: {
-    __typename: "Company";
-    id: string;
-    name: string;
-    domain: string;
-    room: {
-      __typename: "ModelRoomConnection";
-      nextToken: string | null;
-    } | null;
-    companyMembers: {
-      __typename: "ModelUserConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  };
-  messages: {
-    __typename: "ModelMessageConnection";
-    items: Array<{
-      __typename: "Message";
-      id: string;
-      taskID: string;
-      authorID: string;
-      content: string;
-      createdAt: string | null;
-      isSent: boolean | null;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  room: {
-    __typename: "ModelRoomGroupConnection";
-    items: Array<{
-      __typename: "RoomGroup";
-      id: string;
-      roomID: string;
-      userID: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  task: {
-    __typename: "ModelTaskGroupConnection";
-    items: Array<{
-      __typename: "TaskGroup";
-      id: string;
-      taskID: string;
-      userID: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  chargeTask: {
-    __typename: "ModelTaskConnection";
-    items: Array<{
-      __typename: "Task";
-      id: string;
-      authorID: string;
-      roomID: string;
-      chargePersonID: string;
-      title: string;
-      description: string | null;
-      scheduleDate: string | null;
-      priority: number | null;
-      status: number | null;
-      createdAt: string | null;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type OnDeleteUserSubscription = {
-  __typename: "User";
-  id: string;
-  username: string;
-  email: string;
-  companyID: string;
-  tel: string | null;
-  positionName: string | null;
-  iconImage: string | null;
-  registered: boolean | null;
-  authority: string | null;
-  company: {
-    __typename: "Company";
-    id: string;
-    name: string;
-    domain: string;
-    room: {
-      __typename: "ModelRoomConnection";
-      nextToken: string | null;
-    } | null;
-    companyMembers: {
-      __typename: "ModelUserConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  };
-  messages: {
-    __typename: "ModelMessageConnection";
-    items: Array<{
-      __typename: "Message";
-      id: string;
-      taskID: string;
-      authorID: string;
-      content: string;
-      createdAt: string | null;
-      isSent: boolean | null;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  room: {
-    __typename: "ModelRoomGroupConnection";
-    items: Array<{
-      __typename: "RoomGroup";
-      id: string;
-      roomID: string;
-      userID: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  task: {
-    __typename: "ModelTaskGroupConnection";
-    items: Array<{
-      __typename: "TaskGroup";
-      id: string;
-      taskID: string;
-      userID: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  chargeTask: {
-    __typename: "ModelTaskConnection";
-    items: Array<{
-      __typename: "Task";
-      id: string;
-      authorID: string;
-      roomID: string;
-      chargePersonID: string;
-      title: string;
-      description: string | null;
-      scheduleDate: string | null;
-      priority: number | null;
-      status: number | null;
-      createdAt: string | null;
       updatedAt: string;
     } | null> | null;
     nextToken: string | null;
@@ -3792,6 +3531,267 @@ export type OnDeleteTaskSubscription = {
     } | null> | null;
     nextToken: string | null;
   } | null;
+  updatedAt: string;
+};
+
+export type OnCreateUserSubscription = {
+  __typename: "User";
+  id: string;
+  username: string;
+  email: string;
+  companyID: string;
+  tel: string | null;
+  positionName: string | null;
+  iconImage: string | null;
+  registered: boolean | null;
+  authority: string | null;
+  company: {
+    __typename: "Company";
+    id: string;
+    name: string;
+    domain: string;
+    room: {
+      __typename: "ModelRoomConnection";
+      nextToken: string | null;
+    } | null;
+    companyMembers: {
+      __typename: "ModelUserConnection";
+      nextToken: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+  };
+  messages: {
+    __typename: "ModelMessageConnection";
+    items: Array<{
+      __typename: "Message";
+      id: string;
+      taskID: string;
+      authorID: string;
+      content: string;
+      createdAt: string | null;
+      isSent: boolean | null;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
+  room: {
+    __typename: "ModelRoomGroupConnection";
+    items: Array<{
+      __typename: "RoomGroup";
+      id: string;
+      roomID: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
+  task: {
+    __typename: "ModelTaskGroupConnection";
+    items: Array<{
+      __typename: "TaskGroup";
+      id: string;
+      taskID: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
+  chargeTask: {
+    __typename: "ModelTaskConnection";
+    items: Array<{
+      __typename: "Task";
+      id: string;
+      authorID: string;
+      roomID: string;
+      chargePersonID: string;
+      title: string;
+      description: string | null;
+      scheduleDate: string | null;
+      priority: number | null;
+      status: number | null;
+      createdAt: string | null;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type OnUpdateUserSubscription = {
+  __typename: "User";
+  id: string;
+  username: string;
+  email: string;
+  companyID: string;
+  tel: string | null;
+  positionName: string | null;
+  iconImage: string | null;
+  registered: boolean | null;
+  authority: string | null;
+  company: {
+    __typename: "Company";
+    id: string;
+    name: string;
+    domain: string;
+    room: {
+      __typename: "ModelRoomConnection";
+      nextToken: string | null;
+    } | null;
+    companyMembers: {
+      __typename: "ModelUserConnection";
+      nextToken: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+  };
+  messages: {
+    __typename: "ModelMessageConnection";
+    items: Array<{
+      __typename: "Message";
+      id: string;
+      taskID: string;
+      authorID: string;
+      content: string;
+      createdAt: string | null;
+      isSent: boolean | null;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
+  room: {
+    __typename: "ModelRoomGroupConnection";
+    items: Array<{
+      __typename: "RoomGroup";
+      id: string;
+      roomID: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
+  task: {
+    __typename: "ModelTaskGroupConnection";
+    items: Array<{
+      __typename: "TaskGroup";
+      id: string;
+      taskID: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
+  chargeTask: {
+    __typename: "ModelTaskConnection";
+    items: Array<{
+      __typename: "Task";
+      id: string;
+      authorID: string;
+      roomID: string;
+      chargePersonID: string;
+      title: string;
+      description: string | null;
+      scheduleDate: string | null;
+      priority: number | null;
+      status: number | null;
+      createdAt: string | null;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type OnDeleteUserSubscription = {
+  __typename: "User";
+  id: string;
+  username: string;
+  email: string;
+  companyID: string;
+  tel: string | null;
+  positionName: string | null;
+  iconImage: string | null;
+  registered: boolean | null;
+  authority: string | null;
+  company: {
+    __typename: "Company";
+    id: string;
+    name: string;
+    domain: string;
+    room: {
+      __typename: "ModelRoomConnection";
+      nextToken: string | null;
+    } | null;
+    companyMembers: {
+      __typename: "ModelUserConnection";
+      nextToken: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+  };
+  messages: {
+    __typename: "ModelMessageConnection";
+    items: Array<{
+      __typename: "Message";
+      id: string;
+      taskID: string;
+      authorID: string;
+      content: string;
+      createdAt: string | null;
+      isSent: boolean | null;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
+  room: {
+    __typename: "ModelRoomGroupConnection";
+    items: Array<{
+      __typename: "RoomGroup";
+      id: string;
+      roomID: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
+  task: {
+    __typename: "ModelTaskGroupConnection";
+    items: Array<{
+      __typename: "TaskGroup";
+      id: string;
+      taskID: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
+  chargeTask: {
+    __typename: "ModelTaskConnection";
+    items: Array<{
+      __typename: "Task";
+      id: string;
+      authorID: string;
+      roomID: string;
+      chargePersonID: string;
+      title: string;
+      description: string | null;
+      scheduleDate: string | null;
+      priority: number | null;
+      status: number | null;
+      createdAt: string | null;
+      updatedAt: string;
+    } | null> | null;
+    nextToken: string | null;
+  } | null;
+  createdAt: string;
   updatedAt: string;
 };
 
@@ -4633,315 +4633,6 @@ export class APIService {
     )) as any;
     return <DeleteCompanyMutation>response.data.deleteCompany;
   }
-  async CreateUser(
-    input: CreateUserInput,
-    condition?: ModelUserConditionInput
-  ): Promise<CreateUserMutation> {
-    const statement = `mutation CreateUser($input: CreateUserInput!, $condition: ModelUserConditionInput) {
-        createUser(input: $input, condition: $condition) {
-          __typename
-          id
-          username
-          email
-          companyID
-          tel
-          positionName
-          iconImage
-          registered
-          authority
-          company {
-            __typename
-            id
-            name
-            domain
-            room {
-              __typename
-              nextToken
-            }
-            companyMembers {
-              __typename
-              nextToken
-            }
-            createdAt
-            updatedAt
-          }
-          messages {
-            __typename
-            items {
-              __typename
-              id
-              taskID
-              authorID
-              content
-              createdAt
-              isSent
-              updatedAt
-            }
-            nextToken
-          }
-          room {
-            __typename
-            items {
-              __typename
-              id
-              roomID
-              userID
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
-          task {
-            __typename
-            items {
-              __typename
-              id
-              taskID
-              userID
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
-          chargeTask {
-            __typename
-            items {
-              __typename
-              id
-              authorID
-              roomID
-              chargePersonID
-              title
-              description
-              scheduleDate
-              priority
-              status
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
-          createdAt
-          updatedAt
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      input
-    };
-    if (condition) {
-      gqlAPIServiceArguments.condition = condition;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <CreateUserMutation>response.data.createUser;
-  }
-  async UpdateUser(
-    input: UpdateUserInput,
-    condition?: ModelUserConditionInput
-  ): Promise<UpdateUserMutation> {
-    const statement = `mutation UpdateUser($input: UpdateUserInput!, $condition: ModelUserConditionInput) {
-        updateUser(input: $input, condition: $condition) {
-          __typename
-          id
-          username
-          email
-          companyID
-          tel
-          positionName
-          iconImage
-          registered
-          authority
-          company {
-            __typename
-            id
-            name
-            domain
-            room {
-              __typename
-              nextToken
-            }
-            companyMembers {
-              __typename
-              nextToken
-            }
-            createdAt
-            updatedAt
-          }
-          messages {
-            __typename
-            items {
-              __typename
-              id
-              taskID
-              authorID
-              content
-              createdAt
-              isSent
-              updatedAt
-            }
-            nextToken
-          }
-          room {
-            __typename
-            items {
-              __typename
-              id
-              roomID
-              userID
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
-          task {
-            __typename
-            items {
-              __typename
-              id
-              taskID
-              userID
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
-          chargeTask {
-            __typename
-            items {
-              __typename
-              id
-              authorID
-              roomID
-              chargePersonID
-              title
-              description
-              scheduleDate
-              priority
-              status
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
-          createdAt
-          updatedAt
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      input
-    };
-    if (condition) {
-      gqlAPIServiceArguments.condition = condition;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <UpdateUserMutation>response.data.updateUser;
-  }
-  async DeleteUser(
-    input: DeleteUserInput,
-    condition?: ModelUserConditionInput
-  ): Promise<DeleteUserMutation> {
-    const statement = `mutation DeleteUser($input: DeleteUserInput!, $condition: ModelUserConditionInput) {
-        deleteUser(input: $input, condition: $condition) {
-          __typename
-          id
-          username
-          email
-          companyID
-          tel
-          positionName
-          iconImage
-          registered
-          authority
-          company {
-            __typename
-            id
-            name
-            domain
-            room {
-              __typename
-              nextToken
-            }
-            companyMembers {
-              __typename
-              nextToken
-            }
-            createdAt
-            updatedAt
-          }
-          messages {
-            __typename
-            items {
-              __typename
-              id
-              taskID
-              authorID
-              content
-              createdAt
-              isSent
-              updatedAt
-            }
-            nextToken
-          }
-          room {
-            __typename
-            items {
-              __typename
-              id
-              roomID
-              userID
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
-          task {
-            __typename
-            items {
-              __typename
-              id
-              taskID
-              userID
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
-          chargeTask {
-            __typename
-            items {
-              __typename
-              id
-              authorID
-              roomID
-              chargePersonID
-              title
-              description
-              scheduleDate
-              priority
-              status
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
-          createdAt
-          updatedAt
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      input
-    };
-    if (condition) {
-      gqlAPIServiceArguments.condition = condition;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <DeleteUserMutation>response.data.deleteUser;
-  }
   async CreateTaskGroup(
     input: CreateTaskGroupInput,
     condition?: ModelTaskGroupConditionInput
@@ -5625,6 +5316,315 @@ export class APIService {
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
     return <DeleteTaskMutation>response.data.deleteTask;
+  }
+  async CreateUser(
+    input: CreateUserInput,
+    condition?: ModelUserConditionInput
+  ): Promise<CreateUserMutation> {
+    const statement = `mutation CreateUser($input: CreateUserInput!, $condition: ModelUserConditionInput) {
+        createUser(input: $input, condition: $condition) {
+          __typename
+          id
+          username
+          email
+          companyID
+          tel
+          positionName
+          iconImage
+          registered
+          authority
+          company {
+            __typename
+            id
+            name
+            domain
+            room {
+              __typename
+              nextToken
+            }
+            companyMembers {
+              __typename
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          messages {
+            __typename
+            items {
+              __typename
+              id
+              taskID
+              authorID
+              content
+              createdAt
+              isSent
+              updatedAt
+            }
+            nextToken
+          }
+          room {
+            __typename
+            items {
+              __typename
+              id
+              roomID
+              userID
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          task {
+            __typename
+            items {
+              __typename
+              id
+              taskID
+              userID
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          chargeTask {
+            __typename
+            items {
+              __typename
+              id
+              authorID
+              roomID
+              chargePersonID
+              title
+              description
+              scheduleDate
+              priority
+              status
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          createdAt
+          updatedAt
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      input
+    };
+    if (condition) {
+      gqlAPIServiceArguments.condition = condition;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <CreateUserMutation>response.data.createUser;
+  }
+  async UpdateUser(
+    input: UpdateUserInput,
+    condition?: ModelUserConditionInput
+  ): Promise<UpdateUserMutation> {
+    const statement = `mutation UpdateUser($input: UpdateUserInput!, $condition: ModelUserConditionInput) {
+        updateUser(input: $input, condition: $condition) {
+          __typename
+          id
+          username
+          email
+          companyID
+          tel
+          positionName
+          iconImage
+          registered
+          authority
+          company {
+            __typename
+            id
+            name
+            domain
+            room {
+              __typename
+              nextToken
+            }
+            companyMembers {
+              __typename
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          messages {
+            __typename
+            items {
+              __typename
+              id
+              taskID
+              authorID
+              content
+              createdAt
+              isSent
+              updatedAt
+            }
+            nextToken
+          }
+          room {
+            __typename
+            items {
+              __typename
+              id
+              roomID
+              userID
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          task {
+            __typename
+            items {
+              __typename
+              id
+              taskID
+              userID
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          chargeTask {
+            __typename
+            items {
+              __typename
+              id
+              authorID
+              roomID
+              chargePersonID
+              title
+              description
+              scheduleDate
+              priority
+              status
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          createdAt
+          updatedAt
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      input
+    };
+    if (condition) {
+      gqlAPIServiceArguments.condition = condition;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <UpdateUserMutation>response.data.updateUser;
+  }
+  async DeleteUser(
+    input: DeleteUserInput,
+    condition?: ModelUserConditionInput
+  ): Promise<DeleteUserMutation> {
+    const statement = `mutation DeleteUser($input: DeleteUserInput!, $condition: ModelUserConditionInput) {
+        deleteUser(input: $input, condition: $condition) {
+          __typename
+          id
+          username
+          email
+          companyID
+          tel
+          positionName
+          iconImage
+          registered
+          authority
+          company {
+            __typename
+            id
+            name
+            domain
+            room {
+              __typename
+              nextToken
+            }
+            companyMembers {
+              __typename
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          messages {
+            __typename
+            items {
+              __typename
+              id
+              taskID
+              authorID
+              content
+              createdAt
+              isSent
+              updatedAt
+            }
+            nextToken
+          }
+          room {
+            __typename
+            items {
+              __typename
+              id
+              roomID
+              userID
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          task {
+            __typename
+            items {
+              __typename
+              id
+              taskID
+              userID
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          chargeTask {
+            __typename
+            items {
+              __typename
+              id
+              authorID
+              roomID
+              chargePersonID
+              title
+              description
+              scheduleDate
+              priority
+              status
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          createdAt
+          updatedAt
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      input
+    };
+    if (condition) {
+      gqlAPIServiceArguments.condition = condition;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <DeleteUserMutation>response.data.deleteUser;
   }
   async CreateRoomGroup(
     input: CreateRoomGroupInput,
@@ -6528,167 +6528,6 @@ export class APIService {
     )) as any;
     return <ListCompanysQuery>response.data.listCompanys;
   }
-  async GetUser(id: string): Promise<GetUserQuery> {
-    const statement = `query GetUser($id: ID!) {
-        getUser(id: $id) {
-          __typename
-          id
-          username
-          email
-          companyID
-          tel
-          positionName
-          iconImage
-          registered
-          authority
-          company {
-            __typename
-            id
-            name
-            domain
-            room {
-              __typename
-              nextToken
-            }
-            companyMembers {
-              __typename
-              nextToken
-            }
-            createdAt
-            updatedAt
-          }
-          messages {
-            __typename
-            items {
-              __typename
-              id
-              taskID
-              authorID
-              content
-              createdAt
-              isSent
-              updatedAt
-            }
-            nextToken
-          }
-          room {
-            __typename
-            items {
-              __typename
-              id
-              roomID
-              userID
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
-          task {
-            __typename
-            items {
-              __typename
-              id
-              taskID
-              userID
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
-          chargeTask {
-            __typename
-            items {
-              __typename
-              id
-              authorID
-              roomID
-              chargePersonID
-              title
-              description
-              scheduleDate
-              priority
-              status
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
-          createdAt
-          updatedAt
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      id
-    };
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <GetUserQuery>response.data.getUser;
-  }
-  async ListUsers(
-    filter?: ModelUserFilterInput,
-    limit?: number,
-    nextToken?: string
-  ): Promise<ListUsersQuery> {
-    const statement = `query ListUsers($filter: ModelUserFilterInput, $limit: Int, $nextToken: String) {
-        listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
-          __typename
-          items {
-            __typename
-            id
-            username
-            email
-            companyID
-            tel
-            positionName
-            iconImage
-            registered
-            authority
-            company {
-              __typename
-              id
-              name
-              domain
-              createdAt
-              updatedAt
-            }
-            messages {
-              __typename
-              nextToken
-            }
-            room {
-              __typename
-              nextToken
-            }
-            task {
-              __typename
-              nextToken
-            }
-            chargeTask {
-              __typename
-              nextToken
-            }
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {};
-    if (filter) {
-      gqlAPIServiceArguments.filter = filter;
-    }
-    if (limit) {
-      gqlAPIServiceArguments.limit = limit;
-    }
-    if (nextToken) {
-      gqlAPIServiceArguments.nextToken = nextToken;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <ListUsersQuery>response.data.listUsers;
-  }
   async GetTaskGroup(id: string): Promise<GetTaskGroupQuery> {
     const statement = `query GetTaskGroup($id: ID!) {
         getTaskGroup(id: $id) {
@@ -7037,6 +6876,167 @@ export class APIService {
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
     return <ListTasksQuery>response.data.listTasks;
+  }
+  async GetUser(id: string): Promise<GetUserQuery> {
+    const statement = `query GetUser($id: ID!) {
+        getUser(id: $id) {
+          __typename
+          id
+          username
+          email
+          companyID
+          tel
+          positionName
+          iconImage
+          registered
+          authority
+          company {
+            __typename
+            id
+            name
+            domain
+            room {
+              __typename
+              nextToken
+            }
+            companyMembers {
+              __typename
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          messages {
+            __typename
+            items {
+              __typename
+              id
+              taskID
+              authorID
+              content
+              createdAt
+              isSent
+              updatedAt
+            }
+            nextToken
+          }
+          room {
+            __typename
+            items {
+              __typename
+              id
+              roomID
+              userID
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          task {
+            __typename
+            items {
+              __typename
+              id
+              taskID
+              userID
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          chargeTask {
+            __typename
+            items {
+              __typename
+              id
+              authorID
+              roomID
+              chargePersonID
+              title
+              description
+              scheduleDate
+              priority
+              status
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          createdAt
+          updatedAt
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      id
+    };
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <GetUserQuery>response.data.getUser;
+  }
+  async ListUsers(
+    filter?: ModelUserFilterInput,
+    limit?: number,
+    nextToken?: string
+  ): Promise<ListUsersQuery> {
+    const statement = `query ListUsers($filter: ModelUserFilterInput, $limit: Int, $nextToken: String) {
+        listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
+          __typename
+          items {
+            __typename
+            id
+            username
+            email
+            companyID
+            tel
+            positionName
+            iconImage
+            registered
+            authority
+            company {
+              __typename
+              id
+              name
+              domain
+              createdAt
+              updatedAt
+            }
+            messages {
+              __typename
+              nextToken
+            }
+            room {
+              __typename
+              nextToken
+            }
+            task {
+              __typename
+              nextToken
+            }
+            chargeTask {
+              __typename
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {};
+    if (filter) {
+      gqlAPIServiceArguments.filter = filter;
+    }
+    if (limit) {
+      gqlAPIServiceArguments.limit = limit;
+    }
+    if (nextToken) {
+      gqlAPIServiceArguments.nextToken = nextToken;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <ListUsersQuery>response.data.listUsers;
   }
   async GetRoomGroup(id: string): Promise<GetRoomGroupQuery> {
     const statement = `query GetRoomGroup($id: ID!) {
@@ -7605,291 +7605,6 @@ export class APIService {
       }`
     )
   ) as Observable<SubscriptionResponse<OnDeleteCompanySubscription>>;
-
-  OnCreateUserListener: Observable<
-    SubscriptionResponse<OnCreateUserSubscription>
-  > = API.graphql(
-    graphqlOperation(
-      `subscription OnCreateUser {
-        onCreateUser {
-          __typename
-          id
-          username
-          email
-          companyID
-          tel
-          positionName
-          iconImage
-          registered
-          authority
-          company {
-            __typename
-            id
-            name
-            domain
-            room {
-              __typename
-              nextToken
-            }
-            companyMembers {
-              __typename
-              nextToken
-            }
-            createdAt
-            updatedAt
-          }
-          messages {
-            __typename
-            items {
-              __typename
-              id
-              taskID
-              authorID
-              content
-              createdAt
-              isSent
-              updatedAt
-            }
-            nextToken
-          }
-          room {
-            __typename
-            items {
-              __typename
-              id
-              roomID
-              userID
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
-          task {
-            __typename
-            items {
-              __typename
-              id
-              taskID
-              userID
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
-          chargeTask {
-            __typename
-            items {
-              __typename
-              id
-              authorID
-              roomID
-              chargePersonID
-              title
-              description
-              scheduleDate
-              priority
-              status
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
-          createdAt
-          updatedAt
-        }
-      }`
-    )
-  ) as Observable<SubscriptionResponse<OnCreateUserSubscription>>;
-
-  OnUpdateUserListener: Observable<
-    SubscriptionResponse<OnUpdateUserSubscription>
-  > = API.graphql(
-    graphqlOperation(
-      `subscription OnUpdateUser {
-        onUpdateUser {
-          __typename
-          id
-          username
-          email
-          companyID
-          tel
-          positionName
-          iconImage
-          registered
-          authority
-          company {
-            __typename
-            id
-            name
-            domain
-            room {
-              __typename
-              nextToken
-            }
-            companyMembers {
-              __typename
-              nextToken
-            }
-            createdAt
-            updatedAt
-          }
-          messages {
-            __typename
-            items {
-              __typename
-              id
-              taskID
-              authorID
-              content
-              createdAt
-              isSent
-              updatedAt
-            }
-            nextToken
-          }
-          room {
-            __typename
-            items {
-              __typename
-              id
-              roomID
-              userID
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
-          task {
-            __typename
-            items {
-              __typename
-              id
-              taskID
-              userID
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
-          chargeTask {
-            __typename
-            items {
-              __typename
-              id
-              authorID
-              roomID
-              chargePersonID
-              title
-              description
-              scheduleDate
-              priority
-              status
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
-          createdAt
-          updatedAt
-        }
-      }`
-    )
-  ) as Observable<SubscriptionResponse<OnUpdateUserSubscription>>;
-
-  OnDeleteUserListener: Observable<
-    SubscriptionResponse<OnDeleteUserSubscription>
-  > = API.graphql(
-    graphqlOperation(
-      `subscription OnDeleteUser {
-        onDeleteUser {
-          __typename
-          id
-          username
-          email
-          companyID
-          tel
-          positionName
-          iconImage
-          registered
-          authority
-          company {
-            __typename
-            id
-            name
-            domain
-            room {
-              __typename
-              nextToken
-            }
-            companyMembers {
-              __typename
-              nextToken
-            }
-            createdAt
-            updatedAt
-          }
-          messages {
-            __typename
-            items {
-              __typename
-              id
-              taskID
-              authorID
-              content
-              createdAt
-              isSent
-              updatedAt
-            }
-            nextToken
-          }
-          room {
-            __typename
-            items {
-              __typename
-              id
-              roomID
-              userID
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
-          task {
-            __typename
-            items {
-              __typename
-              id
-              taskID
-              userID
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
-          chargeTask {
-            __typename
-            items {
-              __typename
-              id
-              authorID
-              roomID
-              chargePersonID
-              title
-              description
-              scheduleDate
-              priority
-              status
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
-          createdAt
-          updatedAt
-        }
-      }`
-    )
-  ) as Observable<SubscriptionResponse<OnDeleteUserSubscription>>;
 
   OnCreateTaskGroupListener: Observable<
     SubscriptionResponse<OnCreateTaskGroupSubscription>
@@ -8526,6 +8241,291 @@ export class APIService {
       }`
     )
   ) as Observable<SubscriptionResponse<OnDeleteTaskSubscription>>;
+
+  OnCreateUserListener: Observable<
+    SubscriptionResponse<OnCreateUserSubscription>
+  > = API.graphql(
+    graphqlOperation(
+      `subscription OnCreateUser {
+        onCreateUser {
+          __typename
+          id
+          username
+          email
+          companyID
+          tel
+          positionName
+          iconImage
+          registered
+          authority
+          company {
+            __typename
+            id
+            name
+            domain
+            room {
+              __typename
+              nextToken
+            }
+            companyMembers {
+              __typename
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          messages {
+            __typename
+            items {
+              __typename
+              id
+              taskID
+              authorID
+              content
+              createdAt
+              isSent
+              updatedAt
+            }
+            nextToken
+          }
+          room {
+            __typename
+            items {
+              __typename
+              id
+              roomID
+              userID
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          task {
+            __typename
+            items {
+              __typename
+              id
+              taskID
+              userID
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          chargeTask {
+            __typename
+            items {
+              __typename
+              id
+              authorID
+              roomID
+              chargePersonID
+              title
+              description
+              scheduleDate
+              priority
+              status
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          createdAt
+          updatedAt
+        }
+      }`
+    )
+  ) as Observable<SubscriptionResponse<OnCreateUserSubscription>>;
+
+  OnUpdateUserListener: Observable<
+    SubscriptionResponse<OnUpdateUserSubscription>
+  > = API.graphql(
+    graphqlOperation(
+      `subscription OnUpdateUser {
+        onUpdateUser {
+          __typename
+          id
+          username
+          email
+          companyID
+          tel
+          positionName
+          iconImage
+          registered
+          authority
+          company {
+            __typename
+            id
+            name
+            domain
+            room {
+              __typename
+              nextToken
+            }
+            companyMembers {
+              __typename
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          messages {
+            __typename
+            items {
+              __typename
+              id
+              taskID
+              authorID
+              content
+              createdAt
+              isSent
+              updatedAt
+            }
+            nextToken
+          }
+          room {
+            __typename
+            items {
+              __typename
+              id
+              roomID
+              userID
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          task {
+            __typename
+            items {
+              __typename
+              id
+              taskID
+              userID
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          chargeTask {
+            __typename
+            items {
+              __typename
+              id
+              authorID
+              roomID
+              chargePersonID
+              title
+              description
+              scheduleDate
+              priority
+              status
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          createdAt
+          updatedAt
+        }
+      }`
+    )
+  ) as Observable<SubscriptionResponse<OnUpdateUserSubscription>>;
+
+  OnDeleteUserListener: Observable<
+    SubscriptionResponse<OnDeleteUserSubscription>
+  > = API.graphql(
+    graphqlOperation(
+      `subscription OnDeleteUser {
+        onDeleteUser {
+          __typename
+          id
+          username
+          email
+          companyID
+          tel
+          positionName
+          iconImage
+          registered
+          authority
+          company {
+            __typename
+            id
+            name
+            domain
+            room {
+              __typename
+              nextToken
+            }
+            companyMembers {
+              __typename
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          messages {
+            __typename
+            items {
+              __typename
+              id
+              taskID
+              authorID
+              content
+              createdAt
+              isSent
+              updatedAt
+            }
+            nextToken
+          }
+          room {
+            __typename
+            items {
+              __typename
+              id
+              roomID
+              userID
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          task {
+            __typename
+            items {
+              __typename
+              id
+              taskID
+              userID
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          chargeTask {
+            __typename
+            items {
+              __typename
+              id
+              authorID
+              roomID
+              chargePersonID
+              title
+              description
+              scheduleDate
+              priority
+              status
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          createdAt
+          updatedAt
+        }
+      }`
+    )
+  ) as Observable<SubscriptionResponse<OnDeleteUserSubscription>>;
 
   OnCreateRoomGroupListener: Observable<
     SubscriptionResponse<OnCreateRoomGroupSubscription>

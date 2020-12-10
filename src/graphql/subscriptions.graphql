@@ -107,234 +107,6 @@ subscription OnDeleteCompany {
     updatedAt
   }
 }
-subscription OnCreateUser {
-  onCreateUser {
-    id
-    username
-    email
-    companyID
-    tel
-    positionName
-    iconImage
-    registered
-    authority
-    company {
-      id
-      name
-      domain
-      room {
-        nextToken
-      }
-      companyMembers {
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-    messages {
-      items {
-        id
-        taskID
-        authorID
-        content
-        createdAt
-        isSent
-        updatedAt
-      }
-      nextToken
-    }
-    room {
-      items {
-        id
-        roomID
-        userID
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-    task {
-      items {
-        id
-        taskID
-        userID
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-    chargeTask {
-      items {
-        id
-        authorID
-        roomID
-        chargePersonID
-        title
-        description
-        scheduleDate
-        priority
-        status
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-    createdAt
-    updatedAt
-  }
-}
-subscription OnUpdateUser {
-  onUpdateUser {
-    id
-    username
-    email
-    companyID
-    tel
-    positionName
-    iconImage
-    registered
-    authority
-    company {
-      id
-      name
-      domain
-      room {
-        nextToken
-      }
-      companyMembers {
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-    messages {
-      items {
-        id
-        taskID
-        authorID
-        content
-        createdAt
-        isSent
-        updatedAt
-      }
-      nextToken
-    }
-    room {
-      items {
-        id
-        roomID
-        userID
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-    task {
-      items {
-        id
-        taskID
-        userID
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-    chargeTask {
-      items {
-        id
-        authorID
-        roomID
-        chargePersonID
-        title
-        description
-        scheduleDate
-        priority
-        status
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-    createdAt
-    updatedAt
-  }
-}
-subscription OnDeleteUser {
-  onDeleteUser {
-    id
-    username
-    email
-    companyID
-    tel
-    positionName
-    iconImage
-    registered
-    authority
-    company {
-      id
-      name
-      domain
-      room {
-        nextToken
-      }
-      companyMembers {
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-    messages {
-      items {
-        id
-        taskID
-        authorID
-        content
-        createdAt
-        isSent
-        updatedAt
-      }
-      nextToken
-    }
-    room {
-      items {
-        id
-        roomID
-        userID
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-    task {
-      items {
-        id
-        taskID
-        userID
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-    chargeTask {
-      items {
-        id
-        authorID
-        roomID
-        chargePersonID
-        title
-        description
-        scheduleDate
-        priority
-        status
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-    createdAt
-    updatedAt
-  }
-}
 subscription OnCreateTaskGroup {
   onCreateTaskGroup {
     id
@@ -845,6 +617,234 @@ subscription OnDeleteTask {
       }
       nextToken
     }
+    updatedAt
+  }
+}
+subscription OnCreateUser {
+  onCreateUser {
+    id
+    username
+    email
+    companyID
+    tel
+    positionName
+    iconImage
+    registered
+    authority
+    company {
+      id
+      name
+      domain
+      room {
+        nextToken
+      }
+      companyMembers {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    messages {
+      items {
+        id
+        taskID
+        authorID
+        content
+        createdAt
+        isSent
+        updatedAt
+      }
+      nextToken
+    }
+    room {
+      items {
+        id
+        roomID
+        userID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    task {
+      items {
+        id
+        taskID
+        userID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    chargeTask {
+      items {
+        id
+        authorID
+        roomID
+        chargePersonID
+        title
+        description
+        scheduleDate
+        priority
+        status
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+  }
+}
+subscription OnUpdateUser {
+  onUpdateUser {
+    id
+    username
+    email
+    companyID
+    tel
+    positionName
+    iconImage
+    registered
+    authority
+    company {
+      id
+      name
+      domain
+      room {
+        nextToken
+      }
+      companyMembers {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    messages {
+      items {
+        id
+        taskID
+        authorID
+        content
+        createdAt
+        isSent
+        updatedAt
+      }
+      nextToken
+    }
+    room {
+      items {
+        id
+        roomID
+        userID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    task {
+      items {
+        id
+        taskID
+        userID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    chargeTask {
+      items {
+        id
+        authorID
+        roomID
+        chargePersonID
+        title
+        description
+        scheduleDate
+        priority
+        status
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+  }
+}
+subscription OnDeleteUser {
+  onDeleteUser {
+    id
+    username
+    email
+    companyID
+    tel
+    positionName
+    iconImage
+    registered
+    authority
+    company {
+      id
+      name
+      domain
+      room {
+        nextToken
+      }
+      companyMembers {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    messages {
+      items {
+        id
+        taskID
+        authorID
+        content
+        createdAt
+        isSent
+        updatedAt
+      }
+      nextToken
+    }
+    room {
+      items {
+        id
+        roomID
+        userID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    task {
+      items {
+        id
+        taskID
+        userID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    chargeTask {
+      items {
+        id
+        authorID
+        roomID
+        chargePersonID
+        title
+        description
+        scheduleDate
+        priority
+        status
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    createdAt
     updatedAt
   }
 }

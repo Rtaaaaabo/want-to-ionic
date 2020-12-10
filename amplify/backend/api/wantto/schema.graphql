@@ -6,34 +6,6 @@ type Company @model {
   companyMembers: [User] @connection(keyName: "byCompany", fields: ["id"])
 }
 
-# type companyGroup
-#   @model
-#   @key(name: "byCompany", fields: ["companyID"])
-#   @key(name: "byUser", fields: ["byUser"]) {
-#   id: ID!
-#   companyID: ID!
-#   userID: ID!
-#   company: Company @connection(fields: ["companyID"])
-#   user: User @connection(fields: ["userID"])
-# }
-
-type User @model @key(name: "byCompany", fields: ["companyID"]) {
-  id: ID!
-  username: String!
-  email: String!
-  companyID: ID!
-  tel: String
-  positionName: String
-  iconImage: String
-  registered: Boolean
-  authority: String
-  company: Company! @connection(fields: ["companyID"])
-  messages: [Message] @connection(keyName: "byUser", fields: ["id"])
-  room: [RoomGroup] @connection(keyName: "byUser", fields: ["id"])
-  task: [TaskGroup] @connection(keyName: "byUser", fields: ["id"])
-  chargeTask: [Task] @connection(keyName: "byUser", fields: ["id"])
-}
-
 type TaskGroup
   @model
   @key(name: "byTask", fields: ["taskID"])
@@ -63,6 +35,23 @@ type Task
   chargePerson: User! @connection(fields: ["chargePersonID"])
   messages: [Message] @connection(keyName: "byTask", fields: ["id"])
   users: [TaskGroup] @connection(keyName: "byTask", fields: ["id"])
+}
+
+type User @model @key(name: "byCompany", fields: ["companyID"]) {
+  id: ID!
+  username: String!
+  email: String!
+  companyID: ID!
+  tel: String
+  positionName: String
+  iconImage: String
+  registered: Boolean
+  authority: String
+  company: Company! @connection(fields: ["companyID"])
+  messages: [Message] @connection(keyName: "byUser", fields: ["id"])
+  room: [RoomGroup] @connection(keyName: "byUser", fields: ["id"])
+  task: [TaskGroup] @connection(keyName: "byUser", fields: ["id"])
+  chargeTask: [Task] @connection(keyName: "byUser", fields: ["id"])
 }
 
 type RoomGroup
