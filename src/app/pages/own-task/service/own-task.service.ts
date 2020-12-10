@@ -11,7 +11,7 @@ export class OwnTaskService {
     private amplifyService: AmplifyService,
   ) { }
 
-  fetchListTaskGroup(filterContent): Observable<any> {
-    return from(this.amplifyService.ListTaskGroups(filterContent));
+  fetchListTaskGroup(userId: string): Observable<any> {
+    return from(this.amplifyService.GetUser(userId));
   }
 }

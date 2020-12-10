@@ -18,7 +18,7 @@ export class OwnTaskPage implements OnInit {
   ngOnInit() {
     this.logic.fetchCurrentUser()
       .pipe(map(result => result.sub))
-      .pipe(concatMap((currentUserId) => this.logic.fetchListTaskGroup(currentUserId)))
+      .pipe(concatMap((currentUserId) => this.logic.getTaskChargeItems(currentUserId)))
       .subscribe(({ items }) => {
         console.log(items);
       })

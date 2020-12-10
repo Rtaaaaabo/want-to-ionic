@@ -5596,6 +5596,24 @@ export class AmplifyService {
         iconImage
         registered
         authority
+        chargeTask {
+          __typename
+          items {
+            __typename
+            id
+            authorID
+            roomID
+            chargePersonID
+            title
+            description
+            scheduleDate
+            priority
+            status
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
         createdAt
         updatedAt
       }
