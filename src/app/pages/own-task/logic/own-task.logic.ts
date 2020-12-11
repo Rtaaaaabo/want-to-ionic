@@ -20,6 +20,7 @@ export class OwnTaskLogic {
   }
 
   getTaskChargeItems(userId: string): Observable<any> {
-    return this.ownTaskService.fetchListTaskGroup(userId);
+    return this.ownTaskService.fetchListTaskGroup(userId)
+      .pipe(map((result) => result.chargeTask))
   }
 }
