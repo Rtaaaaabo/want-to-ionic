@@ -19,6 +19,7 @@ export class OwnTaskPage implements OnInit {
     this.logic.fetchCurrentUser()
       .pipe(map(result => result.sub))
       .pipe(concatMap((currentUserId) => this.logic.getTaskChargeItems(currentUserId)))
+      .pipe(concatMap(({ items }) => this.logic.setTaskPerRoom(items)))
       .subscribe(({ items }) => {
         console.log(items);
       })

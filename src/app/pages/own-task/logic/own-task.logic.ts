@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { from, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { SessionService } from 'src/app/shared/service/session.service';
 import { OwnTaskService } from '../service/own-task.service';
@@ -22,5 +22,14 @@ export class OwnTaskLogic {
   getTaskChargeItems(userId: string): Observable<any> {
     return this.ownTaskService.fetchListTaskGroup(userId)
       .pipe(map((result) => result.chargeTask));
+  }
+
+  setTaskPerRoom(arrayTask): Observable<any> {
+    return from(arrayTask)
+      .pipe(((taskItem) => this.fetchRoomInfo(taskItem)));
+  }
+
+  fetchRoomInfo(taskItem): Observable<any> {
+    return this.ownTaskService.fetchRoomInfoItem(taskItem);
   }
 }
