@@ -6,12 +6,11 @@
 
 <ion-content>
   <ion-list class="list-header">
-    <ion-card
-      *ngFor="let item of ownTaskItems"
-      (click)="navigateToTaskDetail()"
-      class="card-margin"
-    >
-      <ion-card-content class="task-card-content">
+    <ion-card *ngFor="let item of ownTaskItems" class="card-margin">
+      <ion-card-content
+        class="task-card-content"
+        (click)="navigateToTaskDetail(item)"
+      >
         <ion-item class="card-background" lines="none">
           <ion-label>
             <h2 class="task-title">TEST Title</h2>
