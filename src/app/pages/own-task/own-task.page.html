@@ -7,16 +7,22 @@
 <ion-content>
   <ion-list class="list-header">
     <ion-card *ngFor="let item of ownTaskItems">
-      <ion-card-content
-        class="task-card-content"
-        (click)="navigateToTaskDetail(item)"
-      >
+      <ion-card-header>
+        <ion-card-subtitle>
+          {{ item.task.scheduleDate | date: 'yyyy/MM/dd'}} {{item.room.name}}
+        </ion-card-subtitle>
+        <ion-card-title>{{item.task.title}}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content (click)="navigateToTaskDetail(item)">
         <ion-item class="card-background" lines="none">
-          <ion-label>
-            <h2 class="task-title">TEST Title</h2>
-            <p>TEST Describe</p>
-          </ion-label>
+          <p>{{ item.task.description}}</p>
         </ion-item>
+        <!-- <ion-item class="card-background" lines="none"> -->
+        <!-- <ion-label> -->
+        <!-- <h2 class="task-title">{{item.task.title}}</h2> -->
+        <!-- <h2>{{ item.task.scheduleDate | date: 'yyyy/MM/dd'}} まで</h2> -->
+        <!-- <p>{{item.room.name}}</p> -->
+        <!-- </ion-label> -->
       </ion-card-content>
     </ion-card>
   </ion-list>
