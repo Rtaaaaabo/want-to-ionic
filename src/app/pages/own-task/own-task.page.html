@@ -6,20 +6,19 @@
 
 <ion-content>
   <ion-list class="list-header">
-    <ion-item-group>
-      <ion-item-divider color="secondary">
-        これで一旦は完成かな
-      </ion-item-divider>
-      <ion-card (click)="navigateToTaskDetail()" class="card-margin">
-        <ion-card-content class="task-card-content">
-          <ion-item class="card-background" lines="none">
-            <ion-label>
-              <h2 class="task-title">TEST Title</h2>
-              <p>TEST Describe</p>
-            </ion-label>
-          </ion-item>
-        </ion-card-content>
-      </ion-card>
-    </ion-item-group>
+    <ion-card
+      *ngFor="let item of ownTaskItems"
+      (click)="navigateToTaskDetail()"
+      class="card-margin"
+    >
+      <ion-card-content class="task-card-content">
+        <ion-item class="card-background" lines="none">
+          <ion-label>
+            <h2 class="task-title">TEST Title</h2>
+            <p>TEST Describe</p>
+          </ion-label>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
   </ion-list>
 </ion-content>

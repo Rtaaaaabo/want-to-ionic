@@ -9,6 +9,7 @@ import { OwnTaskLogic } from './logic/own-task.logic';
   styleUrls: ['./own-task.page.scss'],
 })
 export class OwnTaskPage implements OnInit {
+  ownTaskItems: Array<any>;
 
   constructor(
     private router: Router,
@@ -20,7 +21,7 @@ export class OwnTaskPage implements OnInit {
       .pipe(map(result => result.sub))
       .pipe(concatMap((currentUserId) => this.logic.getTaskChargeItems(currentUserId)))
       .pipe(concatMap(({ items }) => this.logic.setTaskPerRoom(items)))
-      .subscribe(({ items }) => {
+      .subscribe((items) => {
         console.log(items);
       })
   }
