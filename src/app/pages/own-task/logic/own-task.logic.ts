@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { from, Observable, concat, of } from 'rxjs';
-import { concatMap, map, toArray, filter } from 'rxjs/operators';
+import { concatMap, map, toArray, filter, groupBy } from 'rxjs/operators';
 import { SessionService } from 'src/app/shared/service/session.service';
 import { OwnTaskService } from '../service/own-task.service';
 
@@ -33,7 +33,7 @@ export class OwnTaskLogic {
   fetchRoomInfo(taskItem): Observable<any> {
     return this.ownTaskService.fetchRoomInfoItem(taskItem)
       .pipe(filter((result) => result !== null))
-      .pipe(concatMap((result) => this.makeOwnTaskItems(taskItem, result)))
+      .pipe(concatMap((roomInfo) => this.makeOwnTaskItems(taskItem, roomInfo)))
   }
 
   makeOwnTaskItems(taskItem, roomInfo): Observable<any> {
@@ -42,4 +42,5 @@ export class OwnTaskLogic {
       room: roomInfo,
     });
   }
+
 }

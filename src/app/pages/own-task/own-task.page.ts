@@ -25,6 +25,7 @@ export class OwnTaskPage implements OnInit, AfterViewInit {
       .pipe(concatMap(({ items }) => this.logic.setTaskPerRoom(items)))
       .subscribe((items) => {
         this.ownTaskItems = items;
+        console.log('ownTaskItems', this.ownTaskItems);
       })
   }
 
