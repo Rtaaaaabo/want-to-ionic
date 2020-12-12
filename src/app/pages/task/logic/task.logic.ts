@@ -6,6 +6,7 @@ import {
   toArray,
   concatMap,
   findIndex,
+  catchError,
 } from "rxjs/operators";
 import {
   CreateRoomGroupMutation,
@@ -148,15 +149,21 @@ export class TaskLogic {
   fetchCompanyMember(
     companyId: string,
     queryFilterUser?: string
-  ): Observable<ListUsersQuery> {
-    const filterContent = {
-      companyID: {
-        eq: `${companyId}`,
-      },
-      username: {
-        contains: queryFilterUser,
-      },
-    };
+  ): Observable<ListUsersQuery | any> {
+    const filterContent = queryFilterUser !== undefined ?
+      {
+        companyID: {
+          eq: `${companyId}`,
+        },
+        username: {
+          contains: queryFilterUser,
+        },
+      } :
+      {
+        companyID: {
+          eq: `${companyId}`,
+        },
+      }
     return this.taskService.fetchCompanyMember(filterContent);
   }
 
