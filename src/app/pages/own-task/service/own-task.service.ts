@@ -12,7 +12,7 @@ export class OwnTaskService {
     private amplifyService: AmplifyService,
   ) { }
 
-  fetchListTaskGroup(userId: string): Observable<any> {
+  getUserInfo(userId: string): Observable<any> {
     return from(this.amplifyService.GetUser(userId));
   }
 

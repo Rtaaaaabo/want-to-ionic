@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { concatMap, map } from 'rxjs/operators';
 import { OwnTaskLogic } from './logic/own-task.logic';
@@ -8,7 +8,7 @@ import { OwnTaskLogic } from './logic/own-task.logic';
   templateUrl: './own-task.page.html',
   styleUrls: ['./own-task.page.scss'],
 })
-export class OwnTaskPage implements OnInit {
+export class OwnTaskPage implements OnInit, AfterViewInit {
   ownTaskItems: Array<any>;
 
   constructor(
@@ -16,13 +16,15 @@ export class OwnTaskPage implements OnInit {
     private logic: OwnTaskLogic,
   ) { }
 
-  ngOnInit() {
+  ngOnInit() { }
+
+  ngAfterViewInit() {
     this.logic.fetchCurrentUser()
       .pipe(map(result => result.sub))
       .pipe(concatMap((currentUserId) => this.logic.getTaskChargeItems(currentUserId)))
       .pipe(concatMap(({ items }) => this.logic.setTaskPerRoom(items)))
       .subscribe((items) => {
-        console.log(items);
+        this.ownTaskItems = items;
       })
   }
 

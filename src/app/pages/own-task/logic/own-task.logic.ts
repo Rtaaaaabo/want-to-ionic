@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { from, Observable } from 'rxjs';
-import { concatMap, map, toArray } from 'rxjs/operators';
+import { from, Observable, concat, of } from 'rxjs';
+import { concatMap, map, toArray, filter } from 'rxjs/operators';
 import { SessionService } from 'src/app/shared/service/session.service';
 import { OwnTaskService } from '../service/own-task.service';
 
@@ -20,7 +20,7 @@ export class OwnTaskLogic {
   }
 
   getTaskChargeItems(userId: string): Observable<any> {
-    return this.ownTaskService.fetchListTaskGroup(userId)
+    return this.ownTaskService.getUserInfo(userId)
       .pipe(map((result) => result.chargeTask));
   }
 
@@ -31,6 +31,15 @@ export class OwnTaskLogic {
   }
 
   fetchRoomInfo(taskItem): Observable<any> {
-    return this.ownTaskService.fetchRoomInfoItem(taskItem);
+    return this.ownTaskService.fetchRoomInfoItem(taskItem)
+      .pipe(filter((result) => result !== null))
+      .pipe(concatMap((result) => this.makeOwnTaskItems(taskItem, result)))
+  }
+
+  makeOwnTaskItems(taskItem, roomInfo): Observable<any> {
+    return of({
+      task: taskItem,
+      room: roomInfo,
+    });
   }
 }
