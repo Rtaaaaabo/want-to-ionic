@@ -30,6 +30,17 @@ export class OwnTaskPage implements OnInit, AfterViewInit {
       })
   }
 
+  async presentLoading() {
+    const loading = await this.loadingCtrl.create({
+      cssClass: 'custom-loading',
+      message: '読込中...',
+      translucent: true,
+      backdropDismiss: true
+    });
+    await loading.present();
+    const { role, data } = await loading.onDidDismiss();
+  }
+
   navigateToTaskDetail() {
     console.log('Navigator to task detail');
   }
