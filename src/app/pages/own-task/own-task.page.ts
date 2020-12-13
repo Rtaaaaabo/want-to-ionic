@@ -41,8 +41,8 @@ export class OwnTaskPage implements OnInit, AfterViewInit {
     const { role, data } = await loading.onDidDismiss();
   }
 
-  navigateToTaskDetail() {
-    console.log('Navigator to task detail');
+  navigateToTaskDetail(item) {
+    this.router.navigate(['task-detail', `${item.task.id}`, `active`]);
   }
 
 }
