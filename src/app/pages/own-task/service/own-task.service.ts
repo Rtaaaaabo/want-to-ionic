@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { from, Observable, of } from 'rxjs';
 import { AmplifyService } from 'src/app/shared/service/amplify.service';
-import { TaskLogic } from '../../task/logic/task.logic';
 
 @Injectable({
   providedIn: 'root'
