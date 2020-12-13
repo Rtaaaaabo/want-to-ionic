@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { LoadingController } from '@ionic/angular';
 import { concatMap, map } from 'rxjs/operators';
 import { OwnTaskLogic } from './logic/own-task.logic';
 
@@ -13,6 +14,7 @@ export class OwnTaskPage implements OnInit, AfterViewInit {
 
   constructor(
     private router: Router,
+    private loadingCtrl: LoadingController,
     private logic: OwnTaskLogic,
   ) { }
 
