@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ActionSheetController, ModalController } from '@ionic/angular';
-import { SettingLogic } from './logic/setting-logic.service';
+import { SettingLogic } from './logic/setting.logic';
 import { EditProfileModalComponent } from '../../shared/component/modal/edit-profile-modal/edit-profile-modal.component';
 import { from } from 'rxjs';
 import { flatMap } from 'rxjs/operators';

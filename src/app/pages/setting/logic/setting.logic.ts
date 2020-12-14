@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { SessionService } from '../../../shared/service/session.service';
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { SettingService } from '../service/setting-service.service';
+import { SettingService } from '../service/setting.service';
 
 @Injectable({
   providedIn: 'root'
