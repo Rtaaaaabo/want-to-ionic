@@ -57,6 +57,19 @@ export class HomeLogic {
     return this.homeService.createUser(requestContent);
   }
 
+  updateUser(formContent): Observable<any> {
+    const requestContent = {
+      id: formContent.get('id').value,
+      companyID: 'takuCloudCom',
+      email: formContent.get('targetEmail').value,
+      username: formContent.get('userName').value,
+      positionName: formContent.get('positionName').value,
+      tel: formContent.get('tel').value,
+      iconImage: formContent.get('iconImage').value,
+    };
+    return this.homeService.updateUser(requestContent);
+  }
+
   deleteRoomItem(roomId: string): Observable<any> {
     return this.homeService.deleteRoomItem(roomId);
   }

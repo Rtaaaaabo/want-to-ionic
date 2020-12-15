@@ -24,7 +24,11 @@ export class HomeService {
   }
 
   createUser(content): Observable<any> {
-    return from(this.amplifyService.CreateUser(content))
+    return from(this.amplifyService.CreateUser(content));
+  }
+
+  updateUser(content): Observable<any> {
+    return from(this.amplifyService.UpdateUser(content));
   }
 
   fetchRoomList(filterContent: ModelRoomGroupFilterInput): Observable<ListRoomGroupsQuery> {

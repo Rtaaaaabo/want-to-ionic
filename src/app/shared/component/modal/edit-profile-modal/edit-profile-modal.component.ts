@@ -18,12 +18,12 @@ export class EditProfileModalComponent implements OnInit {
     targetEmail: new FormControl('', [Validators.required, Validators.email]),
     tel: new FormControl(''),
   });
+
   @Input() status: string;
   @Input() email: string;
   @Input() userId: string;
-  title: string;
-
   @Input() user;
+  title: string;
 
   constructor(
     private modalCtrl: ModalController,
@@ -31,14 +31,15 @@ export class EditProfileModalComponent implements OnInit {
     private imagePicker: ImagePicker,
   ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
+    this.title = 'プロフィールの作成';
     if (this.status === 'new') {
       this.editProfileForm.patchValue({
         id: this.userId,
         targetEmail: this.email
       });
-      this.title = 'プロフィールの作成';
     } else {
+      this.title = 'プロフィールの編集';
       this.editProfileForm.patchValue({
         id: this.user.id,
         targetEmail: this.user.email,
@@ -46,21 +47,29 @@ export class EditProfileModalComponent implements OnInit {
         positionName: this.user.positionName,
         tel: this.user.tel,
       })
-      this.title = 'プロフィールの編集';
     }
   }
 
-  saveProfile() {
-    this.logic.createUser(this.editProfileForm).subscribe(() => {
-      this.modalCtrl.dismiss();
-    })
+  saveProfile(): void {
+    if (this.status === 'new') {
+      this.logic.createUser(this.editProfileForm)
+        .subscribe(() => {
+          this.modalCtrl.dismiss();
+        });
+    } else {
+      this.logic.updateUser(this.editProfileForm)
+        .subscribe((res) => {
+          console.log('Response: ', res);
+          this.modalCtrl.dismiss();
+        });
+    }
   }
 
-  dismissModal() {
+  dismissModal(): void {
     this.modalCtrl.dismiss();
   }
 
-  pickerImage() {
+  pickerImage(): void {
     const options = {
       maximumImagesCount: 1,
       width: 400,
@@ -68,9 +77,10 @@ export class EditProfileModalComponent implements OnInit {
       quality: 30,
       outputType: 0,
     }
-    this.imagePicker.getPictures(options).then((result) => {
-      console.log(result);
-    })
+    this.imagePicker.getPictures(options)
+      .then((result) => {
+        console.log(result);
+      })
   }
 
 }

@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { ActionSheetController, ModalController } from '@ionic/angular';
 import { SettingLogic } from './logic/setting.logic';
 import { EditProfileModalComponent } from '../../shared/component/modal/edit-profile-modal/edit-profile-modal.component';
-import { from } from 'rxjs';
 import { flatMap } from 'rxjs/operators';
 
 // interface User
@@ -40,7 +39,6 @@ export class SettingPage implements OnInit {
     this.logic.fetchCurrentUser()
       .pipe(flatMap((result) => this.logic.fetchUserInfo(result.username)))
       .subscribe((data) => {
-        console.log(data);
         this.user = data;
       });
   }
@@ -66,7 +64,8 @@ export class SettingPage implements OnInit {
   }
 
   actionLogout() {
-    this.logic.signOut().subscribe(() => this.router.navigate(['/login']));
+    this.logic.signOut()
+      .subscribe(() => this.router.navigate(['/login']));
   }
 
   async presentEditModal(): Promise<void> {
@@ -74,8 +73,7 @@ export class SettingPage implements OnInit {
       component: EditProfileModalComponent,
       componentProps: {
         'status': 'already',
-        'email': this.user.email,
-        'userId': this.user.id,
+        'user': this.user,
       }
     });
     return modal.present();

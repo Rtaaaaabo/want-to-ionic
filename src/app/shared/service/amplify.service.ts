@@ -5085,26 +5085,55 @@ export class AmplifyService {
         updateUser(input: $input, condition: $condition) {
           __typename
           id
+          username
           email
           companyID
-          username
+          tel
+          positionName
+          iconImage
           registered
           authority
-          company {
+          room {
             __typename
-            id
-            name
-            domain
-            room {
+            items {
               __typename
-              nextToken
+              id
+              roomID
+              userID
+              createdAt
+              updatedAt
             }
-            members {
+            nextToken
+          }
+          task {
+            __typename
+            items {
               __typename
-              nextToken
+              id
+              taskID
+              userID
+              createdAt
+              updatedAt
             }
-            createdAt
-            updatedAt
+            nextToken
+          }
+          chargeTask {
+            __typename
+            items {
+              __typename
+              id
+              authorID
+              roomID
+              chargePersonID
+              title
+              description
+              scheduleDate
+              priority
+              status
+              createdAt
+              updatedAt
+            }
+            nextToken
           }
           createdAt
           updatedAt
