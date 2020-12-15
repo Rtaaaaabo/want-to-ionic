@@ -3,7 +3,8 @@ import { Router } from '@angular/router';
 import { ActionSheetController, ModalController } from '@ionic/angular';
 import { SettingLogic } from './logic/setting.logic';
 import { EditProfileModalComponent } from '../../shared/component/modal/edit-profile-modal/edit-profile-modal.component';
-import { flatMap } from 'rxjs/operators';
+import { from } from 'rxjs';
+import { concatMap, flatMap } from 'rxjs/operators';
 
 // interface User
 interface OwnUser {
@@ -76,6 +77,13 @@ export class SettingPage implements OnInit {
         'user': this.user,
       }
     });
+    const dismissObservable = from(modal.onDidDismiss());
+    dismissObservable
+      .pipe(concatMap(() => this.logic.fetchCurrentUser()))
+      .pipe(flatMap((result) => this.logic.fetchUserInfo(result.username)))
+      .subscribe((data) => {
+        this.user = data;
+      });
     return modal.present();
   }
 
