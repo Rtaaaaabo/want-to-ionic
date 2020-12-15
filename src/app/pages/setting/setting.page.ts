@@ -73,11 +73,11 @@ export class SettingPage implements OnInit {
     const modal = await this.modalCtrl.create({
       component: EditProfileModalComponent,
       componentProps: {
-        status: 'already',
-        user: this.user,
+        'status': 'already',
+        'email': this.user.email,
+        'userId': this.user.id,
       }
     });
-    const observable = from(modal.onDidDismiss());
     return modal.present();
   }
 
