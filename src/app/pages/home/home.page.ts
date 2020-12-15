@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { of } from 'rxjs';
-import { catchError, filter, flatMap, map } from 'rxjs/operators';
+import { of, from } from 'rxjs';
+import { catchError, concatMap, filter, flatMap, map } from 'rxjs/operators';
 import { EditProfileModalComponent } from 'src/app/shared/component/modal/edit-profile-modal/edit-profile-modal.component';
-
 import { HomeLogic } from './logic/home.logic';
 
 @Component({
@@ -49,6 +48,12 @@ export class HomePage implements OnInit {
         'userId': this.attributes.sub,
       },
     })
+    const dismissObservable = from(modal.onDidDismiss());
+    dismissObservable
+      .pipe(concatMap(() => this.logic.fetchCurrentUser()))
+      .pipe(map((attributes) => {
+        this.attributes = attributes;
+      }));
     return modal.present();
   }
 
