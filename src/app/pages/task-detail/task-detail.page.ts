@@ -133,7 +133,7 @@ export class TaskDetailPage implements OnInit {
       });
   }
 
-  async presentActionSheet(taskDetail) {
+  async presentActionSheet(taskDetail): Promise<void> {
     const activeActionSheet = await this.actionSheetCtrl.create({
       cssClass: 'my-custom-class',
       buttons: [
@@ -199,17 +199,29 @@ export class TaskDetailPage implements OnInit {
     }
   }
 
-  deleteTask(taskDetail) {
+  deleteTask(taskDetail): void {
     console.log('削除します。', taskDetail);
   }
 
-  goBackToRoom() {
+  goBackToRoom(): void {
     this.location.back();
   }
 
+  selectFile(): void {
+
+  }
+
+  takePhoto(): void {
+
+  }
+
+  selectPhoto(): void {
+
+  }
 
   initializeApp(): Observable<string> {
     return from(this.platform.ready());
   }
+
 
 }
