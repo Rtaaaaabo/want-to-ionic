@@ -62,21 +62,23 @@
       </ion-col>
     </ion-row>
   </ion-toolbar>
+  <ion-toolbar>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-card class="width-height">
+            <img src="../../../assets/img/sojiro_1.jpg" />
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
   <ion-toolbar class="text-right">
     <ion-col class="size-icon-col" size="1">
       <ion-button fill="clear" (click)="takePhoto()">
         <ion-icon
           expand="block"
           name="camera-outline"
-          slot="icon-only"
-        ></ion-icon>
-      </ion-button>
-    </ion-col>
-    <ion-col class="size-icon-col" size="1">
-      <ion-button fill="clear" (click)="selectPhoto()">
-        <ion-icon
-          expand="block"
-          name="image-outline"
           slot="icon-only"
         ></ion-icon>
       </ion-button>

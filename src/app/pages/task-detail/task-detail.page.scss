@@ -17,6 +17,7 @@
     border-radius: 10px;
     resize: none;
     padding-left: 30px; // padding-right: 10px;
+    --background: '#1c1c1d';
 }
 
 .msg-btn {
@@ -38,4 +39,10 @@
 
 .size-icon-col {
     --ion-grid-width: 20px
+}
+
+.width-height {
+    width: 50px;
+    height: 50px;
+    margin: 2px;
 }
