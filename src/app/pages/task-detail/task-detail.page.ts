@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Location, ViewportScroller } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { ModalController, ActionSheetController, ToastController, IonContent, Platform } from '@ionic/angular';
+import { Plugins, CameraResultType } from '@capacitor/core';
 import { from, Observable, of } from 'rxjs';
 import { TaskDetailLogic } from './logic/task-detail.logic';
 import { AddTaskModalComponent } from 'src/app/shared/component/modal/add-task-modal/add-task-modal.component';
@@ -9,6 +10,8 @@ import { filter, tap, map, concatMap } from 'rxjs/operators';
 import { CurrentUserInfo } from '../task/interface/current-user-info.interface';
 import { ListRoomGroupsQuery } from 'src/app/API.service';
 
+
+const { Camera } = Plugins;
 @Component({
   selector: 'app-task-detail',
   templateUrl: './task-detail.page.html',
@@ -211,12 +214,18 @@ export class TaskDetailPage implements OnInit {
 
   }
 
-  takePhoto(): void {
-
+  async takePhoto(): Promise<void> {
+    const image = await Camera.getPhoto({
+      quality: 50,
+      allowEditing: true,
+      resultType: CameraResultType.Uri
+    });
+    const imageUrl = image.webPath;
+    console.log(imageUrl);
   }
 
   selectPhoto(): void {
-
+    console.log('selectPhoto');
   }
 
   initializeApp(): Observable<string> {
