@@ -218,10 +218,14 @@ export class TaskDetailPage implements OnInit {
     const image = await Camera.getPhoto({
       quality: 50,
       allowEditing: true,
-      resultType: CameraResultType.Uri
+      resultType: CameraResultType.Uri,
+      promptLabelHeader: 'カメラ',
+      promptLabelCancel: 'キャンセル',
+      promptLabelPhoto: 'ライブラリから',
+      promptLabelPicture: 'カメラ'
     });
     const imageUrl = image.webPath;
-    console.log(imageUrl);
+    console.log('imageUrl', imageUrl);
   }
 
   selectPhoto(): void {
