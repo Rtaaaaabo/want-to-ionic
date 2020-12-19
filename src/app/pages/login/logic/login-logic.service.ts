@@ -13,8 +13,9 @@ export class LoginLogic {
   ) { }
 
   sendLoginInfo(email, password): Observable<void> {
-    return this.sessionService.userLogin(email, password).pipe(catchError(() => {
-      throw 'Login Error';
-    }));
+    return this.sessionService.userLogin(email, password)
+      .pipe(catchError(() => {
+        throw 'Login Error';
+      }));
   }
 }

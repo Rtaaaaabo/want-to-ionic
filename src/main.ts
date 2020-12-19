@@ -5,7 +5,7 @@ import { environment } from './environments/environment';
 import { defineCustomElements } from '@ionic/pwa-elements/loader';
 
 // Amplify Config
-import Amplify, { Auth } from 'aws-amplify';
+import Amplify, { Auth, Storage } from 'aws-amplify';
 import PubSub from '@aws-amplify/pubsub';
 import API from '@aws-amplify/api';
 import awsmobile from './aws-exports';
@@ -14,6 +14,7 @@ Amplify.configure(awsmobile);
 API.configure(awsmobile);
 PubSub.configure(awsmobile);
 Auth.configure(awsmobile);
+Storage.configure(awsmobile);
 
 if (environment.production) {
   enableProdMode();
