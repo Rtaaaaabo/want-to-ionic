@@ -62,12 +62,12 @@
       </ion-col>
     </ion-row>
   </ion-toolbar>
-  <ion-toolbar>
+  <ion-toolbar *ngIf="imageUrl !== ''">
     <ion-grid>
       <ion-row>
         <ion-col>
           <ion-card class="width-height">
-            <img src="../../../assets/img/sojiro_1.jpg" />
+            <img [src]="imageUrl" />
           </ion-card>
         </ion-col>
       </ion-row>

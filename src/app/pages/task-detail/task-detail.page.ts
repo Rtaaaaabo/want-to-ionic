@@ -29,6 +29,7 @@ export class TaskDetailPage implements OnInit {
   message;
   userId: string;
   roomMembers: Array<ListRoomGroupsQuery>;
+  imageUrl: string = 'https://cdn.image.st-hatena.com/image/square/200563c38a06138bf5d0ae1f7f38e8998d587b8f/backend=imagemagick;height=405;version=1;width=960/https%3A%2F%2Fcdn-ak.f.st-hatena.com%2Fimages%2Ffotolife%2Fc%2Fchiakimori%2F20201216%2F20201216105845.jpg';
 
   constructor(
     private location: Location,
@@ -53,6 +54,7 @@ export class TaskDetailPage implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this.imageUrl);
     this.taskId = this.route.snapshot.paramMap.get('id');
     this.segment = this.route.snapshot.paramMap.get('segment');
     this.logic.fetchCurrentUserInfo().subscribe((res: CurrentUserInfo) => {
@@ -130,7 +132,6 @@ export class TaskDetailPage implements OnInit {
       .pipe(concatMap(() => this.logic.fetchAnyTask(taskDetail.id)))
       .pipe(tap(() => presentToast))
       .pipe(map((data) => this.taskDetail = data))
-      // なにかあればここでPriorityを変更する処理入れる
       .subscribe((data) => {
         console.log(data);
       });
@@ -218,14 +219,13 @@ export class TaskDetailPage implements OnInit {
     const image = await Camera.getPhoto({
       quality: 50,
       allowEditing: true,
-      resultType: CameraResultType.Uri,
+      resultType: CameraResultType.DataUrl,
       promptLabelHeader: 'カメラ',
       promptLabelCancel: 'キャンセル',
       promptLabelPhoto: 'ライブラリから',
       promptLabelPicture: 'カメラ'
     });
-    const imageUrl = image.webPath;
-    console.log('imageUrl', imageUrl);
+    this.imageUrl = image.dataUrl;
   }
 
   selectPhoto(): void {
