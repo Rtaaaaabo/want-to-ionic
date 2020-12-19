@@ -29,7 +29,7 @@ export class TaskDetailPage implements OnInit {
   message;
   userId: string;
   roomMembers: Array<ListRoomGroupsQuery>;
-  imageUrl: string = 'https://cdn.image.st-hatena.com/image/square/200563c38a06138bf5d0ae1f7f38e8998d587b8f/backend=imagemagick;height=405;version=1;width=960/https%3A%2F%2Fcdn-ak.f.st-hatena.com%2Fimages%2Ffotolife%2Fc%2Fchiakimori%2F20201216%2F20201216105845.jpg';
+  imageUrl: string = '';
 
   constructor(
     private location: Location,
@@ -54,7 +54,6 @@ export class TaskDetailPage implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.imageUrl);
     this.taskId = this.route.snapshot.paramMap.get('id');
     this.segment = this.route.snapshot.paramMap.get('segment');
     this.logic.fetchCurrentUserInfo().subscribe((res: CurrentUserInfo) => {
