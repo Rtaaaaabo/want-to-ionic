@@ -228,10 +228,6 @@ export class TaskDetailPage implements OnInit {
     }
   }
 
-  selectPhoto(): void {
-    console.log('selectPhoto');
-  }
-
   initializeApp(): Observable<string> {
     return from(this.platform.ready());
   }
