@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Location, ViewportScroller } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { ModalController, ActionSheetController, ToastController, IonContent, Platform } from '@ionic/angular';
+import { ModalController, ActionSheetController, ToastController, IonContent, Platform, AlertController } from '@ionic/angular';
 import { Plugins, CameraResultType } from '@capacitor/core';
 import { from, Observable, of } from 'rxjs';
 import { TaskDetailLogic } from './logic/task-detail.logic';
@@ -40,6 +40,7 @@ export class TaskDetailPage implements OnInit {
     private actionSheetCtrl: ActionSheetController,
     private toastCtrl: ToastController,
     private platform: Platform,
+    private readonly alertCtrl: AlertController,
   ) {
     this.initializeApp()
       .subscribe(() => {
@@ -98,8 +99,6 @@ export class TaskDetailPage implements OnInit {
   }
 
   async presentModalEditTask(taskDetail) {
-    console.log('taskDetail', taskDetail);
-    console.log('roomMembers', this.roomMembers);
     const modal = await this.modalCtrl.create({
       component: AddTaskModalComponent,
       componentProps: {
@@ -210,9 +209,7 @@ export class TaskDetailPage implements OnInit {
     this.location.back();
   }
 
-  selectFile(): void {
-
-  }
+  selectFile(): void { }
 
   async takePhoto(): Promise<void> {
     const image = await Camera.getPhoto({
@@ -224,8 +221,11 @@ export class TaskDetailPage implements OnInit {
       promptLabelPhoto: 'ライブラリから',
       promptLabelPicture: 'カメラ'
     });
-    this.arrayImageUrl.push(image.dataUrl);
-    console.log(this.arrayImageUrl);
+    if (this.arrayImageUrl.length === 1) {
+      this.presentAlert();
+    } else {
+      this.arrayImageUrl.push(image.dataUrl);
+    }
   }
 
   selectPhoto(): void {
@@ -238,7 +238,14 @@ export class TaskDetailPage implements OnInit {
 
   deleteImage(indexTarget: number): void {
     this.arrayImageUrl.splice(indexTarget, 1);
-    console.log('arrayImageUrl', this.arrayImageUrl);
   }
 
+  async presentAlert(): Promise<void> {
+    const alert = await this.alertCtrl.create({
+      header: 'アップロード最大値です',
+      message: '一度にアップロードできる数は一件です',
+      buttons: ['了解']
+    });
+    await alert.present();
+  }
 }
