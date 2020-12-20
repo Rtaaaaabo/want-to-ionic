@@ -67,20 +67,17 @@
   <ion-toolbar *ngIf="arrayImageUrl.length !== 0">
     <ion-grid>
       <ion-row>
-        <ion-col *ngFor="let imageItem of arrayImageUrl; index as i">
-          <ion-card class="width-height">
-            <img [src]="imageItem" />
-            <div class="deleteButtonContainer">
-              <button
-                type="submit"
-                class="deleteButton"
-                (click)="deleteImage(i)"
-              >
-                <ion-icon name="close-outline"></ion-icon>
-              </button>
-            </div>
-          </ion-card>
-        </ion-col>
+        <ion-card
+          *ngFor="let imageItem of arrayImageUrl; index as i"
+          class="width-height"
+        >
+          <img [src]="imageItem" />
+          <div class="deleteButtonContainer">
+            <button type="submit" class="deleteButton" (click)="deleteImage(i)">
+              <ion-icon name="close-outline"></ion-icon>
+            </button>
+          </div>
+        </ion-card>
       </ion-row>
     </ion-grid>
   </ion-toolbar>
