@@ -29,7 +29,7 @@ export class TaskDetailPage implements OnInit {
   message;
   userId: string;
   roomMembers: Array<ListRoomGroupsQuery>;
-  imageUrl: string = '';
+  arrayImageUrl: Array<string> = [];
 
   constructor(
     private location: Location,
@@ -224,7 +224,8 @@ export class TaskDetailPage implements OnInit {
       promptLabelPhoto: 'ライブラリから',
       promptLabelPicture: 'カメラ'
     });
-    this.imageUrl = image.dataUrl;
+    this.arrayImageUrl.push(image.dataUrl);
+    console.log(this.arrayImageUrl);
   }
 
   selectPhoto(): void {
@@ -235,5 +236,9 @@ export class TaskDetailPage implements OnInit {
     return from(this.platform.ready());
   }
 
+  deleteImage(indexTarget: number): void {
+    this.arrayImageUrl.splice(indexTarget, 1);
+    console.log('arrayImageUrl', this.arrayImageUrl);
+  }
 
 }
