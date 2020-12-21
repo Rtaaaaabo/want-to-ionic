@@ -23,7 +23,7 @@ import { v4 as uuid } from "uuid";
 import { TaskService } from "../service/task.service";
 import { CurrentUserInfo } from "../interface/current-user-info.interface";
 import { InterfaceTask } from "src/app/interfaces/task.interface";
-import { Filesystem, FilesystemDirectory, FilesystemEncoding, FileWriteResult, FileReadResult } from "@capacitor/core";
+import { Filesystem, FilesystemDirectory, FilesystemEncoding, FileWriteResult, FileReadResult, FileDeleteResult } from "@capacitor/core";
 
 @Injectable({
   providedIn: "root",
@@ -212,6 +212,13 @@ export class TaskLogic {
       path: fileName,
       directory: FilesystemDirectory.Documents,
       encoding: FilesystemEncoding.UTF8
+    }));
+  }
+
+  fileDelete(fileName: string): Observable<FileDeleteResult> {
+    return from(Filesystem.deleteFile({
+      path: fileName,
+      directory: FilesystemDirectory.Documents
     }));
   }
 
