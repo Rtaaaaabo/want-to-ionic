@@ -9,9 +9,8 @@ import { AddTaskModalComponent } from 'src/app/shared/component/modal/add-task-m
 import { filter, tap, map, concatMap } from 'rxjs/operators';
 import { CurrentUserInfo } from '../task/interface/current-user-info.interface';
 import { ListRoomGroupsQuery } from 'src/app/API.service';
-
-
 const { Camera } = Plugins;
+
 @Component({
   selector: 'app-task-detail',
   templateUrl: './task-detail.page.html',
@@ -54,7 +53,7 @@ export class TaskDetailPage implements OnInit {
       });
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.taskId = this.route.snapshot.paramMap.get('id');
     this.segment = this.route.snapshot.paramMap.get('segment');
     this.logic.fetchCurrentUserInfo().subscribe((res: CurrentUserInfo) => {
@@ -71,8 +70,9 @@ export class TaskDetailPage implements OnInit {
     });
   }
 
-  sendMessage() {
+  sendMessage(): void {
     this.logic.sendNewMessage(this.taskId, this.newMsg, this.userId)
+      // .pipe(concatMap(() => this.logic.fileWrite)
       .subscribe(() => this.newMsg = '');
   }
 
@@ -98,7 +98,7 @@ export class TaskDetailPage implements OnInit {
     });
   }
 
-  async presentModalEditTask(taskDetail) {
+  async presentModalEditTask(taskDetail): Promise<void> {
     const modal = await this.modalCtrl.create({
       component: AddTaskModalComponent,
       componentProps: {
@@ -124,15 +124,13 @@ export class TaskDetailPage implements OnInit {
       .pipe(tap(() => presentToast)).subscribe((data) => this.taskDetail = data);
   }
 
-  moveTask(taskDetail) {
+  moveTask(taskDetail): void {
     const presentToast = from(this.presentMoveTask());
     this.logic.updateTaskItem(taskDetail, 0)
       .pipe(concatMap(() => this.logic.fetchAnyTask(taskDetail.id)))
       .pipe(tap(() => presentToast))
       .pipe(map((data) => this.taskDetail = data))
-      .subscribe((data) => {
-        console.log(data);
-      });
+      .subscribe(() => { });
   }
 
   async presentActionSheet(taskDetail): Promise<void> {

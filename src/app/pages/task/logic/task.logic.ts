@@ -23,7 +23,7 @@ import { v4 as uuid } from "uuid";
 import { TaskService } from "../service/task.service";
 import { CurrentUserInfo } from "../interface/current-user-info.interface";
 import { InterfaceTask } from "src/app/interfaces/task.interface";
-import { Filesystem, FilesystemDirectory, FilesystemEncoding, FileWriteResult, FileReadResult, FileDeleteResult } from "@capacitor/core";
+
 
 @Injectable({
   providedIn: "root",
@@ -197,29 +197,4 @@ export class TaskLogic {
   addMembersToAnyRoom(arrayUserId: Array<string>, roomId: string): Observable<any> {
     return from(arrayUserId).pipe(concatMap((userId) => this.createUserRoomGroup(userId, roomId)))
   }
-
-  fileWrite(fileName: string, fileData: string): Observable<FileWriteResult> {
-    return from(Filesystem.writeFile({
-      path: fileName,
-      data: fileData,
-      directory: FilesystemDirectory.Documents,
-      encoding: FilesystemEncoding.UTF8,
-    }));
-  }
-
-  fileRead(fileName: string): Observable<FileReadResult> {
-    return from(Filesystem.readFile({
-      path: fileName,
-      directory: FilesystemDirectory.Documents,
-      encoding: FilesystemEncoding.UTF8
-    }));
-  }
-
-  fileDelete(fileName: string): Observable<FileDeleteResult> {
-    return from(Filesystem.deleteFile({
-      path: fileName,
-      directory: FilesystemDirectory.Documents
-    }));
-  }
-
 }

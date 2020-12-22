@@ -5,6 +5,7 @@ import { v4 as uuid } from 'uuid';
 import { SessionService } from 'src/app/shared/service/session.service';
 import { CurrentUserInfo } from '../../task/interface/current-user-info.interface';
 import { TaskDetailService } from '../service/task-detail.service';
+import { Filesystem, FilesystemDirectory, FilesystemEncoding, FileWriteResult, FileReadResult, FileDeleteResult } from "@capacitor/core";
 
 @Injectable({
   providedIn: 'root'
@@ -78,4 +79,27 @@ export class TaskDetailLogic {
     return this.taskDetailService.fetchRoomMember(filterContent);
   }
 
+  fileWrite(fileName: string, fileData: string): Observable<FileWriteResult> {
+    return from(Filesystem.writeFile({
+      path: fileName,
+      data: fileData,
+      directory: FilesystemDirectory.Documents,
+      encoding: FilesystemEncoding.UTF8,
+    }));
+  }
+
+  fileRead(fileName: string): Observable<FileReadResult> {
+    return from(Filesystem.readFile({
+      path: fileName,
+      directory: FilesystemDirectory.Documents,
+      encoding: FilesystemEncoding.UTF8
+    }));
+  }
+
+  fileDelete(fileName: string): Observable<FileDeleteResult> {
+    return from(Filesystem.deleteFile({
+      path: fileName,
+      directory: FilesystemDirectory.Documents
+    }));
+  }
 }
