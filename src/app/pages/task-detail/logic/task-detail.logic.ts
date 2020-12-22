@@ -102,4 +102,30 @@ export class TaskDetailLogic {
       directory: FilesystemDirectory.Documents
     }));
   }
+
+  getContentType(base64Data: any): string {
+    const block = base64Data.split(";");
+    const contentType = block[0].split(":")[1];
+    return contentType
+  }
+
+  base64toBlob(base64data, contentType): Blob {
+    const contentTypeResult = contentType || '';
+    const sliceSize = 512
+    const byteCharacters = atob(base64data);
+    let byteArrays = [];
+    for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+      let slice = byteCharacters.slice(offset, offset + sliceSize);
+      let byteNumbers = new Array(slice.length);
+      for (let i = 0; i < slice.length; i++) {
+        byteNumbers[i] = slice.charCodeAt(i);
+      }
+      var byteArray = new Uint8Array(byteNumbers);
+      byteArrays.push(byteArray);
+    }
+    let blob = new Blob(byteArrays, {
+      type: contentTypeResult
+    });
+    return blob;
+  }
 }

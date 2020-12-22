@@ -71,9 +71,14 @@ export class TaskDetailPage implements OnInit {
   }
 
   sendMessage(): void {
-    this.logic.sendNewMessage(this.taskId, this.newMsg, this.userId)
-      // .pipe(concatMap(() => this.logic.fileWrite)
-      .subscribe(() => this.newMsg = '');
+    if (this.arrayImageUrl.length === 0) {
+      this.logic.sendNewMessage(this.taskId, this.newMsg, this.userId)
+        .subscribe(() => this.newMsg = '');
+    } else {
+      this.logic.fileWrite('filename', 'fileData')
+        .pipe(concatMap(() => this.logic.sendNewMessage(this.taskId, this.newMsg, this.userId)))
+        .subscribe(() => this.newMsg = '');
+    }
   }
 
   async presentDoneToast(): Promise<void> {
@@ -219,6 +224,7 @@ export class TaskDetailPage implements OnInit {
       promptLabelPhoto: 'ライブラリから',
       promptLabelPicture: 'カメラ'
     });
+    console.log('imageInfo', image);
     if (this.arrayImageUrl.length === 1) {
       this.presentAlert();
     } else {
