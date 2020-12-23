@@ -71,11 +71,12 @@ export class TaskDetailPage implements OnInit {
   }
 
   sendMessage(): void {
+    const fileName = new Date().toISOString();
     if (this.arrayImageUrl.length === 0) {
       this.logic.sendNewMessage(this.taskId, this.newMsg, this.userId)
         .subscribe(() => this.newMsg = '');
     } else {
-      this.logic.fileWrite('filename', 'fileData')
+      this.logic.uploadFile(fileName, this.arrayImageUrl[0])
         .pipe(concatMap(() => this.logic.sendNewMessage(this.taskId, this.newMsg, this.userId)))
         .subscribe(() => this.newMsg = '');
     }
@@ -224,11 +225,11 @@ export class TaskDetailPage implements OnInit {
       promptLabelPhoto: 'ライブラリから',
       promptLabelPicture: 'カメラ'
     });
-    console.log('imageInfo', image);
     if (this.arrayImageUrl.length === 1) {
       this.presentAlert();
     } else {
       this.arrayImageUrl.push(image.dataUrl);
+      console.log('arrayImageUrl', this.arrayImageUrl);
     }
   }
 

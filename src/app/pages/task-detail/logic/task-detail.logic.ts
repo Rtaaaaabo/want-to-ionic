@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Observable, from } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { Storage } from 'aws-amplify';
 import { v4 as uuid } from 'uuid';
 import { SessionService } from 'src/app/shared/service/session.service';
 import { CurrentUserInfo } from '../../task/interface/current-user-info.interface';
 import { TaskDetailService } from '../service/task-detail.service';
 import { Filesystem, FilesystemDirectory, FilesystemEncoding, FileWriteResult, FileReadResult, FileDeleteResult } from "@capacitor/core";
+import { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } from 'constants';
 
 @Injectable({
   providedIn: 'root'
@@ -79,6 +81,35 @@ export class TaskDetailLogic {
     return this.taskDetailService.fetchRoomMember(filterContent);
   }
 
+  uploadFile(fileName: string, base64Data: any): Observable<any> {
+    const dt = new Date();
+    const dirName = this.getDirString(dt);
+    const uploadFileName = dirName + "/" + fileName;
+    const contentType = this.getContentType(base64Data);
+    const blobFile = this.base64toBlob(base64Data, contentType);
+    return this.putStorage(uploadFileName, blobFile, contentType);
+  }
+
+  putStorage(fileName: string, blobFile: Blob, contentType: string): Observable<any> {
+    return from(Storage.put(fileName, blobFile, {
+      contentType: contentType
+    }));
+  }
+
+  getDirString(dt: Date): string {
+    const random = dt.getTime() + Math.floor(100000 * Math.random());
+    const randomMath = Math.random() * random;
+    const randomFloor = randomMath.toString(16);
+    return "" +
+      ("00" + dt.getUTCFullYear()).slice(-2) +
+      ("00" + (dt.getMonth() + 1)).slice(-2) +
+      ("00" + dt.getUTCDate()).slice(-2) +
+      ("00" + dt.getUTCHours()).slice(-2) +
+      ("00" + dt.getMinutes()).slice(-2) +
+      ("00" + dt.getUTCSeconds()).slice(-2) +
+      "-" + randomFloor;
+  }
+
   fileWrite(fileName: string, fileData: string): Observable<FileWriteResult> {
     return from(Filesystem.writeFile({
       path: fileName,
@@ -110,21 +141,14 @@ export class TaskDetailLogic {
   }
 
   base64toBlob(base64data, contentType): Blob {
-    const contentTypeResult = contentType || '';
-    const sliceSize = 512
-    const byteCharacters = atob(base64data);
-    let byteArrays = [];
-    for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
-      let slice = byteCharacters.slice(offset, offset + sliceSize);
-      let byteNumbers = new Array(slice.length);
-      for (let i = 0; i < slice.length; i++) {
-        byteNumbers[i] = slice.charCodeAt(i);
-      }
-      var byteArray = new Uint8Array(byteNumbers);
-      byteArrays.push(byteArray);
+    console.log('contentType', contentType);
+    const byteCharacters = atob(base64data.replace(/^.*,/, ''));
+    let buffer = new Uint8Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+      buffer[i] = byteCharacters.charCodeAt(i);
     }
-    let blob = new Blob(byteArrays, {
-      type: contentTypeResult
+    const blob = new Blob([buffer.buffer], {
+      type: contentType
     });
     return blob;
   }
