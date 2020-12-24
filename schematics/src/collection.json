@@ -3,7 +3,7 @@
   "schematics": {
     "schematics": {
       "description": "A blank schematic.",
-      "factory": "./schematics/index#schematics"
+      "factory": "../build/schematics/index#schematics"
     }
   }
 }

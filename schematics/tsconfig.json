@@ -23,12 +23,15 @@
     "types": [
       "jasmine",
       "node"
-    ]
+    ],
+    "outDir": "build"
   },
   "include": [
     "src/**/*"
   ],
   "exclude": [
-    "src/*/files/**/*"
+    "src/*/files/**/*",
+    "build",
+    "templates"
   ]
 }
