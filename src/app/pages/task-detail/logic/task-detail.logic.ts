@@ -7,7 +7,6 @@ import { SessionService } from 'src/app/shared/service/session.service';
 import { CurrentUserInfo } from '../../task/interface/current-user-info.interface';
 import { TaskDetailService } from '../service/task-detail.service';
 import { Filesystem, FilesystemDirectory, FilesystemEncoding, FileWriteResult, FileReadResult, FileDeleteResult } from "@capacitor/core";
-import { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } from 'constants';
 
 @Injectable({
   providedIn: 'root'
@@ -84,8 +83,9 @@ export class TaskDetailLogic {
   uploadFile(fileName: string, base64Data: any): Observable<any> {
     const dt = new Date();
     const dirName = this.getDirString(dt);
-    const uploadFileName = dirName + "/" + fileName;
     const contentType = this.getContentType(base64Data);
+    const ext = contentType.match(/([^/]+?)?$/)[0];
+    const uploadFileName = dirName + "/" + `${fileName}.${ext}`;
     const blobFile = this.base64toBlob(base64Data, contentType);
     return this.putStorage(uploadFileName, blobFile, contentType);
   }
