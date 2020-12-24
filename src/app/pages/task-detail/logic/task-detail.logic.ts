@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, from } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { concatMap, map, tap } from 'rxjs/operators';
 import { Storage } from 'aws-amplify';
 import { v4 as uuid } from 'uuid';
 import { SessionService } from 'src/app/shared/service/session.service';
@@ -80,14 +80,20 @@ export class TaskDetailLogic {
     return this.taskDetailService.fetchRoomMember(filterContent);
   }
 
-  uploadFile(fileName: string, base64Data: any): Observable<any> {
+  uploadFile(fileName: string, arrayBase64Data: Array<any>): Observable<any> {
+    let ext = '';
     const dt = new Date();
     const dirName = this.getDirString(dt);
-    const contentType = this.getContentType(base64Data);
-    const ext = contentType.match(/([^/]+?)?$/)[0];
-    const uploadFileName = dirName + "/" + `${fileName}.${ext}`;
-    const blobFile = this.base64toBlob(base64Data, contentType);
-    return this.putStorage(uploadFileName, blobFile, contentType);
+    return from(arrayBase64Data)
+      .pipe(concatMap((base64Data) => this.getContentType(base64Data)))
+      .pipe(map((result) => ext = result))
+    // .pipe(tap(result => ))
+    // .pipe(concatMap((base64Data) => {
+    //   const contentType = this.getContentType(base64Data);
+    //   const ext = contentType.match(/([^/]+?)?$/)[0];
+    //   const uploadFileName = dirName + "/" + `${fileName}.${ext}`;
+    //   const blobFile = this.base64toBlob(base64Data, contentType);
+    // })).pipe(concatMap(() => this.putStorage(uploadFileName, blobFile, contentType))
   }
 
   putStorage(fileName: string, blobFile: Blob, contentType: string): Observable<any> {
@@ -134,10 +140,10 @@ export class TaskDetailLogic {
     }));
   }
 
-  getContentType(base64Data: any): string {
+  getContentType(base64Data: any): Observable<string> {
     const block = base64Data.split(";");
-    const contentType = block[0].split(":")[1];
-    return contentType
+    const contentType: string = block[0].split(":")[1];
+    return from(contentType);
   }
 
   base64toBlob(base64data, contentType): Blob {
