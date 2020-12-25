@@ -233,7 +233,6 @@ export class TaskDetailPage implements OnInit {
       this.presentAlert();
     } else {
       this.arrayImageUrl.push(image.dataUrl);
-      console.log('arrayImageUrl', this.arrayImageUrl);
     }
   }
 

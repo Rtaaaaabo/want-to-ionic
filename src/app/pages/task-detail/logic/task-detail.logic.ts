@@ -60,8 +60,6 @@ export class TaskDetailLogic {
   }
 
   updateTaskToRoom(dismissData, taskId): Observable<any> {
-    const iosStringDate = (new Date()).toISOString();
-    console.log(dismissData);
     const content = {
       id: `${taskId}`,
       title: `${dismissData.nameItem}`,
@@ -87,31 +85,25 @@ export class TaskDetailLogic {
    * @returns Observable型でS3から返ってきた値です。
    */
   uploadFile(fileName: string, arrayBase64Data: Array<any>): Observable<any> {
+    let base64Data = '';
     let ext = '';
     let contentType = '';
     let uploadFileName = '';
     const dt = new Date();
     const dirName = this.getDirString(dt);
     return from(arrayBase64Data)
+      .pipe(map((base64Result) => base64Data = base64Result))
       .pipe(concatMap((base64Data) => this.getContentType(base64Data)))
-    // .pipe(map((result) => contentType = result))
-    // .pipe(concatMap((contentType) => this.makeExt(contentType)))
-    // .pipe(map(result => ext = result))
-    // .pipe(map(() => uploadFileName = `${dirName}/${fileName}.${ext}`))
-    // .pipe(concatMap((uploadFileName) => this.base64toBlob(uploadFileName, contentType)))
-    // .pipe(concatMap((blobFile) => this.putStorage(uploadFileName, blobFile, contentType)))
-    // .pipe(concatMap((base64Data) => {
-    //   const contentType = this.getContentType(base64Data);
-    //   const ext = contentType.match(/([^/]+?)?$/)[0];
-    //   const uploadFileName = dirName + "/" + `${fileName}.${ext}`;
-    //   const blobFile = this.base64toBlob(base64Data, contentType);
-    // })).pipe(concatMap(() => this.putStorage(uploadFileName, blobFile, contentType))
+      .pipe(map((result) => contentType = result))
+      .pipe(concatMap((contentType) => this.makeExt(contentType)))
+      .pipe(map(result => ext = result))
+      .pipe(map(() => uploadFileName = `${dirName}/${fileName}.${ext}`))
+      .pipe(concatMap(() => this.base64toBlob(base64Data, contentType)))
+      .pipe(concatMap((blobFile) => this.putStorage(uploadFileName, blobFile, contentType)))
   }
 
   makeExt(contentType: string): Observable<string> {
-    console.log('contentType', contentType);
-    console.log('ext', contentType.match(/([^/]+?)?$/))
-    return from(contentType.match(/([^/]+?)?$/)[0]);
+    return of(contentType.match(/([^/]+?)?$/)[0]);
   }
 
   putStorage(fileName: string, blobFile: Blob, contentType: string): Observable<any> {
@@ -160,7 +152,6 @@ export class TaskDetailLogic {
 
   getContentType(base64Data: any): Observable<string> {
     const block = base64Data.split(";");
-    console.log('getContentType', base64Data);
     const contentType: string = block[0].split(":")[1];
     return of(contentType);
   }
