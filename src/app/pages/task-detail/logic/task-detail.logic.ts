@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable, from } from 'rxjs';
-import { concatMap, map, tap } from 'rxjs/operators';
+import { Observable, from, of } from 'rxjs';
+import { concatMap, map } from 'rxjs/operators';
 import { Storage } from 'aws-amplify';
 import { v4 as uuid } from 'uuid';
 import { SessionService } from 'src/app/shared/service/session.service';
@@ -80,20 +80,38 @@ export class TaskDetailLogic {
     return this.taskDetailService.fetchRoomMember(filterContent);
   }
 
+  /**
+   * Takes two numbers and returns their sum
+   * @param fileName ファイルのディレクトリ名と名前をつなげています
+   * @param arrayBase64Data 配列型のBase64Dataを渡します
+   * @returns Observable型でS3から返ってきた値です。
+   */
   uploadFile(fileName: string, arrayBase64Data: Array<any>): Observable<any> {
     let ext = '';
+    let contentType = '';
+    let uploadFileName = '';
     const dt = new Date();
     const dirName = this.getDirString(dt);
     return from(arrayBase64Data)
       .pipe(concatMap((base64Data) => this.getContentType(base64Data)))
-      .pipe(map((result) => ext = result))
-    // .pipe(tap(result => ))
+    // .pipe(map((result) => contentType = result))
+    // .pipe(concatMap((contentType) => this.makeExt(contentType)))
+    // .pipe(map(result => ext = result))
+    // .pipe(map(() => uploadFileName = `${dirName}/${fileName}.${ext}`))
+    // .pipe(concatMap((uploadFileName) => this.base64toBlob(uploadFileName, contentType)))
+    // .pipe(concatMap((blobFile) => this.putStorage(uploadFileName, blobFile, contentType)))
     // .pipe(concatMap((base64Data) => {
     //   const contentType = this.getContentType(base64Data);
     //   const ext = contentType.match(/([^/]+?)?$/)[0];
     //   const uploadFileName = dirName + "/" + `${fileName}.${ext}`;
     //   const blobFile = this.base64toBlob(base64Data, contentType);
     // })).pipe(concatMap(() => this.putStorage(uploadFileName, blobFile, contentType))
+  }
+
+  makeExt(contentType: string): Observable<string> {
+    console.log('contentType', contentType);
+    console.log('ext', contentType.match(/([^/]+?)?$/))
+    return from(contentType.match(/([^/]+?)?$/)[0]);
   }
 
   putStorage(fileName: string, blobFile: Blob, contentType: string): Observable<any> {
@@ -142,12 +160,12 @@ export class TaskDetailLogic {
 
   getContentType(base64Data: any): Observable<string> {
     const block = base64Data.split(";");
+    console.log('getContentType', base64Data);
     const contentType: string = block[0].split(":")[1];
-    return from(contentType);
+    return of(contentType);
   }
 
-  base64toBlob(base64data, contentType): Blob {
-    console.log('contentType', contentType);
+  base64toBlob(base64data: any, contentType: string): Observable<Blob> {
     const byteCharacters = atob(base64data.replace(/^.*,/, ''));
     let buffer = new Uint8Array(byteCharacters.length);
     for (let i = 0; i < byteCharacters.length; i++) {
@@ -156,6 +174,6 @@ export class TaskDetailLogic {
     const blob = new Blob([buffer.buffer], {
       type: contentType
     });
-    return blob;
+    return of(blob);
   }
 }

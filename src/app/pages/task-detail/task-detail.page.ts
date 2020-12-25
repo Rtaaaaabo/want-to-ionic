@@ -72,7 +72,6 @@ export class TaskDetailPage implements OnInit {
 
   sendMessage(): void {
     const fileName = new Date().getTime().toString();
-    console.log('fileName ', fileName);
     if (this.arrayImageUrl.length === 0) {
       this.logic.sendNewMessage(this.taskId, this.newMsg, this.userId)
         .subscribe(() => this.newMsg = '');
