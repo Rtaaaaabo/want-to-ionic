@@ -85,6 +85,7 @@ type Message
   content: String!
   createdAt: AWSDateTime
   isSent: Boolean
+  attachmentUri: [String]
   author: User! @connection(fields: ["authorID"])
   task: Task! @connection(fields: ["taskID"])
 }

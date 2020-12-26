@@ -276,6 +276,7 @@ export type CreateMessageInput = {
   content: string;
   createdAt?: string | null;
   isSent?: boolean | null;
+  attachmentUri?: Array<string | null> | null;
 };
 
 export type ModelMessageConditionInput = {
@@ -284,6 +285,7 @@ export type ModelMessageConditionInput = {
   content?: ModelStringInput | null;
   createdAt?: ModelStringInput | null;
   isSent?: ModelBooleanInput | null;
+  attachmentUri?: ModelStringInput | null;
   and?: Array<ModelMessageConditionInput | null> | null;
   or?: Array<ModelMessageConditionInput | null> | null;
   not?: ModelMessageConditionInput | null;
@@ -296,6 +298,7 @@ export type UpdateMessageInput = {
   content?: string | null;
   createdAt?: string | null;
   isSent?: boolean | null;
+  attachmentUri?: Array<string | null> | null;
 };
 
 export type DeleteMessageInput = {
@@ -377,6 +380,7 @@ export type ModelMessageFilterInput = {
   content?: ModelStringInput | null;
   createdAt?: ModelStringInput | null;
   isSent?: ModelBooleanInput | null;
+  attachmentUri?: ModelStringInput | null;
   and?: Array<ModelMessageFilterInput | null> | null;
   or?: Array<ModelMessageFilterInput | null> | null;
   not?: ModelMessageFilterInput | null;
@@ -863,6 +867,7 @@ export type CreateTaskMutation = {
       content: string;
       createdAt: string | null;
       isSent: boolean | null;
+      attachmentUri: Array<string | null> | null;
       updatedAt: string;
     } | null> | null;
     nextToken: string | null;
@@ -967,6 +972,7 @@ export type UpdateTaskMutation = {
       content: string;
       createdAt: string | null;
       isSent: boolean | null;
+      attachmentUri: Array<string | null> | null;
       updatedAt: string;
     } | null> | null;
     nextToken: string | null;
@@ -1071,6 +1077,7 @@ export type DeleteTaskMutation = {
       content: string;
       createdAt: string | null;
       isSent: boolean | null;
+      attachmentUri: Array<string | null> | null;
       updatedAt: string;
     } | null> | null;
     nextToken: string | null;
@@ -1127,6 +1134,7 @@ export type CreateUserMutation = {
       content: string;
       createdAt: string | null;
       isSent: boolean | null;
+      attachmentUri: Array<string | null> | null;
       updatedAt: string;
     } | null> | null;
     nextToken: string | null;
@@ -1214,6 +1222,7 @@ export type UpdateUserMutation = {
       content: string;
       createdAt: string | null;
       isSent: boolean | null;
+      attachmentUri: Array<string | null> | null;
       updatedAt: string;
     } | null> | null;
     nextToken: string | null;
@@ -1301,6 +1310,7 @@ export type DeleteUserMutation = {
       content: string;
       createdAt: string | null;
       isSent: boolean | null;
+      attachmentUri: Array<string | null> | null;
       updatedAt: string;
     } | null> | null;
     nextToken: string | null;
@@ -1743,6 +1753,7 @@ export type CreateMessageMutation = {
   content: string;
   createdAt: string | null;
   isSent: boolean | null;
+  attachmentUri: Array<string | null> | null;
   author: {
     __typename: "User";
     id: string;
@@ -1837,6 +1848,7 @@ export type UpdateMessageMutation = {
   content: string;
   createdAt: string | null;
   isSent: boolean | null;
+  attachmentUri: Array<string | null> | null;
   author: {
     __typename: "User";
     id: string;
@@ -1931,6 +1943,7 @@ export type DeleteMessageMutation = {
   content: string;
   createdAt: string | null;
   isSent: boolean | null;
+  attachmentUri: Array<string | null> | null;
   author: {
     __typename: "User";
     id: string;
@@ -2296,6 +2309,7 @@ export type GetTaskQuery = {
       content: string;
       createdAt: string | null;
       isSent: boolean | null;
+      attachmentUri: Array<string | null> | null;
       updatedAt: string;
     } | null> | null;
     nextToken: string | null;
@@ -2402,6 +2416,7 @@ export type GetUserQuery = {
       content: string;
       createdAt: string | null;
       isSent: boolean | null;
+      attachmentUri: Array<string | null> | null;
       updatedAt: string;
     } | null> | null;
     nextToken: string | null;
@@ -2697,6 +2712,7 @@ export type GetMessageQuery = {
   content: string;
   createdAt: string | null;
   isSent: boolean | null;
+  attachmentUri: Array<string | null> | null;
   author: {
     __typename: "User";
     id: string;
@@ -2793,6 +2809,7 @@ export type ListMessagesQuery = {
     content: string;
     createdAt: string | null;
     isSent: boolean | null;
+    attachmentUri: Array<string | null> | null;
     author: {
       __typename: "User";
       id: string;
@@ -3307,6 +3324,7 @@ export type OnCreateTaskSubscription = {
       content: string;
       createdAt: string | null;
       isSent: boolean | null;
+      attachmentUri: Array<string | null> | null;
       updatedAt: string;
     } | null> | null;
     nextToken: string | null;
@@ -3411,6 +3429,7 @@ export type OnUpdateTaskSubscription = {
       content: string;
       createdAt: string | null;
       isSent: boolean | null;
+      attachmentUri: Array<string | null> | null;
       updatedAt: string;
     } | null> | null;
     nextToken: string | null;
@@ -3515,6 +3534,7 @@ export type OnDeleteTaskSubscription = {
       content: string;
       createdAt: string | null;
       isSent: boolean | null;
+      attachmentUri: Array<string | null> | null;
       updatedAt: string;
     } | null> | null;
     nextToken: string | null;
@@ -3571,6 +3591,7 @@ export type OnCreateUserSubscription = {
       content: string;
       createdAt: string | null;
       isSent: boolean | null;
+      attachmentUri: Array<string | null> | null;
       updatedAt: string;
     } | null> | null;
     nextToken: string | null;
@@ -3658,6 +3679,7 @@ export type OnUpdateUserSubscription = {
       content: string;
       createdAt: string | null;
       isSent: boolean | null;
+      attachmentUri: Array<string | null> | null;
       updatedAt: string;
     } | null> | null;
     nextToken: string | null;
@@ -3745,6 +3767,7 @@ export type OnDeleteUserSubscription = {
       content: string;
       createdAt: string | null;
       isSent: boolean | null;
+      attachmentUri: Array<string | null> | null;
       updatedAt: string;
     } | null> | null;
     nextToken: string | null;
@@ -4187,6 +4210,7 @@ export type OnCreateMessageSubscription = {
   content: string;
   createdAt: string | null;
   isSent: boolean | null;
+  attachmentUri: Array<string | null> | null;
   author: {
     __typename: "User";
     id: string;
@@ -4281,6 +4305,7 @@ export type OnUpdateMessageSubscription = {
   content: string;
   createdAt: string | null;
   isSent: boolean | null;
+  attachmentUri: Array<string | null> | null;
   author: {
     __typename: "User";
     id: string;
@@ -4375,6 +4400,7 @@ export type OnDeleteMessageSubscription = {
   content: string;
   createdAt: string | null;
   isSent: boolean | null;
+  attachmentUri: Array<string | null> | null;
   author: {
     __typename: "User";
     id: string;
@@ -5047,6 +5073,7 @@ export class APIService {
               content
               createdAt
               isSent
+              attachmentUri
               updatedAt
             }
             nextToken
@@ -5167,6 +5194,7 @@ export class APIService {
               content
               createdAt
               isSent
+              attachmentUri
               updatedAt
             }
             nextToken
@@ -5287,6 +5315,7 @@ export class APIService {
               content
               createdAt
               isSent
+              attachmentUri
               updatedAt
             }
             nextToken
@@ -5359,6 +5388,7 @@ export class APIService {
               content
               createdAt
               isSent
+              attachmentUri
               updatedAt
             }
             nextToken
@@ -5462,6 +5492,7 @@ export class APIService {
               content
               createdAt
               isSent
+              attachmentUri
               updatedAt
             }
             nextToken
@@ -5565,6 +5596,7 @@ export class APIService {
               content
               createdAt
               isSent
+              attachmentUri
               updatedAt
             }
             nextToken
@@ -6119,6 +6151,7 @@ export class APIService {
           content
           createdAt
           isSent
+          attachmentUri
           author {
             __typename
             id
@@ -6229,6 +6262,7 @@ export class APIService {
           content
           createdAt
           isSent
+          attachmentUri
           author {
             __typename
             id
@@ -6339,6 +6373,7 @@ export class APIService {
           content
           createdAt
           isSent
+          attachmentUri
           author {
             __typename
             id
@@ -6779,6 +6814,7 @@ export class APIService {
               content
               createdAt
               isSent
+              attachmentUri
               updatedAt
             }
             nextToken
@@ -6916,6 +6952,7 @@ export class APIService {
               content
               createdAt
               isSent
+              attachmentUri
               updatedAt
             }
             nextToken
@@ -7304,6 +7341,7 @@ export class APIService {
           content
           createdAt
           isSent
+          attachmentUri
           author {
             __typename
             id
@@ -7414,6 +7452,7 @@ export class APIService {
             content
             createdAt
             isSent
+            attachmentUri
             author {
               __typename
               id
@@ -7996,6 +8035,7 @@ export class APIService {
               content
               createdAt
               isSent
+              attachmentUri
               updatedAt
             }
             nextToken
@@ -8108,6 +8148,7 @@ export class APIService {
               content
               createdAt
               isSent
+              attachmentUri
               updatedAt
             }
             nextToken
@@ -8220,6 +8261,7 @@ export class APIService {
               content
               createdAt
               isSent
+              attachmentUri
               updatedAt
             }
             nextToken
@@ -8284,6 +8326,7 @@ export class APIService {
               content
               createdAt
               isSent
+              attachmentUri
               updatedAt
             }
             nextToken
@@ -8379,6 +8422,7 @@ export class APIService {
               content
               createdAt
               isSent
+              attachmentUri
               updatedAt
             }
             nextToken
@@ -8474,6 +8518,7 @@ export class APIService {
               content
               createdAt
               isSent
+              attachmentUri
               updatedAt
             }
             nextToken
@@ -8972,6 +9017,7 @@ export class APIService {
           content
           createdAt
           isSent
+          attachmentUri
           author {
             __typename
             id
@@ -9074,6 +9120,7 @@ export class APIService {
           content
           createdAt
           isSent
+          attachmentUri
           author {
             __typename
             id
@@ -9176,6 +9223,7 @@ export class APIService {
           content
           createdAt
           isSent
+          attachmentUri
           author {
             __typename
             id
