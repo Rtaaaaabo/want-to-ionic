@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
 import { AddPersonModalComponent } from './add-person-modal.component';
@@ -7,9 +7,9 @@ describe('AddPersonModalComponent', () => {
   let component: AddPersonModalComponent;
   let fixture: ComponentFixture<AddPersonModalComponent>;
 
-  beforeEach(async(() => {
+  beforeEach((() => {
     TestBed.configureTestingModule({
-      declarations: [ AddPersonModalComponent ],
+      declarations: [AddPersonModalComponent],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 

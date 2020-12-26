@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
 import { CommentPage } from './comment.page';
@@ -7,9 +7,9 @@ describe('CommentPage', () => {
   let component: CommentPage;
   let fixture: ComponentFixture<CommentPage>;
 
-  beforeEach(async(() => {
+  beforeEach((() => {
     TestBed.configureTestingModule({
-      declarations: [ CommentPage ],
+      declarations: [CommentPage],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
