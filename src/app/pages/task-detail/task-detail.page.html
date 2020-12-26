@@ -84,7 +84,11 @@
 
   <ion-toolbar class="text-right">
     <ion-col class="size-icon-col" size="1">
-      <ion-button fill="clear" (click)="takePhoto()">
+      <ion-button
+        fill="clear"
+        [disabled]="arrayImageUrl.length === 2"
+        (click)="takePhoto()"
+      >
         <ion-icon
           expand="block"
           name="camera-outline"

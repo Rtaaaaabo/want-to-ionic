@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { HomeLogic } from './home.logic';
 
-describe('HomeLogicService', () => {
+describe('HomeLogic', () => {
   let service: HomeLogic;
 
   beforeEach(() => {

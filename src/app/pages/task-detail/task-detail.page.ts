@@ -130,7 +130,8 @@ export class TaskDetailPage implements OnInit {
     const presentToast = from(this.presentDoneToast());
     this.logic.updateTaskItem(taskDetail, 10)
       .pipe(concatMap(() => this.logic.fetchAnyTask(taskDetail.id)))
-      .pipe(tap(() => presentToast)).subscribe((data) => this.taskDetail = data);
+      .pipe(tap(() => presentToast))
+      .subscribe((data) => this.taskDetail = data);
   }
 
   moveTask(taskDetail): void {
@@ -208,9 +209,7 @@ export class TaskDetailPage implements OnInit {
     }
   }
 
-  deleteTask(taskDetail): void {
-    console.log('削除します。', taskDetail);
-  }
+  deleteTask(taskDetail): void { }
 
   goBackToRoom(): void {
     this.location.back();
@@ -228,11 +227,7 @@ export class TaskDetailPage implements OnInit {
       promptLabelPhoto: 'ライブラリから',
       promptLabelPicture: 'カメラ'
     });
-    if (this.arrayImageUrl.length === 1) {
-      this.presentAlert();
-    } else {
-      this.arrayImageUrl.push(image.dataUrl);
-    }
+    this.arrayImageUrl.push(image.dataUrl);
   }
 
   initializeApp(): Observable<string> {
