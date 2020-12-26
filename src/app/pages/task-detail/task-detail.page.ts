@@ -77,9 +77,8 @@ export class TaskDetailPage implements OnInit {
         .subscribe(() => this.newMsg = '');
     } else {
       this.logic.uploadFile(fileName, this.arrayImageUrl)
-        // .pipe(concatMap(() => this.logic.sendNewMessage(this.taskId, this.newMsg, this.userId)))
-        .subscribe((result) => {
-          console.log(result);
+        .pipe(concatMap(({ key }) => this.logic.sendNewMessage(this.taskId, this.newMsg, this.userId, key)))
+        .subscribe(() => {
           this.newMsg = '';
           this.arrayImageUrl = [];
         });

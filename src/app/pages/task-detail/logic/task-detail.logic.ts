@@ -39,13 +39,14 @@ export class TaskDetailLogic {
     return this.taskDetailService.updateTaskItem(content);
   }
 
-  sendNewMessage(taskId, messageContent, userId): Observable<any> {
+  sendNewMessage(taskId: string, messageContent: string, userId: string, attachmentUri?: string): Observable<any> {
     const inputContent = {
       id: `${uuid()}`,
       authorID: `${userId}`,
       content: messageContent,
       taskID: taskId,
       isSent: true,
+      attachmentUri: attachmentUri,
     }
     return this.taskDetailService.createMessageItem(inputContent);
   }
