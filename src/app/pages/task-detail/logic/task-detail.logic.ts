@@ -80,10 +80,10 @@ export class TaskDetailLogic {
   }
 
   /**
-   * Takes two numbers and returns their sum
-   * @param fileName ファイルのディレクトリ名と名前を繋げています
-   * @param arrayBase64Data 配列型のBase64Dataを渡します
-   * @returns Observable型でS3から返ってきた値を返します
+   * S3にアップロードするロジックです。
+   * @param fileName ファイルのディレクトリ名と名前を繋げています。
+   * @param arrayBase64Data 配列型のBase64Dataを渡します。
+   * @returns Observable型でS3から返ってきた値を返します。
    */
   uploadFile(fileName: string, arrayBase64Data: Array<any>): Observable<any> {
     let base64Data = '';
@@ -97,14 +97,11 @@ export class TaskDetailLogic {
       .pipe(concatMap((base64Data) => this.getContentType(base64Data)))
       .pipe(map((result) => contentType = result))
       .pipe(concatMap((contentType) => this.makeExt(contentType)))
-      .pipe(map(result => ext = result))
+      .pipe(map((result) => ext = result))
       .pipe(map(() => uploadFileName = `${dirName}/${fileName}.${ext}`))
       .pipe(concatMap(() => this.base64toBlob(base64Data, contentType)))
       .pipe(concatMap((blobFile) => this.putStorage(uploadFileName, blobFile, contentType)))
   }
-
-  // makeAttachmentArray(strAttachmentUrl: string): Observable<Array<string>> {
-  // }
 
   makeExt(contentType: string): Observable<string> {
     return of(contentType.match(/([^/]+?)?$/)[0]);

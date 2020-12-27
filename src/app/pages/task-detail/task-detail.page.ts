@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ModalController, ActionSheetController, ToastController, IonContent, Platform, AlertController } from '@ionic/angular';
 import { Plugins, CameraResultType } from '@capacitor/core';
 import { from, Observable, of } from 'rxjs';
+import { v4 as uuid } from 'uuid';
 import { TaskDetailLogic } from './logic/task-detail.logic';
 import { AddTaskModalComponent } from 'src/app/shared/component/modal/add-task-modal/add-task-modal.component';
 import { filter, tap, map, concatMap, toArray } from 'rxjs/operators';
@@ -71,7 +72,7 @@ export class TaskDetailPage implements OnInit {
   }
 
   sendMessage(): void {
-    const fileName = new Date().getTime().toString();
+    const fileName = `attachment_${uuid()}_${this.taskId}`;
     if (this.arrayImageUrl.length === 0) {
       this.logic.sendNewMessage(this.taskId, this.newMsg, this.userId)
         .subscribe(() => this.newMsg = '');
