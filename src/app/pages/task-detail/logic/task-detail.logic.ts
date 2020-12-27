@@ -39,14 +39,14 @@ export class TaskDetailLogic {
     return this.taskDetailService.updateTaskItem(content);
   }
 
-  sendNewMessage(taskId: string, messageContent: string, userId: string, attachmentUri?: string): Observable<any> {
+  sendNewMessage(taskId: string, messageContent: string, userId: string, arrayAttachmentUri?: Array<string>): Observable<any> {
     const inputContent = {
       id: `${uuid()}`,
       authorID: `${userId}`,
       content: messageContent,
       taskID: taskId,
       isSent: true,
-      attachmentUri: attachmentUri,
+      attachmentUri: arrayAttachmentUri,
     }
     return this.taskDetailService.createMessageItem(inputContent);
   }
@@ -81,9 +81,9 @@ export class TaskDetailLogic {
 
   /**
    * Takes two numbers and returns their sum
-   * @param fileName ファイルのディレクトリ名と名前をつなげています
+   * @param fileName ファイルのディレクトリ名と名前を繋げています
    * @param arrayBase64Data 配列型のBase64Dataを渡します
-   * @returns Observable型でS3から返ってきた値です。
+   * @returns Observable型でS3から返ってきた値を返します
    */
   uploadFile(fileName: string, arrayBase64Data: Array<any>): Observable<any> {
     let base64Data = '';
@@ -102,6 +102,9 @@ export class TaskDetailLogic {
       .pipe(concatMap(() => this.base64toBlob(base64Data, contentType)))
       .pipe(concatMap((blobFile) => this.putStorage(uploadFileName, blobFile, contentType)))
   }
+
+  // makeAttachmentArray(strAttachmentUrl: string): Observable<Array<string>> {
+  // }
 
   makeExt(contentType: string): Observable<string> {
     return of(contentType.match(/([^/]+?)?$/)[0]);

@@ -6,7 +6,7 @@ import { Plugins, CameraResultType } from '@capacitor/core';
 import { from, Observable, of } from 'rxjs';
 import { TaskDetailLogic } from './logic/task-detail.logic';
 import { AddTaskModalComponent } from 'src/app/shared/component/modal/add-task-modal/add-task-modal.component';
-import { filter, tap, map, concatMap } from 'rxjs/operators';
+import { filter, tap, map, concatMap, toArray } from 'rxjs/operators';
 import { CurrentUserInfo } from '../task/interface/current-user-info.interface';
 import { ListRoomGroupsQuery } from 'src/app/API.service';
 const { Camera } = Plugins;
@@ -77,7 +77,9 @@ export class TaskDetailPage implements OnInit {
         .subscribe(() => this.newMsg = '');
     } else {
       this.logic.uploadFile(fileName, this.arrayImageUrl)
-        .pipe(concatMap(({ key }) => this.logic.sendNewMessage(this.taskId, this.newMsg, this.userId, key)))
+        .pipe(map((data) => data.key))
+        .pipe(toArray())
+        .pipe(concatMap((data) => this.logic.sendNewMessage(this.taskId, this.newMsg, this.userId, data)))
         .subscribe(() => {
           this.newMsg = '';
           this.arrayImageUrl = [];
