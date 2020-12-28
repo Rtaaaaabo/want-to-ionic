@@ -66,9 +66,11 @@ export class TaskDetailPage implements OnInit {
       .subscribe(({ items }) => {
         this.roomMembers = items;
       });
-    this.logic.fetchMessagePerTask(this.taskId).subscribe((data) => {
-      this.message = data.items;
-    });
+    this.logic.fetchMessagePerTask(this.taskId)
+      .subscribe((data) => {
+        this.message = data.items;
+        console.log('Message', this.message);
+      });
   }
 
   sendMessage(): void {
