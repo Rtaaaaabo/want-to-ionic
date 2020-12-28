@@ -45,6 +45,7 @@ export class TaskDetailLogic {
   }
 
   sendNewMessage(taskId: string, messageContent: string, userId: string, arrayAttachmentUri?: Array<string>): Observable<any> {
+    console.log('arrayAttachmentUri', arrayAttachmentUri);
     const inputContent = {
       id: `${uuid()}`,
       authorID: `${userId}`,
@@ -119,6 +120,7 @@ export class TaskDetailLogic {
   }
 
   getStorage(fileName: string): Observable<any> {
+    console.log('fileName', fileName);
     return from(Storage.get(fileName));
   }
 

@@ -44,11 +44,14 @@
       <ion-label>
         <h3>{{ item.content }}</h3>
         <p>{{item.author.username}}</p>
-        <!-- <ion-row>
-          <ion-card *ngFor="let imageSrc of item.arrayImageUrl" class="width-height">
+        <ion-row>
+          <ion-card
+            *ngFor="let imageSrc of item.arrayImageUrl"
+            class="width-height"
+          >
             <img [src]="imageSrc" />
           </ion-card>
-        </ion-row> -->
+        </ion-row>
         <p class="text-right">
           {{ item.createdAt | date: "yyyy/MM/dd HH:mm" }}
         </p>

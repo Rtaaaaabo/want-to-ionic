@@ -82,6 +82,7 @@ export class TaskDetailPage implements OnInit {
     } else {
       this.logic.uploadFile(fileName, this.arrayImageUrl)
         .pipe(map((data) => data.key))
+        .pipe(concatMap((result) => this.logic.getStorage(result)))
         .pipe(toArray())
         .pipe(concatMap((data) => this.logic.sendNewMessage(this.taskId, this.newMsg, this.userId, data)))
         .subscribe(() => {
