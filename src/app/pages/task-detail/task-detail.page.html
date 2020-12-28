@@ -44,6 +44,12 @@
       <ion-label>
         <h3>{{ item.content }}</h3>
         <p>{{item.author.username}}</p>
+        <ion-row>
+          <ion-card class="width-height">
+            <img src="../../../assets/img/sojiro_1.jpg" />
+            <div class="deleteButtonContainer"></div>
+          </ion-card>
+        </ion-row>
         <p class="text-right">{{item.createdAt | date: "yyyy/MM/dd HH:mm"}}</p>
       </ion-label>
     </ion-item>
