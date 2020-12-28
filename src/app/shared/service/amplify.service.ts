@@ -5577,6 +5577,7 @@ export class AmplifyService {
             content
             createdAt
             isSent
+            attachmentUri
             task {
               __typename
               id
