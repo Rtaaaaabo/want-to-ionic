@@ -10,6 +10,7 @@ import { AddTaskModalComponent } from 'src/app/shared/component/modal/add-task-m
 import { filter, tap, map, concatMap, toArray } from 'rxjs/operators';
 import { CurrentUserInfo } from '../task/interface/current-user-info.interface';
 import { ListRoomGroupsQuery } from 'src/app/API.service';
+import { ListMessagesQuery } from 'src/app/shared/service/amplify.service';
 const { Camera } = Plugins;
 
 @Component({
@@ -26,7 +27,7 @@ export class TaskDetailPage implements OnInit {
   link = "comment"
   fragmentComment = '';
   newMsg: string = '';
-  message;
+  message: ListMessagesQuery;
   userId: string;
   roomMembers: Array<ListRoomGroupsQuery>;
   arrayImageUrl: Array<string> = [];

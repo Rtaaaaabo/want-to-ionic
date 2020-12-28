@@ -18,6 +18,11 @@ export class TaskDetailLogic {
     private sessionService: SessionService,
   ) { }
 
+  /**
+   * 任意のタスクの詳細情報を取得します
+   * @param taskId TaskIDです
+   * @returns Observable型で Taskの詳細情報を返します
+   */
   fetchAnyTask(taskId: string): Observable<any> {
     return from(this.taskDetailService.getTask(taskId));
   }
@@ -111,6 +116,10 @@ export class TaskDetailLogic {
     return from(Storage.put(fileName, blobFile, {
       contentType: contentType
     }));
+  }
+
+  getStorage(fileName: string): Observable<any> {
+    return from(Storage.get(fileName));
   }
 
   getDirString(dt: Date): string {
