@@ -46,7 +46,7 @@
         <p>{{item.author.username}}</p>
         <ion-row>
           <ion-card
-            *ngFor="let imageSrc of item.arrayImageUrl"
+            *ngFor="let imageSrc of item.attachmentUri"
             class="width-height"
           >
             <img [src]="imageSrc" />

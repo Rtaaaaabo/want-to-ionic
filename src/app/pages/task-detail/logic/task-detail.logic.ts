@@ -120,7 +120,6 @@ export class TaskDetailLogic {
   }
 
   getStorage(fileName: string): Observable<any> {
-    console.log('fileName', fileName);
     return from(Storage.get(fileName));
   }
 
