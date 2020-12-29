@@ -36,26 +36,29 @@
       (ionItemReorder)="reorderTask($event)"
       [disabled]="!isReorder"
     >
-      <ion-card *ngFor="let item of taskActiveItems">
-        <ion-card-content
-          class="task-card-content"
-          (click)="navigateToTaskDetail(item, segment)"
-        >
+      <ion-card
+        *ngFor="let item of taskActiveItems"
+        (click)="navigateToTaskDetail(item, segment)"
+      >
+        <ion-card-header>
+          <ion-card-subtitle>
+            {{ item.scheduleDate | date: 'yyyy/MM/dd' }} まで
+          </ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-title> {{ item.title }} </ion-card-title>
+        <ion-card-content class="task-card-content">
           <ion-reorder *ngIf="isReorder">
             <ion-item class="card-background" lines="none">
-              <ion-label>
-                <h2 class="task-title">{{ item.title }}</h2>
-                <p>{{item.description}}</p>
-              </ion-label>
+              <p>{{ item.description }}</p>
             </ion-item>
           </ion-reorder>
+
           <ion-item *ngIf="!isReorder" class="card-background" lines="none">
-            <ion-label *ngIf="!isReorder">
-              <h2 class="task-title">{{ item.title }}</h2>
-              <p>{{item.description}}</p>
-            </ion-label>
+            <p>{{ item.description }}</p>
           </ion-item>
         </ion-card-content>
+
+        <!-- ボタン部分 -->
         <ion-row *ngIf="!isReorder" class="cardfooter">
           <ion-col class="button-center">
             <ion-button
@@ -81,6 +84,7 @@
             </ion-button>
           </ion-col>
         </ion-row>
+        <!-- /ボタン部分 -->
       </ion-card>
     </ion-reorder-group>
   </ion-list>

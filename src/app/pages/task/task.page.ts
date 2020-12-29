@@ -70,6 +70,7 @@ export class TaskPage implements OnInit {
       this.taskDoneItems = data.doneTaskItems;
       this.room = data.room;
       this.roomMembers = data.roomMembers;
+      console.log('taskActiveItems', this.taskActiveItems);
     });
   }
 
