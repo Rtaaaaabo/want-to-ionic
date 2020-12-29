@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Observable, from, of } from 'rxjs';
-import { concatMap, map } from 'rxjs/operators';
+import { catchError, concatMap, map } from 'rxjs/operators';
 import { Storage } from 'aws-amplify';
 import { v4 as uuid } from 'uuid';
 import { SessionService } from 'src/app/shared/service/session.service';
 import { CurrentUserInfo } from '../../task/interface/current-user-info.interface';
 import { TaskDetailService } from '../service/task-detail.service';
 import { Filesystem, FilesystemDirectory, FilesystemEncoding, FileWriteResult, FileReadResult, FileDeleteResult } from "@capacitor/core";
+
+const OneWeekSecond = 604800;
 
 @Injectable({
   providedIn: 'root'
@@ -120,7 +122,9 @@ export class TaskDetailLogic {
   }
 
   getStorage(fileName: string): Observable<any> {
-    return from(Storage.get(fileName));
+    return from(Storage.get(fileName, {
+      expires: OneWeekSecond,
+    }))
   }
 
   getDirString(dt: Date): string {
