@@ -30,6 +30,7 @@
   </ion-toolbar>
 </ion-header>
 
+<!-- Segment: Activeの場合 -->
 <ion-content *ngIf="segment === 'active'">
   <ion-list>
     <ion-reorder-group
@@ -38,25 +39,21 @@
     >
       <ion-card
         *ngFor="let item of taskActiveItems"
-        (click)="navigateToTaskDetail(item, segment)"
+        (click)="navigateToTaskDetail(item, segment, isReorder)"
       >
-        <ion-card-header>
-          <ion-card-subtitle>
-            {{ item.scheduleDate | date: 'yyyy/MM/dd' }} まで
-          </ion-card-subtitle>
-        </ion-card-header>
-        <ion-card-title> {{ item.title }} </ion-card-title>
-        <ion-card-content class="task-card-content">
-          <ion-reorder *ngIf="isReorder">
+        <ion-reorder>
+          <ion-card-header>
+            <ion-card-subtitle>
+              {{ item.scheduleDate | date: 'yyyy/MM/dd' }} まで
+            </ion-card-subtitle>
+            <ion-card-title> {{ item.title }} </ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
             <ion-item class="card-background" lines="none">
               <p>{{ item.description }}</p>
             </ion-item>
-          </ion-reorder>
-
-          <ion-item *ngIf="!isReorder" class="card-background" lines="none">
-            <p>{{ item.description }}</p>
-          </ion-item>
-        </ion-card-content>
+          </ion-card-content>
+        </ion-reorder>
 
         <!-- ボタン部分 -->
         <ion-row *ngIf="!isReorder" class="cardfooter">
@@ -95,13 +92,11 @@
   </ion-fab-button>
 </ion-fab>
 
+<!-- Segment: DONEの場合 -->
 <ion-content *ngIf="segment === 'done'">
   <ion-list>
     <ion-card *ngFor="let item of taskDoneItems">
-      <ion-card-content
-        class="task-card-content"
-        (click)="navigateToTaskDetail(item, segment)"
-      >
+      <ion-card-content (click)="navigateToTaskDetail(item, segment)">
         <ion-item class="card-background" lines="none">
           <ion-label>
             <h2 class="task-title">{{ item.title }}</h2>
@@ -112,3 +107,4 @@
     </ion-card>
   </ion-list>
 </ion-content>
+<!-- /Segment: DONEの場合 -->

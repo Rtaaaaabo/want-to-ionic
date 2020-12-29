@@ -133,7 +133,8 @@ export class TaskPage implements OnInit {
       .subscribe();
   }
 
-  navigateToTaskDetail(task, segment): void {
+  navigateToTaskDetail(task, segment: string, isReorder: boolean): void {
+    if (isReorder) return;
     this.router.navigate(['task-detail', `${task.id}`, `${segment}`])
   }
 
