@@ -29,6 +29,11 @@ export class TaskDetailLogic {
     return from(this.taskDetailService.getTask(taskId));
   }
 
+  /**
+   * タスクあたりのMessageを返します
+   * @param taskId TaskIDです
+   * @returns Observable型で タスクあたりのMessageを返します
+   */
   fetchMessagePerTask(taskId: string): Observable<any> {
     const filterContent = {
       taskID: {
@@ -38,6 +43,12 @@ export class TaskDetailLogic {
     return this.taskDetailService.fetchMessagePerTask(filterContent);
   }
 
+  /**
+   * 任意のタスクの情報をアップデートします
+   * @param taskItem TaskItemのObject
+   * @param status TaskItemのObject
+   * @returns Observable型で updateTaskItemを返します
+   */
   updateTaskItem(taskItem, status): Observable<any> {
     const content = {
       id: taskItem.id,
@@ -46,6 +57,14 @@ export class TaskDetailLogic {
     return this.taskDetailService.updateTaskItem(content);
   }
 
+  /**
+   * Message（コメントを新規で作成します）
+   * @param taskId TaskID
+   * @param messageContent messageContent
+   * @param userId userId
+   * @param arrayAttachmentUri arrayAttachmentUri
+   * @returns Observable型でcreateMessageItemを返します
+   */
   sendNewMessage(taskId: string, messageContent: string, userId: string, arrayAttachmentUri?: Array<string>): Observable<any> {
     const inputContent = {
       id: `${uuid()}`,
@@ -58,15 +77,29 @@ export class TaskDetailLogic {
     return this.taskDetailService.createMessageItem(inputContent);
   }
 
+  /**
+   * 新規で作られたMessageをSubscribeします
+   * @returns Observable型でonMessageListenerを返します
+   */
   onCreateMessageListener() {
     return this.taskDetailService.onMessageListener();
   }
 
+  /**
+   * ログイン済みのユーザーIDを取得します
+   * @returns Observable型でCurrentUserInfoを返します
+   */
   fetchCurrentUserInfo(): Observable<CurrentUserInfo> {
     return this.sessionService.fetchCurrentUser()
       .pipe(map((res) => res.attributes));
   }
 
+  /**
+   * 任意のRoomにTaskを追加します
+   * @param dismissData dismissData
+   * @param taskId taskId
+   * @returns Observable型でupdateTaskItemを返します
+   */
   updateTaskToRoom(dismissData, taskId): Observable<any> {
     const content = {
       id: `${taskId}`,
@@ -77,6 +110,11 @@ export class TaskDetailLogic {
     return this.taskDetailService.updateTaskItem(content);
   }
 
+  /**
+   * Roomのメンバーを取得します
+   * @param roomId roomId
+   * @returns Observable型でfetchRoomMemberを返します
+   */
   fetchMemberListOnRoom(roomId: string | number): Observable<any> {
     const filterContent = {
       roomID: {
