@@ -74,11 +74,11 @@
   </ion-toolbar>
 
   <!-- 写真添付時に表示される -->
-  <ion-toolbar *ngIf="arrayImageUrl.length !== 0">
+  <ion-toolbar *ngIf="arrayImageBase64Data.length !== 0">
     <ion-grid>
       <ion-row>
         <ion-card
-          *ngFor="let imageItem of arrayImageUrl; index as i"
+          *ngFor="let imageItem of arrayImageBase64Data; index as i"
           class="width-height"
         >
           <img [src]="imageItem" />
@@ -96,7 +96,7 @@
     <ion-col class="size-icon-col" size="1">
       <ion-button
         fill="clear"
-        [disabled]="arrayImageUrl.length === 2"
+        [disabled]="arrayImageBase64Data.length === 2"
         (click)="takePhoto()"
       >
         <ion-icon

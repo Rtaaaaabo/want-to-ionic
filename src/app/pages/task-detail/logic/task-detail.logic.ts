@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, from, of } from 'rxjs';
-import { catchError, concatMap, map } from 'rxjs/operators';
+import { concatMap, map } from 'rxjs/operators';
 import { Storage } from 'aws-amplify';
 import { v4 as uuid } from 'uuid';
 import { SessionService } from 'src/app/shared/service/session.service';
@@ -47,7 +47,6 @@ export class TaskDetailLogic {
   }
 
   sendNewMessage(taskId: string, messageContent: string, userId: string, arrayAttachmentUri?: Array<string>): Observable<any> {
-    console.log('arrayAttachmentUri', arrayAttachmentUri);
     const inputContent = {
       id: `${uuid()}`,
       authorID: `${userId}`,
@@ -93,11 +92,12 @@ export class TaskDetailLogic {
    * @param arrayBase64Data 配列型のBase64Dataを渡します。
    * @returns Observable型でS3から返ってきた値を返します。
    */
-  uploadFile(fileName: string, arrayBase64Data: Array<any>): Observable<any> {
-    let base64Data = '';
-    let ext = '';
-    let contentType = '';
-    let uploadFileName = '';
+  uploadFile(arrayBase64Data: Array<any>, taskId: string): Observable<any> {
+    let fileName: string;
+    let base64Data: any;
+    let ext: string;
+    let contentType: string;
+    let uploadFileName: string;
     const dt = new Date();
     const dirName = this.getDirString(dt);
     return from(arrayBase64Data)
@@ -106,6 +106,7 @@ export class TaskDetailLogic {
       .pipe(map((result) => contentType = result))
       .pipe(concatMap((contentType) => this.makeExt(contentType)))
       .pipe(map((result) => ext = result))
+      .pipe(map(() => fileName = `attachment_${uuid()}_${taskId}`))
       .pipe(map(() => uploadFileName = `${dirName}/${fileName}.${ext}`))
       .pipe(concatMap(() => this.base64toBlob(base64Data, contentType)))
       .pipe(concatMap((blobFile) => this.putStorage(uploadFileName, blobFile, contentType)))

@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Location, ViewportScroller } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
+import { v4 as uuid } from 'uuid';
 import { ModalController, ActionSheetController, ToastController, IonContent, Platform, AlertController } from '@ionic/angular';
 import { Plugins, CameraResultType } from '@capacitor/core';
-import { from, Observable, of } from 'rxjs';
-import { v4 as uuid } from 'uuid';
+import { from, Observable } from 'rxjs';
 import { TaskDetailLogic } from './logic/task-detail.logic';
 import { AddTaskModalComponent } from 'src/app/shared/component/modal/add-task-modal/add-task-modal.component';
 import { filter, tap, map, concatMap, toArray } from 'rxjs/operators';
@@ -30,7 +30,7 @@ export class TaskDetailPage implements OnInit {
   message: ListMessagesQuery;
   userId: string;
   roomMembers: Array<ListRoomGroupsQuery>;
-  arrayImageUrl: Array<string> = [];
+  arrayImageBase64Data: Array<any> = [];
 
   constructor(
     private location: Location,
@@ -70,24 +70,22 @@ export class TaskDetailPage implements OnInit {
     this.logic.fetchMessagePerTask(this.taskId)
       .subscribe((data) => {
         this.message = data.items;
-        console.log('Message', this.message);
       });
   }
 
   sendMessage(): void {
-    const fileName = `attachment_${uuid()}_${this.taskId}`;
-    if (this.arrayImageUrl.length === 0) {
+    if (this.arrayImageBase64Data.length === 0) {
       this.logic.sendNewMessage(this.taskId, this.newMsg, this.userId)
         .subscribe(() => this.newMsg = '');
     } else {
-      this.logic.uploadFile(fileName, this.arrayImageUrl)
+      this.logic.uploadFile(this.arrayImageBase64Data, this.taskId)
         .pipe(map((data) => data.key))
         .pipe(concatMap((result) => this.logic.getStorage(result)))
         .pipe(toArray())
         .pipe(concatMap((data) => this.logic.sendNewMessage(this.taskId, this.newMsg, this.userId, data)))
         .subscribe(() => {
           this.newMsg = '';
-          this.arrayImageUrl = [];
+          this.arrayImageBase64Data = [];
         });
     }
   }
@@ -234,7 +232,7 @@ export class TaskDetailPage implements OnInit {
       promptLabelPhoto: 'ライブラリから',
       promptLabelPicture: 'カメラ'
     });
-    this.arrayImageUrl.push(image.dataUrl);
+    this.arrayImageBase64Data.push(image.dataUrl);
   }
 
   initializeApp(): Observable<string> {
@@ -242,7 +240,7 @@ export class TaskDetailPage implements OnInit {
   }
 
   deleteImage(indexTarget: number): void {
-    this.arrayImageUrl.splice(indexTarget, 1);
+    this.arrayImageBase64Data.splice(indexTarget, 1);
   }
 
   async presentAlert(): Promise<void> {
