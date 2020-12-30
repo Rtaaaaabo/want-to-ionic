@@ -37,11 +37,8 @@
       (ionItemReorder)="reorderTask($event)"
       [disabled]="!isReorder"
     >
-      <ion-card
-        *ngFor="let item of taskActiveItems"
-        (click)="navigateToTaskDetail(item, segment, isReorder)"
-      >
-        <ion-reorder>
+      <ion-card *ngFor="let item of taskActiveItems">
+        <ion-reorder (click)="navigateToTaskDetail(item, segment, isReorder)">
           <ion-card-header>
             <ion-card-subtitle>
               {{ item.scheduleDate | date: 'yyyy/MM/dd' }} まで
