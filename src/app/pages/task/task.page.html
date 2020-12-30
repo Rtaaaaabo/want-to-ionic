@@ -95,13 +95,19 @@
 <!-- Segment: DONEの場合 -->
 <ion-content *ngIf="segment === 'done'">
   <ion-list>
-    <ion-card *ngFor="let item of taskDoneItems">
-      <ion-card-content (click)="navigateToTaskDetail(item, segment)">
+    <ion-card
+      *ngFor="let item of taskDoneItems"
+      (click)="navigateToTaskDetail(item, segment)"
+    >
+      <ion-card-header>
+        <ion-card-subtitle>
+          {{ item.scheduleDate | date: 'yyyy/MM/dd' }} まで
+        </ion-card-subtitle>
+        <ion-card-title> {{ item.title }}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
         <ion-item class="card-background" lines="none">
-          <ion-label>
-            <h2 class="task-title">{{ item.title }}</h2>
-            <p>{{item.description}}</p>
-          </ion-label>
+          <p>{{item.description}}</p>
         </ion-item>
       </ion-card-content>
     </ion-card>
