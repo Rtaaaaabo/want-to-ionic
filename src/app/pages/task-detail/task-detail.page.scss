@@ -15,10 +15,9 @@
     width: 100%;
     border: 1px solid var(--ion-color-medium);
     border-radius: 10px;
-    background: #fff;
     resize: none;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-left: 30px; // padding-right: 10px;
+    --background: '#1c1c1d';
 }
 
 .msg-btn {
@@ -36,4 +35,40 @@
 
 .text-right {
     text-align: right;
+}
+
+.size-icon-col {
+    --ion-grid-width: 20px
+}
+
+.width-height {
+    width: 75px;
+    height: 75px;
+    margin: 2px;
+    position: relative;
+}
+
+/*ボタンを重ねるためのブロック要素*/
+.deleteButtonContainer {
+    width: 15px;
+    height: 15px;
+    position: absolute;
+    top: 0;
+}
+
+/*各サムネイル画像に重ねる削除ボタン*/
+.deleteButton {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    padding-left: 0;
+    padding-right: 0;
+    text-align: center;
+    line-height: 9px;
+    vertical-align: middle;
+    color: grey;
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    left: 3px;
 }

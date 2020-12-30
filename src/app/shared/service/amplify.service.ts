@@ -2794,6 +2794,7 @@ export type ListMessagesQuery = {
     content: string;
     createdAt: string | null;
     isSent: boolean | null;
+    attachmentUri: Array<string | null> | null;
     author: {
       __typename: "User";
       id: string;
@@ -5577,6 +5578,7 @@ export class AmplifyService {
             content
             createdAt
             isSent
+            attachmentUri
             task {
               __typename
               id

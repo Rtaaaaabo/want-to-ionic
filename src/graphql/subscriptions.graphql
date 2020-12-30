@@ -423,6 +423,7 @@ subscription OnCreateTask {
         content
         createdAt
         isSent
+        attachmentUri
         updatedAt
       }
       nextToken
@@ -513,6 +514,7 @@ subscription OnUpdateTask {
         content
         createdAt
         isSent
+        attachmentUri
         updatedAt
       }
       nextToken
@@ -603,6 +605,7 @@ subscription OnDeleteTask {
         content
         createdAt
         isSent
+        attachmentUri
         updatedAt
       }
       nextToken
@@ -652,6 +655,7 @@ subscription OnCreateUser {
         content
         createdAt
         isSent
+        attachmentUri
         updatedAt
       }
       nextToken
@@ -728,6 +732,7 @@ subscription OnUpdateUser {
         content
         createdAt
         isSent
+        attachmentUri
         updatedAt
       }
       nextToken
@@ -804,6 +809,7 @@ subscription OnDeleteUser {
         content
         createdAt
         isSent
+        attachmentUri
         updatedAt
       }
       nextToken
@@ -1189,6 +1195,7 @@ subscription OnCreateMessage {
     content
     createdAt
     isSent
+    attachmentUri
     author {
       id
       username
@@ -1272,6 +1279,7 @@ subscription OnUpdateMessage {
     content
     createdAt
     isSent
+    attachmentUri
     author {
       id
       username
@@ -1355,6 +1363,7 @@ subscription OnDeleteMessage {
     content
     createdAt
     isSent
+    attachmentUri
     author {
       id
       username

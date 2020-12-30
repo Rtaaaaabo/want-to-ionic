@@ -3,7 +3,6 @@ import { Router } from "@angular/router";
 import { Auth } from "aws-amplify";
 import { Observable, from, BehaviorSubject, of } from "rxjs";
 import { map, tap, catchError } from "rxjs/operators";
-import { InterfaceSignup } from "../../interfaces/signup.interface";
 
 @Injectable({
   providedIn: "root",

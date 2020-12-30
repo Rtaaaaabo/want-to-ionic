@@ -7,8 +7,6 @@ import { concatMap, map, filter, toArray } from 'rxjs/operators';
 import { ModelRoomGroupFilterInput } from 'src/app/shared/service/amplify.service';
 import { ResponseListRoomGroupsQueryItems } from '../service/reponse/response.model';
 
-
-
 interface Attribute {
   email: string,
   email_verified: boolean,

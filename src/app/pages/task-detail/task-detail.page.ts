@@ -1,13 +1,17 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Location, ViewportScroller } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { ModalController, ActionSheetController, ToastController, IonContent, Platform } from '@ionic/angular';
-import { from, Observable, of } from 'rxjs';
+import { v4 as uuid } from 'uuid';
+import { ModalController, ActionSheetController, ToastController, IonContent, Platform, AlertController } from '@ionic/angular';
+import { Plugins, CameraResultType } from '@capacitor/core';
+import { from, Observable } from 'rxjs';
 import { TaskDetailLogic } from './logic/task-detail.logic';
 import { AddTaskModalComponent } from 'src/app/shared/component/modal/add-task-modal/add-task-modal.component';
-import { filter, tap, map, concatMap } from 'rxjs/operators';
+import { filter, tap, map, concatMap, toArray } from 'rxjs/operators';
 import { CurrentUserInfo } from '../task/interface/current-user-info.interface';
 import { ListRoomGroupsQuery } from 'src/app/API.service';
+import { ListMessagesQuery } from 'src/app/shared/service/amplify.service';
+const { Camera } = Plugins;
 
 @Component({
   selector: 'app-task-detail',
@@ -23,9 +27,10 @@ export class TaskDetailPage implements OnInit {
   link = "comment"
   fragmentComment = '';
   newMsg: string = '';
-  message;
+  message: ListMessagesQuery;
   userId: string;
   roomMembers: Array<ListRoomGroupsQuery>;
+  arrayImageBase64Data: Array<any> = [];
 
   constructor(
     private location: Location,
@@ -36,6 +41,7 @@ export class TaskDetailPage implements OnInit {
     private actionSheetCtrl: ActionSheetController,
     private toastCtrl: ToastController,
     private platform: Platform,
+    private readonly alertCtrl: AlertController,
   ) {
     this.initializeApp()
       .subscribe(() => {
@@ -49,7 +55,7 @@ export class TaskDetailPage implements OnInit {
       });
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.taskId = this.route.snapshot.paramMap.get('id');
     this.segment = this.route.snapshot.paramMap.get('segment');
     this.logic.fetchCurrentUserInfo().subscribe((res: CurrentUserInfo) => {
@@ -61,14 +67,27 @@ export class TaskDetailPage implements OnInit {
       .subscribe(({ items }) => {
         this.roomMembers = items;
       });
-    this.logic.fetchMessagePerTask(this.taskId).subscribe((data) => {
-      this.message = data.items;
-    });
+    this.logic.fetchMessagePerTask(this.taskId)
+      .subscribe((data) => {
+        this.message = data.items;
+      });
   }
 
-  sendMessage() {
-    this.logic.sendNewMessage(this.taskId, this.newMsg, this.userId)
-      .subscribe(() => this.newMsg = '');
+  sendMessage(): void {
+    if (this.arrayImageBase64Data.length === 0) {
+      this.logic.sendNewMessage(this.taskId, this.newMsg, this.userId)
+        .subscribe(() => this.newMsg = '');
+    } else {
+      this.logic.uploadFile(this.arrayImageBase64Data, this.taskId)
+        .pipe(map((data) => data.key))
+        .pipe(concatMap((result) => this.logic.getStorage(result)))
+        .pipe(toArray())
+        .pipe(concatMap((data) => this.logic.sendNewMessage(this.taskId, this.newMsg, this.userId, data)))
+        .subscribe(() => {
+          this.newMsg = '';
+          this.arrayImageBase64Data = [];
+        });
+    }
   }
 
   async presentDoneToast(): Promise<void> {
@@ -93,9 +112,7 @@ export class TaskDetailPage implements OnInit {
     });
   }
 
-  async presentModalEditTask(taskDetail) {
-    console.log('taskDetail', taskDetail);
-    console.log('roomMembers', this.roomMembers);
+  async presentModalEditTask(taskDetail): Promise<void> {
     const modal = await this.modalCtrl.create({
       component: AddTaskModalComponent,
       componentProps: {
@@ -118,22 +135,20 @@ export class TaskDetailPage implements OnInit {
     const presentToast = from(this.presentDoneToast());
     this.logic.updateTaskItem(taskDetail, 10)
       .pipe(concatMap(() => this.logic.fetchAnyTask(taskDetail.id)))
-      .pipe(tap(() => presentToast)).subscribe((data) => this.taskDetail = data);
+      .pipe(tap(() => presentToast))
+      .subscribe((data) => this.taskDetail = data);
   }
 
-  moveTask(taskDetail) {
+  moveTask(taskDetail): void {
     const presentToast = from(this.presentMoveTask());
     this.logic.updateTaskItem(taskDetail, 0)
       .pipe(concatMap(() => this.logic.fetchAnyTask(taskDetail.id)))
       .pipe(tap(() => presentToast))
       .pipe(map((data) => this.taskDetail = data))
-      // なにかあればここでPriorityを変更する処理入れる
-      .subscribe((data) => {
-        console.log(data);
-      });
+      .subscribe(() => { });
   }
 
-  async presentActionSheet(taskDetail) {
+  async presentActionSheet(taskDetail): Promise<void> {
     const activeActionSheet = await this.actionSheetCtrl.create({
       cssClass: 'my-custom-class',
       buttons: [
@@ -199,17 +214,41 @@ export class TaskDetailPage implements OnInit {
     }
   }
 
-  deleteTask(taskDetail) {
-    console.log('削除します。', taskDetail);
-  }
+  deleteTask(taskDetail): void { }
 
-  goBackToRoom() {
+  goBackToRoom(): void {
     this.location.back();
   }
 
+  selectFile(): void { }
+
+  async takePhoto(): Promise<void> {
+    const image = await Camera.getPhoto({
+      quality: 50,
+      allowEditing: true,
+      resultType: CameraResultType.DataUrl,
+      promptLabelHeader: 'カメラ',
+      promptLabelCancel: 'キャンセル',
+      promptLabelPhoto: 'ライブラリから',
+      promptLabelPicture: 'カメラ'
+    });
+    this.arrayImageBase64Data.push(image.dataUrl);
+  }
 
   initializeApp(): Observable<string> {
     return from(this.platform.ready());
   }
 
+  deleteImage(indexTarget: number): void {
+    this.arrayImageBase64Data.splice(indexTarget, 1);
+  }
+
+  async presentAlert(): Promise<void> {
+    const alert = await this.alertCtrl.create({
+      header: 'アップロード最大値です',
+      message: '一度にアップロードできる数は一件です',
+      buttons: ['了解']
+    });
+    await alert.present();
+  }
 }

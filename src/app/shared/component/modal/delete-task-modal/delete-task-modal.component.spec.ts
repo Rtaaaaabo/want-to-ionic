@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
 import { DeleteTaskModalComponent } from './delete-task-modal.component';
@@ -7,9 +7,9 @@ describe('DeleteTaskModalComponent', () => {
   let component: DeleteTaskModalComponent;
   let fixture: ComponentFixture<DeleteTaskModalComponent>;
 
-  beforeEach(async(() => {
+  beforeEach((() => {
     TestBed.configureTestingModule({
-      declarations: [ DeleteTaskModalComponent ],
+      declarations: [DeleteTaskModalComponent],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 

@@ -70,6 +70,7 @@ export class TaskPage implements OnInit {
       this.taskDoneItems = data.doneTaskItems;
       this.room = data.room;
       this.roomMembers = data.roomMembers;
+      console.log('taskActiveItems', this.taskActiveItems);
     });
   }
 
@@ -132,7 +133,8 @@ export class TaskPage implements OnInit {
       .subscribe();
   }
 
-  navigateToTaskDetail(task, segment): void {
+  navigateToTaskDetail(task, segment: string, isReorder: boolean): void {
+    if (isReorder) return;
     this.router.navigate(['task-detail', `${task.id}`, `${segment}`])
   }
 

@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
 import { TaskDetailPage } from './task-detail.page';
@@ -7,9 +7,9 @@ describe('TaskDetailPage', () => {
   let component: TaskDetailPage;
   let fixture: ComponentFixture<TaskDetailPage>;
 
-  beforeEach(async(() => {
+  beforeEach((() => {
     TestBed.configureTestingModule({
-      declarations: [ TaskDetailPage ],
+      declarations: [TaskDetailPage],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 

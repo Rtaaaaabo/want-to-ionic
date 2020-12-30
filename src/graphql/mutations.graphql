@@ -444,6 +444,7 @@ mutation CreateTask(
         content
         createdAt
         isSent
+        attachmentUri
         updatedAt
       }
       nextToken
@@ -537,6 +538,7 @@ mutation UpdateTask(
         content
         createdAt
         isSent
+        attachmentUri
         updatedAt
       }
       nextToken
@@ -630,6 +632,7 @@ mutation DeleteTask(
         content
         createdAt
         isSent
+        attachmentUri
         updatedAt
       }
       nextToken
@@ -682,6 +685,7 @@ mutation CreateUser(
         content
         createdAt
         isSent
+        attachmentUri
         updatedAt
       }
       nextToken
@@ -761,6 +765,7 @@ mutation UpdateUser(
         content
         createdAt
         isSent
+        attachmentUri
         updatedAt
       }
       nextToken
@@ -840,6 +845,7 @@ mutation DeleteUser(
         content
         createdAt
         isSent
+        attachmentUri
         updatedAt
       }
       nextToken
@@ -1246,6 +1252,7 @@ mutation CreateMessage(
     content
     createdAt
     isSent
+    attachmentUri
     author {
       id
       username
@@ -1332,6 +1339,7 @@ mutation UpdateMessage(
     content
     createdAt
     isSent
+    attachmentUri
     author {
       id
       username
@@ -1418,6 +1426,7 @@ mutation DeleteMessage(
     content
     createdAt
     isSent
+    attachmentUri
     author {
       id
       username

@@ -6,8 +6,8 @@ import {
   toArray,
   concatMap,
   findIndex,
-  catchError,
 } from "rxjs/operators";
+import { Storage } from 'aws-amplify';
 import {
   CreateRoomGroupMutation,
   CreateTaskMutation,
@@ -23,6 +23,7 @@ import { v4 as uuid } from "uuid";
 import { TaskService } from "../service/task.service";
 import { CurrentUserInfo } from "../interface/current-user-info.interface";
 import { InterfaceTask } from "src/app/interfaces/task.interface";
+
 
 @Injectable({
   providedIn: "root",
@@ -196,5 +197,4 @@ export class TaskLogic {
   addMembersToAnyRoom(arrayUserId: Array<string>, roomId: string): Observable<any> {
     return from(arrayUserId).pipe(concatMap((userId) => this.createUserRoomGroup(userId, roomId)))
   }
-
 }

@@ -253,6 +253,7 @@ query GetTask($id: ID!) {
         content
         createdAt
         isSent
+        attachmentUri
         updatedAt
       }
       nextToken
@@ -351,6 +352,7 @@ query GetUser($id: ID!) {
         content
         createdAt
         isSent
+        attachmentUri
         updatedAt
       }
       nextToken
@@ -622,6 +624,7 @@ query GetMessage($id: ID!) {
     content
     createdAt
     isSent
+    attachmentUri
     author {
       id
       username
@@ -710,6 +713,7 @@ query ListMessages(
       content
       createdAt
       isSent
+      attachmentUri
       author {
         id
         username
