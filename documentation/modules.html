@@ -8,35 +8,1095 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link rel="icon" type="image/x-icon" href="./images/favicon.ico">
-	      <link rel="stylesheet" href="./styles/style.css">
+	    <link rel="stylesheet" href="./styles/style.css">
     </head>
     <body>
 
         <div class="navbar navbar-default navbar-fixed-top visible-xs">
             <a href="./" class="navbar-brand">wanto documentation</a>
-            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+            <button type="button" class="btn btn-default btn-menu fa fa-bars" id="btn-menu"></button>
         </div>
 
         <div class="xs-menu menu" id="mobile-menu">
-                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+            <div id="book-search-input" role="search">
+                <input type="text" placeholder="Type to search">
+            </div>
+            <nav>
+            
+                <ul class="list">
+            
+                    <li class="title">
+                        <a href="./">wanto documentation</a>
+                    </li>
+            
+                    <li class="divider"></li>
+            
+            
+                    <li class="chapter">
+                        <a data-type="chapter-link" href="./"><span class="fa fa-home"></span>Getting started</a>
+                        <ul class="links">
+                                <li class="link">
+                                    <a href="./" ><span class="fa fa-file-text-o"></span>README</a>
+                                </li>
+                                <li class="link">
+                                    <a 
+                                        
+                                         href="./overview.html" 
+                                         href="./overview.html" 
+                                        >
+                                        <span class="fa fa-th"></span>Overview
+                                    </a>
+                                </li>
+                        </ul>
+                    </li>
+            
+                    <li class="chapter">
+                        <a data-type="chapter-link" href="./modules.html"  class="active" >
+                            <span class="fa fa-archive"></span>
+                            <span>Modules</span>
+                            <span class="menu-toggler fa fa-angle-up" data-toggle="collapse"
+                                    data-target="#xs-modules-links"
+                            ></span>
+                        </a>
+                        <ul class="links collapse in"
+                                id="xs-modules-links"
+                            >
+                                <li class="link">
+                                    <a href="modules/AppModule.html" >AppModule</a>
+                                </li>
+                                <li class="link">
+                                    <a href="modules/CommentPageModule.html" >CommentPageModule</a>
+                                </li>
+                                <li class="link">
+                                    <a href="modules/CommentPageRoutingModule.html" >CommentPageRoutingModule</a>
+                                </li>
+                                <li class="link">
+                                    <a href="modules/ConfirmPageModule.html" >ConfirmPageModule</a>
+                                </li>
+                                <li class="link">
+                                    <a href="modules/ConfirmPageRoutingModule.html" >ConfirmPageRoutingModule</a>
+                                </li>
+                                <li class="link">
+                                    <a href="modules/HomePageModule.html" >HomePageModule</a>
+                                </li>
+                                <li class="link">
+                                    <a href="modules/HomePageRoutingModule.html" >HomePageRoutingModule</a>
+                                </li>
+                                <li class="link">
+                                    <a href="modules/LoginPageModule.html" >LoginPageModule</a>
+                                </li>
+                                <li class="link">
+                                    <a href="modules/LoginPageRoutingModule.html" >LoginPageRoutingModule</a>
+                                </li>
+                                <li class="link">
+                                    <a href="modules/OwnTaskPageModule.html" >OwnTaskPageModule</a>
+                                </li>
+                                <li class="link">
+                                    <a href="modules/OwnTaskPageRoutingModule.html" >OwnTaskPageRoutingModule</a>
+                                </li>
+                                <li class="link">
+                                    <a href="modules/RoomMembersPageModule.html" >RoomMembersPageModule</a>
+                                </li>
+                                <li class="link">
+                                    <a href="modules/RoomMembersPageRoutingModule.html" >RoomMembersPageRoutingModule</a>
+                                </li>
+                                <li class="link">
+                                    <a href="modules/SettingPageModule.html" >SettingPageModule</a>
+                                </li>
+                                <li class="link">
+                                    <a href="modules/SettingPageRoutingModule.html" >SettingPageRoutingModule</a>
+                                </li>
+                                <li class="link">
+                                    <a href="modules/SharedModule.html" >SharedModule</a>
+                                </li>
+                                <li class="link">
+                                    <a href="modules/SignupPageModule.html" >SignupPageModule</a>
+                                </li>
+                                <li class="link">
+                                    <a href="modules/SignupPageRoutingModule.html" >SignupPageRoutingModule</a>
+                                </li>
+                                <li class="link">
+                                    <a href="modules/TabsPageModule.html" >TabsPageModule</a>
+                                </li>
+                                <li class="link">
+                                    <a href="modules/TaskDetailPageModule.html" >TaskDetailPageModule</a>
+                                </li>
+                                <li class="link">
+                                    <a href="modules/TaskDetailPageRoutingModule.html" >TaskDetailPageRoutingModule</a>
+                                </li>
+                                <li class="link">
+                                    <a href="modules/TaskPageModule.html" >TaskPageModule</a>
+                                </li>
+                                <li class="link">
+                                    <a href="modules/TaskPageRoutingModule.html" >TaskPageRoutingModule</a>
+                                </li>
+                        </ul>
+                    </li>
+            
+                    <li class="chapter">
+                        <div class="simple">
+                            <span class="fa fa-cogs"></span>
+                            <span>Components</span>
+                            <span class="menu-toggler fa fa-angle-up" data-toggle="collapse"
+                                    data-target="#xs-components-links"
+                                ></span>
+                        </div>
+                        <ul class="links collapse in"
+                                id="xs-components-links"
+                            >
+                                <li class="link">
+                                    <a href="components/AddPersonModalComponent.html" >AddPersonModalComponent</a>
+                                </li>
+                                <li class="link">
+                                    <a href="components/AddRoomModalComponent.html" >AddRoomModalComponent</a>
+                                </li>
+                                <li class="link">
+                                    <a href="components/AddTaskModalComponent.html" >AddTaskModalComponent</a>
+                                </li>
+                                <li class="link">
+                                    <a href="components/AppComponent.html" >AppComponent</a>
+                                </li>
+                                <li class="link">
+                                    <a href="components/CommentPage.html" >CommentPage</a>
+                                </li>
+                                <li class="link">
+                                    <a href="components/ConfirmPage.html" >ConfirmPage</a>
+                                </li>
+                                <li class="link">
+                                    <a href="components/DeleteTaskModalComponent.html" >DeleteTaskModalComponent</a>
+                                </li>
+                                <li class="link">
+                                    <a href="components/EditProfileModalComponent.html" >EditProfileModalComponent</a>
+                                </li>
+                                <li class="link">
+                                    <a href="components/HomePage.html" >HomePage</a>
+                                </li>
+                                <li class="link">
+                                    <a href="components/ListRoomComponent.html" >ListRoomComponent</a>
+                                </li>
+                                <li class="link">
+                                    <a href="components/LoginPage.html" >LoginPage</a>
+                                </li>
+                                <li class="link">
+                                    <a href="components/NoContentComponent.html" >NoContentComponent</a>
+                                </li>
+                                <li class="link">
+                                    <a href="components/OwnTaskPage.html" >OwnTaskPage</a>
+                                </li>
+                                <li class="link">
+                                    <a href="components/RoomMembersPage.html" >RoomMembersPage</a>
+                                </li>
+                                <li class="link">
+                                    <a href="components/SettingPage.html" >SettingPage</a>
+                                </li>
+                                <li class="link">
+                                    <a href="components/SignupPage.html" >SignupPage</a>
+                                </li>
+                                <li class="link">
+                                    <a href="components/TabsPage.html" >TabsPage</a>
+                                </li>
+                                <li class="link">
+                                    <a href="components/TaskDetailPage.html" >TaskDetailPage</a>
+                                </li>
+                                <li class="link">
+                                    <a href="components/TaskPage.html" >TaskPage</a>
+                                </li>
+                        </ul>
+                    </li>
+            
+            
+            
+                    <li class="chapter">
+                        <a data-type="chapter-link" href="./routes.html" ><span class="fa fa-code-fork"></span>Routes</a>
+                    </li>
+            
+                    <li class="chapter">
+                        <div class="simple">
+                            <span class="fa fa-long-arrow-down"></span>
+                            <span>Injectables</span>
+                            <span class="menu-toggler fa fa-angle-up" data-toggle="collapse"
+                                    data-target="#xs-injectables-links"
+                                ></span>
+                        </div>
+                        <ul class="links collapse in"
+                                id="xs-injectables-links"
+                            >
+                                <li class="link">
+                                    <a href="injectables/APIService.html" >APIService</a>
+                                </li>
+                                <li class="link">
+                                    <a href="injectables/AddPersonLogic.html" >AddPersonLogic</a>
+                                </li>
+                                <li class="link">
+                                    <a href="injectables/AmplifyService.html" >AmplifyService</a>
+                                </li>
+                                <li class="link">
+                                    <a href="injectables/AuthGuard.html" >AuthGuard</a>
+                                </li>
+                                <li class="link">
+                                    <a href="injectables/ConfirmLogic.html" >ConfirmLogic</a>
+                                </li>
+                                <li class="link">
+                                    <a href="injectables/HomeLogic.html" >HomeLogic</a>
+                                </li>
+                                <li class="link">
+                                    <a href="injectables/HomeService.html" >HomeService</a>
+                                </li>
+                                <li class="link">
+                                    <a href="injectables/LoginLogic.html" >LoginLogic</a>
+                                </li>
+                                <li class="link">
+                                    <a href="injectables/OwnTaskLogic.html" >OwnTaskLogic</a>
+                                </li>
+                                <li class="link">
+                                    <a href="injectables/OwnTaskService.html" >OwnTaskService</a>
+                                </li>
+                                <li class="link">
+                                    <a href="injectables/RoomMemberService.html" >RoomMemberService</a>
+                                </li>
+                                <li class="link">
+                                    <a href="injectables/RoomMembersLogic.html" >RoomMembersLogic</a>
+                                </li>
+                                <li class="link">
+                                    <a href="injectables/SessionService.html" >SessionService</a>
+                                </li>
+                                <li class="link">
+                                    <a href="injectables/SettingLogic.html" >SettingLogic</a>
+                                </li>
+                                <li class="link">
+                                    <a href="injectables/SettingService.html" >SettingService</a>
+                                </li>
+                                <li class="link">
+                                    <a href="injectables/SharedLogicService.html" >SharedLogicService</a>
+                                </li>
+                                <li class="link">
+                                    <a href="injectables/SignupLogicService.html" >SignupLogicService</a>
+                                </li>
+                                <li class="link">
+                                    <a href="injectables/TaskDetailLogic.html" >TaskDetailLogic</a>
+                                </li>
+                                <li class="link">
+                                    <a href="injectables/TaskDetailService.html" >TaskDetailService</a>
+                                </li>
+                                <li class="link">
+                                    <a href="injectables/TaskLogic.html" >TaskLogic</a>
+                                </li>
+                                <li class="link">
+                                    <a href="injectables/TaskService.html" >TaskService</a>
+                                </li>
+                        </ul>
+                    </li>
+            
+                    <li class="chapter">
+                        <div class="simple">
+                            <span class="fa fa-info"></span>
+                            <span>Interfaces</span>
+                            <span class="menu-toggler fa fa-angle-up" data-toggle="collapse"
+                                    data-target="#xs-interfaces-links"
+                                ></span>
+                        </div>
+                        <ul class="links collapse in"
+                                id="xs-interfaces-links"
+                            >
+                                <li class="link">
+                                    <a href="interfaces/Attribute.html" >Attribute</a>
+                                </li>
+                                <li class="link">
+                                    <a href="interfaces/CompanyMembers.html" >CompanyMembers</a>
+                                </li>
+                                <li class="link">
+                                    <a href="interfaces/CurrentUserInfo.html" >CurrentUserInfo</a>
+                                </li>
+                                <li class="link">
+                                    <a href="interfaces/InterfaceRoomMembers.html" >InterfaceRoomMembers</a>
+                                </li>
+                                <li class="link">
+                                    <a href="interfaces/InterfaceSignup.html" >InterfaceSignup</a>
+                                </li>
+                                <li class="link">
+                                    <a href="interfaces/InterfaceTask.html" >InterfaceTask</a>
+                                </li>
+                                <li class="link">
+                                    <a href="interfaces/InterfaceUser.html" >InterfaceUser</a>
+                                </li>
+                                <li class="link">
+                                    <a href="interfaces/MemberTask.html" >MemberTask</a>
+                                </li>
+                                <li class="link">
+                                    <a href="interfaces/OwnUser.html" >OwnUser</a>
+                                </li>
+                                <li class="link">
+                                    <a href="interfaces/ResponseListRoomGroupsQueryItems.html" >ResponseListRoomGroupsQueryItems</a>
+                                </li>
+                                <li class="link">
+                                    <a href="interfaces/SubscriptionResponse.html" >SubscriptionResponse</a>
+                                </li>
+                                <li class="link">
+                                    <a href="interfaces/TaskFormModel.html" >TaskFormModel</a>
+                                </li>
+                        </ul>
+                    </li>
+            
+            
+                    <li class="chapter">
+                        <a data-type="chapter-link" href="./miscellaneous.html" ><span class="fa fa-cubes"></span>Miscellaneous</a>
+                    </li>
+            
+                    <li class="chapter">
+                        <a data-type="chapter-link" href="./coverage.html" ><span class="fa fa-tasks"></span>Documentation coverage</a>
+                    </li>
+            
+                    <li class="divider"></li>
+                    <li class="copyright">
+                            Documentation generated using <a href="https://compodoc.github.io/compodoc/" target="_blank">
+                                        <img src=".//images/compodoc-vectorise.svg" class="img-responsive">
+                            </a>
+                    </li>
+            
+                </ul>
+            
+            </nav>
         </div>
 
         <div class="container-fluid main">
            <div class="row main">
                <div class="hidden-xs menu">
-                   <compodoc-menu mode="normal"></compodoc-menu>
+                   <nav>
+                   
+                       <ul class="list">
+                   
+                           <li class="title">
+                               <a href="./">wanto documentation</a>
+                           </li>
+                   
+                           <li class="divider"></li>
+                   
+                               <div id="book-search-input" role="search">
+                                   <input type="text" placeholder="Type to search">
+                               </div>
+                   
+                           <li class="chapter">
+                               <a data-type="chapter-link" href="./"><span class="fa fa-home"></span>Getting started</a>
+                               <ul class="links">
+                                       <li class="link">
+                                           <a href="./" ><span class="fa fa-file-text-o"></span>README</a>
+                                       </li>
+                                       <li class="link">
+                                           <a 
+                                               
+                                                href="./overview.html" 
+                                                href="./overview.html" 
+                                               >
+                                               <span class="fa fa-th"></span>Overview
+                                           </a>
+                                       </li>
+                               </ul>
+                           </li>
+                   
+                           <li class="chapter">
+                               <a data-type="chapter-link" href="./modules.html"  class="active" >
+                                   <span class="fa fa-archive"></span>
+                                   <span>Modules</span>
+                                   <span class="menu-toggler fa fa-angle-up" data-toggle="collapse"
+                                           data-target="#modules-links"
+                                   ></span>
+                               </a>
+                               <ul class="links collapse in"
+                                       id="modules-links"
+                   >
+                                       <li class="link">
+                                           <a href="modules/AppModule.html" >AppModule</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="modules/CommentPageModule.html" >CommentPageModule</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="modules/CommentPageRoutingModule.html" >CommentPageRoutingModule</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="modules/ConfirmPageModule.html" >ConfirmPageModule</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="modules/ConfirmPageRoutingModule.html" >ConfirmPageRoutingModule</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="modules/HomePageModule.html" >HomePageModule</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="modules/HomePageRoutingModule.html" >HomePageRoutingModule</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="modules/LoginPageModule.html" >LoginPageModule</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="modules/LoginPageRoutingModule.html" >LoginPageRoutingModule</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="modules/OwnTaskPageModule.html" >OwnTaskPageModule</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="modules/OwnTaskPageRoutingModule.html" >OwnTaskPageRoutingModule</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="modules/RoomMembersPageModule.html" >RoomMembersPageModule</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="modules/RoomMembersPageRoutingModule.html" >RoomMembersPageRoutingModule</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="modules/SettingPageModule.html" >SettingPageModule</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="modules/SettingPageRoutingModule.html" >SettingPageRoutingModule</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="modules/SharedModule.html" >SharedModule</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="modules/SignupPageModule.html" >SignupPageModule</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="modules/SignupPageRoutingModule.html" >SignupPageRoutingModule</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="modules/TabsPageModule.html" >TabsPageModule</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="modules/TaskDetailPageModule.html" >TaskDetailPageModule</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="modules/TaskDetailPageRoutingModule.html" >TaskDetailPageRoutingModule</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="modules/TaskPageModule.html" >TaskPageModule</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="modules/TaskPageRoutingModule.html" >TaskPageRoutingModule</a>
+                                       </li>
+                               </ul>
+                           </li>
+                   
+                           <li class="chapter">
+                               <div class="simple">
+                                   <span class="fa fa-cogs"></span>
+                                   <span>Components</span>
+                                   <span class="menu-toggler fa fa-angle-up" data-toggle="collapse"
+                                           data-target="#components-links"
+                   ></span>
+                               </div>
+                               <ul class="links collapse in"
+                                       id="components-links"
+                   >
+                                       <li class="link">
+                                           <a href="components/AddPersonModalComponent.html" >AddPersonModalComponent</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="components/AddRoomModalComponent.html" >AddRoomModalComponent</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="components/AddTaskModalComponent.html" >AddTaskModalComponent</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="components/AppComponent.html" >AppComponent</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="components/CommentPage.html" >CommentPage</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="components/ConfirmPage.html" >ConfirmPage</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="components/DeleteTaskModalComponent.html" >DeleteTaskModalComponent</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="components/EditProfileModalComponent.html" >EditProfileModalComponent</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="components/HomePage.html" >HomePage</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="components/ListRoomComponent.html" >ListRoomComponent</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="components/LoginPage.html" >LoginPage</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="components/NoContentComponent.html" >NoContentComponent</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="components/OwnTaskPage.html" >OwnTaskPage</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="components/RoomMembersPage.html" >RoomMembersPage</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="components/SettingPage.html" >SettingPage</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="components/SignupPage.html" >SignupPage</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="components/TabsPage.html" >TabsPage</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="components/TaskDetailPage.html" >TaskDetailPage</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="components/TaskPage.html" >TaskPage</a>
+                                       </li>
+                               </ul>
+                           </li>
+                   
+                   
+                   
+                           <li class="chapter">
+                               <a data-type="chapter-link" href="./routes.html" ><span class="fa fa-code-fork"></span>Routes</a>
+                           </li>
+                   
+                           <li class="chapter">
+                               <div class="simple">
+                                   <span class="fa fa-long-arrow-down"></span>
+                                   <span>Injectables</span>
+                                   <span class="menu-toggler fa fa-angle-up" data-toggle="collapse"
+                                           data-target="#injectables-links"
+                   ></span>
+                               </div>
+                               <ul class="links collapse in"
+                                       id="injectables-links"
+                   >
+                                       <li class="link">
+                                           <a href="injectables/APIService.html" >APIService</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="injectables/AddPersonLogic.html" >AddPersonLogic</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="injectables/AmplifyService.html" >AmplifyService</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="injectables/AuthGuard.html" >AuthGuard</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="injectables/ConfirmLogic.html" >ConfirmLogic</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="injectables/HomeLogic.html" >HomeLogic</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="injectables/HomeService.html" >HomeService</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="injectables/LoginLogic.html" >LoginLogic</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="injectables/OwnTaskLogic.html" >OwnTaskLogic</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="injectables/OwnTaskService.html" >OwnTaskService</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="injectables/RoomMemberService.html" >RoomMemberService</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="injectables/RoomMembersLogic.html" >RoomMembersLogic</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="injectables/SessionService.html" >SessionService</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="injectables/SettingLogic.html" >SettingLogic</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="injectables/SettingService.html" >SettingService</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="injectables/SharedLogicService.html" >SharedLogicService</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="injectables/SignupLogicService.html" >SignupLogicService</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="injectables/TaskDetailLogic.html" >TaskDetailLogic</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="injectables/TaskDetailService.html" >TaskDetailService</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="injectables/TaskLogic.html" >TaskLogic</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="injectables/TaskService.html" >TaskService</a>
+                                       </li>
+                               </ul>
+                           </li>
+                   
+                           <li class="chapter">
+                               <div class="simple">
+                                   <span class="fa fa-info"></span>
+                                   <span>Interfaces</span>
+                                   <span class="menu-toggler fa fa-angle-up" data-toggle="collapse"
+                                           data-target="#interfaces-links"
+                   ></span>
+                               </div>
+                               <ul class="links collapse in"
+                                       id="interfaces-links"
+                   >
+                                       <li class="link">
+                                           <a href="interfaces/Attribute.html" >Attribute</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="interfaces/CompanyMembers.html" >CompanyMembers</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="interfaces/CurrentUserInfo.html" >CurrentUserInfo</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="interfaces/InterfaceRoomMembers.html" >InterfaceRoomMembers</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="interfaces/InterfaceSignup.html" >InterfaceSignup</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="interfaces/InterfaceTask.html" >InterfaceTask</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="interfaces/InterfaceUser.html" >InterfaceUser</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="interfaces/MemberTask.html" >MemberTask</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="interfaces/OwnUser.html" >OwnUser</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="interfaces/ResponseListRoomGroupsQueryItems.html" >ResponseListRoomGroupsQueryItems</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="interfaces/SubscriptionResponse.html" >SubscriptionResponse</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="interfaces/TaskFormModel.html" >TaskFormModel</a>
+                                       </li>
+                               </ul>
+                           </li>
+                   
+                   
+                           <li class="chapter">
+                               <a data-type="chapter-link" href="./miscellaneous.html" ><span class="fa fa-cubes"></span>Miscellaneous</a>
+                           </li>
+                   
+                           <li class="chapter">
+                               <a data-type="chapter-link" href="./coverage.html" ><span class="fa fa-tasks"></span>Documentation coverage</a>
+                           </li>
+                   
+                           <li class="divider"></li>
+                           <li class="copyright">
+                                   Documentation generated using <a href="https://compodoc.github.io/compodoc/" target="_blank">
+                                               <img src=".//images/compodoc-vectorise.svg" class="img-responsive">
+                                   </a>
+                           </li>
+                   
+                       </ul>
+                   
+                   </nav>
                </div>
-               <!-- START CONTENT -->
                <div class="content modules">
                    <div class="content-data">
 
-
-
-<ol class="breadcrumb">
-    <li>Modules</li>
-</ol>
+<h3>Modules</h3>
 <div class="container-fluid modules">
     <div class="row">
+        <div class="col-sm-4">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">AppModule</h4>
+                </div>
+                <div class="card-block">
+                    <p>
+                        <object id="demo-svg" type="image/svg+xml" data="./modules/AppModule/dependencies.svg" style="width: 100%; height: 175px;">
+                                Your browser does not support SVG
+                        </object>
+                    </p>
+                    <footer class="text-center">
+                        <a href="./modules/AppModule.html" class="btn btn-default">Browse</a>
+                    </footer>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">CommentPageModule</h4>
+                </div>
+                <div class="card-block">
+                    <p>
+                        <object id="demo-svg" type="image/svg+xml" data="./modules/CommentPageModule/dependencies.svg" style="width: 100%; height: 175px;">
+                                Your browser does not support SVG
+                        </object>
+                    </p>
+                    <footer class="text-center">
+                        <a href="./modules/CommentPageModule.html" class="btn btn-default">Browse</a>
+                    </footer>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">CommentPageRoutingModule</h4>
+                </div>
+                <div class="card-block">
+                    <p>
+                        <object id="demo-svg" type="image/svg+xml" data="./modules/CommentPageRoutingModule/dependencies.svg" style="width: 100%; height: 175px;">
+                                Your browser does not support SVG
+                        </object>
+                    </p>
+                    <footer class="text-center">
+                        <a href="./modules/CommentPageRoutingModule.html" class="btn btn-default">Browse</a>
+                    </footer>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">ConfirmPageModule</h4>
+                </div>
+                <div class="card-block">
+                    <p>
+                        <object id="demo-svg" type="image/svg+xml" data="./modules/ConfirmPageModule/dependencies.svg" style="width: 100%; height: 175px;">
+                                Your browser does not support SVG
+                        </object>
+                    </p>
+                    <footer class="text-center">
+                        <a href="./modules/ConfirmPageModule.html" class="btn btn-default">Browse</a>
+                    </footer>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">ConfirmPageRoutingModule</h4>
+                </div>
+                <div class="card-block">
+                    <p>
+                        <object id="demo-svg" type="image/svg+xml" data="./modules/ConfirmPageRoutingModule/dependencies.svg" style="width: 100%; height: 175px;">
+                                Your browser does not support SVG
+                        </object>
+                    </p>
+                    <footer class="text-center">
+                        <a href="./modules/ConfirmPageRoutingModule.html" class="btn btn-default">Browse</a>
+                    </footer>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">HomePageModule</h4>
+                </div>
+                <div class="card-block">
+                    <p>
+                        <object id="demo-svg" type="image/svg+xml" data="./modules/HomePageModule/dependencies.svg" style="width: 100%; height: 175px;">
+                                Your browser does not support SVG
+                        </object>
+                    </p>
+                    <footer class="text-center">
+                        <a href="./modules/HomePageModule.html" class="btn btn-default">Browse</a>
+                    </footer>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">HomePageRoutingModule</h4>
+                </div>
+                <div class="card-block">
+                    <p>
+                        <object id="demo-svg" type="image/svg+xml" data="./modules/HomePageRoutingModule/dependencies.svg" style="width: 100%; height: 175px;">
+                                Your browser does not support SVG
+                        </object>
+                    </p>
+                    <footer class="text-center">
+                        <a href="./modules/HomePageRoutingModule.html" class="btn btn-default">Browse</a>
+                    </footer>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">LoginPageModule</h4>
+                </div>
+                <div class="card-block">
+                    <p>
+                        <object id="demo-svg" type="image/svg+xml" data="./modules/LoginPageModule/dependencies.svg" style="width: 100%; height: 175px;">
+                                Your browser does not support SVG
+                        </object>
+                    </p>
+                    <footer class="text-center">
+                        <a href="./modules/LoginPageModule.html" class="btn btn-default">Browse</a>
+                    </footer>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">LoginPageRoutingModule</h4>
+                </div>
+                <div class="card-block">
+                    <p>
+                        <object id="demo-svg" type="image/svg+xml" data="./modules/LoginPageRoutingModule/dependencies.svg" style="width: 100%; height: 175px;">
+                                Your browser does not support SVG
+                        </object>
+                    </p>
+                    <footer class="text-center">
+                        <a href="./modules/LoginPageRoutingModule.html" class="btn btn-default">Browse</a>
+                    </footer>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">OwnTaskPageModule</h4>
+                </div>
+                <div class="card-block">
+                    <p>
+                        <object id="demo-svg" type="image/svg+xml" data="./modules/OwnTaskPageModule/dependencies.svg" style="width: 100%; height: 175px;">
+                                Your browser does not support SVG
+                        </object>
+                    </p>
+                    <footer class="text-center">
+                        <a href="./modules/OwnTaskPageModule.html" class="btn btn-default">Browse</a>
+                    </footer>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">OwnTaskPageRoutingModule</h4>
+                </div>
+                <div class="card-block">
+                    <p>
+                        <object id="demo-svg" type="image/svg+xml" data="./modules/OwnTaskPageRoutingModule/dependencies.svg" style="width: 100%; height: 175px;">
+                                Your browser does not support SVG
+                        </object>
+                    </p>
+                    <footer class="text-center">
+                        <a href="./modules/OwnTaskPageRoutingModule.html" class="btn btn-default">Browse</a>
+                    </footer>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">RoomMembersPageModule</h4>
+                </div>
+                <div class="card-block">
+                    <p>
+                        <object id="demo-svg" type="image/svg+xml" data="./modules/RoomMembersPageModule/dependencies.svg" style="width: 100%; height: 175px;">
+                                Your browser does not support SVG
+                        </object>
+                    </p>
+                    <footer class="text-center">
+                        <a href="./modules/RoomMembersPageModule.html" class="btn btn-default">Browse</a>
+                    </footer>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">RoomMembersPageRoutingModule</h4>
+                </div>
+                <div class="card-block">
+                    <p>
+                        <object id="demo-svg" type="image/svg+xml" data="./modules/RoomMembersPageRoutingModule/dependencies.svg" style="width: 100%; height: 175px;">
+                                Your browser does not support SVG
+                        </object>
+                    </p>
+                    <footer class="text-center">
+                        <a href="./modules/RoomMembersPageRoutingModule.html" class="btn btn-default">Browse</a>
+                    </footer>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">SettingPageModule</h4>
+                </div>
+                <div class="card-block">
+                    <p>
+                        <object id="demo-svg" type="image/svg+xml" data="./modules/SettingPageModule/dependencies.svg" style="width: 100%; height: 175px;">
+                                Your browser does not support SVG
+                        </object>
+                    </p>
+                    <footer class="text-center">
+                        <a href="./modules/SettingPageModule.html" class="btn btn-default">Browse</a>
+                    </footer>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">SettingPageRoutingModule</h4>
+                </div>
+                <div class="card-block">
+                    <p>
+                        <object id="demo-svg" type="image/svg+xml" data="./modules/SettingPageRoutingModule/dependencies.svg" style="width: 100%; height: 175px;">
+                                Your browser does not support SVG
+                        </object>
+                    </p>
+                    <footer class="text-center">
+                        <a href="./modules/SettingPageRoutingModule.html" class="btn btn-default">Browse</a>
+                    </footer>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">SharedModule</h4>
+                </div>
+                <div class="card-block">
+                    <p>
+                        <object id="demo-svg" type="image/svg+xml" data="./modules/SharedModule/dependencies.svg" style="width: 100%; height: 175px;">
+                                Your browser does not support SVG
+                        </object>
+                    </p>
+                    <footer class="text-center">
+                        <a href="./modules/SharedModule.html" class="btn btn-default">Browse</a>
+                    </footer>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">SignupPageModule</h4>
+                </div>
+                <div class="card-block">
+                    <p>
+                        <object id="demo-svg" type="image/svg+xml" data="./modules/SignupPageModule/dependencies.svg" style="width: 100%; height: 175px;">
+                                Your browser does not support SVG
+                        </object>
+                    </p>
+                    <footer class="text-center">
+                        <a href="./modules/SignupPageModule.html" class="btn btn-default">Browse</a>
+                    </footer>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">SignupPageRoutingModule</h4>
+                </div>
+                <div class="card-block">
+                    <p>
+                        <object id="demo-svg" type="image/svg+xml" data="./modules/SignupPageRoutingModule/dependencies.svg" style="width: 100%; height: 175px;">
+                                Your browser does not support SVG
+                        </object>
+                    </p>
+                    <footer class="text-center">
+                        <a href="./modules/SignupPageRoutingModule.html" class="btn btn-default">Browse</a>
+                    </footer>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">TabsPageModule</h4>
+                </div>
+                <div class="card-block">
+                    <p>
+                        <object id="demo-svg" type="image/svg+xml" data="./modules/TabsPageModule/dependencies.svg" style="width: 100%; height: 175px;">
+                                Your browser does not support SVG
+                        </object>
+                    </p>
+                    <footer class="text-center">
+                        <a href="./modules/TabsPageModule.html" class="btn btn-default">Browse</a>
+                    </footer>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">TaskDetailPageModule</h4>
+                </div>
+                <div class="card-block">
+                    <p>
+                        <object id="demo-svg" type="image/svg+xml" data="./modules/TaskDetailPageModule/dependencies.svg" style="width: 100%; height: 175px;">
+                                Your browser does not support SVG
+                        </object>
+                    </p>
+                    <footer class="text-center">
+                        <a href="./modules/TaskDetailPageModule.html" class="btn btn-default">Browse</a>
+                    </footer>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">TaskDetailPageRoutingModule</h4>
+                </div>
+                <div class="card-block">
+                    <p>
+                        <object id="demo-svg" type="image/svg+xml" data="./modules/TaskDetailPageRoutingModule/dependencies.svg" style="width: 100%; height: 175px;">
+                                Your browser does not support SVG
+                        </object>
+                    </p>
+                    <footer class="text-center">
+                        <a href="./modules/TaskDetailPageRoutingModule.html" class="btn btn-default">Browse</a>
+                    </footer>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">TaskPageModule</h4>
+                </div>
+                <div class="card-block">
+                    <p>
+                        <object id="demo-svg" type="image/svg+xml" data="./modules/TaskPageModule/dependencies.svg" style="width: 100%; height: 175px;">
+                                Your browser does not support SVG
+                        </object>
+                    </p>
+                    <footer class="text-center">
+                        <a href="./modules/TaskPageModule.html" class="btn btn-default">Browse</a>
+                    </footer>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">TaskPageRoutingModule</h4>
+                </div>
+                <div class="card-block">
+                    <p>
+                        <object id="demo-svg" type="image/svg+xml" data="./modules/TaskPageRoutingModule/dependencies.svg" style="width: 100%; height: 175px;">
+                                Your browser does not support SVG
+                        </object>
+                    </p>
+                    <footer class="text-center">
+                        <a href="./modules/TaskPageRoutingModule.html" class="btn btn-default">Browse</a>
+                    </footer>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -49,15 +1109,9 @@
 
 
 
-
-                   
-
-
-
-
                    </div><div class="search-results">
     <div class="has-results">
-        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
         <ul class="search-results-list"></ul>
     </div>
     <div class="no-results">
@@ -65,22 +1119,8 @@
     </div>
 </div>
 </div>
-               <!-- END CONTENT -->
            </div>
        </div>
-
-       <script>
-            var COMPODOC_CURRENT_PAGE_DEPTH = 0;
-            var COMPODOC_CURRENT_PAGE_CONTEXT = 'modules';
-            var COMPODOC_CURRENT_PAGE_URL = 'modules.html';
-            var MAX_SEARCH_RESULTS = 15;
-       </script>
-
-       <script src="./js/libs/custom-elements.min.js"></script>
-       <script src="./js/libs/lit-html.js"></script>
-       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
-       <script src="./js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
-       <script src="./js/menu-wc.js" defer></script>
 
        <script src="./js/libs/bootstrap-native.js"></script>
 
@@ -91,17 +1131,20 @@
 
        <script src="./js/compodoc.js"></script>
 
-       <script src="./js/tabs.js"></script>
-       <script src="./js/menu.js"></script>
-       <script src="./js/libs/clipboard.min.js"></script>
-       <script src="./js/libs/prism.js"></script>
-       <script src="./js/sourceCode.js"></script>
-          <script src="./js/search/search.js"></script>
-          <script src="./js/search/lunr.min.js"></script>
-          <script src="./js/search/search-lunr.js"></script>
-          <script src="./js/search/search_index.js"></script>
-       <script src="./js/lazy-load-graphs.js"></script>
+       <script src="./js/search/search.js"></script>
+       <script src="./js/search/lunr.min.js"></script>
+       <script src="./js/search/search-lunr.js"></script>
 
+       <script src="./js/menu.js"></script>
+       <script src="./js/libs/highlight.pack.js"></script>
+       <script src="./js/libs/highlightjs-line-numbers.min.js"></script>
+       <script src="./js/search/search_index.js"></script>
+       <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                hljs.initHighlightingOnLoad();
+                hljs.initLineNumbersOnLoad();
+            });
+       </script>
 
     </body>
 </html>

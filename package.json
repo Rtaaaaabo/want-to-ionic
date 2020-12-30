@@ -10,7 +10,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "compodoc": "npx compodoc -p tsconfig.app.json src",
+    "compodoc": "compodoc -p tsconfig.app.json src -s",
     "postinstall": "ngcc"
   },
   "private": true,
@@ -55,6 +55,7 @@
     "@types/jest": "^26.0.8",
     "@types/node": "^12.11.1",
     "codelyzer": "^5.1.2",
+    "compodoc": "0.0.41",
     "jasmine-core": "~3.5.0",
     "jasmine-spec-reporter": "~4.2.1",
     "jest": "^26.2.2",
