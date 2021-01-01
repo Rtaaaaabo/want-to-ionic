@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { ModalController } from '@ionic/angular';
-import { concatMap, map } from 'rxjs/operators';
+import { concatMap, map, switchMap } from 'rxjs/operators';
 import { RoomMembersLogic } from './logic/room-members.logic';
 import { AddPersonModalComponent } from '../task/component/add-person-modal/add-person-modal.component';
 
@@ -58,7 +58,10 @@ export class RoomMembersPage implements OnInit {
     this.location.back();
   }
 
-  activeEditMode(): void { }
+  withdrawalFromAnyRoom(): void {
+    this.logic.fetchRoomMembersExceptOwn(this.roomId, this.currentUserId)
+      .pipe(switchMap((data) => data.length === 0 ? this.logic.deleteRoomItem(this.roomId) : this.logic.removeOwnFromRoom(this.roomId, this.currentUser)));
+  }
 
   searchRoomMembers(ev: CustomEvent): void {
     const nameQuery = ev.detail.value;

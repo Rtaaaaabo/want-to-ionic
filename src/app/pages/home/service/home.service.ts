@@ -58,7 +58,6 @@ export class HomeService {
     const requestContent = {
       id: roomGroupId
     }
-    console.log('Service [deleteRoomGroupsItem requestContent]', requestContent);
     return from(this.amplifyService.DeleteRoomGroup(requestContent));
   }
 }
