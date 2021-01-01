@@ -12,12 +12,12 @@ import { MemberTask } from '../../model/task-member.model';
 export class AddPersonModalComponent implements OnInit {
 
   arraySelectedPersonId: Array<string>;
-  notAssignMembers;
   members: Array<MemberTask>;
-  companyMembers;
-  users;
   companyId: string;
   roomId: string;
+  companyMembers;
+  notAssignMembers;
+  users;
 
   constructor(
     private modalCtrl: ModalController,

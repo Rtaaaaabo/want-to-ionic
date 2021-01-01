@@ -6,7 +6,6 @@ import { concatMap, map } from 'rxjs/operators';
 import { RoomMembersLogic } from './logic/room-members.logic';
 import { AddPersonModalComponent } from '../task/component/add-person-modal/add-person-modal.component';
 
-
 @Component({
   selector: 'app-room-members',
   templateUrl: './room-members.page.html',
@@ -40,8 +39,8 @@ export class RoomMembersPage implements OnInit {
       .pipe(concatMap((result) => this.logic.setRoomMembers(result, this.currentUserId)))
       .pipe(map((members) => this.roomMembers = members))
       .pipe(concatMap(() => this.logic.fetchCompanyMember(this.companyId)))
-      .subscribe(({ items }) => {
-        this.companyMembers = items;
+      .subscribe(({ items: companyMembers }) => {
+        this.companyMembers = companyMembers;
         this.roomMembers.unshift(this.currentUser);
         this.notAssignMembers = this.checkNotAssignMember(this.companyMembers, this.roomMembers);
       });
@@ -94,9 +93,11 @@ export class RoomMembersPage implements OnInit {
           return;
         };
         this.logic.fetchRoomMembers(this.roomId)
-          .pipe(concatMap(({ items }) => this.logic.setRoomMembers(items, this.currentUserId)))
-          .subscribe((items) => {
-            this.roomMembers = items;
+          .pipe(concatMap(({ items: members }) => this.logic.setRoomMembers(members, this.currentUserId)))
+          .subscribe((members) => {
+            this.roomMembers = members;
+            this.roomMembers.unshift(this.currentUser);
+            console.log(this.roomMembers);
             this.notAssignMembers = this.checkNotAssignMember(this.companyMembers, this.roomMembers);
           })
       })

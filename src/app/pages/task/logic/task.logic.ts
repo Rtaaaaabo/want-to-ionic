@@ -195,6 +195,7 @@ export class TaskLogic {
   }
 
   addMembersToAnyRoom(arrayUserId: Array<string>, roomId: string): Observable<any> {
-    return from(arrayUserId).pipe(concatMap((userId) => this.createUserRoomGroup(userId, roomId)))
+    return from(arrayUserId)
+      .pipe(concatMap((userId) => this.createUserRoomGroup(userId, roomId)));
   }
 }
