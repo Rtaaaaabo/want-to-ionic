@@ -28,7 +28,7 @@ export class RoomMembersPage implements OnInit {
     private route: ActivatedRoute,
   ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.notAssignMembers = [];
     this.companyId = this.route.snapshot.paramMap.get('companyId');
     this.roomId = this.route.snapshot.paramMap.get('roomId');
@@ -55,15 +55,15 @@ export class RoomMembersPage implements OnInit {
     });
   }
 
-  goBackToRoom() {
+  goBackToRoom(): void {
     this.location.back();
   }
 
-  activeEditMode() {
+  activeEditMode(): void {
     console.log('activeEditMode');
   }
 
-  searchRoomMembers(ev: CustomEvent) {
+  searchRoomMembers(ev: CustomEvent): void {
     const nameQuery = ev.detail.value;
     if (nameQuery !== null) {
       this.logic.fetchRoomMembers(this.roomId, nameQuery)
@@ -74,13 +74,11 @@ export class RoomMembersPage implements OnInit {
     } else {
       this.logic.fetchRoomMembers(this.roomId)
         .pipe(map((result) => result.items))
-        .subscribe(() => {
-          console.log('SearchBarがnullになったとき');
-        })
+        .subscribe(() => { });
     }
   }
 
-  async addMemberOnRoom() {
+  async addMemberOnRoom(): Promise<void> {
     const modal = await this.modalCtrl.create({
       component: AddPersonModalComponent,
       componentProps: {
@@ -90,17 +88,18 @@ export class RoomMembersPage implements OnInit {
         roomId: this.roomId,
       }
     });
-    modal.onDidDismiss().then(({ data }) => {
-      if (data.result === 'dismiss') {
-        return;
-      };
-      this.logic.fetchRoomMembers(this.roomId)
-        .pipe(concatMap(({ items }) => this.logic.setRoomMembers(items, this.currentUserId)))
-        .subscribe((items) => {
-          this.roomMembers = items;
-          this.notAssignMembers = this.checkNotAssignMember(this.companyMembers, this.roomMembers);
-        })
-    })
+    modal.onDidDismiss()
+      .then(({ data }) => {
+        if (data.result === 'dismiss') {
+          return;
+        };
+        this.logic.fetchRoomMembers(this.roomId)
+          .pipe(concatMap(({ items }) => this.logic.setRoomMembers(items, this.currentUserId)))
+          .subscribe((items) => {
+            this.roomMembers = items;
+            this.notAssignMembers = this.checkNotAssignMember(this.companyMembers, this.roomMembers);
+          })
+      })
     return modal.present();
   }
 }
