@@ -58,9 +58,7 @@ export class RoomMembersPage implements OnInit {
     this.location.back();
   }
 
-  activeEditMode(): void {
-    console.log('activeEditMode');
-  }
+  activeEditMode(): void { }
 
   searchRoomMembers(ev: CustomEvent): void {
     const nameQuery = ev.detail.value;
@@ -97,7 +95,6 @@ export class RoomMembersPage implements OnInit {
           .subscribe((members) => {
             this.roomMembers = members;
             this.roomMembers.unshift(this.currentUser);
-            console.log(this.roomMembers);
             this.notAssignMembers = this.checkNotAssignMember(this.companyMembers, this.roomMembers);
           })
       })
