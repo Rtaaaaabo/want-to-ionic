@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { concatMap, map, switchMap } from 'rxjs/operators';
 import { RoomMembersLogic } from './logic/room-members.logic';
@@ -24,6 +24,7 @@ export class RoomMembersPage implements OnInit {
     private logic: RoomMembersLogic,
     private location: Location,
     private modalCtrl: ModalController,
+    private router: Router,
     private route: ActivatedRoute,
   ) { }
 
@@ -59,8 +60,15 @@ export class RoomMembersPage implements OnInit {
   }
 
   withdrawalFromAnyRoom(): void {
+    console.log('withdrawalFromAnyRoom');
     this.logic.fetchRoomMembersExceptOwn(this.roomId, this.currentUserId)
-      .pipe(switchMap((data) => data.length === 0 ? this.logic.deleteRoomItem(this.roomId) : this.logic.removeOwnFromRoom(this.roomId, this.currentUser)));
+      .pipe(switchMap((data) => data.length === 0 ?
+        this.logic.deleteRoomItem(this.roomId) : this.logic.removeOwnFromRoom(this.roomId, this.currentUserId)
+      ))
+      .subscribe((result) => {
+        console.log(result);
+        this.router.navigate(['../tabs/home']);
+      })
   }
 
   searchRoomMembers(ev: CustomEvent): void {

@@ -66,6 +66,8 @@ export class RoomMembersLogic {
   }
 
   removeOwnFromRoom(roomId: string, currentUserId: string): Observable<any> {
+    console.log('roomId', roomId);
+    console.log('currentUserId', currentUserId);
     return this.fetchRoomGroupsId(roomId, currentUserId)
       .pipe(concatMap((roomGroupId) => this.roomMemberService.deleteRoomGroupsItem(roomGroupId)));
   }
