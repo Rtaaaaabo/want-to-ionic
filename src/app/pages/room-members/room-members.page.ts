@@ -67,7 +67,7 @@ export class RoomMembersPage implements OnInit {
       ))
       .subscribe((result) => {
         console.log(result);
-        this.router.navigate(['../tabs/home']);
+        this.router.navigate(['/home']);
       })
   }
 

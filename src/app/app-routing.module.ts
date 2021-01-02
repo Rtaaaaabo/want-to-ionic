@@ -8,21 +8,21 @@ const routes: Routes = [
     loadChildren: () => import('./pages/tabs/tabs.module').then(m => m.TabsPageModule),
     canActivate: [AuthGuard],
   },
-  {
-    path: 'home',
-    loadChildren: () => import('./pages/home/home.module').then(m => m.HomePageModule),
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'setting',
-    loadChildren: () => import('./pages/setting/setting.module').then(m => m.SettingPageModule),
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'own-task',
-    loadChildren: () => import('./pages/own-task/own-task.module').then(m => m.OwnTaskPageModule),
-    canActivate: [AuthGuard],
-  },
+  // {
+  //   path: 'home',
+  //   loadChildren: () => import('./pages/home/home.module').then(m => m.HomePageModule),
+  //   canActivate: [AuthGuard],
+  // },
+  // {
+  //   path: 'setting',
+  //   loadChildren: () => import('./pages/setting/setting.module').then(m => m.SettingPageModule),
+  //   canActivate: [AuthGuard],
+  // },
+  // {
+  //   path: 'own-task',
+  //   loadChildren: () => import('./pages/own-task/own-task.module').then(m => m.OwnTaskPageModule),
+  //   canActivate: [AuthGuard],
+  // },
   {
     path: 'signup',
     loadChildren: () => import('./pages/signup/signup.module').then(m => m.SignupPageModule),

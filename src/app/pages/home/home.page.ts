@@ -22,10 +22,12 @@ export class HomePage implements OnInit {
   constructor(
     private logic: HomeLogic,
     private modalCtrl: ModalController,
-  ) { }
+  ) {
+    console.log('Home Constructor');
+  }
 
   ngOnInit() {
-    console.log('ngOnInit');
+    console.log('Home ngOnInit');
     this.logic.fetchCurrentUser()
       .pipe(map((attributes) => {
         this.attributes = attributes;

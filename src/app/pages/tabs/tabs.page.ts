@@ -7,6 +7,10 @@ import { Component } from '@angular/core';
 })
 export class TabsPage {
 
-  constructor() {}
+  constructor() { }
+
+  navigateSetting(): void {
+    console.log('Navigate To Setting');
+  }
 
 }
