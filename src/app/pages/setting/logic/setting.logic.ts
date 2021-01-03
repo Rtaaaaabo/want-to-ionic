@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { SessionService } from '../../../shared/service/session.service';
 import { Observable } from 'rxjs';
-import { catchError } from 'rxjs/operators';
 import { SettingService } from '../service/setting.service';
 
 @Injectable({
@@ -15,8 +14,7 @@ export class SettingLogic {
   ) { }
 
   signOut(): Observable<any> {
-    return this.sessionService.signOut()
-      .pipe(catchError((error) => { return error }))
+    return this.sessionService.signOut();
   }
 
   fetchCurrentUser(): Observable<any> {

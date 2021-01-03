@@ -24,7 +24,7 @@ export class HomePage implements OnInit {
     private modalCtrl: ModalController,
   ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.logic.fetchCurrentUser()
       .pipe(map((attributes) => {
         this.attributes = attributes;
@@ -40,7 +40,7 @@ export class HomePage implements OnInit {
     console.log('HOME ON_INIT');
   }
 
-  async presentRegistrationUser() {
+  async presentRegistrationUser(): Promise<void> {
     const modal = await this.modalCtrl.create({
       component: EditProfileModalComponent,
       componentProps: {
@@ -56,10 +56,6 @@ export class HomePage implements OnInit {
         this.attributes = attributes;
       }));
     return modal.present();
-  }
-
-  ionTabsDidChange() {
-    console.log('home page ionTabsDidChange');
   }
 
 }
