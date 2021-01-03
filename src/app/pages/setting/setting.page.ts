@@ -5,7 +5,6 @@ import { SettingLogic } from './logic/setting.logic';
 import { EditProfileModalComponent } from '../../shared/component/modal/edit-profile-modal/edit-profile-modal.component';
 import { from } from 'rxjs';
 import { concatMap, flatMap } from 'rxjs/operators';
-import { runInThisContext } from 'vm';
 
 // interface User
 interface OwnUser {
@@ -35,16 +34,13 @@ export class SettingPage implements OnInit {
     private logic: SettingLogic,
     private router: Router,
     private modalCtrl: ModalController,
-  ) {
-    console.log(this.user);
-  }
+  ) { }
 
   ngOnInit() {
     this.logic.fetchCurrentUser()
       .pipe(flatMap((result) => this.logic.fetchUserInfo(result.username)))
       .subscribe((data) => {
         this.user = data;
-        console.log('user', this.user);
       });
   }
 

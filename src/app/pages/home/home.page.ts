@@ -22,12 +22,9 @@ export class HomePage implements OnInit {
   constructor(
     private logic: HomeLogic,
     private modalCtrl: ModalController,
-  ) {
-    console.log('Home Constructor');
-  }
+  ) { }
 
   ngOnInit() {
-    console.log('Home ngOnInit');
     this.logic.fetchCurrentUser()
       .pipe(map((attributes) => {
         this.attributes = attributes;
@@ -40,6 +37,7 @@ export class HomePage implements OnInit {
         }
         this.presentRegistrationUser()
       });
+    console.log('HOME ON_INIT');
   }
 
   async presentRegistrationUser() {
@@ -58,6 +56,10 @@ export class HomePage implements OnInit {
         this.attributes = attributes;
       }));
     return modal.present();
+  }
+
+  ionTabsDidChange() {
+    console.log('home page ionTabsDidChange');
   }
 
 }
