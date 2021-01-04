@@ -4800,21 +4800,59 @@ export class AmplifyService {
     condition?: ModelTaskConditionInput
   ): Promise<UpdateTaskMutation> {
     const statement = `mutation UpdateTask($input: UpdateTaskInput!, $condition: ModelTaskConditionInput) {
-        updateTask(input: $input, condition: $condition) {
+      updateTask(input: $input, condition: $condition) {
+        __typename
+        id
+        authorID
+        roomID
+        chargePersonID
+        title
+        description
+        scheduleDate
+        priority
+        status
+        createdAt
+        chargePerson {
           __typename
           id
-          authorID
-          roomID
-          title
-          description
-          scheduleDate
-          priority
-          status
+          username
+          email
+          companyID
+          tel
+          positionName
+          iconImage
+          registered
+          authority
+          company {
+            __typename
+            id
+            name
+            domain
+            createdAt
+            updatedAt
+          }
+          messages {
+            __typename
+            nextToken
+          }
+          room {
+            __typename
+            nextToken
+          }
+          task {
+            __typename
+            nextToken
+          }
+          chargeTask {
+            __typename
+            nextToken
+          }
           createdAt
           updatedAt
         }
-      }`;
-    const gqlAPIServiceArguments: any = {
+        updatedAt
+      }
+    }`; const gqlAPIServiceArguments: any = {
       input
     };
     if (condition) {

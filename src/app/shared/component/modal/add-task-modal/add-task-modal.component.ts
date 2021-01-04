@@ -33,6 +33,7 @@ export class AddTaskModalComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    console.log(this.taskForm);
     const currentDate = new Date();
     this.minYear = (currentDate.getFullYear()).toString();
     this.maxYear = (currentDate.getFullYear() + 1).toString();
@@ -58,6 +59,7 @@ export class AddTaskModalComponent implements OnInit {
   }
 
   createTaskItem(): void {
+    console.log('Create TaskFormValue', this.taskForm.value);
     this.modalCtrl.dismiss(this.taskForm.value);
   }
 

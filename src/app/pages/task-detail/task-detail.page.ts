@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Location, ViewportScroller } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { v4 as uuid } from 'uuid';
 import { ModalController, ActionSheetController, ToastController, IonContent, Platform, AlertController } from '@ionic/angular';
 import { Plugins, CameraResultType } from '@capacitor/core';
 import { from, Observable } from 'rxjs';
@@ -126,6 +125,7 @@ export class TaskDetailPage implements OnInit {
       .pipe(concatMap(({ data }) => this.logic.updateTaskToRoom(data, this.taskId)))
       .pipe(concatMap(() => this.logic.fetchAnyTask(this.taskId)))
       .subscribe((data) => {
+        console.log('onDidDismiss', data);
         this.taskDetail = data;
       })
     return modal.present();
