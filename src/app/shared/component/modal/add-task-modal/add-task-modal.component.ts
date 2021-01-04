@@ -23,6 +23,8 @@ export class AddTaskModalComponent implements OnInit {
   currentIsoString: string;
   roomMembers: ListRoomGroupsQuery;
 
+  strButton: string;
+
   room;
   taskDetail;
   userList;
@@ -33,7 +35,6 @@ export class AddTaskModalComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log(this.taskForm);
     const currentDate = new Date();
     this.minYear = (currentDate.getFullYear()).toString();
     this.maxYear = (currentDate.getFullYear() + 1).toString();
@@ -45,12 +46,14 @@ export class AddTaskModalComponent implements OnInit {
         scheduleDateItem: this.taskDetail.scheduleDate,
       });
       this.room = this.taskDetail.room;
+      this.strButton = '更新';
     } else {
       this.currentIsoString = currentDate.toISOString();
       this.taskForm.patchValue({
         scheduleDateItem: this.currentIsoString,
         chargePersonId: this.userId,
       });
+      this.strButton = '追加';
     }
   }
 
@@ -59,12 +62,9 @@ export class AddTaskModalComponent implements OnInit {
   }
 
   createTaskItem(): void {
-    console.log('Create TaskFormValue', this.taskForm.value);
     this.modalCtrl.dismiss(this.taskForm.value);
   }
 
-  changeDate() {
-    console.log('changeDate');
-  }
+  changeDate() { }
 
 }

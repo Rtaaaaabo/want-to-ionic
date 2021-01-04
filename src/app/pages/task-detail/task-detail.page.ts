@@ -125,7 +125,6 @@ export class TaskDetailPage implements OnInit {
       .pipe(concatMap(({ data }) => this.logic.updateTaskToRoom(data, this.taskId)))
       .pipe(concatMap(() => this.logic.fetchAnyTask(this.taskId)))
       .subscribe((data) => {
-        console.log('onDidDismiss', data);
         this.taskDetail = data;
       })
     return modal.present();
