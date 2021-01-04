@@ -106,6 +106,7 @@ export class TaskDetailLogic {
       title: `${dismissData.nameItem}`,
       description: `${dismissData.descriptionItem}`,
       scheduleDate: `${dismissData.scheduleDateItem}`,
+      chargePersonID: `${dismissData.chargePersonId}`,
     }
     return this.taskDetailService.updateTaskItem(content);
   }
