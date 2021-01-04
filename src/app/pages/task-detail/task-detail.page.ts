@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Location, ViewportScroller } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { ModalController, ActionSheetController, ToastController, IonContent, Platform, AlertController } from '@ionic/angular';
-import { Plugins, CameraResultType } from '@capacitor/core';
+import { Plugins, CameraResultType, FilesystemDirectory, FilesystemEncoding } from '@capacitor/core';
 import { from, Observable } from 'rxjs';
 import { TaskDetailLogic } from './logic/task-detail.logic';
 import { AddTaskModalComponent } from 'src/app/shared/component/modal/add-task-modal/add-task-modal.component';
@@ -10,7 +10,7 @@ import { filter, tap, map, concatMap, toArray } from 'rxjs/operators';
 import { CurrentUserInfo } from '../task/interface/current-user-info.interface';
 import { ListRoomGroupsQuery } from 'src/app/API.service';
 import { ListMessagesQuery } from 'src/app/shared/service/amplify.service';
-const { Camera } = Plugins;
+const { Camera, Filesystem } = Plugins;
 
 @Component({
   selector: 'app-task-detail',
@@ -232,6 +232,15 @@ export class TaskDetailPage implements OnInit {
       promptLabelPicture: 'カメラ'
     });
     this.arrayImageBase64Data.push(image.dataUrl);
+  }
+
+  async choiceFiles(): Promise<void> {
+    const contents = await Filesystem.readFile({
+      path: 'test.txt',
+      directory: FilesystemDirectory.Documents,
+      encoding: FilesystemEncoding.UTF8,
+    });
+    console.log(contents);
   }
 
   initializeApp(): Observable<string> {
