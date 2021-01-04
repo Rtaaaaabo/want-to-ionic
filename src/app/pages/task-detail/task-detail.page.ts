@@ -18,8 +18,8 @@ const { Camera, Filesystem } = Plugins;
   styleUrls: ['./task-detail.page.scss'],
 })
 export class TaskDetailPage implements OnInit {
-  @ViewChild('comment') child: HTMLElement;
-  @ViewChild(IonContent, { static: false }) content: IonContent;
+  // @ViewChild('comment') child: HTMLElement;
+  // @ViewChild(IonContent, { static: false }) content: IonContent;
   taskId: string;
   segment: string;
   taskDetail;
