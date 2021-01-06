@@ -11,6 +11,7 @@ import { EditProfileModalComponent } from './component/modal/edit-profile-modal/
 import { AddPersonModalComponent } from '../pages/task/component/add-person-modal/add-person-modal.component';
 import { NoContentComponent } from './component/no-content/no-content.component';
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
+import { UploadFileDirective } from './directive/upload-file.directive';
 
 
 @NgModule({
@@ -21,6 +22,7 @@ import { ImagePicker } from '@ionic-native/image-picker/ngx';
     EditProfileModalComponent,
     AddPersonModalComponent,
     NoContentComponent,
+    UploadFileDirective,
   ],
   imports: [
     CommonModule,

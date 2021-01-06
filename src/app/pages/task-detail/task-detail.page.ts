@@ -219,8 +219,6 @@ export class TaskDetailPage implements OnInit {
     this.location.back();
   }
 
-  selectFile(): void { }
-
   async takePhoto(): Promise<void> {
     const image = await Camera.getPhoto({
       quality: 50,
@@ -234,13 +232,15 @@ export class TaskDetailPage implements OnInit {
     this.arrayImageBase64Data.push(image.dataUrl);
   }
 
-  async choiceFiles(): Promise<void> {
-    const contents = await Filesystem.readFile({
-      path: 'test.txt',
-      directory: FilesystemDirectory.Documents,
-      encoding: FilesystemEncoding.UTF8,
+  async choiceFiles() {
+    // try {
+    await Filesystem.readdir({
+      path: 'test',
+      directory: FilesystemDirectory.Documents
     });
-    console.log(contents);
+    // } catch (e) {
+    // console.error('Error', e);
+    // }
   }
 
   initializeApp(): Observable<string> {

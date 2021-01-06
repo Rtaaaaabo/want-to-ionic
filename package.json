@@ -36,6 +36,7 @@
     "@types/jest": "^26.0.8",
     "aws-amplify": "^3.3.3",
     "cordova-plugin-file": "^6.0.2",
+    "ngx-uploader": "^11.0.0",
     "rxjs": "~6.5.1",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"

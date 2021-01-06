@@ -11,6 +11,8 @@ import { AppComponent } from './app.component';
 
 import { SharedModule } from './shared/shared.module';
 
+import { NgxUploaderModule } from 'ngx-uploader';
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -18,7 +20,8 @@ import { SharedModule } from './shared/shared.module';
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
-    SharedModule
+    SharedModule,
+    NgxUploaderModule,
   ],
   providers: [
     StatusBar,
