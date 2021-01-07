@@ -35,7 +35,7 @@
 
   <ion-list>
     <ion-list-header>
-      <ion-label>コメント</ion-label>
+      <ion-label>コミュニケーション</ion-label>
     </ion-list-header>
     <ion-item *ngFor="let item of message">
       <ion-avatar slot="start">
@@ -65,6 +65,7 @@
     <ion-row class="ion-no-padding">
       <ion-col>
         <ion-textarea
+          placeholder="メッセージ"
           class="message-input"
           maxRows="2"
           [(ngModel)]="newMsg"
