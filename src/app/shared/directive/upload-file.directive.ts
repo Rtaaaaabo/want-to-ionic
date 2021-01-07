@@ -26,7 +26,7 @@ export class UploadFileDirective {
   /**
    * ファイルドロップ時のイベント
    * 取得したファイルを引数に onFileDrop イベントを発火させる
-   * 
+   *
    * @param event イベント
    */
   @HostListener('drop', ['$event'])

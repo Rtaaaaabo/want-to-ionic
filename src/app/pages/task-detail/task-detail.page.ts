@@ -232,15 +232,8 @@ export class TaskDetailPage implements OnInit {
     this.arrayImageBase64Data.push(image.dataUrl);
   }
 
-  async choiceFiles() {
-    // try {
-    await Filesystem.readdir({
-      path: 'test',
-      directory: FilesystemDirectory.Documents
-    });
-    // } catch (e) {
-    // console.error('Error', e);
-    // }
+  onFileSelect(ev) {
+    console.log('choiceFiles', ev);
   }
 
   initializeApp(): Observable<string> {

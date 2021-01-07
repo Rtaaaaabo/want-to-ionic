@@ -12,6 +12,7 @@ import { AddPersonModalComponent } from '../pages/task/component/add-person-moda
 import { NoContentComponent } from './component/no-content/no-content.component';
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
 import { UploadFileDirective } from './directive/upload-file.directive';
+import { FileSelectDirective } from './directive/file-select.directive';
 
 
 @NgModule({
@@ -23,6 +24,7 @@ import { UploadFileDirective } from './directive/upload-file.directive';
     AddPersonModalComponent,
     NoContentComponent,
     UploadFileDirective,
+    FileSelectDirective,
   ],
   imports: [
     CommonModule,
