@@ -2,10 +2,11 @@ import { Injectable } from '@angular/core';
 import { HomeService } from '../service/home.service';
 import { SessionService } from '../../../shared/service/session.service';
 import { v4 as uuid } from 'uuid';
-import { Observable, from } from 'rxjs';
+import { Observable, from, of } from 'rxjs';
 import { concatMap, map, filter, toArray } from 'rxjs/operators';
 import { ModelRoomGroupFilterInput } from 'src/app/shared/service/amplify.service';
 import { ResponseListRoomGroupsQueryItems } from '../service/reponse/response.model';
+import { Storage } from 'aws-amplify';
 
 interface Attribute {
   email: string,
@@ -127,5 +128,33 @@ export class HomeLogic {
       .pipe(filter((item: ResponseListRoomGroupsQueryItems) => item.room !== null))
       .pipe(filter((item: ResponseListRoomGroupsQueryItems) => item.user !== null))
       .pipe(toArray());
+  }
+
+  getContentType(base64data): Observable<string> {
+    const block = base64data.split(";");
+    const contentType = block[0].split(";")[1];
+    return of(contentType)
+  }
+
+  makeExt(contentType: string): Observable<string> {
+    return of(contentType.match(/([^/]+?)?$/)[0]);
+  }
+
+  base64toBlob(base64Data: any, contentType: string): Observable<Blob> {
+    const byteCharacters = atob(base64Data.replace(/^.*,/, ''));
+    let buffer = new Uint8Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+      buffer[i] = byteCharacters.charCodeAt(i);
+    }
+    const blob = new Blob([buffer.buffer], {
+      type: contentType
+    });
+    return of(blob);
+  }
+
+  putStorage(uploadFileName: string, blobFile: Blob, contentType: string) {
+    return from(Storage.put(uploadFileName, blobFile, {
+      contentType: contentType
+    }));
   }
 }

@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { HomeLogic } from '../../../../pages/home/logic/home.logic';
-import { ImagePicker } from '@ionic-native/image-picker/ngx';
+import { Camera, CameraResultType } from '@capacitor/core';
 
 @Component({
   selector: 'app-edit-profile-modal',
@@ -24,11 +24,11 @@ export class EditProfileModalComponent implements OnInit {
   @Input() userId: string;
   @Input() user;
   title: string;
+  iconImage: string;
 
   constructor(
     private modalCtrl: ModalController,
     private logic: HomeLogic,
-    private imagePicker: ImagePicker,
   ) { }
 
   ngOnInit(): void {
@@ -58,8 +58,7 @@ export class EditProfileModalComponent implements OnInit {
         });
     } else {
       this.logic.updateUser(this.editProfileForm)
-        .subscribe((res) => {
-          console.log('Response: ', res);
+        .subscribe(() => {
           this.modalCtrl.dismiss();
         });
     }
@@ -69,18 +68,18 @@ export class EditProfileModalComponent implements OnInit {
     this.modalCtrl.dismiss();
   }
 
-  pickerImage(): void {
-    const options = {
-      maximumImagesCount: 1,
-      width: 400,
-      height: 400,
-      quality: 30,
-      outputType: 0,
-    }
-    this.imagePicker.getPictures(options)
-      .then((result) => {
-        console.log(result);
-      })
+  async pickerImage(): Promise<void> {
+    let iconImage = await Camera.getPhoto({
+      quality: 50,
+      allowEditing: true,
+      resultType: CameraResultType.DataUrl,
+      promptLabelPicture: 'カメラ',
+      promptLabelHeader: 'カメラ',
+      promptLabelPhoto: 'ライブラリから',
+      promptLabelCancel: 'キャンセル',
+    });
+    this.iconImage = await iconImage.dataUrl;
+
   }
 
 }
