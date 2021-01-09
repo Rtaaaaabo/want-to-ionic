@@ -123,6 +123,37 @@ export class HomeLogic {
       .pipe(map(({ items }) => items));
   }
 
+  fetchAvatarIconUrl(base64Data: any, userId: string) {
+    let contentType: string;
+    let fileName: string;
+    let uploadFilePath: string;
+    let ext: string;
+    const dt = new Date();
+    const dirName = this.getDirString(dt);
+    this.getContentType(base64Data)
+      .pipe(map((result) => contentType = result))
+      .pipe(concatMap(contentType => this.makeExt(contentType)))
+      .pipe(map(result => ext = result))
+      .pipe(map(() => fileName = `avatar_${uuid()}_${userId}`))
+      .pipe(map(() => uploadFilePath = `${dirName}/${fileName}.${ext}`))
+      .pipe(concatMap(() => this.base64toBlob(base64Data, contentType)))
+      .pipe(concatMap((blobFile) => this.putStorage(uploadFilePath, blobFile, contentType)));
+  }
+
+  getDirString(dt: Date): string {
+    const random = dt.getTime() + Math.floor(100000 * Math.random());
+    const randomMath = Math.random() * random;
+    const randomFloor = randomMath.toString(16);
+    return "" +
+      ("00" + dt.getUTCFullYear()).slice(-2) +
+      ("00" + (dt.getMonth() + 1)).slice(-2) +
+      ("00" + dt.getUTCDate()).slice(-2) +
+      ("00" + dt.getUTCHours()).slice(-2) +
+      ("00" + dt.getMinutes()).slice(-2) +
+      ("00" + dt.getUTCSeconds()).slice(-2) +
+      "-" + randomFloor;
+  }
+
   setExitsRoomAndUser(data): Observable<any> {
     return from(data)
       .pipe(filter((item: ResponseListRoomGroupsQueryItems) => item.room !== null))

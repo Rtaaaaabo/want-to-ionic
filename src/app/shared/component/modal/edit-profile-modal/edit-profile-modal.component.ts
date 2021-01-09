@@ -3,6 +3,7 @@ import { ModalController } from '@ionic/angular';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { HomeLogic } from '../../../../pages/home/logic/home.logic';
 import { Camera, CameraResultType } from '@capacitor/core';
+import { runInThisContext } from 'vm';
 
 const optionPicture = {
   quality: 50,
@@ -39,11 +40,13 @@ export class EditProfileModalComponent implements OnInit {
   constructor(
     private modalCtrl: ModalController,
     private logic: HomeLogic,
-  ) { }
+  ) {
+    console.log('avatarImage', this.editProfileForm.value.iconImage);
+  }
 
   ngOnInit(): void {
-    this.title = 'プロフィールの作成';
     if (this.status === 'new') {
+      this.title = 'プロフィールの作成';
       this.editProfileForm.patchValue({
         id: this.userId,
         targetEmail: this.email
@@ -66,15 +69,18 @@ export class EditProfileModalComponent implements OnInit {
 
   async pickerImage(): Promise<void> {
     let iconImage = await Camera.getPhoto(optionPicture);
-    const avatarIcon = await iconImage.dataUrl;
-    this.editProfileForm.patchValue({
-      id: this.user.id,
-      targetEmail: this.user.email,
-      userName: this.user.username,
-      positionName: this.user.positionName,
-      tel: this.user.tel,
-      iconImage: avatarIcon,
-    });
+    const avatarBase64Data = await iconImage.dataUrl;
+
+    // this.logic.getContentType(avatarBase64Data)
+    // .pipe()
+    // this.editProfileForm.patchValue({
+    //   id: this.user.id,
+    //   targetEmail: this.user.email,
+    //   userName: this.user.username,
+    //   positionName: this.user.positionName,
+    //   tel: this.user.tel,
+    //   iconImage: avatarIcon,
+    // });
   }
 
   saveProfile(): void {
