@@ -27,6 +27,19 @@ interface OwnUser {
 })
 export class SettingPage implements OnInit {
 
+  ButtonEdit = [
+    {
+      text: 'ログアウト',
+      role: 'destructive',
+      handler: () => {
+        this.actionLogout()
+      }
+    },
+    {
+      text: 'キャンセル',
+      role: 'cancel',
+    }
+  ]
   user: OwnUser;
 
   constructor(
@@ -47,19 +60,7 @@ export class SettingPage implements OnInit {
   async confirmLogout() {
     const logoutActionSheet = await this.actionSheetCtrl.create({
       cssClass: 'my-custom-class',
-      buttons: [
-        {
-          text: 'ログアウト',
-          role: 'destructive',
-          handler: () => {
-            this.actionLogout()
-          }
-        },
-        {
-          text: 'キャンセル',
-          role: 'cancel',
-        }
-      ]
+      buttons: this.ButtonEdit,
     });
     return logoutActionSheet.present();
   }
@@ -77,6 +78,7 @@ export class SettingPage implements OnInit {
         'user': this.user,
       }
     });
+
     const dismissObservable = from(modal.onDidDismiss());
     dismissObservable
       .pipe(concatMap(() => this.logic.fetchCurrentUser()))

@@ -4,11 +4,21 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { HomeLogic } from '../../../../pages/home/logic/home.logic';
 import { Camera, CameraResultType } from '@capacitor/core';
 
+const optionPicture = {
+  quality: 50,
+  allowEditing: true,
+  resultType: CameraResultType.DataUrl,
+  promptLabelPicture: 'カメラ',
+  promptLabelHeader: 'カメラ',
+  promptLabelPhoto: 'ライブラリから',
+  promptLabelCancel: 'キャンセル',
+};
 @Component({
   selector: 'app-edit-profile-modal',
   templateUrl: './edit-profile-modal.component.html',
   styleUrls: ['./edit-profile-modal.component.scss'],
 })
+
 export class EditProfileModalComponent implements OnInit {
   editProfileForm = new FormGroup({
     id: new FormControl(''),
@@ -46,21 +56,7 @@ export class EditProfileModalComponent implements OnInit {
         userName: this.user.username,
         positionName: this.user.positionName,
         tel: this.user.tel,
-      })
-    }
-  }
-
-  saveProfile(): void {
-    if (this.status === 'new') {
-      this.logic.createUser(this.editProfileForm)
-        .subscribe(() => {
-          this.modalCtrl.dismiss();
-        });
-    } else {
-      this.logic.updateUser(this.editProfileForm)
-        .subscribe(() => {
-          this.modalCtrl.dismiss();
-        });
+      });
     }
   }
 
@@ -69,17 +65,20 @@ export class EditProfileModalComponent implements OnInit {
   }
 
   async pickerImage(): Promise<void> {
-    let iconImage = await Camera.getPhoto({
-      quality: 50,
-      allowEditing: true,
-      resultType: CameraResultType.DataUrl,
-      promptLabelPicture: 'カメラ',
-      promptLabelHeader: 'カメラ',
-      promptLabelPhoto: 'ライブラリから',
-      promptLabelCancel: 'キャンセル',
+    let iconImage = await Camera.getPhoto(optionPicture);
+    const avatarIcon = await iconImage.dataUrl;
+    this.editProfileForm.patchValue({
+      id: this.user.id,
+      targetEmail: this.user.email,
+      userName: this.user.username,
+      positionName: this.user.positionName,
+      tel: this.user.tel,
+      iconImage: avatarIcon,
     });
-    this.iconImage = await iconImage.dataUrl;
-
   }
 
+  saveProfile(): void {
+    const observableRegister = this.status === 'new' ? this.logic.createUser(this.editProfileForm) : this.logic.updateUser(this.editProfileForm);
+    observableRegister.subscribe(() => this.modalCtrl.dismiss());
+  }
 }
