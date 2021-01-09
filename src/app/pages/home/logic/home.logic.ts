@@ -14,6 +14,7 @@ interface Attribute {
   sub: string,
 };
 
+const OneWeekSecond = 644800;
 @Injectable({
   providedIn: 'root',
 })
@@ -187,5 +188,11 @@ export class HomeLogic {
     return from(Storage.put(uploadFileName, blobFile, {
       contentType: contentType
     }));
+  }
+
+  getStorage(filePathName: string): Observable<any> {
+    return from(Storage.get(filePathName, {
+      expires: OneWeekSecond,
+    }))
   }
 }

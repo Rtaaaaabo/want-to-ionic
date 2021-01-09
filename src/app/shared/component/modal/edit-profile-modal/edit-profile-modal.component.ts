@@ -4,6 +4,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { HomeLogic } from '../../../../pages/home/logic/home.logic';
 import { Camera, CameraResultType } from '@capacitor/core';
 import { runInThisContext } from 'vm';
+import { concatMap } from 'rxjs/operators';
 
 const optionPicture = {
   quality: 50,
@@ -71,18 +72,18 @@ export class EditProfileModalComponent implements OnInit {
     let iconImage = await Camera.getPhoto(optionPicture);
     const avatarBase64Data = await iconImage.dataUrl;
     this.logic.fetchAvatarIconUrl(avatarBase64Data, this.user.id)
-      .subscribe(({ key: awsFilePath }) => console.log(awsFilePath));
+      .pipe(concatMap(({ key: awsFilePath }) => this.logic.getStorage(awsFilePath)))
+      .subscribe((avatarUrl) => {
+        this.editProfileForm.patchValue({
+          id: this.user.id,
+          targetEmail: this.user.email,
+          userName: this.user.username,
+          positionName: this.user.positionName,
+          tel: this.user.tel,
+          iconImage: avatarUrl,
+        });
+      })
 
-    // this.logic.getContentType(avatarBase64Data)
-    // .pipe()
-    // this.editProfileForm.patchValue({
-    //   id: this.user.id,
-    //   targetEmail: this.user.email,
-    //   userName: this.user.username,
-    //   positionName: this.user.positionName,
-    //   tel: this.user.tel,
-    //   iconImage: avatarIcon,
-    // });
   }
 
   saveProfile(): void {
