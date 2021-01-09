@@ -123,16 +123,16 @@ export class HomeLogic {
       .pipe(map(({ items }) => items));
   }
 
-  fetchAvatarIconUrl(base64Data: any, userId: string) {
+  fetchAvatarIconUrl(base64Data: any, userId: string): Observable<any> {
     let contentType: string;
     let fileName: string;
     let uploadFilePath: string;
     let ext: string;
     const dt = new Date();
     const dirName = this.getDirString(dt);
-    this.getContentType(base64Data)
+    return this.getContentType(base64Data)
       .pipe(map((result) => contentType = result))
-      .pipe(concatMap(contentType => this.makeExt(contentType)))
+      .pipe(concatMap((contentType) => this.makeExt(contentType)))
       .pipe(map(result => ext = result))
       .pipe(map(() => fileName = `avatar_${uuid()}_${userId}`))
       .pipe(map(() => uploadFilePath = `${dirName}/${fileName}.${ext}`))
@@ -163,7 +163,7 @@ export class HomeLogic {
 
   getContentType(base64data): Observable<string> {
     const block = base64data.split(";");
-    const contentType = block[0].split(";")[1];
+    const contentType = block[0].split(":")[1];
     return of(contentType)
   }
 

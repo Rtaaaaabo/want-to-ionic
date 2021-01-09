@@ -48,7 +48,7 @@ export class EditProfileModalComponent implements OnInit {
     if (this.status === 'new') {
       this.title = 'プロフィールの作成';
       this.editProfileForm.patchValue({
-        id: this.userId,
+        id: this.user.id,
         targetEmail: this.email
       });
     } else {
@@ -70,6 +70,8 @@ export class EditProfileModalComponent implements OnInit {
   async pickerImage(): Promise<void> {
     let iconImage = await Camera.getPhoto(optionPicture);
     const avatarBase64Data = await iconImage.dataUrl;
+    this.logic.fetchAvatarIconUrl(avatarBase64Data, this.user.id)
+      .subscribe(({ key: awsFilePath }) => console.log(awsFilePath));
 
     // this.logic.getContentType(avatarBase64Data)
     // .pipe()
