@@ -3,7 +3,6 @@ import { ModalController } from '@ionic/angular';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { HomeLogic } from '../../../../pages/home/logic/home.logic';
 import { Camera, CameraResultType } from '@capacitor/core';
-import { runInThisContext } from 'vm';
 import { concatMap } from 'rxjs/operators';
 
 const optionPicture = {
@@ -62,6 +61,7 @@ export class EditProfileModalComponent implements OnInit {
         tel: this.user.tel,
       });
     }
+    console.log('user: ', this.user);
   }
 
   dismissModal(): void {
@@ -82,8 +82,7 @@ export class EditProfileModalComponent implements OnInit {
           tel: this.user.tel,
           iconImage: avatarUrl,
         });
-      })
-
+      });
   }
 
   saveProfile(): void {

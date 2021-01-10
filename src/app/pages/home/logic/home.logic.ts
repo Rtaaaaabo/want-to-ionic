@@ -14,7 +14,8 @@ interface Attribute {
   sub: string,
 };
 
-const OneWeekSecond = 644800;
+const OneWeekSecond = 64480;
+
 @Injectable({
   providedIn: 'root',
 })
@@ -191,8 +192,9 @@ export class HomeLogic {
   }
 
   getStorage(filePathName: string): Observable<any> {
+    console.log('filePathName:', filePathName);
     return from(Storage.get(filePathName, {
       expires: OneWeekSecond,
-    }))
+    }));
   }
 }
