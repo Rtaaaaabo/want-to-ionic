@@ -7,7 +7,7 @@
 <ion-content>
   <ion-item>
     <ion-avatar class="profile-icon">
-      <img src="../../../assets/svg/anonymous.svg" />
+      <img [src]="user?.iconImage" />
     </ion-avatar>
     <ion-label class="margin-left">
       <h2>{{ user?.username }}</h2>

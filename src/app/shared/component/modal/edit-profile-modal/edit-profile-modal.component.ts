@@ -5,6 +5,22 @@ import { HomeLogic } from '../../../../pages/home/logic/home.logic';
 import { Camera, CameraResultType } from '@capacitor/core';
 import { concatMap } from 'rxjs/operators';
 
+
+interface OwnUser {
+  authority: string;
+  companyID: string;
+  createdAt: string;
+  positionName: string;
+  iconImage: string;
+  email: string;
+  id: string;
+  registered?: boolean
+  updatedAt: string;
+  username: string;
+  tel: string;
+  __typename: string;
+}
+
 const optionPicture = {
   quality: 50,
   allowEditing: true,
@@ -33,7 +49,7 @@ export class EditProfileModalComponent implements OnInit {
   @Input() status: string;
   @Input() email: string;
   @Input() userId: string;
-  @Input() user;
+  @Input() user: OwnUser;
   title: string;
   iconImage: string;
 

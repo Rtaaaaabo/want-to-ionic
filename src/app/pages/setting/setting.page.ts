@@ -12,6 +12,7 @@ interface OwnUser {
   companyID: string;
   createdAt: string;
   positionName: string;
+  iconImage: string;
   email: string;
   id: string;
   registered?: boolean
