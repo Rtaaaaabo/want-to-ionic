@@ -51,7 +51,7 @@ export class ListRoomComponent implements OnInit {
   }
 
   navigateToTask(room): void {
-    this.router.navigate(['task', `${room.id}`]);
+    this.router.navigate(['home/task', `${room.id}`]);
   }
 
   deleteRoom(roomId): void {

@@ -21,11 +21,6 @@ const routes: Routes = [
     loadChildren: () => import('./pages/login/login.module').then(m => m.LoginPageModule)
   },
   {
-    path: 'task',
-    loadChildren: () => import('./pages/task/task.module').then(m => m.TaskPageModule),
-    canActivate: [AuthGuard],
-  },
-  {
     path: 'task-detail',
     loadChildren: () => import('./pages/task-detail/task-detail.module').then(m => m.TaskDetailPageModule),
     canActivate: [AuthGuard],
@@ -39,7 +34,7 @@ const routes: Routes = [
     path: 'room-members',
     loadChildren: () => import('./pages/room-members/room-members.module').then(m => m.RoomMembersPageModule),
     canActivate: [AuthGuard],
-  }
+  },
 ];
 @NgModule({
   imports: [
