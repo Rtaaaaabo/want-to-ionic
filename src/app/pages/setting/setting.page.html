@@ -7,7 +7,7 @@
 <ion-content>
   <ion-item>
     <ion-avatar class="profile-icon">
-      <img src="../../../assets/svg/anonymous.svg" />
+      <img [src]="user?.iconImage" />
     </ion-avatar>
     <ion-label class="margin-left">
       <h2>{{ user?.username }}</h2>
@@ -15,7 +15,7 @@
       <a (click)="presentEditModal()">編集</a>
     </ion-label>
   </ion-item>
-  <ion-item class="logout-line"> 運営について </ion-item>
+  <ion-item class="logout-line"> 運営者について </ion-item>
   <ion-item
     class="logout-line"
     lines="none"

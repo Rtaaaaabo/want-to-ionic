@@ -2,16 +2,19 @@ import { Injectable } from '@angular/core';
 import { HomeService } from '../service/home.service';
 import { SessionService } from '../../../shared/service/session.service';
 import { v4 as uuid } from 'uuid';
-import { Observable, from } from 'rxjs';
+import { Observable, from, of } from 'rxjs';
 import { concatMap, map, filter, toArray } from 'rxjs/operators';
 import { ModelRoomGroupFilterInput } from 'src/app/shared/service/amplify.service';
 import { ResponseListRoomGroupsQueryItems } from '../service/reponse/response.model';
+import { Storage } from 'aws-amplify';
 
 interface Attribute {
   email: string,
   email_verified: boolean,
   sub: string,
 };
+
+const OneWeekSecond = 64480;
 
 @Injectable({
   providedIn: 'root',
@@ -122,10 +125,76 @@ export class HomeLogic {
       .pipe(map(({ items }) => items));
   }
 
+  fetchAvatarIconUrl(base64Data: any, userId: string): Observable<any> {
+    let contentType: string;
+    let fileName: string;
+    let uploadFilePath: string;
+    let ext: string;
+    const dt = new Date();
+    const dirName = this.getDirString(dt);
+    return this.getContentType(base64Data)
+      .pipe(map((result) => contentType = result))
+      .pipe(concatMap((contentType) => this.makeExt(contentType)))
+      .pipe(map(result => ext = result))
+      .pipe(map(() => fileName = `avatar_${uuid()}_${userId}`))
+      .pipe(map(() => uploadFilePath = `${dirName}/${fileName}.${ext}`))
+      .pipe(concatMap(() => this.base64toBlob(base64Data, contentType)))
+      .pipe(concatMap((blobFile) => this.putStorage(uploadFilePath, blobFile, contentType)));
+  }
+
+  getDirString(dt: Date): string {
+    const random = dt.getTime() + Math.floor(100000 * Math.random());
+    const randomMath = Math.random() * random;
+    const randomFloor = randomMath.toString(16);
+    return "" +
+      ("00" + dt.getUTCFullYear()).slice(-2) +
+      ("00" + (dt.getMonth() + 1)).slice(-2) +
+      ("00" + dt.getUTCDate()).slice(-2) +
+      ("00" + dt.getUTCHours()).slice(-2) +
+      ("00" + dt.getMinutes()).slice(-2) +
+      ("00" + dt.getUTCSeconds()).slice(-2) +
+      "-" + randomFloor;
+  }
+
   setExitsRoomAndUser(data): Observable<any> {
     return from(data)
       .pipe(filter((item: ResponseListRoomGroupsQueryItems) => item.room !== null))
       .pipe(filter((item: ResponseListRoomGroupsQueryItems) => item.user !== null))
       .pipe(toArray());
+  }
+
+  getContentType(base64data): Observable<string> {
+    const block = base64data.split(";");
+    const contentType = block[0].split(":")[1];
+    return of(contentType)
+  }
+
+  makeExt(contentType: string): Observable<string> {
+    return of(contentType.match(/([^/]+?)?$/)[0]);
+  }
+
+  base64toBlob(base64Data: any, contentType: string): Observable<Blob> {
+    const byteCharacters = atob(base64Data.replace(/^.*,/, ''));
+    let buffer = new Uint8Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+      buffer[i] = byteCharacters.charCodeAt(i);
+    }
+    const blob = new Blob([buffer.buffer], {
+      type: contentType
+    });
+    return of(blob);
+  }
+
+  putStorage(uploadFileName: string, blobFile: Blob, contentType: string) {
+    return from(Storage.put(uploadFileName, blobFile, {
+      contentType: contentType
+    }));
+  }
+
+  getStorage(filePathName: string): Observable<any> {
+    console.log('filePathName:', filePathName);
+    return from(Storage.get(filePathName, {
+      expires: OneWeekSecond,
+    }));
   }
 }

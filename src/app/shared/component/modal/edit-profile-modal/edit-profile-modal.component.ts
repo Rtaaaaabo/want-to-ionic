@@ -2,13 +2,39 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { HomeLogic } from '../../../../pages/home/logic/home.logic';
-import { ImagePicker } from '@ionic-native/image-picker/ngx';
+import { Camera, CameraResultType } from '@capacitor/core';
+import { concatMap } from 'rxjs/operators';
 
+interface OwnUser {
+  authority: string;
+  companyID: string;
+  createdAt: string;
+  positionName: string;
+  iconImage: string;
+  email: string;
+  id: string;
+  registered?: boolean
+  updatedAt: string;
+  username: string;
+  tel: string;
+  __typename: string;
+}
+
+const optionPicture = {
+  quality: 50,
+  allowEditing: true,
+  resultType: CameraResultType.DataUrl,
+  promptLabelPicture: 'カメラ',
+  promptLabelHeader: 'カメラ',
+  promptLabelPhoto: 'ライブラリから',
+  promptLabelCancel: 'キャンセル',
+};
 @Component({
   selector: 'app-edit-profile-modal',
   templateUrl: './edit-profile-modal.component.html',
   styleUrls: ['./edit-profile-modal.component.scss'],
 })
+
 export class EditProfileModalComponent implements OnInit {
   editProfileForm = new FormGroup({
     id: new FormControl(''),
@@ -22,20 +48,22 @@ export class EditProfileModalComponent implements OnInit {
   @Input() status: string;
   @Input() email: string;
   @Input() userId: string;
-  @Input() user;
+  @Input() user: OwnUser;
   title: string;
+  iconImage: string;
 
   constructor(
     private modalCtrl: ModalController,
     private logic: HomeLogic,
-    private imagePicker: ImagePicker,
-  ) { }
+  ) {
+    console.log('avatarImage', this.editProfileForm.value.iconImage);
+  }
 
   ngOnInit(): void {
-    this.title = 'プロフィールの作成';
     if (this.status === 'new') {
+      this.title = 'プロフィールの作成';
       this.editProfileForm.patchValue({
-        id: this.userId,
+        id: this.user.id,
         targetEmail: this.email
       });
     } else {
@@ -46,41 +74,34 @@ export class EditProfileModalComponent implements OnInit {
         userName: this.user.username,
         positionName: this.user.positionName,
         tel: this.user.tel,
-      })
+      });
     }
-  }
-
-  saveProfile(): void {
-    if (this.status === 'new') {
-      this.logic.createUser(this.editProfileForm)
-        .subscribe(() => {
-          this.modalCtrl.dismiss();
-        });
-    } else {
-      this.logic.updateUser(this.editProfileForm)
-        .subscribe((res) => {
-          console.log('Response: ', res);
-          this.modalCtrl.dismiss();
-        });
-    }
+    console.log('user: ', this.user);
   }
 
   dismissModal(): void {
     this.modalCtrl.dismiss();
   }
 
-  pickerImage(): void {
-    const options = {
-      maximumImagesCount: 1,
-      width: 400,
-      height: 400,
-      quality: 30,
-      outputType: 0,
-    }
-    this.imagePicker.getPictures(options)
-      .then((result) => {
-        console.log(result);
-      })
+  async pickerImage(): Promise<void> {
+    let iconImage = await Camera.getPhoto(optionPicture);
+    const avatarBase64Data = await iconImage.dataUrl;
+    this.logic.fetchAvatarIconUrl(avatarBase64Data, this.user.id)
+      .pipe(concatMap(({ key: awsFilePath }) => this.logic.getStorage(awsFilePath)))
+      .subscribe((avatarUrl) => {
+        this.editProfileForm.patchValue({
+          id: this.user.id,
+          targetEmail: this.user.email,
+          userName: this.user.username,
+          positionName: this.user.positionName,
+          tel: this.user.tel,
+          iconImage: avatarUrl,
+        });
+      });
   }
 
+  saveProfile(): void {
+    const observableRegister = this.status === 'new' ? this.logic.createUser(this.editProfileForm) : this.logic.updateUser(this.editProfileForm);
+    observableRegister.subscribe(() => this.modalCtrl.dismiss());
+  }
 }
