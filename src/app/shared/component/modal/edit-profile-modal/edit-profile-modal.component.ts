@@ -5,7 +5,6 @@ import { HomeLogic } from '../../../../pages/home/logic/home.logic';
 import { Camera, CameraResultType } from '@capacitor/core';
 import { concatMap } from 'rxjs/operators';
 
-
 interface OwnUser {
   authority: string;
   companyID: string;
