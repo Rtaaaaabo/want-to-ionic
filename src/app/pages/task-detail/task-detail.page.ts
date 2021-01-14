@@ -65,7 +65,6 @@ export class TaskDetailPage implements OnInit {
       .pipe(concatMap(() => this.logic.fetchMemberListOnRoom(this.taskDetail.roomID)))
       .subscribe(({ items }) => {
         this.roomMembers = items;
-        console.log(this.taskDetail);
       });
     this.logic.fetchMessagePerTask(this.taskId)
       .subscribe((data) => {
