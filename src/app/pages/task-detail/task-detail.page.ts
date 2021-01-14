@@ -9,7 +9,7 @@ import { AddTaskModalComponent } from 'src/app/shared/component/modal/add-task-m
 import { filter, tap, map, concatMap, toArray } from 'rxjs/operators';
 import { CurrentUserInfo } from '../task/interface/current-user-info.interface';
 import { ListRoomGroupsQuery } from 'src/app/API.service';
-import { ListMessagesQuery } from 'src/app/shared/service/amplify.service';
+import { GetTaskQuery, ListMessagesQuery } from 'src/app/shared/service/amplify.service';
 const { Camera } = Plugins;
 
 @Component({
@@ -22,7 +22,7 @@ export class TaskDetailPage implements OnInit {
   @ViewChild(IonContent, { static: false }) content: IonContent;
   taskId: string;
   segment: string;
-  taskDetail;
+  taskDetail: GetTaskQuery;
   link = "comment"
   fragmentComment = '';
   newMsg: string = '';
@@ -65,6 +65,7 @@ export class TaskDetailPage implements OnInit {
       .pipe(concatMap(() => this.logic.fetchMemberListOnRoom(this.taskDetail.roomID)))
       .subscribe(({ items }) => {
         this.roomMembers = items;
+        console.log(this.taskDetail);
       });
     this.logic.fetchMessagePerTask(this.taskId)
       .subscribe((data) => {
@@ -151,12 +152,6 @@ export class TaskDetailPage implements OnInit {
     const activeActionSheet = await this.actionSheetCtrl.create({
       cssClass: 'my-custom-class',
       buttons: [
-        {
-          text: '編集',
-          handler: () => {
-            this.presentModalEditTask(taskDetail)
-          }
-        },
         {
           text: '完了',
           handler: () => {
