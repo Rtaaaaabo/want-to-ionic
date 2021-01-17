@@ -60,13 +60,11 @@ export class RoomMembersPage implements OnInit {
   }
 
   withdrawalFromAnyRoom(): void {
-    console.log('withdrawalFromAnyRoom');
     this.logic.fetchRoomMembersExceptOwn(this.roomId, this.currentUserId)
       .pipe(switchMap((data) => data.length === 0 ?
         this.logic.deleteRoomItem(this.roomId) : this.logic.removeOwnFromRoom(this.roomId, this.currentUserId)
       ))
-      .subscribe((result) => {
-        console.log(result);
+      .subscribe(() => {
         this.router.navigate(['/home']);
       })
   }

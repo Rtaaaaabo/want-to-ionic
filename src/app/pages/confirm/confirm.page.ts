@@ -31,8 +31,6 @@ export class ConfirmPage implements OnInit {
     })
   }
 
-  reSendSignup() {
-    console.log('reSendSignup');
-  }
+  reSendSignup() { }
 
 }

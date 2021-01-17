@@ -192,7 +192,6 @@ export class HomeLogic {
   }
 
   getStorage(filePathName: string): Observable<any> {
-    console.log('filePathName:', filePathName);
     return from(Storage.get(filePathName, {
       expires: OneWeekSecond,
     }));

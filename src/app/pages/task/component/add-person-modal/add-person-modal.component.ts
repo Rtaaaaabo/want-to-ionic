@@ -76,12 +76,8 @@ export class AddPersonModalComponent implements OnInit {
     });
   }
 
-  cancelSearch(ev): void {
-    console.log('cancelSearch', ev);
-  }
+  cancelSearch(ev): void { }
 
-  clearSearch(ev): void {
-    console.log('clearSearch', ev);
-  }
+  clearSearch(ev): void { }
 
 }

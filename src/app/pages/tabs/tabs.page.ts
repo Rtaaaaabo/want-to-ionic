@@ -9,14 +9,10 @@ export class TabsPage implements OnInit {
 
   constructor() { }
 
-  ngOnInit(): void {
-    console.log('Tabs OnInit');
-  }
+  ngOnInit(): void { }
 
   navigateSetting(): void { }
 
-  ionTabsDidChange() {
-    console.log('Tabs ionTabsDidChange');
-  }
+  ionTabsDidChange() { }
 
 }

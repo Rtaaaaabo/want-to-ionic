@@ -18,9 +18,7 @@ export class OwnTaskPage implements OnInit, AfterViewInit {
     private logic: OwnTaskLogic,
   ) { }
 
-  ngOnInit() {
-    console.log('OWN-TASK ON_INIT');
-  }
+  ngOnInit() { }
 
   ngAfterViewInit() {
     this.logic.fetchCurrentUser()

@@ -55,9 +55,7 @@ export class EditProfileModalComponent implements OnInit {
   constructor(
     private modalCtrl: ModalController,
     private logic: HomeLogic,
-  ) {
-    console.log('avatarImage', this.editProfileForm.value.iconImage);
-  }
+  ) { }
 
   ngOnInit(): void {
     if (this.status === 'new') {
@@ -76,7 +74,6 @@ export class EditProfileModalComponent implements OnInit {
         tel: this.user.tel,
       });
     }
-    console.log('user: ', this.user);
   }
 
   dismissModal(): void {

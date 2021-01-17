@@ -86,7 +86,6 @@ export class SettingPage implements OnInit {
       .pipe(flatMap((result) => this.logic.fetchUserInfo(result.username)))
       .subscribe((data) => {
         this.user = data;
-        console.log('user', this.user);
       });
     return modal.present();
   }

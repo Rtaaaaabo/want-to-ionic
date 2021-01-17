@@ -37,7 +37,6 @@ export class HomePage implements OnInit {
         }
         this.presentRegistrationUser()
       });
-    console.log('HOME ON_INIT');
   }
 
   async presentRegistrationUser(): Promise<void> {
