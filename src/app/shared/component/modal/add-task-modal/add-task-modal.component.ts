@@ -66,7 +66,6 @@ export class AddTaskModalComponent implements OnInit {
   }
 
   createTaskItem(): void {
-    this.status;
     this.modalCtrl.dismiss(this.taskForm.value);
   }
 
@@ -77,9 +76,4 @@ export class AddTaskModalComponent implements OnInit {
   checkStatus(): boolean {
     return true;
   }
-
-  // get status() {
-  //   return this.taskForm.controls['nameItem'].valueChanges.subscribe((data) => console.log(data));
-  // }
-
 }
