@@ -206,7 +206,7 @@ export class TaskLogic {
       id: `${uuid()}`,
       taskID: `${data.id}`,
       authorID: `${data.authorID}`,
-      content: `${data.priority + 1} 番目に移動しました`,
+      content: `優先度 ${data.priority + 1} 番目に移動しました`,
     }
     return this.taskService.updateMessage(createContent);
   }
