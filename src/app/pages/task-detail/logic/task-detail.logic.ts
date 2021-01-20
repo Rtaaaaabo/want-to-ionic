@@ -7,6 +7,7 @@ import { SessionService } from 'src/app/shared/service/session.service';
 import { CurrentUserInfo } from '../../task/interface/current-user-info.interface';
 import { TaskDetailService } from '../service/task-detail.service';
 import { Filesystem, FilesystemDirectory, FilesystemEncoding, FileWriteResult, FileReadResult, FileDeleteResult } from "@capacitor/core";
+import { GetTaskQuery, UpdateTaskMutation } from 'src/app/shared/service/amplify.service';
 
 const OneWeekSecond = 604800;
 
@@ -25,7 +26,7 @@ export class TaskDetailLogic {
    * @param taskId TaskIDです
    * @returns Observable型で Taskの詳細情報を返します
    */
-  fetchAnyTask(taskId: string): Observable<any> {
+  fetchAnyTask(taskId: string): Observable<GetTaskQuery> {
     return from(this.taskDetailService.getTask(taskId));
   }
 
@@ -100,7 +101,7 @@ export class TaskDetailLogic {
    * @param taskId taskId
    * @returns Observable型でupdateTaskItemを返します
    */
-  updateTaskToRoom(dismissData, taskId): Observable<any> {
+  updateTaskToRoom(dismissData, taskId): Observable<UpdateTaskMutation> {
     const content = {
       id: `${taskId}`,
       title: `${dismissData.nameItem}`,

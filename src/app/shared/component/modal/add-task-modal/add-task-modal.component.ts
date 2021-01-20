@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { ListRoomGroupsQuery } from 'src/app/shared/service/amplify.service';
+import { GetTaskQuery, ListRoomGroupsQuery } from 'src/app/shared/service/amplify.service';
 
 @Component({
   selector: 'app-add-task-modal',
@@ -26,7 +26,7 @@ export class AddTaskModalComponent implements OnInit {
   strButton: string;
 
   room;
-  taskDetail;
+  taskDetail: GetTaskQuery;
   userList;
 
 
@@ -55,6 +55,10 @@ export class AddTaskModalComponent implements OnInit {
       });
       this.strButton = '追加';
     }
+
+    this.taskForm.get("nameItem").valueChanges.subscribe((data) => {
+      console.log('data', data);
+    })
   }
 
   dismissModal(): void {
@@ -62,9 +66,20 @@ export class AddTaskModalComponent implements OnInit {
   }
 
   createTaskItem(): void {
+    this.status;
     this.modalCtrl.dismiss(this.taskForm.value);
   }
 
-  changeDate() { }
+  changeDate(ev) {
+    console.log(ev);
+  }
+
+  checkStatus(): boolean {
+    return true;
+  }
+
+  // get status() {
+  //   return this.taskForm.controls['nameItem'].valueChanges.subscribe((data) => console.log(data));
+  // }
 
 }
