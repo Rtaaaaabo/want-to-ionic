@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import {
   AmplifyService,
+  CreateMessageInput,
   CreateRoomGroupMutation,
   CreateTaskMutation,
   DeleteTaskMutation,
@@ -9,6 +10,7 @@ import {
   ListRoomGroupsQuery,
   ListTasksQuery,
   ListUsersQuery,
+  UpdateMessageInput,
   UpdateTaskMutation,
 } from "../../../shared/service/amplify.service";
 import { Observable, from } from "rxjs";
@@ -75,5 +77,9 @@ export class TaskService {
 
   createUserRoomGroup(filterContent): Observable<any> {
     return from(this.amplifyService.CreateRoomGroup(filterContent));
+  }
+
+  updateMessage(content: CreateMessageInput): Observable<any> {
+    return from(this.amplifyService.CreateMessage(content));
   }
 }

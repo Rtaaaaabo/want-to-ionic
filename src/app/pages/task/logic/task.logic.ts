@@ -9,6 +9,7 @@ import {
 } from "rxjs/operators";
 import { Storage } from 'aws-amplify';
 import {
+  CreateMessageInput,
   CreateRoomGroupMutation,
   CreateTaskMutation,
   DeleteTaskMutation,
@@ -16,6 +17,7 @@ import {
   GetUserQuery,
   ListRoomGroupsQuery,
   ListUsersQuery,
+  UpdateMessageInput,
   UpdateTaskMutation,
 } from "src/app/shared/service/amplify.service";
 import { SessionService } from "../../../shared/service/session.service";
@@ -197,5 +199,15 @@ export class TaskLogic {
   addMembersToAnyRoom(arrayUserId: Array<string>, roomId: string): Observable<any> {
     return from(arrayUserId)
       .pipe(concatMap((userId) => this.createUserRoomGroup(userId, roomId)));
+  }
+
+  reorderTaskMessage(data: UpdateTaskMutation): Observable<any> {
+    const createContent: CreateMessageInput = {
+      id: `${uuid()}`,
+      taskID: `${data.id}`,
+      authorID: `${data.authorID}`,
+      content: `${data.priority + 1} 番目に移動しました`,
+    }
+    return this.taskService.updateMessage(createContent);
   }
 }

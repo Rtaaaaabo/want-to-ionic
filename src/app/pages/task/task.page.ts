@@ -129,7 +129,7 @@ export class TaskPage implements OnInit {
     from(this.taskActiveItems)
       .pipe(concatMap((taskActiveItem) => this.logic.getIndexNewArray(this.taskActiveItems, taskActiveItem)))
       .pipe(concatMap((indexArray: number) => this.logic.updateTaskItemPriority(indexArray, this.taskActiveItems)))
-      // ここにUpdateMessageを入れる
+      .pipe(concatMap((data) => this.logic.reorderTaskMessage(data)))
       .subscribe((data) => console.log(data));
   }
 
