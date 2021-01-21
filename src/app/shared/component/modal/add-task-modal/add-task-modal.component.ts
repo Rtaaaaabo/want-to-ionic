@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { GetTaskQuery, ListRoomGroupsQuery } from 'src/app/shared/service/amplify.service';
+import { forkJoin } from 'rxjs';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-add-task-modal',
@@ -28,6 +30,7 @@ export class AddTaskModalComponent implements OnInit {
   room;
   taskDetail: GetTaskQuery;
   userList;
+  hasModifyForm = true;
 
 
   constructor(
@@ -55,10 +58,10 @@ export class AddTaskModalComponent implements OnInit {
       });
       this.strButton = '追加';
     }
-
-    this.taskForm.get("nameItem").valueChanges.subscribe((data) => {
-      console.log('data', data);
-    })
+    this.taskForm.get("nameItem").valueChanges.pipe(filter(() => this.hasModifyForm === true)).subscribe(() => this.hasModifyForm = !this.hasModifyForm);
+    this.taskForm.get("descriptionItem").valueChanges.pipe(filter(() => this.hasModifyForm === true)).subscribe(() => this.hasModifyForm = !this.hasModifyForm);
+    this.taskForm.get("chargePersonId").valueChanges.pipe(filter(() => this.hasModifyForm === true)).subscribe(() => this.hasModifyForm = !this.hasModifyForm);
+    this.taskForm.get("scheduleDateItem").valueChanges.pipe(filter(() => this.hasModifyForm === true)).subscribe(() => this.hasModifyForm = !this.hasModifyForm);
   }
 
   dismissModal(): void {
@@ -70,7 +73,6 @@ export class AddTaskModalComponent implements OnInit {
   }
 
   changeDate(ev) {
-    console.log(ev);
   }
 
   checkStatus(): boolean {

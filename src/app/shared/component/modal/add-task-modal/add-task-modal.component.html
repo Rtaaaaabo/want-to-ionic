@@ -51,7 +51,7 @@
 
     <ion-button
       (click)="createTaskItem()"
-      [disabled]="taskForm.invalid"
+      [disabled]="taskForm.invalid || hasModifyForm"
       expand="full"
     >
       {{ strButton }}
