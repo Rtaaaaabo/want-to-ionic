@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { GetTaskQuery, ListRoomGroupsQuery } from 'src/app/shared/service/amplify.service';
-import { forkJoin } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
 @Component({

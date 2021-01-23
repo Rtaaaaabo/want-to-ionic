@@ -223,4 +223,14 @@ export class TaskDetailLogic {
     });
     return of(blob);
   }
+
+  createMessage(data: UpdateTaskMutation): Observable<any> {
+    const content = {
+      id: `${uuid()}`,
+      taskID: `${data.id}`,
+      authorID: `${data.authorID}`,
+      content: `タスク内容を下記のように修正いたしました。`
+    }
+    return this.taskDetailService.createMessageItem(content);
+  }
 }

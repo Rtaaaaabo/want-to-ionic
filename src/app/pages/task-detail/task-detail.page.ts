@@ -123,6 +123,7 @@ export class TaskDetailPage implements OnInit {
     dismissObservable
       .pipe(filter(({ data }) => data !== undefined))
       .pipe(concatMap(({ data }) => this.logic.updateTaskToRoom(data, this.taskId)))
+      .pipe(concatMap((data) => this.logic.createMessage(data)))
       .pipe(concatMap(() => this.logic.fetchAnyTask(this.taskId)))
       .subscribe((data) => {
         this.taskDetail = data;
