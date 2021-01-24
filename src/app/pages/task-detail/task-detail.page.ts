@@ -116,20 +116,27 @@ export class TaskDetailPage implements OnInit {
       component: AddTaskModalComponent,
       componentProps: {
         taskDetail: taskDetail,
-        roomMembers: this.roomMembers
+        roomMembers: this.roomMembers,
       },
     });
     const dismissObservable = from(modal.onDidDismiss());
+    let resultObj = {
+      taskValue: {},
+      objHasTask: {},
+    }
     dismissObservable
-      .pipe(filter(({ data }) => data !== undefined))
-      .pipe(concatMap(({ data }) => this.logic.updateTaskToRoom(data, this.taskId)))
-      .pipe(concatMap((data) => this.logic.createMessage(data)))
-      .pipe(concatMap(() => this.logic.fetchAnyTask(this.taskId)))
+      .pipe(filter(({ data }) => data.taskValue !== undefined))
+      // .pipe(map(({ data }) => resultObj = data))
+      // .pipe(concatMap(({ data }) => this.logic.updateTaskToRoom(data.taskValue, this.taskId)))
+      // .pipe(concatMap((result) => this.logic.createMessage(result, resultObj.objHasTask)))
+      // .pipe(concatMap(() => this.logic.fetchAnyTask(this.taskId)))
       .subscribe((data) => {
-        this.taskDetail = data;
+        console.log(data);
+        // this.taskDetail = data;
       })
     return modal.present();
   }
+
 
   doneTask(taskDetail): void {
     const presentToast = from(this.presentDoneToast());

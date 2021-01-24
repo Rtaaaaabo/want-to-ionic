@@ -224,7 +224,8 @@ export class TaskDetailLogic {
     return of(blob);
   }
 
-  createMessage(data: UpdateTaskMutation): Observable<any> {
+  createMessage(data: UpdateTaskMutation, hasTaskKind): Observable<any> {
+    console.log('hasTaskKind', hasTaskKind);
     const content = {
       id: `${uuid()}`,
       taskID: `${data.id}`,

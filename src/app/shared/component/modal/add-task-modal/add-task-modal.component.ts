@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { GetTaskQuery, ListRoomGroupsQuery } from 'src/app/shared/service/amplify.service';
-import { filter } from 'rxjs/operators';
+import { filter, switchMap, map } from 'rxjs/operators';
+import { from, of } from 'rxjs';
 
 @Component({
   selector: 'app-add-task-modal',
@@ -29,8 +30,14 @@ export class AddTaskModalComponent implements OnInit {
   room;
   taskDetail: GetTaskQuery;
   userList;
-  hasModifyForm = true;
+  hasModifyForm = false;
 
+  hasTaskKind = {
+    name: false,
+    description: false,
+    chargePerson: false,
+    scheduleDate: false
+  };
 
   constructor(
     private modalCtrl: ModalController,
@@ -57,10 +64,22 @@ export class AddTaskModalComponent implements OnInit {
       });
       this.strButton = '追加';
     }
-    this.taskForm.get("nameItem").valueChanges.pipe(filter(() => this.hasModifyForm === true)).subscribe(() => this.hasModifyForm = !this.hasModifyForm);
-    this.taskForm.get("descriptionItem").valueChanges.pipe(filter(() => this.hasModifyForm === true)).subscribe(() => this.hasModifyForm = !this.hasModifyForm);
-    this.taskForm.get("chargePersonId").valueChanges.pipe(filter(() => this.hasModifyForm === true)).subscribe(() => this.hasModifyForm = !this.hasModifyForm);
-    this.taskForm.get("scheduleDateItem").valueChanges.pipe(filter(() => this.hasModifyForm === true)).subscribe(() => this.hasModifyForm = !this.hasModifyForm);
+    this.taskForm.get("nameItem").valueChanges
+      .pipe(switchMap(() => of(!this.hasModifyForm ? this.hasModifyForm = !this.hasModifyForm : this.hasModifyForm = this.hasModifyForm)))
+      .pipe(map(() => !this.hasTaskKind.name ? this.hasTaskKind.name = !this.hasTaskKind.name : this.hasTaskKind.name = this.hasTaskKind.name))
+      .subscribe(() => { });
+    this.taskForm.get("descriptionItem").valueChanges
+      .pipe(switchMap(() => of(!this.hasModifyForm ? this.hasModifyForm = !this.hasModifyForm : this.hasModifyForm = this.hasModifyForm)))
+      .pipe(map(() => !this.hasTaskKind.description ? this.hasTaskKind.description = !this.hasTaskKind.description : this.hasTaskKind.description = this.hasTaskKind.description))
+      .subscribe(() => { });
+    this.taskForm.get("chargePersonId").valueChanges
+      .pipe(switchMap(() => of(!this.hasModifyForm ? this.hasModifyForm = !this.hasModifyForm : this.hasModifyForm = this.hasModifyForm)))
+      .pipe(map(() => !this.hasTaskKind.chargePerson ? this.hasTaskKind.chargePerson = !this.hasTaskKind.chargePerson : this.hasTaskKind.chargePerson = this.hasTaskKind.chargePerson))
+      .subscribe(() => { });
+    this.taskForm.get("scheduleDateItem").valueChanges
+      .pipe(switchMap(() => of(!this.hasModifyForm ? this.hasModifyForm = !this.hasModifyForm : this.hasModifyForm = this.hasModifyForm)))
+      .pipe(map(() => !this.hasTaskKind.scheduleDate ? this.hasTaskKind.scheduleDate = !this.hasTaskKind.scheduleDate : this.hasTaskKind.chargePerson = this.hasTaskKind.scheduleDate))
+      .subscribe(() => { });
   }
 
   dismissModal(): void {
@@ -68,7 +87,10 @@ export class AddTaskModalComponent implements OnInit {
   }
 
   createTaskItem(): void {
-    this.modalCtrl.dismiss(this.taskForm.value);
+    this.modalCtrl.dismiss({
+      taskValue: this.taskForm.value,
+      hasTaskKind: this.hasTaskKind,
+    });
   }
 
   changeDate(ev) {
