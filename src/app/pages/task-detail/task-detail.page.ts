@@ -136,10 +136,14 @@ export class TaskDetailPage implements OnInit {
 
   doneTask(taskDetail): void {
     const presentToast = from(this.presentDoneToast());
+    const messageContent = 'このタスクを完了としました';
     this.logic.updateTaskItem(taskDetail, 10)
+      .pipe(concatMap((data) => this.logic.createMessage(data, null, messageContent)))
       .pipe(concatMap(() => this.logic.fetchAnyTask(taskDetail.id)))
       .pipe(tap(() => presentToast))
-      .subscribe((data) => this.taskDetail = data);
+      .subscribe((data) => {
+        this.taskDetail = data
+      });
   }
 
   moveTask(taskDetail): void {
@@ -147,8 +151,7 @@ export class TaskDetailPage implements OnInit {
     this.logic.updateTaskItem(taskDetail, 0)
       .pipe(concatMap(() => this.logic.fetchAnyTask(taskDetail.id)))
       .pipe(tap(() => presentToast))
-      .pipe(map((data) => this.taskDetail = data))
-      .subscribe(() => { });
+      .subscribe((data) => { this.taskDetail = data });
   }
 
   async presentActionSheet(taskDetail): Promise<void> {

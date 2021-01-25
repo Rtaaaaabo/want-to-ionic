@@ -224,13 +224,12 @@ export class TaskDetailLogic {
     return of(blob);
   }
 
-  createMessage(data: UpdateTaskMutation, hasTaskKind): Observable<any> {
-    console.log('hasTaskKind', hasTaskKind);
+  createMessage(data: UpdateTaskMutation, taskKind?, messageContent?: string): Observable<any> {
     const content = {
       id: `${uuid()}`,
       taskID: `${data.id}`,
       authorID: `${data.authorID}`,
-      content: `タスク内容を下記のように修正いたしました。`
+      content: `${messageContent}`
     }
     return this.taskDetailService.createMessageItem(content);
   }
