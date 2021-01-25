@@ -133,7 +133,6 @@ export class TaskDetailPage implements OnInit {
     return modal.present();
   }
 
-
   doneTask(taskDetail): void {
     const presentToast = from(this.presentDoneToast());
     const messageContent = 'このタスクを完了としました';
