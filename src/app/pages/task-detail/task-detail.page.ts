@@ -147,10 +147,15 @@ export class TaskDetailPage implements OnInit {
 
   moveTask(taskDetail): void {
     const presentToast = from(this.presentMoveTask());
+    const messageContent = 'このタスクをActiveにもどしました。\n 頑張ってください！';
     this.logic.updateTaskItem(taskDetail, 0)
+      .pipe(concatMap((result) => this.logic.createMessage(result, null, messageContent)))
       .pipe(concatMap(() => this.logic.fetchAnyTask(taskDetail.id)))
       .pipe(tap(() => presentToast))
-      .subscribe((data) => { this.taskDetail = data });
+      .subscribe((data) => {
+        console.log('[moveTask] data', data);
+        this.taskDetail = data;
+      });
   }
 
   async presentActionSheet(taskDetail): Promise<void> {
