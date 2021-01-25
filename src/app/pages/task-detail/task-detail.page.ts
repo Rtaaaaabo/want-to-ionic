@@ -39,7 +39,7 @@ export class TaskDetailPage implements OnInit {
     private modalCtrl: ModalController,
     private actionSheetCtrl: ActionSheetController,
     private toastCtrl: ToastController,
-    private platform: Platform,
+    private readonly platform: Platform,
     private readonly alertCtrl: AlertController,
   ) {
     this.initializeApp()
@@ -153,7 +153,6 @@ export class TaskDetailPage implements OnInit {
       .pipe(concatMap(() => this.logic.fetchAnyTask(taskDetail.id)))
       .pipe(tap(() => presentToast))
       .subscribe((data) => {
-        console.log('[moveTask] data', data);
         this.taskDetail = data;
       });
   }
@@ -254,5 +253,9 @@ export class TaskDetailPage implements OnInit {
       buttons: ['了解']
     });
     await alert.present();
+  }
+
+  ngOnDestroy() {
+    console.log('ngOnDestroy');
   }
 }

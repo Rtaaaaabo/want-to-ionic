@@ -43,7 +43,9 @@ export class TaskPage implements OnInit {
     private actionSheetCtrl: ActionSheetController,
   ) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    console.log('task page onInit');
+  }
 
   ionViewWillEnter(): void {
     this.isReorder = false;
@@ -105,7 +107,8 @@ export class TaskPage implements OnInit {
   }
 
   goBackToRoom(): void {
-    this.location.back();
+    this.router.navigateByUrl()
+    // this.location.back();
   }
 
   activeSortTaskItem(): void {
