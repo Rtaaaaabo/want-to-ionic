@@ -122,13 +122,14 @@ export class TaskDetailPage implements OnInit {
     const dismissObservable = from(modal.onDidDismiss());
     let resultObj;
     dismissObservable
-      .pipe(filter(({ data }) => data.taskValue !== undefined))
+      .pipe(filter(({ data }) => data !== undefined))
       .pipe(map((data) => resultObj = data))
       .pipe(concatMap(({ data }) => this.logic.updateTaskToRoom(data.taskValue, this.taskId)))
       .pipe(concatMap((result) => this.logic.createMessage(result, resultObj.objHasTask)))
       .pipe(concatMap(() => this.logic.fetchAnyTask(this.taskId)))
       .subscribe((data) => {
-        this.taskDetail = data;
+        console.log(data);
+        // this.taskDetail = data;
       })
     return modal.present();
   }
@@ -253,9 +254,5 @@ export class TaskDetailPage implements OnInit {
       buttons: ['了解']
     });
     await alert.present();
-  }
-
-  ngOnDestroy() {
-    console.log('ngOnDestroy');
   }
 }
