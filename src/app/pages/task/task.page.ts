@@ -90,7 +90,7 @@ export class TaskPage {
     });
     const dismissObservable = from(modal.onDidDismiss());
     dismissObservable
-      .pipe(map(({ data }) => this.taskFormData = data))
+      .pipe(map(({ data }) => this.taskFormData = data.taskValue))
       .pipe(switchMap(() => this.taskActiveItems.length !== 0 ?
         this.logic.updateStatusTaskItems(this.taskActiveItems) : of(this.taskActiveItems)
       ))
