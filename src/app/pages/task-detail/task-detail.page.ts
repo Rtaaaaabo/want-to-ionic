@@ -218,7 +218,29 @@ export class TaskDetailPage implements OnInit {
     }
   }
 
-  deleteTask(taskDetail): void { }
+  async deleteTask(taskDetail): Promise<void> {
+    const alert = await this.alertCtrl.create({
+      header: 'タスクの削除',
+      message: `${taskDetail.title}を削除してもよろしいでしょうか？`,
+      buttons: [{
+        text: 'OK',
+        role: 'confirm',
+        handler: () => {
+          this.deleteTaskConfirm(taskDetail);
+        }
+      },
+      {
+        text: 'キャンセル',
+        role: 'cancel',
+      }
+      ]
+    })
+    console.log('taskDetail', taskDetail);
+  }
+
+  deleteTaskConfirm(taskDetail) {
+    console.log('deleteTaskConfirm', taskDetail);
+  }
 
   goBackToRoom(): void {
     this.location.back();
