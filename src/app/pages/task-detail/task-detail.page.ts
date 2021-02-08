@@ -222,24 +222,26 @@ export class TaskDetailPage implements OnInit {
     const alert = await this.alertCtrl.create({
       header: 'タスクの削除',
       message: `${taskDetail.title}を削除してもよろしいでしょうか？`,
-      buttons: [{
-        text: 'OK',
-        role: 'confirm',
-        handler: () => {
-          this.deleteTaskConfirm(taskDetail);
-        }
-      },
-      {
-        text: 'キャンセル',
-        role: 'cancel',
-      }
+      buttons: [
+        {
+          text: 'キャンセル',
+          role: 'confirm',
+        },
+        {
+          text: 'OK',
+          role: 'cancel',
+          handler: () => {
+            this.deleteTaskConfirm(taskDetail);
+          }
+        },
       ]
     })
-    console.log('taskDetail', taskDetail);
+    await alert.present();
   }
 
   deleteTaskConfirm(taskDetail) {
-    console.log('deleteTaskConfirm', taskDetail);
+    this.logic.deleteTask(taskDetail.id)
+      .subscribe((result) => { });
   }
 
   goBackToRoom(): void {

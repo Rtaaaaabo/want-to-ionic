@@ -233,4 +233,9 @@ export class TaskDetailLogic {
     }
     return this.taskDetailService.createMessageItem(content);
   }
+
+  deleteTask(taskId: string): Observable<any> {
+    const content = { id: taskId };
+    return this.taskDetailService.deleteTask(content);
+  }
 }
