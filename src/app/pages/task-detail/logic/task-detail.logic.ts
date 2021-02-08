@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, from, of } from 'rxjs';
 import { concatMap, map } from 'rxjs/operators';
-import { Storage } from 'aws-amplify';
+import { input, Storage } from 'aws-amplify';
 import { v4 as uuid } from 'uuid';
 import { SessionService } from 'src/app/shared/service/session.service';
 import { CurrentUserInfo } from '../../task/interface/current-user-info.interface';
@@ -67,14 +67,18 @@ export class TaskDetailLogic {
    * @returns Observable型でcreateMessageItemを返します
    */
   sendNewMessage(taskId: string, messageContent: string, userId: string, arrayAttachmentUri?: Array<string>): Observable<any> {
-    const inputContent = {
+    let inputContent = {
       id: `${uuid()}`,
       authorID: `${userId}`,
       content: messageContent,
       taskID: taskId,
       isSent: true,
-      attachmentUri: arrayAttachmentUri,
+      attachmentUri: [],
+    };
+    if (arrayAttachmentUri !== undefined) {
+      inputContent.attachmentUri = arrayAttachmentUri;
     }
+    console.log('Message InputContent', inputContent);
     return this.taskDetailService.createMessageItem(inputContent);
   }
 

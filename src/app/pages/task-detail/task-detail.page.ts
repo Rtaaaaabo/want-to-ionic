@@ -27,7 +27,7 @@ export class TaskDetailPage implements OnInit {
   fragmentComment = '';
   newMsg: string = '';
   message: ListMessagesQuery;
-  userId: string;
+  currentUserId: string;
   roomMembers: Array<ListRoomGroupsQuery>;
   arrayImageBase64Data: Array<any> = [];
 
@@ -58,7 +58,7 @@ export class TaskDetailPage implements OnInit {
     this.taskId = this.route.snapshot.paramMap.get('id');
     this.segment = this.route.snapshot.paramMap.get('segment');
     this.logic.fetchCurrentUserInfo().subscribe((res: CurrentUserInfo) => {
-      this.userId = res.sub;
+      this.currentUserId = res.sub;
     });
     this.logic.fetchAnyTask(this.taskId)
       .pipe(map((data) => this.taskDetail = data))
@@ -74,14 +74,14 @@ export class TaskDetailPage implements OnInit {
 
   sendMessage(): void {
     if (this.arrayImageBase64Data.length === 0) {
-      this.logic.sendNewMessage(this.taskId, this.newMsg, this.userId)
+      this.logic.sendNewMessage(this.taskId, this.newMsg, this.currentUserId)
         .subscribe(() => this.newMsg = '');
     } else {
       this.logic.uploadFile(this.arrayImageBase64Data, this.taskId)
         .pipe(map((data) => data.key))
         .pipe(concatMap((result) => this.logic.getStorage(result)))
         .pipe(toArray())
-        .pipe(concatMap((data) => this.logic.sendNewMessage(this.taskId, this.newMsg, this.userId, data)))
+        .pipe(concatMap((data) => this.logic.sendNewMessage(this.taskId, this.newMsg, this.currentUserId, data)))
         .subscribe(() => {
           this.newMsg = '';
           this.arrayImageBase64Data = [];
@@ -127,10 +127,7 @@ export class TaskDetailPage implements OnInit {
       .pipe(concatMap(({ data }) => this.logic.updateTaskToRoom(data.taskValue, this.taskId)))
       .pipe(concatMap((result) => this.logic.createMessage(result, resultObj.objHasTask)))
       .pipe(concatMap(() => this.logic.fetchAnyTask(this.taskId)))
-      .subscribe((data) => {
-        console.log(data);
-        // this.taskDetail = data;
-      })
+      .subscribe(() => { })
     return modal.present();
   }
 
@@ -240,8 +237,11 @@ export class TaskDetailPage implements OnInit {
   }
 
   deleteTaskConfirm(taskDetail) {
+    const messageContent = 'タスクを削除しました。';
+    console.log('taskDetail', taskDetail);
     this.logic.deleteTask(taskDetail.id)
-      .subscribe((result) => { });
+      .pipe(concatMap(() => this.logic.sendNewMessage(taskDetail.id, messageContent, this.currentUserId)))
+      .subscribe((result) => { console.log('Result', result) });
   }
 
   goBackToRoom(): void {
