@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Location, ViewportScroller } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ModalController, ActionSheetController, ToastController, IonContent, Platform, AlertController } from '@ionic/angular';
 import { Plugins, CameraResultType } from '@capacitor/core';
 import { from, Observable } from 'rxjs';
@@ -34,6 +34,7 @@ export class TaskDetailPage implements OnInit {
   constructor(
     private location: Location,
     private logic: TaskDetailLogic,
+    private router: Router,
     private route: ActivatedRoute,
     private scroll: ViewportScroller,
     private modalCtrl: ModalController,
@@ -241,7 +242,9 @@ export class TaskDetailPage implements OnInit {
     console.log('taskDetail', taskDetail);
     this.logic.deleteTask(taskDetail.id)
       .pipe(concatMap(() => this.logic.sendNewMessage(taskDetail.id, messageContent, this.currentUserId)))
-      .subscribe((result) => { console.log('Result', result) });
+      .subscribe(() => {
+        this.router.navigate(['home/task', `${taskDetail.room.id}`]);
+      });
   }
 
   goBackToRoom(): void {
