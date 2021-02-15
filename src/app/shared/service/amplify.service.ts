@@ -6338,19 +6338,7 @@ export class AmplifyService {
             iconImage
             registered
             authority
-            company {
-              __typename
-              id
-              name
-              domain
-              createdAt
-              updatedAt
-            }
             room {
-              __typename
-              nextToken
-            }
-            task {
               __typename
               nextToken
             }
@@ -6364,36 +6352,6 @@ export class AmplifyService {
           content
           createdAt
           isSent
-          task {
-            __typename
-            id
-            authorID
-            roomID
-            title
-            room {
-              __typename
-              id
-              name
-              companyID
-              description
-              createdAt
-              updatedAt
-            }
-            description
-            scheduleDate
-            priority
-            status
-            createdAt
-            messages {
-              __typename
-              nextToken
-            }
-            users {
-              __typename
-              nextToken
-            }
-            updatedAt
-          }
           updatedAt
         }
       }`

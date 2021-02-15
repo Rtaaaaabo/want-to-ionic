@@ -6,7 +6,7 @@ import { Plugins, CameraResultType } from '@capacitor/core';
 import { from, Observable } from 'rxjs';
 import { TaskDetailLogic } from './logic/task-detail.logic';
 import { AddTaskModalComponent } from 'src/app/shared/component/modal/add-task-modal/add-task-modal.component';
-import { filter, tap, map, concatMap, toArray } from 'rxjs/operators';
+import { filter, tap, map, concatMap, toArray, catchError } from 'rxjs/operators';
 import { CurrentUserInfo } from '../task/interface/current-user-info.interface';
 import { ListRoomGroupsQuery } from 'src/app/API.service';
 import { GetTaskQuery, ListMessagesQuery } from 'src/app/shared/service/amplify.service';
@@ -46,11 +46,14 @@ export class TaskDetailPage implements OnInit {
     this.initializeApp()
       .subscribe(() => {
         this.logic.onCreateMessageListener()
-          .subscribe(() => {
-            this.logic.fetchMessagePerTask(this.taskId)
-              .subscribe((result) => {
-                this.message = result.items
-              })
+          .subscribe(({ value }) => {
+            console.log('[onCreateMessageListener] value', value);
+            // if (!data.value.hasOwnProperty('errors')) {
+            //   this.logic.fetchMessagePerTask(this.taskId)
+            //     .subscribe((result) => {
+            //       this.message = result.items
+            //     })
+            // }
           });
       });
   }
@@ -223,14 +226,13 @@ export class TaskDetailPage implements OnInit {
       buttons: [
         {
           text: 'キャンセル',
-          role: 'confirm',
+          role: 'cancel',
         },
         {
           text: 'OK',
-          role: 'cancel',
           handler: () => {
             this.deleteTaskConfirm(taskDetail);
-          }
+          },
         },
       ]
     })
@@ -239,11 +241,10 @@ export class TaskDetailPage implements OnInit {
 
   deleteTaskConfirm(taskDetail) {
     const messageContent = 'タスクを削除しました。';
-    console.log('taskDetail', taskDetail);
     this.logic.deleteTask(taskDetail.id)
       .pipe(concatMap(() => this.logic.sendNewMessage(taskDetail.id, messageContent, this.currentUserId)))
       .subscribe(() => {
-        this.router.navigate(['home/task', `${taskDetail.room.id}`]);
+        this.location.back();
       });
   }
 

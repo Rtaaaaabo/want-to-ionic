@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ItemReorderEventDetail } from '@ionic/core';
@@ -18,7 +18,7 @@ import { CompanyMembers } from './model/task-member.model';
   templateUrl: './task.page.html',
   styleUrls: ['./task.page.scss'],
 })
-export class TaskPage {
+export class TaskPage implements OnInit {
   room = {} as GetRoomQuery;
   roomId: string;
   currentUserId: string;
@@ -42,6 +42,8 @@ export class TaskPage {
     private toastCtrl: ToastController,
     private actionSheetCtrl: ActionSheetController,
   ) { }
+
+  ngOnInit() { }
 
   ionViewWillEnter(): void {
     this.isReorder = false;

@@ -7,7 +7,7 @@ import { SessionService } from 'src/app/shared/service/session.service';
 import { CurrentUserInfo } from '../../task/interface/current-user-info.interface';
 import { TaskDetailService } from '../service/task-detail.service';
 import { Filesystem, FilesystemDirectory, FilesystemEncoding, FileWriteResult, FileReadResult, FileDeleteResult } from "@capacitor/core";
-import { GetTaskQuery, UpdateTaskMutation } from 'src/app/shared/service/amplify.service';
+import { GetTaskQuery, OnCreateCompanySubscription, OnCreateMessageSubscription, UpdateTaskMutation } from 'src/app/shared/service/amplify.service';
 
 const OneWeekSecond = 604800;
 
@@ -78,15 +78,15 @@ export class TaskDetailLogic {
     if (arrayAttachmentUri !== undefined) {
       inputContent.attachmentUri = arrayAttachmentUri;
     }
-    console.log('Message InputContent', inputContent);
     return this.taskDetailService.createMessageItem(inputContent);
   }
 
   /**
    * 新規で作られたMessageをSubscribeします
+   * Observable<OnCreateMessageSubscription>
    * @returns Observable型でonMessageListenerを返します
    */
-  onCreateMessageListener() {
+  onCreateMessageListener(): any {
     return this.taskDetailService.onMessageListener();
   }
 
