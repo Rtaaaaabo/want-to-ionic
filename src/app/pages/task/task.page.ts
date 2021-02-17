@@ -139,7 +139,7 @@ export class TaskPage implements OnInit {
   }
 
   addCommentToTaskDetail(task): void {
-    this.router.navigate(['task-detail', `${task.id}`], {
+    this.router.navigate(['task-detail', `${task.id}`, 'active'], {
       fragment: 'comment'
     })
   }
