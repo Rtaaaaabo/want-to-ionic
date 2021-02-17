@@ -34,8 +34,4 @@ export class TaskDetailService {
   fetchRoomMember(content): Observable<any> {
     return from(this.amplifyService.ListRoomGroups(content));
   }
-
-  deleteTask(content: { id: string }): Observable<any> {
-    return from(this.amplifyService.DeleteTask(content));
-  }
 }
