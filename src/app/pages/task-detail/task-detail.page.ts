@@ -48,12 +48,12 @@ export class TaskDetailPage implements OnInit {
         this.logic.onCreateMessageListener()
           .subscribe(({ value }) => {
             console.log('[onCreateMessageListener] value', value);
-            // if (!data.value.hasOwnProperty('errors')) {
-            //   this.logic.fetchMessagePerTask(this.taskId)
-            //     .subscribe((result) => {
-            //       this.message = result.items
-            //     })
-            // }
+            if (!value.hasOwnProperty('errors')) {
+              this.logic.fetchMessagePerTask(this.taskId)
+                .subscribe((result) => {
+                  this.message = result.items
+                })
+            }
           });
       });
   }
@@ -169,13 +169,6 @@ export class TaskDetailPage implements OnInit {
             this.doneTask(taskDetail);
           }
         },
-        // {
-        //   text: '削除',
-        //   role: 'destructive',
-        //   handler: () => {
-        //     this.deleteTask(taskDetail)
-        //   }
-        // },
         {
           text: 'キャンセル',
           role: 'cancel',
@@ -198,13 +191,6 @@ export class TaskDetailPage implements OnInit {
             this.presentModalEditTask(taskDetail)
           }
         },
-        // {
-        //   text: '削除',
-        //   role: 'destructive',
-        //   handler: () => {
-        //     this.deleteTask(taskDetail)
-        //   }
-        // },
         {
           text: 'キャンセル',
           role: 'cancel',
@@ -217,36 +203,6 @@ export class TaskDetailPage implements OnInit {
     } else if (this.segment === 'done') {
       await doneActionSheet.present();
     }
-  }
-
-  async deleteTask(taskDetail): Promise<void> {
-    const alert = await this.alertCtrl.create({
-      header: 'タスクの削除',
-      message: `${taskDetail.title}を削除してもよろしいでしょうか？`,
-      buttons: [
-        {
-          text: 'キャンセル',
-          role: 'cancel',
-        },
-        {
-          text: 'OK',
-          handler: () => {
-            this.deleteTaskConfirm(taskDetail);
-          },
-        },
-      ]
-    })
-    await alert.present().then((res) => {
-      console.log('res', res);
-    });
-  }
-
-  deleteTaskConfirm(taskDetail) {
-    this.logic.deleteTask(taskDetail.id)
-      .subscribe((res) => {
-        console.log('deleteTaskConfirm res', res);
-        this.location.back();
-      });
   }
 
   goBackToRoom(): void {
