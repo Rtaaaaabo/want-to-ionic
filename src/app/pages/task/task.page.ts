@@ -159,33 +159,6 @@ export class TaskPage implements OnInit {
       .subscribe((data) => { this.taskActiveItems = data });
   }
 
-  async presentConfirmDelete(task): Promise<void> {
-    const actionSheet = await this.actionSheetCtrl.create({
-      buttons: [
-        {
-          text: '削除',
-          role: 'destructive',
-          handler: () => {
-            this.deleteTask(task)
-          }
-        },
-        {
-          text: 'キャンセル',
-          role: 'cancel',
-        }
-      ]
-    })
-    return actionSheet.present();
-  }
-
-  deleteTask(task): void {
-    this.logic.deleteTaskItem(task.id)
-      .pipe(concatMap(() => this.logic.fetchActiveTaskPerRoom(this.roomId)))
-      .subscribe((result) => {
-        this.taskActiveItems = result
-      });
-  }
-
   navigateToRoomMember(): void {
     this.router.navigate(['room-members', `${this.roomId}`, `${this.companyId}`]);
   }

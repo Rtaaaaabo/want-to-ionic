@@ -138,13 +138,6 @@ export class TaskLogic {
     return this.taskService.updateTaskStatusForReorder(content);
   }
 
-  deleteTaskItem(taskId: string): Observable<DeleteTaskMutation> {
-    const content = {
-      id: `${taskId}`,
-    };
-    return this.taskService.deleteTaskItem(content);
-  }
-
   fetchUserInfoFromAmplify(userId: string): Observable<GetUserQuery> {
     return this.taskService.fetchUserInfo(userId);
   }
