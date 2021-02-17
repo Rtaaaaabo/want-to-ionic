@@ -169,13 +169,13 @@ export class TaskDetailPage implements OnInit {
             this.doneTask(taskDetail);
           }
         },
-        {
-          text: '削除',
-          role: 'destructive',
-          handler: () => {
-            this.deleteTask(taskDetail)
-          }
-        },
+        // {
+        //   text: '削除',
+        //   role: 'destructive',
+        //   handler: () => {
+        //     this.deleteTask(taskDetail)
+        //   }
+        // },
         {
           text: 'キャンセル',
           role: 'cancel',
@@ -198,13 +198,13 @@ export class TaskDetailPage implements OnInit {
             this.presentModalEditTask(taskDetail)
           }
         },
-        {
-          text: '削除',
-          role: 'destructive',
-          handler: () => {
-            this.deleteTask(taskDetail)
-          }
-        },
+        // {
+        //   text: '削除',
+        //   role: 'destructive',
+        //   handler: () => {
+        //     this.deleteTask(taskDetail)
+        //   }
+        // },
         {
           text: 'キャンセル',
           role: 'cancel',
@@ -236,14 +236,15 @@ export class TaskDetailPage implements OnInit {
         },
       ]
     })
-    await alert.present();
+    await alert.present().then((res) => {
+      console.log('res', res);
+    });
   }
 
   deleteTaskConfirm(taskDetail) {
-    const messageContent = 'タスクを削除しました。';
     this.logic.deleteTask(taskDetail.id)
-      .pipe(concatMap(() => this.logic.sendNewMessage(taskDetail.id, messageContent, this.currentUserId)))
-      .subscribe(() => {
+      .subscribe((res) => {
+        console.log('deleteTaskConfirm res', res);
         this.location.back();
       });
   }
