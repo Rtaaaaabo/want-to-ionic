@@ -47,7 +47,6 @@ export class TaskDetailPage implements OnInit {
       .subscribe(() => {
         this.logic.onCreateMessageListener()
           .subscribe(({ value }) => {
-            console.log('[onCreateMessageListener] value', value);
             if (!value.hasOwnProperty('errors')) {
               this.logic.fetchMessagePerTask(this.taskId)
                 .subscribe((result) => {

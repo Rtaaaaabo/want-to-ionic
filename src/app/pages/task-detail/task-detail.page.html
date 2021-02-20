@@ -32,31 +32,33 @@
     </ion-card-content>
   </ion-card>
 
-  <ion-list>
-    <ion-list-header>
-      <ion-label>コミュニケーション</ion-label>
-    </ion-list-header>
-    <ion-item *ngFor="let item of message">
-      <ion-avatar slot="start">
-        <img src="../../../assets/svg/anonymous.svg" />
-      </ion-avatar>
-      <ion-label>
-        <h3>{{ item.content }}</h3>
-        <p>{{item.author.username}}</p>
-        <ion-row>
-          <ion-card
-            *ngFor="let imageSrc of item.attachmentUri"
-            class="width-height"
-          >
-            <img [src]="imageSrc" />
-          </ion-card>
-        </ion-row>
-        <p class="text-right">
-          {{ item.createdAt | date: "yyyy/MM/dd HH:mm" }}
-        </p>
-      </ion-label>
-    </ion-item>
-  </ion-list>
+  <div id="comment">
+    <ion-list>
+      <ion-list-header>
+        <ion-label>コミュニケーション</ion-label>
+      </ion-list-header>
+      <ion-item *ngFor="let item of message">
+        <ion-avatar slot="start">
+          <img src="../../../assets/svg/anonymous.svg" />
+        </ion-avatar>
+        <ion-label>
+          <h3>{{ item.content }}</h3>
+          <p>{{item.author.username}}</p>
+          <ion-row>
+            <ion-card
+              *ngFor="let imageSrc of item.attachmentUri"
+              class="width-height"
+            >
+              <img [src]="imageSrc" />
+            </ion-card>
+          </ion-row>
+          <p class="text-right">
+            {{ item.createdAt | date: "yyyy/MM/dd HH:mm" }}
+          </p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </div>
 </ion-content>
 
 <ion-footer>
