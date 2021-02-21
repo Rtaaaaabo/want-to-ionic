@@ -151,7 +151,7 @@ export class TaskPage implements OnInit {
     })
   }
 
-  async presentAlert(alertBody): Promise<void> {
+  async presentDoneTaskAlert(alertBody): Promise<void> {
     const alert = await this.alertCtrl.create({
       header: '完了にしますか？',
       message: `${alertBody.title}を完了にします。`,
@@ -174,10 +174,6 @@ export class TaskPage implements OnInit {
       ]
     });
     await alert.present();
-  }
-
-  doneTask(taskFormItem): void {
-    from(this.presentAlert(taskFormItem));
   }
 
   navigateToRoomMember(): void {
