@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ItemReorderEventDetail } from '@ionic/core';
-import { ModalController, ToastController, ActionSheetController } from '@ionic/angular';
+import { ModalController, ToastController, AlertController } from '@ionic/angular';
 import { forkJoin, from, of } from 'rxjs';
 import { flatMap, switchMap, tap, map, concatMap } from 'rxjs/operators';
 import { GetRoomQuery, GetUserQuery, ListUsersQuery } from 'src/app/shared/service/amplify.service';
@@ -40,7 +40,7 @@ export class TaskPage implements OnInit {
     private location: Location,
     private logic: TaskLogic,
     private toastCtrl: ToastController,
-    private actionSheetCtrl: ActionSheetController,
+    private alertCtrl: AlertController,
   ) { }
 
   ngOnInit() { }
@@ -151,12 +151,33 @@ export class TaskPage implements OnInit {
     })
   }
 
+  async presentAlert(alertBody): Promise<void> {
+    const alert = await this.alertCtrl.create({
+      header: '完了にしますか？',
+      message: `${alertBody.title}を完了にします。`,
+      buttons: [
+        {
+          text: 'キャンセル',
+          role: 'cancel',
+        },
+        {
+          text: 'OK',
+          role: 'ok',
+          handler: () => {
+            const presentToast = from(this.presentDoneToast());
+            this.logic.updateDoneTaskItem(alertBody, 10)
+              .pipe(flatMap(() => this.logic.fetchActiveTaskPerRoom(this.roomId)))
+              .pipe(tap(() => presentToast))
+              .subscribe((data) => { this.taskActiveItems = data });
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
   doneTask(taskFormItem): void {
-    const presentToast = from(this.presentDoneToast());
-    this.logic.updateDoneTaskItem(taskFormItem, 10)
-      .pipe(flatMap(() => this.logic.fetchActiveTaskPerRoom(this.roomId)))
-      .pipe(tap(() => presentToast))
-      .subscribe((data) => { this.taskActiveItems = data });
+    from(this.presentAlert(taskFormItem));
   }
 
   navigateToRoomMember(): void {
