@@ -53,22 +53,15 @@
         </ion-reorder>
 
         <!-- ボタン部分 -->
-        <ion-row *ngIf="!isReorder" class="cardfooter">
-          <ion-col class="button-center">
-            <ion-button
-              (click)="addCommentToTaskDetail(item)"
-              fill="clear"
-              color="primary"
-            >
-              <ion-icon name="chatbubbles-outline"></ion-icon>
-            </ion-button>
-          </ion-col>
-          <ion-col class="button-center">
-            <ion-button (click)="doneTask(item)" fill="clear" color="primary">
-              <ion-icon name="checkmark-circle-outline"></ion-icon>
-            </ion-button>
-          </ion-col>
-        </ion-row>
+        <ion-button
+          *ngIf="!isReorder"
+          expand="full"
+          class="button-center"
+          (click)="doneTask(item)"
+          color="primary"
+        >
+          <ion-icon name="checkmark"></ion-icon>
+        </ion-button>
         <!-- /ボタン部分 -->
       </ion-card>
     </ion-reorder-group>
