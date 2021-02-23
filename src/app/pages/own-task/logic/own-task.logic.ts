@@ -43,4 +43,9 @@ export class OwnTaskLogic {
     });
   }
 
+  filterExceptDoneTask(itemsArray): Observable<any> {
+    return from(itemsArray.filter(item => item.task.status < 10))
+      .pipe(toArray());
+  }
+
 }

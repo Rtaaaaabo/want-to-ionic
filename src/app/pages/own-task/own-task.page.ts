@@ -25,6 +25,7 @@ export class OwnTaskPage implements OnInit, AfterViewInit {
       .pipe(map(result => result.sub))
       .pipe(concatMap((currentUserId) => this.logic.getTaskChargeItems(currentUserId)))
       .pipe(concatMap(({ items }) => this.logic.setTaskPerRoom(items)))
+      .pipe(concatMap((items) => this.logic.filterExceptDoneTask(items)))
       .subscribe((items) => {
         this.ownTaskItems = items;
       })
@@ -38,7 +39,7 @@ export class OwnTaskPage implements OnInit, AfterViewInit {
       backdropDismiss: true
     });
     await loading.present();
-    const { role, data } = await loading.onDidDismiss();
+    await loading.onDidDismiss();
   }
 
   navigateToTaskDetail(item) {
