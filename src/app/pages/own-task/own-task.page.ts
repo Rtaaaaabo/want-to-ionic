@@ -72,6 +72,7 @@ export class OwnTaskPage implements OnInit, AfterViewInit {
         }
       ]
     });
+    await alert.present();
   }
 
   async presentDoneToast(): Promise<void> {

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { from, Observable, of } from 'rxjs';
-import { AmplifyService } from 'src/app/shared/service/amplify.service';
+import { AmplifyService, UpdateTaskMutation } from 'src/app/shared/service/amplify.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,5 +18,9 @@ export class OwnTaskService {
   fetchRoomInfoItem(taskItem): Observable<any> {
     const roomId: string = taskItem.roomID;
     return from(this.amplifyService.GetRoom(roomId));
+  }
+
+  updateTaskItem(content): Observable<UpdateTaskMutation> {
+    return from(this.amplifyService.UpdateTask(content));
   }
 }

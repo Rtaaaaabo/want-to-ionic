@@ -10,8 +10,8 @@ import { OwnTaskService } from '../service/own-task.service';
 export class OwnTaskLogic {
 
   constructor(
-    private ownTaskService: OwnTaskService,
-    private sessionService: SessionService,
+    private readonly ownTaskService: OwnTaskService,
+    private readonly sessionService: SessionService,
   ) { }
 
   fetchCurrentUser(): Observable<any> {
