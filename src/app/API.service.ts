@@ -62,6 +62,141 @@ export type ModelSizeInput = {
   between?: Array<number | null> | null;
 };
 
+export type Company = {
+  __typename: "Company";
+  id?: string;
+  name?: string;
+  domain?: string;
+  room?: ModelRoomConnection;
+  companyMembers?: ModelUserConnection;
+  createdAt?: string;
+  updatedAt?: string;
+};
+
+export type ModelRoomConnection = {
+  __typename: "ModelRoomConnection";
+  items?: Array<Room | null> | null;
+  nextToken?: string | null;
+};
+
+export type Room = {
+  __typename: "Room";
+  id?: string;
+  name?: string;
+  companyID?: string;
+  description?: string;
+  company?: Company;
+  tasks?: ModelTaskConnection;
+  users?: ModelRoomGroupConnection;
+  createdAt?: string;
+  updatedAt?: string;
+};
+
+export type ModelTaskConnection = {
+  __typename: "ModelTaskConnection";
+  items?: Array<Task | null> | null;
+  nextToken?: string | null;
+};
+
+export type Task = {
+  __typename: "Task";
+  id?: string;
+  authorID?: string;
+  roomID?: string;
+  chargePersonID?: string;
+  title?: string;
+  room?: Room;
+  description?: string | null;
+  scheduleDate?: string | null;
+  priority?: number | null;
+  status?: number | null;
+  createdAt?: string | null;
+  chargePerson?: User;
+  messages?: ModelMessageConnection;
+  users?: ModelTaskGroupConnection;
+  updatedAt?: string;
+};
+
+export type User = {
+  __typename: "User";
+  id?: string;
+  username?: string;
+  email?: string;
+  companyID?: string;
+  tel?: string | null;
+  positionName?: string | null;
+  iconImage?: string | null;
+  registered?: boolean | null;
+  authority?: string | null;
+  company?: Company;
+  messages?: ModelMessageConnection;
+  room?: ModelRoomGroupConnection;
+  task?: ModelTaskGroupConnection;
+  chargeTask?: ModelTaskConnection;
+  createdAt?: string;
+  updatedAt?: string;
+};
+
+export type ModelMessageConnection = {
+  __typename: "ModelMessageConnection";
+  items?: Array<Message | null> | null;
+  nextToken?: string | null;
+};
+
+export type Message = {
+  __typename: "Message";
+  id?: string;
+  taskID?: string;
+  authorID?: string;
+  content?: string;
+  createdAt?: string | null;
+  isSent?: boolean | null;
+  attachmentUri?: Array<string | null> | null;
+  author?: User;
+  task?: Task;
+  updatedAt?: string;
+};
+
+export type ModelRoomGroupConnection = {
+  __typename: "ModelRoomGroupConnection";
+  items?: Array<RoomGroup | null> | null;
+  nextToken?: string | null;
+};
+
+export type RoomGroup = {
+  __typename: "RoomGroup";
+  id?: string;
+  roomID?: string;
+  userID?: string;
+  room?: Room;
+  user?: User;
+  createdAt?: string;
+  updatedAt?: string;
+};
+
+export type ModelTaskGroupConnection = {
+  __typename: "ModelTaskGroupConnection";
+  items?: Array<TaskGroup | null> | null;
+  nextToken?: string | null;
+};
+
+export type TaskGroup = {
+  __typename: "TaskGroup";
+  id?: string;
+  taskID?: string;
+  userID?: string;
+  task?: Task;
+  user?: User;
+  createdAt?: string;
+  updatedAt?: string;
+};
+
+export type ModelUserConnection = {
+  __typename: "ModelUserConnection";
+  items?: Array<User | null> | null;
+  nextToken?: string | null;
+};
+
 export type UpdateCompanyInput = {
   id: string;
   name?: string | null;
@@ -314,6 +449,12 @@ export type ModelCompanyFilterInput = {
   not?: ModelCompanyFilterInput | null;
 };
 
+export type ModelCompanyConnection = {
+  __typename: "ModelCompanyConnection";
+  items?: Array<Company | null> | null;
+  nextToken?: string | null;
+};
+
 export type ModelTaskGroupFilterInput = {
   id?: ModelIDInput | null;
   taskID?: ModelIDInput | null;
@@ -391,9 +532,9 @@ export type CreateCompanyMutation = {
   id: string;
   name: string;
   domain: string;
-  room: {
+  room?: {
     __typename: "ModelRoomConnection";
-    items: Array<{
+    items?: Array<{
       __typename: "Room";
       id: string;
       name: string;
@@ -402,25 +543,25 @@ export type CreateCompanyMutation = {
       createdAt: string;
       updatedAt: string;
     } | null> | null;
-    nextToken: string | null;
+    nextToken?: string | null;
   } | null;
-  companyMembers: {
+  companyMembers?: {
     __typename: "ModelUserConnection";
-    items: Array<{
+    items?: Array<{
       __typename: "User";
       id: string;
       username: string;
       email: string;
       companyID: string;
-      tel: string | null;
-      positionName: string | null;
-      iconImage: string | null;
-      registered: boolean | null;
-      authority: string | null;
+      tel?: string | null;
+      positionName?: string | null;
+      iconImage?: string | null;
+      registered?: boolean | null;
+      authority?: string | null;
       createdAt: string;
       updatedAt: string;
     } | null> | null;
-    nextToken: string | null;
+    nextToken?: string | null;
   } | null;
   createdAt: string;
   updatedAt: string;
@@ -431,9 +572,9 @@ export type UpdateCompanyMutation = {
   id: string;
   name: string;
   domain: string;
-  room: {
+  room?: {
     __typename: "ModelRoomConnection";
-    items: Array<{
+    items?: Array<{
       __typename: "Room";
       id: string;
       name: string;
@@ -442,25 +583,25 @@ export type UpdateCompanyMutation = {
       createdAt: string;
       updatedAt: string;
     } | null> | null;
-    nextToken: string | null;
+    nextToken?: string | null;
   } | null;
-  companyMembers: {
+  companyMembers?: {
     __typename: "ModelUserConnection";
-    items: Array<{
+    items?: Array<{
       __typename: "User";
       id: string;
       username: string;
       email: string;
       companyID: string;
-      tel: string | null;
-      positionName: string | null;
-      iconImage: string | null;
-      registered: boolean | null;
-      authority: string | null;
+      tel?: string | null;
+      positionName?: string | null;
+      iconImage?: string | null;
+      registered?: boolean | null;
+      authority?: string | null;
       createdAt: string;
       updatedAt: string;
     } | null> | null;
-    nextToken: string | null;
+    nextToken?: string | null;
   } | null;
   createdAt: string;
   updatedAt: string;
@@ -471,9 +612,9 @@ export type DeleteCompanyMutation = {
   id: string;
   name: string;
   domain: string;
-  room: {
+  room?: {
     __typename: "ModelRoomConnection";
-    items: Array<{
+    items?: Array<{
       __typename: "Room";
       id: string;
       name: string;
@@ -482,25 +623,25 @@ export type DeleteCompanyMutation = {
       createdAt: string;
       updatedAt: string;
     } | null> | null;
-    nextToken: string | null;
+    nextToken?: string | null;
   } | null;
-  companyMembers: {
+  companyMembers?: {
     __typename: "ModelUserConnection";
-    items: Array<{
+    items?: Array<{
       __typename: "User";
       id: string;
       username: string;
       email: string;
       companyID: string;
-      tel: string | null;
-      positionName: string | null;
-      iconImage: string | null;
-      registered: boolean | null;
-      authority: string | null;
+      tel?: string | null;
+      positionName?: string | null;
+      iconImage?: string | null;
+      registered?: boolean | null;
+      authority?: string | null;
       createdAt: string;
       updatedAt: string;
     } | null> | null;
-    nextToken: string | null;
+    nextToken?: string | null;
   } | null;
   createdAt: string;
   updatedAt: string;
@@ -511,7 +652,7 @@ export type CreateTaskGroupMutation = {
   id: string;
   taskID: string;
   userID: string;
-  task: {
+  task?: {
     __typename: "Task";
     id: string;
     authorID: string;
@@ -527,46 +668,46 @@ export type CreateTaskGroupMutation = {
       createdAt: string;
       updatedAt: string;
     };
-    description: string | null;
-    scheduleDate: string | null;
-    priority: number | null;
-    status: number | null;
-    createdAt: string | null;
+    description?: string | null;
+    scheduleDate?: string | null;
+    priority?: number | null;
+    status?: number | null;
+    createdAt?: string | null;
     chargePerson: {
       __typename: "User";
       id: string;
       username: string;
       email: string;
       companyID: string;
-      tel: string | null;
-      positionName: string | null;
-      iconImage: string | null;
-      registered: boolean | null;
-      authority: string | null;
+      tel?: string | null;
+      positionName?: string | null;
+      iconImage?: string | null;
+      registered?: boolean | null;
+      authority?: string | null;
       createdAt: string;
       updatedAt: string;
     };
-    messages: {
+    messages?: {
       __typename: "ModelMessageConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    users: {
+    users?: {
       __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
     updatedAt: string;
   } | null;
-  user: {
+  user?: {
     __typename: "User";
     id: string;
     username: string;
     email: string;
     companyID: string;
-    tel: string | null;
-    positionName: string | null;
-    iconImage: string | null;
-    registered: boolean | null;
-    authority: string | null;
+    tel?: string | null;
+    positionName?: string | null;
+    iconImage?: string | null;
+    registered?: boolean | null;
+    authority?: string | null;
     company: {
       __typename: "Company";
       id: string;
@@ -575,21 +716,21 @@ export type CreateTaskGroupMutation = {
       createdAt: string;
       updatedAt: string;
     };
-    messages: {
+    messages?: {
       __typename: "ModelMessageConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    room: {
+    room?: {
       __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    task: {
+    task?: {
       __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    chargeTask: {
+    chargeTask?: {
       __typename: "ModelTaskConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
     createdAt: string;
     updatedAt: string;
@@ -603,7 +744,7 @@ export type UpdateTaskGroupMutation = {
   id: string;
   taskID: string;
   userID: string;
-  task: {
+  task?: {
     __typename: "Task";
     id: string;
     authorID: string;
@@ -619,46 +760,46 @@ export type UpdateTaskGroupMutation = {
       createdAt: string;
       updatedAt: string;
     };
-    description: string | null;
-    scheduleDate: string | null;
-    priority: number | null;
-    status: number | null;
-    createdAt: string | null;
+    description?: string | null;
+    scheduleDate?: string | null;
+    priority?: number | null;
+    status?: number | null;
+    createdAt?: string | null;
     chargePerson: {
       __typename: "User";
       id: string;
       username: string;
       email: string;
       companyID: string;
-      tel: string | null;
-      positionName: string | null;
-      iconImage: string | null;
-      registered: boolean | null;
-      authority: string | null;
+      tel?: string | null;
+      positionName?: string | null;
+      iconImage?: string | null;
+      registered?: boolean | null;
+      authority?: string | null;
       createdAt: string;
       updatedAt: string;
     };
-    messages: {
+    messages?: {
       __typename: "ModelMessageConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    users: {
+    users?: {
       __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
     updatedAt: string;
   } | null;
-  user: {
+  user?: {
     __typename: "User";
     id: string;
     username: string;
     email: string;
     companyID: string;
-    tel: string | null;
-    positionName: string | null;
-    iconImage: string | null;
-    registered: boolean | null;
-    authority: string | null;
+    tel?: string | null;
+    positionName?: string | null;
+    iconImage?: string | null;
+    registered?: boolean | null;
+    authority?: string | null;
     company: {
       __typename: "Company";
       id: string;
@@ -667,21 +808,21 @@ export type UpdateTaskGroupMutation = {
       createdAt: string;
       updatedAt: string;
     };
-    messages: {
+    messages?: {
       __typename: "ModelMessageConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    room: {
+    room?: {
       __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    task: {
+    task?: {
       __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    chargeTask: {
+    chargeTask?: {
       __typename: "ModelTaskConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
     createdAt: string;
     updatedAt: string;
@@ -695,7 +836,7 @@ export type DeleteTaskGroupMutation = {
   id: string;
   taskID: string;
   userID: string;
-  task: {
+  task?: {
     __typename: "Task";
     id: string;
     authorID: string;
@@ -711,46 +852,46 @@ export type DeleteTaskGroupMutation = {
       createdAt: string;
       updatedAt: string;
     };
-    description: string | null;
-    scheduleDate: string | null;
-    priority: number | null;
-    status: number | null;
-    createdAt: string | null;
+    description?: string | null;
+    scheduleDate?: string | null;
+    priority?: number | null;
+    status?: number | null;
+    createdAt?: string | null;
     chargePerson: {
       __typename: "User";
       id: string;
       username: string;
       email: string;
       companyID: string;
-      tel: string | null;
-      positionName: string | null;
-      iconImage: string | null;
-      registered: boolean | null;
-      authority: string | null;
+      tel?: string | null;
+      positionName?: string | null;
+      iconImage?: string | null;
+      registered?: boolean | null;
+      authority?: string | null;
       createdAt: string;
       updatedAt: string;
     };
-    messages: {
+    messages?: {
       __typename: "ModelMessageConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    users: {
+    users?: {
       __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
     updatedAt: string;
   } | null;
-  user: {
+  user?: {
     __typename: "User";
     id: string;
     username: string;
     email: string;
     companyID: string;
-    tel: string | null;
-    positionName: string | null;
-    iconImage: string | null;
-    registered: boolean | null;
-    authority: string | null;
+    tel?: string | null;
+    positionName?: string | null;
+    iconImage?: string | null;
+    registered?: boolean | null;
+    authority?: string | null;
     company: {
       __typename: "Company";
       id: string;
@@ -759,21 +900,21 @@ export type DeleteTaskGroupMutation = {
       createdAt: string;
       updatedAt: string;
     };
-    messages: {
+    messages?: {
       __typename: "ModelMessageConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    room: {
+    room?: {
       __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    task: {
+    task?: {
       __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    chargeTask: {
+    chargeTask?: {
       __typename: "ModelTaskConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
     createdAt: string;
     updatedAt: string;
@@ -803,33 +944,33 @@ export type CreateTaskMutation = {
       createdAt: string;
       updatedAt: string;
     };
-    tasks: {
+    tasks?: {
       __typename: "ModelTaskConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    users: {
+    users?: {
       __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
     createdAt: string;
     updatedAt: string;
   };
-  description: string | null;
-  scheduleDate: string | null;
-  priority: number | null;
-  status: number | null;
-  createdAt: string | null;
+  description?: string | null;
+  scheduleDate?: string | null;
+  priority?: number | null;
+  status?: number | null;
+  createdAt?: string | null;
   chargePerson: {
     __typename: "User";
     id: string;
     username: string;
     email: string;
     companyID: string;
-    tel: string | null;
-    positionName: string | null;
-    iconImage: string | null;
-    registered: boolean | null;
-    authority: string | null;
+    tel?: string | null;
+    positionName?: string | null;
+    iconImage?: string | null;
+    registered?: boolean | null;
+    authority?: string | null;
     company: {
       __typename: "Company";
       id: string;
@@ -838,43 +979,43 @@ export type CreateTaskMutation = {
       createdAt: string;
       updatedAt: string;
     };
-    messages: {
+    messages?: {
       __typename: "ModelMessageConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    room: {
+    room?: {
       __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    task: {
+    task?: {
       __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    chargeTask: {
+    chargeTask?: {
       __typename: "ModelTaskConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
     createdAt: string;
     updatedAt: string;
   };
-  messages: {
+  messages?: {
     __typename: "ModelMessageConnection";
-    items: Array<{
+    items?: Array<{
       __typename: "Message";
       id: string;
       taskID: string;
       authorID: string;
       content: string;
-      createdAt: string | null;
-      isSent: boolean | null;
-      attachmentUri: Array<string | null> | null;
+      createdAt?: string | null;
+      isSent?: boolean | null;
+      attachmentUri?: Array<string | null> | null;
       updatedAt: string;
     } | null> | null;
-    nextToken: string | null;
+    nextToken?: string | null;
   } | null;
-  users: {
+  users?: {
     __typename: "ModelTaskGroupConnection";
-    items: Array<{
+    items?: Array<{
       __typename: "TaskGroup";
       id: string;
       taskID: string;
@@ -882,7 +1023,7 @@ export type CreateTaskMutation = {
       createdAt: string;
       updatedAt: string;
     } | null> | null;
-    nextToken: string | null;
+    nextToken?: string | null;
   } | null;
   updatedAt: string;
 };
@@ -908,33 +1049,33 @@ export type UpdateTaskMutation = {
       createdAt: string;
       updatedAt: string;
     };
-    tasks: {
+    tasks?: {
       __typename: "ModelTaskConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    users: {
+    users?: {
       __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
     createdAt: string;
     updatedAt: string;
   };
-  description: string | null;
-  scheduleDate: string | null;
-  priority: number | null;
-  status: number | null;
-  createdAt: string | null;
+  description?: string | null;
+  scheduleDate?: string | null;
+  priority?: number | null;
+  status?: number | null;
+  createdAt?: string | null;
   chargePerson: {
     __typename: "User";
     id: string;
     username: string;
     email: string;
     companyID: string;
-    tel: string | null;
-    positionName: string | null;
-    iconImage: string | null;
-    registered: boolean | null;
-    authority: string | null;
+    tel?: string | null;
+    positionName?: string | null;
+    iconImage?: string | null;
+    registered?: boolean | null;
+    authority?: string | null;
     company: {
       __typename: "Company";
       id: string;
@@ -943,43 +1084,43 @@ export type UpdateTaskMutation = {
       createdAt: string;
       updatedAt: string;
     };
-    messages: {
+    messages?: {
       __typename: "ModelMessageConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    room: {
+    room?: {
       __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    task: {
+    task?: {
       __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    chargeTask: {
+    chargeTask?: {
       __typename: "ModelTaskConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
     createdAt: string;
     updatedAt: string;
   };
-  messages: {
+  messages?: {
     __typename: "ModelMessageConnection";
-    items: Array<{
+    items?: Array<{
       __typename: "Message";
       id: string;
       taskID: string;
       authorID: string;
       content: string;
-      createdAt: string | null;
-      isSent: boolean | null;
-      attachmentUri: Array<string | null> | null;
+      createdAt?: string | null;
+      isSent?: boolean | null;
+      attachmentUri?: Array<string | null> | null;
       updatedAt: string;
     } | null> | null;
-    nextToken: string | null;
+    nextToken?: string | null;
   } | null;
-  users: {
+  users?: {
     __typename: "ModelTaskGroupConnection";
-    items: Array<{
+    items?: Array<{
       __typename: "TaskGroup";
       id: string;
       taskID: string;
@@ -987,7 +1128,7 @@ export type UpdateTaskMutation = {
       createdAt: string;
       updatedAt: string;
     } | null> | null;
-    nextToken: string | null;
+    nextToken?: string | null;
   } | null;
   updatedAt: string;
 };
@@ -1013,33 +1154,33 @@ export type DeleteTaskMutation = {
       createdAt: string;
       updatedAt: string;
     };
-    tasks: {
+    tasks?: {
       __typename: "ModelTaskConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    users: {
+    users?: {
       __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
     createdAt: string;
     updatedAt: string;
   };
-  description: string | null;
-  scheduleDate: string | null;
-  priority: number | null;
-  status: number | null;
-  createdAt: string | null;
+  description?: string | null;
+  scheduleDate?: string | null;
+  priority?: number | null;
+  status?: number | null;
+  createdAt?: string | null;
   chargePerson: {
     __typename: "User";
     id: string;
     username: string;
     email: string;
     companyID: string;
-    tel: string | null;
-    positionName: string | null;
-    iconImage: string | null;
-    registered: boolean | null;
-    authority: string | null;
+    tel?: string | null;
+    positionName?: string | null;
+    iconImage?: string | null;
+    registered?: boolean | null;
+    authority?: string | null;
     company: {
       __typename: "Company";
       id: string;
@@ -1048,43 +1189,43 @@ export type DeleteTaskMutation = {
       createdAt: string;
       updatedAt: string;
     };
-    messages: {
+    messages?: {
       __typename: "ModelMessageConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    room: {
+    room?: {
       __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    task: {
+    task?: {
       __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    chargeTask: {
+    chargeTask?: {
       __typename: "ModelTaskConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
     createdAt: string;
     updatedAt: string;
   };
-  messages: {
+  messages?: {
     __typename: "ModelMessageConnection";
-    items: Array<{
+    items?: Array<{
       __typename: "Message";
       id: string;
       taskID: string;
       authorID: string;
       content: string;
-      createdAt: string | null;
-      isSent: boolean | null;
-      attachmentUri: Array<string | null> | null;
+      createdAt?: string | null;
+      isSent?: boolean | null;
+      attachmentUri?: Array<string | null> | null;
       updatedAt: string;
     } | null> | null;
-    nextToken: string | null;
+    nextToken?: string | null;
   } | null;
-  users: {
+  users?: {
     __typename: "ModelTaskGroupConnection";
-    items: Array<{
+    items?: Array<{
       __typename: "TaskGroup";
       id: string;
       taskID: string;
@@ -1092,7 +1233,7 @@ export type DeleteTaskMutation = {
       createdAt: string;
       updatedAt: string;
     } | null> | null;
-    nextToken: string | null;
+    nextToken?: string | null;
   } | null;
   updatedAt: string;
 };
@@ -1103,45 +1244,45 @@ export type CreateUserMutation = {
   username: string;
   email: string;
   companyID: string;
-  tel: string | null;
-  positionName: string | null;
-  iconImage: string | null;
-  registered: boolean | null;
-  authority: string | null;
+  tel?: string | null;
+  positionName?: string | null;
+  iconImage?: string | null;
+  registered?: boolean | null;
+  authority?: string | null;
   company: {
     __typename: "Company";
     id: string;
     name: string;
     domain: string;
-    room: {
+    room?: {
       __typename: "ModelRoomConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    companyMembers: {
+    companyMembers?: {
       __typename: "ModelUserConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
     createdAt: string;
     updatedAt: string;
   };
-  messages: {
+  messages?: {
     __typename: "ModelMessageConnection";
-    items: Array<{
+    items?: Array<{
       __typename: "Message";
       id: string;
       taskID: string;
       authorID: string;
       content: string;
-      createdAt: string | null;
-      isSent: boolean | null;
-      attachmentUri: Array<string | null> | null;
+      createdAt?: string | null;
+      isSent?: boolean | null;
+      attachmentUri?: Array<string | null> | null;
       updatedAt: string;
     } | null> | null;
-    nextToken: string | null;
+    nextToken?: string | null;
   } | null;
-  room: {
+  room?: {
     __typename: "ModelRoomGroupConnection";
-    items: Array<{
+    items?: Array<{
       __typename: "RoomGroup";
       id: string;
       roomID: string;
@@ -1149,11 +1290,11 @@ export type CreateUserMutation = {
       createdAt: string;
       updatedAt: string;
     } | null> | null;
-    nextToken: string | null;
+    nextToken?: string | null;
   } | null;
-  task: {
+  task?: {
     __typename: "ModelTaskGroupConnection";
-    items: Array<{
+    items?: Array<{
       __typename: "TaskGroup";
       id: string;
       taskID: string;
@@ -1161,25 +1302,25 @@ export type CreateUserMutation = {
       createdAt: string;
       updatedAt: string;
     } | null> | null;
-    nextToken: string | null;
+    nextToken?: string | null;
   } | null;
-  chargeTask: {
+  chargeTask?: {
     __typename: "ModelTaskConnection";
-    items: Array<{
+    items?: Array<{
       __typename: "Task";
       id: string;
       authorID: string;
       roomID: string;
       chargePersonID: string;
       title: string;
-      description: string | null;
-      scheduleDate: string | null;
-      priority: number | null;
-      status: number | null;
-      createdAt: string | null;
+      description?: string | null;
+      scheduleDate?: string | null;
+      priority?: number | null;
+      status?: number | null;
+      createdAt?: string | null;
       updatedAt: string;
     } | null> | null;
-    nextToken: string | null;
+    nextToken?: string | null;
   } | null;
   createdAt: string;
   updatedAt: string;
@@ -1191,45 +1332,45 @@ export type UpdateUserMutation = {
   username: string;
   email: string;
   companyID: string;
-  tel: string | null;
-  positionName: string | null;
-  iconImage: string | null;
-  registered: boolean | null;
-  authority: string | null;
+  tel?: string | null;
+  positionName?: string | null;
+  iconImage?: string | null;
+  registered?: boolean | null;
+  authority?: string | null;
   company: {
     __typename: "Company";
     id: string;
     name: string;
     domain: string;
-    room: {
+    room?: {
       __typename: "ModelRoomConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    companyMembers: {
+    companyMembers?: {
       __typename: "ModelUserConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
     createdAt: string;
     updatedAt: string;
   };
-  messages: {
+  messages?: {
     __typename: "ModelMessageConnection";
-    items: Array<{
+    items?: Array<{
       __typename: "Message";
       id: string;
       taskID: string;
       authorID: string;
       content: string;
-      createdAt: string | null;
-      isSent: boolean | null;
-      attachmentUri: Array<string | null> | null;
+      createdAt?: string | null;
+      isSent?: boolean | null;
+      attachmentUri?: Array<string | null> | null;
       updatedAt: string;
     } | null> | null;
-    nextToken: string | null;
+    nextToken?: string | null;
   } | null;
-  room: {
+  room?: {
     __typename: "ModelRoomGroupConnection";
-    items: Array<{
+    items?: Array<{
       __typename: "RoomGroup";
       id: string;
       roomID: string;
@@ -1237,11 +1378,11 @@ export type UpdateUserMutation = {
       createdAt: string;
       updatedAt: string;
     } | null> | null;
-    nextToken: string | null;
+    nextToken?: string | null;
   } | null;
-  task: {
+  task?: {
     __typename: "ModelTaskGroupConnection";
-    items: Array<{
+    items?: Array<{
       __typename: "TaskGroup";
       id: string;
       taskID: string;
@@ -1249,25 +1390,25 @@ export type UpdateUserMutation = {
       createdAt: string;
       updatedAt: string;
     } | null> | null;
-    nextToken: string | null;
+    nextToken?: string | null;
   } | null;
-  chargeTask: {
+  chargeTask?: {
     __typename: "ModelTaskConnection";
-    items: Array<{
+    items?: Array<{
       __typename: "Task";
       id: string;
       authorID: string;
       roomID: string;
       chargePersonID: string;
       title: string;
-      description: string | null;
-      scheduleDate: string | null;
-      priority: number | null;
-      status: number | null;
-      createdAt: string | null;
+      description?: string | null;
+      scheduleDate?: string | null;
+      priority?: number | null;
+      status?: number | null;
+      createdAt?: string | null;
       updatedAt: string;
     } | null> | null;
-    nextToken: string | null;
+    nextToken?: string | null;
   } | null;
   createdAt: string;
   updatedAt: string;
@@ -1279,45 +1420,45 @@ export type DeleteUserMutation = {
   username: string;
   email: string;
   companyID: string;
-  tel: string | null;
-  positionName: string | null;
-  iconImage: string | null;
-  registered: boolean | null;
-  authority: string | null;
+  tel?: string | null;
+  positionName?: string | null;
+  iconImage?: string | null;
+  registered?: boolean | null;
+  authority?: string | null;
   company: {
     __typename: "Company";
     id: string;
     name: string;
     domain: string;
-    room: {
+    room?: {
       __typename: "ModelRoomConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    companyMembers: {
+    companyMembers?: {
       __typename: "ModelUserConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
     createdAt: string;
     updatedAt: string;
   };
-  messages: {
+  messages?: {
     __typename: "ModelMessageConnection";
-    items: Array<{
+    items?: Array<{
       __typename: "Message";
       id: string;
       taskID: string;
       authorID: string;
       content: string;
-      createdAt: string | null;
-      isSent: boolean | null;
-      attachmentUri: Array<string | null> | null;
+      createdAt?: string | null;
+      isSent?: boolean | null;
+      attachmentUri?: Array<string | null> | null;
       updatedAt: string;
     } | null> | null;
-    nextToken: string | null;
+    nextToken?: string | null;
   } | null;
-  room: {
+  room?: {
     __typename: "ModelRoomGroupConnection";
-    items: Array<{
+    items?: Array<{
       __typename: "RoomGroup";
       id: string;
       roomID: string;
@@ -1325,11 +1466,11 @@ export type DeleteUserMutation = {
       createdAt: string;
       updatedAt: string;
     } | null> | null;
-    nextToken: string | null;
+    nextToken?: string | null;
   } | null;
-  task: {
+  task?: {
     __typename: "ModelTaskGroupConnection";
-    items: Array<{
+    items?: Array<{
       __typename: "TaskGroup";
       id: string;
       taskID: string;
@@ -1337,25 +1478,25 @@ export type DeleteUserMutation = {
       createdAt: string;
       updatedAt: string;
     } | null> | null;
-    nextToken: string | null;
+    nextToken?: string | null;
   } | null;
-  chargeTask: {
+  chargeTask?: {
     __typename: "ModelTaskConnection";
-    items: Array<{
+    items?: Array<{
       __typename: "Task";
       id: string;
       authorID: string;
       roomID: string;
       chargePersonID: string;
       title: string;
-      description: string | null;
-      scheduleDate: string | null;
-      priority: number | null;
-      status: number | null;
-      createdAt: string | null;
+      description?: string | null;
+      scheduleDate?: string | null;
+      priority?: number | null;
+      status?: number | null;
+      createdAt?: string | null;
       updatedAt: string;
     } | null> | null;
-    nextToken: string | null;
+    nextToken?: string | null;
   } | null;
   createdAt: string;
   updatedAt: string;
@@ -1366,7 +1507,7 @@ export type CreateRoomGroupMutation = {
   id: string;
   roomID: string;
   userID: string;
-  room: {
+  room?: {
     __typename: "Room";
     id: string;
     name: string;
@@ -1380,28 +1521,28 @@ export type CreateRoomGroupMutation = {
       createdAt: string;
       updatedAt: string;
     };
-    tasks: {
+    tasks?: {
       __typename: "ModelTaskConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    users: {
+    users?: {
       __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
     createdAt: string;
     updatedAt: string;
   } | null;
-  user: {
+  user?: {
     __typename: "User";
     id: string;
     username: string;
     email: string;
     companyID: string;
-    tel: string | null;
-    positionName: string | null;
-    iconImage: string | null;
-    registered: boolean | null;
-    authority: string | null;
+    tel?: string | null;
+    positionName?: string | null;
+    iconImage?: string | null;
+    registered?: boolean | null;
+    authority?: string | null;
     company: {
       __typename: "Company";
       id: string;
@@ -1410,21 +1551,21 @@ export type CreateRoomGroupMutation = {
       createdAt: string;
       updatedAt: string;
     };
-    messages: {
+    messages?: {
       __typename: "ModelMessageConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    room: {
+    room?: {
       __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    task: {
+    task?: {
       __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    chargeTask: {
+    chargeTask?: {
       __typename: "ModelTaskConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
     createdAt: string;
     updatedAt: string;
@@ -1438,7 +1579,7 @@ export type UpdateRoomGroupMutation = {
   id: string;
   roomID: string;
   userID: string;
-  room: {
+  room?: {
     __typename: "Room";
     id: string;
     name: string;
@@ -1452,28 +1593,28 @@ export type UpdateRoomGroupMutation = {
       createdAt: string;
       updatedAt: string;
     };
-    tasks: {
+    tasks?: {
       __typename: "ModelTaskConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    users: {
+    users?: {
       __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
     createdAt: string;
     updatedAt: string;
   } | null;
-  user: {
+  user?: {
     __typename: "User";
     id: string;
     username: string;
     email: string;
     companyID: string;
-    tel: string | null;
-    positionName: string | null;
-    iconImage: string | null;
-    registered: boolean | null;
-    authority: string | null;
+    tel?: string | null;
+    positionName?: string | null;
+    iconImage?: string | null;
+    registered?: boolean | null;
+    authority?: string | null;
     company: {
       __typename: "Company";
       id: string;
@@ -1482,21 +1623,21 @@ export type UpdateRoomGroupMutation = {
       createdAt: string;
       updatedAt: string;
     };
-    messages: {
+    messages?: {
       __typename: "ModelMessageConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    room: {
+    room?: {
       __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    task: {
+    task?: {
       __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    chargeTask: {
+    chargeTask?: {
       __typename: "ModelTaskConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
     createdAt: string;
     updatedAt: string;
@@ -1510,7 +1651,7 @@ export type DeleteRoomGroupMutation = {
   id: string;
   roomID: string;
   userID: string;
-  room: {
+  room?: {
     __typename: "Room";
     id: string;
     name: string;
@@ -1524,28 +1665,28 @@ export type DeleteRoomGroupMutation = {
       createdAt: string;
       updatedAt: string;
     };
-    tasks: {
+    tasks?: {
       __typename: "ModelTaskConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    users: {
+    users?: {
       __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
     createdAt: string;
     updatedAt: string;
   } | null;
-  user: {
+  user?: {
     __typename: "User";
     id: string;
     username: string;
     email: string;
     companyID: string;
-    tel: string | null;
-    positionName: string | null;
-    iconImage: string | null;
-    registered: boolean | null;
-    authority: string | null;
+    tel?: string | null;
+    positionName?: string | null;
+    iconImage?: string | null;
+    registered?: boolean | null;
+    authority?: string | null;
     company: {
       __typename: "Company";
       id: string;
@@ -1554,21 +1695,21 @@ export type DeleteRoomGroupMutation = {
       createdAt: string;
       updatedAt: string;
     };
-    messages: {
+    messages?: {
       __typename: "ModelMessageConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    room: {
+    room?: {
       __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    task: {
+    task?: {
       __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    chargeTask: {
+    chargeTask?: {
       __typename: "ModelTaskConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
     createdAt: string;
     updatedAt: string;
@@ -1588,38 +1729,38 @@ export type CreateRoomMutation = {
     id: string;
     name: string;
     domain: string;
-    room: {
+    room?: {
       __typename: "ModelRoomConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    companyMembers: {
+    companyMembers?: {
       __typename: "ModelUserConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
     createdAt: string;
     updatedAt: string;
   };
-  tasks: {
+  tasks?: {
     __typename: "ModelTaskConnection";
-    items: Array<{
+    items?: Array<{
       __typename: "Task";
       id: string;
       authorID: string;
       roomID: string;
       chargePersonID: string;
       title: string;
-      description: string | null;
-      scheduleDate: string | null;
-      priority: number | null;
-      status: number | null;
-      createdAt: string | null;
+      description?: string | null;
+      scheduleDate?: string | null;
+      priority?: number | null;
+      status?: number | null;
+      createdAt?: string | null;
       updatedAt: string;
     } | null> | null;
-    nextToken: string | null;
+    nextToken?: string | null;
   } | null;
-  users: {
+  users?: {
     __typename: "ModelRoomGroupConnection";
-    items: Array<{
+    items?: Array<{
       __typename: "RoomGroup";
       id: string;
       roomID: string;
@@ -1627,7 +1768,7 @@ export type CreateRoomMutation = {
       createdAt: string;
       updatedAt: string;
     } | null> | null;
-    nextToken: string | null;
+    nextToken?: string | null;
   } | null;
   createdAt: string;
   updatedAt: string;
@@ -1644,38 +1785,38 @@ export type UpdateRoomMutation = {
     id: string;
     name: string;
     domain: string;
-    room: {
+    room?: {
       __typename: "ModelRoomConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    companyMembers: {
+    companyMembers?: {
       __typename: "ModelUserConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
     createdAt: string;
     updatedAt: string;
   };
-  tasks: {
+  tasks?: {
     __typename: "ModelTaskConnection";
-    items: Array<{
+    items?: Array<{
       __typename: "Task";
       id: string;
       authorID: string;
       roomID: string;
       chargePersonID: string;
       title: string;
-      description: string | null;
-      scheduleDate: string | null;
-      priority: number | null;
-      status: number | null;
-      createdAt: string | null;
+      description?: string | null;
+      scheduleDate?: string | null;
+      priority?: number | null;
+      status?: number | null;
+      createdAt?: string | null;
       updatedAt: string;
     } | null> | null;
-    nextToken: string | null;
+    nextToken?: string | null;
   } | null;
-  users: {
+  users?: {
     __typename: "ModelRoomGroupConnection";
-    items: Array<{
+    items?: Array<{
       __typename: "RoomGroup";
       id: string;
       roomID: string;
@@ -1683,7 +1824,7 @@ export type UpdateRoomMutation = {
       createdAt: string;
       updatedAt: string;
     } | null> | null;
-    nextToken: string | null;
+    nextToken?: string | null;
   } | null;
   createdAt: string;
   updatedAt: string;
@@ -1700,38 +1841,38 @@ export type DeleteRoomMutation = {
     id: string;
     name: string;
     domain: string;
-    room: {
+    room?: {
       __typename: "ModelRoomConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    companyMembers: {
+    companyMembers?: {
       __typename: "ModelUserConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
     createdAt: string;
     updatedAt: string;
   };
-  tasks: {
+  tasks?: {
     __typename: "ModelTaskConnection";
-    items: Array<{
+    items?: Array<{
       __typename: "Task";
       id: string;
       authorID: string;
       roomID: string;
       chargePersonID: string;
       title: string;
-      description: string | null;
-      scheduleDate: string | null;
-      priority: number | null;
-      status: number | null;
-      createdAt: string | null;
+      description?: string | null;
+      scheduleDate?: string | null;
+      priority?: number | null;
+      status?: number | null;
+      createdAt?: string | null;
       updatedAt: string;
     } | null> | null;
-    nextToken: string | null;
+    nextToken?: string | null;
   } | null;
-  users: {
+  users?: {
     __typename: "ModelRoomGroupConnection";
-    items: Array<{
+    items?: Array<{
       __typename: "RoomGroup";
       id: string;
       roomID: string;
@@ -1739,7 +1880,7 @@ export type DeleteRoomMutation = {
       createdAt: string;
       updatedAt: string;
     } | null> | null;
-    nextToken: string | null;
+    nextToken?: string | null;
   } | null;
   createdAt: string;
   updatedAt: string;
@@ -1751,20 +1892,20 @@ export type CreateMessageMutation = {
   taskID: string;
   authorID: string;
   content: string;
-  createdAt: string | null;
-  isSent: boolean | null;
-  attachmentUri: Array<string | null> | null;
+  createdAt?: string | null;
+  isSent?: boolean | null;
+  attachmentUri?: Array<string | null> | null;
   author: {
     __typename: "User";
     id: string;
     username: string;
     email: string;
     companyID: string;
-    tel: string | null;
-    positionName: string | null;
-    iconImage: string | null;
-    registered: boolean | null;
-    authority: string | null;
+    tel?: string | null;
+    positionName?: string | null;
+    iconImage?: string | null;
+    registered?: boolean | null;
+    authority?: string | null;
     company: {
       __typename: "Company";
       id: string;
@@ -1773,21 +1914,21 @@ export type CreateMessageMutation = {
       createdAt: string;
       updatedAt: string;
     };
-    messages: {
+    messages?: {
       __typename: "ModelMessageConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    room: {
+    room?: {
       __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    task: {
+    task?: {
       __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    chargeTask: {
+    chargeTask?: {
       __typename: "ModelTaskConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
     createdAt: string;
     updatedAt: string;
@@ -1808,32 +1949,32 @@ export type CreateMessageMutation = {
       createdAt: string;
       updatedAt: string;
     };
-    description: string | null;
-    scheduleDate: string | null;
-    priority: number | null;
-    status: number | null;
-    createdAt: string | null;
+    description?: string | null;
+    scheduleDate?: string | null;
+    priority?: number | null;
+    status?: number | null;
+    createdAt?: string | null;
     chargePerson: {
       __typename: "User";
       id: string;
       username: string;
       email: string;
       companyID: string;
-      tel: string | null;
-      positionName: string | null;
-      iconImage: string | null;
-      registered: boolean | null;
-      authority: string | null;
+      tel?: string | null;
+      positionName?: string | null;
+      iconImage?: string | null;
+      registered?: boolean | null;
+      authority?: string | null;
       createdAt: string;
       updatedAt: string;
     };
-    messages: {
+    messages?: {
       __typename: "ModelMessageConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    users: {
+    users?: {
       __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
     updatedAt: string;
   };
@@ -1846,20 +1987,20 @@ export type UpdateMessageMutation = {
   taskID: string;
   authorID: string;
   content: string;
-  createdAt: string | null;
-  isSent: boolean | null;
-  attachmentUri: Array<string | null> | null;
+  createdAt?: string | null;
+  isSent?: boolean | null;
+  attachmentUri?: Array<string | null> | null;
   author: {
     __typename: "User";
     id: string;
     username: string;
     email: string;
     companyID: string;
-    tel: string | null;
-    positionName: string | null;
-    iconImage: string | null;
-    registered: boolean | null;
-    authority: string | null;
+    tel?: string | null;
+    positionName?: string | null;
+    iconImage?: string | null;
+    registered?: boolean | null;
+    authority?: string | null;
     company: {
       __typename: "Company";
       id: string;
@@ -1868,21 +2009,21 @@ export type UpdateMessageMutation = {
       createdAt: string;
       updatedAt: string;
     };
-    messages: {
+    messages?: {
       __typename: "ModelMessageConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    room: {
+    room?: {
       __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    task: {
+    task?: {
       __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    chargeTask: {
+    chargeTask?: {
       __typename: "ModelTaskConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
     createdAt: string;
     updatedAt: string;
@@ -1903,32 +2044,32 @@ export type UpdateMessageMutation = {
       createdAt: string;
       updatedAt: string;
     };
-    description: string | null;
-    scheduleDate: string | null;
-    priority: number | null;
-    status: number | null;
-    createdAt: string | null;
+    description?: string | null;
+    scheduleDate?: string | null;
+    priority?: number | null;
+    status?: number | null;
+    createdAt?: string | null;
     chargePerson: {
       __typename: "User";
       id: string;
       username: string;
       email: string;
       companyID: string;
-      tel: string | null;
-      positionName: string | null;
-      iconImage: string | null;
-      registered: boolean | null;
-      authority: string | null;
+      tel?: string | null;
+      positionName?: string | null;
+      iconImage?: string | null;
+      registered?: boolean | null;
+      authority?: string | null;
       createdAt: string;
       updatedAt: string;
     };
-    messages: {
+    messages?: {
       __typename: "ModelMessageConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    users: {
+    users?: {
       __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
     updatedAt: string;
   };
@@ -1941,20 +2082,20 @@ export type DeleteMessageMutation = {
   taskID: string;
   authorID: string;
   content: string;
-  createdAt: string | null;
-  isSent: boolean | null;
-  attachmentUri: Array<string | null> | null;
+  createdAt?: string | null;
+  isSent?: boolean | null;
+  attachmentUri?: Array<string | null> | null;
   author: {
     __typename: "User";
     id: string;
     username: string;
     email: string;
     companyID: string;
-    tel: string | null;
-    positionName: string | null;
-    iconImage: string | null;
-    registered: boolean | null;
-    authority: string | null;
+    tel?: string | null;
+    positionName?: string | null;
+    iconImage?: string | null;
+    registered?: boolean | null;
+    authority?: string | null;
     company: {
       __typename: "Company";
       id: string;
@@ -1963,21 +2104,21 @@ export type DeleteMessageMutation = {
       createdAt: string;
       updatedAt: string;
     };
-    messages: {
+    messages?: {
       __typename: "ModelMessageConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    room: {
+    room?: {
       __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    task: {
+    task?: {
       __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    chargeTask: {
+    chargeTask?: {
       __typename: "ModelTaskConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
     createdAt: string;
     updatedAt: string;
@@ -1998,32 +2139,32 @@ export type DeleteMessageMutation = {
       createdAt: string;
       updatedAt: string;
     };
-    description: string | null;
-    scheduleDate: string | null;
-    priority: number | null;
-    status: number | null;
-    createdAt: string | null;
+    description?: string | null;
+    scheduleDate?: string | null;
+    priority?: number | null;
+    status?: number | null;
+    createdAt?: string | null;
     chargePerson: {
       __typename: "User";
       id: string;
       username: string;
       email: string;
       companyID: string;
-      tel: string | null;
-      positionName: string | null;
-      iconImage: string | null;
-      registered: boolean | null;
-      authority: string | null;
+      tel?: string | null;
+      positionName?: string | null;
+      iconImage?: string | null;
+      registered?: boolean | null;
+      authority?: string | null;
       createdAt: string;
       updatedAt: string;
     };
-    messages: {
+    messages?: {
       __typename: "ModelMessageConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    users: {
+    users?: {
       __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
     updatedAt: string;
   };
@@ -2035,9 +2176,9 @@ export type GetCompanyQuery = {
   id: string;
   name: string;
   domain: string;
-  room: {
+  room?: {
     __typename: "ModelRoomConnection";
-    items: Array<{
+    items?: Array<{
       __typename: "Room";
       id: string;
       name: string;
@@ -2046,25 +2187,25 @@ export type GetCompanyQuery = {
       createdAt: string;
       updatedAt: string;
     } | null> | null;
-    nextToken: string | null;
+    nextToken?: string | null;
   } | null;
-  companyMembers: {
+  companyMembers?: {
     __typename: "ModelUserConnection";
-    items: Array<{
+    items?: Array<{
       __typename: "User";
       id: string;
       username: string;
       email: string;
       companyID: string;
-      tel: string | null;
-      positionName: string | null;
-      iconImage: string | null;
-      registered: boolean | null;
-      authority: string | null;
+      tel?: string | null;
+      positionName?: string | null;
+      iconImage?: string | null;
+      registered?: boolean | null;
+      authority?: string | null;
       createdAt: string;
       updatedAt: string;
     } | null> | null;
-    nextToken: string | null;
+    nextToken?: string | null;
   } | null;
   createdAt: string;
   updatedAt: string;
@@ -2072,23 +2213,23 @@ export type GetCompanyQuery = {
 
 export type ListCompanysQuery = {
   __typename: "ModelCompanyConnection";
-  items: Array<{
+  items?: Array<{
     __typename: "Company";
     id: string;
     name: string;
     domain: string;
-    room: {
+    room?: {
       __typename: "ModelRoomConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    companyMembers: {
+    companyMembers?: {
       __typename: "ModelUserConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
     createdAt: string;
     updatedAt: string;
   } | null> | null;
-  nextToken: string | null;
+  nextToken?: string | null;
 };
 
 export type GetTaskGroupQuery = {
@@ -2096,7 +2237,7 @@ export type GetTaskGroupQuery = {
   id: string;
   taskID: string;
   userID: string;
-  task: {
+  task?: {
     __typename: "Task";
     id: string;
     authorID: string;
@@ -2112,46 +2253,46 @@ export type GetTaskGroupQuery = {
       createdAt: string;
       updatedAt: string;
     };
-    description: string | null;
-    scheduleDate: string | null;
-    priority: number | null;
-    status: number | null;
-    createdAt: string | null;
+    description?: string | null;
+    scheduleDate?: string | null;
+    priority?: number | null;
+    status?: number | null;
+    createdAt?: string | null;
     chargePerson: {
       __typename: "User";
       id: string;
       username: string;
       email: string;
       companyID: string;
-      tel: string | null;
-      positionName: string | null;
-      iconImage: string | null;
-      registered: boolean | null;
-      authority: string | null;
+      tel?: string | null;
+      positionName?: string | null;
+      iconImage?: string | null;
+      registered?: boolean | null;
+      authority?: string | null;
       createdAt: string;
       updatedAt: string;
     };
-    messages: {
+    messages?: {
       __typename: "ModelMessageConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    users: {
+    users?: {
       __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
     updatedAt: string;
   } | null;
-  user: {
+  user?: {
     __typename: "User";
     id: string;
     username: string;
     email: string;
     companyID: string;
-    tel: string | null;
-    positionName: string | null;
-    iconImage: string | null;
-    registered: boolean | null;
-    authority: string | null;
+    tel?: string | null;
+    positionName?: string | null;
+    iconImage?: string | null;
+    registered?: boolean | null;
+    authority?: string | null;
     company: {
       __typename: "Company";
       id: string;
@@ -2160,21 +2301,21 @@ export type GetTaskGroupQuery = {
       createdAt: string;
       updatedAt: string;
     };
-    messages: {
+    messages?: {
       __typename: "ModelMessageConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    room: {
+    room?: {
       __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    task: {
+    task?: {
       __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    chargeTask: {
+    chargeTask?: {
       __typename: "ModelTaskConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
     createdAt: string;
     updatedAt: string;
@@ -2185,43 +2326,43 @@ export type GetTaskGroupQuery = {
 
 export type ListTaskGroupsQuery = {
   __typename: "ModelTaskGroupConnection";
-  items: Array<{
+  items?: Array<{
     __typename: "TaskGroup";
     id: string;
     taskID: string;
     userID: string;
-    task: {
+    task?: {
       __typename: "Task";
       id: string;
       authorID: string;
       roomID: string;
       chargePersonID: string;
       title: string;
-      description: string | null;
-      scheduleDate: string | null;
-      priority: number | null;
-      status: number | null;
-      createdAt: string | null;
+      description?: string | null;
+      scheduleDate?: string | null;
+      priority?: number | null;
+      status?: number | null;
+      createdAt?: string | null;
       updatedAt: string;
     } | null;
-    user: {
+    user?: {
       __typename: "User";
       id: string;
       username: string;
       email: string;
       companyID: string;
-      tel: string | null;
-      positionName: string | null;
-      iconImage: string | null;
-      registered: boolean | null;
-      authority: string | null;
+      tel?: string | null;
+      positionName?: string | null;
+      iconImage?: string | null;
+      registered?: boolean | null;
+      authority?: string | null;
       createdAt: string;
       updatedAt: string;
     } | null;
     createdAt: string;
     updatedAt: string;
   } | null> | null;
-  nextToken: string | null;
+  nextToken?: string | null;
 };
 
 export type GetTaskQuery = {
@@ -2245,33 +2386,33 @@ export type GetTaskQuery = {
       createdAt: string;
       updatedAt: string;
     };
-    tasks: {
+    tasks?: {
       __typename: "ModelTaskConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    users: {
+    users?: {
       __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
     createdAt: string;
     updatedAt: string;
   };
-  description: string | null;
-  scheduleDate: string | null;
-  priority: number | null;
-  status: number | null;
-  createdAt: string | null;
+  description?: string | null;
+  scheduleDate?: string | null;
+  priority?: number | null;
+  status?: number | null;
+  createdAt?: string | null;
   chargePerson: {
     __typename: "User";
     id: string;
     username: string;
     email: string;
     companyID: string;
-    tel: string | null;
-    positionName: string | null;
-    iconImage: string | null;
-    registered: boolean | null;
-    authority: string | null;
+    tel?: string | null;
+    positionName?: string | null;
+    iconImage?: string | null;
+    registered?: boolean | null;
+    authority?: string | null;
     company: {
       __typename: "Company";
       id: string;
@@ -2280,43 +2421,43 @@ export type GetTaskQuery = {
       createdAt: string;
       updatedAt: string;
     };
-    messages: {
+    messages?: {
       __typename: "ModelMessageConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    room: {
+    room?: {
       __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    task: {
+    task?: {
       __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    chargeTask: {
+    chargeTask?: {
       __typename: "ModelTaskConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
     createdAt: string;
     updatedAt: string;
   };
-  messages: {
+  messages?: {
     __typename: "ModelMessageConnection";
-    items: Array<{
+    items?: Array<{
       __typename: "Message";
       id: string;
       taskID: string;
       authorID: string;
       content: string;
-      createdAt: string | null;
-      isSent: boolean | null;
-      attachmentUri: Array<string | null> | null;
+      createdAt?: string | null;
+      isSent?: boolean | null;
+      attachmentUri?: Array<string | null> | null;
       updatedAt: string;
     } | null> | null;
-    nextToken: string | null;
+    nextToken?: string | null;
   } | null;
-  users: {
+  users?: {
     __typename: "ModelTaskGroupConnection";
-    items: Array<{
+    items?: Array<{
       __typename: "TaskGroup";
       id: string;
       taskID: string;
@@ -2324,14 +2465,14 @@ export type GetTaskQuery = {
       createdAt: string;
       updatedAt: string;
     } | null> | null;
-    nextToken: string | null;
+    nextToken?: string | null;
   } | null;
   updatedAt: string;
 };
 
 export type ListTasksQuery = {
   __typename: "ModelTaskConnection";
-  items: Array<{
+  items?: Array<{
     __typename: "Task";
     id: string;
     authorID: string;
@@ -2347,36 +2488,36 @@ export type ListTasksQuery = {
       createdAt: string;
       updatedAt: string;
     };
-    description: string | null;
-    scheduleDate: string | null;
-    priority: number | null;
-    status: number | null;
-    createdAt: string | null;
+    description?: string | null;
+    scheduleDate?: string | null;
+    priority?: number | null;
+    status?: number | null;
+    createdAt?: string | null;
     chargePerson: {
       __typename: "User";
       id: string;
       username: string;
       email: string;
       companyID: string;
-      tel: string | null;
-      positionName: string | null;
-      iconImage: string | null;
-      registered: boolean | null;
-      authority: string | null;
+      tel?: string | null;
+      positionName?: string | null;
+      iconImage?: string | null;
+      registered?: boolean | null;
+      authority?: string | null;
       createdAt: string;
       updatedAt: string;
     };
-    messages: {
+    messages?: {
       __typename: "ModelMessageConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    users: {
+    users?: {
       __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
     updatedAt: string;
   } | null> | null;
-  nextToken: string | null;
+  nextToken?: string | null;
 };
 
 export type GetUserQuery = {
@@ -2385,45 +2526,45 @@ export type GetUserQuery = {
   username: string;
   email: string;
   companyID: string;
-  tel: string | null;
-  positionName: string | null;
-  iconImage: string | null;
-  registered: boolean | null;
-  authority: string | null;
+  tel?: string | null;
+  positionName?: string | null;
+  iconImage?: string | null;
+  registered?: boolean | null;
+  authority?: string | null;
   company: {
     __typename: "Company";
     id: string;
     name: string;
     domain: string;
-    room: {
+    room?: {
       __typename: "ModelRoomConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    companyMembers: {
+    companyMembers?: {
       __typename: "ModelUserConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
     createdAt: string;
     updatedAt: string;
   };
-  messages: {
+  messages?: {
     __typename: "ModelMessageConnection";
-    items: Array<{
+    items?: Array<{
       __typename: "Message";
       id: string;
       taskID: string;
       authorID: string;
       content: string;
-      createdAt: string | null;
-      isSent: boolean | null;
-      attachmentUri: Array<string | null> | null;
+      createdAt?: string | null;
+      isSent?: boolean | null;
+      attachmentUri?: Array<string | null> | null;
       updatedAt: string;
     } | null> | null;
-    nextToken: string | null;
+    nextToken?: string | null;
   } | null;
-  room: {
+  room?: {
     __typename: "ModelRoomGroupConnection";
-    items: Array<{
+    items?: Array<{
       __typename: "RoomGroup";
       id: string;
       roomID: string;
@@ -2431,11 +2572,11 @@ export type GetUserQuery = {
       createdAt: string;
       updatedAt: string;
     } | null> | null;
-    nextToken: string | null;
+    nextToken?: string | null;
   } | null;
-  task: {
+  task?: {
     __typename: "ModelTaskGroupConnection";
-    items: Array<{
+    items?: Array<{
       __typename: "TaskGroup";
       id: string;
       taskID: string;
@@ -2443,25 +2584,25 @@ export type GetUserQuery = {
       createdAt: string;
       updatedAt: string;
     } | null> | null;
-    nextToken: string | null;
+    nextToken?: string | null;
   } | null;
-  chargeTask: {
+  chargeTask?: {
     __typename: "ModelTaskConnection";
-    items: Array<{
+    items?: Array<{
       __typename: "Task";
       id: string;
       authorID: string;
       roomID: string;
       chargePersonID: string;
       title: string;
-      description: string | null;
-      scheduleDate: string | null;
-      priority: number | null;
-      status: number | null;
-      createdAt: string | null;
+      description?: string | null;
+      scheduleDate?: string | null;
+      priority?: number | null;
+      status?: number | null;
+      createdAt?: string | null;
       updatedAt: string;
     } | null> | null;
-    nextToken: string | null;
+    nextToken?: string | null;
   } | null;
   createdAt: string;
   updatedAt: string;
@@ -2469,17 +2610,17 @@ export type GetUserQuery = {
 
 export type ListUsersQuery = {
   __typename: "ModelUserConnection";
-  items: Array<{
+  items?: Array<{
     __typename: "User";
     id: string;
     username: string;
     email: string;
     companyID: string;
-    tel: string | null;
-    positionName: string | null;
-    iconImage: string | null;
-    registered: boolean | null;
-    authority: string | null;
+    tel?: string | null;
+    positionName?: string | null;
+    iconImage?: string | null;
+    registered?: boolean | null;
+    authority?: string | null;
     company: {
       __typename: "Company";
       id: string;
@@ -2488,26 +2629,26 @@ export type ListUsersQuery = {
       createdAt: string;
       updatedAt: string;
     };
-    messages: {
+    messages?: {
       __typename: "ModelMessageConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    room: {
+    room?: {
       __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    task: {
+    task?: {
       __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    chargeTask: {
+    chargeTask?: {
       __typename: "ModelTaskConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
     createdAt: string;
     updatedAt: string;
   } | null> | null;
-  nextToken: string | null;
+  nextToken?: string | null;
 };
 
 export type GetRoomGroupQuery = {
@@ -2515,7 +2656,7 @@ export type GetRoomGroupQuery = {
   id: string;
   roomID: string;
   userID: string;
-  room: {
+  room?: {
     __typename: "Room";
     id: string;
     name: string;
@@ -2529,28 +2670,28 @@ export type GetRoomGroupQuery = {
       createdAt: string;
       updatedAt: string;
     };
-    tasks: {
+    tasks?: {
       __typename: "ModelTaskConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    users: {
+    users?: {
       __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
     createdAt: string;
     updatedAt: string;
   } | null;
-  user: {
+  user?: {
     __typename: "User";
     id: string;
     username: string;
     email: string;
     companyID: string;
-    tel: string | null;
-    positionName: string | null;
-    iconImage: string | null;
-    registered: boolean | null;
-    authority: string | null;
+    tel?: string | null;
+    positionName?: string | null;
+    iconImage?: string | null;
+    registered?: boolean | null;
+    authority?: string | null;
     company: {
       __typename: "Company";
       id: string;
@@ -2559,21 +2700,21 @@ export type GetRoomGroupQuery = {
       createdAt: string;
       updatedAt: string;
     };
-    messages: {
+    messages?: {
       __typename: "ModelMessageConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    room: {
+    room?: {
       __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    task: {
+    task?: {
       __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    chargeTask: {
+    chargeTask?: {
       __typename: "ModelTaskConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
     createdAt: string;
     updatedAt: string;
@@ -2584,12 +2725,12 @@ export type GetRoomGroupQuery = {
 
 export type ListRoomGroupsQuery = {
   __typename: "ModelRoomGroupConnection";
-  items: Array<{
+  items?: Array<{
     __typename: "RoomGroup";
     id: string;
     roomID: string;
     userID: string;
-    room: {
+    room?: {
       __typename: "Room";
       id: string;
       name: string;
@@ -2598,24 +2739,24 @@ export type ListRoomGroupsQuery = {
       createdAt: string;
       updatedAt: string;
     } | null;
-    user: {
+    user?: {
       __typename: "User";
       id: string;
       username: string;
       email: string;
       companyID: string;
-      tel: string | null;
-      positionName: string | null;
-      iconImage: string | null;
-      registered: boolean | null;
-      authority: string | null;
+      tel?: string | null;
+      positionName?: string | null;
+      iconImage?: string | null;
+      registered?: boolean | null;
+      authority?: string | null;
       createdAt: string;
       updatedAt: string;
     } | null;
     createdAt: string;
     updatedAt: string;
   } | null> | null;
-  nextToken: string | null;
+  nextToken?: string | null;
 };
 
 export type GetRoomQuery = {
@@ -2629,38 +2770,38 @@ export type GetRoomQuery = {
     id: string;
     name: string;
     domain: string;
-    room: {
+    room?: {
       __typename: "ModelRoomConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    companyMembers: {
+    companyMembers?: {
       __typename: "ModelUserConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
     createdAt: string;
     updatedAt: string;
   };
-  tasks: {
+  tasks?: {
     __typename: "ModelTaskConnection";
-    items: Array<{
+    items?: Array<{
       __typename: "Task";
       id: string;
       authorID: string;
       roomID: string;
       chargePersonID: string;
       title: string;
-      description: string | null;
-      scheduleDate: string | null;
-      priority: number | null;
-      status: number | null;
-      createdAt: string | null;
+      description?: string | null;
+      scheduleDate?: string | null;
+      priority?: number | null;
+      status?: number | null;
+      createdAt?: string | null;
       updatedAt: string;
     } | null> | null;
-    nextToken: string | null;
+    nextToken?: string | null;
   } | null;
-  users: {
+  users?: {
     __typename: "ModelRoomGroupConnection";
-    items: Array<{
+    items?: Array<{
       __typename: "RoomGroup";
       id: string;
       roomID: string;
@@ -2668,7 +2809,7 @@ export type GetRoomQuery = {
       createdAt: string;
       updatedAt: string;
     } | null> | null;
-    nextToken: string | null;
+    nextToken?: string | null;
   } | null;
   createdAt: string;
   updatedAt: string;
@@ -2676,7 +2817,7 @@ export type GetRoomQuery = {
 
 export type ListRoomsQuery = {
   __typename: "ModelRoomConnection";
-  items: Array<{
+  items?: Array<{
     __typename: "Room";
     id: string;
     name: string;
@@ -2690,18 +2831,18 @@ export type ListRoomsQuery = {
       createdAt: string;
       updatedAt: string;
     };
-    tasks: {
+    tasks?: {
       __typename: "ModelTaskConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    users: {
+    users?: {
       __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
     createdAt: string;
     updatedAt: string;
   } | null> | null;
-  nextToken: string | null;
+  nextToken?: string | null;
 };
 
 export type GetMessageQuery = {
@@ -2710,20 +2851,20 @@ export type GetMessageQuery = {
   taskID: string;
   authorID: string;
   content: string;
-  createdAt: string | null;
-  isSent: boolean | null;
-  attachmentUri: Array<string | null> | null;
+  createdAt?: string | null;
+  isSent?: boolean | null;
+  attachmentUri?: Array<string | null> | null;
   author: {
     __typename: "User";
     id: string;
     username: string;
     email: string;
     companyID: string;
-    tel: string | null;
-    positionName: string | null;
-    iconImage: string | null;
-    registered: boolean | null;
-    authority: string | null;
+    tel?: string | null;
+    positionName?: string | null;
+    iconImage?: string | null;
+    registered?: boolean | null;
+    authority?: string | null;
     company: {
       __typename: "Company";
       id: string;
@@ -2732,21 +2873,21 @@ export type GetMessageQuery = {
       createdAt: string;
       updatedAt: string;
     };
-    messages: {
+    messages?: {
       __typename: "ModelMessageConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    room: {
+    room?: {
       __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    task: {
+    task?: {
       __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    chargeTask: {
+    chargeTask?: {
       __typename: "ModelTaskConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
     createdAt: string;
     updatedAt: string;
@@ -2767,32 +2908,32 @@ export type GetMessageQuery = {
       createdAt: string;
       updatedAt: string;
     };
-    description: string | null;
-    scheduleDate: string | null;
-    priority: number | null;
-    status: number | null;
-    createdAt: string | null;
+    description?: string | null;
+    scheduleDate?: string | null;
+    priority?: number | null;
+    status?: number | null;
+    createdAt?: string | null;
     chargePerson: {
       __typename: "User";
       id: string;
       username: string;
       email: string;
       companyID: string;
-      tel: string | null;
-      positionName: string | null;
-      iconImage: string | null;
-      registered: boolean | null;
-      authority: string | null;
+      tel?: string | null;
+      positionName?: string | null;
+      iconImage?: string | null;
+      registered?: boolean | null;
+      authority?: string | null;
       createdAt: string;
       updatedAt: string;
     };
-    messages: {
+    messages?: {
       __typename: "ModelMessageConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    users: {
+    users?: {
       __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
     updatedAt: string;
   };
@@ -2801,26 +2942,26 @@ export type GetMessageQuery = {
 
 export type ListMessagesQuery = {
   __typename: "ModelMessageConnection";
-  items: Array<{
+  items?: Array<{
     __typename: "Message";
     id: string;
     taskID: string;
     authorID: string;
     content: string;
-    createdAt: string | null;
-    isSent: boolean | null;
-    attachmentUri: Array<string | null> | null;
+    createdAt?: string | null;
+    isSent?: boolean | null;
+    attachmentUri?: Array<string | null> | null;
     author: {
       __typename: "User";
       id: string;
       username: string;
       email: string;
       companyID: string;
-      tel: string | null;
-      positionName: string | null;
-      iconImage: string | null;
-      registered: boolean | null;
-      authority: string | null;
+      tel?: string | null;
+      positionName?: string | null;
+      iconImage?: string | null;
+      registered?: boolean | null;
+      authority?: string | null;
       createdAt: string;
       updatedAt: string;
     };
@@ -2831,16 +2972,16 @@ export type ListMessagesQuery = {
       roomID: string;
       chargePersonID: string;
       title: string;
-      description: string | null;
-      scheduleDate: string | null;
-      priority: number | null;
-      status: number | null;
-      createdAt: string | null;
+      description?: string | null;
+      scheduleDate?: string | null;
+      priority?: number | null;
+      status?: number | null;
+      createdAt?: string | null;
       updatedAt: string;
     };
     updatedAt: string;
   } | null> | null;
-  nextToken: string | null;
+  nextToken?: string | null;
 };
 
 export type OnCreateCompanySubscription = {
@@ -2848,9 +2989,9 @@ export type OnCreateCompanySubscription = {
   id: string;
   name: string;
   domain: string;
-  room: {
+  room?: {
     __typename: "ModelRoomConnection";
-    items: Array<{
+    items?: Array<{
       __typename: "Room";
       id: string;
       name: string;
@@ -2859,25 +3000,25 @@ export type OnCreateCompanySubscription = {
       createdAt: string;
       updatedAt: string;
     } | null> | null;
-    nextToken: string | null;
+    nextToken?: string | null;
   } | null;
-  companyMembers: {
+  companyMembers?: {
     __typename: "ModelUserConnection";
-    items: Array<{
+    items?: Array<{
       __typename: "User";
       id: string;
       username: string;
       email: string;
       companyID: string;
-      tel: string | null;
-      positionName: string | null;
-      iconImage: string | null;
-      registered: boolean | null;
-      authority: string | null;
+      tel?: string | null;
+      positionName?: string | null;
+      iconImage?: string | null;
+      registered?: boolean | null;
+      authority?: string | null;
       createdAt: string;
       updatedAt: string;
     } | null> | null;
-    nextToken: string | null;
+    nextToken?: string | null;
   } | null;
   createdAt: string;
   updatedAt: string;
@@ -2888,9 +3029,9 @@ export type OnUpdateCompanySubscription = {
   id: string;
   name: string;
   domain: string;
-  room: {
+  room?: {
     __typename: "ModelRoomConnection";
-    items: Array<{
+    items?: Array<{
       __typename: "Room";
       id: string;
       name: string;
@@ -2899,25 +3040,25 @@ export type OnUpdateCompanySubscription = {
       createdAt: string;
       updatedAt: string;
     } | null> | null;
-    nextToken: string | null;
+    nextToken?: string | null;
   } | null;
-  companyMembers: {
+  companyMembers?: {
     __typename: "ModelUserConnection";
-    items: Array<{
+    items?: Array<{
       __typename: "User";
       id: string;
       username: string;
       email: string;
       companyID: string;
-      tel: string | null;
-      positionName: string | null;
-      iconImage: string | null;
-      registered: boolean | null;
-      authority: string | null;
+      tel?: string | null;
+      positionName?: string | null;
+      iconImage?: string | null;
+      registered?: boolean | null;
+      authority?: string | null;
       createdAt: string;
       updatedAt: string;
     } | null> | null;
-    nextToken: string | null;
+    nextToken?: string | null;
   } | null;
   createdAt: string;
   updatedAt: string;
@@ -2928,9 +3069,9 @@ export type OnDeleteCompanySubscription = {
   id: string;
   name: string;
   domain: string;
-  room: {
+  room?: {
     __typename: "ModelRoomConnection";
-    items: Array<{
+    items?: Array<{
       __typename: "Room";
       id: string;
       name: string;
@@ -2939,25 +3080,25 @@ export type OnDeleteCompanySubscription = {
       createdAt: string;
       updatedAt: string;
     } | null> | null;
-    nextToken: string | null;
+    nextToken?: string | null;
   } | null;
-  companyMembers: {
+  companyMembers?: {
     __typename: "ModelUserConnection";
-    items: Array<{
+    items?: Array<{
       __typename: "User";
       id: string;
       username: string;
       email: string;
       companyID: string;
-      tel: string | null;
-      positionName: string | null;
-      iconImage: string | null;
-      registered: boolean | null;
-      authority: string | null;
+      tel?: string | null;
+      positionName?: string | null;
+      iconImage?: string | null;
+      registered?: boolean | null;
+      authority?: string | null;
       createdAt: string;
       updatedAt: string;
     } | null> | null;
-    nextToken: string | null;
+    nextToken?: string | null;
   } | null;
   createdAt: string;
   updatedAt: string;
@@ -2968,7 +3109,7 @@ export type OnCreateTaskGroupSubscription = {
   id: string;
   taskID: string;
   userID: string;
-  task: {
+  task?: {
     __typename: "Task";
     id: string;
     authorID: string;
@@ -2984,46 +3125,46 @@ export type OnCreateTaskGroupSubscription = {
       createdAt: string;
       updatedAt: string;
     };
-    description: string | null;
-    scheduleDate: string | null;
-    priority: number | null;
-    status: number | null;
-    createdAt: string | null;
+    description?: string | null;
+    scheduleDate?: string | null;
+    priority?: number | null;
+    status?: number | null;
+    createdAt?: string | null;
     chargePerson: {
       __typename: "User";
       id: string;
       username: string;
       email: string;
       companyID: string;
-      tel: string | null;
-      positionName: string | null;
-      iconImage: string | null;
-      registered: boolean | null;
-      authority: string | null;
+      tel?: string | null;
+      positionName?: string | null;
+      iconImage?: string | null;
+      registered?: boolean | null;
+      authority?: string | null;
       createdAt: string;
       updatedAt: string;
     };
-    messages: {
+    messages?: {
       __typename: "ModelMessageConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    users: {
+    users?: {
       __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
     updatedAt: string;
   } | null;
-  user: {
+  user?: {
     __typename: "User";
     id: string;
     username: string;
     email: string;
     companyID: string;
-    tel: string | null;
-    positionName: string | null;
-    iconImage: string | null;
-    registered: boolean | null;
-    authority: string | null;
+    tel?: string | null;
+    positionName?: string | null;
+    iconImage?: string | null;
+    registered?: boolean | null;
+    authority?: string | null;
     company: {
       __typename: "Company";
       id: string;
@@ -3032,21 +3173,21 @@ export type OnCreateTaskGroupSubscription = {
       createdAt: string;
       updatedAt: string;
     };
-    messages: {
+    messages?: {
       __typename: "ModelMessageConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    room: {
+    room?: {
       __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    task: {
+    task?: {
       __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    chargeTask: {
+    chargeTask?: {
       __typename: "ModelTaskConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
     createdAt: string;
     updatedAt: string;
@@ -3060,7 +3201,7 @@ export type OnUpdateTaskGroupSubscription = {
   id: string;
   taskID: string;
   userID: string;
-  task: {
+  task?: {
     __typename: "Task";
     id: string;
     authorID: string;
@@ -3076,46 +3217,46 @@ export type OnUpdateTaskGroupSubscription = {
       createdAt: string;
       updatedAt: string;
     };
-    description: string | null;
-    scheduleDate: string | null;
-    priority: number | null;
-    status: number | null;
-    createdAt: string | null;
+    description?: string | null;
+    scheduleDate?: string | null;
+    priority?: number | null;
+    status?: number | null;
+    createdAt?: string | null;
     chargePerson: {
       __typename: "User";
       id: string;
       username: string;
       email: string;
       companyID: string;
-      tel: string | null;
-      positionName: string | null;
-      iconImage: string | null;
-      registered: boolean | null;
-      authority: string | null;
+      tel?: string | null;
+      positionName?: string | null;
+      iconImage?: string | null;
+      registered?: boolean | null;
+      authority?: string | null;
       createdAt: string;
       updatedAt: string;
     };
-    messages: {
+    messages?: {
       __typename: "ModelMessageConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    users: {
+    users?: {
       __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
     updatedAt: string;
   } | null;
-  user: {
+  user?: {
     __typename: "User";
     id: string;
     username: string;
     email: string;
     companyID: string;
-    tel: string | null;
-    positionName: string | null;
-    iconImage: string | null;
-    registered: boolean | null;
-    authority: string | null;
+    tel?: string | null;
+    positionName?: string | null;
+    iconImage?: string | null;
+    registered?: boolean | null;
+    authority?: string | null;
     company: {
       __typename: "Company";
       id: string;
@@ -3124,21 +3265,21 @@ export type OnUpdateTaskGroupSubscription = {
       createdAt: string;
       updatedAt: string;
     };
-    messages: {
+    messages?: {
       __typename: "ModelMessageConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    room: {
+    room?: {
       __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    task: {
+    task?: {
       __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    chargeTask: {
+    chargeTask?: {
       __typename: "ModelTaskConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
     createdAt: string;
     updatedAt: string;
@@ -3152,7 +3293,7 @@ export type OnDeleteTaskGroupSubscription = {
   id: string;
   taskID: string;
   userID: string;
-  task: {
+  task?: {
     __typename: "Task";
     id: string;
     authorID: string;
@@ -3168,46 +3309,46 @@ export type OnDeleteTaskGroupSubscription = {
       createdAt: string;
       updatedAt: string;
     };
-    description: string | null;
-    scheduleDate: string | null;
-    priority: number | null;
-    status: number | null;
-    createdAt: string | null;
+    description?: string | null;
+    scheduleDate?: string | null;
+    priority?: number | null;
+    status?: number | null;
+    createdAt?: string | null;
     chargePerson: {
       __typename: "User";
       id: string;
       username: string;
       email: string;
       companyID: string;
-      tel: string | null;
-      positionName: string | null;
-      iconImage: string | null;
-      registered: boolean | null;
-      authority: string | null;
+      tel?: string | null;
+      positionName?: string | null;
+      iconImage?: string | null;
+      registered?: boolean | null;
+      authority?: string | null;
       createdAt: string;
       updatedAt: string;
     };
-    messages: {
+    messages?: {
       __typename: "ModelMessageConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    users: {
+    users?: {
       __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
     updatedAt: string;
   } | null;
-  user: {
+  user?: {
     __typename: "User";
     id: string;
     username: string;
     email: string;
     companyID: string;
-    tel: string | null;
-    positionName: string | null;
-    iconImage: string | null;
-    registered: boolean | null;
-    authority: string | null;
+    tel?: string | null;
+    positionName?: string | null;
+    iconImage?: string | null;
+    registered?: boolean | null;
+    authority?: string | null;
     company: {
       __typename: "Company";
       id: string;
@@ -3216,21 +3357,21 @@ export type OnDeleteTaskGroupSubscription = {
       createdAt: string;
       updatedAt: string;
     };
-    messages: {
+    messages?: {
       __typename: "ModelMessageConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    room: {
+    room?: {
       __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    task: {
+    task?: {
       __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    chargeTask: {
+    chargeTask?: {
       __typename: "ModelTaskConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
     createdAt: string;
     updatedAt: string;
@@ -3260,33 +3401,33 @@ export type OnCreateTaskSubscription = {
       createdAt: string;
       updatedAt: string;
     };
-    tasks: {
+    tasks?: {
       __typename: "ModelTaskConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    users: {
+    users?: {
       __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
     createdAt: string;
     updatedAt: string;
   };
-  description: string | null;
-  scheduleDate: string | null;
-  priority: number | null;
-  status: number | null;
-  createdAt: string | null;
+  description?: string | null;
+  scheduleDate?: string | null;
+  priority?: number | null;
+  status?: number | null;
+  createdAt?: string | null;
   chargePerson: {
     __typename: "User";
     id: string;
     username: string;
     email: string;
     companyID: string;
-    tel: string | null;
-    positionName: string | null;
-    iconImage: string | null;
-    registered: boolean | null;
-    authority: string | null;
+    tel?: string | null;
+    positionName?: string | null;
+    iconImage?: string | null;
+    registered?: boolean | null;
+    authority?: string | null;
     company: {
       __typename: "Company";
       id: string;
@@ -3295,43 +3436,43 @@ export type OnCreateTaskSubscription = {
       createdAt: string;
       updatedAt: string;
     };
-    messages: {
+    messages?: {
       __typename: "ModelMessageConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    room: {
+    room?: {
       __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    task: {
+    task?: {
       __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    chargeTask: {
+    chargeTask?: {
       __typename: "ModelTaskConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
     createdAt: string;
     updatedAt: string;
   };
-  messages: {
+  messages?: {
     __typename: "ModelMessageConnection";
-    items: Array<{
+    items?: Array<{
       __typename: "Message";
       id: string;
       taskID: string;
       authorID: string;
       content: string;
-      createdAt: string | null;
-      isSent: boolean | null;
-      attachmentUri: Array<string | null> | null;
+      createdAt?: string | null;
+      isSent?: boolean | null;
+      attachmentUri?: Array<string | null> | null;
       updatedAt: string;
     } | null> | null;
-    nextToken: string | null;
+    nextToken?: string | null;
   } | null;
-  users: {
+  users?: {
     __typename: "ModelTaskGroupConnection";
-    items: Array<{
+    items?: Array<{
       __typename: "TaskGroup";
       id: string;
       taskID: string;
@@ -3339,7 +3480,7 @@ export type OnCreateTaskSubscription = {
       createdAt: string;
       updatedAt: string;
     } | null> | null;
-    nextToken: string | null;
+    nextToken?: string | null;
   } | null;
   updatedAt: string;
 };
@@ -3365,33 +3506,33 @@ export type OnUpdateTaskSubscription = {
       createdAt: string;
       updatedAt: string;
     };
-    tasks: {
+    tasks?: {
       __typename: "ModelTaskConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    users: {
+    users?: {
       __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
     createdAt: string;
     updatedAt: string;
   };
-  description: string | null;
-  scheduleDate: string | null;
-  priority: number | null;
-  status: number | null;
-  createdAt: string | null;
+  description?: string | null;
+  scheduleDate?: string | null;
+  priority?: number | null;
+  status?: number | null;
+  createdAt?: string | null;
   chargePerson: {
     __typename: "User";
     id: string;
     username: string;
     email: string;
     companyID: string;
-    tel: string | null;
-    positionName: string | null;
-    iconImage: string | null;
-    registered: boolean | null;
-    authority: string | null;
+    tel?: string | null;
+    positionName?: string | null;
+    iconImage?: string | null;
+    registered?: boolean | null;
+    authority?: string | null;
     company: {
       __typename: "Company";
       id: string;
@@ -3400,43 +3541,43 @@ export type OnUpdateTaskSubscription = {
       createdAt: string;
       updatedAt: string;
     };
-    messages: {
+    messages?: {
       __typename: "ModelMessageConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    room: {
+    room?: {
       __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    task: {
+    task?: {
       __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    chargeTask: {
+    chargeTask?: {
       __typename: "ModelTaskConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
     createdAt: string;
     updatedAt: string;
   };
-  messages: {
+  messages?: {
     __typename: "ModelMessageConnection";
-    items: Array<{
+    items?: Array<{
       __typename: "Message";
       id: string;
       taskID: string;
       authorID: string;
       content: string;
-      createdAt: string | null;
-      isSent: boolean | null;
-      attachmentUri: Array<string | null> | null;
+      createdAt?: string | null;
+      isSent?: boolean | null;
+      attachmentUri?: Array<string | null> | null;
       updatedAt: string;
     } | null> | null;
-    nextToken: string | null;
+    nextToken?: string | null;
   } | null;
-  users: {
+  users?: {
     __typename: "ModelTaskGroupConnection";
-    items: Array<{
+    items?: Array<{
       __typename: "TaskGroup";
       id: string;
       taskID: string;
@@ -3444,7 +3585,7 @@ export type OnUpdateTaskSubscription = {
       createdAt: string;
       updatedAt: string;
     } | null> | null;
-    nextToken: string | null;
+    nextToken?: string | null;
   } | null;
   updatedAt: string;
 };
@@ -3470,33 +3611,33 @@ export type OnDeleteTaskSubscription = {
       createdAt: string;
       updatedAt: string;
     };
-    tasks: {
+    tasks?: {
       __typename: "ModelTaskConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    users: {
+    users?: {
       __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
     createdAt: string;
     updatedAt: string;
   };
-  description: string | null;
-  scheduleDate: string | null;
-  priority: number | null;
-  status: number | null;
-  createdAt: string | null;
+  description?: string | null;
+  scheduleDate?: string | null;
+  priority?: number | null;
+  status?: number | null;
+  createdAt?: string | null;
   chargePerson: {
     __typename: "User";
     id: string;
     username: string;
     email: string;
     companyID: string;
-    tel: string | null;
-    positionName: string | null;
-    iconImage: string | null;
-    registered: boolean | null;
-    authority: string | null;
+    tel?: string | null;
+    positionName?: string | null;
+    iconImage?: string | null;
+    registered?: boolean | null;
+    authority?: string | null;
     company: {
       __typename: "Company";
       id: string;
@@ -3505,43 +3646,43 @@ export type OnDeleteTaskSubscription = {
       createdAt: string;
       updatedAt: string;
     };
-    messages: {
+    messages?: {
       __typename: "ModelMessageConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    room: {
+    room?: {
       __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    task: {
+    task?: {
       __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    chargeTask: {
+    chargeTask?: {
       __typename: "ModelTaskConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
     createdAt: string;
     updatedAt: string;
   };
-  messages: {
+  messages?: {
     __typename: "ModelMessageConnection";
-    items: Array<{
+    items?: Array<{
       __typename: "Message";
       id: string;
       taskID: string;
       authorID: string;
       content: string;
-      createdAt: string | null;
-      isSent: boolean | null;
-      attachmentUri: Array<string | null> | null;
+      createdAt?: string | null;
+      isSent?: boolean | null;
+      attachmentUri?: Array<string | null> | null;
       updatedAt: string;
     } | null> | null;
-    nextToken: string | null;
+    nextToken?: string | null;
   } | null;
-  users: {
+  users?: {
     __typename: "ModelTaskGroupConnection";
-    items: Array<{
+    items?: Array<{
       __typename: "TaskGroup";
       id: string;
       taskID: string;
@@ -3549,7 +3690,7 @@ export type OnDeleteTaskSubscription = {
       createdAt: string;
       updatedAt: string;
     } | null> | null;
-    nextToken: string | null;
+    nextToken?: string | null;
   } | null;
   updatedAt: string;
 };
@@ -3560,45 +3701,45 @@ export type OnCreateUserSubscription = {
   username: string;
   email: string;
   companyID: string;
-  tel: string | null;
-  positionName: string | null;
-  iconImage: string | null;
-  registered: boolean | null;
-  authority: string | null;
+  tel?: string | null;
+  positionName?: string | null;
+  iconImage?: string | null;
+  registered?: boolean | null;
+  authority?: string | null;
   company: {
     __typename: "Company";
     id: string;
     name: string;
     domain: string;
-    room: {
+    room?: {
       __typename: "ModelRoomConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    companyMembers: {
+    companyMembers?: {
       __typename: "ModelUserConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
     createdAt: string;
     updatedAt: string;
   };
-  messages: {
+  messages?: {
     __typename: "ModelMessageConnection";
-    items: Array<{
+    items?: Array<{
       __typename: "Message";
       id: string;
       taskID: string;
       authorID: string;
       content: string;
-      createdAt: string | null;
-      isSent: boolean | null;
-      attachmentUri: Array<string | null> | null;
+      createdAt?: string | null;
+      isSent?: boolean | null;
+      attachmentUri?: Array<string | null> | null;
       updatedAt: string;
     } | null> | null;
-    nextToken: string | null;
+    nextToken?: string | null;
   } | null;
-  room: {
+  room?: {
     __typename: "ModelRoomGroupConnection";
-    items: Array<{
+    items?: Array<{
       __typename: "RoomGroup";
       id: string;
       roomID: string;
@@ -3606,11 +3747,11 @@ export type OnCreateUserSubscription = {
       createdAt: string;
       updatedAt: string;
     } | null> | null;
-    nextToken: string | null;
+    nextToken?: string | null;
   } | null;
-  task: {
+  task?: {
     __typename: "ModelTaskGroupConnection";
-    items: Array<{
+    items?: Array<{
       __typename: "TaskGroup";
       id: string;
       taskID: string;
@@ -3618,25 +3759,25 @@ export type OnCreateUserSubscription = {
       createdAt: string;
       updatedAt: string;
     } | null> | null;
-    nextToken: string | null;
+    nextToken?: string | null;
   } | null;
-  chargeTask: {
+  chargeTask?: {
     __typename: "ModelTaskConnection";
-    items: Array<{
+    items?: Array<{
       __typename: "Task";
       id: string;
       authorID: string;
       roomID: string;
       chargePersonID: string;
       title: string;
-      description: string | null;
-      scheduleDate: string | null;
-      priority: number | null;
-      status: number | null;
-      createdAt: string | null;
+      description?: string | null;
+      scheduleDate?: string | null;
+      priority?: number | null;
+      status?: number | null;
+      createdAt?: string | null;
       updatedAt: string;
     } | null> | null;
-    nextToken: string | null;
+    nextToken?: string | null;
   } | null;
   createdAt: string;
   updatedAt: string;
@@ -3648,45 +3789,45 @@ export type OnUpdateUserSubscription = {
   username: string;
   email: string;
   companyID: string;
-  tel: string | null;
-  positionName: string | null;
-  iconImage: string | null;
-  registered: boolean | null;
-  authority: string | null;
+  tel?: string | null;
+  positionName?: string | null;
+  iconImage?: string | null;
+  registered?: boolean | null;
+  authority?: string | null;
   company: {
     __typename: "Company";
     id: string;
     name: string;
     domain: string;
-    room: {
+    room?: {
       __typename: "ModelRoomConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    companyMembers: {
+    companyMembers?: {
       __typename: "ModelUserConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
     createdAt: string;
     updatedAt: string;
   };
-  messages: {
+  messages?: {
     __typename: "ModelMessageConnection";
-    items: Array<{
+    items?: Array<{
       __typename: "Message";
       id: string;
       taskID: string;
       authorID: string;
       content: string;
-      createdAt: string | null;
-      isSent: boolean | null;
-      attachmentUri: Array<string | null> | null;
+      createdAt?: string | null;
+      isSent?: boolean | null;
+      attachmentUri?: Array<string | null> | null;
       updatedAt: string;
     } | null> | null;
-    nextToken: string | null;
+    nextToken?: string | null;
   } | null;
-  room: {
+  room?: {
     __typename: "ModelRoomGroupConnection";
-    items: Array<{
+    items?: Array<{
       __typename: "RoomGroup";
       id: string;
       roomID: string;
@@ -3694,11 +3835,11 @@ export type OnUpdateUserSubscription = {
       createdAt: string;
       updatedAt: string;
     } | null> | null;
-    nextToken: string | null;
+    nextToken?: string | null;
   } | null;
-  task: {
+  task?: {
     __typename: "ModelTaskGroupConnection";
-    items: Array<{
+    items?: Array<{
       __typename: "TaskGroup";
       id: string;
       taskID: string;
@@ -3706,25 +3847,25 @@ export type OnUpdateUserSubscription = {
       createdAt: string;
       updatedAt: string;
     } | null> | null;
-    nextToken: string | null;
+    nextToken?: string | null;
   } | null;
-  chargeTask: {
+  chargeTask?: {
     __typename: "ModelTaskConnection";
-    items: Array<{
+    items?: Array<{
       __typename: "Task";
       id: string;
       authorID: string;
       roomID: string;
       chargePersonID: string;
       title: string;
-      description: string | null;
-      scheduleDate: string | null;
-      priority: number | null;
-      status: number | null;
-      createdAt: string | null;
+      description?: string | null;
+      scheduleDate?: string | null;
+      priority?: number | null;
+      status?: number | null;
+      createdAt?: string | null;
       updatedAt: string;
     } | null> | null;
-    nextToken: string | null;
+    nextToken?: string | null;
   } | null;
   createdAt: string;
   updatedAt: string;
@@ -3736,45 +3877,45 @@ export type OnDeleteUserSubscription = {
   username: string;
   email: string;
   companyID: string;
-  tel: string | null;
-  positionName: string | null;
-  iconImage: string | null;
-  registered: boolean | null;
-  authority: string | null;
+  tel?: string | null;
+  positionName?: string | null;
+  iconImage?: string | null;
+  registered?: boolean | null;
+  authority?: string | null;
   company: {
     __typename: "Company";
     id: string;
     name: string;
     domain: string;
-    room: {
+    room?: {
       __typename: "ModelRoomConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    companyMembers: {
+    companyMembers?: {
       __typename: "ModelUserConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
     createdAt: string;
     updatedAt: string;
   };
-  messages: {
+  messages?: {
     __typename: "ModelMessageConnection";
-    items: Array<{
+    items?: Array<{
       __typename: "Message";
       id: string;
       taskID: string;
       authorID: string;
       content: string;
-      createdAt: string | null;
-      isSent: boolean | null;
-      attachmentUri: Array<string | null> | null;
+      createdAt?: string | null;
+      isSent?: boolean | null;
+      attachmentUri?: Array<string | null> | null;
       updatedAt: string;
     } | null> | null;
-    nextToken: string | null;
+    nextToken?: string | null;
   } | null;
-  room: {
+  room?: {
     __typename: "ModelRoomGroupConnection";
-    items: Array<{
+    items?: Array<{
       __typename: "RoomGroup";
       id: string;
       roomID: string;
@@ -3782,11 +3923,11 @@ export type OnDeleteUserSubscription = {
       createdAt: string;
       updatedAt: string;
     } | null> | null;
-    nextToken: string | null;
+    nextToken?: string | null;
   } | null;
-  task: {
+  task?: {
     __typename: "ModelTaskGroupConnection";
-    items: Array<{
+    items?: Array<{
       __typename: "TaskGroup";
       id: string;
       taskID: string;
@@ -3794,25 +3935,25 @@ export type OnDeleteUserSubscription = {
       createdAt: string;
       updatedAt: string;
     } | null> | null;
-    nextToken: string | null;
+    nextToken?: string | null;
   } | null;
-  chargeTask: {
+  chargeTask?: {
     __typename: "ModelTaskConnection";
-    items: Array<{
+    items?: Array<{
       __typename: "Task";
       id: string;
       authorID: string;
       roomID: string;
       chargePersonID: string;
       title: string;
-      description: string | null;
-      scheduleDate: string | null;
-      priority: number | null;
-      status: number | null;
-      createdAt: string | null;
+      description?: string | null;
+      scheduleDate?: string | null;
+      priority?: number | null;
+      status?: number | null;
+      createdAt?: string | null;
       updatedAt: string;
     } | null> | null;
-    nextToken: string | null;
+    nextToken?: string | null;
   } | null;
   createdAt: string;
   updatedAt: string;
@@ -3823,7 +3964,7 @@ export type OnCreateRoomGroupSubscription = {
   id: string;
   roomID: string;
   userID: string;
-  room: {
+  room?: {
     __typename: "Room";
     id: string;
     name: string;
@@ -3837,28 +3978,28 @@ export type OnCreateRoomGroupSubscription = {
       createdAt: string;
       updatedAt: string;
     };
-    tasks: {
+    tasks?: {
       __typename: "ModelTaskConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    users: {
+    users?: {
       __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
     createdAt: string;
     updatedAt: string;
   } | null;
-  user: {
+  user?: {
     __typename: "User";
     id: string;
     username: string;
     email: string;
     companyID: string;
-    tel: string | null;
-    positionName: string | null;
-    iconImage: string | null;
-    registered: boolean | null;
-    authority: string | null;
+    tel?: string | null;
+    positionName?: string | null;
+    iconImage?: string | null;
+    registered?: boolean | null;
+    authority?: string | null;
     company: {
       __typename: "Company";
       id: string;
@@ -3867,21 +4008,21 @@ export type OnCreateRoomGroupSubscription = {
       createdAt: string;
       updatedAt: string;
     };
-    messages: {
+    messages?: {
       __typename: "ModelMessageConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    room: {
+    room?: {
       __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    task: {
+    task?: {
       __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    chargeTask: {
+    chargeTask?: {
       __typename: "ModelTaskConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
     createdAt: string;
     updatedAt: string;
@@ -3895,7 +4036,7 @@ export type OnUpdateRoomGroupSubscription = {
   id: string;
   roomID: string;
   userID: string;
-  room: {
+  room?: {
     __typename: "Room";
     id: string;
     name: string;
@@ -3909,28 +4050,28 @@ export type OnUpdateRoomGroupSubscription = {
       createdAt: string;
       updatedAt: string;
     };
-    tasks: {
+    tasks?: {
       __typename: "ModelTaskConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    users: {
+    users?: {
       __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
     createdAt: string;
     updatedAt: string;
   } | null;
-  user: {
+  user?: {
     __typename: "User";
     id: string;
     username: string;
     email: string;
     companyID: string;
-    tel: string | null;
-    positionName: string | null;
-    iconImage: string | null;
-    registered: boolean | null;
-    authority: string | null;
+    tel?: string | null;
+    positionName?: string | null;
+    iconImage?: string | null;
+    registered?: boolean | null;
+    authority?: string | null;
     company: {
       __typename: "Company";
       id: string;
@@ -3939,21 +4080,21 @@ export type OnUpdateRoomGroupSubscription = {
       createdAt: string;
       updatedAt: string;
     };
-    messages: {
+    messages?: {
       __typename: "ModelMessageConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    room: {
+    room?: {
       __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    task: {
+    task?: {
       __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    chargeTask: {
+    chargeTask?: {
       __typename: "ModelTaskConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
     createdAt: string;
     updatedAt: string;
@@ -3967,7 +4108,7 @@ export type OnDeleteRoomGroupSubscription = {
   id: string;
   roomID: string;
   userID: string;
-  room: {
+  room?: {
     __typename: "Room";
     id: string;
     name: string;
@@ -3981,28 +4122,28 @@ export type OnDeleteRoomGroupSubscription = {
       createdAt: string;
       updatedAt: string;
     };
-    tasks: {
+    tasks?: {
       __typename: "ModelTaskConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    users: {
+    users?: {
       __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
     createdAt: string;
     updatedAt: string;
   } | null;
-  user: {
+  user?: {
     __typename: "User";
     id: string;
     username: string;
     email: string;
     companyID: string;
-    tel: string | null;
-    positionName: string | null;
-    iconImage: string | null;
-    registered: boolean | null;
-    authority: string | null;
+    tel?: string | null;
+    positionName?: string | null;
+    iconImage?: string | null;
+    registered?: boolean | null;
+    authority?: string | null;
     company: {
       __typename: "Company";
       id: string;
@@ -4011,21 +4152,21 @@ export type OnDeleteRoomGroupSubscription = {
       createdAt: string;
       updatedAt: string;
     };
-    messages: {
+    messages?: {
       __typename: "ModelMessageConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    room: {
+    room?: {
       __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    task: {
+    task?: {
       __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    chargeTask: {
+    chargeTask?: {
       __typename: "ModelTaskConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
     createdAt: string;
     updatedAt: string;
@@ -4045,38 +4186,38 @@ export type OnCreateRoomSubscription = {
     id: string;
     name: string;
     domain: string;
-    room: {
+    room?: {
       __typename: "ModelRoomConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    companyMembers: {
+    companyMembers?: {
       __typename: "ModelUserConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
     createdAt: string;
     updatedAt: string;
   };
-  tasks: {
+  tasks?: {
     __typename: "ModelTaskConnection";
-    items: Array<{
+    items?: Array<{
       __typename: "Task";
       id: string;
       authorID: string;
       roomID: string;
       chargePersonID: string;
       title: string;
-      description: string | null;
-      scheduleDate: string | null;
-      priority: number | null;
-      status: number | null;
-      createdAt: string | null;
+      description?: string | null;
+      scheduleDate?: string | null;
+      priority?: number | null;
+      status?: number | null;
+      createdAt?: string | null;
       updatedAt: string;
     } | null> | null;
-    nextToken: string | null;
+    nextToken?: string | null;
   } | null;
-  users: {
+  users?: {
     __typename: "ModelRoomGroupConnection";
-    items: Array<{
+    items?: Array<{
       __typename: "RoomGroup";
       id: string;
       roomID: string;
@@ -4084,7 +4225,7 @@ export type OnCreateRoomSubscription = {
       createdAt: string;
       updatedAt: string;
     } | null> | null;
-    nextToken: string | null;
+    nextToken?: string | null;
   } | null;
   createdAt: string;
   updatedAt: string;
@@ -4101,38 +4242,38 @@ export type OnUpdateRoomSubscription = {
     id: string;
     name: string;
     domain: string;
-    room: {
+    room?: {
       __typename: "ModelRoomConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    companyMembers: {
+    companyMembers?: {
       __typename: "ModelUserConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
     createdAt: string;
     updatedAt: string;
   };
-  tasks: {
+  tasks?: {
     __typename: "ModelTaskConnection";
-    items: Array<{
+    items?: Array<{
       __typename: "Task";
       id: string;
       authorID: string;
       roomID: string;
       chargePersonID: string;
       title: string;
-      description: string | null;
-      scheduleDate: string | null;
-      priority: number | null;
-      status: number | null;
-      createdAt: string | null;
+      description?: string | null;
+      scheduleDate?: string | null;
+      priority?: number | null;
+      status?: number | null;
+      createdAt?: string | null;
       updatedAt: string;
     } | null> | null;
-    nextToken: string | null;
+    nextToken?: string | null;
   } | null;
-  users: {
+  users?: {
     __typename: "ModelRoomGroupConnection";
-    items: Array<{
+    items?: Array<{
       __typename: "RoomGroup";
       id: string;
       roomID: string;
@@ -4140,7 +4281,7 @@ export type OnUpdateRoomSubscription = {
       createdAt: string;
       updatedAt: string;
     } | null> | null;
-    nextToken: string | null;
+    nextToken?: string | null;
   } | null;
   createdAt: string;
   updatedAt: string;
@@ -4157,38 +4298,38 @@ export type OnDeleteRoomSubscription = {
     id: string;
     name: string;
     domain: string;
-    room: {
+    room?: {
       __typename: "ModelRoomConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    companyMembers: {
+    companyMembers?: {
       __typename: "ModelUserConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
     createdAt: string;
     updatedAt: string;
   };
-  tasks: {
+  tasks?: {
     __typename: "ModelTaskConnection";
-    items: Array<{
+    items?: Array<{
       __typename: "Task";
       id: string;
       authorID: string;
       roomID: string;
       chargePersonID: string;
       title: string;
-      description: string | null;
-      scheduleDate: string | null;
-      priority: number | null;
-      status: number | null;
-      createdAt: string | null;
+      description?: string | null;
+      scheduleDate?: string | null;
+      priority?: number | null;
+      status?: number | null;
+      createdAt?: string | null;
       updatedAt: string;
     } | null> | null;
-    nextToken: string | null;
+    nextToken?: string | null;
   } | null;
-  users: {
+  users?: {
     __typename: "ModelRoomGroupConnection";
-    items: Array<{
+    items?: Array<{
       __typename: "RoomGroup";
       id: string;
       roomID: string;
@@ -4196,7 +4337,7 @@ export type OnDeleteRoomSubscription = {
       createdAt: string;
       updatedAt: string;
     } | null> | null;
-    nextToken: string | null;
+    nextToken?: string | null;
   } | null;
   createdAt: string;
   updatedAt: string;
@@ -4208,20 +4349,20 @@ export type OnCreateMessageSubscription = {
   taskID: string;
   authorID: string;
   content: string;
-  createdAt: string | null;
-  isSent: boolean | null;
-  attachmentUri: Array<string | null> | null;
+  createdAt?: string | null;
+  isSent?: boolean | null;
+  attachmentUri?: Array<string | null> | null;
   author: {
     __typename: "User";
     id: string;
     username: string;
     email: string;
     companyID: string;
-    tel: string | null;
-    positionName: string | null;
-    iconImage: string | null;
-    registered: boolean | null;
-    authority: string | null;
+    tel?: string | null;
+    positionName?: string | null;
+    iconImage?: string | null;
+    registered?: boolean | null;
+    authority?: string | null;
     company: {
       __typename: "Company";
       id: string;
@@ -4230,21 +4371,21 @@ export type OnCreateMessageSubscription = {
       createdAt: string;
       updatedAt: string;
     };
-    messages: {
+    messages?: {
       __typename: "ModelMessageConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    room: {
+    room?: {
       __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    task: {
+    task?: {
       __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    chargeTask: {
+    chargeTask?: {
       __typename: "ModelTaskConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
     createdAt: string;
     updatedAt: string;
@@ -4265,32 +4406,32 @@ export type OnCreateMessageSubscription = {
       createdAt: string;
       updatedAt: string;
     };
-    description: string | null;
-    scheduleDate: string | null;
-    priority: number | null;
-    status: number | null;
-    createdAt: string | null;
+    description?: string | null;
+    scheduleDate?: string | null;
+    priority?: number | null;
+    status?: number | null;
+    createdAt?: string | null;
     chargePerson: {
       __typename: "User";
       id: string;
       username: string;
       email: string;
       companyID: string;
-      tel: string | null;
-      positionName: string | null;
-      iconImage: string | null;
-      registered: boolean | null;
-      authority: string | null;
+      tel?: string | null;
+      positionName?: string | null;
+      iconImage?: string | null;
+      registered?: boolean | null;
+      authority?: string | null;
       createdAt: string;
       updatedAt: string;
     };
-    messages: {
+    messages?: {
       __typename: "ModelMessageConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    users: {
+    users?: {
       __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
     updatedAt: string;
   };
@@ -4303,20 +4444,20 @@ export type OnUpdateMessageSubscription = {
   taskID: string;
   authorID: string;
   content: string;
-  createdAt: string | null;
-  isSent: boolean | null;
-  attachmentUri: Array<string | null> | null;
+  createdAt?: string | null;
+  isSent?: boolean | null;
+  attachmentUri?: Array<string | null> | null;
   author: {
     __typename: "User";
     id: string;
     username: string;
     email: string;
     companyID: string;
-    tel: string | null;
-    positionName: string | null;
-    iconImage: string | null;
-    registered: boolean | null;
-    authority: string | null;
+    tel?: string | null;
+    positionName?: string | null;
+    iconImage?: string | null;
+    registered?: boolean | null;
+    authority?: string | null;
     company: {
       __typename: "Company";
       id: string;
@@ -4325,21 +4466,21 @@ export type OnUpdateMessageSubscription = {
       createdAt: string;
       updatedAt: string;
     };
-    messages: {
+    messages?: {
       __typename: "ModelMessageConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    room: {
+    room?: {
       __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    task: {
+    task?: {
       __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    chargeTask: {
+    chargeTask?: {
       __typename: "ModelTaskConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
     createdAt: string;
     updatedAt: string;
@@ -4360,32 +4501,32 @@ export type OnUpdateMessageSubscription = {
       createdAt: string;
       updatedAt: string;
     };
-    description: string | null;
-    scheduleDate: string | null;
-    priority: number | null;
-    status: number | null;
-    createdAt: string | null;
+    description?: string | null;
+    scheduleDate?: string | null;
+    priority?: number | null;
+    status?: number | null;
+    createdAt?: string | null;
     chargePerson: {
       __typename: "User";
       id: string;
       username: string;
       email: string;
       companyID: string;
-      tel: string | null;
-      positionName: string | null;
-      iconImage: string | null;
-      registered: boolean | null;
-      authority: string | null;
+      tel?: string | null;
+      positionName?: string | null;
+      iconImage?: string | null;
+      registered?: boolean | null;
+      authority?: string | null;
       createdAt: string;
       updatedAt: string;
     };
-    messages: {
+    messages?: {
       __typename: "ModelMessageConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    users: {
+    users?: {
       __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
     updatedAt: string;
   };
@@ -4398,20 +4539,20 @@ export type OnDeleteMessageSubscription = {
   taskID: string;
   authorID: string;
   content: string;
-  createdAt: string | null;
-  isSent: boolean | null;
-  attachmentUri: Array<string | null> | null;
+  createdAt?: string | null;
+  isSent?: boolean | null;
+  attachmentUri?: Array<string | null> | null;
   author: {
     __typename: "User";
     id: string;
     username: string;
     email: string;
     companyID: string;
-    tel: string | null;
-    positionName: string | null;
-    iconImage: string | null;
-    registered: boolean | null;
-    authority: string | null;
+    tel?: string | null;
+    positionName?: string | null;
+    iconImage?: string | null;
+    registered?: boolean | null;
+    authority?: string | null;
     company: {
       __typename: "Company";
       id: string;
@@ -4420,21 +4561,21 @@ export type OnDeleteMessageSubscription = {
       createdAt: string;
       updatedAt: string;
     };
-    messages: {
+    messages?: {
       __typename: "ModelMessageConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    room: {
+    room?: {
       __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    task: {
+    task?: {
       __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    chargeTask: {
+    chargeTask?: {
       __typename: "ModelTaskConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
     createdAt: string;
     updatedAt: string;
@@ -4455,32 +4596,32 @@ export type OnDeleteMessageSubscription = {
       createdAt: string;
       updatedAt: string;
     };
-    description: string | null;
-    scheduleDate: string | null;
-    priority: number | null;
-    status: number | null;
-    createdAt: string | null;
+    description?: string | null;
+    scheduleDate?: string | null;
+    priority?: number | null;
+    status?: number | null;
+    createdAt?: string | null;
     chargePerson: {
       __typename: "User";
       id: string;
       username: string;
       email: string;
       companyID: string;
-      tel: string | null;
-      positionName: string | null;
-      iconImage: string | null;
-      registered: boolean | null;
-      authority: string | null;
+      tel?: string | null;
+      positionName?: string | null;
+      iconImage?: string | null;
+      registered?: boolean | null;
+      authority?: string | null;
       createdAt: string;
       updatedAt: string;
     };
-    messages: {
+    messages?: {
       __typename: "ModelMessageConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    users: {
+    users?: {
       __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
     updatedAt: string;
   };
