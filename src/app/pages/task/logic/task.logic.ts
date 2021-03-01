@@ -106,7 +106,7 @@ export class TaskLogic {
       .pipe(toArray());
   }
 
-  updateDoneTaskItem(taskFormItem, status): Observable<UpdateTaskMutation> {
+  updateDoneTaskItem(taskFormItem, status: number): Observable<UpdateTaskMutation> {
     const content = {
       id: taskFormItem.id,
       status: status,

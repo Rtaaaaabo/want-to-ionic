@@ -48,4 +48,12 @@ export class OwnTaskLogic {
       .pipe(toArray());
   }
 
+  updateDoneTaskItem(taskFormItem, status: number): Observable<any> {
+    const content = {
+      id: taskFormItem.id,
+      status: status,
+    };
+    return this.ownTaskService.updateTaskItem(content);
+  }
+
 }
