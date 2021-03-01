@@ -21,6 +21,13 @@
           <p>{{ item.task.description}}</p>
         </ion-item>
       </ion-card-content>
+      <ion-button
+        expand="full"
+        class="button-center"
+        (click)="presentDoneTaskAlert(item)"
+        color="primary"
+      >
+      </ion-button>
     </ion-card>
   </ion-list>
 </ion-content>
