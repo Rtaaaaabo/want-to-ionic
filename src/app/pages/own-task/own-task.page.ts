@@ -24,7 +24,9 @@ export class OwnTaskPage implements OnInit, AfterViewInit {
 
   ngOnInit() { }
 
-  ngAfterViewInit() {
+  ngAfterViewInit() { }
+
+  ionViewWillEnter() {
     this.logic.fetchCurrentUser()
       .pipe(map(result => this.currentUserId = result.sub))
       .pipe(concatMap((currentUserId) => this.logic.getTaskChargeItems(currentUserId)))
@@ -88,4 +90,6 @@ export class OwnTaskPage implements OnInit, AfterViewInit {
     });
     toast.present();
   }
+
+
 }

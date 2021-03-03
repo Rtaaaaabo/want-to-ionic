@@ -24,7 +24,10 @@ export class HomePage implements OnInit {
     private modalCtrl: ModalController,
   ) { }
 
-  ngOnInit(): void {
+  ngOnInit(): void { }
+
+  ionViewWillEnter() {
+    console.log('Home ionViewWillEnter');
     this.logic.fetchCurrentUser()
       .pipe(map((attributes) => {
         this.attributes = attributes;
