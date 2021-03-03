@@ -50,7 +50,7 @@ export class OwnTaskLogic {
 
   updateDoneTaskItem(taskFormItem, status: number): Observable<any> {
     const content = {
-      id: taskFormItem.id,
+      id: taskFormItem.task.id,
       status: status,
     };
     return this.ownTaskService.updateTaskItem(content);
