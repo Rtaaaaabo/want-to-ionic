@@ -134,6 +134,7 @@ export class TaskPage implements OnInit {
   }
 
   navigateToTaskDetail(task, segment: string, isReorder: boolean): void {
+    console.log('isReorder', isReorder);
     if (isReorder) return;
     this.router.navigate(['task-detail', `${task.id}`, `${segment}`])
   }

@@ -78,7 +78,7 @@
   <ion-list>
     <ion-card
       *ngFor="let item of taskDoneItems"
-      (click)="navigateToTaskDetail(item, segment, !isReorder)"
+      (click)="navigateToTaskDetail(item, segment, isReorder)"
     >
       <ion-card-header>
         <ion-card-subtitle>
