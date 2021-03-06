@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, from, of } from 'rxjs';
 import { concatMap, map } from 'rxjs/operators';
-import { input, Storage } from 'aws-amplify';
+import { Storage } from 'aws-amplify';
 import { v4 as uuid } from 'uuid';
 import { SessionService } from 'src/app/shared/service/session.service';
 import { CurrentUserInfo } from '../../task/interface/current-user-info.interface';
@@ -161,9 +161,14 @@ export class TaskDetailLogic {
   }
 
   putStorage(fileName: string, blobFile: Blob, contentType: string): Observable<any> {
-    return from(Storage.put(fileName, blobFile, {
-      contentType: contentType
-    }));
+    return from(Storage.put(
+      fileName,
+      blobFile,
+      {
+        contentType: contentType,
+        expires: Date.now() + 604960677, //Plus 一週間
+      }
+    ));
   }
 
   getStorage(fileName: string): Observable<any> {
