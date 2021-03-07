@@ -143,6 +143,7 @@ export class HomeLogic {
   }
 
   getDirString(dt: Date): string {
+    console.log('getDirString', dt);
     const random = dt.getTime() + Math.floor(100000 * Math.random());
     const randomMath = Math.random() * random;
     const randomFloor = randomMath.toString(16);
@@ -186,9 +187,15 @@ export class HomeLogic {
   }
 
   putStorage(uploadFileName: string, blobFile: Blob, contentType: string) {
-    return from(Storage.put(uploadFileName, blobFile, {
-      contentType: contentType
-    }));
+    console.log('uploadFileName', uploadFileName);
+    return from(Storage.put(
+      uploadFileName,
+      blobFile,
+      {
+        contentType: contentType,
+        // expires: Date.now() + 3155673600,
+      }
+    ));
   }
 
   getStorage(filePathName: string): Observable<any> {

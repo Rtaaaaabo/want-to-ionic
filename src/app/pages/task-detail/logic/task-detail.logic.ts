@@ -166,7 +166,6 @@ export class TaskDetailLogic {
       blobFile,
       {
         contentType: contentType,
-        // 100年後はプラス3155673600
         expires: Date.now() + 604960677, //一週間で投稿画像を削除
       }
     ));
