@@ -29,6 +29,7 @@ const optionPicture = {
   promptLabelPhoto: 'ライブラリから',
   promptLabelCancel: 'キャンセル',
 };
+
 @Component({
   selector: 'app-edit-profile-modal',
   templateUrl: './edit-profile-modal.component.html',
