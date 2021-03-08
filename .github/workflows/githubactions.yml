@@ -25,8 +25,7 @@ jobs:
         with:
           token: ${{ secrets.PAT }}
           commit-message: Merge for Staging branch
-          committer: Github <noreply@github.com>
-          author: ${{ github.actor }}<${{ github.actor }}@users.noreply.github.com>
+          # author: ${{ github.actor }}<r.taaaaabo@gmail.com>
           signoff: false
           branch: develop
           delete-branch: false
