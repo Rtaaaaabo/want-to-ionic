@@ -14,7 +14,7 @@ jobs:
   createPullRequest:
     runs-on: ubuntu-latest
     steps:
-      - run: ${{ secrets.PAT }}
+      - run: ${{ secrets.PERSONAL }}
       - uses: actions/checkout@v2
 
       - name: Make changes to pull request
@@ -26,7 +26,7 @@ jobs:
         with:
           token: ${{ secrets.PAT }}
           commit-message: Merge for Staging branch
-          # author: ${{ github.actor }}<r.taaaaabo@gmail.com>
+          author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
           signoff: false
           branch: develop
           delete-branch: false
