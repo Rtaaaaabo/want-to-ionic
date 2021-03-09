@@ -14,7 +14,8 @@ jobs:
   createPullRequest:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout branch
+        uses: actions/checkout@v2
         with:
           token: ${{ secrets.PAT }}
 
@@ -23,13 +24,9 @@ jobs:
         uses: peter-evans/create-pull-request@v3
         with:
           token: ${{ secrets.PAT }}
-          commit-message: Merge for Staging branch
           author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
-          base: staging
           delete-branch: false
           title: "20210310_Release"
-          body: |
-            Update report
 
       - name: Check outputs
         run: |
