@@ -14,7 +14,6 @@ jobs:
   createPullRequest:
     runs-on: ubuntu-latest
     steps:
-      - run: ${{ secrets.PERSONAL }}
       - uses: actions/checkout@v2
 
       - name: Make changes to pull request
@@ -24,7 +23,7 @@ jobs:
         id: cpr
         uses: peter-evans/create-pull-request@v3
         with:
-          token: ${{ secrets.PERSONAL }}
+          token: ${{ secrets.PAT }}
           commit-message: Merge for Staging branch
           author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
           signoff: false
