@@ -85,7 +85,6 @@ export class EditProfileModalComponent implements OnInit {
     let iconImage = await Camera.getPhoto(optionPicture);
     const avatarBase64Data = await iconImage.dataUrl;
     this.logic.fetchAvatarIconUrl(avatarBase64Data, this.user.id)
-      // .subscribe(data => console.log('data', data));
       .pipe(concatMap(({ key: awsFilePath }) => this.logic.getStorage(awsFilePath)))
       .subscribe((avatarUrl) => {
         this.editProfileForm.patchValue({

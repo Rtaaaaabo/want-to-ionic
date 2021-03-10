@@ -193,7 +193,7 @@ export class HomeLogic {
       blobFile,
       {
         contentType: contentType,
-        // expires: Date.now() + 3155673600,
+        expires: 3155673600,
       }
     ));
   }

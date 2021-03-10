@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, from, of } from 'rxjs';
-import { concatMap, map } from 'rxjs/operators';
+import { catchError, concatMap, map } from 'rxjs/operators';
 import { Storage } from 'aws-amplify';
 import { v4 as uuid } from 'uuid';
 import { SessionService } from 'src/app/shared/service/session.service';
@@ -132,8 +132,8 @@ export class TaskDetailLogic {
 
   /**
    * S3にアップロードするロジックです。
-   * @param fileName ファイルのディレクトリ名と名前を繋げています。
    * @param arrayBase64Data 配列型のBase64Dataを渡します。
+   * @param taskId タスクのIDを渡します。
    * @returns Observable型でS3から返ってきた値を返します。
    */
   uploadFile(arrayBase64Data: Array<any>, taskId: string): Observable<any> {
@@ -161,12 +161,12 @@ export class TaskDetailLogic {
   }
 
   putStorage(fileName: string, blobFile: Blob, contentType: string): Observable<any> {
+    console.log('new Date().getTime() + OneWeekSecond', new Date().getTime() + OneWeekSecond);
     return from(Storage.put(
       fileName,
       blobFile,
       {
         contentType: contentType,
-        expires: Date.now() + 604960677, //一週間で投稿画像を削除
       }
     ));
   }
