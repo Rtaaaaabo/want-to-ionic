@@ -3,8 +3,8 @@ import { ModalController } from '@ionic/angular';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { HomeLogic } from '../../../../pages/home/logic/home.logic';
 import { Camera, CameraResultType } from '@capacitor/core';
-import { concatMap } from 'rxjs/operators';
-
+import { from, of } from 'rxjs';
+import { catchError, concatMap, filter, map, switchMap } from 'rxjs/operators';
 interface OwnUser {
   authority: string;
   companyID: string;
@@ -81,12 +81,16 @@ export class EditProfileModalComponent implements OnInit {
     this.modalCtrl.dismiss();
   }
 
-  async pickerImage(): Promise<void> {
-    let iconImage = await Camera.getPhoto(optionPicture);
-    const avatarBase64Data = await iconImage.dataUrl;
-    this.logic.fetchAvatarIconUrl(avatarBase64Data, this.user.id)
+  pickerImage(): void {
+    const observableIconImage = from(Camera.getPhoto(optionPicture));
+    observableIconImage
+      .pipe(map((data) => data.dataUrl))
+      .pipe(concatMap((dataUrl) => this.logic.fetchAvatarIconUrl(dataUrl, this.user.id)))
       .pipe(concatMap(({ key: awsFilePath }) => this.logic.getStorage(awsFilePath)))
+      .pipe(catchError(() => of(false)))
+      .pipe(filter((result) => result))
       .subscribe((avatarUrl) => {
+        this.user.iconImage = avatarUrl;
         this.editProfileForm.patchValue({
           id: this.user.id,
           targetEmail: this.user.email,

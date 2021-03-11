@@ -144,7 +144,6 @@ export class HomeLogic {
   }
 
   getDirString(dt: Date): string {
-    console.log('getDirString', dt);
     const random = dt.getTime() + Math.floor(100000 * Math.random());
     const randomMath = Math.random() * random;
     const randomFloor = randomMath.toString(16);
