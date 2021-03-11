@@ -131,12 +131,13 @@ export class HomeLogic {
     let uploadFilePath: string;
     let ext: string;
     const dt = new Date();
-    const dirName = this.getDirString(dt);
+    const dateDir = this.getDirString(dt);
+    const dirName = userId;
     return this.getContentType(base64Data)
       .pipe(map((result) => contentType = result))
       .pipe(concatMap((contentType) => this.makeExt(contentType)))
       .pipe(map(result => ext = result))
-      .pipe(map(() => fileName = `avatar_${uuid()}_${userId}`))
+      .pipe(map(() => fileName = `avatar/${dateDir}_${uuid()}`))
       .pipe(map(() => uploadFilePath = `${dirName}/${fileName}.${ext}`))
       .pipe(concatMap(() => this.base64toBlob(base64Data, contentType)))
       .pipe(concatMap((blobFile) => this.putStorage(uploadFilePath, blobFile, contentType)));
@@ -187,20 +188,16 @@ export class HomeLogic {
   }
 
   putStorage(uploadFileName: string, blobFile: Blob, contentType: string) {
-    console.log('uploadFileName', uploadFileName);
     return from(Storage.put(
       uploadFileName,
       blobFile,
       {
         contentType: contentType,
-        expires: 3155673600,
       }
     ));
   }
 
   getStorage(filePathName: string): Observable<any> {
-    return from(Storage.get(filePathName, {
-      expires: OneWeekSecond,
-    }));
+    return from(Storage.get(filePathName));
   }
 }

@@ -172,9 +172,7 @@ export class TaskDetailLogic {
   }
 
   getStorage(fileName: string): Observable<any> {
-    return from(Storage.get(fileName, {
-      expires: OneWeekSecond,
-    }))
+    return from(Storage.get(fileName))
   }
 
   getDirString(dt: Date): string {
