@@ -128,7 +128,7 @@ export class TaskDetailPage implements OnInit {
       .pipe(filter(({ data }) => data !== undefined))
       .pipe(map((data) => resultObj = data))
       .pipe(concatMap(({ data }) => this.logic.updateTaskToRoom(data.taskValue, this.taskId)))
-      .pipe(concatMap((result) => this.logic.createMessage(result, resultObj.objHasTask)))
+      .pipe(concatMap((result) => this.logic.createMessage(result, resultObj)))
       .pipe(concatMap(() => this.logic.fetchAnyTask(this.taskId)))
       .subscribe((data) => {
         this.taskDetail = data;
@@ -140,7 +140,7 @@ export class TaskDetailPage implements OnInit {
     const presentToast = from(this.presentDoneToast());
     const messageContent = 'このタスクを完了としました';
     this.logic.updateTaskItem(taskDetail, 10)
-      .pipe(concatMap((data) => this.logic.createMessage(data, null, messageContent)))
+      .pipe(concatMap((data) => this.logic.createMessage(data, messageContent)))
       .pipe(concatMap(() => this.logic.fetchAnyTask(taskDetail.id)))
       .pipe(tap(() => presentToast))
       .subscribe((data) => {
@@ -152,7 +152,7 @@ export class TaskDetailPage implements OnInit {
     const presentToast = from(this.presentMoveTask());
     const messageContent = 'このタスクをActiveにもどしました。\n 頑張ってください！';
     this.logic.updateTaskItem(taskDetail, 0)
-      .pipe(concatMap((result) => this.logic.createMessage(result, null, messageContent)))
+      .pipe(concatMap((result) => this.logic.createMessage(result, messageContent)))
       .pipe(concatMap(() => this.logic.fetchAnyTask(taskDetail.id)))
       .pipe(tap(() => presentToast))
       .subscribe((data) => {

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, from, of } from 'rxjs';
 import { catchError, concatMap, map } from 'rxjs/operators';
-import { Storage } from 'aws-amplify';
+import { a, Storage } from 'aws-amplify';
 import { v4 as uuid } from 'uuid';
 import { SessionService } from 'src/app/shared/service/session.service';
 import { CurrentUserInfo } from '../../task/interface/current-user-info.interface';
@@ -10,6 +10,24 @@ import { Filesystem, FilesystemDirectory, FilesystemEncoding, FileWriteResult, F
 import { GetTaskQuery, OnCreateCompanySubscription, OnCreateMessageSubscription, UpdateTaskMutation } from 'src/app/shared/service/amplify.service';
 
 const OneWeekSecond = 604800;
+
+interface IsMessageContent {
+  data: {
+    hasTaskKind: {
+      chargePerson: boolean;
+      description: boolean;
+      name: boolean;
+      scheduleDate: boolean;
+    },
+    taskValue: {
+      chargePersonId: string;
+      descriptionItem: string;
+      nameItem: string;
+      scheduleDateItem: string;
+    }
+  },
+  role: undefined;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -231,7 +249,34 @@ export class TaskDetailLogic {
     return of(blob);
   }
 
-  createMessage(data: UpdateTaskMutation, taskKind?, messageContent?: string): Observable<any> {
+  createMessage(data: UpdateTaskMutation, argContent?: string | IsMessageContent): Observable<any> {
+    console.log('messageContent', argContent);
+    let messageContent = '';
+    if (typeof (argContent) === "object") {
+      if (argContent.data.hasTaskKind.chargePerson) {
+        messageContent = `・担当者を${argContent.data.taskValue.chargePersonId}`
+      }
+      if (argContent.data.hasTaskKind.description) {
+        messageContent = `
+        ${messageContent}
+        ・説明文を${argContent.data.taskValue.descriptionItem}に変更しました。
+        `;
+      }
+      if (argContent.data.hasTaskKind.name) {
+        messageContent = `
+        ${messageContent}
+        ・タイトルを${argContent.data.taskValue.nameItem}に変更しました。
+        `;
+      }
+      if (argContent.data.hasTaskKind.scheduleDate) {
+        messageContent = `
+        ${messageContent}
+        ・締め切りを${argContent.data.taskValue.scheduleDateItem}に変更しました。
+        `;
+      }
+    } else {
+      messageContent = argContent;
+    }
     const content = {
       id: `${uuid()}`,
       taskID: `${data.id}`,
