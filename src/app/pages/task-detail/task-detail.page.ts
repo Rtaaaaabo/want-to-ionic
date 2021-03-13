@@ -130,7 +130,9 @@ export class TaskDetailPage implements OnInit {
       .pipe(concatMap(({ data }) => this.logic.updateTaskToRoom(data.taskValue, this.taskId)))
       .pipe(concatMap((result) => this.logic.createMessage(result, resultObj.objHasTask)))
       .pipe(concatMap(() => this.logic.fetchAnyTask(this.taskId)))
-      .subscribe(() => { })
+      .subscribe((data) => {
+        this.taskDetail = data;
+      })
     return modal.present();
   }
 
@@ -142,7 +144,7 @@ export class TaskDetailPage implements OnInit {
       .pipe(concatMap(() => this.logic.fetchAnyTask(taskDetail.id)))
       .pipe(tap(() => presentToast))
       .subscribe((data) => {
-        this.taskDetail = data
+        this.taskDetail = data;
       });
   }
 
