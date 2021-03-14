@@ -19,8 +19,8 @@ type TaskGroup
 
 type Task
   @model
-  @key(name: "byRoom", fields: ["roomID", "createdAt"])
-  @key(name: "byUser", fields: ["chargePersonID", "createdAt"]) {
+  @key(name: "byRoom", fields: ["roomID"])
+  @key(name: "byUser", fields: ["chargePersonID"]) {
   id: ID!
   authorID: ID!
   roomID: ID!
@@ -77,8 +77,9 @@ type Room @model @key(name: "byCompany", fields: ["companyID"]) {
 
 type Message
   @model
-  @key(name: "byTask", fields: ["taskID", "createdAt"])
-  @key(name: "byUser", fields: ["authorID", "createdAt"]) {
+  @key(fields: ["id", "createdAt"])
+  @key(name: "byTask", fields: ["taskID"])
+  @key(name: "byUser", fields: ["authorID"]) {
   id: ID!
   taskID: ID!
   authorID: ID!
