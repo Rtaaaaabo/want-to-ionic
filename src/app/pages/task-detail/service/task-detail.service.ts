@@ -34,4 +34,8 @@ export class TaskDetailService {
   fetchRoomMember(content): Observable<any> {
     return from(this.amplifyService.ListRoomGroups(content));
   }
+
+  fetchUserName(userId: string): Observable<any> {
+    return from(this.amplifyService.GetUser(userId));
+  }
 }

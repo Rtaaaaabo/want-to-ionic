@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Observable, from, of } from 'rxjs';
+import { Observable, from, of, concat } from 'rxjs';
 import { catchError, concatMap, map } from 'rxjs/operators';
-import { a, Storage } from 'aws-amplify';
+import { Storage } from 'aws-amplify';
 import { v4 as uuid } from 'uuid';
 import { SessionService } from 'src/app/shared/service/session.service';
 import { CurrentUserInfo } from '../../task/interface/current-user-info.interface';
@@ -27,6 +27,13 @@ interface IsMessageContent {
     }
   },
   role: undefined;
+}
+
+interface MessageContent {
+  id: string,
+  taskID: string,
+  authorID: string,
+  content: string,
 }
 
 @Injectable({
@@ -250,11 +257,16 @@ export class TaskDetailLogic {
   }
 
   createMessage(data: UpdateTaskMutation, argContent?: string | IsMessageContent): Observable<any> {
-    console.log('messageContent', argContent);
+    console.log(data);
+    return this.createMessageContent(data, argContent)
+      .pipe(concatMap((messageContent) => this.taskDetailService.createMessageItem(messageContent)));
+  }
+
+  createMessageContent(data, argContent): Observable<MessageContent> {
     let messageContent = '';
     if (typeof (argContent) === "object") {
       if (argContent.data.hasTaskKind.chargePerson) {
-        messageContent = `・担当者を${argContent.data.taskValue.chargePersonId}`
+        messageContent = `・担当者を ${data.chargePerson.username}に変更しました`;
       }
       if (argContent.data.hasTaskKind.description) {
         messageContent = `
@@ -277,12 +289,14 @@ export class TaskDetailLogic {
     } else {
       messageContent = argContent;
     }
+
     const content = {
       id: `${uuid()}`,
       taskID: `${data.id}`,
       authorID: `${data.authorID}`,
       content: `${messageContent}`
     }
-    return this.taskDetailService.createMessageItem(content);
+    return of(content);
   }
+
 }

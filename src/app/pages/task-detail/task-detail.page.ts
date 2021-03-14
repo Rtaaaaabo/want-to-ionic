@@ -132,7 +132,7 @@ export class TaskDetailPage implements OnInit {
       .pipe(concatMap(() => this.logic.fetchAnyTask(this.taskId)))
       .subscribe((data) => {
         this.taskDetail = data;
-      })
+      });
     return modal.present();
   }
 
