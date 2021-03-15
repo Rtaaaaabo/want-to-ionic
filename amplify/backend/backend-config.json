@@ -7,6 +7,20 @@
     }
   },
   "api": {
+    "apifc8796ac": {
+      "service": "API Gateway",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [
+        {
+          "category": "function",
+          "resourceName": "S3Trigger8b3c74c8",
+          "attributes": [
+            "Name",
+            "Arn"
+          ]
+        }
+      ]
+    },
     "wantto": {
       "service": "AppSync",
       "providerPlugin": "awscloudformation",
@@ -21,20 +35,6 @@
           "additionalAuthenticationProviders": []
         }
       }
-    },
-    "apifc8796ac": {
-      "service": "API Gateway",
-      "providerPlugin": "awscloudformation",
-      "dependsOn": [
-        {
-          "category": "function",
-          "resourceName": "S3Trigger8b3c74c8",
-          "attributes": [
-            "Name",
-            "Arn"
-          ]
-        }
-      ]
     }
   },
   "function": {

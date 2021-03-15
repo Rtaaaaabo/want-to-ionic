@@ -149,7 +149,7 @@ export type Message = {
   taskID?: string;
   authorID?: string;
   content?: string;
-  createdAt?: string | null;
+  createdAt?: string;
   isSent?: boolean | null;
   attachmentUri?: Array<string | null> | null;
   author?: User;
@@ -418,7 +418,6 @@ export type ModelMessageConditionInput = {
   taskID?: ModelIDInput | null;
   authorID?: ModelIDInput | null;
   content?: ModelStringInput | null;
-  createdAt?: ModelStringInput | null;
   isSent?: ModelBooleanInput | null;
   attachmentUri?: ModelStringInput | null;
   and?: Array<ModelMessageConditionInput | null> | null;
@@ -431,13 +430,14 @@ export type UpdateMessageInput = {
   taskID?: string | null;
   authorID?: string | null;
   content?: string | null;
-  createdAt?: string | null;
+  createdAt: string;
   isSent?: boolean | null;
   attachmentUri?: Array<string | null> | null;
 };
 
 export type DeleteMessageInput = {
-  id?: string | null;
+  id: string;
+  createdAt: string;
 };
 
 export type ModelCompanyFilterInput = {
@@ -514,6 +514,16 @@ export type ModelRoomFilterInput = {
   not?: ModelRoomFilterInput | null;
 };
 
+export type ModelStringKeyConditionInput = {
+  eq?: string | null;
+  le?: string | null;
+  lt?: string | null;
+  ge?: string | null;
+  gt?: string | null;
+  between?: Array<string | null> | null;
+  beginsWith?: string | null;
+};
+
 export type ModelMessageFilterInput = {
   id?: ModelIDInput | null;
   taskID?: ModelIDInput | null;
@@ -526,6 +536,11 @@ export type ModelMessageFilterInput = {
   or?: Array<ModelMessageFilterInput | null> | null;
   not?: ModelMessageFilterInput | null;
 };
+
+export enum ModelSortDirection {
+  ASC = "ASC",
+  DESC = "DESC"
+}
 
 export type CreateCompanyMutation = {
   __typename: "Company";
@@ -1006,7 +1021,7 @@ export type CreateTaskMutation = {
       taskID: string;
       authorID: string;
       content: string;
-      createdAt?: string | null;
+      createdAt: string;
       isSent?: boolean | null;
       attachmentUri?: Array<string | null> | null;
       updatedAt: string;
@@ -1111,7 +1126,7 @@ export type UpdateTaskMutation = {
       taskID: string;
       authorID: string;
       content: string;
-      createdAt?: string | null;
+      createdAt: string;
       isSent?: boolean | null;
       attachmentUri?: Array<string | null> | null;
       updatedAt: string;
@@ -1216,7 +1231,7 @@ export type DeleteTaskMutation = {
       taskID: string;
       authorID: string;
       content: string;
-      createdAt?: string | null;
+      createdAt: string;
       isSent?: boolean | null;
       attachmentUri?: Array<string | null> | null;
       updatedAt: string;
@@ -1273,7 +1288,7 @@ export type CreateUserMutation = {
       taskID: string;
       authorID: string;
       content: string;
-      createdAt?: string | null;
+      createdAt: string;
       isSent?: boolean | null;
       attachmentUri?: Array<string | null> | null;
       updatedAt: string;
@@ -1361,7 +1376,7 @@ export type UpdateUserMutation = {
       taskID: string;
       authorID: string;
       content: string;
-      createdAt?: string | null;
+      createdAt: string;
       isSent?: boolean | null;
       attachmentUri?: Array<string | null> | null;
       updatedAt: string;
@@ -1449,7 +1464,7 @@ export type DeleteUserMutation = {
       taskID: string;
       authorID: string;
       content: string;
-      createdAt?: string | null;
+      createdAt: string;
       isSent?: boolean | null;
       attachmentUri?: Array<string | null> | null;
       updatedAt: string;
@@ -1892,7 +1907,7 @@ export type CreateMessageMutation = {
   taskID: string;
   authorID: string;
   content: string;
-  createdAt?: string | null;
+  createdAt: string;
   isSent?: boolean | null;
   attachmentUri?: Array<string | null> | null;
   author: {
@@ -1987,7 +2002,7 @@ export type UpdateMessageMutation = {
   taskID: string;
   authorID: string;
   content: string;
-  createdAt?: string | null;
+  createdAt: string;
   isSent?: boolean | null;
   attachmentUri?: Array<string | null> | null;
   author: {
@@ -2082,7 +2097,7 @@ export type DeleteMessageMutation = {
   taskID: string;
   authorID: string;
   content: string;
-  createdAt?: string | null;
+  createdAt: string;
   isSent?: boolean | null;
   attachmentUri?: Array<string | null> | null;
   author: {
@@ -2448,7 +2463,7 @@ export type GetTaskQuery = {
       taskID: string;
       authorID: string;
       content: string;
-      createdAt?: string | null;
+      createdAt: string;
       isSent?: boolean | null;
       attachmentUri?: Array<string | null> | null;
       updatedAt: string;
@@ -2555,7 +2570,7 @@ export type GetUserQuery = {
       taskID: string;
       authorID: string;
       content: string;
-      createdAt?: string | null;
+      createdAt: string;
       isSent?: boolean | null;
       attachmentUri?: Array<string | null> | null;
       updatedAt: string;
@@ -2851,7 +2866,7 @@ export type GetMessageQuery = {
   taskID: string;
   authorID: string;
   content: string;
-  createdAt?: string | null;
+  createdAt: string;
   isSent?: boolean | null;
   attachmentUri?: Array<string | null> | null;
   author: {
@@ -2948,7 +2963,7 @@ export type ListMessagesQuery = {
     taskID: string;
     authorID: string;
     content: string;
-    createdAt?: string | null;
+    createdAt: string;
     isSent?: boolean | null;
     attachmentUri?: Array<string | null> | null;
     author: {
@@ -3463,7 +3478,7 @@ export type OnCreateTaskSubscription = {
       taskID: string;
       authorID: string;
       content: string;
-      createdAt?: string | null;
+      createdAt: string;
       isSent?: boolean | null;
       attachmentUri?: Array<string | null> | null;
       updatedAt: string;
@@ -3568,7 +3583,7 @@ export type OnUpdateTaskSubscription = {
       taskID: string;
       authorID: string;
       content: string;
-      createdAt?: string | null;
+      createdAt: string;
       isSent?: boolean | null;
       attachmentUri?: Array<string | null> | null;
       updatedAt: string;
@@ -3673,7 +3688,7 @@ export type OnDeleteTaskSubscription = {
       taskID: string;
       authorID: string;
       content: string;
-      createdAt?: string | null;
+      createdAt: string;
       isSent?: boolean | null;
       attachmentUri?: Array<string | null> | null;
       updatedAt: string;
@@ -3730,7 +3745,7 @@ export type OnCreateUserSubscription = {
       taskID: string;
       authorID: string;
       content: string;
-      createdAt?: string | null;
+      createdAt: string;
       isSent?: boolean | null;
       attachmentUri?: Array<string | null> | null;
       updatedAt: string;
@@ -3818,7 +3833,7 @@ export type OnUpdateUserSubscription = {
       taskID: string;
       authorID: string;
       content: string;
-      createdAt?: string | null;
+      createdAt: string;
       isSent?: boolean | null;
       attachmentUri?: Array<string | null> | null;
       updatedAt: string;
@@ -3906,7 +3921,7 @@ export type OnDeleteUserSubscription = {
       taskID: string;
       authorID: string;
       content: string;
-      createdAt?: string | null;
+      createdAt: string;
       isSent?: boolean | null;
       attachmentUri?: Array<string | null> | null;
       updatedAt: string;
@@ -4349,7 +4364,7 @@ export type OnCreateMessageSubscription = {
   taskID: string;
   authorID: string;
   content: string;
-  createdAt?: string | null;
+  createdAt: string;
   isSent?: boolean | null;
   attachmentUri?: Array<string | null> | null;
   author: {
@@ -4444,7 +4459,7 @@ export type OnUpdateMessageSubscription = {
   taskID: string;
   authorID: string;
   content: string;
-  createdAt?: string | null;
+  createdAt: string;
   isSent?: boolean | null;
   attachmentUri?: Array<string | null> | null;
   author: {
@@ -4539,7 +4554,7 @@ export type OnDeleteMessageSubscription = {
   taskID: string;
   authorID: string;
   content: string;
-  createdAt?: string | null;
+  createdAt: string;
   isSent?: boolean | null;
   attachmentUri?: Array<string | null> | null;
   author: {
@@ -7472,9 +7487,9 @@ export class APIService {
     )) as any;
     return <ListRoomsQuery>response.data.listRooms;
   }
-  async GetMessage(id: string): Promise<GetMessageQuery> {
-    const statement = `query GetMessage($id: ID!) {
-        getMessage(id: $id) {
+  async GetMessage(id: string, createdAt: string): Promise<GetMessageQuery> {
+    const statement = `query GetMessage($id: ID!, $createdAt: AWSDateTime!) {
+        getMessage(id: $id, createdAt: $createdAt) {
           __typename
           id
           taskID
@@ -7570,7 +7585,8 @@ export class APIService {
         }
       }`;
     const gqlAPIServiceArguments: any = {
-      id
+      id,
+      createdAt
     };
     const response = (await API.graphql(
       graphqlOperation(statement, gqlAPIServiceArguments)
@@ -7578,12 +7594,15 @@ export class APIService {
     return <GetMessageQuery>response.data.getMessage;
   }
   async ListMessages(
+    id?: string,
+    createdAt?: ModelStringKeyConditionInput,
     filter?: ModelMessageFilterInput,
     limit?: number,
-    nextToken?: string
+    nextToken?: string,
+    sortDirection?: ModelSortDirection
   ): Promise<ListMessagesQuery> {
-    const statement = `query ListMessages($filter: ModelMessageFilterInput, $limit: Int, $nextToken: String) {
-        listMessages(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    const statement = `query ListMessages($id: ID, $createdAt: ModelStringKeyConditionInput, $filter: ModelMessageFilterInput, $limit: Int, $nextToken: String, $sortDirection: ModelSortDirection) {
+        listMessages(id: $id, createdAt: $createdAt, filter: $filter, limit: $limit, nextToken: $nextToken, sortDirection: $sortDirection) {
           __typename
           items {
             __typename
@@ -7628,6 +7647,12 @@ export class APIService {
         }
       }`;
     const gqlAPIServiceArguments: any = {};
+    if (id) {
+      gqlAPIServiceArguments.id = id;
+    }
+    if (createdAt) {
+      gqlAPIServiceArguments.createdAt = createdAt;
+    }
     if (filter) {
       gqlAPIServiceArguments.filter = filter;
     }
@@ -7636,6 +7661,9 @@ export class APIService {
     }
     if (nextToken) {
       gqlAPIServiceArguments.nextToken = nextToken;
+    }
+    if (sortDirection) {
+      gqlAPIServiceArguments.sortDirection = sortDirection;
     }
     const response = (await API.graphql(
       graphqlOperation(statement, gqlAPIServiceArguments)
