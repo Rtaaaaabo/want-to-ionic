@@ -100,6 +100,7 @@ export class TaskDetailLogic {
       isSent: true,
       attachmentUri: [],
     };
+    console.log(inputContent);
     if (arrayAttachmentUri !== undefined) {
       inputContent.attachmentUri = arrayAttachmentUri;
     }

@@ -371,6 +371,17 @@ export type ModelRoomFilterInput = {
   not?: ModelRoomFilterInput | null;
 };
 
+export type ModelStringKeyConditionInput = {
+  eq?: string | null;
+  le?: string | null;
+  lt?: string | null;
+  ge?: string | null;
+  gt?: string | null;
+  between?: Array<string | null> | null;
+  beginsWith?: string | null;
+};
+
+
 export type ModelMessageFilterInput = {
   id?: ModelIDInput | null;
   taskID?: ModelIDInput | null;
@@ -382,6 +393,11 @@ export type ModelMessageFilterInput = {
   or?: Array<ModelMessageFilterInput | null> | null;
   not?: ModelMessageFilterInput | null;
 };
+
+export enum ModelSortDirection {
+  ASC = "ASC",
+  DESC = "DESC"
+}
 
 export type CreateCompanyMutation = {
   __typename: "Company";
@@ -5580,17 +5596,25 @@ export class AmplifyService {
     return <GetMessageQuery>response.data.getMessage;
   }
   async ListMessages(
+    id?: string,
+    createdAt?: ModelStringKeyConditionInput,
     filter?: ModelMessageFilterInput,
     limit?: number,
-    nextToken?: string
+    nextToken?: string,
+    sortDirection?: ModelSortDirection
   ): Promise<ListMessagesQuery> {
-    const statement = `query ListMessages($filter: ModelMessageFilterInput, $limit: Int, $nextToken: String) {
-        listMessages(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    const statement = `query ListMessages($id: ID, $createdAt: ModelStringKeyConditionInput, $filter: ModelMessageFilterInput, $limit: Int, $nextToken: String, $sortDirection: ModelSortDirection) {
+        listMessages(id: $id, createdAt: $createdAt, filter: $filter, limit: $limit, nextToken: $nextToken, sortDirection: $sortDirection) {
           __typename
           items {
             __typename
             id
             taskID
+            authorID
+            content
+            createdAt
+            isSent
+            attachmentUri
             author {
               __typename
               id
@@ -5605,10 +5629,6 @@ export class AmplifyService {
               createdAt
               updatedAt
             }
-            content
-            createdAt
-            isSent
-            attachmentUri
             task {
               __typename
               id
@@ -5629,6 +5649,12 @@ export class AmplifyService {
         }
       }`;
     const gqlAPIServiceArguments: any = {};
+    if (id) {
+      gqlAPIServiceArguments.id = id;
+    }
+    if (createdAt) {
+      gqlAPIServiceArguments.createdAt = createdAt;
+    }
     if (filter) {
       gqlAPIServiceArguments.filter = filter;
     }
@@ -5637,6 +5663,9 @@ export class AmplifyService {
     }
     if (nextToken) {
       gqlAPIServiceArguments.nextToken = nextToken;
+    }
+    if (sortDirection) {
+      gqlAPIServiceArguments.sortDirection = sortDirection;
     }
     const response = (await API.graphql(
       graphqlOperation(statement, gqlAPIServiceArguments)
@@ -5727,8 +5756,9 @@ export class AmplifyService {
     )) as any;
     return <ListUsersQuery>response.data.listUsers;
   }
+
   OnCreateCompanyListener: Observable<
-    OnCreateCompanySubscription
+    SubscriptionResponse<OnCreateCompanySubscription>
   > = API.graphql(
     graphqlOperation(
       `subscription OnCreateCompany {
@@ -5742,22 +5772,25 @@ export class AmplifyService {
             items {
               __typename
               id
-              companyID
               name
+              companyID
               description
               createdAt
               updatedAt
             }
             nextToken
           }
-          members {
+          companyMembers {
             __typename
             items {
               __typename
               id
+              username
               email
               companyID
-              username
+              tel
+              positionName
+              iconImage
               registered
               authority
               createdAt
@@ -5770,7 +5803,7 @@ export class AmplifyService {
         }
       }`
     )
-  ) as Observable<OnCreateCompanySubscription>;
+  ) as Observable<SubscriptionResponse<OnCreateCompanySubscription>>;
 
   OnUpdateCompanyListener: Observable<
     OnUpdateCompanySubscription

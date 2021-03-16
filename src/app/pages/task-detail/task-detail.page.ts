@@ -34,7 +34,6 @@ export class TaskDetailPage implements OnInit {
   constructor(
     private location: Location,
     private logic: TaskDetailLogic,
-    private router: Router,
     private route: ActivatedRoute,
     private scroll: ViewportScroller,
     private modalCtrl: ModalController,
@@ -45,15 +44,15 @@ export class TaskDetailPage implements OnInit {
   ) {
     this.initializeApp()
       .subscribe(() => {
-        this.logic.onCreateMessageListener()
-          .subscribe(({ value }) => {
-            if (!value.hasOwnProperty('errors')) {
-              this.logic.fetchMessagePerTask(this.taskId)
-                .subscribe((result) => {
-                  this.message = result.items
-                })
-            }
-          });
+        // this.logic.onCreateMessageListener()
+        //   .subscribe(({ value }) => {
+        //     if (!value.hasOwnProperty('errors')) {
+        //       this.logic.fetchMessagePerTask(this.taskId)
+        //         .subscribe((result) => {
+        //           this.message = result.items
+        //         })
+        //     }
+        //   });
       });
   }
 
