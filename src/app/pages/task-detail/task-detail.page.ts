@@ -59,19 +59,19 @@ export class TaskDetailPage implements OnInit {
   ngOnInit(): void {
     this.taskId = this.route.snapshot.paramMap.get('id');
     this.segment = this.route.snapshot.paramMap.get('segment');
-    this.logic.fetchCurrentUserInfo().subscribe((res: CurrentUserInfo) => {
-      this.currentUserId = res.sub;
-    });
+    const observerFetchCurrentUserInfo = this.logic.fetchCurrentUserInfo();
     const observerFetchAnyTask = this.logic.fetchAnyTask(this.taskId)
       .pipe(map((data) => this.taskDetail = data))
       .pipe(concatMap(() => this.logic.fetchMemberListOnRoom(this.taskDetail.roomID)));
     const observerFetchMessagePerTask = this.logic.fetchMessagePerTask(this.taskId);
 
     forkJoin({
+      currentUserInfo: observerFetchCurrentUserInfo,
       anyTask: observerFetchAnyTask,
       messagePerTask: observerFetchMessagePerTask,
     }).subscribe((result) => {
       console.log('result: ', result);
+      this.currentUserId = result.currentUserInfo.sub;
       this.roomMembers = result.anyTask.items;
       this.message = result.messagePerTask.items;
     });
