@@ -3,7 +3,7 @@ import { Location, ViewportScroller } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ModalController, ActionSheetController, ToastController, IonContent, Platform, AlertController } from '@ionic/angular';
 import { Plugins, CameraResultType } from '@capacitor/core';
-import { from, Observable } from 'rxjs';
+import { forkJoin, from, Observable } from 'rxjs';
 import { TaskDetailLogic } from './logic/task-detail.logic';
 import { AddTaskModalComponent } from 'src/app/shared/component/modal/add-task-modal/add-task-modal.component';
 import { filter, tap, map, concatMap, toArray, catchError } from 'rxjs/operators';
@@ -62,16 +62,19 @@ export class TaskDetailPage implements OnInit {
     this.logic.fetchCurrentUserInfo().subscribe((res: CurrentUserInfo) => {
       this.currentUserId = res.sub;
     });
-    this.logic.fetchAnyTask(this.taskId)
+    const observerFetchAnyTask = this.logic.fetchAnyTask(this.taskId)
       .pipe(map((data) => this.taskDetail = data))
-      .pipe(concatMap(() => this.logic.fetchMemberListOnRoom(this.taskDetail.roomID)))
-      .subscribe(({ items }) => {
-        this.roomMembers = items;
-      });
-    this.logic.fetchMessagePerTask(this.taskId)
-      .subscribe((data) => {
-        this.message = data.items;
-      });
+      .pipe(concatMap(() => this.logic.fetchMemberListOnRoom(this.taskDetail.roomID)));
+    const observerFetchMessagePerTask = this.logic.fetchMessagePerTask(this.taskId);
+
+    forkJoin({
+      anyTask: observerFetchAnyTask,
+      messagePerTask: observerFetchMessagePerTask,
+    }).subscribe((result) => {
+      console.log('result: ', result);
+      this.roomMembers = result.anyTask.items;
+      this.message = result.messagePerTask.items;
+    });
   }
 
   sendMessage(): void {
