@@ -77,7 +77,11 @@ type Room @model @key(name: "byCompany", fields: ["companyID"]) {
 
 type Message
   @model
-  @key(fields: ["id", "createdAt"])
+  @key(
+    name: "byTaskCreatedAt"
+    fields: ["id", "createdAt"]
+    queryField: "byCreatedAt"
+  )
   @key(name: "byTask", fields: ["taskID"])
   @key(name: "byUser", fields: ["authorID"]) {
   id: ID!
@@ -88,5 +92,5 @@ type Message
   isSent: Boolean
   attachmentUri: [String]
   author: User! @connection(fields: ["authorID"])
-  task: Task! @connection(fields: ["taskID"])
+  # task: Task! @connection(fields: ["taskID"])
 }

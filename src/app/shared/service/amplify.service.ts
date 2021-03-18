@@ -5596,15 +5596,12 @@ export class AmplifyService {
     return <GetMessageQuery>response.data.getMessage;
   }
   async ListMessages(
-    id?: string,
-    createdAt?: ModelStringKeyConditionInput,
     filter?: ModelMessageFilterInput,
     limit?: number,
-    nextToken?: string,
     sortDirection?: ModelSortDirection
   ): Promise<ListMessagesQuery> {
-    const statement = `query ListMessages($id: ID, $createdAt: ModelStringKeyConditionInput, $filter: ModelMessageFilterInput, $limit: Int, $nextToken: String, $sortDirection: ModelSortDirection) {
-        listMessages(id: $id, createdAt: $createdAt, filter: $filter, limit: $limit, nextToken: $nextToken, sortDirection: $sortDirection) {
+    const statement = `query ListMessages($filter: ModelMessageFilterInput, $limit: Int, $sortDirection: ModelSortDirection) {
+        listMessages( filter: $filter, limit: $limit, sortDirection: $sortDirection) {
           __typename
           items {
             __typename
@@ -5649,21 +5646,21 @@ export class AmplifyService {
         }
       }`;
     const gqlAPIServiceArguments: any = {};
-    if (id) {
-      gqlAPIServiceArguments.id = id;
-    }
-    if (createdAt) {
-      gqlAPIServiceArguments.createdAt = createdAt;
-    }
+    // if (id) {
+    //   gqlAPIServiceArguments.id = id;
+    // }
+    // if (createdAt) {
+    //   gqlAPIServiceArguments.createdAt = createdAt;
+    // }
     if (filter) {
       gqlAPIServiceArguments.filter = filter;
     }
     if (limit) {
       gqlAPIServiceArguments.limit = limit;
     }
-    if (nextToken) {
-      gqlAPIServiceArguments.nextToken = nextToken;
-    }
+    // if (nextToken) {
+    //   gqlAPIServiceArguments.nextToken = nextToken;
+    // }
     if (sortDirection) {
       gqlAPIServiceArguments.sortDirection = sortDirection;
     }

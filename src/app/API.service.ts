@@ -153,7 +153,6 @@ export type Message = {
   isSent?: boolean | null;
   attachmentUri?: Array<string | null> | null;
   author?: User;
-  task?: Task;
   updatedAt?: string;
 };
 
@@ -418,6 +417,7 @@ export type ModelMessageConditionInput = {
   taskID?: ModelIDInput | null;
   authorID?: ModelIDInput | null;
   content?: ModelStringInput | null;
+  createdAt?: ModelStringInput | null;
   isSent?: ModelBooleanInput | null;
   attachmentUri?: ModelStringInput | null;
   and?: Array<ModelMessageConditionInput | null> | null;
@@ -430,14 +430,13 @@ export type UpdateMessageInput = {
   taskID?: string | null;
   authorID?: string | null;
   content?: string | null;
-  createdAt: string;
+  createdAt?: string | null;
   isSent?: boolean | null;
   attachmentUri?: Array<string | null> | null;
 };
 
 export type DeleteMessageInput = {
-  id: string;
-  createdAt: string;
+  id?: string | null;
 };
 
 export type ModelCompanyFilterInput = {
@@ -514,16 +513,6 @@ export type ModelRoomFilterInput = {
   not?: ModelRoomFilterInput | null;
 };
 
-export type ModelStringKeyConditionInput = {
-  eq?: string | null;
-  le?: string | null;
-  lt?: string | null;
-  ge?: string | null;
-  gt?: string | null;
-  between?: Array<string | null> | null;
-  beginsWith?: string | null;
-};
-
 export type ModelMessageFilterInput = {
   id?: ModelIDInput | null;
   taskID?: ModelIDInput | null;
@@ -535,6 +524,16 @@ export type ModelMessageFilterInput = {
   and?: Array<ModelMessageFilterInput | null> | null;
   or?: Array<ModelMessageFilterInput | null> | null;
   not?: ModelMessageFilterInput | null;
+};
+
+export type ModelStringKeyConditionInput = {
+  eq?: string | null;
+  le?: string | null;
+  lt?: string | null;
+  ge?: string | null;
+  gt?: string | null;
+  between?: Array<string | null> | null;
+  beginsWith?: string | null;
 };
 
 export enum ModelSortDirection {
@@ -1948,51 +1947,6 @@ export type CreateMessageMutation = {
     createdAt: string;
     updatedAt: string;
   };
-  task: {
-    __typename: "Task";
-    id: string;
-    authorID: string;
-    roomID: string;
-    chargePersonID: string;
-    title: string;
-    room: {
-      __typename: "Room";
-      id: string;
-      name: string;
-      companyID: string;
-      description: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    description?: string | null;
-    scheduleDate?: string | null;
-    priority?: number | null;
-    status?: number | null;
-    createdAt?: string | null;
-    chargePerson: {
-      __typename: "User";
-      id: string;
-      username: string;
-      email: string;
-      companyID: string;
-      tel?: string | null;
-      positionName?: string | null;
-      iconImage?: string | null;
-      registered?: boolean | null;
-      authority?: string | null;
-      createdAt: string;
-      updatedAt: string;
-    };
-    messages?: {
-      __typename: "ModelMessageConnection";
-      nextToken?: string | null;
-    } | null;
-    users?: {
-      __typename: "ModelTaskGroupConnection";
-      nextToken?: string | null;
-    } | null;
-    updatedAt: string;
-  };
   updatedAt: string;
 };
 
@@ -2043,51 +1997,6 @@ export type UpdateMessageMutation = {
     createdAt: string;
     updatedAt: string;
   };
-  task: {
-    __typename: "Task";
-    id: string;
-    authorID: string;
-    roomID: string;
-    chargePersonID: string;
-    title: string;
-    room: {
-      __typename: "Room";
-      id: string;
-      name: string;
-      companyID: string;
-      description: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    description?: string | null;
-    scheduleDate?: string | null;
-    priority?: number | null;
-    status?: number | null;
-    createdAt?: string | null;
-    chargePerson: {
-      __typename: "User";
-      id: string;
-      username: string;
-      email: string;
-      companyID: string;
-      tel?: string | null;
-      positionName?: string | null;
-      iconImage?: string | null;
-      registered?: boolean | null;
-      authority?: string | null;
-      createdAt: string;
-      updatedAt: string;
-    };
-    messages?: {
-      __typename: "ModelMessageConnection";
-      nextToken?: string | null;
-    } | null;
-    users?: {
-      __typename: "ModelTaskGroupConnection";
-      nextToken?: string | null;
-    } | null;
-    updatedAt: string;
-  };
   updatedAt: string;
 };
 
@@ -2136,51 +2045,6 @@ export type DeleteMessageMutation = {
       nextToken?: string | null;
     } | null;
     createdAt: string;
-    updatedAt: string;
-  };
-  task: {
-    __typename: "Task";
-    id: string;
-    authorID: string;
-    roomID: string;
-    chargePersonID: string;
-    title: string;
-    room: {
-      __typename: "Room";
-      id: string;
-      name: string;
-      companyID: string;
-      description: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    description?: string | null;
-    scheduleDate?: string | null;
-    priority?: number | null;
-    status?: number | null;
-    createdAt?: string | null;
-    chargePerson: {
-      __typename: "User";
-      id: string;
-      username: string;
-      email: string;
-      companyID: string;
-      tel?: string | null;
-      positionName?: string | null;
-      iconImage?: string | null;
-      registered?: boolean | null;
-      authority?: string | null;
-      createdAt: string;
-      updatedAt: string;
-    };
-    messages?: {
-      __typename: "ModelMessageConnection";
-      nextToken?: string | null;
-    } | null;
-    users?: {
-      __typename: "ModelTaskGroupConnection";
-      nextToken?: string | null;
-    } | null;
     updatedAt: string;
   };
   updatedAt: string;
@@ -2907,51 +2771,6 @@ export type GetMessageQuery = {
     createdAt: string;
     updatedAt: string;
   };
-  task: {
-    __typename: "Task";
-    id: string;
-    authorID: string;
-    roomID: string;
-    chargePersonID: string;
-    title: string;
-    room: {
-      __typename: "Room";
-      id: string;
-      name: string;
-      companyID: string;
-      description: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    description?: string | null;
-    scheduleDate?: string | null;
-    priority?: number | null;
-    status?: number | null;
-    createdAt?: string | null;
-    chargePerson: {
-      __typename: "User";
-      id: string;
-      username: string;
-      email: string;
-      companyID: string;
-      tel?: string | null;
-      positionName?: string | null;
-      iconImage?: string | null;
-      registered?: boolean | null;
-      authority?: string | null;
-      createdAt: string;
-      updatedAt: string;
-    };
-    messages?: {
-      __typename: "ModelMessageConnection";
-      nextToken?: string | null;
-    } | null;
-    users?: {
-      __typename: "ModelTaskGroupConnection";
-      nextToken?: string | null;
-    } | null;
-    updatedAt: string;
-  };
   updatedAt: string;
 };
 
@@ -2980,18 +2799,34 @@ export type ListMessagesQuery = {
       createdAt: string;
       updatedAt: string;
     };
-    task: {
-      __typename: "Task";
+    updatedAt: string;
+  } | null> | null;
+  nextToken?: string | null;
+};
+
+export type ByCreatedAtQuery = {
+  __typename: "ModelMessageConnection";
+  items?: Array<{
+    __typename: "Message";
+    id: string;
+    taskID: string;
+    authorID: string;
+    content: string;
+    createdAt: string;
+    isSent?: boolean | null;
+    attachmentUri?: Array<string | null> | null;
+    author: {
+      __typename: "User";
       id: string;
-      authorID: string;
-      roomID: string;
-      chargePersonID: string;
-      title: string;
-      description?: string | null;
-      scheduleDate?: string | null;
-      priority?: number | null;
-      status?: number | null;
-      createdAt?: string | null;
+      username: string;
+      email: string;
+      companyID: string;
+      tel?: string | null;
+      positionName?: string | null;
+      iconImage?: string | null;
+      registered?: boolean | null;
+      authority?: string | null;
+      createdAt: string;
       updatedAt: string;
     };
     updatedAt: string;
@@ -4405,51 +4240,6 @@ export type OnCreateMessageSubscription = {
     createdAt: string;
     updatedAt: string;
   };
-  task: {
-    __typename: "Task";
-    id: string;
-    authorID: string;
-    roomID: string;
-    chargePersonID: string;
-    title: string;
-    room: {
-      __typename: "Room";
-      id: string;
-      name: string;
-      companyID: string;
-      description: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    description?: string | null;
-    scheduleDate?: string | null;
-    priority?: number | null;
-    status?: number | null;
-    createdAt?: string | null;
-    chargePerson: {
-      __typename: "User";
-      id: string;
-      username: string;
-      email: string;
-      companyID: string;
-      tel?: string | null;
-      positionName?: string | null;
-      iconImage?: string | null;
-      registered?: boolean | null;
-      authority?: string | null;
-      createdAt: string;
-      updatedAt: string;
-    };
-    messages?: {
-      __typename: "ModelMessageConnection";
-      nextToken?: string | null;
-    } | null;
-    users?: {
-      __typename: "ModelTaskGroupConnection";
-      nextToken?: string | null;
-    } | null;
-    updatedAt: string;
-  };
   updatedAt: string;
 };
 
@@ -4500,51 +4290,6 @@ export type OnUpdateMessageSubscription = {
     createdAt: string;
     updatedAt: string;
   };
-  task: {
-    __typename: "Task";
-    id: string;
-    authorID: string;
-    roomID: string;
-    chargePersonID: string;
-    title: string;
-    room: {
-      __typename: "Room";
-      id: string;
-      name: string;
-      companyID: string;
-      description: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    description?: string | null;
-    scheduleDate?: string | null;
-    priority?: number | null;
-    status?: number | null;
-    createdAt?: string | null;
-    chargePerson: {
-      __typename: "User";
-      id: string;
-      username: string;
-      email: string;
-      companyID: string;
-      tel?: string | null;
-      positionName?: string | null;
-      iconImage?: string | null;
-      registered?: boolean | null;
-      authority?: string | null;
-      createdAt: string;
-      updatedAt: string;
-    };
-    messages?: {
-      __typename: "ModelMessageConnection";
-      nextToken?: string | null;
-    } | null;
-    users?: {
-      __typename: "ModelTaskGroupConnection";
-      nextToken?: string | null;
-    } | null;
-    updatedAt: string;
-  };
   updatedAt: string;
 };
 
@@ -4593,51 +4338,6 @@ export type OnDeleteMessageSubscription = {
       nextToken?: string | null;
     } | null;
     createdAt: string;
-    updatedAt: string;
-  };
-  task: {
-    __typename: "Task";
-    id: string;
-    authorID: string;
-    roomID: string;
-    chargePersonID: string;
-    title: string;
-    room: {
-      __typename: "Room";
-      id: string;
-      name: string;
-      companyID: string;
-      description: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    description?: string | null;
-    scheduleDate?: string | null;
-    priority?: number | null;
-    status?: number | null;
-    createdAt?: string | null;
-    chargePerson: {
-      __typename: "User";
-      id: string;
-      username: string;
-      email: string;
-      companyID: string;
-      tel?: string | null;
-      positionName?: string | null;
-      iconImage?: string | null;
-      registered?: boolean | null;
-      authority?: string | null;
-      createdAt: string;
-      updatedAt: string;
-    };
-    messages?: {
-      __typename: "ModelMessageConnection";
-      nextToken?: string | null;
-    } | null;
-    users?: {
-      __typename: "ModelTaskGroupConnection";
-      nextToken?: string | null;
-    } | null;
     updatedAt: string;
   };
   updatedAt: string;
@@ -6346,51 +6046,6 @@ export class APIService {
             createdAt
             updatedAt
           }
-          task {
-            __typename
-            id
-            authorID
-            roomID
-            chargePersonID
-            title
-            room {
-              __typename
-              id
-              name
-              companyID
-              description
-              createdAt
-              updatedAt
-            }
-            description
-            scheduleDate
-            priority
-            status
-            createdAt
-            chargePerson {
-              __typename
-              id
-              username
-              email
-              companyID
-              tel
-              positionName
-              iconImage
-              registered
-              authority
-              createdAt
-              updatedAt
-            }
-            messages {
-              __typename
-              nextToken
-            }
-            users {
-              __typename
-              nextToken
-            }
-            updatedAt
-          }
           updatedAt
         }
       }`;
@@ -6457,51 +6112,6 @@ export class APIService {
             createdAt
             updatedAt
           }
-          task {
-            __typename
-            id
-            authorID
-            roomID
-            chargePersonID
-            title
-            room {
-              __typename
-              id
-              name
-              companyID
-              description
-              createdAt
-              updatedAt
-            }
-            description
-            scheduleDate
-            priority
-            status
-            createdAt
-            chargePerson {
-              __typename
-              id
-              username
-              email
-              companyID
-              tel
-              positionName
-              iconImage
-              registered
-              authority
-              createdAt
-              updatedAt
-            }
-            messages {
-              __typename
-              nextToken
-            }
-            users {
-              __typename
-              nextToken
-            }
-            updatedAt
-          }
           updatedAt
         }
       }`;
@@ -6566,51 +6176,6 @@ export class APIService {
               nextToken
             }
             createdAt
-            updatedAt
-          }
-          task {
-            __typename
-            id
-            authorID
-            roomID
-            chargePersonID
-            title
-            room {
-              __typename
-              id
-              name
-              companyID
-              description
-              createdAt
-              updatedAt
-            }
-            description
-            scheduleDate
-            priority
-            status
-            createdAt
-            chargePerson {
-              __typename
-              id
-              username
-              email
-              companyID
-              tel
-              positionName
-              iconImage
-              registered
-              authority
-              createdAt
-              updatedAt
-            }
-            messages {
-              __typename
-              nextToken
-            }
-            users {
-              __typename
-              nextToken
-            }
             updatedAt
           }
           updatedAt
@@ -7487,9 +7052,9 @@ export class APIService {
     )) as any;
     return <ListRoomsQuery>response.data.listRooms;
   }
-  async GetMessage(id: string, createdAt: string): Promise<GetMessageQuery> {
-    const statement = `query GetMessage($id: ID!, $createdAt: AWSDateTime!) {
-        getMessage(id: $id, createdAt: $createdAt) {
+  async GetMessage(id: string): Promise<GetMessageQuery> {
+    const statement = `query GetMessage($id: ID!) {
+        getMessage(id: $id) {
           __typename
           id
           taskID
@@ -7536,57 +7101,11 @@ export class APIService {
             createdAt
             updatedAt
           }
-          task {
-            __typename
-            id
-            authorID
-            roomID
-            chargePersonID
-            title
-            room {
-              __typename
-              id
-              name
-              companyID
-              description
-              createdAt
-              updatedAt
-            }
-            description
-            scheduleDate
-            priority
-            status
-            createdAt
-            chargePerson {
-              __typename
-              id
-              username
-              email
-              companyID
-              tel
-              positionName
-              iconImage
-              registered
-              authority
-              createdAt
-              updatedAt
-            }
-            messages {
-              __typename
-              nextToken
-            }
-            users {
-              __typename
-              nextToken
-            }
-            updatedAt
-          }
           updatedAt
         }
       }`;
     const gqlAPIServiceArguments: any = {
-      id,
-      createdAt
+      id
     };
     const response = (await API.graphql(
       graphqlOperation(statement, gqlAPIServiceArguments)
@@ -7594,15 +7113,12 @@ export class APIService {
     return <GetMessageQuery>response.data.getMessage;
   }
   async ListMessages(
-    id?: string,
-    createdAt?: ModelStringKeyConditionInput,
     filter?: ModelMessageFilterInput,
     limit?: number,
-    nextToken?: string,
-    sortDirection?: ModelSortDirection
+    nextToken?: string
   ): Promise<ListMessagesQuery> {
-    const statement = `query ListMessages($id: ID, $createdAt: ModelStringKeyConditionInput, $filter: ModelMessageFilterInput, $limit: Int, $nextToken: String, $sortDirection: ModelSortDirection) {
-        listMessages(id: $id, createdAt: $createdAt, filter: $filter, limit: $limit, nextToken: $nextToken, sortDirection: $sortDirection) {
+    const statement = `query ListMessages($filter: ModelMessageFilterInput, $limit: Int, $nextToken: String) {
+        listMessages(filter: $filter, limit: $limit, nextToken: $nextToken) {
           __typename
           items {
             __typename
@@ -7627,17 +7143,57 @@ export class APIService {
               createdAt
               updatedAt
             }
-            task {
+            updatedAt
+          }
+          nextToken
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {};
+    if (filter) {
+      gqlAPIServiceArguments.filter = filter;
+    }
+    if (limit) {
+      gqlAPIServiceArguments.limit = limit;
+    }
+    if (nextToken) {
+      gqlAPIServiceArguments.nextToken = nextToken;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <ListMessagesQuery>response.data.listMessages;
+  }
+  async ByCreatedAt(
+    id?: string,
+    createdAt?: ModelStringKeyConditionInput,
+    sortDirection?: ModelSortDirection,
+    filter?: ModelMessageFilterInput,
+    limit?: number,
+    nextToken?: string
+  ): Promise<ByCreatedAtQuery> {
+    const statement = `query ByCreatedAt($id: ID, $createdAt: ModelStringKeyConditionInput, $sortDirection: ModelSortDirection, $filter: ModelMessageFilterInput, $limit: Int, $nextToken: String) {
+        byCreatedAt(id: $id, createdAt: $createdAt, sortDirection: $sortDirection, filter: $filter, limit: $limit, nextToken: $nextToken) {
+          __typename
+          items {
+            __typename
+            id
+            taskID
+            authorID
+            content
+            createdAt
+            isSent
+            attachmentUri
+            author {
               __typename
               id
-              authorID
-              roomID
-              chargePersonID
-              title
-              description
-              scheduleDate
-              priority
-              status
+              username
+              email
+              companyID
+              tel
+              positionName
+              iconImage
+              registered
+              authority
               createdAt
               updatedAt
             }
@@ -7653,6 +7209,9 @@ export class APIService {
     if (createdAt) {
       gqlAPIServiceArguments.createdAt = createdAt;
     }
+    if (sortDirection) {
+      gqlAPIServiceArguments.sortDirection = sortDirection;
+    }
     if (filter) {
       gqlAPIServiceArguments.filter = filter;
     }
@@ -7662,13 +7221,10 @@ export class APIService {
     if (nextToken) {
       gqlAPIServiceArguments.nextToken = nextToken;
     }
-    if (sortDirection) {
-      gqlAPIServiceArguments.sortDirection = sortDirection;
-    }
     const response = (await API.graphql(
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
-    return <ListMessagesQuery>response.data.listMessages;
+    return <ByCreatedAtQuery>response.data.byCreatedAt;
   }
   OnCreateCompanyListener: Observable<
     SubscriptionResponse<OnCreateCompanySubscription>
@@ -9225,51 +8781,6 @@ export class APIService {
             createdAt
             updatedAt
           }
-          task {
-            __typename
-            id
-            authorID
-            roomID
-            chargePersonID
-            title
-            room {
-              __typename
-              id
-              name
-              companyID
-              description
-              createdAt
-              updatedAt
-            }
-            description
-            scheduleDate
-            priority
-            status
-            createdAt
-            chargePerson {
-              __typename
-              id
-              username
-              email
-              companyID
-              tel
-              positionName
-              iconImage
-              registered
-              authority
-              createdAt
-              updatedAt
-            }
-            messages {
-              __typename
-              nextToken
-            }
-            users {
-              __typename
-              nextToken
-            }
-            updatedAt
-          }
           updatedAt
         }
       }`
@@ -9328,51 +8839,6 @@ export class APIService {
             createdAt
             updatedAt
           }
-          task {
-            __typename
-            id
-            authorID
-            roomID
-            chargePersonID
-            title
-            room {
-              __typename
-              id
-              name
-              companyID
-              description
-              createdAt
-              updatedAt
-            }
-            description
-            scheduleDate
-            priority
-            status
-            createdAt
-            chargePerson {
-              __typename
-              id
-              username
-              email
-              companyID
-              tel
-              positionName
-              iconImage
-              registered
-              authority
-              createdAt
-              updatedAt
-            }
-            messages {
-              __typename
-              nextToken
-            }
-            users {
-              __typename
-              nextToken
-            }
-            updatedAt
-          }
           updatedAt
         }
       }`
@@ -9429,51 +8895,6 @@ export class APIService {
               nextToken
             }
             createdAt
-            updatedAt
-          }
-          task {
-            __typename
-            id
-            authorID
-            roomID
-            chargePersonID
-            title
-            room {
-              __typename
-              id
-              name
-              companyID
-              description
-              createdAt
-              updatedAt
-            }
-            description
-            scheduleDate
-            priority
-            status
-            createdAt
-            chargePerson {
-              __typename
-              id
-              username
-              email
-              companyID
-              tel
-              positionName
-              iconImage
-              registered
-              authority
-              createdAt
-              updatedAt
-            }
-            messages {
-              __typename
-              nextToken
-            }
-            users {
-              __typename
-              nextToken
-            }
             updatedAt
           }
           updatedAt

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AmplifyService, GetTaskQuery, UpdateTaskMutation } from '../../../shared/service/amplify.service';
+import { AmplifyService, GetTaskQuery, UpdateTaskMutation, ModelSortDirection } from '../../../shared/service/amplify.service';
 import { Observable, from } from 'rxjs';
 
 @Injectable({
@@ -16,7 +16,7 @@ export class TaskDetailService {
   }
 
   fetchMessagePerTask(filterInfo): Observable<any> {
-    return from(this.amplifyService.ListMessages(filterInfo));
+    return from(this.amplifyService.ListMessages(filterInfo, 100, ModelSortDirection.ASC));
   }
 
   updateTaskItem(inputContent): Observable<UpdateTaskMutation> {

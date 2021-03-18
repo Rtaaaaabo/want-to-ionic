@@ -616,8 +616,8 @@ query ListRooms(
     nextToken
   }
 }
-query GetMessage($id: ID!, $createdAt: AWSDateTime!) {
-  getMessage(id: $id, createdAt: $createdAt) {
+query GetMessage($id: ID!) {
+  getMessage(id: $id) {
     id
     taskID
     authorID
@@ -657,65 +657,15 @@ query GetMessage($id: ID!, $createdAt: AWSDateTime!) {
       createdAt
       updatedAt
     }
-    task {
-      id
-      authorID
-      roomID
-      chargePersonID
-      title
-      room {
-        id
-        name
-        companyID
-        description
-        createdAt
-        updatedAt
-      }
-      description
-      scheduleDate
-      priority
-      status
-      createdAt
-      chargePerson {
-        id
-        username
-        email
-        companyID
-        tel
-        positionName
-        iconImage
-        registered
-        authority
-        createdAt
-        updatedAt
-      }
-      messages {
-        nextToken
-      }
-      users {
-        nextToken
-      }
-      updatedAt
-    }
     updatedAt
   }
 }
 query ListMessages(
-  $id: ID
-  $createdAt: ModelStringKeyConditionInput
   $filter: ModelMessageFilterInput
   $limit: Int
   $nextToken: String
-  $sortDirection: ModelSortDirection
 ) {
-  listMessages(
-    id: $id
-    createdAt: $createdAt
-    filter: $filter
-    limit: $limit
-    nextToken: $nextToken
-    sortDirection: $sortDirection
-  ) {
+  listMessages(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       id
       taskID
@@ -737,16 +687,45 @@ query ListMessages(
         createdAt
         updatedAt
       }
-      task {
+      updatedAt
+    }
+    nextToken
+  }
+}
+query ByCreatedAt(
+  $id: ID
+  $createdAt: ModelStringKeyConditionInput
+  $sortDirection: ModelSortDirection
+  $filter: ModelMessageFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  byCreatedAt(
+    id: $id
+    createdAt: $createdAt
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      taskID
+      authorID
+      content
+      createdAt
+      isSent
+      attachmentUri
+      author {
         id
-        authorID
-        roomID
-        chargePersonID
-        title
-        description
-        scheduleDate
-        priority
-        status
+        username
+        email
+        companyID
+        tel
+        positionName
+        iconImage
+        registered
+        authority
         createdAt
         updatedAt
       }

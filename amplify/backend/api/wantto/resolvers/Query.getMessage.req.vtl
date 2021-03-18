@@ -1,9 +1,3 @@
-## [Start] Set the primary @key. **
-#set( $modelObjectKey = {
-  "id": $util.dynamodb.toDynamoDB($ctx.args.id),
-  "createdAt": $util.dynamodb.toDynamoDB($ctx.args.createdAt)
-} )
-## [End] Set the primary @key. **
 {
   "version": "2018-05-29",
   "operation": "GetItem",

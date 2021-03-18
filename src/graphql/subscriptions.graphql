@@ -1228,46 +1228,6 @@ subscription OnCreateMessage {
       createdAt
       updatedAt
     }
-    task {
-      id
-      authorID
-      roomID
-      chargePersonID
-      title
-      room {
-        id
-        name
-        companyID
-        description
-        createdAt
-        updatedAt
-      }
-      description
-      scheduleDate
-      priority
-      status
-      createdAt
-      chargePerson {
-        id
-        username
-        email
-        companyID
-        tel
-        positionName
-        iconImage
-        registered
-        authority
-        createdAt
-        updatedAt
-      }
-      messages {
-        nextToken
-      }
-      users {
-        nextToken
-      }
-      updatedAt
-    }
     updatedAt
   }
 }
@@ -1312,46 +1272,6 @@ subscription OnUpdateMessage {
       createdAt
       updatedAt
     }
-    task {
-      id
-      authorID
-      roomID
-      chargePersonID
-      title
-      room {
-        id
-        name
-        companyID
-        description
-        createdAt
-        updatedAt
-      }
-      description
-      scheduleDate
-      priority
-      status
-      createdAt
-      chargePerson {
-        id
-        username
-        email
-        companyID
-        tel
-        positionName
-        iconImage
-        registered
-        authority
-        createdAt
-        updatedAt
-      }
-      messages {
-        nextToken
-      }
-      users {
-        nextToken
-      }
-      updatedAt
-    }
     updatedAt
   }
 }
@@ -1394,46 +1314,6 @@ subscription OnDeleteMessage {
         nextToken
       }
       createdAt
-      updatedAt
-    }
-    task {
-      id
-      authorID
-      roomID
-      chargePersonID
-      title
-      room {
-        id
-        name
-        companyID
-        description
-        createdAt
-        updatedAt
-      }
-      description
-      scheduleDate
-      priority
-      status
-      createdAt
-      chargePerson {
-        id
-        username
-        email
-        companyID
-        tel
-        positionName
-        iconImage
-        registered
-        authority
-        createdAt
-        updatedAt
-      }
-      messages {
-        nextToken
-      }
-      users {
-        nextToken
-      }
       updatedAt
     }
     updatedAt
