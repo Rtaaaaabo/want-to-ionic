@@ -1,6 +1,11 @@
 
 
-
+## [Start] Set the primary @key. **
+#set( $modelObjectKey = {
+  "id": $util.dynamodb.toDynamoDB($ctx.args.input.id),
+  "createdAt": $util.dynamodb.toDynamoDB($ctx.args.input.createdAt)
+} )
+## [End] Set the primary @key. **
 #if( $authCondition )
   #set( $condition = $authCondition )
   #if( $modelObjectKey )

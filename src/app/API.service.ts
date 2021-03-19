@@ -417,7 +417,6 @@ export type ModelMessageConditionInput = {
   taskID?: ModelIDInput | null;
   authorID?: ModelIDInput | null;
   content?: ModelStringInput | null;
-  createdAt?: ModelStringInput | null;
   isSent?: ModelBooleanInput | null;
   attachmentUri?: ModelStringInput | null;
   and?: Array<ModelMessageConditionInput | null> | null;
@@ -430,13 +429,14 @@ export type UpdateMessageInput = {
   taskID?: string | null;
   authorID?: string | null;
   content?: string | null;
-  createdAt?: string | null;
+  createdAt: string;
   isSent?: boolean | null;
   attachmentUri?: Array<string | null> | null;
 };
 
 export type DeleteMessageInput = {
-  id?: string | null;
+  id: string;
+  createdAt: string;
 };
 
 export type ModelCompanyFilterInput = {
@@ -513,6 +513,16 @@ export type ModelRoomFilterInput = {
   not?: ModelRoomFilterInput | null;
 };
 
+export type ModelStringKeyConditionInput = {
+  eq?: string | null;
+  le?: string | null;
+  lt?: string | null;
+  ge?: string | null;
+  gt?: string | null;
+  between?: Array<string | null> | null;
+  beginsWith?: string | null;
+};
+
 export type ModelMessageFilterInput = {
   id?: ModelIDInput | null;
   taskID?: ModelIDInput | null;
@@ -524,16 +534,6 @@ export type ModelMessageFilterInput = {
   and?: Array<ModelMessageFilterInput | null> | null;
   or?: Array<ModelMessageFilterInput | null> | null;
   not?: ModelMessageFilterInput | null;
-};
-
-export type ModelStringKeyConditionInput = {
-  eq?: string | null;
-  le?: string | null;
-  lt?: string | null;
-  ge?: string | null;
-  gt?: string | null;
-  between?: Array<string | null> | null;
-  beginsWith?: string | null;
 };
 
 export enum ModelSortDirection {
@@ -2775,36 +2775,6 @@ export type GetMessageQuery = {
 };
 
 export type ListMessagesQuery = {
-  __typename: "ModelMessageConnection";
-  items?: Array<{
-    __typename: "Message";
-    id: string;
-    taskID: string;
-    authorID: string;
-    content: string;
-    createdAt: string;
-    isSent?: boolean | null;
-    attachmentUri?: Array<string | null> | null;
-    author: {
-      __typename: "User";
-      id: string;
-      username: string;
-      email: string;
-      companyID: string;
-      tel?: string | null;
-      positionName?: string | null;
-      iconImage?: string | null;
-      registered?: boolean | null;
-      authority?: string | null;
-      createdAt: string;
-      updatedAt: string;
-    };
-    updatedAt: string;
-  } | null> | null;
-  nextToken?: string | null;
-};
-
-export type ByCreatedAtQuery = {
   __typename: "ModelMessageConnection";
   items?: Array<{
     __typename: "Message";
@@ -7052,9 +7022,9 @@ export class APIService {
     )) as any;
     return <ListRoomsQuery>response.data.listRooms;
   }
-  async GetMessage(id: string): Promise<GetMessageQuery> {
-    const statement = `query GetMessage($id: ID!) {
-        getMessage(id: $id) {
+  async GetMessage(id: string, createdAt: string): Promise<GetMessageQuery> {
+    const statement = `query GetMessage($id: ID!, $createdAt: AWSDateTime!) {
+        getMessage(id: $id, createdAt: $createdAt) {
           __typename
           id
           taskID
@@ -7105,7 +7075,8 @@ export class APIService {
         }
       }`;
     const gqlAPIServiceArguments: any = {
-      id
+      id,
+      createdAt
     };
     const response = (await API.graphql(
       graphqlOperation(statement, gqlAPIServiceArguments)
@@ -7113,66 +7084,15 @@ export class APIService {
     return <GetMessageQuery>response.data.getMessage;
   }
   async ListMessages(
-    filter?: ModelMessageFilterInput,
-    limit?: number,
-    nextToken?: string
-  ): Promise<ListMessagesQuery> {
-    const statement = `query ListMessages($filter: ModelMessageFilterInput, $limit: Int, $nextToken: String) {
-        listMessages(filter: $filter, limit: $limit, nextToken: $nextToken) {
-          __typename
-          items {
-            __typename
-            id
-            taskID
-            authorID
-            content
-            createdAt
-            isSent
-            attachmentUri
-            author {
-              __typename
-              id
-              username
-              email
-              companyID
-              tel
-              positionName
-              iconImage
-              registered
-              authority
-              createdAt
-              updatedAt
-            }
-            updatedAt
-          }
-          nextToken
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {};
-    if (filter) {
-      gqlAPIServiceArguments.filter = filter;
-    }
-    if (limit) {
-      gqlAPIServiceArguments.limit = limit;
-    }
-    if (nextToken) {
-      gqlAPIServiceArguments.nextToken = nextToken;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <ListMessagesQuery>response.data.listMessages;
-  }
-  async ByCreatedAt(
     id?: string,
     createdAt?: ModelStringKeyConditionInput,
-    sortDirection?: ModelSortDirection,
     filter?: ModelMessageFilterInput,
     limit?: number,
-    nextToken?: string
-  ): Promise<ByCreatedAtQuery> {
-    const statement = `query ByCreatedAt($id: ID, $createdAt: ModelStringKeyConditionInput, $sortDirection: ModelSortDirection, $filter: ModelMessageFilterInput, $limit: Int, $nextToken: String) {
-        byCreatedAt(id: $id, createdAt: $createdAt, sortDirection: $sortDirection, filter: $filter, limit: $limit, nextToken: $nextToken) {
+    nextToken?: string,
+    sortDirection?: ModelSortDirection
+  ): Promise<ListMessagesQuery> {
+    const statement = `query ListMessages($id: ID, $createdAt: ModelStringKeyConditionInput, $filter: ModelMessageFilterInput, $limit: Int, $nextToken: String, $sortDirection: ModelSortDirection) {
+        listMessages(id: $id, createdAt: $createdAt, filter: $filter, limit: $limit, nextToken: $nextToken, sortDirection: $sortDirection) {
           __typename
           items {
             __typename
@@ -7209,9 +7129,6 @@ export class APIService {
     if (createdAt) {
       gqlAPIServiceArguments.createdAt = createdAt;
     }
-    if (sortDirection) {
-      gqlAPIServiceArguments.sortDirection = sortDirection;
-    }
     if (filter) {
       gqlAPIServiceArguments.filter = filter;
     }
@@ -7221,10 +7138,13 @@ export class APIService {
     if (nextToken) {
       gqlAPIServiceArguments.nextToken = nextToken;
     }
+    if (sortDirection) {
+      gqlAPIServiceArguments.sortDirection = sortDirection;
+    }
     const response = (await API.graphql(
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
-    return <ByCreatedAtQuery>response.data.byCreatedAt;
+    return <ListMessagesQuery>response.data.listMessages;
   }
   OnCreateCompanyListener: Observable<
     SubscriptionResponse<OnCreateCompanySubscription>

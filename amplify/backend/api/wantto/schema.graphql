@@ -78,9 +78,9 @@ type Room @model @key(name: "byCompany", fields: ["companyID"]) {
 type Message
   @model
   @key(
-    name: "byTaskCreatedAt"
+    # name: "byTaskCreatedAt"
     fields: ["id", "createdAt"]
-    queryField: "byCreatedAt"
+    # queryField: "byCreatedAt"
   )
   @key(name: "byTask", fields: ["taskID"])
   @key(name: "byUser", fields: ["authorID"]) {
