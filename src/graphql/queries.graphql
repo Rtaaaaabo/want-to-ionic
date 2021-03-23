@@ -616,8 +616,8 @@ query ListRooms(
     nextToken
   }
 }
-query GetMessage($id: ID!, $createdAt: AWSDateTime!) {
-  getMessage(id: $id, createdAt: $createdAt) {
+query GetMessage($id: ID!) {
+  getMessage(id: $id) {
     id
     taskID
     authorID
@@ -661,21 +661,11 @@ query GetMessage($id: ID!, $createdAt: AWSDateTime!) {
   }
 }
 query ListMessages(
-  $id: ID
-  $createdAt: ModelStringKeyConditionInput
   $filter: ModelMessageFilterInput
   $limit: Int
   $nextToken: String
-  $sortDirection: ModelSortDirection
 ) {
-  listMessages(
-    id: $id
-    createdAt: $createdAt
-    filter: $filter
-    limit: $limit
-    nextToken: $nextToken
-    sortDirection: $sortDirection
-  ) {
+  listMessages(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       id
       taskID

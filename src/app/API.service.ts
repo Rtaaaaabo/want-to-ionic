@@ -417,6 +417,7 @@ export type ModelMessageConditionInput = {
   taskID?: ModelIDInput | null;
   authorID?: ModelIDInput | null;
   content?: ModelStringInput | null;
+  createdAt?: ModelStringInput | null;
   isSent?: ModelBooleanInput | null;
   attachmentUri?: ModelStringInput | null;
   and?: Array<ModelMessageConditionInput | null> | null;
@@ -429,14 +430,13 @@ export type UpdateMessageInput = {
   taskID?: string | null;
   authorID?: string | null;
   content?: string | null;
-  createdAt: string;
+  createdAt?: string | null;
   isSent?: boolean | null;
   attachmentUri?: Array<string | null> | null;
 };
 
 export type DeleteMessageInput = {
-  id: string;
-  createdAt: string;
+  id?: string | null;
 };
 
 export type ModelCompanyFilterInput = {
@@ -513,16 +513,6 @@ export type ModelRoomFilterInput = {
   not?: ModelRoomFilterInput | null;
 };
 
-export type ModelStringKeyConditionInput = {
-  eq?: string | null;
-  le?: string | null;
-  lt?: string | null;
-  ge?: string | null;
-  gt?: string | null;
-  between?: Array<string | null> | null;
-  beginsWith?: string | null;
-};
-
 export type ModelMessageFilterInput = {
   id?: ModelIDInput | null;
   taskID?: ModelIDInput | null;
@@ -535,11 +525,6 @@ export type ModelMessageFilterInput = {
   or?: Array<ModelMessageFilterInput | null> | null;
   not?: ModelMessageFilterInput | null;
 };
-
-export enum ModelSortDirection {
-  ASC = "ASC",
-  DESC = "DESC"
-}
 
 export type CreateCompanyMutation = {
   __typename: "Company";
@@ -7022,9 +7007,9 @@ export class APIService {
     )) as any;
     return <ListRoomsQuery>response.data.listRooms;
   }
-  async GetMessage(id: string, createdAt: string): Promise<GetMessageQuery> {
-    const statement = `query GetMessage($id: ID!, $createdAt: AWSDateTime!) {
-        getMessage(id: $id, createdAt: $createdAt) {
+  async GetMessage(id: string): Promise<GetMessageQuery> {
+    const statement = `query GetMessage($id: ID!) {
+        getMessage(id: $id) {
           __typename
           id
           taskID
@@ -7075,8 +7060,7 @@ export class APIService {
         }
       }`;
     const gqlAPIServiceArguments: any = {
-      id,
-      createdAt
+      id
     };
     const response = (await API.graphql(
       graphqlOperation(statement, gqlAPIServiceArguments)
@@ -7084,15 +7068,12 @@ export class APIService {
     return <GetMessageQuery>response.data.getMessage;
   }
   async ListMessages(
-    id?: string,
-    createdAt?: ModelStringKeyConditionInput,
     filter?: ModelMessageFilterInput,
     limit?: number,
-    nextToken?: string,
-    sortDirection?: ModelSortDirection
+    nextToken?: string
   ): Promise<ListMessagesQuery> {
-    const statement = `query ListMessages($id: ID, $createdAt: ModelStringKeyConditionInput, $filter: ModelMessageFilterInput, $limit: Int, $nextToken: String, $sortDirection: ModelSortDirection) {
-        listMessages(id: $id, createdAt: $createdAt, filter: $filter, limit: $limit, nextToken: $nextToken, sortDirection: $sortDirection) {
+    const statement = `query ListMessages($filter: ModelMessageFilterInput, $limit: Int, $nextToken: String) {
+        listMessages(filter: $filter, limit: $limit, nextToken: $nextToken) {
           __typename
           items {
             __typename
@@ -7123,12 +7104,6 @@ export class APIService {
         }
       }`;
     const gqlAPIServiceArguments: any = {};
-    if (id) {
-      gqlAPIServiceArguments.id = id;
-    }
-    if (createdAt) {
-      gqlAPIServiceArguments.createdAt = createdAt;
-    }
     if (filter) {
       gqlAPIServiceArguments.filter = filter;
     }
@@ -7137,9 +7112,6 @@ export class APIService {
     }
     if (nextToken) {
       gqlAPIServiceArguments.nextToken = nextToken;
-    }
-    if (sortDirection) {
-      gqlAPIServiceArguments.sortDirection = sortDirection;
     }
     const response = (await API.graphql(
       graphqlOperation(statement, gqlAPIServiceArguments)
