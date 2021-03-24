@@ -153,6 +153,7 @@ export type Message = {
   isSent?: boolean | null;
   attachmentUri?: Array<string | null> | null;
   author?: User;
+  task?: Task;
   updatedAt?: string;
 };
 
@@ -525,6 +526,21 @@ export type ModelMessageFilterInput = {
   or?: Array<ModelMessageFilterInput | null> | null;
   not?: ModelMessageFilterInput | null;
 };
+
+export type ModelStringKeyConditionInput = {
+  eq?: string | null;
+  le?: string | null;
+  lt?: string | null;
+  ge?: string | null;
+  gt?: string | null;
+  between?: Array<string | null> | null;
+  beginsWith?: string | null;
+};
+
+export enum ModelSortDirection {
+  ASC = "ASC",
+  DESC = "DESC"
+}
 
 export type CreateCompanyMutation = {
   __typename: "Company";
@@ -1932,6 +1948,51 @@ export type CreateMessageMutation = {
     createdAt: string;
     updatedAt: string;
   };
+  task: {
+    __typename: "Task";
+    id: string;
+    authorID: string;
+    roomID: string;
+    chargePersonID: string;
+    title: string;
+    room: {
+      __typename: "Room";
+      id: string;
+      name: string;
+      companyID: string;
+      description: string;
+      createdAt: string;
+      updatedAt: string;
+    };
+    description?: string | null;
+    scheduleDate?: string | null;
+    priority?: number | null;
+    status?: number | null;
+    createdAt?: string | null;
+    chargePerson: {
+      __typename: "User";
+      id: string;
+      username: string;
+      email: string;
+      companyID: string;
+      tel?: string | null;
+      positionName?: string | null;
+      iconImage?: string | null;
+      registered?: boolean | null;
+      authority?: string | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+    messages?: {
+      __typename: "ModelMessageConnection";
+      nextToken?: string | null;
+    } | null;
+    users?: {
+      __typename: "ModelTaskGroupConnection";
+      nextToken?: string | null;
+    } | null;
+    updatedAt: string;
+  };
   updatedAt: string;
 };
 
@@ -1982,6 +2043,51 @@ export type UpdateMessageMutation = {
     createdAt: string;
     updatedAt: string;
   };
+  task: {
+    __typename: "Task";
+    id: string;
+    authorID: string;
+    roomID: string;
+    chargePersonID: string;
+    title: string;
+    room: {
+      __typename: "Room";
+      id: string;
+      name: string;
+      companyID: string;
+      description: string;
+      createdAt: string;
+      updatedAt: string;
+    };
+    description?: string | null;
+    scheduleDate?: string | null;
+    priority?: number | null;
+    status?: number | null;
+    createdAt?: string | null;
+    chargePerson: {
+      __typename: "User";
+      id: string;
+      username: string;
+      email: string;
+      companyID: string;
+      tel?: string | null;
+      positionName?: string | null;
+      iconImage?: string | null;
+      registered?: boolean | null;
+      authority?: string | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+    messages?: {
+      __typename: "ModelMessageConnection";
+      nextToken?: string | null;
+    } | null;
+    users?: {
+      __typename: "ModelTaskGroupConnection";
+      nextToken?: string | null;
+    } | null;
+    updatedAt: string;
+  };
   updatedAt: string;
 };
 
@@ -2030,6 +2136,51 @@ export type DeleteMessageMutation = {
       nextToken?: string | null;
     } | null;
     createdAt: string;
+    updatedAt: string;
+  };
+  task: {
+    __typename: "Task";
+    id: string;
+    authorID: string;
+    roomID: string;
+    chargePersonID: string;
+    title: string;
+    room: {
+      __typename: "Room";
+      id: string;
+      name: string;
+      companyID: string;
+      description: string;
+      createdAt: string;
+      updatedAt: string;
+    };
+    description?: string | null;
+    scheduleDate?: string | null;
+    priority?: number | null;
+    status?: number | null;
+    createdAt?: string | null;
+    chargePerson: {
+      __typename: "User";
+      id: string;
+      username: string;
+      email: string;
+      companyID: string;
+      tel?: string | null;
+      positionName?: string | null;
+      iconImage?: string | null;
+      registered?: boolean | null;
+      authority?: string | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+    messages?: {
+      __typename: "ModelMessageConnection";
+      nextToken?: string | null;
+    } | null;
+    users?: {
+      __typename: "ModelTaskGroupConnection";
+      nextToken?: string | null;
+    } | null;
     updatedAt: string;
   };
   updatedAt: string;
@@ -2756,6 +2907,51 @@ export type GetMessageQuery = {
     createdAt: string;
     updatedAt: string;
   };
+  task: {
+    __typename: "Task";
+    id: string;
+    authorID: string;
+    roomID: string;
+    chargePersonID: string;
+    title: string;
+    room: {
+      __typename: "Room";
+      id: string;
+      name: string;
+      companyID: string;
+      description: string;
+      createdAt: string;
+      updatedAt: string;
+    };
+    description?: string | null;
+    scheduleDate?: string | null;
+    priority?: number | null;
+    status?: number | null;
+    createdAt?: string | null;
+    chargePerson: {
+      __typename: "User";
+      id: string;
+      username: string;
+      email: string;
+      companyID: string;
+      tel?: string | null;
+      positionName?: string | null;
+      iconImage?: string | null;
+      registered?: boolean | null;
+      authority?: string | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+    messages?: {
+      __typename: "ModelMessageConnection";
+      nextToken?: string | null;
+    } | null;
+    users?: {
+      __typename: "ModelTaskGroupConnection";
+      nextToken?: string | null;
+    } | null;
+    updatedAt: string;
+  };
   updatedAt: string;
 };
 
@@ -2782,6 +2978,64 @@ export type ListMessagesQuery = {
       registered?: boolean | null;
       authority?: string | null;
       createdAt: string;
+      updatedAt: string;
+    };
+    task: {
+      __typename: "Task";
+      id: string;
+      authorID: string;
+      roomID: string;
+      chargePersonID: string;
+      title: string;
+      description?: string | null;
+      scheduleDate?: string | null;
+      priority?: number | null;
+      status?: number | null;
+      createdAt?: string | null;
+      updatedAt: string;
+    };
+    updatedAt: string;
+  } | null> | null;
+  nextToken?: string | null;
+};
+
+export type TaskByCreatedAtQuery = {
+  __typename: "ModelMessageConnection";
+  items?: Array<{
+    __typename: "Message";
+    id: string;
+    taskID: string;
+    authorID: string;
+    content: string;
+    createdAt: string;
+    isSent?: boolean | null;
+    attachmentUri?: Array<string | null> | null;
+    author: {
+      __typename: "User";
+      id: string;
+      username: string;
+      email: string;
+      companyID: string;
+      tel?: string | null;
+      positionName?: string | null;
+      iconImage?: string | null;
+      registered?: boolean | null;
+      authority?: string | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+    task: {
+      __typename: "Task";
+      id: string;
+      authorID: string;
+      roomID: string;
+      chargePersonID: string;
+      title: string;
+      description?: string | null;
+      scheduleDate?: string | null;
+      priority?: number | null;
+      status?: number | null;
+      createdAt?: string | null;
       updatedAt: string;
     };
     updatedAt: string;
@@ -4195,6 +4449,51 @@ export type OnCreateMessageSubscription = {
     createdAt: string;
     updatedAt: string;
   };
+  task: {
+    __typename: "Task";
+    id: string;
+    authorID: string;
+    roomID: string;
+    chargePersonID: string;
+    title: string;
+    room: {
+      __typename: "Room";
+      id: string;
+      name: string;
+      companyID: string;
+      description: string;
+      createdAt: string;
+      updatedAt: string;
+    };
+    description?: string | null;
+    scheduleDate?: string | null;
+    priority?: number | null;
+    status?: number | null;
+    createdAt?: string | null;
+    chargePerson: {
+      __typename: "User";
+      id: string;
+      username: string;
+      email: string;
+      companyID: string;
+      tel?: string | null;
+      positionName?: string | null;
+      iconImage?: string | null;
+      registered?: boolean | null;
+      authority?: string | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+    messages?: {
+      __typename: "ModelMessageConnection";
+      nextToken?: string | null;
+    } | null;
+    users?: {
+      __typename: "ModelTaskGroupConnection";
+      nextToken?: string | null;
+    } | null;
+    updatedAt: string;
+  };
   updatedAt: string;
 };
 
@@ -4245,6 +4544,51 @@ export type OnUpdateMessageSubscription = {
     createdAt: string;
     updatedAt: string;
   };
+  task: {
+    __typename: "Task";
+    id: string;
+    authorID: string;
+    roomID: string;
+    chargePersonID: string;
+    title: string;
+    room: {
+      __typename: "Room";
+      id: string;
+      name: string;
+      companyID: string;
+      description: string;
+      createdAt: string;
+      updatedAt: string;
+    };
+    description?: string | null;
+    scheduleDate?: string | null;
+    priority?: number | null;
+    status?: number | null;
+    createdAt?: string | null;
+    chargePerson: {
+      __typename: "User";
+      id: string;
+      username: string;
+      email: string;
+      companyID: string;
+      tel?: string | null;
+      positionName?: string | null;
+      iconImage?: string | null;
+      registered?: boolean | null;
+      authority?: string | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+    messages?: {
+      __typename: "ModelMessageConnection";
+      nextToken?: string | null;
+    } | null;
+    users?: {
+      __typename: "ModelTaskGroupConnection";
+      nextToken?: string | null;
+    } | null;
+    updatedAt: string;
+  };
   updatedAt: string;
 };
 
@@ -4293,6 +4637,51 @@ export type OnDeleteMessageSubscription = {
       nextToken?: string | null;
     } | null;
     createdAt: string;
+    updatedAt: string;
+  };
+  task: {
+    __typename: "Task";
+    id: string;
+    authorID: string;
+    roomID: string;
+    chargePersonID: string;
+    title: string;
+    room: {
+      __typename: "Room";
+      id: string;
+      name: string;
+      companyID: string;
+      description: string;
+      createdAt: string;
+      updatedAt: string;
+    };
+    description?: string | null;
+    scheduleDate?: string | null;
+    priority?: number | null;
+    status?: number | null;
+    createdAt?: string | null;
+    chargePerson: {
+      __typename: "User";
+      id: string;
+      username: string;
+      email: string;
+      companyID: string;
+      tel?: string | null;
+      positionName?: string | null;
+      iconImage?: string | null;
+      registered?: boolean | null;
+      authority?: string | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+    messages?: {
+      __typename: "ModelMessageConnection";
+      nextToken?: string | null;
+    } | null;
+    users?: {
+      __typename: "ModelTaskGroupConnection";
+      nextToken?: string | null;
+    } | null;
     updatedAt: string;
   };
   updatedAt: string;
@@ -6001,6 +6390,51 @@ export class APIService {
             createdAt
             updatedAt
           }
+          task {
+            __typename
+            id
+            authorID
+            roomID
+            chargePersonID
+            title
+            room {
+              __typename
+              id
+              name
+              companyID
+              description
+              createdAt
+              updatedAt
+            }
+            description
+            scheduleDate
+            priority
+            status
+            createdAt
+            chargePerson {
+              __typename
+              id
+              username
+              email
+              companyID
+              tel
+              positionName
+              iconImage
+              registered
+              authority
+              createdAt
+              updatedAt
+            }
+            messages {
+              __typename
+              nextToken
+            }
+            users {
+              __typename
+              nextToken
+            }
+            updatedAt
+          }
           updatedAt
         }
       }`;
@@ -6067,6 +6501,51 @@ export class APIService {
             createdAt
             updatedAt
           }
+          task {
+            __typename
+            id
+            authorID
+            roomID
+            chargePersonID
+            title
+            room {
+              __typename
+              id
+              name
+              companyID
+              description
+              createdAt
+              updatedAt
+            }
+            description
+            scheduleDate
+            priority
+            status
+            createdAt
+            chargePerson {
+              __typename
+              id
+              username
+              email
+              companyID
+              tel
+              positionName
+              iconImage
+              registered
+              authority
+              createdAt
+              updatedAt
+            }
+            messages {
+              __typename
+              nextToken
+            }
+            users {
+              __typename
+              nextToken
+            }
+            updatedAt
+          }
           updatedAt
         }
       }`;
@@ -6131,6 +6610,51 @@ export class APIService {
               nextToken
             }
             createdAt
+            updatedAt
+          }
+          task {
+            __typename
+            id
+            authorID
+            roomID
+            chargePersonID
+            title
+            room {
+              __typename
+              id
+              name
+              companyID
+              description
+              createdAt
+              updatedAt
+            }
+            description
+            scheduleDate
+            priority
+            status
+            createdAt
+            chargePerson {
+              __typename
+              id
+              username
+              email
+              companyID
+              tel
+              positionName
+              iconImage
+              registered
+              authority
+              createdAt
+              updatedAt
+            }
+            messages {
+              __typename
+              nextToken
+            }
+            users {
+              __typename
+              nextToken
+            }
             updatedAt
           }
           updatedAt
@@ -7056,6 +7580,51 @@ export class APIService {
             createdAt
             updatedAt
           }
+          task {
+            __typename
+            id
+            authorID
+            roomID
+            chargePersonID
+            title
+            room {
+              __typename
+              id
+              name
+              companyID
+              description
+              createdAt
+              updatedAt
+            }
+            description
+            scheduleDate
+            priority
+            status
+            createdAt
+            chargePerson {
+              __typename
+              id
+              username
+              email
+              companyID
+              tel
+              positionName
+              iconImage
+              registered
+              authority
+              createdAt
+              updatedAt
+            }
+            messages {
+              __typename
+              nextToken
+            }
+            users {
+              __typename
+              nextToken
+            }
+            updatedAt
+          }
           updatedAt
         }
       }`;
@@ -7098,6 +7667,20 @@ export class APIService {
               createdAt
               updatedAt
             }
+            task {
+              __typename
+              id
+              authorID
+              roomID
+              chargePersonID
+              title
+              description
+              scheduleDate
+              priority
+              status
+              createdAt
+              updatedAt
+            }
             updatedAt
           }
           nextToken
@@ -7117,6 +7700,83 @@ export class APIService {
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
     return <ListMessagesQuery>response.data.listMessages;
+  }
+  async TaskByCreatedAt(
+    taskID?: string,
+    createdAt?: ModelStringKeyConditionInput,
+    sortDirection?: ModelSortDirection,
+    filter?: ModelMessageFilterInput,
+    limit?: number,
+    nextToken?: string
+  ): Promise<TaskByCreatedAtQuery> {
+    const statement = `query TaskByCreatedAt($taskID: ID, $createdAt: ModelStringKeyConditionInput, $sortDirection: ModelSortDirection, $filter: ModelMessageFilterInput, $limit: Int, $nextToken: String) {
+        taskByCreatedAt(taskID: $taskID, createdAt: $createdAt, sortDirection: $sortDirection, filter: $filter, limit: $limit, nextToken: $nextToken) {
+          __typename
+          items {
+            __typename
+            id
+            taskID
+            authorID
+            content
+            createdAt
+            isSent
+            attachmentUri
+            author {
+              __typename
+              id
+              username
+              email
+              companyID
+              tel
+              positionName
+              iconImage
+              registered
+              authority
+              createdAt
+              updatedAt
+            }
+            task {
+              __typename
+              id
+              authorID
+              roomID
+              chargePersonID
+              title
+              description
+              scheduleDate
+              priority
+              status
+              createdAt
+              updatedAt
+            }
+            updatedAt
+          }
+          nextToken
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {};
+    if (taskID) {
+      gqlAPIServiceArguments.taskID = taskID;
+    }
+    if (createdAt) {
+      gqlAPIServiceArguments.createdAt = createdAt;
+    }
+    if (sortDirection) {
+      gqlAPIServiceArguments.sortDirection = sortDirection;
+    }
+    if (filter) {
+      gqlAPIServiceArguments.filter = filter;
+    }
+    if (limit) {
+      gqlAPIServiceArguments.limit = limit;
+    }
+    if (nextToken) {
+      gqlAPIServiceArguments.nextToken = nextToken;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <TaskByCreatedAtQuery>response.data.taskByCreatedAt;
   }
   OnCreateCompanyListener: Observable<
     SubscriptionResponse<OnCreateCompanySubscription>
@@ -8673,6 +9333,51 @@ export class APIService {
             createdAt
             updatedAt
           }
+          task {
+            __typename
+            id
+            authorID
+            roomID
+            chargePersonID
+            title
+            room {
+              __typename
+              id
+              name
+              companyID
+              description
+              createdAt
+              updatedAt
+            }
+            description
+            scheduleDate
+            priority
+            status
+            createdAt
+            chargePerson {
+              __typename
+              id
+              username
+              email
+              companyID
+              tel
+              positionName
+              iconImage
+              registered
+              authority
+              createdAt
+              updatedAt
+            }
+            messages {
+              __typename
+              nextToken
+            }
+            users {
+              __typename
+              nextToken
+            }
+            updatedAt
+          }
           updatedAt
         }
       }`
@@ -8731,6 +9436,51 @@ export class APIService {
             createdAt
             updatedAt
           }
+          task {
+            __typename
+            id
+            authorID
+            roomID
+            chargePersonID
+            title
+            room {
+              __typename
+              id
+              name
+              companyID
+              description
+              createdAt
+              updatedAt
+            }
+            description
+            scheduleDate
+            priority
+            status
+            createdAt
+            chargePerson {
+              __typename
+              id
+              username
+              email
+              companyID
+              tel
+              positionName
+              iconImage
+              registered
+              authority
+              createdAt
+              updatedAt
+            }
+            messages {
+              __typename
+              nextToken
+            }
+            users {
+              __typename
+              nextToken
+            }
+            updatedAt
+          }
           updatedAt
         }
       }`
@@ -8787,6 +9537,51 @@ export class APIService {
               nextToken
             }
             createdAt
+            updatedAt
+          }
+          task {
+            __typename
+            id
+            authorID
+            roomID
+            chargePersonID
+            title
+            room {
+              __typename
+              id
+              name
+              companyID
+              description
+              createdAt
+              updatedAt
+            }
+            description
+            scheduleDate
+            priority
+            status
+            createdAt
+            chargePerson {
+              __typename
+              id
+              username
+              email
+              companyID
+              tel
+              positionName
+              iconImage
+              registered
+              authority
+              createdAt
+              updatedAt
+            }
+            messages {
+              __typename
+              nextToken
+            }
+            users {
+              __typename
+              nextToken
+            }
             updatedAt
           }
           updatedAt

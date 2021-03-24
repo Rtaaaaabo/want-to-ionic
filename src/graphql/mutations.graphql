@@ -1285,6 +1285,46 @@ mutation CreateMessage(
       createdAt
       updatedAt
     }
+    task {
+      id
+      authorID
+      roomID
+      chargePersonID
+      title
+      room {
+        id
+        name
+        companyID
+        description
+        createdAt
+        updatedAt
+      }
+      description
+      scheduleDate
+      priority
+      status
+      createdAt
+      chargePerson {
+        id
+        username
+        email
+        companyID
+        tel
+        positionName
+        iconImage
+        registered
+        authority
+        createdAt
+        updatedAt
+      }
+      messages {
+        nextToken
+      }
+      users {
+        nextToken
+      }
+      updatedAt
+    }
     updatedAt
   }
 }
@@ -1332,6 +1372,46 @@ mutation UpdateMessage(
       createdAt
       updatedAt
     }
+    task {
+      id
+      authorID
+      roomID
+      chargePersonID
+      title
+      room {
+        id
+        name
+        companyID
+        description
+        createdAt
+        updatedAt
+      }
+      description
+      scheduleDate
+      priority
+      status
+      createdAt
+      chargePerson {
+        id
+        username
+        email
+        companyID
+        tel
+        positionName
+        iconImage
+        registered
+        authority
+        createdAt
+        updatedAt
+      }
+      messages {
+        nextToken
+      }
+      users {
+        nextToken
+      }
+      updatedAt
+    }
     updatedAt
   }
 }
@@ -1377,6 +1457,46 @@ mutation DeleteMessage(
         nextToken
       }
       createdAt
+      updatedAt
+    }
+    task {
+      id
+      authorID
+      roomID
+      chargePersonID
+      title
+      room {
+        id
+        name
+        companyID
+        description
+        createdAt
+        updatedAt
+      }
+      description
+      scheduleDate
+      priority
+      status
+      createdAt
+      chargePerson {
+        id
+        username
+        email
+        companyID
+        tel
+        positionName
+        iconImage
+        registered
+        authority
+        createdAt
+        updatedAt
+      }
+      messages {
+        nextToken
+      }
+      users {
+        nextToken
+      }
       updatedAt
     }
     updatedAt

@@ -21,7 +21,7 @@
         }
       ]
     },
-    "wantto": {
+    "wanttographql": {
       "service": "AppSync",
       "providerPlugin": "awscloudformation",
       "output": {
