@@ -27,17 +27,17 @@ export class HomePage implements OnInit {
   ngOnInit(): void { }
 
   ionViewWillEnter() {
-    console.log('Home ionViewWillEnter');
     this.logic.fetchCurrentUser()
       .pipe(map((attributes) => {
         this.attributes = attributes;
       }))
       .pipe(flatMap(() => this.logic.checkRegistrationUser(this.attributes)))
-      .pipe(filter(({ items }) => items.length === 0), catchError(() => of('Already')))
+      .pipe(filter(({ items }) => items.length === 0))
       .subscribe((data) => {
-        if (data === 'Already') {
-          return;
-        }
+        console.log('ionViewWillEnter: data', data);
+        // if (data === 'Already') {
+        //   return;
+        // }
         this.presentRegistrationUser()
       });
   }

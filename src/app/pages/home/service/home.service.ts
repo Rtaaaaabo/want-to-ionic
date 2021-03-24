@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AmplifyService, ModelRoomFilterInput, ListRoomsQuery, ModelUserFilterInput, ModelRoomGroupFilterInput, ListRoomGroupsQuery } from '../../../shared/service/amplify.service';
 import { from, Observable } from 'rxjs';
+import { filter } from 'rxjs/operators';
 
 
 @Injectable({
@@ -16,6 +17,7 @@ export class HomeService {
         eq: `${email}`
       }
     }
+    console.log('filterContent', filterContent);
     return from(this.amplifyService.ListUsers(filterContent));
   }
 
