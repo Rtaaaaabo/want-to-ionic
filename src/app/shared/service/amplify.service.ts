@@ -2800,6 +2800,50 @@ export type GetMessageQuery = {
   updatedAt: string;
 };
 
+export type TaskByCreatedAtQuery = {
+  __typename: "ModelMessageConnection";
+  items?: Array<{
+    __typename: "Message";
+    id: string;
+    taskID: string;
+    authorID: string;
+    content: string;
+    createdAt: string;
+    isSent?: boolean | null;
+    attachmentUri?: Array<string | null> | null;
+    author: {
+      __typename: "User";
+      id: string;
+      username: string;
+      email: string;
+      companyID: string;
+      tel?: string | null;
+      positionName?: string | null;
+      iconImage?: string | null;
+      registered?: boolean | null;
+      authority?: string | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+    task: {
+      __typename: "Task";
+      id: string;
+      authorID: string;
+      roomID: string;
+      chargePersonID: string;
+      title: string;
+      description?: string | null;
+      scheduleDate?: string | null;
+      priority?: number | null;
+      status?: number | null;
+      createdAt?: string | null;
+      updatedAt: string;
+    };
+    updatedAt: string;
+  } | null> | null;
+  nextToken?: string | null;
+};
+
 export type ListMessagesQuery = {
   __typename: "ModelMessageConnection";
   items: Array<{
@@ -5598,10 +5642,10 @@ export class AmplifyService {
   async ListMessages(
     filter?: ModelMessageFilterInput,
     limit?: number,
-    sortDirection?: ModelSortDirection
+    nextToken?: string
   ): Promise<ListMessagesQuery> {
-    const statement = `query ListMessages($filter: ModelMessageFilterInput, $limit: Int, $sortDirection: ModelSortDirection) {
-        listMessages( filter: $filter, limit: $limit, sortDirection: $sortDirection) {
+    const statement = `query ListMessages($filter: ModelMessageFilterInput, $limit: Int, $nextToken: String) {
+        listMessages(filter: $filter, limit: $limit, nextToken: $nextToken) {
           __typename
           items {
             __typename
@@ -5646,28 +5690,97 @@ export class AmplifyService {
         }
       }`;
     const gqlAPIServiceArguments: any = {};
-    // if (id) {
-    //   gqlAPIServiceArguments.id = id;
-    // }
-    // if (createdAt) {
-    //   gqlAPIServiceArguments.createdAt = createdAt;
-    // }
     if (filter) {
       gqlAPIServiceArguments.filter = filter;
     }
     if (limit) {
       gqlAPIServiceArguments.limit = limit;
     }
-    // if (nextToken) {
-    //   gqlAPIServiceArguments.nextToken = nextToken;
-    // }
-    if (sortDirection) {
-      gqlAPIServiceArguments.sortDirection = sortDirection;
+    if (nextToken) {
+      gqlAPIServiceArguments.nextToken = nextToken;
     }
     const response = (await API.graphql(
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
     return <ListMessagesQuery>response.data.listMessages;
+  }
+
+  async TaskByCreatedAt(
+    taskID?: string,
+    createdAt?: ModelStringKeyConditionInput,
+    sortDirection?: ModelSortDirection,
+    filter?: ModelMessageFilterInput,
+    limit?: number,
+    nextToken?: string
+  ): Promise<TaskByCreatedAtQuery> {
+    const statement = `query TaskByCreatedAt($taskID: ID, $createdAt: ModelStringKeyConditionInput, $sortDirection: ModelSortDirection, $filter: ModelMessageFilterInput, $limit: Int, $nextToken: String) {
+        taskByCreatedAt(taskID: $taskID, createdAt: $createdAt, sortDirection: $sortDirection, filter: $filter, limit: $limit, nextToken: $nextToken) {
+          __typename
+          items {
+            __typename
+            id
+            taskID
+            authorID
+            content
+            createdAt
+            isSent
+            attachmentUri
+            author {
+              __typename
+              id
+              username
+              email
+              companyID
+              tel
+              positionName
+              iconImage
+              registered
+              authority
+              createdAt
+              updatedAt
+            }
+            task {
+              __typename
+              id
+              authorID
+              roomID
+              chargePersonID
+              title
+              description
+              scheduleDate
+              priority
+              status
+              createdAt
+              updatedAt
+            }
+            updatedAt
+          }
+          nextToken
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {};
+    if (taskID) {
+      gqlAPIServiceArguments.taskID = taskID;
+    }
+    if (createdAt) {
+      gqlAPIServiceArguments.createdAt = createdAt;
+    }
+    if (sortDirection) {
+      gqlAPIServiceArguments.sortDirection = sortDirection;
+    }
+    if (filter) {
+      gqlAPIServiceArguments.filter = filter;
+    }
+    if (limit) {
+      gqlAPIServiceArguments.limit = limit;
+    }
+    if (nextToken) {
+      gqlAPIServiceArguments.nextToken = nextToken;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <TaskByCreatedAtQuery>response.data.taskByCreatedAt;
   }
 
   async GetUser(id: string): Promise<GetUserQuery> {
