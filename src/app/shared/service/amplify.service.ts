@@ -5707,11 +5707,11 @@ export class AmplifyService {
 
   async TaskByCreatedAt(
     taskID?: string,
-    createdAt?: ModelStringKeyConditionInput,
     sortDirection?: ModelSortDirection,
-    filter?: ModelMessageFilterInput,
     limit?: number,
-    nextToken?: string
+    nextToken?: string,
+    filter?: ModelMessageFilterInput,
+    createdAt?: ModelStringKeyConditionInput,
   ): Promise<TaskByCreatedAtQuery> {
     const statement = `query TaskByCreatedAt($taskID: ID, $createdAt: ModelStringKeyConditionInput, $sortDirection: ModelSortDirection, $filter: ModelMessageFilterInput, $limit: Int, $nextToken: String) {
         taskByCreatedAt(taskID: $taskID, createdAt: $createdAt, sortDirection: $sortDirection, filter: $filter, limit: $limit, nextToken: $nextToken) {

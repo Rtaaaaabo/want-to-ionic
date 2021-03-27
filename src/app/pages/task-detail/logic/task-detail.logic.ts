@@ -61,12 +61,7 @@ export class TaskDetailLogic {
    * @returns Observable型で タスクあたりのMessageを返します
    */
   fetchMessagePerTask(taskId: string): Observable<any> {
-    const filterContent = {
-      taskID: {
-        eq: `${taskId}`
-      }
-    }
-    return this.taskDetailService.fetchMessagePerTask(filterContent);
+    return this.taskDetailService.fetchMessagePerTask(taskId)
   }
 
   /**
