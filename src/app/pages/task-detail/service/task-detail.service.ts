@@ -17,7 +17,7 @@ export class TaskDetailService {
 
   fetchMessagePerTask(taskId: string): Observable<any> {
     const limitMessage = 100;
-    return from(this.amplifyService.TaskByCreatedAt(taskId, ModelSortDirection.ASC, limitMessage))
+    return from(this.amplifyService.TaskByCreatedAt(taskId, ModelSortDirection.DESC, limitMessage))
   }
 
   updateTaskItem(inputContent): Observable<UpdateTaskMutation> {
