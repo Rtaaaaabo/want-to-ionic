@@ -16,7 +16,8 @@ export class TaskDetailService {
   }
 
   fetchMessagePerTask(filterInfo): Observable<any> {
-    return from(this.amplifyService.ListMessages(filterInfo, 100, ModelSortDirection.ASC));
+    const limitMessage = 100;
+    return from(this.amplifyService.ListMessages(filterInfo, limitMessage));
   }
 
   updateTaskItem(inputContent): Observable<UpdateTaskMutation> {

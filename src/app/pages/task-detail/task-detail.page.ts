@@ -74,7 +74,7 @@ export class TaskDetailPage implements OnInit {
       console.log('result: ', result);
       this.currentUserId = result.currentUserInfo.sub;
       this.roomMembers = result.anyTask.items;
-      // this.message = result.messagePerTask.items;
+      this.message = result.messagePerTask.items;
     });
   }
 
