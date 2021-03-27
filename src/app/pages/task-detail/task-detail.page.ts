@@ -44,15 +44,15 @@ export class TaskDetailPage implements OnInit {
   ) {
     this.initializeApp()
       .subscribe(() => {
-        // this.logic.onCreateMessageListener()
-        //   .subscribe(({ value }) => {
-        //     if (!value.hasOwnProperty('errors')) {
-        //       this.logic.fetchMessagePerTask(this.taskId)
-        //         .subscribe((result) => {
-        //           this.message = result.items
-        //         })
-        //     }
-        //   });
+        this.logic.onCreateMessageListener()
+          .subscribe(({ value }) => {
+            if (!value.hasOwnProperty('errors')) {
+              this.logic.fetchMessagePerTask(this.taskId)
+                .subscribe((result) => {
+                  this.message = result.items
+                })
+            }
+          });
       });
   }
 
@@ -70,8 +70,6 @@ export class TaskDetailPage implements OnInit {
       anyTask: observerFetchAnyTask,
       messagePerTask: observerFetchMessagePerTask,
     }).subscribe((result) => {
-      console.log('forkJoin Result', result);
-      console.log('result: ', result);
       this.currentUserId = result.currentUserInfo.sub;
       this.roomMembers = result.anyTask.items;
       this.message = result.messagePerTask.items;
