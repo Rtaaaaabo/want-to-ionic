@@ -42,7 +42,8 @@
           <img src="../../../assets/svg/anonymous.svg" />
         </ion-avatar>
         <ion-label>
-          <h3>{{ item.content }}</h3>
+          <!-- <h3>{{ item.content }}</h3> -->
+          <h3><ion-textarea>{{ item.content }}</ion-textarea></h3>
           <p>{{item.author.username}}</p>
           <ion-row>
             <ion-card
