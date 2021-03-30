@@ -46,7 +46,7 @@
           <p class="text-right">
             {{ item.createdAt | date: "yyyy/MM/dd HH:mm" }}
           </p>
-          <h3><ion-textarea>{{ item.content }}</ion-textarea></h3>
+          <h3 class="breke">{{ item.content }}</h3>
           <ion-row>
             <ion-card
               *ngFor="let imageSrc of item.attachmentUri"
