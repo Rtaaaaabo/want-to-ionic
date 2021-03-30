@@ -265,22 +265,19 @@ export class TaskDetailLogic {
         messageContent = `・担当者を ${data.chargePerson.username}に変更しました`;
       }
       if (argContent.data.hasTaskKind.description) {
-        messageContent = `
-        ${messageContent}
-        ・説明文を${argContent.data.taskValue.descriptionItem}に変更しました。
-        `;
+        messageContent =
+          `${messageContent}\n` +
+          `・説明文を${argContent.data.taskValue.descriptionItem}に変更しました。`;
       }
       if (argContent.data.hasTaskKind.name) {
-        messageContent = `
-        ${messageContent}
-        ・タイトルを${argContent.data.taskValue.nameItem}に変更しました。
-        `;
+        messageContent =
+          `${messageContent}\n` +
+          `・タイトルを${argContent.data.taskValue.nameItem}に変更しました。`;
       }
       if (argContent.data.hasTaskKind.scheduleDate) {
-        messageContent = `
-        ${messageContent}
-        ・締め切りを${argContent.data.taskValue.scheduleDateItem}に変更しました。
-        `;
+        messageContent =
+          `${messageContent}\n` +
+          `・締め切りを${argContent.data.taskValue.scheduleDateItem}に変更しました。`;
       }
     } else {
       messageContent = argContent;

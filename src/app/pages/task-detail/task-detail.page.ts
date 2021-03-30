@@ -26,7 +26,7 @@ export class TaskDetailPage implements OnInit {
   link = "comment"
   fragmentComment = '';
   newMsg: string = '';
-  message: ListMessagesQuery;
+  message: Array<any>;
   currentUserId: string;
   roomMembers: Array<ListRoomGroupsQuery>;
   arrayImageBase64Data: Array<any> = [];
@@ -74,6 +74,8 @@ export class TaskDetailPage implements OnInit {
       this.roomMembers = result.anyTask.items;
       this.message = result.messagePerTask.items;
       console.log(this.message);
+      // const spaceRegex = /(\n\s+)/g;
+      // console.log(this.message.map(item => item.content.replace(spaceRegex, '<br>')));
     });
   }
 
