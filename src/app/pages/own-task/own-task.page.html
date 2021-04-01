@@ -9,7 +9,8 @@
     <ion-card *ngFor="let item of ownTaskItems">
       <ion-card-header>
         <ion-card-subtitle>
-          {{ item.task.scheduleDate | date: 'yyyy/MM/dd' }} {{item.room.name}}
+          {{item.room.name}} {{ item.task.scheduleDate | date: 'yyyy/MM/dd'
+          }}まで
         </ion-card-subtitle>
         <ion-card-title>{{item.task.title}}</ion-card-title>
       </ion-card-header>
