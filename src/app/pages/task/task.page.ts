@@ -67,7 +67,6 @@ export class TaskPage implements OnInit {
     }).subscribe((data) => {
       this.companyMembers = data.companyUser.items;
       this.taskActiveItems = data.activeTaskItems.sort(this.logic.compareTaskArray);
-      console.log('taskActiveItems', this.taskActiveItems);
       this.taskDoneItems = data.doneTaskItems;
       this.room = data.room;
       this.roomMembers = data.roomMembers;
@@ -131,11 +130,10 @@ export class TaskPage implements OnInit {
       .pipe(concatMap((taskActiveItem) => this.logic.getIndexNewArray(this.taskActiveItems, taskActiveItem)))
       .pipe(concatMap((indexArray: number) => this.logic.updateTaskItemPriority(indexArray, this.taskActiveItems)))
       .pipe(concatMap((data) => this.logic.reorderTaskMessage(data)))
-      .subscribe((data) => console.log(data));
+      .subscribe();
   }
 
   navigateToTaskDetail(task, segment: string, isReorder: boolean): void {
-    console.log('isReorder', isReorder);
     if (isReorder) return;
     this.router.navigate(['task-detail', `${task.id}`, `${segment}`])
   }

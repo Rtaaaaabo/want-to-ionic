@@ -17,7 +17,6 @@ export class HomeService {
         eq: `${email}`
       }
     }
-    console.log('filterContent', filterContent);
     return from(this.amplifyService.ListUsers(filterContent));
   }
 

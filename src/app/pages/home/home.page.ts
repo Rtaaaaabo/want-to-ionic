@@ -33,11 +33,7 @@ export class HomePage implements OnInit {
       }))
       .pipe(flatMap(() => this.logic.checkRegistrationUser(this.attributes)))
       .pipe(filter(({ items }) => items.length === 0))
-      .subscribe((data) => {
-        console.log('ionViewWillEnter: data', data);
-        // if (data === 'Already') {
-        //   return;
-        // }
+      .subscribe(() => {
         this.presentRegistrationUser()
       });
   }

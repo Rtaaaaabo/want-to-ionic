@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, from, of, concat } from 'rxjs';
-import { catchError, concatMap, map } from 'rxjs/operators';
+import { concatMap, map } from 'rxjs/operators';
 import { Storage } from 'aws-amplify';
 import { v4 as uuid } from 'uuid';
 import { SessionService } from 'src/app/shared/service/session.service';
@@ -95,7 +95,6 @@ export class TaskDetailLogic {
       isSent: true,
       attachmentUri: [],
     };
-    console.log(inputContent);
     if (arrayAttachmentUri !== undefined) {
       inputContent.attachmentUri = arrayAttachmentUri;
     }
@@ -182,7 +181,6 @@ export class TaskDetailLogic {
   }
 
   putStorage(fileName: string, blobFile: Blob, contentType: string): Observable<any> {
-    console.log('new Date().getTime() + OneWeekSecond', new Date().getTime() + OneWeekSecond);
     return from(Storage.put(
       fileName,
       blobFile,
@@ -253,7 +251,6 @@ export class TaskDetailLogic {
   }
 
   createMessage(data: UpdateTaskMutation, argContent?: string | IsMessageContent): Observable<any> {
-    console.log(data);
     return this.createMessageContent(data, argContent)
       .pipe(concatMap((messageContent) => this.taskDetailService.createMessageItem(messageContent)));
   }
