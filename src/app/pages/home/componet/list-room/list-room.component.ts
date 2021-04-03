@@ -55,7 +55,7 @@ export class ListRoomComponent implements OnInit {
     this.router.navigate(['home/task', `${room.id}`]);
   }
 
-  deleteRoom(roomId): void {
+  deleteRoom(roomId, slideItem): void {
     this.logic.fetchRoomMembers(roomId, this.currentUserId)
       .pipe(switchMap((data) => data.length === 0 ?
         this.deleteRoomItem(roomId) : this.removeOwnFromRoom(roomId, this.currentUserId))
@@ -64,11 +64,11 @@ export class ListRoomComponent implements OnInit {
       .pipe(concatMap((data) => this.logic.setExitsRoomAndUser(data)))
       .subscribe((result) => {
         this.roomGroupsItems = result;
+        slideItem.close();
       });
   }
 
-  async presentDeleteAlert(item): Promise<void> {
-    console.log(item);
+  async presentDeleteAlert(item, slideItem): Promise<void> {
     const alert = await this.alertCtrl.create({
       header: '項目を削除します',
       subHeader: `${item.room.name}を削除します。よろしいでしょうか？`,
@@ -77,12 +77,15 @@ export class ListRoomComponent implements OnInit {
         {
           text: 'キャンセル',
           role: 'cancel',
+          handler: () => {
+            slideItem.close();
+          }
         },
         {
           text: 'OK',
           role: 'ok',
           handler: () => {
-            this.deleteRoom(item.roomID);
+            this.deleteRoom(item.roomID, slideItem);
           }
         }
       ]
@@ -96,5 +99,13 @@ export class ListRoomComponent implements OnInit {
 
   removeOwnFromRoom(roomId: string, currentUserId: string): Observable<any> {
     return this.logic.removeMeFromRoom(roomId, currentUserId);
+  }
+
+  testClose(ev) {
+    console.log('test', ev);
+  }
+
+  testOpen(ev) {
+    console.log('test', ev);
   }
 }
