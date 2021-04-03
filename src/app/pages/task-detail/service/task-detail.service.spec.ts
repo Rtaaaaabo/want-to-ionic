@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { TaskDetailService } from './task-detail.service';
 
-describe('TaskDetailServiceService', () => {
+describe('TaskDetailService', () => {
   let service: TaskDetailService;
 
   beforeEach(() => {
