@@ -7,7 +7,7 @@ describe('TaskDetailServiceService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(TaskDetailService;
+    service = TestBed.inject(TaskDetailService);
   });
 
   it('should be created', () => {

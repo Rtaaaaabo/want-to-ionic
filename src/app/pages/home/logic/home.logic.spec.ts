@@ -11,6 +11,7 @@ describe('HomeLogic', () => {
   });
 
   it('should be created', () => {
+    console.log('Service', service);
     expect(service).toBeTruthy();
   });
 });
