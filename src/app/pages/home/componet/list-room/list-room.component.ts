@@ -100,12 +100,4 @@ export class ListRoomComponent implements OnInit {
   removeOwnFromRoom(roomId: string, currentUserId: string): Observable<any> {
     return this.logic.removeMeFromRoom(roomId, currentUserId);
   }
-
-  testClose(ev) {
-    console.log('test', ev);
-  }
-
-  testOpen(ev) {
-    console.log('test', ev);
-  }
 }
