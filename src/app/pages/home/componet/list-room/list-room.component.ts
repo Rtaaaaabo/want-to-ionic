@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ModalController } from '@ionic/angular';
+import { ModalController, AlertController } from '@ionic/angular';
 import { AddRoomModalComponent } from '../../../../shared/component/modal/add-room-modal/add-room-modal.component';
 import { HomeLogic } from '../../logic/home.logic';
 import { from, Observable } from 'rxjs';
@@ -21,6 +21,7 @@ export class ListRoomComponent implements OnInit {
     private modalCtrl: ModalController,
     private logic: HomeLogic,
     private router: Router,
+    private readonly alertCtrl: AlertController,
   ) { }
 
   ngOnInit() {
@@ -63,7 +64,30 @@ export class ListRoomComponent implements OnInit {
       .pipe(concatMap((data) => this.logic.setExitsRoomAndUser(data)))
       .subscribe((result) => {
         this.roomGroupsItems = result;
-      })
+      });
+  }
+
+  async presentDeleteAlert(item): Promise<void> {
+    console.log(item);
+    const alert = await this.alertCtrl.create({
+      header: '項目を削除します',
+      subHeader: `${item.room.name}を削除します。よろしいでしょうか？`,
+      message: '参加者がいなければ完全に消えます。参加者がいる場合は退出します。',
+      buttons: [
+        {
+          text: 'キャンセル',
+          role: 'cancel',
+        },
+        {
+          text: 'OK',
+          role: 'ok',
+          handler: () => {
+            this.deleteRoom(item.roomID);
+          }
+        }
+      ]
+    });
+    alert.present();
   }
 
   deleteRoomItem(roomId: string): Observable<any> {
