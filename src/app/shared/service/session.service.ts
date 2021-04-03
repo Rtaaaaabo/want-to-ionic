@@ -1,5 +1,4 @@
 import { Injectable } from "@angular/core";
-import { Router } from "@angular/router";
 import { Auth } from "aws-amplify";
 import { Observable, from, BehaviorSubject, of } from "rxjs";
 import { map, tap, catchError } from "rxjs/operators";
@@ -10,7 +9,7 @@ import { map, tap, catchError } from "rxjs/operators";
 export class SessionService {
   loggedIn: BehaviorSubject<boolean>;
 
-  constructor(private readonly router: Router) {
+  constructor() {
     this.loggedIn = new BehaviorSubject<boolean>(false);
   }
 

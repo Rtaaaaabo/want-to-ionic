@@ -10,7 +10,8 @@ describe('SessionService', () => {
     service = TestBed.inject(SessionService);
   });
 
-  it('should be created', () => {
+  it('Created SessionService', () => {
+    console.log('セッションService', service);
     expect(service).toBeTruthy();
   });
 });
