@@ -3,12 +3,11 @@ import { SessionService } from '../../../shared/service/session.service';
 import { AmplifyService } from '../../../shared/service/amplify.service';
 import { v4 as uuid } from 'uuid';
 import { Observable, from } from 'rxjs';
-import { catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
-export class SignupLogicService {
+export class SignupLogic {
 
   constructor(
     private sessionService: SessionService,

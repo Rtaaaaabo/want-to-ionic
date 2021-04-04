@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
-import { SignupLogicService } from './logic/signup-logic.service';
+import { SignupLogic } from './logic/signup.logic';
 import { InterfaceSignup } from '../../interfaces/signup.interface';
 
 @Component({
@@ -20,7 +20,7 @@ export class SignupPage implements OnInit {
   constructor(
     private router: Router,
     private location: Location,
-    private logic: SignupLogicService
+    private logic: SignupLogic
   ) { }
 
   ngOnInit() {

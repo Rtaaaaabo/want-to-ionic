@@ -11,7 +11,6 @@ describe('SessionService', () => {
   });
 
   it('Created SessionService', () => {
-    console.log('セッションService', service);
     expect(service).toBeTruthy();
   });
 });

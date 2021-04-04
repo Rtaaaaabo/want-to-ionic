@@ -6,7 +6,7 @@ import { IonicModule } from '@ionic/angular';
 import { SharedModule } from '../../shared/shared.module';
 import { SignupPageRoutingModule } from './signup-routing.module';
 import { SignupPage } from './signup.page';
-import { SignupLogicService } from './logic/signup-logic.service';
+import { SignupLogic } from './logic/signup.logic';
 
 @NgModule({
   imports: [
@@ -18,6 +18,6 @@ import { SignupLogicService } from './logic/signup-logic.service';
     SignupPageRoutingModule
   ],
   declarations: [SignupPage],
-  providers: [SignupLogicService],
+  providers: [SignupLogic],
 })
 export class SignupPageModule { }
