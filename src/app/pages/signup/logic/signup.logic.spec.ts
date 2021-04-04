@@ -1,16 +1,62 @@
+
 import { TestBed } from '@angular/core/testing';
-
 import { SignupLogic } from './signup.logic';
+import { SessionService } from 'src/app/shared/service/session.service';
 
-describe('SignupLogic', () => {
-  let service: SignupLogic;
+jest.mock('../../../shared/service/session.service.ts');
+
+describe('SignUpLogic', () => {
+  let logic: SignupLogic;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(SignupLogic);
+    TestBed.configureTestingModule({
+      providers: [SessionService]
+    });
+    logic = TestBed.inject(SignupLogic);
   });
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
+  describe('テスト準備', () => {
+    it('SignUpLogicがインスタンス化されていること', () => {
+      expect(logic).toBeTruthy();
+    });
+
+    it('依存クラス(SessionService)がMock化されていること', () => {
+      const mockedSessionService = TestBed.inject(SessionService) as jest.Mocked<SessionService>;
+      expect(mockedSessionService.entryUserSignup.mock).toBeTruthy();
+    });
+  })
+
+  describe('SignUpLogicメソッドのテスト', () => {
+    it('Mock用のデータを返却すること', () => {
+      const mockedSessionService = TestBed.inject(SessionService) as jest.Mocked<SessionService>;
+      const expectedResult = 'success';
+      const mockArgs = {
+        username: 'MockedEmail',
+        password: 'MockedPassword',
+        attributes: {
+          email: 'MockedEmail',
+        }
+      }
+      const mockArgsParams = {
+        username: 'MockedEmail',
+        email: 'MockedEmail',
+        passwordform: 'MockedPassword',
+      }
+
+      const result = logic.entrySignupUser(mockArgsParams);
+      expect(result).toBeUndefined();
+    })
+
+    it('SessionServiceのentryUserSignUpメソッドを呼び出していること', () => {
+      const mockArgsParams = {
+        username: 'MockedEmail',
+        email: 'MockedEmail',
+        passwordform: 'MockedPassword',
+      }
+      const sessionService = TestBed.inject(SessionService);
+      const spy = jest.spyOn(sessionService, 'entryUserSignup');
+      logic.entrySignupUser(mockArgsParams);
+      expect(spy).toBeCalled();
+    })
+  })
 });
