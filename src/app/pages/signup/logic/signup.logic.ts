@@ -13,7 +13,7 @@ export class SignupLogic {
     private sessionService: SessionService,
   ) { }
 
-  entrySignupUser(value: InterfaceSignup): Observable<string> {
+  entrySignupUser(value: InterfaceSignup): Observable<any> {
     const signupContent = {
       username: value.email,
       password: value.passwordform,

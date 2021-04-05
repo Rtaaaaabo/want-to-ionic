@@ -1,6 +1,7 @@
 
 import { TestBed } from '@angular/core/testing';
 import { SignupLogic } from './signup.logic';
+import { of } from 'rxjs';
 import { SessionService } from 'src/app/shared/service/session.service';
 
 jest.mock('../../../shared/service/session.service.ts');
@@ -27,26 +28,6 @@ describe('SignUpLogic', () => {
   })
 
   describe('SignUpLogicメソッドのテスト', () => {
-    it('Mock用のデータを返却すること', () => {
-      const mockedSessionService = TestBed.inject(SessionService) as jest.Mocked<SessionService>;
-      const expectedResult = 'success';
-      const mockArgs = {
-        username: 'MockedEmail',
-        password: 'MockedPassword',
-        attributes: {
-          email: 'MockedEmail',
-        }
-      }
-      const mockArgsParams = {
-        username: 'MockedEmail',
-        email: 'MockedEmail',
-        passwordform: 'MockedPassword',
-      }
-
-      const result = logic.entrySignupUser(mockArgsParams);
-      expect(result).toBeUndefined();
-    })
-
     it('SessionServiceのentryUserSignUpメソッドを呼び出していること', () => {
       const mockArgsParams = {
         username: 'MockedEmail',
