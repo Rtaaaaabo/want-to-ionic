@@ -1,7 +1,6 @@
 
 import { TestBed } from '@angular/core/testing';
 import { SignupLogic } from './signup.logic';
-import { of } from 'rxjs';
 import { SessionService } from 'src/app/shared/service/session.service';
 
 jest.mock('../../../shared/service/session.service.ts');

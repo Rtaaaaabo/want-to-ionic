@@ -1,16 +1,25 @@
 import { TestBed } from '@angular/core/testing';
 
 import { HomeLogic } from './home.logic';
+import { HomeService } from '../service/home.service';
+import { SessionService } from '../../../shared/service/session.service';
 
 describe('HomeLogic', () => {
-  let service: HomeLogic;
+  let logic: HomeLogic;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(HomeLogic);
+    TestBed.configureTestingModule({
+      providers: [HomeService, SessionService]
+    });
+    logic = TestBed.inject(HomeLogic);
   });
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
+  test('HomeLogicがインスタンス化されていること', () => {
+    expect(logic).toBeTruthy();
   });
+
+  test('checkRegistrationUserのテスト', () => {
+    const homeService = TestBed.inject(HomeService);
+    const mockHomeServiceCheckRegistration = jest.spyOn(homeService, 'checkRegistrationUser').
+  })
 });

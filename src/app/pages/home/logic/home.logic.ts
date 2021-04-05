@@ -22,8 +22,8 @@ const OneWeekSecond = 64480;
 export class HomeLogic {
 
   constructor(
-    private homeService: HomeService,
-    private sessionService: SessionService,
+    private readonly homeService: HomeService,
+    private readonly sessionService: SessionService,
   ) { }
 
   checkRegistrationUser(attribute: Attribute): Observable<any> {
