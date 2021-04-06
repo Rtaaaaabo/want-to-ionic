@@ -4,7 +4,7 @@ import { SessionService } from '../../../shared/service/session.service';
 import { v4 as uuid } from 'uuid';
 import { Observable, from, of } from 'rxjs';
 import { concatMap, map, filter, toArray } from 'rxjs/operators';
-import { ModelRoomGroupFilterInput } from 'src/app/shared/service/amplify.service';
+import { ListUsersQuery, ModelRoomGroupFilterInput } from 'src/app/shared/service/amplify.service';
 import { ResponseListRoomGroupsQueryItems } from '../service/reponse/response.model';
 import { Storage } from 'aws-amplify';
 
@@ -26,7 +26,7 @@ export class HomeLogic {
     private readonly sessionService: SessionService,
   ) { }
 
-  checkRegistrationUser(attribute: Attribute): Observable<any> {
+  checkRegistrationUser(attribute: Attribute): Observable<ListUsersQuery> {
     return this.homeService.checkRegistrationUser(attribute.email);
   }
 

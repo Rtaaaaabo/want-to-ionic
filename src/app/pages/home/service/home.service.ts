@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AmplifyService, ModelRoomFilterInput, ListRoomsQuery, ModelUserFilterInput, ModelRoomGroupFilterInput, ListRoomGroupsQuery } from '../../../shared/service/amplify.service';
+import { AmplifyService, ModelRoomFilterInput, ListRoomsQuery, ModelUserFilterInput, ModelRoomGroupFilterInput, ListRoomGroupsQuery, ListUsersQuery } from '../../../shared/service/amplify.service';
 import { from, Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
@@ -11,7 +11,7 @@ export class HomeService {
 
   constructor(private amplifyService: AmplifyService) { }
 
-  checkRegistrationUser(email: string): Observable<any> {
+  checkRegistrationUser(email: string): Observable<ListUsersQuery> {
     const filterContent: ModelUserFilterInput = {
       email: {
         eq: `${email}`
