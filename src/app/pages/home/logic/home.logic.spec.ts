@@ -4,8 +4,7 @@ import { HomeLogic } from './home.logic';
 import { HomeService } from '../service/home.service';
 import { SessionService } from '../../../shared/service/session.service';
 import { of } from 'rxjs';
-import { ListUsersQuery } from 'src/app/shared/service/amplify.service';
-import { Session } from 'inspector';
+import { CreateRoomMutation, ListUsersQuery } from 'src/app/shared/service/amplify.service';
 
 
 describe('HomeLogic', () => {
@@ -79,5 +78,99 @@ describe('HomeLogic', () => {
       expect(result).toBe(expectedResponse);
     });
     expect(mockSessionServiceFetchCurrentUser).toHaveBeenCalled();
-  })
+  });
+
+  test('createRoomのテスト', () => {
+    const mockResponseService = {
+      __typename: "Room",
+      id: 'testId',
+      name: 'testName',
+      companyID: 'testCompanyId',
+      description: 'testDescription',
+      company: {
+        __typename: "Company",
+        id: 'testCompanyId',
+        name: 'testCompanyName',
+        domain: 'testCompanyDomain',
+        createdAt: 'testCreatedAt',
+        updatedAt: 'testUpdatedAt',
+      },
+      createdAt: 'testCreatedAt',
+      updatedAt: 'testUpdatedAt',
+    } as CreateRoomMutation;
+    const argsParam = {
+      nameItem: 'testArgsName',
+      descriptionItem: 'testArgsDescription',
+    }
+    const homeService = TestBed.inject(HomeService);
+    const mockHomeServiceCreateUserRoomGroup = jest.spyOn(homeService, 'createRoom').mockReturnValue(of(mockResponseService));
+    logic.createRoom(argsParam).subscribe((result) => {
+      expect(result).toBe(mockResponseService);
+    });
+    expect(mockHomeServiceCreateUserRoomGroup).toBeCalled();
+  });
+
+  test('createUserのテスト', () => {
+
+  });
+
+  test('updateUserのテスト', () => {
+
+  });
+
+  test('deleteRoomItemのテスト', () => {
+
+  });
+
+  test('createUserRoomGroupのテスト', () => {
+
+  });
+
+  test('fetchRoomMembersのテスト', () => {
+
+  });
+
+  test('removeMeFromRoomのテスト', () => {
+
+  });
+
+  test('fetchRoomGroupsIdのテスト', () => {
+
+  });
+
+  test('fetchRoomListのテスト', () => {
+
+  });
+
+  test('fetchAvatarIconUrlのテスト', () => {
+
+  });
+
+  test('getDirStringのテスト', () => {
+
+  });
+
+  test('setExitsRoomAndUserのテスト', () => {
+
+  });
+
+  test('getContentTypeのテスト', () => {
+
+  });
+
+  test('makeExtのテスト', () => {
+
+  });
+
+  test('base64toBlobのテスト', () => {
+
+  });
+
+  test('putStorageのテスト', () => {
+
+  });
+
+  test('getStorageのテスト', () => {
+
+  });
 });

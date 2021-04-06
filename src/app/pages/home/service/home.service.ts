@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { AmplifyService, ModelRoomFilterInput, ListRoomsQuery, ModelUserFilterInput, ModelRoomGroupFilterInput, ListRoomGroupsQuery, ListUsersQuery } from '../../../shared/service/amplify.service';
+import { AmplifyService, ModelRoomFilterInput, ListRoomsQuery, ModelUserFilterInput, ModelRoomGroupFilterInput, ListRoomGroupsQuery, ListUsersQuery, CreateRoomMutation } from '../../../shared/service/amplify.service';
 import { from, Observable } from 'rxjs';
-import { filter } from 'rxjs/operators';
-
+import { InterfaceArgsCreateRoom } from '../model/home.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -20,7 +19,7 @@ export class HomeService {
     return from(this.amplifyService.ListUsers(filterContent));
   }
 
-  createRoom(content): Observable<any> {
+  createRoom(content: InterfaceArgsCreateRoom): Observable<CreateRoomMutation> {
     return from(this.amplifyService.CreateRoom(content));
   }
 

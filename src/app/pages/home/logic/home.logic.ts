@@ -4,7 +4,7 @@ import { SessionService } from '../../../shared/service/session.service';
 import { v4 as uuid } from 'uuid';
 import { Observable, from, of } from 'rxjs';
 import { concatMap, map, filter, toArray } from 'rxjs/operators';
-import { ListUsersQuery, ModelRoomGroupFilterInput } from 'src/app/shared/service/amplify.service';
+import { CreateRoomMutation, ListUsersQuery, ModelRoomGroupFilterInput } from 'src/app/shared/service/amplify.service';
 import { ResponseListRoomGroupsQueryItems } from '../service/reponse/response.model';
 import { Storage } from 'aws-amplify';
 
@@ -35,7 +35,7 @@ export class HomeLogic {
       .pipe(map((res) => res.attributes));
   }
 
-  createRoom(content): Observable<any> {
+  createRoom(content): Observable<CreateRoomMutation> {
     const requestContent = {
       id: `${uuid()}`,
       companyID: 'takuCloudCom',
