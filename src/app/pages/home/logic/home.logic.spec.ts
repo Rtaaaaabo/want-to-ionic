@@ -1,10 +1,10 @@
 import { TestBed } from '@angular/core/testing';
-
+import { FormGroup } from '@angular/forms';
 import { HomeLogic } from './home.logic';
 import { HomeService } from '../service/home.service';
 import { SessionService } from '../../../shared/service/session.service';
 import { of } from 'rxjs';
-import { CreateRoomMutation, ListUsersQuery } from 'src/app/shared/service/amplify.service';
+import { CreateRoomGroupMutation, CreateRoomMutation, CreateUserMutation, DeleteRoomMutation, ListUsersQuery } from 'src/app/shared/service/amplify.service';
 
 
 describe('HomeLogic', () => {
@@ -110,20 +110,37 @@ describe('HomeLogic', () => {
     expect(mockHomeServiceCreateUserRoomGroup).toBeCalled();
   });
 
-  test('createUserのテスト', () => {
-
-  });
-
-  test('updateUserのテスト', () => {
-
-  });
 
   test('deleteRoomItemのテスト', () => {
-
+    const expectedResult = {
+      __typename: "Room",
+      id: 'testId',
+      name: 'testName',
+      companyID: 'testCompanyId',
+      description: 'testDescription',
+    } as DeleteRoomMutation;
+    const argsRoomId = 'testRoomId'
+    const homeService = TestBed.inject(HomeService);
+    const mockDeleteRoomItem = jest.spyOn(homeService, "deleteRoomItem").mockReturnValue(of(expectedResult));
+    logic.deleteRoomItem(argsRoomId).subscribe(result => {
+      expect(result).toBe(expectedResult);
+    });
+    expect(mockDeleteRoomItem).toBeCalled();
   });
 
   test('createUserRoomGroupのテスト', () => {
-
+    const expectedResult = {
+      __typename: "RoomGroup",
+      id: 'testId',
+      roomID: 'testRoomId',
+      userID: 'testUserId;'
+    } as CreateRoomGroupMutation
+    const homeService = TestBed.inject(HomeService);
+    const mockCreateUserRoomGroup = jest.spyOn(homeService, "createUserRoomGroup").mockReturnValue(of(expectedResult));
+    logic.createUserRoomGroup('tesUserId', 'testRoomId').subscribe(result => {
+      expect(result).toBe(expectedResult);
+    });
+    expect(mockCreateUserRoomGroup).toBeCalled();
   });
 
   test('fetchRoomMembersのテスト', () => {

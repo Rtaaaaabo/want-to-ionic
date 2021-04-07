@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { AmplifyService, ModelRoomFilterInput, ListRoomsQuery, ModelUserFilterInput, ModelRoomGroupFilterInput, ListRoomGroupsQuery, ListUsersQuery, CreateRoomMutation } from '../../../shared/service/amplify.service';
+import { AmplifyService, ModelRoomFilterInput, ListRoomsQuery, ModelUserFilterInput, ModelRoomGroupFilterInput, ListRoomGroupsQuery, ListUsersQuery, CreateRoomMutation, CreateUserMutation, CreateUserInput, DeleteRoomMutation, CreateRoomGroupMutation } from '../../../shared/service/amplify.service';
 import { from, Observable } from 'rxjs';
-import { InterfaceArgsCreateRoom } from '../model/home.interface';
+import { InterfaceArgsCreateRoom, ISArgsCreateRoomGroup } from '../model/home.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -23,7 +23,7 @@ export class HomeService {
     return from(this.amplifyService.CreateRoom(content));
   }
 
-  createUser(content): Observable<any> {
+  createUser(content: CreateUserInput): Observable<CreateUserMutation> {
     return from(this.amplifyService.CreateUser(content));
   }
 
@@ -35,14 +35,14 @@ export class HomeService {
     return from(this.amplifyService.ListRoomGroups(filterContent));
   }
 
-  deleteRoomItem(roomId: string): Observable<any> {
+  deleteRoomItem(roomId: string): Observable<DeleteRoomMutation> {
     const requestContent = {
       id: roomId
     }
     return from(this.amplifyService.DeleteRoom(requestContent));
   }
 
-  createUserRoomGroup(filterContent): Observable<any> {
+  createUserRoomGroup(filterContent: ISArgsCreateRoomGroup): Observable<CreateRoomGroupMutation> {
     return from(this.amplifyService.CreateRoomGroup(filterContent));
   }
 
