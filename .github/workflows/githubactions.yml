@@ -27,7 +27,7 @@ jobs:
           author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
           base: staging
           branch: develop
-          title: "DATE_Release"
+          title: "For Release"
 
       - name: Check outputs
         run: |
