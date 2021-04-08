@@ -26,7 +26,7 @@ jobs:
           token: ${{ secrets.PAT }}
           author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
           # base: staging
-          branch: staging
+          # branch: staging
           title: "For Release DATE"
 
       - name: Check outputs
