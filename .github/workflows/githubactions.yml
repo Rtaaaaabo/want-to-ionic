@@ -14,11 +14,6 @@ jobs:
   createPullRequest:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout branch staging
-        uses: actions/checkout@v2
-        with:
-          ref: "staging"
-
       - name: Checkout branch develop
         uses: actions/checkout@v2
         with:
