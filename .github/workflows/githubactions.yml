@@ -17,7 +17,7 @@ jobs:
       - name: Checkout branch develop
         uses: actions/checkout@v2
         with:
-          ref: "develop"
+          ref: "staging"
 
       - name: Create Pull Request
         id: cpr
