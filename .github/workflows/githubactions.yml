@@ -32,7 +32,6 @@ jobs:
           author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
           base: develop
           branch: staging
-          delete-branch: true
           title: "DATE_Release"
 
       - name: Check outputs
