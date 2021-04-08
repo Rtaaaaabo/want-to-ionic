@@ -25,9 +25,10 @@ jobs:
         with:
           token: ${{ secrets.PAT }}
           author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
-          base: staging
+          base: develop
+          branch: staging
           delete-branch: true
-          title: "20210310_Release"
+          title: "DATE_Release"
 
       - name: Check outputs
         run: |
