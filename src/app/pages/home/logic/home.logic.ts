@@ -4,9 +4,11 @@ import { SessionService } from '../../../shared/service/session.service';
 import { v4 as uuid } from 'uuid';
 import { Observable, from, of } from 'rxjs';
 import { concatMap, map, filter, toArray } from 'rxjs/operators';
-import { ModelRoomGroupFilterInput } from 'src/app/shared/service/amplify.service';
+import { CreateRoomGroupMutation, CreateRoomMutation, CreateUserMutation, DeleteRoomMutation, ListUsersQuery, ModelRoomGroupFilterInput } from 'src/app/shared/service/amplify.service';
 import { ResponseListRoomGroupsQueryItems } from '../service/reponse/response.model';
 import { Storage } from 'aws-amplify';
+import { ILResponseFetchRoomMembers, InterfaceLogicArgsCreateRoom } from '../model/home.interface';
+import { FormGroup } from '@angular/forms';
 
 interface Attribute {
   email: string,
@@ -22,11 +24,11 @@ const OneWeekSecond = 64480;
 export class HomeLogic {
 
   constructor(
-    private homeService: HomeService,
-    private sessionService: SessionService,
+    private readonly homeService: HomeService,
+    private readonly sessionService: SessionService,
   ) { }
 
-  checkRegistrationUser(attribute: Attribute): Observable<any> {
+  checkRegistrationUser(attribute: Attribute): Observable<ListUsersQuery> {
     return this.homeService.checkRegistrationUser(attribute.email);
   }
 
@@ -35,7 +37,7 @@ export class HomeLogic {
       .pipe(map((res) => res.attributes));
   }
 
-  createRoom(content): Observable<any> {
+  createRoom(content: InterfaceLogicArgsCreateRoom): Observable<CreateRoomMutation> {
     const requestContent = {
       id: `${uuid()}`,
       companyID: 'takuCloudCom',
@@ -45,7 +47,8 @@ export class HomeLogic {
     return this.homeService.createRoom(requestContent);
   }
 
-  createUser(formContent): Observable<any> {
+  createUser(formContent: FormGroup): Observable<CreateUserMutation> {
+    console.log(formContent);
     const requestContent = {
       id: formContent.get('id').value,
       companyID: 'takuCloudCom',
@@ -58,7 +61,8 @@ export class HomeLogic {
     return this.homeService.createUser(requestContent);
   }
 
-  updateUser(formContent): Observable<any> {
+  updateUser(formContent: FormGroup): Observable<any> {
+    console.log(formContent);
     const requestContent = {
       id: formContent.get('id').value,
       companyID: 'takuCloudCom',
@@ -71,11 +75,11 @@ export class HomeLogic {
     return this.homeService.updateUser(requestContent);
   }
 
-  deleteRoomItem(roomId: string): Observable<any> {
+  deleteRoomItem(roomId: string): Observable<DeleteRoomMutation> {
     return this.homeService.deleteRoomItem(roomId);
   }
 
-  createUserRoomGroup(userId, roomId): Observable<any> {
+  createUserRoomGroup(userId: string, roomId: string): Observable<CreateRoomGroupMutation> {
     const content = {
       id: `user-room-group-${uuid()}`,
       roomID: `${roomId}`,
@@ -84,7 +88,7 @@ export class HomeLogic {
     return this.homeService.createUserRoomGroup(content);
   }
 
-  fetchRoomMembers(roomId: string, currentUserId: string): Observable<any> {
+  fetchRoomMembers(roomId: string, currentUserId: string): Observable<Array<ILResponseFetchRoomMembers>> {
     const filterContent: ModelRoomGroupFilterInput = {
       roomID: {
         eq: `${roomId}`

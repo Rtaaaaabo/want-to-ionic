@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { AmplifyService, ModelRoomFilterInput, ListRoomsQuery, ModelUserFilterInput, ModelRoomGroupFilterInput, ListRoomGroupsQuery } from '../../../shared/service/amplify.service';
+import { AmplifyService, ModelRoomFilterInput, ListRoomsQuery, ModelUserFilterInput, ModelRoomGroupFilterInput, ListRoomGroupsQuery, ListUsersQuery, CreateRoomMutation, CreateUserMutation, CreateUserInput, DeleteRoomMutation, CreateRoomGroupMutation } from '../../../shared/service/amplify.service';
 import { from, Observable } from 'rxjs';
-import { filter } from 'rxjs/operators';
-
+import { InterfaceArgsCreateRoom, ISArgsCreateRoomGroup } from '../model/home.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -11,21 +10,20 @@ export class HomeService {
 
   constructor(private amplifyService: AmplifyService) { }
 
-  checkRegistrationUser(email: string): Observable<any> {
+  checkRegistrationUser(email: string): Observable<ListUsersQuery> {
     const filterContent: ModelUserFilterInput = {
       email: {
         eq: `${email}`
       }
     }
-    console.log('filterContent', filterContent);
     return from(this.amplifyService.ListUsers(filterContent));
   }
 
-  createRoom(content): Observable<any> {
+  createRoom(content: InterfaceArgsCreateRoom): Observable<CreateRoomMutation> {
     return from(this.amplifyService.CreateRoom(content));
   }
 
-  createUser(content): Observable<any> {
+  createUser(content: CreateUserInput): Observable<CreateUserMutation> {
     return from(this.amplifyService.CreateUser(content));
   }
 
@@ -37,22 +35,22 @@ export class HomeService {
     return from(this.amplifyService.ListRoomGroups(filterContent));
   }
 
-  deleteRoomItem(roomId: string): Observable<any> {
+  deleteRoomItem(roomId: string): Observable<DeleteRoomMutation> {
     const requestContent = {
       id: roomId
     }
     return from(this.amplifyService.DeleteRoom(requestContent));
   }
 
-  createUserRoomGroup(filterContent): Observable<any> {
+  createUserRoomGroup(filterContent: ISArgsCreateRoomGroup): Observable<CreateRoomGroupMutation> {
     return from(this.amplifyService.CreateRoomGroup(filterContent));
   }
 
-  fetchRoomMembers(filterContent: ModelRoomGroupFilterInput): Observable<any> {
+  fetchRoomMembers(filterContent: ModelRoomGroupFilterInput): Observable<ListRoomGroupsQuery> {
     return from(this.amplifyService.ListRoomGroups(filterContent));
   }
 
-  fetchRoomGroupsId(filterContent: ModelRoomGroupFilterInput): Observable<any> {
+  fetchRoomGroupsId(filterContent: ModelRoomGroupFilterInput): Observable<ListRoomGroupsQuery> {
     return from(this.amplifyService.ListRoomGroups(filterContent));
   }
 

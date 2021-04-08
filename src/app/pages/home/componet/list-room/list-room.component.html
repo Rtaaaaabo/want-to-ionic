@@ -17,7 +17,7 @@
         <ion-icon
           slot="icon-only"
           name="trash"
-          (click)="deleteRoom(item.room?.id)"
+          (click)="presentDeleteAlert(item, slidingItem)"
         ></ion-icon>
       </ion-item-option>
     </ion-item-options>

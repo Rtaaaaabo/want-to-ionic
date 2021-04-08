@@ -61,7 +61,6 @@ export class EditProfileModalComponent implements OnInit {
   ngOnInit(): void {
     if (this.status === 'new') {
       this.title = 'プロフィールの作成';
-      console.log(this.email);
       this.editProfileForm.patchValue({
         id: this.userId,
         targetEmail: this.email

@@ -7,9 +7,10 @@
 <ion-content>
   <ion-list class="list-header">
     <ion-card *ngFor="let item of ownTaskItems">
-      <ion-card-header>
+      <ion-card-header (click)="navigateToTaskDetail(item)">
         <ion-card-subtitle>
-          {{ item.task.scheduleDate | date: 'yyyy/MM/dd' }} {{item.room.name}}
+          {{item.room.name}} {{ item.task.scheduleDate | date: 'yyyy/MM/dd'
+          }}まで
         </ion-card-subtitle>
         <ion-card-title>{{item.task.title}}</ion-card-title>
       </ion-card-header>

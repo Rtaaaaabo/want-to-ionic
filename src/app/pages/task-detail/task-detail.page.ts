@@ -26,7 +26,7 @@ export class TaskDetailPage implements OnInit {
   link = "comment"
   fragmentComment = '';
   newMsg: string = '';
-  message: ListMessagesQuery;
+  message: Array<any>;
   currentUserId: string;
   roomMembers: Array<ListRoomGroupsQuery>;
   arrayImageBase64Data: Array<any> = [];
@@ -73,7 +73,6 @@ export class TaskDetailPage implements OnInit {
       this.currentUserId = result.currentUserInfo.sub;
       this.roomMembers = result.anyTask.items;
       this.message = result.messagePerTask.items;
-      console.log(this.message);
     });
   }
 

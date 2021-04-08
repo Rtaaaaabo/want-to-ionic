@@ -53,7 +53,6 @@ export class OwnTaskPage implements OnInit, AfterViewInit {
   }
 
   async presentDoneTaskAlert(alertBody): Promise<void> {
-    console.log(alertBody);
     const alert = await this.alertCtrl.create({
       header: '完了にしますか？',
       message: `${alertBody.task.title}を完了します。`,
@@ -73,7 +72,6 @@ export class OwnTaskPage implements OnInit, AfterViewInit {
               .pipe(concatMap(({ items }) => this.logic.setTaskPerRoom(items)))
               .pipe(concatMap((items) => this.logic.filterExceptDoneTask(items)))
               .subscribe((data) => {
-                console.log('Data: ', data);
                 this.ownTaskItems = data;
               })
           }

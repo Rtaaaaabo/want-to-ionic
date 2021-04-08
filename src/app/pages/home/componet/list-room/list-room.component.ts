@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ModalController } from '@ionic/angular';
+import { ModalController, AlertController } from '@ionic/angular';
 import { AddRoomModalComponent } from '../../../../shared/component/modal/add-room-modal/add-room-modal.component';
 import { HomeLogic } from '../../logic/home.logic';
 import { from, Observable } from 'rxjs';
@@ -21,6 +21,7 @@ export class ListRoomComponent implements OnInit {
     private modalCtrl: ModalController,
     private logic: HomeLogic,
     private router: Router,
+    private readonly alertCtrl: AlertController,
   ) { }
 
   ngOnInit() {
@@ -29,7 +30,6 @@ export class ListRoomComponent implements OnInit {
       .pipe((concatMap(() => this.logic.fetchRoomList(this.currentUserId))))
       .pipe(concatMap((data) => this.logic.setExitsRoomAndUser(data)))
       .subscribe((data: Array<ResponseListRoomGroupsQueryItems>) => {
-        console.log(data);
         this.roomGroupsItems = data;
       })
   }
@@ -55,7 +55,7 @@ export class ListRoomComponent implements OnInit {
     this.router.navigate(['home/task', `${room.id}`]);
   }
 
-  deleteRoom(roomId): void {
+  deleteRoom(roomId, slideItem): void {
     this.logic.fetchRoomMembers(roomId, this.currentUserId)
       .pipe(switchMap((data) => data.length === 0 ?
         this.deleteRoomItem(roomId) : this.removeOwnFromRoom(roomId, this.currentUserId))
@@ -64,7 +64,33 @@ export class ListRoomComponent implements OnInit {
       .pipe(concatMap((data) => this.logic.setExitsRoomAndUser(data)))
       .subscribe((result) => {
         this.roomGroupsItems = result;
-      })
+        slideItem.close();
+      });
+  }
+
+  async presentDeleteAlert(item, slideItem): Promise<void> {
+    const alert = await this.alertCtrl.create({
+      header: '項目を削除します',
+      subHeader: `${item.room.name}を削除します。よろしいでしょうか？`,
+      message: '参加者がいなければ完全に消えます。参加者がいる場合は退出します。',
+      buttons: [
+        {
+          text: 'キャンセル',
+          role: 'cancel',
+          handler: () => {
+            slideItem.close();
+          }
+        },
+        {
+          text: 'OK',
+          role: 'ok',
+          handler: () => {
+            this.deleteRoom(item.roomID, slideItem);
+          }
+        }
+      ]
+    });
+    alert.present();
   }
 
   deleteRoomItem(roomId: string): Observable<any> {
