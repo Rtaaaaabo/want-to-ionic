@@ -18,6 +18,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           token: ${{ secrets.PAT }}
+          ref: develop
 
       - name: Create Pull Request
         id: cpr
@@ -25,6 +26,8 @@ jobs:
         with:
           token: ${{ secrets.PAT }}
           author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
+          base: staging
+          branch: develop
           delete-branch: false
           title: "20210310_Release"
 

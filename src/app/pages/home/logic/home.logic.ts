@@ -7,7 +7,7 @@ import { concatMap, map, filter, toArray } from 'rxjs/operators';
 import { CreateRoomGroupMutation, CreateRoomMutation, CreateUserMutation, DeleteRoomMutation, ListUsersQuery, ModelRoomGroupFilterInput } from 'src/app/shared/service/amplify.service';
 import { ResponseListRoomGroupsQueryItems } from '../service/reponse/response.model';
 import { Storage } from 'aws-amplify';
-import { InterfaceLogicArgsCreateRoom } from '../model/home.interface';
+import { ILResponseFetchRoomMembers, InterfaceLogicArgsCreateRoom } from '../model/home.interface';
 import { FormGroup } from '@angular/forms';
 
 interface Attribute {
@@ -88,7 +88,7 @@ export class HomeLogic {
     return this.homeService.createUserRoomGroup(content);
   }
 
-  fetchRoomMembers(roomId: string, currentUserId: string): Observable<any> {
+  fetchRoomMembers(roomId: string, currentUserId: string): Observable<Array<ILResponseFetchRoomMembers>> {
     const filterContent: ModelRoomGroupFilterInput = {
       roomID: {
         eq: `${roomId}`

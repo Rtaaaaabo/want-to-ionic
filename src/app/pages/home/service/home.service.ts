@@ -46,11 +46,11 @@ export class HomeService {
     return from(this.amplifyService.CreateRoomGroup(filterContent));
   }
 
-  fetchRoomMembers(filterContent: ModelRoomGroupFilterInput): Observable<any> {
+  fetchRoomMembers(filterContent: ModelRoomGroupFilterInput): Observable<ListRoomGroupsQuery> {
     return from(this.amplifyService.ListRoomGroups(filterContent));
   }
 
-  fetchRoomGroupsId(filterContent: ModelRoomGroupFilterInput): Observable<any> {
+  fetchRoomGroupsId(filterContent: ModelRoomGroupFilterInput): Observable<ListRoomGroupsQuery> {
     return from(this.amplifyService.ListRoomGroups(filterContent));
   }
 
