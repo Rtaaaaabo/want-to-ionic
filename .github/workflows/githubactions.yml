@@ -16,9 +16,9 @@ jobs:
     steps:
       - name: Checkout branch develop
         uses: actions/checkout@v2
-        with:
-          ref: staging
 
+        # with:
+        #   ref: staging
       - name: Check github
         run: |
           echo " ${{ github.actor }}"
