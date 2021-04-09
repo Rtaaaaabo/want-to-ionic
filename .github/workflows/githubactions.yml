@@ -21,12 +21,13 @@ jobs:
       #   ref: staging
       - name: Check github
         run: |
-          echo " ${{ github.repository }}"
+          echo " ${{ GITHUB_WORKSPACE }}"
 
       - name: Create Pull Request
         id: cpr
         uses: peter-evans/create-pull-request@v3
         with:
+          path: ${{ github.repository }}
           token: ${{ secrets.PAT }}
           author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
           title: "For Release DATES"
