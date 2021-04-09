@@ -19,9 +19,9 @@ jobs:
 
       # with:
       #   ref: staging
-      - name: Check github
-        run: |
-          echo " ${{ GITHUB_WORKSPACE }}"
+      # - name: Check github
+      #   run: |
+      #     echo " ${{ GITHUB_WORKSPACE }}"
 
       - name: Create Pull Request
         id: cpr
