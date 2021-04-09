@@ -21,7 +21,7 @@ jobs:
 
       - name: Check github
         run: |
-          echo " ${{ github }}"
+          echo " ${{ github.actor }}"
 
       - name: Create Pull Request
         id: cpr
