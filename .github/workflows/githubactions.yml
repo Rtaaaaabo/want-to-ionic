@@ -21,8 +21,8 @@ jobs:
 
       - name: Reset ci/githubactions branch
         run: |
-          git fetch origin ci/githubaction
-          git reset --hard ci/githubaction
+          git fetch origin ci/githubactions
+          git reset --hard ci/githubactions
 
       - name: Create Pull Request
         id: cpr
