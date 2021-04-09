@@ -21,7 +21,7 @@ jobs:
       #   ref: staging
       - name: Check github
         run: |
-          echo " ${{ github.actor }}"
+          echo " ${{ github.repository }}"
 
       - name: Create Pull Request
         id: cpr
