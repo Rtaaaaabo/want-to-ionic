@@ -17,7 +17,10 @@ jobs:
       - name: Checkout branch develop
         uses: actions/checkout@v2
         with:
-          ref: "staging"
+          ref: staging
+
+      - name: Check github
+          echo " ${{ github }}"
 
       - name: Create Pull Request
         id: cpr
@@ -25,11 +28,11 @@ jobs:
         with:
           token: ${{ secrets.PAT }}
           author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
-          # base: staging
-          # branch: staging
           title: "For Release DATES"
-
-      - name: Check outputs
-        run: |
-          echo "Pull Request Number - ${{ steps.cpr.outputs.pull-request-number }}"
-          echo "Pull Request URL - ${{ steps.cpr.outputs.pull-request-url }}"
+          base: staging
+          branch: develop
+          # delete-branch: true
+      # - name: Check outputs
+      #   run: |
+      #     echo "Pull Request Number - ${{ steps.cpr.outputs.pull-request-number }}"
+      #     echo "Pull Request URL - ${{ steps.cpr.outputs.pull-request-url }}"
