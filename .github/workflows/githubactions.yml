@@ -14,25 +14,24 @@ jobs:
   createPullRequest:
     runs-on: ubuntu-latest
     steps:
-      # - name: Checkout branch develop
-      #   uses: actions/checkout@v2
+      - name: Checkout branch develop
+        uses: actions/checkout@v2
+        with:
+          ref: staging
 
-      # with:
-      #   ref: staging
-      # - name: Check github
-      #   run: |
-      #     echo " ${{ GITHUB_WORKSPACE }}"
+      - name: Reset ci/githubactions branch
+        run: |
+          git fetch origin ci/githubaction
+          git reset --hard ci/githubaction
 
       - name: Create Pull Request
         id: cpr
         uses: peter-evans/create-pull-request@v3
         with:
-          path: ${{ github.repository }}
           token: ${{ secrets.PAT }}
           author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
           title: "For Release DATES"
           base: staging
-          branch: develop
           # delete-branch: true
       # - name: Check outputs
       #   run: |
