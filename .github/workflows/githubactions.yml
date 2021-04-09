@@ -30,8 +30,8 @@ jobs:
           token: ${{ secrets.PAT }}
           author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
           title: "For Release DATES"
-          base: staging
-          branch: develop
+          # base: staging
+          # branch: develop
           # delete-branch: true
       # - name: Check outputs
       #   run: |
