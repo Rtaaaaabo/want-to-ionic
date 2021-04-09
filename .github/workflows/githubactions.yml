@@ -14,11 +14,11 @@ jobs:
   createPullRequest:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout branch develop
-        uses: actions/checkout@v2
+      # - name: Checkout branch develop
+      #   uses: actions/checkout@v2
 
-        # with:
-        #   ref: staging
+      # with:
+      #   ref: staging
       - name: Check github
         run: |
           echo " ${{ github.actor }}"
@@ -30,8 +30,8 @@ jobs:
           token: ${{ secrets.PAT }}
           author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
           title: "For Release DATES"
-          # base: staging
-          # branch: develop
+          base: staging
+          branch: develop
           # delete-branch: true
       # - name: Check outputs
       #   run: |
