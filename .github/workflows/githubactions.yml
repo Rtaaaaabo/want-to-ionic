@@ -17,12 +17,12 @@ jobs:
       - name: Checkout branch develop
         uses: actions/checkout@v2
         with:
-          ref: staging
+          ref: staging # PRのBaseになる
 
       - name: Reset ci/githubactions branch
         run: |
-          git fetch origin ci/githubactions:ci/githubactions
-          git reset --hard ci/githubactions
+          git fetch origin develop:develop
+          git reset --hard develop
 
       - name: Create Pull Request
         id: cpr
@@ -32,8 +32,9 @@ jobs:
           author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
           title: "For Release DATES"
           base: staging
-          # delete-branch: true
-      # - name: Check outputs
-      #   run: |
-      #     echo "Pull Request Number - ${{ steps.cpr.outputs.pull-request-number }}"
-      #     echo "Pull Request URL - ${{ steps.cpr.outputs.pull-request-url }}"
+          branch: develop
+
+      - name: Check outputs
+        run: |
+          echo "Pull Request Number - ${{ steps.cpr.outputs.pull-request-number }}"
+          echo "Pull Request URL - ${{ steps.cpr.outputs.pull-request-url }}"
