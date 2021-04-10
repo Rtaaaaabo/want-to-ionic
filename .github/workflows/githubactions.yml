@@ -1,0 +1,39 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Create Pull Request to staging branch
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the develop branch
+on:
+  schedule:
+    - cron: "*/2 * * * *"
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  createPullRequest:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch develop
+        uses: actions/checkout@v2
+        with:
+          ref: staging # PRのBaseになる
+
+      - name: Fetch develop branch
+        run: |
+          git fetch origin develop:develop
+          git reset --hard develop
+
+      - name: Create Pull Request
+        id: cpr
+        uses: peter-evans/create-pull-request@v3
+        with:
+          token: ${{ secrets.PAT }}
+          author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
+          title: "For Release DATES"
+          base: staging
+          branch: develop
+
+      - name: Check outputs
+        run: |
+          echo "Pull Request Number - ${{ steps.cpr.outputs.pull-request-number }}"
+          echo "Pull Request URL - ${{ steps.cpr.outputs.pull-request-url }}"

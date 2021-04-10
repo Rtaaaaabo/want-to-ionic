@@ -13,7 +13,7 @@ export class HomeService {
   checkRegistrationUser(email: string): Observable<ListUsersQuery> {
     const filterContent: ModelUserFilterInput = {
       email: {
-        eq: `${email}`
+        eq: `${email}`,
       }
     }
     return from(this.amplifyService.ListUsers(filterContent));
