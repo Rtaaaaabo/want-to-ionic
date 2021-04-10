@@ -5,9 +5,8 @@ name: Create Pull Request to staging branch
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the develop branch
 on:
-  push:
-    branches:
-      - ci/githubactions
+  schedule:
+    - cron: "3 * * * 6"
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -19,7 +18,7 @@ jobs:
         with:
           ref: staging # PRのBaseになる
 
-      - name: Reset ci/githubactions branch
+      - name: Fetch develop branch
         run: |
           git fetch origin develop:develop
           git reset --hard develop
