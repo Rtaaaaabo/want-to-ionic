@@ -39,6 +39,8 @@ jobs:
           title: "${{steps.date.outputs.date}} For Release"
           base: staging
           branch: develop
+          reviewers: |
+            Rtaaaaabo
 
       - name: Check outputs
         run: |
