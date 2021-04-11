@@ -36,11 +36,13 @@ jobs:
         with:
           token: ${{ secrets.PAT }}
           author: GitHub <noreply@github.com>
+          commit-message: Update report
+          committer: GitHub <noreply@github.com>
           title: "${{steps.date.outputs.date}} For Release"
           base: staging
           branch: develop
           reviewers: |
-            Rtaaaaabo
+            taku-nakagawa-developer
 
       - name: Check outputs
         run: |
