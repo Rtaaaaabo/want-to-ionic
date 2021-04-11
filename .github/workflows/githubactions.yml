@@ -16,7 +16,11 @@ jobs:
   createPullRequest:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout branch develop
+      - name: Get current
+        id: date
+        run: echo "::set-output name=date::$(date + '%Y-%m-%d')"
+
+      - name: Checkout Staging branch
         uses: actions/checkout@v2
         with:
           ref: staging # PRのBaseになる
@@ -24,15 +28,15 @@ jobs:
       - name: Fetch develop branch
         run: |
           git fetch origin develop:develop
-          git reset --hard develop
+      #          git reset --hard develop
 
       - name: Create Pull Request
         id: cpr
         uses: peter-evans/create-pull-request@v3
         with:
           token: ${{ secrets.PAT }}
-          author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
-          title: "For Release DATES"
+          author: GitHub <noreply@github.com>
+          title: "${{steps.date.outputs.date}} For Release"
           base: staging
           branch: develop
 
