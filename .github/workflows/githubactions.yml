@@ -65,4 +65,18 @@ jobs:
           author_name: "auto create pr"
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-        # if: always()
+
+      - name: Notify Not Create PR
+        uses: 8398a7/action-slack@v3.9.0
+        if: steps.cpr.outputs.pull-request-url == ''
+        with:
+          status: ${{ job.status }}
+          mention: here
+          fields: repo,job,took
+          text: |
+            "下記のブランチでは差分がないです"
+            "${{ github.repo }}"
+          icon_url: ":wink:"
+          author_name: "auto create pr"
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
