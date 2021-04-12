@@ -25,10 +25,10 @@ jobs:
         with:
           ref: staging # PRのBaseになる
 
-      # - name: Fetch develop branch
-      #   run: |
-      #     git fetch origin develop:develop
-      #     git reset --hard develop
+      - name: Fetch develop branch
+        run: |
+          git fetch origin develop:develop
+          git reset --hard develop
 
       - name: Create Pull Request
         id: cpr
@@ -77,6 +77,6 @@ jobs:
             下記のブランチでは差分はないです
             リリースはなしです。
           icon_emoji: ":wink:"
-          author_name: "auto create pr"
+          author_name: "Wantto 側"
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
