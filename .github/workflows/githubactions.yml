@@ -62,7 +62,7 @@ jobs:
             PR URL - ${{ steps.cpr.outputs.pull-request-url }}
             確認後、Approvalをしてください
           icon_emoji: ":wink:"
-          author_name: "auto create pr"
+          author_name: "Wantto 側"
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
