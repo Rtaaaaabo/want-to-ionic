@@ -25,10 +25,10 @@ jobs:
         with:
           ref: staging # PRのBaseになる
 
-      - name: Fetch develop branch
-        run: |
-          git fetch origin develop:develop
-          git reset --hard develop
+      # - name: Fetch develop branch
+      #   run: |
+      #     git fetch origin develop:develop
+      #     git reset --hard develop
 
       - name: Create Pull Request
         id: cpr
@@ -56,7 +56,7 @@ jobs:
         with:
           status: ${{ job.status }}
           mention: here
-          fields: repo,message,commit,author,action,eventName,ref,workflow,job,took
+          fields: repo,job,took
           text: |
             "PR URL - ${{ steps.cpr.outputs.pull-request-url }}"
             "確認後、Approvalをしてください"
@@ -64,4 +64,4 @@ jobs:
           author_name: "auto create pr"
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-        if: always()
+        # if: always()
