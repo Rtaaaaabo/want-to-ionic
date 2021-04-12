@@ -75,7 +75,7 @@ jobs:
           fields: repo
           text: |
             下記のブランチでは差分はないです
-            リリースはなしです。
+            今週のリリースはなしです。
           icon_emoji: ":wink:"
           author_name: "Wantto 側"
         env:
