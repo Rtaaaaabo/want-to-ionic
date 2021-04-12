@@ -64,4 +64,4 @@ jobs:
           author_name: "auto create pr"
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-        if: always
+        if: always()
