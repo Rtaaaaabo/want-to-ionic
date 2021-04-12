@@ -53,6 +53,7 @@ jobs:
 
       - name: Notify Create PR
         uses: 8398a7/action-slack@v3.9.0
+        if: steps.cpr.outputs.pull-request-url != ''
         with:
           status: ${{ job.status }}
           mention: here
