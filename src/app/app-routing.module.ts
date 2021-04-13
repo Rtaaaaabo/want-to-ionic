@@ -16,6 +16,10 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
+    path: 'task',
+    loadChildren: () => import('./pages/task/task.module').then((m) => m.TaskPageModule),
+  },
+  {
     path: 'signup',
     loadChildren: () => import('./pages/signup/signup.module').then(m => m.SignupPageModule),
   },

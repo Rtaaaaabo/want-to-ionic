@@ -11,8 +11,4 @@ export class TabsPage implements OnInit {
 
   ngOnInit(): void { }
 
-  navigateSetting(): void { }
-
-  ionTabsDidChange() { }
-
 }

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ItemReorderEventDetail } from '@ionic/core';
-import { ModalController, ToastController, AlertController } from '@ionic/angular';
+import { ModalController, ToastController, AlertController, NavController } from '@ionic/angular';
 import { forkJoin, from, of } from 'rxjs';
 import { flatMap, switchMap, tap, map, concatMap } from 'rxjs/operators';
 import { GetRoomQuery, GetUserQuery, ListUsersQuery } from 'src/app/shared/service/amplify.service';
@@ -34,13 +34,14 @@ export class TaskPage implements OnInit {
   taskDoneItems: Array<InterfaceTask>;
 
   constructor(
-    private router: Router,
+    private readonly router: Router,
+    private readonly location: Location,
+    private readonly alertCtrl: AlertController,
+    private readonly navCtrl: NavController,
+    private readonly toastCtrl: ToastController,
     private modalCtrl: ModalController,
     private route: ActivatedRoute,
-    private location: Location,
     private logic: TaskLogic,
-    private toastCtrl: ToastController,
-    private alertCtrl: AlertController,
   ) { }
 
   ngOnInit() { }
