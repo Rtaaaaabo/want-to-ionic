@@ -1,9 +1,27 @@
+<ion-menu side="start" menuId="first" contentId="main">
+  <ion-header>
+    <ion-toolbar translate>
+      <ion-title>チーム</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <ion-item> テスト </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+
 <ion-header>
   <ion-toolbar>
-    <ion-title>会社名</ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button
+        ><ion-icon name="information-outline"></ion-icon>
+      </ion-menu-button>
+    </ion-buttons>
+    <ion-title>ここにチーム名を記載</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content id="main">
   <app-list-room></app-list-room>
 </ion-content>
