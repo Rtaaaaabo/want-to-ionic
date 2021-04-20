@@ -12,12 +12,8 @@ const routerOptions: ExtraOptions = {
 const routes: Routes = [
   {
     path: '',
-    loadChildren: () => import('./pages/tabs/tabs.module').then(m => m.TabsPageModule),
+    loadChildren: () => import('./pages/menu/menu.module').then(m => m.MenuPageModule),
     canActivate: [AuthGuard],
-  },
-  {
-    path: 'task',
-    loadChildren: () => import('./pages/task/task.module').then((m) => m.TaskPageModule),
   },
   {
     path: 'signup',
@@ -30,6 +26,11 @@ const routes: Routes = [
   {
     path: 'login',
     loadChildren: () => import('./pages/login/login.module').then(m => m.LoginPageModule)
+  },
+  {
+    path: 'task',
+    loadChildren: () => import('./pages/task/task.module').then((m) => m.TaskPageModule),
+    canActivate: [AuthGuard],
   },
   {
     path: 'task-detail',
