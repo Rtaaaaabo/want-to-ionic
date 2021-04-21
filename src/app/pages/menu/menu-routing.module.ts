@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-
 import { MenuPage } from './menu.page';
 
 const routes: Routes = [
@@ -9,16 +8,11 @@ const routes: Routes = [
     component: MenuPage,
     children: [
       {
-        path: 'tabs',
+        path: '',
         loadChildren: () => import('../tabs/tabs.module').then(m => m.TabsPageModule),
-      }
+      },
     ]
   },
-  {
-    path: '',
-    redirectTo: '/tabs',
-    pathMatch: 'full'
-  }
 ];
 
 @NgModule({
