@@ -62,7 +62,6 @@ export class HomeLogic {
   }
 
   updateUser(formContent: FormGroup): Observable<any> {
-    console.log(formContent);
     const requestContent = {
       id: formContent.get('id').value,
       companyID: 'takuCloudCom',
@@ -72,6 +71,7 @@ export class HomeLogic {
       tel: formContent.get('tel').value,
       iconImage: formContent.get('iconImage').value,
     };
+    console.log('[requestContent]', requestContent);
     return this.homeService.updateUser(requestContent);
   }
 
@@ -190,7 +190,7 @@ export class HomeLogic {
     return of(blob);
   }
 
-  putStorage(uploadFileName: string, blobFile: Blob, contentType: string) {
+  putStorage(uploadFileName: string, blobFile: Blob, contentType: string): Observable<Object> {
     return from(Storage.put(
       uploadFileName,
       blobFile,

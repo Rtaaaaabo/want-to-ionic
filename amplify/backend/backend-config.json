@@ -7,20 +7,6 @@
     }
   },
   "api": {
-    "apifc8796ac": {
-      "service": "API Gateway",
-      "providerPlugin": "awscloudformation",
-      "dependsOn": [
-        {
-          "category": "function",
-          "resourceName": "S3Trigger8b3c74c8",
-          "attributes": [
-            "Name",
-            "Arn"
-          ]
-        }
-      ]
-    },
     "wanttographql": {
       "service": "AppSync",
       "providerPlugin": "awscloudformation",
@@ -41,7 +27,22 @@
     "S3Trigger8b3c74c8": {
       "service": "Lambda",
       "providerPlugin": "awscloudformation",
-      "build": true
+      "build": true,
+      "dependsOn": []
+    },
+    "wanttoce4834c3": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": [
+        {
+          "category": "storage",
+          "resourceName": "s3staticfile",
+          "attributes": [
+            "BucketName"
+          ]
+        }
+      ]
     }
   },
   "storage": {

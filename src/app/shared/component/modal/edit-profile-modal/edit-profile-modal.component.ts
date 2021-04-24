@@ -5,20 +5,7 @@ import { HomeLogic } from '../../../../pages/home/logic/home.logic';
 import { Camera, CameraResultType } from '@capacitor/core';
 import { from, of } from 'rxjs';
 import { catchError, concatMap, filter, map, switchMap } from 'rxjs/operators';
-interface OwnUser {
-  authority: string;
-  companyID: string;
-  createdAt: string;
-  positionName: string;
-  iconImage: string;
-  email: string;
-  id: string;
-  registered?: boolean
-  updatedAt: string;
-  username: string;
-  tel: string;
-  __typename: string;
-}
+import { IOwnUser } from '../../../../pages/setting/interface /setting.interface';
 
 const optionPicture = {
   quality: 50,
@@ -49,7 +36,7 @@ export class EditProfileModalComponent implements OnInit {
   @Input() status: string;
   @Input() email: string;
   @Input() userId: string;
-  @Input() user: OwnUser;
+  @Input() user: IOwnUser;
   title: string;
   iconImage: string;
 
