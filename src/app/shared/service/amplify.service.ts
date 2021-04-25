@@ -7317,7 +7317,6 @@ export class AmplifyService {
               companyID
               tel
               positionName
-              iconImage
               registered
               authority
               createdAt

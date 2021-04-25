@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AmplifyService, ModelRoomFilterInput, ListRoomsQuery, ModelUserFilterInput, ModelRoomGroupFilterInput, ListRoomGroupsQuery, ListUsersQuery, CreateRoomMutation, CreateUserMutation, CreateUserInput, DeleteRoomMutation, CreateRoomGroupMutation, UpdateUserMutation } from '../../../shared/service/amplify.service';
+import { AmplifyService, ModelRoomFilterInput, ListRoomsQuery, ModelUserFilterInput, ModelRoomGroupFilterInput, ListRoomGroupsQuery, ListUsersQuery, CreateRoomMutation, CreateUserMutation, CreateUserInput, DeleteRoomMutation, CreateRoomGroupMutation, UpdateUserMutation, UpdateUserInput } from '../../../shared/service/amplify.service';
 import { from, Observable } from 'rxjs';
 import { InterfaceArgsCreateRoom, ISArgsCreateRoomGroup } from '../model/home.interface';
 
@@ -36,7 +36,7 @@ export class HomeService {
     return from(this.amplifyService.CreateUser(content));
   }
 
-  updateUser(content: IUpdateUserRequest): Observable<UpdateUserMutation> {
+  updateUser(content: UpdateUserInput): Observable<UpdateUserMutation> {
     return from(this.amplifyService.UpdateUser(content));
   }
 

@@ -33,8 +33,9 @@ export class HomePage implements OnInit {
       }))
       .pipe(flatMap(() => this.logic.checkRegistrationUser(this.attributes)))
       .pipe(filter(({ items }) => items.length === 0))
-      .subscribe(() => {
-        this.presentRegistrationUser()
+      .subscribe((result) => {
+        console.log('homePage', result);
+        // this.presentRegistrationUser()
       });
   }
 
