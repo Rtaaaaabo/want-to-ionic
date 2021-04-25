@@ -5799,6 +5799,7 @@ export class AmplifyService {
           id
           authorID
           roomID
+          chargePersonID
           title
           room {
             __typename
@@ -5822,12 +5823,42 @@ export class AmplifyService {
           priority
           status
           createdAt
+          chargePerson {
+            __typename
+            id
+            username
+            email
+            companyID
+            tel
+            positionName
+            registered
+            authority
+            messages {
+              __typename
+              nextToken
+            }
+            room {
+              __typename
+              nextToken
+            }
+            task {
+              __typename
+              nextToken
+            }
+            chargeTask {
+              __typename
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
           messages {
             __typename
             items {
               __typename
               id
               taskID
+              authorID
               content
               createdAt
               isSent
@@ -5846,23 +5877,6 @@ export class AmplifyService {
               updatedAt
             }
             nextToken
-          }
-          chargePerson {
-            __typename
-            id
-            username
-            email
-            companyID
-            positionName
-            iconImage
-            registered
-            authority
-            chargeTask {
-              __typename
-              nextToken
-            }
-            createdAt
-            updatedAt
           }
           updatedAt
         }
@@ -6987,7 +7001,7 @@ export class AmplifyService {
   ) as Observable<OnDeleteTaskSubscription>;
 
   OnCreateMessageListener: Observable<
-    OnCreateMessageSubscription
+    SubscriptionResponse<OnCreateMessageSubscription>
   > = API.graphql(
     graphqlOperation(
       `subscription OnCreateMessage {
@@ -6995,6 +7009,16 @@ export class AmplifyService {
           __typename
           id
           taskID
+          authorID
+          content
+          createdAt
+          isSent
+          attachment {
+            __typename
+            bucket
+            region
+            key
+          }
           author {
             __typename
             id
@@ -7003,10 +7027,31 @@ export class AmplifyService {
             companyID
             tel
             positionName
-            iconImage
+            iconImage {
+              __typename
+              bucket
+              region
+              key
+            }
             registered
             authority
+            company {
+              __typename
+              id
+              name
+              domain
+              createdAt
+              updatedAt
+            }
+            messages {
+              __typename
+              nextToken
+            }
             room {
+              __typename
+              nextToken
+            }
+            task {
               __typename
               nextToken
             }
@@ -7017,14 +7062,56 @@ export class AmplifyService {
             createdAt
             updatedAt
           }
-          content
-          createdAt
-          isSent
+          task {
+            __typename
+            id
+            authorID
+            roomID
+            chargePersonID
+            title
+            room {
+              __typename
+              id
+              name
+              companyID
+              description
+              createdAt
+              updatedAt
+            }
+            description
+            scheduleDate
+            priority
+            status
+            createdAt
+            chargePerson {
+              __typename
+              id
+              username
+              email
+              companyID
+              tel
+              positionName
+              registered
+              authority
+              createdAt
+              updatedAt
+            }
+            messages {
+              __typename
+              nextToken
+            }
+            users {
+              __typename
+              nextToken
+            }
+            updatedAt
+          }
           updatedAt
         }
       }`
     )
-  ) as Observable<OnCreateMessageSubscription>;
+  ) as Observable<SubscriptionResponse<OnCreateMessageSubscription>>;
+
   OnUpdateMessageListener: Observable<
     OnUpdateMessageSubscription
   > = API.graphql(
