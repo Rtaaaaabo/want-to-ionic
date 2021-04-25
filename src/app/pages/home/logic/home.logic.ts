@@ -200,6 +200,8 @@ export class HomeLogic {
     ));
   }
 
+
+
   getStorage(filePathName: string): Observable<any> {
     return from(Storage.get(filePathName));
   }

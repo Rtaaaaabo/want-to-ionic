@@ -2263,44 +2263,49 @@ export type GetUserQuery = {
   username: string;
   email: string;
   companyID: string;
-  tel: string | null;
-  positionName: string | null;
-  iconImage: string | null;
-  registered: boolean | null;
-  authority: string | null;
+  tel?: string | null;
+  positionName?: string | null;
+  iconImage?: {
+    __typename: "s3Object";
+    bucket: string;
+    region: string;
+    key: string;
+  } | null;
+  registered?: boolean | null;
+  authority?: string | null;
   company: {
     __typename: "Company";
     id: string;
     name: string;
     domain: string;
-    room: {
+    room?: {
       __typename: "ModelRoomConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    companyMembers: {
+    companyMembers?: {
       __typename: "ModelUserConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
     createdAt: string;
     updatedAt: string;
   };
-  messages: {
+  messages?: {
     __typename: "ModelMessageConnection";
-    items: Array<{
+    items?: Array<{
       __typename: "Message";
       id: string;
       taskID: string;
       authorID: string;
       content: string;
-      createdAt: string | null;
-      isSent: boolean | null;
+      createdAt: string;
+      isSent?: boolean | null;
       updatedAt: string;
     } | null> | null;
-    nextToken: string | null;
+    nextToken?: string | null;
   } | null;
-  room: {
+  room?: {
     __typename: "ModelRoomGroupConnection";
-    items: Array<{
+    items?: Array<{
       __typename: "RoomGroup";
       id: string;
       roomID: string;
@@ -2308,11 +2313,11 @@ export type GetUserQuery = {
       createdAt: string;
       updatedAt: string;
     } | null> | null;
-    nextToken: string | null;
+    nextToken?: string | null;
   } | null;
-  task: {
+  task?: {
     __typename: "ModelTaskGroupConnection";
-    items: Array<{
+    items?: Array<{
       __typename: "TaskGroup";
       id: string;
       taskID: string;
@@ -2320,25 +2325,25 @@ export type GetUserQuery = {
       createdAt: string;
       updatedAt: string;
     } | null> | null;
-    nextToken: string | null;
+    nextToken?: string | null;
   } | null;
-  chargeTask: {
+  chargeTask?: {
     __typename: "ModelTaskConnection";
-    items: Array<{
+    items?: Array<{
       __typename: "Task";
       id: string;
       authorID: string;
       roomID: string;
       chargePersonID: string;
       title: string;
-      description: string | null;
-      scheduleDate: string | null;
-      priority: number | null;
-      status: number | null;
-      createdAt: string | null;
+      description?: string | null;
+      scheduleDate?: string | null;
+      priority?: number | null;
+      status?: number | null;
+      createdAt?: string | null;
       updatedAt: string;
     } | null> | null;
-    nextToken: string | null;
+    nextToken?: string | null;
   } | null;
   createdAt: string;
   updatedAt: string;
@@ -6116,39 +6121,76 @@ export class AmplifyService {
 
   async GetUser(id: string): Promise<GetUserQuery> {
     const statement = `query GetUser($id: ID!) {
-      getUser(id: $id) {
-        __typename
-        id
-        username
-        email
-        companyID
-        tel
-        positionName
-        iconImage
-        registered
-        authority
-        chargeTask {
+        getUser(id: $id) {
           __typename
-          items {
+          id
+          username
+          email
+          companyID
+          tel
+          positionName
+          registered
+          authority
+          messages {
             __typename
-            id
-            authorID
-            roomID
-            chargePersonID
-            title
-            description
-            scheduleDate
-            priority
-            status
-            createdAt
-            updatedAt
+            items {
+              __typename
+              id
+              taskID
+              authorID
+              content
+              createdAt
+              isSent
+              updatedAt
+            }
+            nextToken
           }
-          nextToken
+          room {
+            __typename
+            items {
+              __typename
+              id
+              roomID
+              userID
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          task {
+            __typename
+            items {
+              __typename
+              id
+              taskID
+              userID
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          chargeTask {
+            __typename
+            items {
+              __typename
+              id
+              authorID
+              roomID
+              chargePersonID
+              title
+              description
+              scheduleDate
+              priority
+              status
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          createdAt
+          updatedAt
         }
-        createdAt
-        updatedAt
-      }
-    }`;
+      }`;
     const gqlAPIServiceArguments: any = {
       id
     };
@@ -6173,9 +6215,22 @@ export class AmplifyService {
             companyID
             tel
             positionName
-            iconImage
+            iconImage {
+              __typename
+              bucket
+              region
+              key
+            }
             registered
             authority
+            company {
+              __typename
+              id
+              name
+              domain
+              createdAt
+              updatedAt
+            }
             messages {
               __typename
               nextToken
@@ -6212,6 +6267,93 @@ export class AmplifyService {
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
     return <ListUsersQuery>response.data.listUsers;
+  }
+  async GetRoomGroup(id: string): Promise<GetRoomGroupQuery> {
+    const statement = `query GetRoomGroup($id: ID!) {
+        getRoomGroup(id: $id) {
+          __typename
+          id
+          roomID
+          userID
+          room {
+            __typename
+            id
+            name
+            companyID
+            description
+            company {
+              __typename
+              id
+              name
+              domain
+              createdAt
+              updatedAt
+            }
+            tasks {
+              __typename
+              nextToken
+            }
+            users {
+              __typename
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          user {
+            __typename
+            id
+            username
+            email
+            companyID
+            tel
+            positionName
+            iconImage {
+              __typename
+              bucket
+              region
+              key
+            }
+            registered
+            authority
+            company {
+              __typename
+              id
+              name
+              domain
+              createdAt
+              updatedAt
+            }
+            messages {
+              __typename
+              nextToken
+            }
+            room {
+              __typename
+              nextToken
+            }
+            task {
+              __typename
+              nextToken
+            }
+            chargeTask {
+              __typename
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          createdAt
+          updatedAt
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      id
+    };
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <GetRoomGroupQuery>response.data.getRoomGroup;
   }
 
   OnCreateCompanyListener: Observable<

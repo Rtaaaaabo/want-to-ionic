@@ -21,7 +21,7 @@ export class SettingLogic {
     return this.sessionService.fetchCurrentUser();
   }
 
-  fetchUserInfo(userId): Observable<any> {
+  fetchUserInfo(userId: string): Observable<any> {
     return this.settingService.fetchUserInfo(userId);
   }
 }
