@@ -31,10 +31,10 @@ export class TaskDetailPage implements OnInit {
   arrayImageBase64Data: Array<any> = [];
 
   constructor(
-    private readonly location: Location,
     private logic: TaskDetailLogic,
-    private readonly route: ActivatedRoute,
     private scroll: ViewportScroller,
+    private readonly location: Location,
+    private readonly route: ActivatedRoute,
     private readonly modalCtrl: ModalController,
     private readonly actionSheetCtrl: ActionSheetController,
     private readonly toastCtrl: ToastController,
