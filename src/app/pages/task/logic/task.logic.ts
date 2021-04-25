@@ -94,6 +94,7 @@ export class TaskLogic {
   }
 
   fetchDoneTaskPerRoom(roomId): Observable<Array<InterfaceTask>> {
+    console.log('fetchDoneTaskPerRoom');
     const filterContent = {
       roomID: {
         eq: `${roomId}`,

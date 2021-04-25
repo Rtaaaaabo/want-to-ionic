@@ -5888,7 +5888,17 @@ export class AmplifyService {
             id
             authorID
             roomID
+            chargePersonID
             title
+            room {
+              __typename
+              id
+              name
+              companyID
+              description
+              createdAt
+              updatedAt
+            }
             description
             scheduleDate
             priority
@@ -5899,12 +5909,21 @@ export class AmplifyService {
               id
               username
               email
+              companyID
+              tel
               positionName
-              iconImage
               registered
               authority
               createdAt
               updatedAt
+            }
+            messages {
+              __typename
+              nextToken
+            }
+            users {
+              __typename
+              nextToken
             }
             updatedAt
           }
@@ -5926,6 +5945,7 @@ export class AmplifyService {
     )) as any;
     return <ListTasksQuery>response.data.listTasks;
   }
+
   async GetMessage(id: string): Promise<GetMessageQuery> {
     const statement = `query GetMessage($id: ID!) {
         getMessage(id: $id) {
@@ -6072,9 +6092,9 @@ export class AmplifyService {
     taskID?: string,
     sortDirection?: ModelSortDirection,
     limit?: number,
-    nextToken?: string,
-    filter?: ModelMessageFilterInput,
     createdAt?: ModelStringKeyConditionInput,
+    filter?: ModelMessageFilterInput,
+    nextToken?: string
   ): Promise<TaskByCreatedAtQuery> {
     const statement = `query TaskByCreatedAt($taskID: ID, $createdAt: ModelStringKeyConditionInput, $sortDirection: ModelSortDirection, $filter: ModelMessageFilterInput, $limit: Int, $nextToken: String) {
         taskByCreatedAt(taskID: $taskID, createdAt: $createdAt, sortDirection: $sortDirection, filter: $filter, limit: $limit, nextToken: $nextToken) {
@@ -6087,7 +6107,12 @@ export class AmplifyService {
             content
             createdAt
             isSent
-            attachmentUri
+            attachment {
+              __typename
+              bucket
+              region
+              key
+            }
             author {
               __typename
               id
@@ -6096,7 +6121,6 @@ export class AmplifyService {
               companyID
               tel
               positionName
-              iconImage
               registered
               authority
               createdAt
@@ -6145,7 +6169,6 @@ export class AmplifyService {
     )) as any;
     return <TaskByCreatedAtQuery>response.data.taskByCreatedAt;
   }
-
   async GetUser(id: string): Promise<GetUserQuery> {
     const statement = `query GetUser($id: ID!) {
         getUser(id: $id) {
