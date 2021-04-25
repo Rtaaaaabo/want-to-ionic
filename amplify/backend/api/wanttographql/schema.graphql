@@ -44,7 +44,7 @@ type User @model @key(name: "byCompany", fields: ["companyID"]) {
   companyID: ID!
   tel: String
   positionName: String
-  iconImage: String
+  iconImage: s3Object
   registered: Boolean
   authority: String
   company: Company! @connection(fields: ["companyID"])
@@ -52,6 +52,12 @@ type User @model @key(name: "byCompany", fields: ["companyID"]) {
   room: [RoomGroup] @connection(keyName: "byUser", fields: ["id"])
   task: [TaskGroup] @connection(keyName: "byUser", fields: ["id"])
   chargeTask: [Task] @connection(keyName: "byUser", fields: ["id"])
+}
+
+type s3Object {
+  bucket: String!
+  region: String!
+  key: String!
 }
 
 type RoomGroup
@@ -90,7 +96,7 @@ type Message
   content: String!
   createdAt: AWSDateTime!
   isSent: Boolean
-  attachmentUri: [String]
+  attachment: [s3Object]
   author: User! @connection(fields: ["authorID"])
   task: Task! @connection(fields: ["taskID"])
 }
