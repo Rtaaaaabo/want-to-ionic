@@ -1,13 +1,11 @@
 import { TestBed } from '@angular/core/testing';
-import { FormGroup } from '@angular/forms';
 import { HomeLogic } from './home.logic';
 import { HomeService } from '../service/home.service';
 import { SessionService } from '../../../shared/service/session.service';
 import { of } from 'rxjs';
-import { CreateRoomGroupMutation, CreateRoomMutation, CreateUserMutation, DeleteRoomMutation, ListUsersQuery } from 'src/app/shared/service/amplify.service';
+import { CreateRoomGroupMutation, CreateRoomMutation, DeleteRoomMutation, ListUsersQuery } from 'src/app/shared/service/amplify.service';
 import { ILResponseFetchRoomMembers } from '../model/home.interface';
 import { ListRoomGroupsQuery } from 'src/app/API.service';
-
 
 describe('HomeLogic', () => {
   let logic: HomeLogic;
@@ -20,6 +18,7 @@ describe('HomeLogic', () => {
   });
 
   test('HomeLogicがインスタンス化されていること', () => {
+    console.log(logic);
     expect(logic).toBeTruthy();
   });
 
@@ -145,25 +144,31 @@ describe('HomeLogic', () => {
     expect(mockCreateUserRoomGroup).toBeCalled();
   });
 
-  test('fetchRoomMembersのテスト', () => {
-    const expectedResult = [{
-      __typename: "RoomGroup",
-      id: 'testId',
-      roomID: 'testRoomId',
-      userID: 'testUserId',
-    }] as Array<ILResponseFetchRoomMembers>;
-    const serviceResult = {
-      __typename: "ModelRoomGroupConnection",
-      items: [{
-        __typename: "RoomGroup",
-        id: 'testId',
-        roomID: 'testRoomId',
-        userID: 'testUserId',
-      }]
-    } as ListRoomGroupsQuery;
-    const homeService = TestBed.inject(HomeService);
-    const mockFetchRoomMembers = jest.spyOn(homeService, 'fetchRoomMembers').mockReturnValue(of(serviceResult));
-  });
+  // test('fetchRoomMembersのテスト', () => {
+  //   const expectedResult = [{
+  //     __typename: "RoomGroup",
+  //     id: 'testId',
+  //     roomID: 'testRoomId',
+  //     userID: 'testUserId',
+  //   }] as Array<ILResponseFetchRoomMembers>;
+  //   const serviceResult = {
+  //     __typename: "ModelRoomGroupConnection",
+  //     items: [{
+  //       __typename: "RoomGroup",
+  //       id: 'testId',
+  //       roomID: 'testRoomId',
+  //       userID: 'testUserId',
+  //     }]
+  //   } as ListRoomGroupsQuery;
+  //   const roomId = 'testRoomId';
+  //   const currentUserId = 'testCurrentUserId';
+  //   const homeService = TestBed.inject(HomeService);
+  //   const mockFetchRoomMembers = jest.spyOn(homeService, 'fetchRoomMembers').mockReturnValue(of(serviceResult));
+  //   logic.fetchRoomMembers(roomId, currentUserId).subscribe(result => {
+  //     console.log(result);
+  //   });
+  //   expect(mockFetchRoomMembers).toBeCalled();
+  // });
 
   test('removeMeFromRoomのテスト', () => {
 

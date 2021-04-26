@@ -12,12 +12,10 @@ import {
   CreateMessageInput,
   CreateRoomGroupMutation,
   CreateTaskMutation,
-  DeleteTaskMutation,
   GetRoomQuery,
   GetUserQuery,
   ListRoomGroupsQuery,
   ListUsersQuery,
-  UpdateMessageInput,
   UpdateTaskMutation,
 } from "src/app/shared/service/amplify.service";
 import { SessionService } from "../../../shared/service/session.service";

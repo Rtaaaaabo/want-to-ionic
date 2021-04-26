@@ -1,16 +1,19 @@
 import { TestBed } from '@angular/core/testing';
-
 import { TaskDetailLogic } from './task-detail.logic';
+import { TaskDetailService } from '../service/task-detail.service';
+import { SessionService } from 'src/app/shared/service/session.service';
 
 describe('TaskDetailLogicService', () => {
-  let service: TaskDetailLogic;
+  let logic: TaskDetailLogic;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(TaskDetailLogic);
+    TestBed.configureTestingModule({
+      providers: [TaskDetailLogic, SessionService]
+    });
+    logic = TestBed.inject(TaskDetailLogic);
   });
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
+  it('TaskDetailLogicがインスタンス化されていること', () => {
+    expect(logic).toBeTruthy();
   });
 });
