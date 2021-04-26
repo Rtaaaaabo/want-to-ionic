@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AmplifyService, ModelRoomFilterInput, ListRoomsQuery, ModelUserFilterInput, ModelRoomGroupFilterInput, ListRoomGroupsQuery, ListUsersQuery, CreateRoomMutation, CreateUserMutation, CreateUserInput, DeleteRoomMutation, CreateRoomGroupMutation, UpdateUserMutation, UpdateUserInput } from '../../../shared/service/amplify.service';
+import { AmplifyService, ModelUserFilterInput, ModelRoomGroupFilterInput, ListRoomGroupsQuery, ListUsersQuery, CreateRoomMutation, CreateUserMutation, CreateUserInput, DeleteRoomMutation, CreateRoomGroupMutation, UpdateUserMutation, UpdateUserInput } from '../../../shared/service/amplify.service';
 import { from, Observable } from 'rxjs';
 import { InterfaceArgsCreateRoom, ISArgsCreateRoomGroup } from '../model/home.interface';
 

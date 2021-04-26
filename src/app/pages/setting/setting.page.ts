@@ -39,7 +39,6 @@ export class SettingPage implements OnInit {
     this.logic.fetchCurrentUser()
       .pipe(flatMap((result) => this.logic.fetchUserInfo(result.username)))
       .subscribe((data) => {
-        console.log('Setting page', data);
         this.user = data;
       });
   }

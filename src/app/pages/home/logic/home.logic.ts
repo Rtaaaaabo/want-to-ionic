@@ -71,7 +71,6 @@ export class HomeLogic {
       tel: formContent.get('tel').value,
       iconImage: formContent.get('iconImage').value,
     };
-    console.log('[requestContent]', requestContent);
     return this.homeService.updateUser(requestContent);
   }
 
@@ -199,8 +198,6 @@ export class HomeLogic {
       }
     ));
   }
-
-
 
   getStorage(filePathName: string): Observable<any> {
     return from(Storage.get(filePathName));

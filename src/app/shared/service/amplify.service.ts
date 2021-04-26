@@ -425,7 +425,7 @@ export type CreateMessageInput = {
   content: string;
   createdAt?: string | null;
   isSent?: boolean | null;
-  attachment?: S3ObjectInput | null,
+  attachment?: Array<S3ObjectInput> | null,
 };
 
 export type ModelMessageConditionInput = {
@@ -5167,22 +5167,8 @@ export class AmplifyService {
             companyID
             tel
             positionName
-            iconImage {
-              __typename
-              bucket
-              region
-              key
-            }
             registered
             authority
-            company {
-              __typename
-              id
-              name
-              domain
-              createdAt
-              updatedAt
-            }
             messages {
               __typename
               nextToken
