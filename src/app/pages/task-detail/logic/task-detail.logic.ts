@@ -8,33 +8,9 @@ import { CurrentUserInfo } from '../../task/interface/current-user-info.interfac
 import { TaskDetailService } from '../service/task-detail.service';
 import { Filesystem, FilesystemDirectory, FilesystemEncoding, FileWriteResult, FileReadResult, FileDeleteResult } from "@capacitor/core";
 import { GetTaskQuery, OnCreateCompanySubscription, OnCreateMessageSubscription, UpdateTaskMutation } from 'src/app/shared/service/amplify.service';
+import { IsMessageContent, IMessageAttachment, MessageContent } from '../models/task-detail.interface';
 
 const OneWeekSecond = 604800;
-
-interface IsMessageContent {
-  data: {
-    hasTaskKind: {
-      chargePerson: boolean;
-      description: boolean;
-      name: boolean;
-      scheduleDate: boolean;
-    },
-    taskValue: {
-      chargePersonId: string;
-      descriptionItem: string;
-      nameItem: string;
-      scheduleDateItem: string;
-    }
-  },
-  role: undefined;
-}
-
-interface MessageContent {
-  id: string,
-  taskID: string,
-  authorID: string,
-  content: string,
-}
 
 @Injectable({
   providedIn: 'root'
@@ -93,10 +69,10 @@ export class TaskDetailLogic {
       content: messageContent,
       taskID: taskId,
       isSent: true,
-      attachmentUri: [],
+      attachment: {},
     };
     if (arrayAttachmentUri !== undefined) {
-      inputContent.attachmentUri = arrayAttachmentUri;
+      inputContent.attachment = arrayAttachmentUri;
     }
     return this.taskDetailService.createMessageItem(inputContent);
   }

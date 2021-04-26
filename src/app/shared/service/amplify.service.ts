@@ -425,6 +425,7 @@ export type CreateMessageInput = {
   content: string;
   createdAt?: string | null;
   isSent?: boolean | null;
+  attachment?: S3ObjectInput | null,
 };
 
 export type ModelMessageConditionInput = {
