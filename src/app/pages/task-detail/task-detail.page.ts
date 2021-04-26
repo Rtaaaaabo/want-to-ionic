@@ -47,8 +47,8 @@ export class TaskDetailPage implements OnInit {
           .subscribe(({ value }) => {
             if (!value.hasOwnProperty('errors')) {
               this.logic.fetchMessagePerTask(this.taskId)
-                .subscribe((result) => {
-                  this.message = result.items
+                .subscribe(({ items }) => {
+                  this.message = items;
                 })
             }
           });

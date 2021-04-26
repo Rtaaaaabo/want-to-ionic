@@ -7014,22 +7014,8 @@ export class AmplifyService {
             companyID
             tel
             positionName
-            iconImage {
-              __typename
-              bucket
-              region
-              key
-            }
             registered
             authority
-            company {
-              __typename
-              id
-              name
-              domain
-              createdAt
-              updatedAt
-            }
             messages {
               __typename
               nextToken
