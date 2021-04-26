@@ -40,7 +40,7 @@ export class TaskPage implements OnInit {
     private readonly toastCtrl: ToastController,
     private readonly modalCtrl: ModalController,
     private readonly route: ActivatedRoute,
-    private logic: TaskLogic,
+    private readonly logic: TaskLogic,
   ) { }
 
   ngOnInit() { }

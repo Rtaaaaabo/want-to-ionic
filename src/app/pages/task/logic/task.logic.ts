@@ -25,6 +25,7 @@ import { v4 as uuid } from "uuid";
 import { TaskService } from "../service/task.service";
 import { CurrentUserInfo } from "../interface/current-user-info.interface";
 import { InterfaceTask } from "src/app/interfaces/task.interface";
+import { TaskPageModule } from '../task.module';
 
 
 @Injectable({
@@ -94,7 +95,6 @@ export class TaskLogic {
   }
 
   fetchDoneTaskPerRoom(roomId): Observable<Array<InterfaceTask>> {
-    console.log('fetchDoneTaskPerRoom');
     const filterContent = {
       roomID: {
         eq: `${roomId}`,

@@ -10,10 +10,10 @@ import {
   ListRoomGroupsQuery,
   ListTasksQuery,
   ListUsersQuery,
-  UpdateMessageInput,
   UpdateTaskMutation,
 } from "../../../shared/service/amplify.service";
 import { Observable, from } from "rxjs";
+import { TaskPageModule } from '../task.module';
 
 @Injectable({
   providedIn: "root",
