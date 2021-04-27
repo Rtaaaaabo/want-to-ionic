@@ -4,7 +4,7 @@ import { SessionService } from '../../../shared/service/session.service';
 import { v4 as uuid } from 'uuid';
 import { Observable, from, of } from 'rxjs';
 import { concatMap, map, filter, toArray } from 'rxjs/operators';
-import { CreateRoomGroupMutation, CreateRoomMutation, CreateUserMutation, DeleteRoomMutation, ListUsersQuery, ModelRoomGroupFilterInput } from 'src/app/shared/service/amplify.service';
+import { CreateRoomGroupMutation, CreateRoomMutation, CreateUserMutation, DeleteRoomGroupMutation, DeleteRoomMutation, ListUsersQuery, ModelRoomGroupFilterInput } from 'src/app/shared/service/amplify.service';
 import { ResponseListRoomGroupsQueryItems } from '../service/reponse/response.model';
 import { Storage } from 'aws-amplify';
 import { ILResponseFetchRoomMembers, InterfaceLogicArgsCreateRoom } from '../model/home.interface';
@@ -87,7 +87,7 @@ export class HomeLogic {
     return this.homeService.createUserRoomGroup(content);
   }
 
-  fetchRoomMembers(roomId: string, currentUserId: string): Observable<Array<ILResponseFetchRoomMembers>> {
+  fetchRoomMembers(roomId: string, currentUserId: string): Observable<Array<ResponseListRoomGroupsQueryItems>> {
     const filterContent: ModelRoomGroupFilterInput = {
       roomID: {
         eq: `${roomId}`
@@ -97,10 +97,10 @@ export class HomeLogic {
       }
     }
     return this.homeService.fetchRoomMembers(filterContent)
-      .pipe(map((result) => result.items));
+      .pipe(map(({ items }) => items));
   }
 
-  removeMeFromRoom(roomId: string, meId: string): Observable<any> {
+  removeMeFromRoom(roomId: string, meId: string): Observable<DeleteRoomGroupMutation> {
     return this.fetchRoomGroupsId(roomId, meId)
       .pipe(concatMap((roomGroupId) => this.homeService.deleteRoomGroupsItem(roomGroupId)));
   }

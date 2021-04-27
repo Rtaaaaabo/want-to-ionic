@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AmplifyService, ModelUserFilterInput, ModelRoomGroupFilterInput, ListRoomGroupsQuery, ListUsersQuery, CreateRoomMutation, CreateUserMutation, CreateUserInput, DeleteRoomMutation, CreateRoomGroupMutation, UpdateUserMutation, UpdateUserInput } from '../../../shared/service/amplify.service';
+import { AmplifyService, ModelUserFilterInput, ModelRoomGroupFilterInput, ListRoomGroupsQuery, ListUsersQuery, CreateRoomMutation, CreateUserMutation, CreateUserInput, DeleteRoomMutation, CreateRoomGroupMutation, UpdateUserMutation, UpdateUserInput, DeleteRoomGroupMutation } from '../../../shared/service/amplify.service';
 import { from, Observable } from 'rxjs';
 import { InterfaceArgsCreateRoom, ISArgsCreateRoomGroup } from '../model/home.interface';
 
@@ -63,7 +63,7 @@ export class HomeService {
     return from(this.amplifyService.ListRoomGroups(filterContent));
   }
 
-  deleteRoomGroupsItem(roomGroupId: string): Observable<any> {
+  deleteRoomGroupsItem(roomGroupId: string): Observable<DeleteRoomGroupMutation> {
     const requestContent = {
       id: roomGroupId
     }

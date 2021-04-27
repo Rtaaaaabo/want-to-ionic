@@ -1715,10 +1715,10 @@ export type DeleteRoomGroupMutation = {
     companyID: string;
     tel: string | null;
     positionName: string | null;
-    iconImage: string | null;
+    iconImage?: string | null;
     registered: boolean | null;
     authority: string | null;
-    company: {
+    company?: {
       __typename: "Company";
       id: string;
       name: string;
@@ -2781,12 +2781,12 @@ export type GetRoomGroupQuery = {
 
 export type ListRoomGroupsQuery = {
   __typename: "ModelRoomGroupConnection";
-  items: Array<{
+  items?: Array<{
     __typename: "RoomGroup";
     id: string;
     roomID: string;
     userID: string;
-    room: {
+    room?: {
       __typename: "Room";
       id: string;
       name: string;
@@ -2795,24 +2795,23 @@ export type ListRoomGroupsQuery = {
       createdAt: string;
       updatedAt: string;
     } | null;
-    user: {
+    user?: {
       __typename: "User";
       id: string;
       username: string;
       email: string;
       companyID: string;
-      tel: string | null;
-      positionName: string | null;
-      iconImage: string | null;
-      registered: boolean | null;
-      authority: string | null;
+      tel?: string | null;
+      positionName?: string | null;
+      registered?: boolean | null;
+      authority?: string | null;
       createdAt: string;
       updatedAt: string;
     } | null;
     createdAt: string;
     updatedAt: string;
   } | null> | null;
-  nextToken: string | null;
+  nextToken?: string | null;
 };
 
 export type GetRoomQuery = {
