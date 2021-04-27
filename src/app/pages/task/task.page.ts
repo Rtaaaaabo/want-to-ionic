@@ -64,7 +64,6 @@ export class TaskPage implements OnInit {
       room: this.logic.fetchRoomInfo(this.roomId),
       roomMembers: this.logic.fetchMemberListOnRoom(this.roomId).pipe(map(({ items }) => items)),
     }).subscribe((data) => {
-      console.log('task page', data);
       this.companyMembers = data.companyUser.items;
       this.taskActiveItems = data.activeTaskItems.sort(this.logic.compareTaskArray);
       this.taskDoneItems = data.doneTaskItems;

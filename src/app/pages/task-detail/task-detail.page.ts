@@ -76,18 +76,20 @@ export class TaskDetailPage implements OnInit {
   }
 
   sendMessage(): void {
+    console.log('[arrayImageBase64Data]', this.arrayImageBase64Data);
     if (this.arrayImageBase64Data.length === 0) {
       this.logic.sendNewMessage(this.taskId, this.newMsg, this.currentUserId)
         .subscribe(() => this.newMsg = '');
     } else {
       this.logic.uploadFile(this.arrayImageBase64Data, this.taskId)
-        .pipe(map((data) => data.key))
-        .pipe(concatMap((result) => this.logic.getStorage(result)))
-        .pipe(toArray())
-        .pipe(concatMap((data) => this.logic.sendNewMessage(this.taskId, this.newMsg, this.currentUserId, data)))
-        .subscribe(() => {
-          this.newMsg = '';
-          this.arrayImageBase64Data = [];
+        // .pipe(map((data) => data.key))
+        // .pipe(concatMap((result) => this.logic.getStorage(result)))
+        // .pipe(toArray())
+        // .pipe(concatMap((data) => this.logic.sendNewMessage(this.taskId, this.newMsg, this.currentUserId, data)))
+        .subscribe((result) => {
+          console.log('[uploadFile result]', result);
+          // this.newMsg = '';
+          // this.arrayImageBase64Data = [];
         });
     }
   }

@@ -8,7 +8,7 @@ import { CurrentUserInfo } from '../../task/interface/current-user-info.interfac
 import { TaskDetailService } from '../service/task-detail.service';
 import { Filesystem, FilesystemDirectory, FilesystemEncoding, FileWriteResult, FileReadResult, FileDeleteResult } from "@capacitor/core";
 import { CreateMessageInput, GetTaskQuery, S3ObjectInput, UpdateTaskMutation } from 'src/app/shared/service/amplify.service';
-import { IMessageAttachment, IsMessageContent, MessageContent } from '../models/task-detail.interface';
+import { IsMessageContent, MessageContent } from '../models/task-detail.interface';
 
 const OneWeekSecond = 604800;
 
@@ -131,7 +131,7 @@ export class TaskDetailLogic {
    * @param taskId タスクのIDを渡します。
    * @returns Observable型でS3から返ってきた値を返します。
    */
-  uploadFile(arrayBase64Data: Array<any>, taskId: string): Observable<any> {
+  uploadFile(arrayBase64Data: Array<any>, taskId: string): Observable<Object> {
     let fileName: string;
     let base64Data: any;
     let ext: string;
@@ -155,7 +155,9 @@ export class TaskDetailLogic {
     return of(contentType.match(/([^/]+?)?$/)[0]);
   }
 
-  putStorage(fileName: string, blobFile: Blob, contentType: string): Observable<any> {
+  putStorage(fileName: string, blobFile: Blob, contentType: string): Observable<Object> {
+    console.log('[fileName]', fileName);
+    console.log('[blobFile]', blobFile);
     return from(Storage.put(
       fileName,
       blobFile,
