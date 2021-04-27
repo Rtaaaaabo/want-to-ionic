@@ -18,7 +18,6 @@ describe('HomeLogic', () => {
   });
 
   test('HomeLogicがインスタンス化されていること', () => {
-    console.log(logic);
     expect(logic).toBeTruthy();
   });
 
