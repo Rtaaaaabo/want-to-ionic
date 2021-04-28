@@ -147,9 +147,6 @@ export class HomeLogic {
   }
 
   getDirString(dt: Date): string {
-    const random = dt.getTime() + Math.floor(100000 * Math.random());
-    // const randomMath = Math.random() * random;
-    // const randomFloor = randomMath.toString(16);
     return "" +
       ("00" + dt.getUTCFullYear()).slice(-2) +
       ("00" + (dt.getMonth() + 1)).slice(-2) +
@@ -157,7 +154,6 @@ export class HomeLogic {
       ("00" + dt.getUTCHours()).slice(-2) +
       ("00" + dt.getMinutes()).slice(-2) +
       ("00" + dt.getUTCSeconds()).slice(-2);
-    // "-" + randomFloor;
   }
 
   setExitsRoomAndUser(data): Observable<any> {
