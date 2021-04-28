@@ -5,22 +5,7 @@ import { SettingLogic } from './logic/setting.logic';
 import { EditProfileModalComponent } from '../../shared/component/modal/edit-profile-modal/edit-profile-modal.component';
 import { from } from 'rxjs';
 import { concatMap, flatMap } from 'rxjs/operators';
-
-// interface User
-interface OwnUser {
-  authority: string;
-  companyID: string;
-  createdAt: string;
-  positionName: string;
-  iconImage: string;
-  email: string;
-  id: string;
-  registered?: boolean
-  updatedAt: string;
-  username: string;
-  __typename: string;
-}
-
+import { IOwnUser } from './interface /setting.interface';
 @Component({
   selector: 'app-setting',
   templateUrl: './setting.page.html',
@@ -41,7 +26,7 @@ export class SettingPage implements OnInit {
       role: 'cancel',
     }
   ]
-  user: OwnUser;
+  user: IOwnUser;
 
   constructor(
     private actionSheetCtrl: ActionSheetController,

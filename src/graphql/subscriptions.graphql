@@ -23,7 +23,6 @@ subscription OnCreateCompany {
         companyID
         tel
         positionName
-        iconImage
         registered
         authority
         createdAt
@@ -59,7 +58,6 @@ subscription OnUpdateCompany {
         companyID
         tel
         positionName
-        iconImage
         registered
         authority
         createdAt
@@ -95,7 +93,6 @@ subscription OnDeleteCompany {
         companyID
         tel
         positionName
-        iconImage
         registered
         authority
         createdAt
@@ -138,7 +135,6 @@ subscription OnCreateTaskGroup {
         companyID
         tel
         positionName
-        iconImage
         registered
         authority
         createdAt
@@ -159,7 +155,11 @@ subscription OnCreateTaskGroup {
       companyID
       tel
       positionName
-      iconImage
+      iconImage {
+        bucket
+        region
+        key
+      }
       registered
       authority
       company {
@@ -219,7 +219,6 @@ subscription OnUpdateTaskGroup {
         companyID
         tel
         positionName
-        iconImage
         registered
         authority
         createdAt
@@ -240,7 +239,11 @@ subscription OnUpdateTaskGroup {
       companyID
       tel
       positionName
-      iconImage
+      iconImage {
+        bucket
+        region
+        key
+      }
       registered
       authority
       company {
@@ -300,7 +303,6 @@ subscription OnDeleteTaskGroup {
         companyID
         tel
         positionName
-        iconImage
         registered
         authority
         createdAt
@@ -321,7 +323,11 @@ subscription OnDeleteTaskGroup {
       companyID
       tel
       positionName
-      iconImage
+      iconImage {
+        bucket
+        region
+        key
+      }
       registered
       authority
       company {
@@ -390,7 +396,11 @@ subscription OnCreateTask {
       companyID
       tel
       positionName
-      iconImage
+      iconImage {
+        bucket
+        region
+        key
+      }
       registered
       authority
       company {
@@ -423,7 +433,6 @@ subscription OnCreateTask {
         content
         createdAt
         isSent
-        attachmentUri
         updatedAt
       }
       nextToken
@@ -481,7 +490,11 @@ subscription OnUpdateTask {
       companyID
       tel
       positionName
-      iconImage
+      iconImage {
+        bucket
+        region
+        key
+      }
       registered
       authority
       company {
@@ -514,7 +527,6 @@ subscription OnUpdateTask {
         content
         createdAt
         isSent
-        attachmentUri
         updatedAt
       }
       nextToken
@@ -572,7 +584,11 @@ subscription OnDeleteTask {
       companyID
       tel
       positionName
-      iconImage
+      iconImage {
+        bucket
+        region
+        key
+      }
       registered
       authority
       company {
@@ -605,7 +621,6 @@ subscription OnDeleteTask {
         content
         createdAt
         isSent
-        attachmentUri
         updatedAt
       }
       nextToken
@@ -631,7 +646,11 @@ subscription OnCreateUser {
     companyID
     tel
     positionName
-    iconImage
+    iconImage {
+      bucket
+      region
+      key
+    }
     registered
     authority
     company {
@@ -655,7 +674,6 @@ subscription OnCreateUser {
         content
         createdAt
         isSent
-        attachmentUri
         updatedAt
       }
       nextToken
@@ -708,7 +726,11 @@ subscription OnUpdateUser {
     companyID
     tel
     positionName
-    iconImage
+    iconImage {
+      bucket
+      region
+      key
+    }
     registered
     authority
     company {
@@ -732,7 +754,6 @@ subscription OnUpdateUser {
         content
         createdAt
         isSent
-        attachmentUri
         updatedAt
       }
       nextToken
@@ -785,7 +806,11 @@ subscription OnDeleteUser {
     companyID
     tel
     positionName
-    iconImage
+    iconImage {
+      bucket
+      region
+      key
+    }
     registered
     authority
     company {
@@ -809,7 +834,6 @@ subscription OnDeleteUser {
         content
         createdAt
         isSent
-        attachmentUri
         updatedAt
       }
       nextToken
@@ -887,7 +911,11 @@ subscription OnCreateRoomGroup {
       companyID
       tel
       positionName
-      iconImage
+      iconImage {
+        bucket
+        region
+        key
+      }
       registered
       authority
       company {
@@ -949,7 +977,11 @@ subscription OnUpdateRoomGroup {
       companyID
       tel
       positionName
-      iconImage
+      iconImage {
+        bucket
+        region
+        key
+      }
       registered
       authority
       company {
@@ -1011,7 +1043,11 @@ subscription OnDeleteRoomGroup {
       companyID
       tel
       positionName
-      iconImage
+      iconImage {
+        bucket
+        region
+        key
+      }
       registered
       authority
       company {
@@ -1195,7 +1231,11 @@ subscription OnCreateMessage {
     content
     createdAt
     isSent
-    attachmentUri
+    attachment {
+      bucket
+      region
+      key
+    }
     author {
       id
       username
@@ -1203,7 +1243,11 @@ subscription OnCreateMessage {
       companyID
       tel
       positionName
-      iconImage
+      iconImage {
+        bucket
+        region
+        key
+      }
       registered
       authority
       company {
@@ -1254,7 +1298,6 @@ subscription OnCreateMessage {
         companyID
         tel
         positionName
-        iconImage
         registered
         authority
         createdAt
@@ -1279,7 +1322,11 @@ subscription OnUpdateMessage {
     content
     createdAt
     isSent
-    attachmentUri
+    attachment {
+      bucket
+      region
+      key
+    }
     author {
       id
       username
@@ -1287,7 +1334,11 @@ subscription OnUpdateMessage {
       companyID
       tel
       positionName
-      iconImage
+      iconImage {
+        bucket
+        region
+        key
+      }
       registered
       authority
       company {
@@ -1338,7 +1389,6 @@ subscription OnUpdateMessage {
         companyID
         tel
         positionName
-        iconImage
         registered
         authority
         createdAt
@@ -1363,7 +1413,11 @@ subscription OnDeleteMessage {
     content
     createdAt
     isSent
-    attachmentUri
+    attachment {
+      bucket
+      region
+      key
+    }
     author {
       id
       username
@@ -1371,7 +1425,11 @@ subscription OnDeleteMessage {
       companyID
       tel
       positionName
-      iconImage
+      iconImage {
+        bucket
+        region
+        key
+      }
       registered
       authority
       company {
@@ -1422,7 +1480,6 @@ subscription OnDeleteMessage {
         companyID
         tel
         positionName
-        iconImage
         registered
         authority
         createdAt

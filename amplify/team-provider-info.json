@@ -66,7 +66,11 @@
       "function": {
         "S3Trigger8b3c74c8": {
           "deploymentBucketName": "amplify-wantto-develop-13306-deployment",
-          "s3Key": "amplify-builds/S3Trigger8b3c74c8-3249516d542b4a74586d-build.zip"
+          "s3Key": "amplify-builds/S3Trigger8b3c74c8-49596a7a434477653356-build.zip"
+        },
+        "wanttoce4834c3": {
+          "deploymentBucketName": "amplify-wantto-develop-13306-deployment",
+          "s3Key": "amplify-builds/wanttoce4834c3-79706e424b782b55387a-build.zip"
         }
       }
     }

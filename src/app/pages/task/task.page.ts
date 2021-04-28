@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ItemReorderEventDetail } from '@ionic/core';
-import { ModalController, ToastController, AlertController, NavController } from '@ionic/angular';
+import { ModalController, ToastController, AlertController } from '@ionic/angular';
 import { forkJoin, from, of } from 'rxjs';
 import { flatMap, switchMap, tap, map, concatMap } from 'rxjs/operators';
 import { GetRoomQuery, GetUserQuery, ListUsersQuery } from 'src/app/shared/service/amplify.service';
@@ -37,11 +37,10 @@ export class TaskPage implements OnInit {
     private readonly router: Router,
     private readonly location: Location,
     private readonly alertCtrl: AlertController,
-    private readonly navCtrl: NavController,
     private readonly toastCtrl: ToastController,
-    private modalCtrl: ModalController,
-    private route: ActivatedRoute,
-    private logic: TaskLogic,
+    private readonly modalCtrl: ModalController,
+    private readonly route: ActivatedRoute,
+    private readonly logic: TaskLogic,
   ) { }
 
   ngOnInit() { }
@@ -60,12 +59,12 @@ export class TaskPage implements OnInit {
         .pipe(map((user) => this.user = user))
         .pipe(map((user) => this.companyId = user.companyID))
         .pipe(concatMap(() => this.logic.fetchCompanyMember(this.user.companyID))),
-
       activeTaskItems: this.logic.fetchActiveTaskPerRoom(this.roomId),
       doneTaskItems: this.logic.fetchDoneTaskPerRoom(this.roomId),
       room: this.logic.fetchRoomInfo(this.roomId),
       roomMembers: this.logic.fetchMemberListOnRoom(this.roomId).pipe(map(({ items }) => items)),
     }).subscribe((data) => {
+      console.log('task page', data);
       this.companyMembers = data.companyUser.items;
       this.taskActiveItems = data.activeTaskItems.sort(this.logic.compareTaskArray);
       this.taskDoneItems = data.doneTaskItems;
@@ -145,7 +144,7 @@ export class TaskPage implements OnInit {
     });
   }
 
-  segmentChanged(ev): void {
+  segmentChanged(ev: CustomEvent): void {
     this.segment = ev.detail.value;
     this.logic.fetchDoneTaskPerRoom(this.roomId).subscribe((data) => {
       this.taskDoneItems = data;

@@ -1,22 +1,34 @@
 import { TestBed } from '@angular/core/testing';
-import { FormGroup } from '@angular/forms';
 import { HomeLogic } from './home.logic';
 import { HomeService } from '../service/home.service';
 import { SessionService } from '../../../shared/service/session.service';
 import { of } from 'rxjs';
-import { CreateRoomGroupMutation, CreateRoomMutation, CreateUserMutation, DeleteRoomMutation, ListUsersQuery } from 'src/app/shared/service/amplify.service';
+import { CreateRoomGroupMutation, CreateRoomMutation, DeleteRoomGroupMutation, DeleteRoomMutation, ListUsersQuery } from 'src/app/shared/service/amplify.service';
 import { ILResponseFetchRoomMembers } from '../model/home.interface';
-import { ListRoomGroupsQuery } from 'src/app/API.service';
-
+import { ListRoomGroupsQuery } from 'src/app/shared/service/amplify.service';
 
 describe('HomeLogic', () => {
+  let now;
+  let spiedDate;
   let logic: HomeLogic;
+  let homeService: HomeService;
 
+  beforeAll(() => {
+    const OriginalDate = Date; // 退避
+    now = new OriginalDate('2019/8/1 12:00:00');
+    Date.now = jest.fn().mockReturnValue(now.valueOf());
+    spiedDate = jest.spyOn(global, 'Date').mockImplementation(() => now);
+  });
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [HomeService, SessionService]
     });
     logic = TestBed.inject(HomeLogic);
+    homeService = TestBed.inject(HomeService);
+  });
+
+  afterAll(() => {
+    spiedDate.mockRestore();
   });
 
   test('HomeLogicがインスタンス化されていること', () => {
@@ -53,7 +65,6 @@ describe('HomeLogic', () => {
       email_verified: true,
       sub: 'testSub',
     }
-    const homeService = TestBed.inject(HomeService);
     const mockHomeServiceCheckRegistration = jest.spyOn(homeService, 'checkRegistrationUser').mockReturnValue(of(dummyResponseListUsersQuery));
     logic.checkRegistrationUser(argsParams).subscribe((result) => {
       expect(result).toBe(dummyResponseListUsersQuery);
@@ -104,7 +115,6 @@ describe('HomeLogic', () => {
       nameItem: 'testArgsName',
       descriptionItem: 'testArgsDescription',
     }
-    const homeService = TestBed.inject(HomeService);
     const mockHomeServiceCreateUserRoomGroup = jest.spyOn(homeService, 'createRoom').mockReturnValue(of(mockResponseService));
     logic.createRoom(argsParam).subscribe((result) => {
       expect(result).toBe(mockResponseService);
@@ -122,7 +132,6 @@ describe('HomeLogic', () => {
       description: 'testDescription',
     } as DeleteRoomMutation;
     const argsRoomId = 'testRoomId'
-    const homeService = TestBed.inject(HomeService);
     const mockDeleteRoomItem = jest.spyOn(homeService, "deleteRoomItem").mockReturnValue(of(expectedResult));
     logic.deleteRoomItem(argsRoomId).subscribe(result => {
       expect(result).toBe(expectedResult);
@@ -137,7 +146,6 @@ describe('HomeLogic', () => {
       roomID: 'testRoomId',
       userID: 'testUserId;'
     } as CreateRoomGroupMutation
-    const homeService = TestBed.inject(HomeService);
     const mockCreateUserRoomGroup = jest.spyOn(homeService, "createUserRoomGroup").mockReturnValue(of(expectedResult));
     logic.createUserRoomGroup('tesUserId', 'testRoomId').subscribe(result => {
       expect(result).toBe(expectedResult);
@@ -152,6 +160,7 @@ describe('HomeLogic', () => {
       roomID: 'testRoomId',
       userID: 'testUserId',
     }] as Array<ILResponseFetchRoomMembers>;
+
     const serviceResult = {
       __typename: "ModelRoomGroupConnection",
       items: [{
@@ -161,36 +170,98 @@ describe('HomeLogic', () => {
         userID: 'testUserId',
       }]
     } as ListRoomGroupsQuery;
-    const homeService = TestBed.inject(HomeService);
+    const roomId = 'testRoomId';
+    const currentUserId = 'testCurrentUserId';
     const mockFetchRoomMembers = jest.spyOn(homeService, 'fetchRoomMembers').mockReturnValue(of(serviceResult));
-  });
-
-  test('removeMeFromRoomのテスト', () => {
-
+    logic.fetchRoomMembers(roomId, currentUserId).subscribe((result) => {
+      expect(result).toBe(expectedResult);
+    });
+    expect(mockFetchRoomMembers).toBeCalled();
   });
 
   test('fetchRoomGroupsIdのテスト', () => {
-
+    const serviceResult = {
+      __typename: "ModelRoomGroupConnection",
+      items: [{
+        __typename: "RoomGroup",
+        id: 'testId',
+        roomID: 'testRoomId',
+        userID: 'testUserId',
+      }]
+    } as ListRoomGroupsQuery;
+    const roomId = 'testRoomId';
+    const meId = 'testMeId';
+    const mockFetchRoomGroupId = jest.spyOn(homeService, "fetchRoomGroupsId").mockReturnValue(of(serviceResult));
+    logic.fetchRoomGroupsId(roomId, meId).subscribe(result => {
+      expect(result).toBe(serviceResult.items[0].id);
+    });
+    expect(mockFetchRoomGroupId).toBeCalled();
   });
 
-  test('fetchRoomListのテスト', () => {
+  test('removeMeFromRoomのテスト', () => {
+    const serviceResult = {
+      __typename: "RoomGroup",
+      id: 'testId',
+      roomID: 'testRoomId',
+      userID: 'testUserId',
+    } as DeleteRoomGroupMutation;
+    const roomId = 'testRoomId';
+    const meId = 'testMeId';
+    const resultLogicFetchRoomGroupsId = 'testGroupId';
+    jest.spyOn(logic, 'fetchRoomGroupsId').mockReturnValue(of(resultLogicFetchRoomGroupsId));
+    const mockDeleteRoomGroupItem = jest.spyOn(homeService, 'deleteRoomGroupsItem').mockReturnValue(of(serviceResult));
+    logic.removeMeFromRoom(roomId, meId).subscribe((result) => {
+      expect(result).toBe(serviceResult);
+    });
+    expect(mockDeleteRoomGroupItem).toBeCalled();
+  })
 
+  test('fetchRoomListのテスト', () => {
+    const serviceResult = {
+      __typename: "ModelRoomGroupConnection",
+      items: [{
+        __typename: "RoomGroup",
+        id: 'testId',
+        roomID: 'testRoomId',
+        userID: 'testUserId',
+        room: {
+          __typename: "Room",
+          id: 'testRoomId',
+          name: 'testRoomName',
+          companyID: 'testCompanyId',
+          description: 'testDescription',
+          createdAt: 'testCreateAt',
+          updatedAt: 'testUpdateAt',
+        }
+      }]
+    } as ListRoomGroupsQuery;
+    const currentUserId = 'testCurrentUserId';
+    const mockFetchRoomList = jest.spyOn(homeService, 'fetchRoomList').mockReturnValue(of(serviceResult));
+    logic.fetchRoomList(currentUserId).subscribe((result) => {
+      expect(result).toBe(serviceResult.items);
+    });
+    expect(mockFetchRoomList).toBeCalled();
+  });
+
+  test('getDirStringのテスト', () => {
+    const nowDate = now;
+    const response = logic.getDirString(nowDate);
+    const expectDirectory = "" +
+      ("00" + nowDate.getUTCFullYear()).slice(-2) +
+      ("00" + (nowDate.getMonth() + 1)).slice(-2) +
+      ("00" + nowDate.getUTCDate()).slice(-2) +
+      ("00" + nowDate.getUTCHours()).slice(-2) +
+      ("00" + nowDate.getMinutes()).slice(-2) +
+      ("00" + nowDate.getUTCSeconds()).slice(-2);
+    console.log(response);
+    expect(response).toEqual(expectDirectory);
   });
 
   test('fetchAvatarIconUrlのテスト', () => {
 
   });
 
-  test('getDirStringのテスト', () => {
-
-  });
-
-  test('setExitsRoomAndUserのテスト', () => {
-
-  });
-
   test('getContentTypeのテスト', () => {
-
   });
 
   test('makeExtのテスト', () => {
@@ -204,6 +275,12 @@ describe('HomeLogic', () => {
   test('putStorageのテスト', () => {
 
   });
+
+
+  test('setExitsRoomAndUserのテスト', () => {
+
+  });
+
 
   test('getStorageのテスト', () => {
 

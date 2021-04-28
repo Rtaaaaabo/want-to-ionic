@@ -1,15 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Location, ViewportScroller } from '@angular/common';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { ModalController, ActionSheetController, ToastController, IonContent, Platform, AlertController } from '@ionic/angular';
 import { Plugins, CameraResultType } from '@capacitor/core';
 import { forkJoin, from, Observable } from 'rxjs';
 import { TaskDetailLogic } from './logic/task-detail.logic';
 import { AddTaskModalComponent } from 'src/app/shared/component/modal/add-task-modal/add-task-modal.component';
-import { filter, tap, map, concatMap, toArray, catchError } from 'rxjs/operators';
-import { CurrentUserInfo } from '../task/interface/current-user-info.interface';
+import { filter, tap, map, concatMap, toArray } from 'rxjs/operators';
 import { ListRoomGroupsQuery } from 'src/app/API.service';
-import { GetTaskQuery, ListMessagesQuery } from 'src/app/shared/service/amplify.service';
+import { GetTaskQuery } from 'src/app/shared/service/amplify.service';
 const { Camera } = Plugins;
 
 @Component({
@@ -32,13 +31,13 @@ export class TaskDetailPage implements OnInit {
   arrayImageBase64Data: Array<any> = [];
 
   constructor(
-    private location: Location,
     private logic: TaskDetailLogic,
-    private route: ActivatedRoute,
     private scroll: ViewportScroller,
-    private modalCtrl: ModalController,
-    private actionSheetCtrl: ActionSheetController,
-    private toastCtrl: ToastController,
+    private readonly location: Location,
+    private readonly route: ActivatedRoute,
+    private readonly modalCtrl: ModalController,
+    private readonly actionSheetCtrl: ActionSheetController,
+    private readonly toastCtrl: ToastController,
     private readonly platform: Platform,
     private readonly alertCtrl: AlertController,
   ) {
@@ -48,8 +47,8 @@ export class TaskDetailPage implements OnInit {
           .subscribe(({ value }) => {
             if (!value.hasOwnProperty('errors')) {
               this.logic.fetchMessagePerTask(this.taskId)
-                .subscribe((result) => {
-                  this.message = result.items
+                .subscribe(({ items }) => {
+                  this.message = items;
                 })
             }
           });

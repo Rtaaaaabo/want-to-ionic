@@ -26,7 +26,6 @@ mutation CreateCompany(
         companyID
         tel
         positionName
-        iconImage
         registered
         authority
         createdAt
@@ -65,7 +64,6 @@ mutation UpdateCompany(
         companyID
         tel
         positionName
-        iconImage
         registered
         authority
         createdAt
@@ -104,7 +102,6 @@ mutation DeleteCompany(
         companyID
         tel
         positionName
-        iconImage
         registered
         authority
         createdAt
@@ -150,7 +147,6 @@ mutation CreateTaskGroup(
         companyID
         tel
         positionName
-        iconImage
         registered
         authority
         createdAt
@@ -171,7 +167,11 @@ mutation CreateTaskGroup(
       companyID
       tel
       positionName
-      iconImage
+      iconImage {
+        bucket
+        region
+        key
+      }
       registered
       authority
       company {
@@ -234,7 +234,6 @@ mutation UpdateTaskGroup(
         companyID
         tel
         positionName
-        iconImage
         registered
         authority
         createdAt
@@ -255,7 +254,11 @@ mutation UpdateTaskGroup(
       companyID
       tel
       positionName
-      iconImage
+      iconImage {
+        bucket
+        region
+        key
+      }
       registered
       authority
       company {
@@ -318,7 +321,6 @@ mutation DeleteTaskGroup(
         companyID
         tel
         positionName
-        iconImage
         registered
         authority
         createdAt
@@ -339,7 +341,11 @@ mutation DeleteTaskGroup(
       companyID
       tel
       positionName
-      iconImage
+      iconImage {
+        bucket
+        region
+        key
+      }
       registered
       authority
       company {
@@ -411,7 +417,11 @@ mutation CreateTask(
       companyID
       tel
       positionName
-      iconImage
+      iconImage {
+        bucket
+        region
+        key
+      }
       registered
       authority
       company {
@@ -444,7 +454,6 @@ mutation CreateTask(
         content
         createdAt
         isSent
-        attachmentUri
         updatedAt
       }
       nextToken
@@ -505,7 +514,11 @@ mutation UpdateTask(
       companyID
       tel
       positionName
-      iconImage
+      iconImage {
+        bucket
+        region
+        key
+      }
       registered
       authority
       company {
@@ -538,7 +551,6 @@ mutation UpdateTask(
         content
         createdAt
         isSent
-        attachmentUri
         updatedAt
       }
       nextToken
@@ -599,7 +611,11 @@ mutation DeleteTask(
       companyID
       tel
       positionName
-      iconImage
+      iconImage {
+        bucket
+        region
+        key
+      }
       registered
       authority
       company {
@@ -632,7 +648,6 @@ mutation DeleteTask(
         content
         createdAt
         isSent
-        attachmentUri
         updatedAt
       }
       nextToken
@@ -661,7 +676,11 @@ mutation CreateUser(
     companyID
     tel
     positionName
-    iconImage
+    iconImage {
+      bucket
+      region
+      key
+    }
     registered
     authority
     company {
@@ -685,7 +704,6 @@ mutation CreateUser(
         content
         createdAt
         isSent
-        attachmentUri
         updatedAt
       }
       nextToken
@@ -741,7 +759,11 @@ mutation UpdateUser(
     companyID
     tel
     positionName
-    iconImage
+    iconImage {
+      bucket
+      region
+      key
+    }
     registered
     authority
     company {
@@ -765,7 +787,6 @@ mutation UpdateUser(
         content
         createdAt
         isSent
-        attachmentUri
         updatedAt
       }
       nextToken
@@ -821,7 +842,11 @@ mutation DeleteUser(
     companyID
     tel
     positionName
-    iconImage
+    iconImage {
+      bucket
+      region
+      key
+    }
     registered
     authority
     company {
@@ -845,7 +870,6 @@ mutation DeleteUser(
         content
         createdAt
         isSent
-        attachmentUri
         updatedAt
       }
       nextToken
@@ -926,7 +950,11 @@ mutation CreateRoomGroup(
       companyID
       tel
       positionName
-      iconImage
+      iconImage {
+        bucket
+        region
+        key
+      }
       registered
       authority
       company {
@@ -991,7 +1019,11 @@ mutation UpdateRoomGroup(
       companyID
       tel
       positionName
-      iconImage
+      iconImage {
+        bucket
+        region
+        key
+      }
       registered
       authority
       company {
@@ -1056,7 +1088,11 @@ mutation DeleteRoomGroup(
       companyID
       tel
       positionName
-      iconImage
+      iconImage {
+        bucket
+        region
+        key
+      }
       registered
       authority
       company {
@@ -1252,7 +1288,11 @@ mutation CreateMessage(
     content
     createdAt
     isSent
-    attachmentUri
+    attachment {
+      bucket
+      region
+      key
+    }
     author {
       id
       username
@@ -1260,7 +1300,11 @@ mutation CreateMessage(
       companyID
       tel
       positionName
-      iconImage
+      iconImage {
+        bucket
+        region
+        key
+      }
       registered
       authority
       company {
@@ -1311,7 +1355,6 @@ mutation CreateMessage(
         companyID
         tel
         positionName
-        iconImage
         registered
         authority
         createdAt
@@ -1339,7 +1382,11 @@ mutation UpdateMessage(
     content
     createdAt
     isSent
-    attachmentUri
+    attachment {
+      bucket
+      region
+      key
+    }
     author {
       id
       username
@@ -1347,7 +1394,11 @@ mutation UpdateMessage(
       companyID
       tel
       positionName
-      iconImage
+      iconImage {
+        bucket
+        region
+        key
+      }
       registered
       authority
       company {
@@ -1398,7 +1449,6 @@ mutation UpdateMessage(
         companyID
         tel
         positionName
-        iconImage
         registered
         authority
         createdAt
@@ -1426,7 +1476,11 @@ mutation DeleteMessage(
     content
     createdAt
     isSent
-    attachmentUri
+    attachment {
+      bucket
+      region
+      key
+    }
     author {
       id
       username
@@ -1434,7 +1488,11 @@ mutation DeleteMessage(
       companyID
       tel
       positionName
-      iconImage
+      iconImage {
+        bucket
+        region
+        key
+      }
       registered
       authority
       company {
@@ -1485,7 +1543,6 @@ mutation DeleteMessage(
         companyID
         tel
         positionName
-        iconImage
         registered
         authority
         createdAt

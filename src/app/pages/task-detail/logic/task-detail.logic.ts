@@ -7,34 +7,10 @@ import { SessionService } from 'src/app/shared/service/session.service';
 import { CurrentUserInfo } from '../../task/interface/current-user-info.interface';
 import { TaskDetailService } from '../service/task-detail.service';
 import { Filesystem, FilesystemDirectory, FilesystemEncoding, FileWriteResult, FileReadResult, FileDeleteResult } from "@capacitor/core";
-import { GetTaskQuery, OnCreateCompanySubscription, OnCreateMessageSubscription, UpdateTaskMutation } from 'src/app/shared/service/amplify.service';
+import { CreateMessageInput, GetTaskQuery, S3ObjectInput, UpdateTaskMutation } from 'src/app/shared/service/amplify.service';
+import { IMessageAttachment, IsMessageContent, MessageContent } from '../models/task-detail.interface';
 
 const OneWeekSecond = 604800;
-
-interface IsMessageContent {
-  data: {
-    hasTaskKind: {
-      chargePerson: boolean;
-      description: boolean;
-      name: boolean;
-      scheduleDate: boolean;
-    },
-    taskValue: {
-      chargePersonId: string;
-      descriptionItem: string;
-      nameItem: string;
-      scheduleDateItem: string;
-    }
-  },
-  role: undefined;
-}
-
-interface MessageContent {
-  id: string,
-  taskID: string,
-  authorID: string,
-  content: string,
-}
 
 @Injectable({
   providedIn: 'root'
@@ -86,17 +62,16 @@ export class TaskDetailLogic {
    * @param arrayAttachmentUri arrayAttachmentUri
    * @returns Observable型でcreateMessageItemを返します
    */
-  sendNewMessage(taskId: string, messageContent: string, userId: string, arrayAttachmentUri?: Array<string>): Observable<any> {
-    let inputContent = {
+  sendNewMessage(taskId: string, messageContent: string, userId: string, arrayAttachment?: Array<S3ObjectInput>): Observable<any> {
+    let inputContent: CreateMessageInput = {
       id: `${uuid()}`,
       authorID: `${userId}`,
       content: messageContent,
       taskID: taskId,
       isSent: true,
-      attachmentUri: [],
     };
-    if (arrayAttachmentUri !== undefined) {
-      inputContent.attachmentUri = arrayAttachmentUri;
+    if (arrayAttachment !== undefined) {
+      inputContent.attachment = arrayAttachment;
     }
     return this.taskDetailService.createMessageItem(inputContent);
   }

@@ -11,7 +11,7 @@ export class SettingService {
     private amplifyService: AmplifyService,
   ) { }
 
-  fetchUserInfo(userId): Observable<any> {
+  fetchUserInfo(userId: string): Observable<any> {
     return from(this.amplifyService.GetUser(userId));
   }
 }

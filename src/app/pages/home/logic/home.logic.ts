@@ -4,7 +4,7 @@ import { SessionService } from '../../../shared/service/session.service';
 import { v4 as uuid } from 'uuid';
 import { Observable, from, of } from 'rxjs';
 import { concatMap, map, filter, toArray } from 'rxjs/operators';
-import { CreateRoomGroupMutation, CreateRoomMutation, CreateUserMutation, DeleteRoomMutation, ListUsersQuery, ModelRoomGroupFilterInput } from 'src/app/shared/service/amplify.service';
+import { CreateRoomGroupMutation, CreateRoomMutation, CreateUserMutation, DeleteRoomGroupMutation, DeleteRoomMutation, ListUsersQuery, ModelRoomGroupFilterInput } from 'src/app/shared/service/amplify.service';
 import { ResponseListRoomGroupsQueryItems } from '../service/reponse/response.model';
 import { Storage } from 'aws-amplify';
 import { ILResponseFetchRoomMembers, InterfaceLogicArgsCreateRoom } from '../model/home.interface';
@@ -24,8 +24,8 @@ const OneWeekSecond = 64480;
 export class HomeLogic {
 
   constructor(
-    private readonly homeService: HomeService,
-    private readonly sessionService: SessionService,
+    private homeService: HomeService,
+    private sessionService: SessionService,
   ) { }
 
   checkRegistrationUser(attribute: Attribute): Observable<ListUsersQuery> {
@@ -62,7 +62,6 @@ export class HomeLogic {
   }
 
   updateUser(formContent: FormGroup): Observable<any> {
-    console.log(formContent);
     const requestContent = {
       id: formContent.get('id').value,
       companyID: 'takuCloudCom',
@@ -88,7 +87,7 @@ export class HomeLogic {
     return this.homeService.createUserRoomGroup(content);
   }
 
-  fetchRoomMembers(roomId: string, currentUserId: string): Observable<Array<ILResponseFetchRoomMembers>> {
+  fetchRoomMembers(roomId: string, currentUserId: string): Observable<Array<ResponseListRoomGroupsQueryItems>> {
     const filterContent: ModelRoomGroupFilterInput = {
       roomID: {
         eq: `${roomId}`
@@ -98,10 +97,10 @@ export class HomeLogic {
       }
     }
     return this.homeService.fetchRoomMembers(filterContent)
-      .pipe(map((result) => result.items));
+      .pipe(map(({ items }) => items));
   }
 
-  removeMeFromRoom(roomId: string, meId: string): Observable<any> {
+  removeMeFromRoom(roomId: string, meId: string): Observable<DeleteRoomGroupMutation> {
     return this.fetchRoomGroupsId(roomId, meId)
       .pipe(concatMap((roomGroupId) => this.homeService.deleteRoomGroupsItem(roomGroupId)));
   }
@@ -148,17 +147,13 @@ export class HomeLogic {
   }
 
   getDirString(dt: Date): string {
-    const random = dt.getTime() + Math.floor(100000 * Math.random());
-    const randomMath = Math.random() * random;
-    const randomFloor = randomMath.toString(16);
     return "" +
       ("00" + dt.getUTCFullYear()).slice(-2) +
       ("00" + (dt.getMonth() + 1)).slice(-2) +
       ("00" + dt.getUTCDate()).slice(-2) +
       ("00" + dt.getUTCHours()).slice(-2) +
       ("00" + dt.getMinutes()).slice(-2) +
-      ("00" + dt.getUTCSeconds()).slice(-2) +
-      "-" + randomFloor;
+      ("00" + dt.getUTCSeconds()).slice(-2);
   }
 
   setExitsRoomAndUser(data): Observable<any> {
@@ -190,7 +185,7 @@ export class HomeLogic {
     return of(blob);
   }
 
-  putStorage(uploadFileName: string, blobFile: Blob, contentType: string) {
+  putStorage(uploadFileName: string, blobFile: Blob, contentType: string): Observable<Object> {
     return from(Storage.put(
       uploadFileName,
       blobFile,

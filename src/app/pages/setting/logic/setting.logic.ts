@@ -9,8 +9,8 @@ import { SettingService } from '../service/setting.service';
 export class SettingLogic {
 
   constructor(
-    private sessionService: SessionService,
-    private settingService: SettingService,
+    private readonly sessionService: SessionService,
+    private readonly settingService: SettingService,
   ) { }
 
   signOut(): Observable<any> {
@@ -21,7 +21,7 @@ export class SettingLogic {
     return this.sessionService.fetchCurrentUser();
   }
 
-  fetchUserInfo(userId): Observable<any> {
+  fetchUserInfo(userId: string): Observable<any> {
     return this.settingService.fetchUserInfo(userId);
   }
 }

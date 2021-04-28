@@ -18,6 +18,6 @@ import { TaskService } from './service/task.service';
     TaskPageRoutingModule
   ],
   declarations: [TaskPage],
-  providers: [TaskLogic, TaskService],
+  providers: [TaskLogic, TaskService]
 })
 export class TaskPageModule { }

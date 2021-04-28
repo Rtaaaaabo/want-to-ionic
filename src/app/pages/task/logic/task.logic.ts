@@ -12,12 +12,10 @@ import {
   CreateMessageInput,
   CreateRoomGroupMutation,
   CreateTaskMutation,
-  DeleteTaskMutation,
   GetRoomQuery,
   GetUserQuery,
   ListRoomGroupsQuery,
   ListUsersQuery,
-  UpdateMessageInput,
   UpdateTaskMutation,
 } from "src/app/shared/service/amplify.service";
 import { SessionService } from "../../../shared/service/session.service";
@@ -25,6 +23,7 @@ import { v4 as uuid } from "uuid";
 import { TaskService } from "../service/task.service";
 import { CurrentUserInfo } from "../interface/current-user-info.interface";
 import { InterfaceTask } from "src/app/interfaces/task.interface";
+import { TaskPageModule } from '../task.module';
 
 
 @Injectable({

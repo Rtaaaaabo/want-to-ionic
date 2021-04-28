@@ -125,7 +125,7 @@ export type User = {
   companyID?: string;
   tel?: string | null;
   positionName?: string | null;
-  iconImage?: string | null;
+  iconImage?: s3Object;
   registered?: boolean | null;
   authority?: string | null;
   company?: Company;
@@ -135,6 +135,13 @@ export type User = {
   chargeTask?: ModelTaskConnection;
   createdAt?: string;
   updatedAt?: string;
+};
+
+export type s3Object = {
+  __typename: "s3Object";
+  bucket?: string;
+  region?: string;
+  key?: string;
 };
 
 export type ModelMessageConnection = {
@@ -151,7 +158,7 @@ export type Message = {
   content?: string;
   createdAt?: string;
   isSent?: boolean | null;
-  attachmentUri?: Array<string | null> | null;
+  attachment?: Array<s3Object | null> | null;
   author?: User;
   task?: Task;
   updatedAt?: string;
@@ -311,9 +318,15 @@ export type CreateUserInput = {
   companyID: string;
   tel?: string | null;
   positionName?: string | null;
-  iconImage?: string | null;
+  iconImage?: S3ObjectInput | null;
   registered?: boolean | null;
   authority?: string | null;
+};
+
+export type S3ObjectInput = {
+  bucket: string;
+  region: string;
+  key: string;
 };
 
 export type ModelUserConditionInput = {
@@ -322,7 +335,6 @@ export type ModelUserConditionInput = {
   companyID?: ModelIDInput | null;
   tel?: ModelStringInput | null;
   positionName?: ModelStringInput | null;
-  iconImage?: ModelStringInput | null;
   registered?: ModelBooleanInput | null;
   authority?: ModelStringInput | null;
   and?: Array<ModelUserConditionInput | null> | null;
@@ -344,7 +356,7 @@ export type UpdateUserInput = {
   companyID?: string | null;
   tel?: string | null;
   positionName?: string | null;
-  iconImage?: string | null;
+  iconImage?: S3ObjectInput | null;
   registered?: boolean | null;
   authority?: string | null;
 };
@@ -411,7 +423,7 @@ export type CreateMessageInput = {
   content: string;
   createdAt?: string | null;
   isSent?: boolean | null;
-  attachmentUri?: Array<string | null> | null;
+  attachment?: Array<S3ObjectInput | null> | null;
 };
 
 export type ModelMessageConditionInput = {
@@ -420,7 +432,6 @@ export type ModelMessageConditionInput = {
   content?: ModelStringInput | null;
   createdAt?: ModelStringInput | null;
   isSent?: ModelBooleanInput | null;
-  attachmentUri?: ModelStringInput | null;
   and?: Array<ModelMessageConditionInput | null> | null;
   or?: Array<ModelMessageConditionInput | null> | null;
   not?: ModelMessageConditionInput | null;
@@ -433,7 +444,7 @@ export type UpdateMessageInput = {
   content?: string | null;
   createdAt?: string | null;
   isSent?: boolean | null;
-  attachmentUri?: Array<string | null> | null;
+  attachment?: Array<S3ObjectInput | null> | null;
 };
 
 export type DeleteMessageInput = {
@@ -487,7 +498,6 @@ export type ModelUserFilterInput = {
   companyID?: ModelIDInput | null;
   tel?: ModelStringInput | null;
   positionName?: ModelStringInput | null;
-  iconImage?: ModelStringInput | null;
   registered?: ModelBooleanInput | null;
   authority?: ModelStringInput | null;
   and?: Array<ModelUserFilterInput | null> | null;
@@ -521,7 +531,6 @@ export type ModelMessageFilterInput = {
   content?: ModelStringInput | null;
   createdAt?: ModelStringInput | null;
   isSent?: ModelBooleanInput | null;
-  attachmentUri?: ModelStringInput | null;
   and?: Array<ModelMessageFilterInput | null> | null;
   or?: Array<ModelMessageFilterInput | null> | null;
   not?: ModelMessageFilterInput | null;
@@ -570,7 +579,6 @@ export type CreateCompanyMutation = {
       companyID: string;
       tel?: string | null;
       positionName?: string | null;
-      iconImage?: string | null;
       registered?: boolean | null;
       authority?: string | null;
       createdAt: string;
@@ -610,7 +618,6 @@ export type UpdateCompanyMutation = {
       companyID: string;
       tel?: string | null;
       positionName?: string | null;
-      iconImage?: string | null;
       registered?: boolean | null;
       authority?: string | null;
       createdAt: string;
@@ -650,7 +657,6 @@ export type DeleteCompanyMutation = {
       companyID: string;
       tel?: string | null;
       positionName?: string | null;
-      iconImage?: string | null;
       registered?: boolean | null;
       authority?: string | null;
       createdAt: string;
@@ -696,7 +702,6 @@ export type CreateTaskGroupMutation = {
       companyID: string;
       tel?: string | null;
       positionName?: string | null;
-      iconImage?: string | null;
       registered?: boolean | null;
       authority?: string | null;
       createdAt: string;
@@ -720,7 +725,12 @@ export type CreateTaskGroupMutation = {
     companyID: string;
     tel?: string | null;
     positionName?: string | null;
-    iconImage?: string | null;
+    iconImage?: {
+      __typename: "s3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
     registered?: boolean | null;
     authority?: string | null;
     company: {
@@ -788,7 +798,6 @@ export type UpdateTaskGroupMutation = {
       companyID: string;
       tel?: string | null;
       positionName?: string | null;
-      iconImage?: string | null;
       registered?: boolean | null;
       authority?: string | null;
       createdAt: string;
@@ -812,7 +821,12 @@ export type UpdateTaskGroupMutation = {
     companyID: string;
     tel?: string | null;
     positionName?: string | null;
-    iconImage?: string | null;
+    iconImage?: {
+      __typename: "s3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
     registered?: boolean | null;
     authority?: string | null;
     company: {
@@ -880,7 +894,6 @@ export type DeleteTaskGroupMutation = {
       companyID: string;
       tel?: string | null;
       positionName?: string | null;
-      iconImage?: string | null;
       registered?: boolean | null;
       authority?: string | null;
       createdAt: string;
@@ -904,7 +917,12 @@ export type DeleteTaskGroupMutation = {
     companyID: string;
     tel?: string | null;
     positionName?: string | null;
-    iconImage?: string | null;
+    iconImage?: {
+      __typename: "s3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
     registered?: boolean | null;
     authority?: string | null;
     company: {
@@ -983,7 +1001,12 @@ export type CreateTaskMutation = {
     companyID: string;
     tel?: string | null;
     positionName?: string | null;
-    iconImage?: string | null;
+    iconImage?: {
+      __typename: "s3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
     registered?: boolean | null;
     authority?: string | null;
     company: {
@@ -1023,7 +1046,6 @@ export type CreateTaskMutation = {
       content: string;
       createdAt: string;
       isSent?: boolean | null;
-      attachmentUri?: Array<string | null> | null;
       updatedAt: string;
     } | null> | null;
     nextToken?: string | null;
@@ -1088,7 +1110,12 @@ export type UpdateTaskMutation = {
     companyID: string;
     tel?: string | null;
     positionName?: string | null;
-    iconImage?: string | null;
+    iconImage?: {
+      __typename: "s3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
     registered?: boolean | null;
     authority?: string | null;
     company: {
@@ -1128,7 +1155,6 @@ export type UpdateTaskMutation = {
       content: string;
       createdAt: string;
       isSent?: boolean | null;
-      attachmentUri?: Array<string | null> | null;
       updatedAt: string;
     } | null> | null;
     nextToken?: string | null;
@@ -1193,7 +1219,12 @@ export type DeleteTaskMutation = {
     companyID: string;
     tel?: string | null;
     positionName?: string | null;
-    iconImage?: string | null;
+    iconImage?: {
+      __typename: "s3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
     registered?: boolean | null;
     authority?: string | null;
     company: {
@@ -1233,7 +1264,6 @@ export type DeleteTaskMutation = {
       content: string;
       createdAt: string;
       isSent?: boolean | null;
-      attachmentUri?: Array<string | null> | null;
       updatedAt: string;
     } | null> | null;
     nextToken?: string | null;
@@ -1261,7 +1291,12 @@ export type CreateUserMutation = {
   companyID: string;
   tel?: string | null;
   positionName?: string | null;
-  iconImage?: string | null;
+  iconImage?: {
+    __typename: "s3Object";
+    bucket: string;
+    region: string;
+    key: string;
+  } | null;
   registered?: boolean | null;
   authority?: string | null;
   company: {
@@ -1290,7 +1325,6 @@ export type CreateUserMutation = {
       content: string;
       createdAt: string;
       isSent?: boolean | null;
-      attachmentUri?: Array<string | null> | null;
       updatedAt: string;
     } | null> | null;
     nextToken?: string | null;
@@ -1349,7 +1383,12 @@ export type UpdateUserMutation = {
   companyID: string;
   tel?: string | null;
   positionName?: string | null;
-  iconImage?: string | null;
+  iconImage?: {
+    __typename: "s3Object";
+    bucket: string;
+    region: string;
+    key: string;
+  } | null;
   registered?: boolean | null;
   authority?: string | null;
   company: {
@@ -1378,7 +1417,6 @@ export type UpdateUserMutation = {
       content: string;
       createdAt: string;
       isSent?: boolean | null;
-      attachmentUri?: Array<string | null> | null;
       updatedAt: string;
     } | null> | null;
     nextToken?: string | null;
@@ -1437,7 +1475,12 @@ export type DeleteUserMutation = {
   companyID: string;
   tel?: string | null;
   positionName?: string | null;
-  iconImage?: string | null;
+  iconImage?: {
+    __typename: "s3Object";
+    bucket: string;
+    region: string;
+    key: string;
+  } | null;
   registered?: boolean | null;
   authority?: string | null;
   company: {
@@ -1466,7 +1509,6 @@ export type DeleteUserMutation = {
       content: string;
       createdAt: string;
       isSent?: boolean | null;
-      attachmentUri?: Array<string | null> | null;
       updatedAt: string;
     } | null> | null;
     nextToken?: string | null;
@@ -1555,7 +1597,12 @@ export type CreateRoomGroupMutation = {
     companyID: string;
     tel?: string | null;
     positionName?: string | null;
-    iconImage?: string | null;
+    iconImage?: {
+      __typename: "s3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
     registered?: boolean | null;
     authority?: string | null;
     company: {
@@ -1627,7 +1674,12 @@ export type UpdateRoomGroupMutation = {
     companyID: string;
     tel?: string | null;
     positionName?: string | null;
-    iconImage?: string | null;
+    iconImage?: {
+      __typename: "s3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
     registered?: boolean | null;
     authority?: string | null;
     company: {
@@ -1699,7 +1751,12 @@ export type DeleteRoomGroupMutation = {
     companyID: string;
     tel?: string | null;
     positionName?: string | null;
-    iconImage?: string | null;
+    iconImage?: {
+      __typename: "s3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
     registered?: boolean | null;
     authority?: string | null;
     company: {
@@ -1909,7 +1966,12 @@ export type CreateMessageMutation = {
   content: string;
   createdAt: string;
   isSent?: boolean | null;
-  attachmentUri?: Array<string | null> | null;
+  attachment?: Array<{
+    __typename: "s3Object";
+    bucket: string;
+    region: string;
+    key: string;
+  } | null> | null;
   author: {
     __typename: "User";
     id: string;
@@ -1918,7 +1980,12 @@ export type CreateMessageMutation = {
     companyID: string;
     tel?: string | null;
     positionName?: string | null;
-    iconImage?: string | null;
+    iconImage?: {
+      __typename: "s3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
     registered?: boolean | null;
     authority?: string | null;
     company: {
@@ -1977,7 +2044,6 @@ export type CreateMessageMutation = {
       companyID: string;
       tel?: string | null;
       positionName?: string | null;
-      iconImage?: string | null;
       registered?: boolean | null;
       authority?: string | null;
       createdAt: string;
@@ -2004,7 +2070,12 @@ export type UpdateMessageMutation = {
   content: string;
   createdAt: string;
   isSent?: boolean | null;
-  attachmentUri?: Array<string | null> | null;
+  attachment?: Array<{
+    __typename: "s3Object";
+    bucket: string;
+    region: string;
+    key: string;
+  } | null> | null;
   author: {
     __typename: "User";
     id: string;
@@ -2013,7 +2084,12 @@ export type UpdateMessageMutation = {
     companyID: string;
     tel?: string | null;
     positionName?: string | null;
-    iconImage?: string | null;
+    iconImage?: {
+      __typename: "s3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
     registered?: boolean | null;
     authority?: string | null;
     company: {
@@ -2072,7 +2148,6 @@ export type UpdateMessageMutation = {
       companyID: string;
       tel?: string | null;
       positionName?: string | null;
-      iconImage?: string | null;
       registered?: boolean | null;
       authority?: string | null;
       createdAt: string;
@@ -2099,7 +2174,12 @@ export type DeleteMessageMutation = {
   content: string;
   createdAt: string;
   isSent?: boolean | null;
-  attachmentUri?: Array<string | null> | null;
+  attachment?: Array<{
+    __typename: "s3Object";
+    bucket: string;
+    region: string;
+    key: string;
+  } | null> | null;
   author: {
     __typename: "User";
     id: string;
@@ -2108,7 +2188,12 @@ export type DeleteMessageMutation = {
     companyID: string;
     tel?: string | null;
     positionName?: string | null;
-    iconImage?: string | null;
+    iconImage?: {
+      __typename: "s3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
     registered?: boolean | null;
     authority?: string | null;
     company: {
@@ -2167,7 +2252,6 @@ export type DeleteMessageMutation = {
       companyID: string;
       tel?: string | null;
       positionName?: string | null;
-      iconImage?: string | null;
       registered?: boolean | null;
       authority?: string | null;
       createdAt: string;
@@ -2214,7 +2298,6 @@ export type GetCompanyQuery = {
       companyID: string;
       tel?: string | null;
       positionName?: string | null;
-      iconImage?: string | null;
       registered?: boolean | null;
       authority?: string | null;
       createdAt: string;
@@ -2281,7 +2364,6 @@ export type GetTaskGroupQuery = {
       companyID: string;
       tel?: string | null;
       positionName?: string | null;
-      iconImage?: string | null;
       registered?: boolean | null;
       authority?: string | null;
       createdAt: string;
@@ -2305,7 +2387,12 @@ export type GetTaskGroupQuery = {
     companyID: string;
     tel?: string | null;
     positionName?: string | null;
-    iconImage?: string | null;
+    iconImage?: {
+      __typename: "s3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
     registered?: boolean | null;
     authority?: string | null;
     company: {
@@ -2368,7 +2455,6 @@ export type ListTaskGroupsQuery = {
       companyID: string;
       tel?: string | null;
       positionName?: string | null;
-      iconImage?: string | null;
       registered?: boolean | null;
       authority?: string | null;
       createdAt: string;
@@ -2425,7 +2511,12 @@ export type GetTaskQuery = {
     companyID: string;
     tel?: string | null;
     positionName?: string | null;
-    iconImage?: string | null;
+    iconImage?: {
+      __typename: "s3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
     registered?: boolean | null;
     authority?: string | null;
     company: {
@@ -2465,7 +2556,6 @@ export type GetTaskQuery = {
       content: string;
       createdAt: string;
       isSent?: boolean | null;
-      attachmentUri?: Array<string | null> | null;
       updatedAt: string;
     } | null> | null;
     nextToken?: string | null;
@@ -2516,7 +2606,6 @@ export type ListTasksQuery = {
       companyID: string;
       tel?: string | null;
       positionName?: string | null;
-      iconImage?: string | null;
       registered?: boolean | null;
       authority?: string | null;
       createdAt: string;
@@ -2543,7 +2632,12 @@ export type GetUserQuery = {
   companyID: string;
   tel?: string | null;
   positionName?: string | null;
-  iconImage?: string | null;
+  iconImage?: {
+    __typename: "s3Object";
+    bucket: string;
+    region: string;
+    key: string;
+  } | null;
   registered?: boolean | null;
   authority?: string | null;
   company: {
@@ -2572,7 +2666,6 @@ export type GetUserQuery = {
       content: string;
       createdAt: string;
       isSent?: boolean | null;
-      attachmentUri?: Array<string | null> | null;
       updatedAt: string;
     } | null> | null;
     nextToken?: string | null;
@@ -2633,7 +2726,12 @@ export type ListUsersQuery = {
     companyID: string;
     tel?: string | null;
     positionName?: string | null;
-    iconImage?: string | null;
+    iconImage?: {
+      __typename: "s3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
     registered?: boolean | null;
     authority?: string | null;
     company: {
@@ -2704,7 +2802,12 @@ export type GetRoomGroupQuery = {
     companyID: string;
     tel?: string | null;
     positionName?: string | null;
-    iconImage?: string | null;
+    iconImage?: {
+      __typename: "s3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
     registered?: boolean | null;
     authority?: string | null;
     company: {
@@ -2762,7 +2865,6 @@ export type ListRoomGroupsQuery = {
       companyID: string;
       tel?: string | null;
       positionName?: string | null;
-      iconImage?: string | null;
       registered?: boolean | null;
       authority?: string | null;
       createdAt: string;
@@ -2868,7 +2970,12 @@ export type GetMessageQuery = {
   content: string;
   createdAt: string;
   isSent?: boolean | null;
-  attachmentUri?: Array<string | null> | null;
+  attachment?: Array<{
+    __typename: "s3Object";
+    bucket: string;
+    region: string;
+    key: string;
+  } | null> | null;
   author: {
     __typename: "User";
     id: string;
@@ -2877,7 +2984,12 @@ export type GetMessageQuery = {
     companyID: string;
     tel?: string | null;
     positionName?: string | null;
-    iconImage?: string | null;
+    iconImage?: {
+      __typename: "s3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
     registered?: boolean | null;
     authority?: string | null;
     company: {
@@ -2936,7 +3048,6 @@ export type GetMessageQuery = {
       companyID: string;
       tel?: string | null;
       positionName?: string | null;
-      iconImage?: string | null;
       registered?: boolean | null;
       authority?: string | null;
       createdAt: string;
@@ -2965,7 +3076,12 @@ export type ListMessagesQuery = {
     content: string;
     createdAt: string;
     isSent?: boolean | null;
-    attachmentUri?: Array<string | null> | null;
+    attachment?: Array<{
+      __typename: "s3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null> | null;
     author: {
       __typename: "User";
       id: string;
@@ -2974,7 +3090,6 @@ export type ListMessagesQuery = {
       companyID: string;
       tel?: string | null;
       positionName?: string | null;
-      iconImage?: string | null;
       registered?: boolean | null;
       authority?: string | null;
       createdAt: string;
@@ -3009,7 +3124,12 @@ export type TaskByCreatedAtQuery = {
     content: string;
     createdAt: string;
     isSent?: boolean | null;
-    attachmentUri?: Array<string | null> | null;
+    attachment?: Array<{
+      __typename: "s3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null> | null;
     author: {
       __typename: "User";
       id: string;
@@ -3018,7 +3138,6 @@ export type TaskByCreatedAtQuery = {
       companyID: string;
       tel?: string | null;
       positionName?: string | null;
-      iconImage?: string | null;
       registered?: boolean | null;
       authority?: string | null;
       createdAt: string;
@@ -3071,7 +3190,6 @@ export type OnCreateCompanySubscription = {
       companyID: string;
       tel?: string | null;
       positionName?: string | null;
-      iconImage?: string | null;
       registered?: boolean | null;
       authority?: string | null;
       createdAt: string;
@@ -3111,7 +3229,6 @@ export type OnUpdateCompanySubscription = {
       companyID: string;
       tel?: string | null;
       positionName?: string | null;
-      iconImage?: string | null;
       registered?: boolean | null;
       authority?: string | null;
       createdAt: string;
@@ -3151,7 +3268,6 @@ export type OnDeleteCompanySubscription = {
       companyID: string;
       tel?: string | null;
       positionName?: string | null;
-      iconImage?: string | null;
       registered?: boolean | null;
       authority?: string | null;
       createdAt: string;
@@ -3197,7 +3313,6 @@ export type OnCreateTaskGroupSubscription = {
       companyID: string;
       tel?: string | null;
       positionName?: string | null;
-      iconImage?: string | null;
       registered?: boolean | null;
       authority?: string | null;
       createdAt: string;
@@ -3221,7 +3336,12 @@ export type OnCreateTaskGroupSubscription = {
     companyID: string;
     tel?: string | null;
     positionName?: string | null;
-    iconImage?: string | null;
+    iconImage?: {
+      __typename: "s3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
     registered?: boolean | null;
     authority?: string | null;
     company: {
@@ -3289,7 +3409,6 @@ export type OnUpdateTaskGroupSubscription = {
       companyID: string;
       tel?: string | null;
       positionName?: string | null;
-      iconImage?: string | null;
       registered?: boolean | null;
       authority?: string | null;
       createdAt: string;
@@ -3313,7 +3432,12 @@ export type OnUpdateTaskGroupSubscription = {
     companyID: string;
     tel?: string | null;
     positionName?: string | null;
-    iconImage?: string | null;
+    iconImage?: {
+      __typename: "s3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
     registered?: boolean | null;
     authority?: string | null;
     company: {
@@ -3381,7 +3505,6 @@ export type OnDeleteTaskGroupSubscription = {
       companyID: string;
       tel?: string | null;
       positionName?: string | null;
-      iconImage?: string | null;
       registered?: boolean | null;
       authority?: string | null;
       createdAt: string;
@@ -3405,7 +3528,12 @@ export type OnDeleteTaskGroupSubscription = {
     companyID: string;
     tel?: string | null;
     positionName?: string | null;
-    iconImage?: string | null;
+    iconImage?: {
+      __typename: "s3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
     registered?: boolean | null;
     authority?: string | null;
     company: {
@@ -3484,7 +3612,12 @@ export type OnCreateTaskSubscription = {
     companyID: string;
     tel?: string | null;
     positionName?: string | null;
-    iconImage?: string | null;
+    iconImage?: {
+      __typename: "s3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
     registered?: boolean | null;
     authority?: string | null;
     company: {
@@ -3524,7 +3657,6 @@ export type OnCreateTaskSubscription = {
       content: string;
       createdAt: string;
       isSent?: boolean | null;
-      attachmentUri?: Array<string | null> | null;
       updatedAt: string;
     } | null> | null;
     nextToken?: string | null;
@@ -3589,7 +3721,12 @@ export type OnUpdateTaskSubscription = {
     companyID: string;
     tel?: string | null;
     positionName?: string | null;
-    iconImage?: string | null;
+    iconImage?: {
+      __typename: "s3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
     registered?: boolean | null;
     authority?: string | null;
     company: {
@@ -3629,7 +3766,6 @@ export type OnUpdateTaskSubscription = {
       content: string;
       createdAt: string;
       isSent?: boolean | null;
-      attachmentUri?: Array<string | null> | null;
       updatedAt: string;
     } | null> | null;
     nextToken?: string | null;
@@ -3694,7 +3830,12 @@ export type OnDeleteTaskSubscription = {
     companyID: string;
     tel?: string | null;
     positionName?: string | null;
-    iconImage?: string | null;
+    iconImage?: {
+      __typename: "s3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
     registered?: boolean | null;
     authority?: string | null;
     company: {
@@ -3734,7 +3875,6 @@ export type OnDeleteTaskSubscription = {
       content: string;
       createdAt: string;
       isSent?: boolean | null;
-      attachmentUri?: Array<string | null> | null;
       updatedAt: string;
     } | null> | null;
     nextToken?: string | null;
@@ -3762,7 +3902,12 @@ export type OnCreateUserSubscription = {
   companyID: string;
   tel?: string | null;
   positionName?: string | null;
-  iconImage?: string | null;
+  iconImage?: {
+    __typename: "s3Object";
+    bucket: string;
+    region: string;
+    key: string;
+  } | null;
   registered?: boolean | null;
   authority?: string | null;
   company: {
@@ -3791,7 +3936,6 @@ export type OnCreateUserSubscription = {
       content: string;
       createdAt: string;
       isSent?: boolean | null;
-      attachmentUri?: Array<string | null> | null;
       updatedAt: string;
     } | null> | null;
     nextToken?: string | null;
@@ -3850,7 +3994,12 @@ export type OnUpdateUserSubscription = {
   companyID: string;
   tel?: string | null;
   positionName?: string | null;
-  iconImage?: string | null;
+  iconImage?: {
+    __typename: "s3Object";
+    bucket: string;
+    region: string;
+    key: string;
+  } | null;
   registered?: boolean | null;
   authority?: string | null;
   company: {
@@ -3879,7 +4028,6 @@ export type OnUpdateUserSubscription = {
       content: string;
       createdAt: string;
       isSent?: boolean | null;
-      attachmentUri?: Array<string | null> | null;
       updatedAt: string;
     } | null> | null;
     nextToken?: string | null;
@@ -3938,7 +4086,12 @@ export type OnDeleteUserSubscription = {
   companyID: string;
   tel?: string | null;
   positionName?: string | null;
-  iconImage?: string | null;
+  iconImage?: {
+    __typename: "s3Object";
+    bucket: string;
+    region: string;
+    key: string;
+  } | null;
   registered?: boolean | null;
   authority?: string | null;
   company: {
@@ -3967,7 +4120,6 @@ export type OnDeleteUserSubscription = {
       content: string;
       createdAt: string;
       isSent?: boolean | null;
-      attachmentUri?: Array<string | null> | null;
       updatedAt: string;
     } | null> | null;
     nextToken?: string | null;
@@ -4056,7 +4208,12 @@ export type OnCreateRoomGroupSubscription = {
     companyID: string;
     tel?: string | null;
     positionName?: string | null;
-    iconImage?: string | null;
+    iconImage?: {
+      __typename: "s3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
     registered?: boolean | null;
     authority?: string | null;
     company: {
@@ -4128,7 +4285,12 @@ export type OnUpdateRoomGroupSubscription = {
     companyID: string;
     tel?: string | null;
     positionName?: string | null;
-    iconImage?: string | null;
+    iconImage?: {
+      __typename: "s3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
     registered?: boolean | null;
     authority?: string | null;
     company: {
@@ -4200,7 +4362,12 @@ export type OnDeleteRoomGroupSubscription = {
     companyID: string;
     tel?: string | null;
     positionName?: string | null;
-    iconImage?: string | null;
+    iconImage?: {
+      __typename: "s3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
     registered?: boolean | null;
     authority?: string | null;
     company: {
@@ -4410,7 +4577,12 @@ export type OnCreateMessageSubscription = {
   content: string;
   createdAt: string;
   isSent?: boolean | null;
-  attachmentUri?: Array<string | null> | null;
+  attachment?: Array<{
+    __typename: "s3Object";
+    bucket: string;
+    region: string;
+    key: string;
+  } | null> | null;
   author: {
     __typename: "User";
     id: string;
@@ -4419,7 +4591,12 @@ export type OnCreateMessageSubscription = {
     companyID: string;
     tel?: string | null;
     positionName?: string | null;
-    iconImage?: string | null;
+    iconImage?: {
+      __typename: "s3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
     registered?: boolean | null;
     authority?: string | null;
     company: {
@@ -4478,7 +4655,6 @@ export type OnCreateMessageSubscription = {
       companyID: string;
       tel?: string | null;
       positionName?: string | null;
-      iconImage?: string | null;
       registered?: boolean | null;
       authority?: string | null;
       createdAt: string;
@@ -4505,7 +4681,12 @@ export type OnUpdateMessageSubscription = {
   content: string;
   createdAt: string;
   isSent?: boolean | null;
-  attachmentUri?: Array<string | null> | null;
+  attachment?: Array<{
+    __typename: "s3Object";
+    bucket: string;
+    region: string;
+    key: string;
+  } | null> | null;
   author: {
     __typename: "User";
     id: string;
@@ -4514,7 +4695,12 @@ export type OnUpdateMessageSubscription = {
     companyID: string;
     tel?: string | null;
     positionName?: string | null;
-    iconImage?: string | null;
+    iconImage?: {
+      __typename: "s3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
     registered?: boolean | null;
     authority?: string | null;
     company: {
@@ -4573,7 +4759,6 @@ export type OnUpdateMessageSubscription = {
       companyID: string;
       tel?: string | null;
       positionName?: string | null;
-      iconImage?: string | null;
       registered?: boolean | null;
       authority?: string | null;
       createdAt: string;
@@ -4600,7 +4785,12 @@ export type OnDeleteMessageSubscription = {
   content: string;
   createdAt: string;
   isSent?: boolean | null;
-  attachmentUri?: Array<string | null> | null;
+  attachment?: Array<{
+    __typename: "s3Object";
+    bucket: string;
+    region: string;
+    key: string;
+  } | null> | null;
   author: {
     __typename: "User";
     id: string;
@@ -4609,7 +4799,12 @@ export type OnDeleteMessageSubscription = {
     companyID: string;
     tel?: string | null;
     positionName?: string | null;
-    iconImage?: string | null;
+    iconImage?: {
+      __typename: "s3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
     registered?: boolean | null;
     authority?: string | null;
     company: {
@@ -4668,7 +4863,6 @@ export type OnDeleteMessageSubscription = {
       companyID: string;
       tel?: string | null;
       positionName?: string | null;
-      iconImage?: string | null;
       registered?: boolean | null;
       authority?: string | null;
       createdAt: string;
@@ -4724,7 +4918,6 @@ export class APIService {
               companyID
               tel
               positionName
-              iconImage
               registered
               authority
               createdAt
@@ -4780,7 +4973,6 @@ export class APIService {
               companyID
               tel
               positionName
-              iconImage
               registered
               authority
               createdAt
@@ -4836,7 +5028,6 @@ export class APIService {
               companyID
               tel
               positionName
-              iconImage
               registered
               authority
               createdAt
@@ -4898,7 +5089,6 @@ export class APIService {
               companyID
               tel
               positionName
-              iconImage
               registered
               authority
               createdAt
@@ -4922,7 +5112,12 @@ export class APIService {
             companyID
             tel
             positionName
-            iconImage
+            iconImage {
+              __typename
+              bucket
+              region
+              key
+            }
             registered
             authority
             company {
@@ -5006,7 +5201,6 @@ export class APIService {
               companyID
               tel
               positionName
-              iconImage
               registered
               authority
               createdAt
@@ -5030,7 +5224,12 @@ export class APIService {
             companyID
             tel
             positionName
-            iconImage
+            iconImage {
+              __typename
+              bucket
+              region
+              key
+            }
             registered
             authority
             company {
@@ -5114,7 +5313,6 @@ export class APIService {
               companyID
               tel
               positionName
-              iconImage
               registered
               authority
               createdAt
@@ -5138,7 +5336,12 @@ export class APIService {
             companyID
             tel
             positionName
-            iconImage
+            iconImage {
+              __typename
+              bucket
+              region
+              key
+            }
             registered
             authority
             company {
@@ -5233,7 +5436,12 @@ export class APIService {
             companyID
             tel
             positionName
-            iconImage
+            iconImage {
+              __typename
+              bucket
+              region
+              key
+            }
             registered
             authority
             company {
@@ -5273,7 +5481,6 @@ export class APIService {
               content
               createdAt
               isSent
-              attachmentUri
               updatedAt
             }
             nextToken
@@ -5354,7 +5561,12 @@ export class APIService {
             companyID
             tel
             positionName
-            iconImage
+            iconImage {
+              __typename
+              bucket
+              region
+              key
+            }
             registered
             authority
             company {
@@ -5394,7 +5606,6 @@ export class APIService {
               content
               createdAt
               isSent
-              attachmentUri
               updatedAt
             }
             nextToken
@@ -5475,7 +5686,12 @@ export class APIService {
             companyID
             tel
             positionName
-            iconImage
+            iconImage {
+              __typename
+              bucket
+              region
+              key
+            }
             registered
             authority
             company {
@@ -5515,7 +5731,6 @@ export class APIService {
               content
               createdAt
               isSent
-              attachmentUri
               updatedAt
             }
             nextToken
@@ -5559,7 +5774,12 @@ export class APIService {
           companyID
           tel
           positionName
-          iconImage
+          iconImage {
+            __typename
+            bucket
+            region
+            key
+          }
           registered
           authority
           company {
@@ -5588,7 +5808,6 @@ export class APIService {
               content
               createdAt
               isSent
-              attachmentUri
               updatedAt
             }
             nextToken
@@ -5663,7 +5882,12 @@ export class APIService {
           companyID
           tel
           positionName
-          iconImage
+          iconImage {
+            __typename
+            bucket
+            region
+            key
+          }
           registered
           authority
           company {
@@ -5692,7 +5916,6 @@ export class APIService {
               content
               createdAt
               isSent
-              attachmentUri
               updatedAt
             }
             nextToken
@@ -5767,7 +5990,12 @@ export class APIService {
           companyID
           tel
           positionName
-          iconImage
+          iconImage {
+            __typename
+            bucket
+            region
+            key
+          }
           registered
           authority
           company {
@@ -5796,7 +6024,6 @@ export class APIService {
               content
               createdAt
               isSent
-              attachmentUri
               updatedAt
             }
             nextToken
@@ -5901,7 +6128,12 @@ export class APIService {
             companyID
             tel
             positionName
-            iconImage
+            iconImage {
+              __typename
+              bucket
+              region
+              key
+            }
             registered
             authority
             company {
@@ -5989,7 +6221,12 @@ export class APIService {
             companyID
             tel
             positionName
-            iconImage
+            iconImage {
+              __typename
+              bucket
+              region
+              key
+            }
             registered
             authority
             company {
@@ -6077,7 +6314,12 @@ export class APIService {
             companyID
             tel
             positionName
-            iconImage
+            iconImage {
+              __typename
+              bucket
+              region
+              key
+            }
             registered
             authority
             company {
@@ -6351,7 +6593,12 @@ export class APIService {
           content
           createdAt
           isSent
-          attachmentUri
+          attachment {
+            __typename
+            bucket
+            region
+            key
+          }
           author {
             __typename
             id
@@ -6360,7 +6607,12 @@ export class APIService {
             companyID
             tel
             positionName
-            iconImage
+            iconImage {
+              __typename
+              bucket
+              region
+              key
+            }
             registered
             authority
             company {
@@ -6419,7 +6671,6 @@ export class APIService {
               companyID
               tel
               positionName
-              iconImage
               registered
               authority
               createdAt
@@ -6462,7 +6713,12 @@ export class APIService {
           content
           createdAt
           isSent
-          attachmentUri
+          attachment {
+            __typename
+            bucket
+            region
+            key
+          }
           author {
             __typename
             id
@@ -6471,7 +6727,12 @@ export class APIService {
             companyID
             tel
             positionName
-            iconImage
+            iconImage {
+              __typename
+              bucket
+              region
+              key
+            }
             registered
             authority
             company {
@@ -6530,7 +6791,6 @@ export class APIService {
               companyID
               tel
               positionName
-              iconImage
               registered
               authority
               createdAt
@@ -6573,7 +6833,12 @@ export class APIService {
           content
           createdAt
           isSent
-          attachmentUri
+          attachment {
+            __typename
+            bucket
+            region
+            key
+          }
           author {
             __typename
             id
@@ -6582,7 +6847,12 @@ export class APIService {
             companyID
             tel
             positionName
-            iconImage
+            iconImage {
+              __typename
+              bucket
+              region
+              key
+            }
             registered
             authority
             company {
@@ -6641,7 +6911,6 @@ export class APIService {
               companyID
               tel
               positionName
-              iconImage
               registered
               authority
               createdAt
@@ -6701,7 +6970,6 @@ export class APIService {
               companyID
               tel
               positionName
-              iconImage
               registered
               authority
               createdAt
@@ -6799,7 +7067,6 @@ export class APIService {
               companyID
               tel
               positionName
-              iconImage
               registered
               authority
               createdAt
@@ -6823,7 +7090,12 @@ export class APIService {
             companyID
             tel
             positionName
-            iconImage
+            iconImage {
+              __typename
+              bucket
+              region
+              key
+            }
             registered
             authority
             company {
@@ -6900,7 +7172,6 @@ export class APIService {
               companyID
               tel
               positionName
-              iconImage
               registered
               authority
               createdAt
@@ -6974,7 +7245,12 @@ export class APIService {
             companyID
             tel
             positionName
-            iconImage
+            iconImage {
+              __typename
+              bucket
+              region
+              key
+            }
             registered
             authority
             company {
@@ -7014,7 +7290,6 @@ export class APIService {
               content
               createdAt
               isSent
-              attachmentUri
               updatedAt
             }
             nextToken
@@ -7079,7 +7354,6 @@ export class APIService {
               companyID
               tel
               positionName
-              iconImage
               registered
               authority
               createdAt
@@ -7123,7 +7397,12 @@ export class APIService {
           companyID
           tel
           positionName
-          iconImage
+          iconImage {
+            __typename
+            bucket
+            region
+            key
+          }
           registered
           authority
           company {
@@ -7152,7 +7431,6 @@ export class APIService {
               content
               createdAt
               isSent
-              attachmentUri
               updatedAt
             }
             nextToken
@@ -7227,7 +7505,12 @@ export class APIService {
             companyID
             tel
             positionName
-            iconImage
+            iconImage {
+              __typename
+              bucket
+              region
+              key
+            }
             registered
             authority
             company {
@@ -7315,7 +7598,12 @@ export class APIService {
             companyID
             tel
             positionName
-            iconImage
+            iconImage {
+              __typename
+              bucket
+              region
+              key
+            }
             registered
             authority
             company {
@@ -7387,7 +7675,6 @@ export class APIService {
               companyID
               tel
               positionName
-              iconImage
               registered
               authority
               createdAt
@@ -7541,7 +7828,12 @@ export class APIService {
           content
           createdAt
           isSent
-          attachmentUri
+          attachment {
+            __typename
+            bucket
+            region
+            key
+          }
           author {
             __typename
             id
@@ -7550,7 +7842,12 @@ export class APIService {
             companyID
             tel
             positionName
-            iconImage
+            iconImage {
+              __typename
+              bucket
+              region
+              key
+            }
             registered
             authority
             company {
@@ -7609,7 +7906,6 @@ export class APIService {
               companyID
               tel
               positionName
-              iconImage
               registered
               authority
               createdAt
@@ -7652,7 +7948,12 @@ export class APIService {
             content
             createdAt
             isSent
-            attachmentUri
+            attachment {
+              __typename
+              bucket
+              region
+              key
+            }
             author {
               __typename
               id
@@ -7661,7 +7962,6 @@ export class APIService {
               companyID
               tel
               positionName
-              iconImage
               registered
               authority
               createdAt
@@ -7720,7 +8020,12 @@ export class APIService {
             content
             createdAt
             isSent
-            attachmentUri
+            attachment {
+              __typename
+              bucket
+              region
+              key
+            }
             author {
               __typename
               id
@@ -7729,7 +8034,6 @@ export class APIService {
               companyID
               tel
               positionName
-              iconImage
               registered
               authority
               createdAt
@@ -7811,7 +8115,6 @@ export class APIService {
               companyID
               tel
               positionName
-              iconImage
               registered
               authority
               createdAt
@@ -7859,7 +8162,6 @@ export class APIService {
               companyID
               tel
               positionName
-              iconImage
               registered
               authority
               createdAt
@@ -7907,7 +8209,6 @@ export class APIService {
               companyID
               tel
               positionName
-              iconImage
               registered
               authority
               createdAt
@@ -7961,7 +8262,6 @@ export class APIService {
               companyID
               tel
               positionName
-              iconImage
               registered
               authority
               createdAt
@@ -7985,7 +8285,12 @@ export class APIService {
             companyID
             tel
             positionName
-            iconImage
+            iconImage {
+              __typename
+              bucket
+              region
+              key
+            }
             registered
             authority
             company {
@@ -8061,7 +8366,6 @@ export class APIService {
               companyID
               tel
               positionName
-              iconImage
               registered
               authority
               createdAt
@@ -8085,7 +8389,12 @@ export class APIService {
             companyID
             tel
             positionName
-            iconImage
+            iconImage {
+              __typename
+              bucket
+              region
+              key
+            }
             registered
             authority
             company {
@@ -8161,7 +8470,6 @@ export class APIService {
               companyID
               tel
               positionName
-              iconImage
               registered
               authority
               createdAt
@@ -8185,7 +8493,12 @@ export class APIService {
             companyID
             tel
             positionName
-            iconImage
+            iconImage {
+              __typename
+              bucket
+              region
+              key
+            }
             registered
             authority
             company {
@@ -8272,7 +8585,12 @@ export class APIService {
             companyID
             tel
             positionName
-            iconImage
+            iconImage {
+              __typename
+              bucket
+              region
+              key
+            }
             registered
             authority
             company {
@@ -8312,7 +8630,6 @@ export class APIService {
               content
               createdAt
               isSent
-              attachmentUri
               updatedAt
             }
             nextToken
@@ -8385,7 +8702,12 @@ export class APIService {
             companyID
             tel
             positionName
-            iconImage
+            iconImage {
+              __typename
+              bucket
+              region
+              key
+            }
             registered
             authority
             company {
@@ -8425,7 +8747,6 @@ export class APIService {
               content
               createdAt
               isSent
-              attachmentUri
               updatedAt
             }
             nextToken
@@ -8498,7 +8819,12 @@ export class APIService {
             companyID
             tel
             positionName
-            iconImage
+            iconImage {
+              __typename
+              bucket
+              region
+              key
+            }
             registered
             authority
             company {
@@ -8538,7 +8864,6 @@ export class APIService {
               content
               createdAt
               isSent
-              attachmentUri
               updatedAt
             }
             nextToken
@@ -8574,7 +8899,12 @@ export class APIService {
           companyID
           tel
           positionName
-          iconImage
+          iconImage {
+            __typename
+            bucket
+            region
+            key
+          }
           registered
           authority
           company {
@@ -8603,7 +8933,6 @@ export class APIService {
               content
               createdAt
               isSent
-              attachmentUri
               updatedAt
             }
             nextToken
@@ -8670,7 +8999,12 @@ export class APIService {
           companyID
           tel
           positionName
-          iconImage
+          iconImage {
+            __typename
+            bucket
+            region
+            key
+          }
           registered
           authority
           company {
@@ -8699,7 +9033,6 @@ export class APIService {
               content
               createdAt
               isSent
-              attachmentUri
               updatedAt
             }
             nextToken
@@ -8766,7 +9099,12 @@ export class APIService {
           companyID
           tel
           positionName
-          iconImage
+          iconImage {
+            __typename
+            bucket
+            region
+            key
+          }
           registered
           authority
           company {
@@ -8795,7 +9133,6 @@ export class APIService {
               content
               createdAt
               isSent
-              attachmentUri
               updatedAt
             }
             nextToken
@@ -8892,7 +9229,12 @@ export class APIService {
             companyID
             tel
             positionName
-            iconImage
+            iconImage {
+              __typename
+              bucket
+              region
+              key
+            }
             registered
             authority
             company {
@@ -8972,7 +9314,12 @@ export class APIService {
             companyID
             tel
             positionName
-            iconImage
+            iconImage {
+              __typename
+              bucket
+              region
+              key
+            }
             registered
             authority
             company {
@@ -9052,7 +9399,12 @@ export class APIService {
             companyID
             tel
             positionName
-            iconImage
+            iconImage {
+              __typename
+              bucket
+              region
+              key
+            }
             registered
             authority
             company {
@@ -9294,7 +9646,12 @@ export class APIService {
           content
           createdAt
           isSent
-          attachmentUri
+          attachment {
+            __typename
+            bucket
+            region
+            key
+          }
           author {
             __typename
             id
@@ -9303,7 +9660,12 @@ export class APIService {
             companyID
             tel
             positionName
-            iconImage
+            iconImage {
+              __typename
+              bucket
+              region
+              key
+            }
             registered
             authority
             company {
@@ -9362,7 +9724,6 @@ export class APIService {
               companyID
               tel
               positionName
-              iconImage
               registered
               authority
               createdAt
@@ -9397,7 +9758,12 @@ export class APIService {
           content
           createdAt
           isSent
-          attachmentUri
+          attachment {
+            __typename
+            bucket
+            region
+            key
+          }
           author {
             __typename
             id
@@ -9406,7 +9772,12 @@ export class APIService {
             companyID
             tel
             positionName
-            iconImage
+            iconImage {
+              __typename
+              bucket
+              region
+              key
+            }
             registered
             authority
             company {
@@ -9465,7 +9836,6 @@ export class APIService {
               companyID
               tel
               positionName
-              iconImage
               registered
               authority
               createdAt
@@ -9500,7 +9870,12 @@ export class APIService {
           content
           createdAt
           isSent
-          attachmentUri
+          attachment {
+            __typename
+            bucket
+            region
+            key
+          }
           author {
             __typename
             id
@@ -9509,7 +9884,12 @@ export class APIService {
             companyID
             tel
             positionName
-            iconImage
+            iconImage {
+              __typename
+              bucket
+              region
+              key
+            }
             registered
             authority
             company {
@@ -9568,7 +9948,6 @@ export class APIService {
               companyID
               tel
               positionName
-              iconImage
               registered
               authority
               createdAt

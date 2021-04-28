@@ -23,7 +23,6 @@ query GetCompany($id: ID!) {
         companyID
         tel
         positionName
-        iconImage
         registered
         authority
         createdAt
@@ -88,7 +87,6 @@ query GetTaskGroup($id: ID!) {
         companyID
         tel
         positionName
-        iconImage
         registered
         authority
         createdAt
@@ -109,7 +107,11 @@ query GetTaskGroup($id: ID!) {
       companyID
       tel
       positionName
-      iconImage
+      iconImage {
+        bucket
+        region
+        key
+      }
       registered
       authority
       company {
@@ -168,7 +170,6 @@ query ListTaskGroups(
         companyID
         tel
         positionName
-        iconImage
         registered
         authority
         createdAt
@@ -220,7 +221,11 @@ query GetTask($id: ID!) {
       companyID
       tel
       positionName
-      iconImage
+      iconImage {
+        bucket
+        region
+        key
+      }
       registered
       authority
       company {
@@ -253,7 +258,6 @@ query GetTask($id: ID!) {
         content
         createdAt
         isSent
-        attachmentUri
         updatedAt
       }
       nextToken
@@ -303,7 +307,6 @@ query ListTasks(
         companyID
         tel
         positionName
-        iconImage
         registered
         authority
         createdAt
@@ -328,7 +331,11 @@ query GetUser($id: ID!) {
     companyID
     tel
     positionName
-    iconImage
+    iconImage {
+      bucket
+      region
+      key
+    }
     registered
     authority
     company {
@@ -352,7 +359,6 @@ query GetUser($id: ID!) {
         content
         createdAt
         isSent
-        attachmentUri
         updatedAt
       }
       nextToken
@@ -410,7 +416,11 @@ query ListUsers(
       companyID
       tel
       positionName
-      iconImage
+      iconImage {
+        bucket
+        region
+        key
+      }
       registered
       authority
       company {
@@ -471,7 +481,11 @@ query GetRoomGroup($id: ID!) {
       companyID
       tel
       positionName
-      iconImage
+      iconImage {
+        bucket
+        region
+        key
+      }
       registered
       authority
       company {
@@ -525,7 +539,6 @@ query ListRoomGroups(
         companyID
         tel
         positionName
-        iconImage
         registered
         authority
         createdAt
@@ -624,7 +637,11 @@ query GetMessage($id: ID!) {
     content
     createdAt
     isSent
-    attachmentUri
+    attachment {
+      bucket
+      region
+      key
+    }
     author {
       id
       username
@@ -632,7 +649,11 @@ query GetMessage($id: ID!) {
       companyID
       tel
       positionName
-      iconImage
+      iconImage {
+        bucket
+        region
+        key
+      }
       registered
       authority
       company {
@@ -683,7 +704,6 @@ query GetMessage($id: ID!) {
         companyID
         tel
         positionName
-        iconImage
         registered
         authority
         createdAt
@@ -713,7 +733,11 @@ query ListMessages(
       content
       createdAt
       isSent
-      attachmentUri
+      attachment {
+        bucket
+        region
+        key
+      }
       author {
         id
         username
@@ -721,7 +745,6 @@ query ListMessages(
         companyID
         tel
         positionName
-        iconImage
         registered
         authority
         createdAt
@@ -768,7 +791,11 @@ query TaskByCreatedAt(
       content
       createdAt
       isSent
-      attachmentUri
+      attachment {
+        bucket
+        region
+        key
+      }
       author {
         id
         username
@@ -776,7 +803,6 @@ query TaskByCreatedAt(
         companyID
         tel
         positionName
-        iconImage
         registered
         authority
         createdAt

@@ -27,7 +27,7 @@ export class ListRoomComponent implements OnInit {
   ngOnInit() {
     this.logic.fetchCurrentUser()
       .pipe(map((data) => this.currentUserId = data.sub))
-      .pipe((concatMap(() => this.logic.fetchRoomList(this.currentUserId))))
+      .pipe(concatMap(() => this.logic.fetchRoomList(this.currentUserId)))
       .pipe(concatMap((data) => this.logic.setExitsRoomAndUser(data)))
       .subscribe((data: Array<ResponseListRoomGroupsQueryItems>) => {
         this.roomGroupsItems = data;
