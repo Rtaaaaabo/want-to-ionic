@@ -8,14 +8,27 @@ import { ILResponseFetchRoomMembers } from '../model/home.interface';
 import { ListRoomGroupsQuery } from 'src/app/shared/service/amplify.service';
 
 describe('HomeLogic', () => {
+  let now;
+  let spiedDate;
   let logic: HomeLogic;
   let homeService: HomeService;
+
+  beforeAll(() => {
+    const OriginalDate = Date; // 退避
+    now = new OriginalDate('2019/8/1 12:00:00');
+    Date.now = jest.fn().mockReturnValue(now.valueOf());
+    spiedDate = jest.spyOn(global, 'Date').mockImplementation(() => now);
+  });
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [HomeService, SessionService]
     });
     logic = TestBed.inject(HomeLogic);
     homeService = TestBed.inject(HomeService);
+  });
+
+  afterAll(() => {
+    spiedDate.mockRestore();
   });
 
   test('HomeLogicがインスタンス化されていること', () => {
@@ -231,6 +244,17 @@ describe('HomeLogic', () => {
   });
 
   test('getDirStringのテスト', () => {
+    const nowDate = now;
+    const response = logic.getDirString(nowDate);
+    const expectDirectory = "" +
+      ("00" + nowDate.getUTCFullYear()).slice(-2) +
+      ("00" + (nowDate.getMonth() + 1)).slice(-2) +
+      ("00" + nowDate.getUTCDate()).slice(-2) +
+      ("00" + nowDate.getUTCHours()).slice(-2) +
+      ("00" + nowDate.getMinutes()).slice(-2) +
+      ("00" + nowDate.getUTCSeconds()).slice(-2);
+    console.log(response);
+    expect(response).toEqual(expectDirectory);
   });
 
   test('fetchAvatarIconUrlのテスト', () => {
