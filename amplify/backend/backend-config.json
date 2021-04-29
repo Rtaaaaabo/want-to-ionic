@@ -1,13 +1,14 @@
 {
   "auth": {
-    "wantto468d10de": {
+    "wanttoeca31dcb": {
       "service": "Cognito",
       "providerPlugin": "awscloudformation",
-      "dependsOn": []
+      "dependsOn": [],
+      "customAuth": false
     }
   },
   "api": {
-    "wanttographql": {
+    "wantto": {
       "service": "AppSync",
       "providerPlugin": "awscloudformation",
       "output": {
@@ -15,51 +16,12 @@
           "defaultAuthentication": {
             "authenticationType": "AMAZON_COGNITO_USER_POOLS",
             "userPoolConfig": {
-              "userPoolId": "authwantto468d10de"
+              "userPoolId": "authwanttoeca31dcb"
             }
           },
           "additionalAuthenticationProviders": []
         }
       }
-    }
-  },
-  "function": {
-    "S3Trigger8b3c74c8": {
-      "service": "Lambda",
-      "providerPlugin": "awscloudformation",
-      "build": true,
-      "dependsOn": []
-    },
-    "wanttoce4834c3": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda",
-      "dependsOn": [
-        {
-          "category": "storage",
-          "resourceName": "s3staticfile",
-          "attributes": [
-            "BucketName"
-          ]
-        }
-      ]
-    }
-  },
-  "storage": {
-    "s3staticfile": {
-      "service": "S3",
-      "providerPlugin": "awscloudformation",
-      "dependsOn": [
-        {
-          "category": "function",
-          "resourceName": "S3Trigger8b3c74c8",
-          "attributes": [
-            "Name",
-            "Arn",
-            "LambdaExecutionRole"
-          ]
-        }
-      ]
     }
   }
 }

@@ -77,9 +77,13 @@ type Room @model @key(name: "byCompany", fields: ["companyID"]) {
 
 type Message
   @model
-  @key(fields: ["id", "createdAt"])
   @key(name: "byTask", fields: ["taskID"])
-  @key(name: "byUser", fields: ["authorID"]) {
+  @key(name: "byUser", fields: ["authorID"])
+  @key(
+    name: "taskIndex"
+    fields: ["taskID", "createdAt"]
+    queryField: "taskByCreatedAt"
+  ) {
   id: ID!
   taskID: ID!
   authorID: ID!
