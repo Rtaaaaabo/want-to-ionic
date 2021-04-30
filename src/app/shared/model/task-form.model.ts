@@ -4,3 +4,12 @@ export interface TaskFormModel {
     chargePersonId: string;
     scheduleDateItem: string;
 }
+
+export interface IArgsEntrySignup {
+    username: string;
+    password: string;
+    attributes: {
+        name: string;
+        email: string;
+    }
+}

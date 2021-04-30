@@ -12,6 +12,7 @@ import { InterfaceSignup } from '../../interfaces/signup.interface';
 })
 export class SignupPage implements OnInit {
   signUpForm = new FormGroup({
+    name: new FormControl('', [Validators.required]),
     email: new FormControl('', [Validators.required, Validators.email]),
     passwordform: new FormControl('', [Validators.required, Validators.minLength(8)]),
     confirmPasswordform: new FormControl('', [Validators.required, Validators.minLength(8)])
@@ -23,16 +24,15 @@ export class SignupPage implements OnInit {
     private logic: SignupLogic
   ) { }
 
-  ngOnInit() {
-  }
+  ngOnInit(): void { }
 
-  checkPasswords(group: FormGroup) {
+  checkPasswords(group: FormGroup): null | { notSame: boolean } {
     let password = group.get('passwordform').value;
     let confirmPassword = group.get('confirmPasswordform').value;
     return password = confirmPassword ? null : { notSame: true }
   }
 
-  onSubmit() {
+  onSubmit(): void {
     const value: InterfaceSignup = this.signUpForm.value;
     this.logic.entrySignupUser(value)
       .subscribe(() => {
@@ -43,7 +43,7 @@ export class SignupPage implements OnInit {
     }
   }
 
-  goBackToLogin() {
+  goBackToLogin(): void {
     this.location.back();
   }
 

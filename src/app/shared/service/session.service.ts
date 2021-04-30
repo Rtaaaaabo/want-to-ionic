@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { Auth } from "aws-amplify";
 import { Observable, from, BehaviorSubject, of } from "rxjs";
 import { map, tap, catchError } from "rxjs/operators";
+import { IArgsEntrySignup } from "../model/task-form.model";
 
 @Injectable({
   providedIn: "root",
@@ -13,8 +14,8 @@ export class SessionService {
     this.loggedIn = new BehaviorSubject<boolean>(false);
   }
 
-  entryUserSignup(valueObj): Observable<any> {
-    return from(Auth.signUp(valueObj));
+  entryUserSignup(valueObj: IArgsEntrySignup): Observable<string> {
+    return from(Auth.signUp(valueObj)).pipe(map(() => 'Access Success')).pipe(catchError((error) => 'access Denied'));
   }
 
   isAuthenticated(): Observable<boolean> {

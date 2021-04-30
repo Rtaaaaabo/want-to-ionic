@@ -13,11 +13,13 @@ export class SignupLogic {
     private sessionService: SessionService,
   ) { }
 
-  entrySignupUser(value: InterfaceSignup): Observable<any> {
+  entrySignupUser(value: InterfaceSignup): Observable<string> {
+    console.log('[EntrySignupUser Value]', value);
     const signupContent = {
       username: value.email,
       password: value.passwordform,
       attributes: {
+        name: value.name,
         email: value.email,
       }
     }
