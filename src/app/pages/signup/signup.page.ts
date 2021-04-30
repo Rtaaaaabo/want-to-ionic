@@ -19,8 +19,8 @@ export class SignupPage implements OnInit {
   }, this.checkPasswords);
 
   constructor(
-    private router: Router,
-    private location: Location,
+    private readonly router: Router,
+    private readonly location: Location,
     private logic: SignupLogic
   ) { }
 

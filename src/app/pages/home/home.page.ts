@@ -14,19 +14,20 @@ import { HomeLogic } from './logic/home.logic';
 export class HomePage implements OnInit {
   email: string;
   attributes: {
+    name: string,
     email: string,
     email_verified: boolean,
     sub: string,
   }
 
   constructor(
+    private readonly modalCtrl: ModalController,
     private logic: HomeLogic,
-    private modalCtrl: ModalController,
   ) { }
 
   ngOnInit(): void { }
 
-  ionViewWillEnter() {
+  ionViewWillEnter(): void {
     this.logic.fetchCurrentUser()
       .pipe(map((attributes) => {
         this.attributes = attributes;
@@ -34,6 +35,7 @@ export class HomePage implements OnInit {
       .pipe(flatMap(() => this.logic.checkRegistrationUser(this.attributes)))
       .pipe(filter(({ items }) => items.length === 0))
       .subscribe(() => {
+        console.log('attribute', this.attributes);
         this.presentRegistrationUser()
       });
   }
@@ -42,6 +44,7 @@ export class HomePage implements OnInit {
     const modal = await this.modalCtrl.create({
       component: EditProfileModalComponent,
       componentProps: {
+        'name': this.attributes.name,
         'status': 'new',
         'email': this.attributes.email,
         'userId': this.attributes.sub,

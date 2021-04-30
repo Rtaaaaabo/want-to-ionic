@@ -37,6 +37,7 @@ export class EditProfileModalComponent implements OnInit {
   @Input() email: string;
   @Input() userId: string;
   @Input() user: IOwnUser;
+  @Input() name: string;
   title: string;
   iconImage: string;
 
@@ -50,7 +51,8 @@ export class EditProfileModalComponent implements OnInit {
       this.title = 'プロフィールの作成';
       this.editProfileForm.patchValue({
         id: this.userId,
-        targetEmail: this.email
+        targetEmail: this.email,
+        userName: this.name,
       });
     } else {
       this.title = 'プロフィールの編集';

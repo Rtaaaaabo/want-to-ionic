@@ -11,6 +11,7 @@ import { ILResponseFetchRoomMembers, InterfaceLogicArgsCreateRoom } from '../mod
 import { FormGroup } from '@angular/forms';
 
 interface Attribute {
+  name: string,
   email: string,
   email_verified: boolean,
   sub: string,

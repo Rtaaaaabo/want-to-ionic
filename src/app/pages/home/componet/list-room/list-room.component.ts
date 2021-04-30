@@ -20,7 +20,7 @@ export class ListRoomComponent implements OnInit {
   constructor(
     private modalCtrl: ModalController,
     private logic: HomeLogic,
-    private router: Router,
+    private readonly router: Router,
     private readonly alertCtrl: AlertController,
   ) { }
 
