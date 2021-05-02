@@ -82,7 +82,7 @@ export class TaskDetailLogic {
    * @returns Observable型でonMessageListenerを返します
    */
   onCreateMessageListener(): any {
-    return this.taskDetailService.onMessageListener().map(data => data.value?.errors);
+    return this.taskDetailService.onMessageListener();
   }
 
   /**

@@ -3,12 +3,12 @@ import { Location, ViewportScroller } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { ModalController, ActionSheetController, ToastController, IonContent, Platform, AlertController } from '@ionic/angular';
 import { Plugins, CameraResultType } from '@capacitor/core';
+import Amplify, { API, graphqlOperation } from 'aws-amplify'
 import { forkJoin, from, Observable } from 'rxjs';
 import { TaskDetailLogic } from './logic/task-detail.logic';
 import { AddTaskModalComponent } from 'src/app/shared/component/modal/add-task-modal/add-task-modal.component';
 import { filter, tap, map, concatMap, toArray } from 'rxjs/operators';
-import { ListRoomGroupsQuery } from 'src/app/API.service';
-import { GetTaskQuery } from 'src/app/shared/service/amplify.service';
+import { GetTaskQuery, ListRoomGroupsQuery } from 'src/app/shared/service/amplify.service';
 const { Camera } = Plugins;
 
 @Component({
@@ -29,33 +29,26 @@ export class TaskDetailPage implements OnInit {
   currentUserId: string;
   roomMembers: Array<ListRoomGroupsQuery>;
   arrayImageBase64Data: Array<any> = [];
+  subscriptionMessage;
 
   constructor(
     private logic: TaskDetailLogic,
     private readonly scroll: ViewportScroller,
-    private readonly location: Location,
     private readonly route: ActivatedRoute,
+    private readonly location: Location,
     private readonly modalCtrl: ModalController,
     private readonly actionSheetCtrl: ActionSheetController,
     private readonly toastCtrl: ToastController,
     private readonly platform: Platform,
     private readonly alertCtrl: AlertController,
   ) {
-    this.initializeApp()
-      .subscribe(() => {
-        this.logic.onCreateMessageListener()
-        // .subscribe({
-        //   next: ({provider, value})
-        // })
-        // .subscribe((  ) => {
-        // if (!value.hasOwnProperty('errors')) {
-        //   this.logic.fetchMessagePerTask(this.taskId)
-        //     .subscribe(({ items }) => {
-        //       this.message = items;
-        //     })
-        // }
-        // });
-      });
+    this.initializeApp().subscribe(() => {
+      this.subscriptionMessage = this.logic.onCreateMessageListener()
+        .subscribe({
+          next: () => this.logic.fetchMessagePerTask(this.taskId).subscribe(({ items }) => this.message = items),
+          error: () => this.logic.fetchMessagePerTask(this.taskId).subscribe(({ items }) => this.message = items)
+        })
+    });
   }
 
   ngOnInit(): void {
@@ -246,5 +239,9 @@ export class TaskDetailPage implements OnInit {
       buttons: ['了解']
     });
     await alert.present();
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptionMessage.unsubscribe();
   }
 }

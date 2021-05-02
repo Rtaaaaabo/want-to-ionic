@@ -28,7 +28,7 @@ export class TaskDetailService {
     return from(this.amplifyService.CreateMessage(inputContent));
   }
 
-  onMessageListener() {
+  onMessageListener(): any {
     return this.amplifyService.OnCreateMessageListener;
   }
 
