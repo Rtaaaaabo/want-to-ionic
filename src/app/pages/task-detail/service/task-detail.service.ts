@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AmplifyService, GetTaskQuery, UpdateTaskMutation, ModelSortDirection, CreateMessageInput } from '../../../shared/service/amplify.service';
+import { AmplifyService, GetTaskQuery, UpdateTaskMutation, ModelSortDirection, CreateMessageInput, SubscriptionResponse, OnCreateMessageSubscription } from '../../../shared/service/amplify.service';
 import { Observable, from } from 'rxjs';
 
 @Injectable({

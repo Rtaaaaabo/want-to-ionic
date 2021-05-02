@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, from, of, concat } from 'rxjs';
+import { Observable, from, of } from 'rxjs';
 import { concatMap, map } from 'rxjs/operators';
 import { Storage } from 'aws-amplify';
 import { v4 as uuid } from 'uuid';
@@ -82,7 +82,7 @@ export class TaskDetailLogic {
    * @returns Observable型でonMessageListenerを返します
    */
   onCreateMessageListener(): any {
-    return this.taskDetailService.onMessageListener();
+    return this.taskDetailService.onMessageListener().map(data => data.value?.errors);
   }
 
   /**

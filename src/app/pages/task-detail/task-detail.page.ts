@@ -32,7 +32,7 @@ export class TaskDetailPage implements OnInit {
 
   constructor(
     private logic: TaskDetailLogic,
-    private scroll: ViewportScroller,
+    private readonly scroll: ViewportScroller,
     private readonly location: Location,
     private readonly route: ActivatedRoute,
     private readonly modalCtrl: ModalController,
@@ -44,34 +44,38 @@ export class TaskDetailPage implements OnInit {
     this.initializeApp()
       .subscribe(() => {
         this.logic.onCreateMessageListener()
-          .subscribe(({ value }) => {
-            if (!value.hasOwnProperty('errors')) {
-              this.logic.fetchMessagePerTask(this.taskId)
-                .subscribe(({ items }) => {
-                  this.message = items;
-                })
-            }
-          });
+        // .subscribe({
+        //   next: ({provider, value})
+        // })
+        // .subscribe((  ) => {
+        // if (!value.hasOwnProperty('errors')) {
+        //   this.logic.fetchMessagePerTask(this.taskId)
+        //     .subscribe(({ items }) => {
+        //       this.message = items;
+        //     })
+        // }
+        // });
       });
   }
 
   ngOnInit(): void {
     this.taskId = this.route.snapshot.paramMap.get('id');
     this.segment = this.route.snapshot.paramMap.get('segment');
+
     const observerFetchCurrentUserInfo = this.logic.fetchCurrentUserInfo();
     const observerFetchAnyTask = this.logic.fetchAnyTask(this.taskId)
       .pipe(map((data) => this.taskDetail = data))
       .pipe(concatMap(() => this.logic.fetchMemberListOnRoom(this.taskDetail.roomID)));
-    const observerFetchMessagePerTask = this.logic.fetchMessagePerTask(this.taskId);
+    // const observerFetchMessagePerTask = this.logic.fetchMessagePerTask(this.taskId);
 
     forkJoin({
       currentUserInfo: observerFetchCurrentUserInfo,
       anyTask: observerFetchAnyTask,
-      messagePerTask: observerFetchMessagePerTask,
+      // messagePerTask: observerFetchMessagePerTask,
     }).subscribe((result) => {
       this.currentUserId = result.currentUserInfo.sub;
       this.roomMembers = result.anyTask.items;
-      this.message = result.messagePerTask.items;
+      // this.message = result.messagePerTask.items;
     });
   }
 
