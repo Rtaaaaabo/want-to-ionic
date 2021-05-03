@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AmplifyService, GetTaskQuery, UpdateTaskMutation, ModelSortDirection, CreateMessageInput, SubscriptionResponse, OnCreateMessageSubscription } from '../../../shared/service/amplify.service';
 import { Observable, from } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,7 @@ export class TaskDetailService {
 
   fetchMessagePerTask(taskId: string): Observable<any> {
     const limitMessage = 100;
-    return from(this.amplifyService.TaskByCreatedAt(taskId, ModelSortDirection.DESC, limitMessage))
+    return from(this.amplifyService.TaskByCreatedAt(taskId, ModelSortDirection.DESC, limitMessage));
   }
 
   updateTaskItem(inputContent): Observable<UpdateTaskMutation> {

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable, from, of } from 'rxjs';
-import { concatMap, map } from 'rxjs/operators';
+import { Observable, from, of, throwError } from 'rxjs';
+import { catchError, concatMap, map } from 'rxjs/operators';
 import { Storage } from 'aws-amplify';
 import { v4 as uuid } from 'uuid';
 import { SessionService } from 'src/app/shared/service/session.service';
@@ -38,6 +38,9 @@ export class TaskDetailLogic {
    */
   fetchMessagePerTask(taskId: string): Observable<any> {
     return this.taskDetailService.fetchMessagePerTask(taskId)
+      .pipe(catchError((error) => {
+        return throwError(error);
+      }));
   }
 
   /**

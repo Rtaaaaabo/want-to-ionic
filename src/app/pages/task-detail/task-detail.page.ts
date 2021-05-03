@@ -46,7 +46,10 @@ export class TaskDetailPage implements OnInit {
       this.subscriptionMessage = this.logic.onCreateMessageListener()
         .subscribe({
           next: () => this.logic.fetchMessagePerTask(this.taskId).subscribe(({ items }) => this.message = items),
-          error: () => this.logic.fetchMessagePerTask(this.taskId).subscribe(({ items }) => this.message = items)
+          error: (err) => this.logic.fetchMessagePerTask(this.taskId).subscribe(({ items }) => {
+            console.log('[ERR]', err);
+            this.message = items
+          })
         })
     });
   }

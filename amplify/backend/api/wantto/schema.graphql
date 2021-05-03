@@ -44,7 +44,7 @@ type User @model @key(name: "byCompany", fields: ["companyID"]) {
   companyID: ID!
   tel: String
   positionName: String
-  iconImage: String
+  iconImage: S3Object
   registered: Boolean
   authority: String
   company: Company! @connection(fields: ["companyID"])
@@ -90,7 +90,13 @@ type Message
   content: String!
   createdAt: AWSDateTime!
   isSent: Boolean
-  attachmentUri: [String]
+  attachment: [S3Object]
   author: User! @connection(fields: ["authorID"])
   task: Task! @connection(fields: ["taskID"])
+}
+
+type S3Object {
+  bucket: String!
+  region: String!
+  key: String!
 }
