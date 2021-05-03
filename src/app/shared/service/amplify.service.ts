@@ -6098,54 +6098,54 @@ export class AmplifyService {
     nextToken?: string
   ): Promise<TaskByCreatedAtQuery> {
     const statement = `query TaskByCreatedAt($taskID: ID, $createdAt: ModelStringKeyConditionInput, $sortDirection: ModelSortDirection, $filter: ModelMessageFilterInput, $limit: Int, $nextToken: String) {
-      taskByCreatedAt(taskID: $taskID, createdAt: $createdAt, sortDirection: $sortDirection, filter: $filter, limit: $limit, nextToken: $nextToken) {
-        __typename
-        items {
+        taskByCreatedAt(taskID: $taskID, createdAt: $createdAt, sortDirection: $sortDirection, filter: $filter, limit: $limit, nextToken: $nextToken) {
           __typename
-          id
-          taskID
-          authorID
-          content
-          createdAt
-          isSent
-          attachment {
-            __typename
-            bucket
-            region
-            key
-          }
-          author {
+          items {
             __typename
             id
-            username
-            email
-            companyID
-            tel
-            positionName
-            registered
-            authority
-            createdAt
-            updatedAt
-          }
-          task {
-            __typename
-            id
+            taskID
             authorID
-            roomID
-            chargePersonID
-            title
-            description
-            scheduleDate
-            priority
-            status
+            content
             createdAt
+            isSent
+            attachment {
+              __typename
+              bucket
+              region
+              key
+            }
+            author {
+              __typename
+              id
+              username
+              email
+              companyID
+              tel
+              positionName
+              registered
+              authority
+              createdAt
+              updatedAt
+            }
+            task {
+              __typename
+              id
+              authorID
+              roomID
+              chargePersonID
+              title
+              description
+              scheduleDate
+              priority
+              status
+              createdAt
+              updatedAt
+            }
             updatedAt
           }
-          updatedAt
+          nextToken
         }
-        nextToken
-      }
-    }`;
+      }`;
     const gqlAPIServiceArguments: any = {};
     if (taskID) {
       gqlAPIServiceArguments.taskID = taskID;

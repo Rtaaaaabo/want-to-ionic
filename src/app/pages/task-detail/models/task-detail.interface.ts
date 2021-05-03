@@ -28,3 +28,7 @@ export interface MessageContent {
     authorID: string,
     content: string,
 }
+
+export interface IImageFile {
+    key: string,
+}

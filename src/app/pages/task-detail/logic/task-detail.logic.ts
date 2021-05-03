@@ -8,7 +8,7 @@ import { CurrentUserInfo } from '../../task/interface/current-user-info.interfac
 import { TaskDetailService } from '../service/task-detail.service';
 import { Filesystem, FilesystemDirectory, FilesystemEncoding, FileWriteResult, FileReadResult, FileDeleteResult } from "@capacitor/core";
 import { CreateMessageInput, GetTaskQuery, S3ObjectInput, UpdateTaskMutation } from 'src/app/shared/service/amplify.service';
-import { IsMessageContent, MessageContent } from '../models/task-detail.interface';
+import { IImageFile, IsMessageContent, MessageContent } from '../models/task-detail.interface';
 
 const OneWeekSecond = 604800;
 
@@ -134,14 +134,14 @@ export class TaskDetailLogic {
    * @param taskId タスクのIDを渡します。
    * @returns Observable型でS3から返ってきた値を返します。
    */
-  uploadFile(arrayBase64Data: Array<any>, taskId: string): Observable<Object> {
+  uploadFile(arrayBase64Data: Array<any>, taskId: string, currentUserId: string): Observable<IImageFile> {
     let fileName: string;
     let base64Data: any;
     let ext: string;
     let contentType: string;
     let uploadFileName: string;
     const dt = new Date();
-    const dirName = this.getDirString(dt);
+    const dirName = this.getDirString(dt, currentUserId);
     return from(arrayBase64Data)
       .pipe(map((base64Result) => base64Data = base64Result))
       .pipe(concatMap((base64Data) => this.getContentType(base64Data)))
@@ -158,7 +158,7 @@ export class TaskDetailLogic {
     return of(contentType.match(/([^/]+?)?$/)[0]);
   }
 
-  putStorage(fileName: string, blobFile: Blob, contentType: string): Observable<Object> {
+  putStorage(fileName: string, blobFile: Blob, contentType: string): Observable<any> {
     console.log('[fileName]', fileName);
     console.log('[blobFile]', blobFile);
     return from(Storage.put(
@@ -174,18 +174,17 @@ export class TaskDetailLogic {
     return from(Storage.get(fileName))
   }
 
-  getDirString(dt: Date): string {
-    const random = dt.getTime() + Math.floor(100000 * Math.random());
-    const randomMath = Math.random() * random;
-    const randomFloor = randomMath.toString(16);
-    return "" +
+  getDirString(dt: Date, currentUserId: string): string {
+    // const randomMath = Math.random() * random;
+    // const randomFloor = randomMath.toString(16);
+
+    return "" + currentUserId + "/" +
       ("00" + dt.getUTCFullYear()).slice(-2) +
       ("00" + (dt.getMonth() + 1)).slice(-2) +
       ("00" + dt.getUTCDate()).slice(-2) +
       ("00" + dt.getUTCHours()).slice(-2) +
       ("00" + dt.getMinutes()).slice(-2) +
-      ("00" + dt.getUTCSeconds()).slice(-2) +
-      "-" + randomFloor;
+      ("00" + dt.getUTCSeconds()).slice(-2);
   }
 
   fileWrite(fileName: string, fileData: string): Observable<FileWriteResult> {

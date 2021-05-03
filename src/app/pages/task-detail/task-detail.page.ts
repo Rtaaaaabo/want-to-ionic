@@ -46,10 +46,6 @@ export class TaskDetailPage implements OnInit {
       this.subscriptionMessage = this.logic.onCreateMessageListener()
         .subscribe({
           next: () => this.logic.fetchMessagePerTask(this.taskId).subscribe(({ items }) => this.message = items),
-          error: (err) => this.logic.fetchMessagePerTask(this.taskId).subscribe(({ items }) => {
-            console.log('[ERR]', err);
-            this.message = items
-          })
         })
     });
   }
@@ -76,18 +72,18 @@ export class TaskDetailPage implements OnInit {
   }
 
   sendMessage(): void {
-    console.log('[arrayImageBase64Data]', this.arrayImageBase64Data);
     if (this.arrayImageBase64Data.length === 0) {
       this.logic.sendNewMessage(this.taskId, this.newMsg, this.currentUserId)
         .subscribe(() => this.newMsg = '');
     } else {
-      this.logic.uploadFile(this.arrayImageBase64Data, this.taskId)
+      this.logic.uploadFile(this.arrayImageBase64Data, this.taskId, this.currentUserId)
+        // 証明書付きImageではない形に変えなくてはいけない（taku.nakagawa）
         // .pipe(map((data) => data.key))
-        // .pipe(concatMap((result) => this.logic.getStorage(result)))
+        .pipe(concatMap(({ key }) => this.logic.getStorage(key)))
         // .pipe(toArray())
-        // .pipe(concatMap((data) => this.logic.sendNewMessage(this.taskId, this.newMsg, this.currentUserId, data)))
+        // .pipe(concatMap((imageContent) => this.logic.sendNewMessage(this.taskId, this.newMsg, this.currentUserId, imageContent)))
         .subscribe((result) => {
-          console.log('[uploadFile result]', result);
+          console.log('RESULT', result);
           // this.newMsg = '';
           // this.arrayImageBase64Data = [];
         });
