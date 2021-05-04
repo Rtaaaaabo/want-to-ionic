@@ -77,10 +77,12 @@ export class TaskDetailPage implements OnInit {
         .subscribe(() => this.newMsg = '');
     } else {
       this.logic.uploadFile(this.arrayImageBase64Data, this.taskId, this.currentUserId)
-        .pipe(concatMap(({ key }) => this.logic.getStorage(key))) // 証明書付きImageではない形に変えなくてはいけない(taku.Nakagawa)
+        // ここで { bucket: string, region: string, key: string}の形に治す(配列にはしなくてもよい)
+        .pipe(concatMap(({ key }) => this.logic.makeS3Object(key)))
         .pipe(toArray())
         .pipe(concatMap((imageContent) => this.logic.sendNewMessage(this.taskId, this.newMsg, this.currentUserId, imageContent)))
-        .subscribe(() => {
+        .subscribe((result) => {
+          console.log('SendMessage result', result);
           this.newMsg = '';
           this.arrayImageBase64Data = [];
         });

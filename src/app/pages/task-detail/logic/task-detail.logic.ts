@@ -8,7 +8,7 @@ import { CurrentUserInfo } from '../../task/interface/current-user-info.interfac
 import { TaskDetailService } from '../service/task-detail.service';
 import { Filesystem, FilesystemDirectory, FilesystemEncoding, FileWriteResult, FileReadResult, FileDeleteResult } from "@capacitor/core";
 import { CreateMessageInput, GetTaskQuery, S3ObjectInput, UpdateTaskMutation } from 'src/app/shared/service/amplify.service';
-import { IImageFile, IsMessageContent, MessageContent } from '../models/task-detail.interface';
+import { IImageFile, IS3Object, IsMessageContent, MessageContent } from '../models/task-detail.interface';
 
 const OneWeekSecond = 604800;
 
@@ -65,7 +65,7 @@ export class TaskDetailLogic {
    * @param arrayAttachmentUri arrayAttachmentUri
    * @returns Observable型でcreateMessageItemを返します
    */
-  sendNewMessage(taskId: string, messageContent: string, userId: string, arrayAttachment?: Array<S3ObjectInput>): Observable<any> {
+  sendNewMessage(taskId: string, messageContent: string, userId: string, arrayAttachment?: Array<IS3Object>): Observable<any> {
     let inputContent: CreateMessageInput = {
       id: `${uuid()}`,
       authorID: `${userId}`,
@@ -77,6 +77,23 @@ export class TaskDetailLogic {
       inputContent.attachment = arrayAttachment;
     }
     return this.taskDetailService.createMessageItem(inputContent);
+  }
+
+  /**
+   * s3Objectに当てはまるように整形します
+   * @param key s3保存時に返されるKey値
+   * @returns Observable型でIS3Objectを返します
+   */
+  makeS3Object(key: string): Observable<IS3Object> {
+    const region = 'ap-northeast-1';
+    const bucket = 'wattofilestorage234052-dev';
+    const keyFile = `public/${key}`;
+    const returnResult = {
+      key: keyFile,
+      region: region,
+      bucket: bucket,
+    }
+    return of(returnResult);
   }
 
   /**
@@ -159,8 +176,6 @@ export class TaskDetailLogic {
   }
 
   putStorage(fileName: string, blobFile: Blob, contentType: string): Observable<any> {
-    console.log('[fileName]', fileName);
-    console.log('[blobFile]', blobFile);
     return from(Storage.put(
       fileName,
       blobFile,

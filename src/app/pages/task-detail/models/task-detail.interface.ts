@@ -32,3 +32,9 @@ export interface MessageContent {
 export interface IImageFile {
     key: string,
 }
+
+export interface IS3Object {
+    key: string,
+    bucket: string,
+    region: string,
+}

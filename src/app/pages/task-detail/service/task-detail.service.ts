@@ -26,6 +26,7 @@ export class TaskDetailService {
   }
 
   createMessageItem(inputContent: CreateMessageInput): Observable<any> {
+    console.log('inputContent', inputContent);
     return from(this.amplifyService.CreateMessage(inputContent));
   }
 
