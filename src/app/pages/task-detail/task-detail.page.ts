@@ -77,15 +77,12 @@ export class TaskDetailPage implements OnInit {
         .subscribe(() => this.newMsg = '');
     } else {
       this.logic.uploadFile(this.arrayImageBase64Data, this.taskId, this.currentUserId)
-        // 証明書付きImageではない形に変えなくてはいけない（taku.nakagawa）
-        // .pipe(map((data) => data.key))
-        .pipe(concatMap(({ key }) => this.logic.getStorage(key)))
-        // .pipe(toArray())
-        // .pipe(concatMap((imageContent) => this.logic.sendNewMessage(this.taskId, this.newMsg, this.currentUserId, imageContent)))
-        .subscribe((result) => {
-          console.log('RESULT', result);
-          // this.newMsg = '';
-          // this.arrayImageBase64Data = [];
+        .pipe(concatMap(({ key }) => this.logic.getStorage(key))) // 証明書付きImageではない形に変えなくてはいけない(taku.Nakagawa)
+        .pipe(toArray())
+        .pipe(concatMap((imageContent) => this.logic.sendNewMessage(this.taskId, this.newMsg, this.currentUserId, imageContent)))
+        .subscribe(() => {
+          this.newMsg = '';
+          this.arrayImageBase64Data = [];
         });
     }
   }
