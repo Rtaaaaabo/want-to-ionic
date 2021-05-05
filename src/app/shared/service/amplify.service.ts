@@ -3006,7 +3006,12 @@ export type TaskByCreatedAtQuery = {
     content: string;
     createdAt: string;
     isSent?: boolean | null;
-    attachmentUri?: Array<string | null> | null;
+    attachment?: Array<{
+      __typename: "s3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null> | null;
     author: {
       __typename: "User";
       id: string;
@@ -3015,7 +3020,6 @@ export type TaskByCreatedAtQuery = {
       companyID: string;
       tel?: string | null;
       positionName?: string | null;
-      iconImage?: string | null;
       registered?: boolean | null;
       authority?: string | null;
       createdAt: string;
@@ -3042,26 +3046,30 @@ export type TaskByCreatedAtQuery = {
 
 export type ListMessagesQuery = {
   __typename: "ModelMessageConnection";
-  items: Array<{
+  items?: Array<{
     __typename: "Message";
     id: string;
     taskID: string;
     authorID: string;
     content: string;
-    createdAt: string | null;
-    isSent: boolean | null;
-    attachmentUri: Array<string | null> | null;
+    createdAt: string;
+    isSent?: boolean | null;
+    attachment?: Array<{
+      __typename: "s3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null> | null;
     author: {
       __typename: "User";
       id: string;
       username: string;
       email: string;
       companyID: string;
-      tel: string | null;
-      positionName: string | null;
-      iconImage: string | null;
-      registered: boolean | null;
-      authority: string | null;
+      tel?: string | null;
+      positionName?: string | null;
+      registered?: boolean | null;
+      authority?: string | null;
       createdAt: string;
       updatedAt: string;
     };
@@ -3072,16 +3080,16 @@ export type ListMessagesQuery = {
       roomID: string;
       chargePersonID: string;
       title: string;
-      description: string | null;
-      scheduleDate: string | null;
-      priority: number | null;
-      status: number | null;
-      createdAt: string | null;
+      description?: string | null;
+      scheduleDate?: string | null;
+      priority?: number | null;
+      status?: number | null;
+      createdAt?: string | null;
       updatedAt: string;
     };
     updatedAt: string;
   } | null> | null;
-  nextToken: string | null;
+  nextToken?: string | null;
 };
 
 export type OnCreateCompanySubscription = {

@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Observable, from, of, throwError } from 'rxjs';
-import { catchError, concatMap, map } from 'rxjs/operators';
+import { concatMap, map } from 'rxjs/operators';
 import { Storage } from 'aws-amplify';
 import { v4 as uuid } from 'uuid';
 import { SessionService } from 'src/app/shared/service/session.service';
 import { CurrentUserInfo } from '../../task/interface/current-user-info.interface';
 import { TaskDetailService } from '../service/task-detail.service';
 import { Filesystem, FilesystemDirectory, FilesystemEncoding, FileWriteResult, FileReadResult, FileDeleteResult } from "@capacitor/core";
-import { CreateMessageInput, GetTaskQuery, S3ObjectInput, UpdateTaskMutation } from 'src/app/shared/service/amplify.service';
+import { CreateMessageInput, GetTaskQuery, S3ObjectInput, TaskByCreatedAtQuery, UpdateTaskMutation } from 'src/app/shared/service/amplify.service';
 import { IImageFile, IS3Object, IsMessageContent, MessageContent } from '../models/task-detail.interface';
 
 const OneWeekSecond = 604800;
@@ -35,12 +35,10 @@ export class TaskDetailLogic {
    * タスクあたりのMessageを返します
    * @param taskId TaskIDです
    * @returns Observable型で タスクあたりのMessageを返します
+   * TaskByCreatedAtQuery
    */
-  fetchMessagePerTask(taskId: string): Observable<any> {
-    return this.taskDetailService.fetchMessagePerTask(taskId)
-      .pipe(catchError((error) => {
-        return throwError(error);
-      }));
+  fetchMessagePerTask(taskId: string): Observable<TaskByCreatedAtQuery> {
+    return this.taskDetailService.fetchMessagePerTask(taskId);
   }
 
   /**
