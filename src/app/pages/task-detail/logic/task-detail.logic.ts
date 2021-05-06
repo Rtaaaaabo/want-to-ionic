@@ -7,7 +7,7 @@ import { SessionService } from 'src/app/shared/service/session.service';
 import { CurrentUserInfo } from '../../task/interface/current-user-info.interface';
 import { TaskDetailService } from '../service/task-detail.service';
 import { Filesystem, FilesystemDirectory, FilesystemEncoding, FileWriteResult, FileReadResult, FileDeleteResult } from "@capacitor/core";
-import { CreateMessageInput, GetTaskQuery, S3ObjectInput, TaskByCreatedAtQuery, UpdateTaskMutation } from 'src/app/shared/service/amplify.service';
+import { CreateMessageInput, GetTaskQuery, Message, S3ObjectInput, TaskByCreatedAtQuery, UpdateTaskMutation } from 'src/app/shared/service/amplify.service';
 import { IImageFile, IS3Object, IsMessageContent, MessageContent } from '../models/task-detail.interface';
 
 const OneWeekSecond = 604800;
@@ -39,6 +39,18 @@ export class TaskDetailLogic {
    */
   fetchMessagePerTask(taskId: string): Observable<TaskByCreatedAtQuery> {
     return this.taskDetailService.fetchMessagePerTask(taskId);
+  }
+
+
+  /**
+   * MessageのAttachmentのURLを取得します
+   * @param items 配列でType: Messageを取得します。
+   * @returns Observable型で AttachmentのUrlを返します。
+   */
+  makeAttachmentUrl(items: Array<Message>): Observable<any> {
+    console.log('Array Message', items);
+    items.forEach(item => item.attachment)
+    return of();
   }
 
   /**

@@ -57,6 +57,7 @@ export class TaskDetailPage implements OnInit {
       .pipe(map((data) => this.taskDetail = data))
       .pipe(concatMap(() => this.logic.fetchMemberListOnRoom(this.taskDetail.roomID)));
     const observerFetchMessagePerTask = this.logic.fetchMessagePerTask(this.taskId);
+    const observerMakeMessageAttachmentUrl = observerFetchMessagePerTask.pipe(concatMap((result) => this.logic.makeAttachmentUrl(result.items)));
 
     forkJoin({
       currentUserInfo: observerFetchCurrentUserInfo,
