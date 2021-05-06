@@ -63,11 +63,12 @@ export class TaskDetailPage implements OnInit {
       currentUserInfo: observerFetchCurrentUserInfo,
       anyTask: observerFetchAnyTask,
       messagePerTask: observerFetchMessagePerTask,
+      messageAttachment: observerMakeMessageAttachmentUrl,
     }).subscribe((result) => {
       this.currentUserId = result.currentUserInfo.sub;
       this.roomMembers = result.anyTask.items;
       this.message = result.messagePerTask.items;
-      console.log('message: ', this.message);
+      console.log(result.messageAttachment);
     });
   }
 

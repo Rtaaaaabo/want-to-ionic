@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, from, of, throwError } from 'rxjs';
-import { concatMap, map } from 'rxjs/operators';
+import { concatMap, mergeMap, map, filter, toArray } from 'rxjs/operators';
 import { Storage } from 'aws-amplify';
 import { v4 as uuid } from 'uuid';
 import { SessionService } from 'src/app/shared/service/session.service';
@@ -48,10 +48,20 @@ export class TaskDetailLogic {
    * @returns Observable型で AttachmentのUrlを返します。
    */
   makeAttachmentUrl(items: Array<Message>): Observable<any> {
-    console.log('Array Message', items);
-    items.forEach(item => item.attachment)
-    return of();
+    const argsItems = items;
+    let resultItems;
+    // const targetArrayItems = resultItems.find(item => item.attachment !== null);
+    const observableResultItems = from(argsItems)
+      .pipe(map((item) => resultItems = item))
+      .pipe(filter((item) => item.attachment !== null))
+      .pipe(concatMap((item) => from(item.attachment).pipe(concatMap((attachment) => this.getStorage(attachment.key)))))
+      .pipe(toArray())
+    return observableResultItems;
   }
+
+  // fetchAttachmentUrl(item): Observable<any> {
+  //   return this
+  // }
 
   /**
    * 任意のタスクの情報をアップデートします
