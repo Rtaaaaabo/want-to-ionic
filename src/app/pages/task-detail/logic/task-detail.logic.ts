@@ -8,7 +8,7 @@ import { CurrentUserInfo } from '../../task/interface/current-user-info.interfac
 import { TaskDetailService } from '../service/task-detail.service';
 import { Filesystem, FilesystemDirectory, FilesystemEncoding, FileWriteResult, FileReadResult, FileDeleteResult } from "@capacitor/core";
 import { CreateMessageInput, GetTaskQuery, Message, S3ObjectInput, TaskByCreatedAtQuery, UpdateTaskMutation } from 'src/app/shared/service/amplify.service';
-import { IImageFile, IS3Object, IsMessageContent, MessageContent } from '../models/task-detail.interface';
+import { IImageFile, IS3Object, IsMessageContent, IMessageWithAttahUrl, MessageContent } from '../models/task-detail.interface';
 
 const OneWeekSecond = 604800;
 
@@ -49,14 +49,15 @@ export class TaskDetailLogic {
    */
   makeAttachmentUrl(items: Array<Message>): Observable<any> {
     const argsItems = items;
-    let resultItems;
+    let resultItems: IMessageWithAttahUrl;
     // const targetArrayItems = resultItems.find(item => item.attachment !== null);
-    const observableResultItems = from(argsItems)
+    const result = from(argsItems)
       .pipe(map((item) => resultItems = item))
       .pipe(filter((item) => item.attachment !== null))
       .pipe(concatMap((item) => from(item.attachment).pipe(concatMap((attachment) => this.getStorage(attachment.key)))))
+      // .pipe(map((s3UrlValue) => resultItems.attachmentWithUrl = s3UrlValue))
       .pipe(toArray())
-    return observableResultItems;
+    return result;
   }
 
   // fetchAttachmentUrl(item): Observable<any> {

@@ -4,11 +4,12 @@ import { SessionService } from '../../../shared/service/session.service';
 import { v4 as uuid } from 'uuid';
 import { Observable, from, of } from 'rxjs';
 import { concatMap, map, filter, toArray } from 'rxjs/operators';
-import { CreateRoomGroupMutation, CreateRoomMutation, CreateUserMutation, DeleteRoomMutation, ListUsersQuery, ModelRoomGroupFilterInput } from 'src/app/shared/service/amplify.service';
+import { CreateRoomGroupMutation, CreateRoomMutation, CreateUserMutation, DeleteRoomMutation, ListUsersQuery, ModelRoomGroupFilterInput, s3Object } from 'src/app/shared/service/amplify.service';
 import { ResponseListRoomGroupsQueryItems } from '../service/reponse/response.model';
 import { Storage } from 'aws-amplify';
 import { ILResponseFetchRoomMembers, InterfaceLogicArgsCreateRoom } from '../model/home.interface';
 import { FormGroup } from '@angular/forms';
+import { IS3Object } from '../../task-detail/models/task-detail.interface';
 
 interface Attribute {
   name: string,
@@ -49,7 +50,6 @@ export class HomeLogic {
   }
 
   createUser(formContent: FormGroup): Observable<CreateUserMutation> {
-    console.log(formContent);
     const requestContent = {
       id: formContent.get('id').value,
       companyID: 'takuCloudCom',
@@ -57,8 +57,10 @@ export class HomeLogic {
       username: formContent.get('userName').value,
       positionName: formContent.get('positionName').value,
       tel: formContent.get('tel').value,
-      iconImage: formContent.get('iconImage').value,
+      // iconImage: formContent.get('iconImage').value,
     };
+
+    console.log('[requestContent]', requestContent);
     return this.homeService.createUser(requestContent);
   }
 
@@ -129,7 +131,7 @@ export class HomeLogic {
       .pipe(map(({ items }) => items));
   }
 
-  fetchAvatarIconUrl(base64Data: any, userId: string): Observable<any> {
+  uploadAvatarIconUrl(base64Data: any, userId: string): Observable<any> {
     let contentType: string;
     let fileName: string;
     let uploadFilePath: string;
@@ -198,6 +200,18 @@ export class HomeLogic {
         contentType: contentType,
       }
     ));
+  }
+
+  makeS3Object(key: string): Observable<IS3Object> {
+    const region = 'ap-northeast-1';
+    const bucket = 'wattofilestorage234052-dev';
+    const keyFile = `public/${key}`;
+    const returnResult = {
+      key: keyFile,
+      region: region,
+      bucket: bucket
+    }
+    return of(returnResult);
   }
 
   getStorage(filePathName: string): Observable<any> {

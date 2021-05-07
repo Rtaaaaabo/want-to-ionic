@@ -1,4 +1,4 @@
-import { TaskByCreatedAtQuery } from "src/app/shared/service/amplify.service";
+import { Message } from 'src/app/shared/service/amplify.service';
 
 export interface IMessageAttachment {
     bucket: string;
@@ -41,6 +41,6 @@ export interface IS3Object {
     region: string,
 }
 
-export interface ITaskByCreatedAtWithAttahUrl extends TaskByCreatedAtQuery {
-    attachmentWithUrl: string;
+export interface IMessageWithAttahUrl extends Message {
+    attachmentWithUrl?: Array<string>;
 }

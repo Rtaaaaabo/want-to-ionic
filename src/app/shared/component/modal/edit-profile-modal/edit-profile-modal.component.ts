@@ -39,7 +39,7 @@ export class EditProfileModalComponent implements OnInit {
   @Input() user: IOwnUser;
   @Input() name: string;
   title: string;
-  iconImage: string;
+  iconImageUrl: string = '../../../../../assets/img/undefined.jpeg';
 
   constructor(
     private readonly modalCtrl: ModalController,
@@ -74,21 +74,15 @@ export class EditProfileModalComponent implements OnInit {
     const observableIconImage = from(Camera.getPhoto(optionPicture));
     observableIconImage
       .pipe(map((data) => data.dataUrl))
-      .pipe(concatMap((dataUrl) => this.logic.fetchAvatarIconUrl(dataUrl, this.user.id)))
-      // .pipe(concatMap(({ key: awsFilePath }) => this.logic.getStorage(awsFilePath)))
-      // .pipe(catchError(() => of(false)))
-      // .pipe(filter((result) => result))
-      .subscribe((result) => {
-        console.log('result', result);
-        // this.user.iconImage = avatarUrl;
-        // this.editProfileForm.patchValue({
-        //   id: this.user.id,
-        //   targetEmail: this.user.email,
-        //   userName: this.user.username,
-        //   positionName: this.user.positionName,
-        //   tel: this.user.tel,
-        //   iconImage: avatarUrl,
-        // });
+      .pipe(concatMap((dataUrl) => this.logic.uploadAvatarIconUrl(dataUrl, this.userId)))
+      .pipe(concatMap(({ key: awsFilePath }) => this.logic.getStorage(awsFilePath)))
+      .pipe(catchError(() => of(false)))
+      .pipe(filter((result) => result))
+      .subscribe((avatarUrl) => {
+        this.iconImageUrl = avatarUrl;
+        this.editProfileForm.patchValue({
+          iconImage: avatarUrl,
+        });
       });
   }
 

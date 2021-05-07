@@ -1,14 +1,16 @@
+import { IS3Object } from "../../task-detail/models/task-detail.interface";
+
 export interface IOwnUser {
-    authority: string;
-    companyID: string;
-    createdAt: string;
-    positionName: string;
-    iconImage: string;
-    email: string;
-    id: string;
-    registered?: boolean
-    updatedAt: string;
-    username: string;
-    tel?: string;
     __typename: string;
+    id: string;
+    username: string;
+    email: string;
+    companyID: string;
+    authority: string;
+    positionName: string;
+    tel?: string;
+    iconImage: IS3Object;
+    registered?: boolean
+    createdAt: string;
+    updatedAt: string;
 }

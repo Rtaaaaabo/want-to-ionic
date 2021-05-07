@@ -4,7 +4,6 @@
 import { Injectable } from "@angular/core";
 import API, { graphqlOperation } from "@aws-amplify/api";
 import { GraphQLResult } from "@aws-amplify/api/lib/types";
-import { IS3Object } from "src/app/pages/task-detail/models/task-detail.interface";
 import { Observable } from "zen-observable-ts";
 
 export interface SubscriptionResponse<T> {

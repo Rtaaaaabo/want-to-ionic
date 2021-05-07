@@ -83,7 +83,6 @@ export class TaskDetailPage implements OnInit {
         .pipe(toArray())
         .pipe(concatMap((imageContent) => this.logic.sendNewMessage(this.taskId, this.newMsg, this.currentUserId, imageContent)))
         .subscribe((result) => {
-          console.log('SendMessage result', result);
           this.newMsg = '';
           this.arrayImageBase64Data = [];
         });
