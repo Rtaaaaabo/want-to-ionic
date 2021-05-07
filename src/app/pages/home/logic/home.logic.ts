@@ -77,6 +77,7 @@ export class HomeLogic {
       iconImage: avatarUserImage,
       registered: true,
     };
+    console.log('requestContent', requestContent);
     return this.homeService.createUser(requestContent);
   }
 
