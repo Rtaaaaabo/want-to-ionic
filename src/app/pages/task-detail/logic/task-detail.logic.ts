@@ -211,9 +211,6 @@ export class TaskDetailLogic {
   }
 
   getDirString(dt: Date, currentUserId: string): string {
-    // const randomMath = Math.random() * random;
-    // const randomFloor = randomMath.toString(16);
-
     return "" + currentUserId + "/" +
       ("00" + dt.getUTCFullYear()).slice(-2) +
       ("00" + (dt.getMonth() + 1)).slice(-2) +

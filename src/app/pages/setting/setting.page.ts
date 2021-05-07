@@ -29,10 +29,10 @@ export class SettingPage implements OnInit {
   user: IOwnUser;
 
   constructor(
-    private actionSheetCtrl: ActionSheetController,
     private logic: SettingLogic,
-    private router: Router,
-    private modalCtrl: ModalController,
+    private readonly actionSheetCtrl: ActionSheetController,
+    private readonly router: Router,
+    private readonly modalCtrl: ModalController,
   ) { }
 
   ngOnInit() {

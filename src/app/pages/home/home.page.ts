@@ -11,7 +11,7 @@ import { HomeLogic } from './logic/home.logic';
   styleUrls: ['./home.page.scss'],
 })
 
-export class HomePage implements OnInit {
+export class HomePage {
   email: string;
   attributes: {
     name: string,
@@ -21,11 +21,9 @@ export class HomePage implements OnInit {
   }
 
   constructor(
-    private readonly modalCtrl: ModalController,
     private logic: HomeLogic,
+    private readonly modalCtrl: ModalController,
   ) { }
-
-  ngOnInit(): void { }
 
   ionViewWillEnter(): void {
     this.logic.fetchCurrentUser()
@@ -43,8 +41,8 @@ export class HomePage implements OnInit {
     const modal = await this.modalCtrl.create({
       component: EditProfileModalComponent,
       componentProps: {
-        'name': this.attributes.name,
         'status': 'new',
+        'name': this.attributes.name,
         'email': this.attributes.email,
         'userId': this.attributes.sub,
       },

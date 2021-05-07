@@ -8,7 +8,7 @@ import { CreateRoomGroupMutation, CreateRoomMutation, CreateUserMutation, Delete
 import { ResponseListRoomGroupsQueryItems } from '../service/reponse/response.model';
 import { Storage } from 'aws-amplify';
 import { ILResponseFetchRoomMembers, InterfaceLogicArgsCreateRoom } from '../model/home.interface';
-import { FormGroup } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { IS3Object } from '../../task-detail/models/task-detail.interface';
 
 interface Attribute {
@@ -50,17 +50,33 @@ export class HomeLogic {
   }
 
   createUser(formContent: FormGroup): Observable<CreateUserMutation> {
+    const resultFormIconImageUrl = formContent.get('keyAvatarImage').value;
+    const region = 'ap-northeast-1';
+    const bucket = 'wattofilestorage234052-dev';
+    let avatarUserImage: IS3Object;
+    if (resultFormIconImageUrl !== '') {
+      avatarUserImage = {
+        key: resultFormIconImageUrl,
+        bucket: bucket,
+        region: region,
+      }
+    } else {
+      avatarUserImage = {
+        key: '',
+        bucket: bucket,
+        region: region,
+      }
+    }
     const requestContent = {
       id: formContent.get('id').value,
-      companyID: 'takuCloudCom',
-      email: formContent.get('targetEmail').value,
       username: formContent.get('userName').value,
-      positionName: formContent.get('positionName').value,
+      email: formContent.get('targetEmail').value,
+      companyID: 'takuCloudCom',
       tel: formContent.get('tel').value,
-      // iconImage: formContent.get('iconImage').value,
+      positionName: formContent.get('positionName').value,
+      iconImage: avatarUserImage,
+      registered: true,
     };
-
-    console.log('[requestContent]', requestContent);
     return this.homeService.createUser(requestContent);
   }
 
@@ -137,30 +153,26 @@ export class HomeLogic {
     let uploadFilePath: string;
     let ext: string;
     const dt = new Date();
-    const dateDir = this.getDirString(dt);
-    const dirName = userId;
+    const dateDir = this.getDirString(dt, userId);
     return this.getContentType(base64Data)
       .pipe(map((result) => contentType = result))
       .pipe(concatMap((contentType) => this.makeExt(contentType)))
       .pipe(map(result => ext = result))
-      .pipe(map(() => fileName = `avatar/${dateDir}_${uuid()}`))
-      .pipe(map(() => uploadFilePath = `${dirName}/${fileName}.${ext}`))
+      .pipe(map(() => fileName = `avatar_${uuid()}_/${dateDir}`))
+      .pipe(map(() => uploadFilePath = `${fileName}.${ext}`))
       .pipe(concatMap(() => this.base64toBlob(base64Data, contentType)))
       .pipe(concatMap((blobFile) => this.putStorage(uploadFilePath, blobFile, contentType)));
   }
 
-  getDirString(dt: Date): string {
-    const random = dt.getTime() + Math.floor(100000 * Math.random());
-    const randomMath = Math.random() * random;
-    const randomFloor = randomMath.toString(16);
-    return "" +
+  getDirString(dt: Date, userId: string): string {
+    console.log('dt', dt);
+    return "" + userId + "/" +
       ("00" + dt.getUTCFullYear()).slice(-2) +
       ("00" + (dt.getMonth() + 1)).slice(-2) +
       ("00" + dt.getUTCDate()).slice(-2) +
       ("00" + dt.getUTCHours()).slice(-2) +
       ("00" + dt.getMinutes()).slice(-2) +
-      ("00" + dt.getUTCSeconds()).slice(-2) +
-      "-" + randomFloor;
+      ("00" + dt.getUTCSeconds()).slice(-2);
   }
 
   setExitsRoomAndUser(data): Observable<any> {

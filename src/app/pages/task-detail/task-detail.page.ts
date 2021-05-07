@@ -7,7 +7,7 @@ import { forkJoin, from, Observable, Subscription } from 'rxjs';
 import { TaskDetailLogic } from './logic/task-detail.logic';
 import { AddTaskModalComponent } from 'src/app/shared/component/modal/add-task-modal/add-task-modal.component';
 import { filter, tap, map, concatMap, toArray } from 'rxjs/operators';
-import { GetTaskQuery, ListMessagesQuery, ListRoomGroupsQuery, Message } from 'src/app/shared/service/amplify.service';
+import { GetTaskQuery, ListRoomGroupsQuery, Message } from 'src/app/shared/service/amplify.service';
 const { Camera } = Plugins;
 
 @Component({

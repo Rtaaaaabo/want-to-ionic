@@ -26,7 +26,7 @@ const optionPicture = {
 export class EditProfileModalComponent implements OnInit {
   editProfileForm = new FormGroup({
     id: new FormControl(''),
-    iconImage: new FormControl(''),
+    keyAvatarImage: new FormControl(''),
     userName: new FormControl('', [Validators.required]),
     positionName: new FormControl(''),
     targetEmail: new FormControl('', [Validators.required, Validators.email]),
@@ -40,6 +40,7 @@ export class EditProfileModalComponent implements OnInit {
   @Input() name: string;
   title: string;
   iconImageUrl: string = '../../../../../assets/img/undefined.jpeg';
+  keyAvatarImage: string;
 
   constructor(
     private readonly modalCtrl: ModalController,
@@ -72,22 +73,26 @@ export class EditProfileModalComponent implements OnInit {
 
   pickerImage(): void {
     const observableIconImage = from(Camera.getPhoto(optionPicture));
+    let avatarImage: string;
     observableIconImage
       .pipe(map((data) => data.dataUrl))
-      .pipe(concatMap((dataUrl) => this.logic.uploadAvatarIconUrl(dataUrl, this.userId)))
-      .pipe(concatMap(({ key: awsFilePath }) => this.logic.getStorage(awsFilePath)))
+      .pipe(concatMap((dataUrl) => this.logic.uploadAvatarIconUrl(dataUrl, this.editProfileForm.get('id').value)))
+      .pipe(map(({ key }) => avatarImage = key))
+      .pipe(concatMap((key) => this.logic.getStorage(key)))
       .pipe(catchError(() => of(false)))
       .pipe(filter((result) => result))
       .subscribe((avatarUrl) => {
         this.iconImageUrl = avatarUrl;
+        console.log('avatarImage', avatarImage);
         this.editProfileForm.patchValue({
-          iconImage: avatarUrl,
+          keyAvatarImage: avatarImage,
         });
       });
   }
 
   saveProfile(): void {
-    const observableRegister = this.status === 'new' ? this.logic.createUser(this.editProfileForm) : this.logic.updateUser(this.editProfileForm);
+    const observableRegister = this.status === 'new' ?
+      this.logic.createUser(this.editProfileForm) : this.logic.updateUser(this.editProfileForm);
     observableRegister.subscribe(() => this.modalCtrl.dismiss());
   }
 }
