@@ -70,7 +70,10 @@ export class TaskDetailPage implements OnInit {
       this.currentUserId = result.currentUserInfo.sub;
       this.roomMembers = result.anyTask.items;
       this.message = result.messagePerTask.items;
-      console.log('Message', result.messageAttachment);
+      console.log(result.messageAttachment);
+      // result.messageAttachment.forEach(element => {
+
+      // });
     });
   }
 

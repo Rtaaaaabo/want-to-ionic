@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, from, of, throwError } from 'rxjs';
-import { concatMap, mergeMap, map, filter, toArray } from 'rxjs/operators';
+import { concatMap, mergeMap, map, filter, toArray, concatMapTo } from 'rxjs/operators';
 import { Storage } from 'aws-amplify';
 import { v4 as uuid } from 'uuid';
 import { SessionService } from 'src/app/shared/service/session.service';
@@ -50,18 +50,17 @@ export class TaskDetailLogic {
   makeAttachmentUrl(items: Array<Message>): Observable<any> {
     const argsItems = items;
     let resultItems: IMessageWithAttachUrl;
-    const result = from(argsItems)
+    return from(argsItems)
       .pipe(map((item) => resultItems = item))
       .pipe(filter((item) => item.attachment !== null))
-      .pipe(concatMap((item) =>
+      .pipe(mergeMap((item) =>
         from(item.attachment)
-          .pipe(concatMap((attachment) => this.getStorage(attachment.key)))
+          .pipe(mergeMap((attachment) => this.getStorage(attachment.key)))
           .pipe(toArray())
       ))
-      // .pipe(map((s3UrlValue) => resultItems.attachmentWithUrl = s3UrlValue))
-      // .pipe(map(() => resultItems))
+      .pipe(map((s3UrlValue) => resultItems.attachmentWithUrl = s3UrlValue))
+      .pipe(map(() => resultItems))
       .pipe(toArray())
-    return result;
   }
 
   // fetchAttachmentUrl(item): Observable<any> {
