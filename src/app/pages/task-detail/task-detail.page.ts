@@ -44,7 +44,9 @@ export class TaskDetailPage implements OnInit {
     this.initializeApp().subscribe(() => {
       this.subscriptionMessage = this.logic.onCreateMessageListener()
         .subscribe({
-          next: () => this.logic.fetchMessagePerTask(this.taskId).subscribe(({ items }) => this.message = items),
+          next: () => this.logic.fetchMessagePerTask(this.taskId).subscribe(({ items }) => {
+            this.message = items
+          }),
         });
     });
   }
@@ -68,7 +70,7 @@ export class TaskDetailPage implements OnInit {
       this.currentUserId = result.currentUserInfo.sub;
       this.roomMembers = result.anyTask.items;
       this.message = result.messagePerTask.items;
-      console.log(result.messageAttachment);
+      console.log('Message', result.messageAttachment);
     });
   }
 
@@ -82,7 +84,7 @@ export class TaskDetailPage implements OnInit {
         .pipe(concatMap(({ key }) => this.logic.makeS3Object(key)))
         .pipe(toArray())
         .pipe(concatMap((imageContent) => this.logic.sendNewMessage(this.taskId, this.newMsg, this.currentUserId, imageContent)))
-        .subscribe((result) => {
+        .subscribe(() => {
           this.newMsg = '';
           this.arrayImageBase64Data = [];
         });

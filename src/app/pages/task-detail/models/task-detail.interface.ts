@@ -41,6 +41,6 @@ export interface IS3Object {
     region: string,
 }
 
-export interface IMessageWithAttahUrl extends Message {
+export interface IMessageWithAttachUrl extends Message {
     attachmentWithUrl?: Array<string>;
 }

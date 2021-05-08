@@ -1242,59 +1242,38 @@ export type CreateTaskMutation = {
       createdAt: string;
       updatedAt: string;
     };
-    tasks: {
+    tasks?: {
       __typename: "ModelTaskConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    users: {
+    users?: {
       __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
     createdAt: string;
     updatedAt: string;
   };
-  description: string | null;
-  scheduleDate: string | null;
-  priority: number | null;
-  status: number | null;
-  createdAt: string | null;
-  messages: {
-    __typename: "ModelMessageConnection";
-    items: Array<{
-      __typename: "Message";
-      id: string;
-      taskID: string;
-      authorID: string;
-      content: string;
-      createdAt: string | null;
-      isSent: boolean | null;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  users: {
-    __typename: "ModelTaskGroupConnection";
-    items: Array<{
-      __typename: "TaskGroup";
-      id: string;
-      taskID: string;
-      userID: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
+  description?: string | null;
+  scheduleDate?: string | null;
+  priority?: number | null;
+  status?: number | null;
+  createdAt?: string | null;
   chargePerson: {
     __typename: "User";
     id: string;
     username: string;
     email: string;
     companyID: string;
-    tel: string | null;
-    positionName: string | null;
-    iconImage: string | null;
-    registered: boolean | null;
-    authority: string | null;
+    tel?: string | null;
+    positionName?: string | null;
+    iconImage?: {
+      __typename: "s3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
+    registered?: boolean | null;
+    authority?: string | null;
     company: {
       __typename: "Company";
       id: string;
@@ -1303,24 +1282,50 @@ export type CreateTaskMutation = {
       createdAt: string;
       updatedAt: string;
     };
-    messages: {
+    messages?: {
       __typename: "ModelMessageConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    room: {
+    room?: {
       __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    task: {
+    task?: {
       __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    chargeTask: {
+    chargeTask?: {
       __typename: "ModelTaskConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
     createdAt: string;
     updatedAt: string;
+  };
+  messages?: {
+    __typename: "ModelMessageConnection";
+    items?: Array<{
+      __typename: "Message";
+      id: string;
+      taskID: string;
+      authorID: string;
+      content: string;
+      createdAt: string;
+      isSent?: boolean | null;
+      updatedAt: string;
+    } | null> | null;
+    nextToken?: string | null;
+  } | null;
+  users?: {
+    __typename: "ModelTaskGroupConnection";
+    items?: Array<{
+      __typename: "TaskGroup";
+      id: string;
+      taskID: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken?: string | null;
   } | null;
   updatedAt: string;
 };
@@ -5024,52 +5029,38 @@ export class AmplifyService {
     condition?: ModelTaskConditionInput
   ): Promise<CreateTaskMutation> {
     const statement = `mutation CreateTask($input: CreateTaskInput!, $condition: ModelTaskConditionInput) {
-        createTask(input: $input, condition: $condition) {
-          __typename
-          id
-          authorID
-          roomID
-          title
-          chargePerson {
-            __typename
-            id
-            username
-            email
-            companyID
-            tel
-            positionName
-          }
-          description
-          scheduleDate
-          priority
-          status
-          createdAt
-          updatedAt
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      input
-    };
-    if (condition) {
-      gqlAPIServiceArguments.condition = condition;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <CreateTaskMutation>response.data.createTask;
-  }
-  async UpdateTask(
-    input: UpdateTaskInput,
-    condition?: ModelTaskConditionInput
-  ): Promise<UpdateTaskMutation> {
-    const statement = `mutation UpdateTask($input: UpdateTaskInput!, $condition: ModelTaskConditionInput) {
-      updateTask(input: $input, condition: $condition) {
+      createTask(input: $input, condition: $condition) {
         __typename
         id
         authorID
         roomID
         chargePersonID
         title
+        room {
+          __typename
+          id
+          name
+          companyID
+          description
+          company {
+            __typename
+            id
+            name
+            domain
+            createdAt
+            updatedAt
+          }
+          tasks {
+            __typename
+            nextToken
+          }
+          users {
+            __typename
+            nextToken
+          }
+          createdAt
+          updatedAt
+        }
         description
         scheduleDate
         priority
@@ -5083,9 +5074,22 @@ export class AmplifyService {
           companyID
           tel
           positionName
-          iconImage
+          iconImage {
+            __typename
+            bucket
+            region
+            key
+          }
           registered
           authority
+          company {
+            __typename
+            id
+            name
+            domain
+            createdAt
+            updatedAt
+          }
           messages {
             __typename
             nextToken
@@ -5105,9 +5109,145 @@ export class AmplifyService {
           createdAt
           updatedAt
         }
+        messages {
+          __typename
+          items {
+            __typename
+            id
+            taskID
+            authorID
+            content
+            createdAt
+            isSent
+            updatedAt
+          }
+          nextToken
+        }
+        users {
+          __typename
+          items {
+            __typename
+            id
+            taskID
+            userID
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
         updatedAt
       }
-    }`; const gqlAPIServiceArguments: any = {
+    }`;
+    const gqlAPIServiceArguments: any = {
+      input
+    };
+    if (condition) {
+      gqlAPIServiceArguments.condition = condition;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <CreateTaskMutation>response.data.createTask;
+  }
+  async UpdateTask(
+    input: UpdateTaskInput,
+    condition?: ModelTaskConditionInput
+  ): Promise<UpdateTaskMutation> {
+    const statement = `mutation UpdateTask($input: UpdateTaskInput!, $condition: ModelTaskConditionInput) {
+        updateTask(input: $input, condition: $condition) {
+          __typename
+          id
+          authorID
+          roomID
+          chargePersonID
+          title
+          room {
+            __typename
+            id
+            name
+            companyID
+            description
+            tasks {
+              __typename
+              nextToken
+            }
+            users {
+              __typename
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          description
+          scheduleDate
+          priority
+          status
+          createdAt
+          chargePerson {
+            __typename
+            id
+            username
+            email
+            companyID
+            tel
+            positionName
+            iconImage {
+              __typename
+              bucket
+              region
+              key
+            }
+            registered
+            authority
+            messages {
+              __typename
+              nextToken
+            }
+            room {
+              __typename
+              nextToken
+            }
+            task {
+              __typename
+              nextToken
+            }
+            chargeTask {
+              __typename
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          messages {
+            __typename
+            items {
+              __typename
+              id
+              taskID
+              authorID
+              content
+              createdAt
+              isSent
+              updatedAt
+            }
+            nextToken
+          }
+          users {
+            __typename
+            items {
+              __typename
+              id
+              taskID
+              userID
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          updatedAt
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
       input
     };
     if (condition) {
@@ -5289,14 +5429,6 @@ export class AmplifyService {
             }
             registered
             authority
-            company {
-              __typename
-              id
-              name
-              domain
-              createdAt
-              updatedAt
-            }
             messages {
               __typename
               nextToken
@@ -5409,14 +5541,6 @@ export class AmplifyService {
             }
             registered
             authority
-            company {
-              __typename
-              id
-              name
-              domain
-              createdAt
-              updatedAt
-            }
             messages {
               __typename
               nextToken
