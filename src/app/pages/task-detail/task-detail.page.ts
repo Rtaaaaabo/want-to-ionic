@@ -6,8 +6,9 @@ import { Plugins, CameraResultType } from '@capacitor/core';
 import { forkJoin, from, Observable, Subscription } from 'rxjs';
 import { TaskDetailLogic } from './logic/task-detail.logic';
 import { AddTaskModalComponent } from 'src/app/shared/component/modal/add-task-modal/add-task-modal.component';
-import { filter, tap, map, concatMap, toArray } from 'rxjs/operators';
+import { filter, tap, map, concatMap, toArray, mergeMap } from 'rxjs/operators';
 import { GetTaskQuery, ListRoomGroupsQuery, Message } from 'src/app/shared/service/amplify.service';
+import { IMessageWithAttachUrl } from './models/task-detail.interface';
 const { Camera } = Plugins;
 
 @Component({
@@ -21,7 +22,7 @@ export class TaskDetailPage implements OnInit {
   taskId: string;
   segment: string;
   taskDetail: GetTaskQuery;
-  message: Array<Message>;
+  message: Array<IMessageWithAttachUrl>;
   currentUserId: string;
   roomMembers: Array<ListRoomGroupsQuery>;
   arrayImageBase64Data: Array<string> = [];
@@ -54,12 +55,17 @@ export class TaskDetailPage implements OnInit {
   ngOnInit(): void {
     this.taskId = this.route.snapshot.paramMap.get('id');
     this.segment = this.route.snapshot.paramMap.get('segment');
+    let resultMessage;
     const observerFetchCurrentUserInfo = this.logic.fetchCurrentUserInfo();
     const observerFetchAnyTask = this.logic.fetchAnyTask(this.taskId)
       .pipe(map((data) => this.taskDetail = data))
       .pipe(concatMap(() => this.logic.fetchMemberListOnRoom(this.taskDetail.roomID)));
     const observerFetchMessagePerTask = this.logic.fetchMessagePerTask(this.taskId);
-    const observerMakeMessageAttachmentUrl = observerFetchMessagePerTask.pipe(concatMap((result) => this.logic.makeAttachmentUrl(result.items)));
+    const observerMakeMessageAttachmentUrl = observerFetchMessagePerTask
+      .pipe(concatMap((result) => this.logic.makeMessageContent(result.items)))
+    // .pipe(map(result => resultMessage = result))
+    // .pipe(mergeMap((result) => this.logic.makeAttachmentUrl(result.items)))
+    // .pipe(concatMap((result => this.logic.makeMessageContent(result, resultMessage))))
 
     forkJoin({
       currentUserInfo: observerFetchCurrentUserInfo,
@@ -71,9 +77,6 @@ export class TaskDetailPage implements OnInit {
       this.roomMembers = result.anyTask.items;
       this.message = result.messagePerTask.items;
       console.log(result.messageAttachment);
-      // result.messageAttachment.forEach(element => {
-
-      // });
     });
   }
 

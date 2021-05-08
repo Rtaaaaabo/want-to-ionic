@@ -53,14 +53,29 @@ export class TaskDetailLogic {
     return from(argsItems)
       .pipe(map((item) => resultItems = item))
       .pipe(filter((item) => item.attachment !== null))
-      .pipe(mergeMap((item) =>
-        from(item.attachment)
-          .pipe(mergeMap((attachment) => this.getStorage(attachment.key)))
-          .pipe(toArray())
-      ))
-      .pipe(map((s3UrlValue) => resultItems.attachmentWithUrl = s3UrlValue))
+      // .pipe(mergeMap((item) =>
+      //   from(item.attachment)
+      //     .pipe(mergeMap((attachment) => this.getStorage(attachment.key)))
+      //     .pipe(toArray())
+      //   // .pipe(map((s3UrlValue) => resultItems.attachmentWithUrl = s3UrlValue))
+      // ))
       .pipe(map(() => resultItems))
       .pipe(toArray())
+  }
+
+  makeMessageContent(items: Array<Message>): Observable<any> {
+    let resultItems = items;
+    let tempUrl: string;
+    resultItems.forEach((item) => {
+      if (item.attachment !== null) {
+        tempUrl = this.makeMessageAttachmentUrl(item)
+      }
+    })
+    return of();
+  }
+
+  makeMessageAttachmentUrl(item): string {
+    return 'test';
   }
 
   // fetchAttachmentUrl(item): Observable<any> {
