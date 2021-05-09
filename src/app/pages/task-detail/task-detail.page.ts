@@ -62,8 +62,9 @@ export class TaskDetailPage implements OnInit {
       .pipe(concatMap(() => this.logic.fetchMemberListOnRoom(this.taskDetail.roomID)));
     const observerFetchMessagePerTask = this.logic.fetchMessagePerTask(this.taskId);
     const observerMakeMessageAttachmentUrl = observerFetchMessagePerTask
-      .pipe(concatMap((result) => this.logic.makeMessageContent(result.items)))
-    // .pipe(map(result => resultMessage = result))
+      .pipe(map(result => resultMessage = result))
+      .pipe(concatMap((result) => this.logic.makeAttachmentUrl(result.items)))
+    // .pipe(map(() => resultMessage))
     // .pipe(mergeMap((result) => this.logic.makeAttachmentUrl(result.items)))
     // .pipe(concatMap((result => this.logic.makeMessageContent(result, resultMessage))))
 
@@ -76,7 +77,7 @@ export class TaskDetailPage implements OnInit {
       this.currentUserId = result.currentUserInfo.sub;
       this.roomMembers = result.anyTask.items;
       this.message = result.messagePerTask.items;
-      console.log(result.messageAttachment);
+      console.log('messageAttachment', result.messageAttachment);
     });
   }
 

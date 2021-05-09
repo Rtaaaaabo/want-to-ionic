@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
-import { Observable, from, of, throwError } from 'rxjs';
-import { concatMap, mergeMap, map, filter, toArray, concatMapTo } from 'rxjs/operators';
+import { Observable, from, of, throwError, concat } from 'rxjs';
+import { concatMap, mergeMap, map, filter, toArray, concatMapTo, switchMap } from 'rxjs/operators';
 import { Storage } from 'aws-amplify';
 import { v4 as uuid } from 'uuid';
 import { SessionService } from 'src/app/shared/service/session.service';
 import { CurrentUserInfo } from '../../task/interface/current-user-info.interface';
 import { TaskDetailService } from '../service/task-detail.service';
 import { Filesystem, FilesystemDirectory, FilesystemEncoding, FileWriteResult, FileReadResult, FileDeleteResult } from "@capacitor/core";
-import { CreateMessageInput, GetTaskQuery, Message, S3ObjectInput, TaskByCreatedAtQuery, UpdateTaskMutation } from 'src/app/shared/service/amplify.service';
+import { CreateMessageInput, GetTaskQuery, Message, s3Object, S3ObjectInput, TaskByCreatedAtQuery, UpdateTaskMutation } from 'src/app/shared/service/amplify.service';
 import { IImageFile, IS3Object, IsMessageContent, IMessageWithAttachUrl, MessageContent } from '../models/task-detail.interface';
 
 const OneWeekSecond = 604800;
@@ -43,44 +43,27 @@ export class TaskDetailLogic {
 
 
   /**
-   * MessageのAttachmentのURLを取得します
+   * Message内Attachmentが存在するItemに対してAttachmentのURLを取得します
    * @param items 配列でType: Messageを取得します。
    * @returns Observable型で AttachmentのUrlを返します。
    */
   makeAttachmentUrl(items: Array<Message>): Observable<any> {
-    const argsItems = items;
-    let resultItems: IMessageWithAttachUrl;
-    return from(argsItems)
-      .pipe(map((item) => resultItems = item))
-      .pipe(filter((item) => item.attachment !== null))
-      // .pipe(mergeMap((item) =>
-      //   from(item.attachment)
-      //     .pipe(mergeMap((attachment) => this.getStorage(attachment.key)))
-      //     .pipe(toArray())
-      //   // .pipe(map((s3UrlValue) => resultItems.attachmentWithUrl = s3UrlValue))
-      // ))
-      .pipe(map(() => resultItems))
+    let resultItem: IMessageWithAttachUrl;
+    return from(items)
+      .pipe(switchMap((item) =>
+        item.attachment !== null ? this.fetchMakeAttachmentUrl(item) : of([]))) // ここではAttachmentUrlの配列を返す
+      // .pipe(map((result) => resultItem.attachmentWithUrl = result))
+      // .pipe(map(() => resultItem))
       .pipe(toArray())
   }
 
-  makeMessageContent(items: Array<Message>): Observable<any> {
-    let resultItems = items;
-    let tempUrl: string;
-    resultItems.forEach((item) => {
-      if (item.attachment !== null) {
-        tempUrl = this.makeMessageAttachmentUrl(item)
-      }
-    })
-    return of();
+  fetchMakeAttachmentUrl(item: IMessageWithAttachUrl): Observable<any> {
+    const resultItem = item;
+    console.log('fetchMakeAttachmentUrl', item.attachment);
+    return from(item.attachment)
+    // .pipe(concatMap((attachment) => this.getStorage(attachment.key)))
+    // .pipe(toArray())
   }
-
-  makeMessageAttachmentUrl(item): string {
-    return 'test';
-  }
-
-  // fetchAttachmentUrl(item): Observable<any> {
-  //   return this
-  // }
 
   /**
    * 任意のタスクの情報をアップデートします
