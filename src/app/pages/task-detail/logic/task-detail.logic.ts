@@ -49,20 +49,20 @@ export class TaskDetailLogic {
    */
   makeAttachmentUrl(items: Array<Message>): Observable<any> {
     let resultItem: IMessageWithAttachUrl;
+    console.log('makeAttachmentUrl', items);
     return from(items)
-      .pipe(switchMap((item) =>
-        item.attachment !== null ? this.fetchMakeAttachmentUrl(item) : of([]))) // ここではAttachmentUrlの配列を返す
+      .pipe(mergeMap((item) =>
+        item.attachment !== null ? this.fetchMakeAttachmentUrl(item.attachment) : of([])))
       // .pipe(map((result) => resultItem.attachmentWithUrl = result))
       // .pipe(map(() => resultItem))
       .pipe(toArray())
   }
 
-  fetchMakeAttachmentUrl(item: IMessageWithAttachUrl): Observable<any> {
-    const resultItem = item;
-    console.log('fetchMakeAttachmentUrl', item.attachment);
-    return from(item.attachment)
-    // .pipe(concatMap((attachment) => this.getStorage(attachment.key)))
-    // .pipe(toArray())
+  fetchMakeAttachmentUrl(attachmentItem: Array<s3Object>): Observable<any> {
+    console.log('[fetchMakeAttachmentUrl] attachmentItem', attachmentItem);
+    return from(attachmentItem)
+      .pipe(concatMap((attachment) => this.getStorage(attachment.key)))
+      .pipe(toArray());
   }
 
   /**
