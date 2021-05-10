@@ -64,6 +64,7 @@ export class TaskDetailPage implements OnInit {
     const observerMakeMessageAttachmentUrl = observerFetchMessagePerTask
       .pipe(map(result => resultMessage = result))
       .pipe(concatMap((result) => this.logic.makeAttachmentUrl(result.items)))
+    // .pipe(concatMap((message) => this.logic.makeResultItems(message)))
     // .pipe(map(() => resultMessage))
     // .pipe(mergeMap((result) => this.logic.makeAttachmentUrl(result.items)))
     // .pipe(concatMap((result => this.logic.makeMessageContent(result, resultMessage))))

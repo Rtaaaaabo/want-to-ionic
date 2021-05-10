@@ -47,22 +47,21 @@ export class TaskDetailLogic {
    * @param items 配列でType: Messageを取得します。
    * @returns Observable型で AttachmentのUrlを返します。
    */
-  makeAttachmentUrl(items: Array<Message>): Observable<any> {
-    let resultItem: IMessageWithAttachUrl;
-    console.log('makeAttachmentUrl', items);
+  makeAttachmentUrl(items: Array<IMessageWithAttachUrl>): Observable<Array<IMessageWithAttachUrl | null>> {
     return from(items)
       .pipe(mergeMap((item) =>
         item.attachment !== null ? this.fetchMakeAttachmentUrl(item.attachment) : of([])))
-      // .pipe(map((result) => resultItem.attachmentWithUrl = result))
-      // .pipe(map(() => resultItem))
       .pipe(toArray())
   }
 
   fetchMakeAttachmentUrl(attachmentItem: Array<s3Object>): Observable<any> {
-    console.log('[fetchMakeAttachmentUrl] attachmentItem', attachmentItem);
     return from(attachmentItem)
       .pipe(concatMap((attachment) => this.getStorage(attachment.key)))
       .pipe(toArray());
+  }
+
+  makeResultItems(items): Observable<any> {
+    return of({});
   }
 
   /**
