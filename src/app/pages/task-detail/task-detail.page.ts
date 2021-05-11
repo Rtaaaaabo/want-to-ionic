@@ -64,7 +64,7 @@ export class TaskDetailPage implements OnInit {
     const observerMakeMessageAttachmentUrl = observerFetchMessagePerTask
       .pipe(map(result => resultMessage = result))
       .pipe(mergeMap((result) => this.logic.makeAttachmentUrl(result.items)))
-    // .pipe(mergeMap((arrayAttachment) => this.logic.modifiedMessageItems(arrayAttachment, resultMessage.items)))
+      .pipe(mergeMap((arrayAttachment) => this.logic.modifiedMessageItems(arrayAttachment, resultMessage.items)))
 
     forkJoin({
       currentUserInfo: observerFetchCurrentUserInfo,

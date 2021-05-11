@@ -41,7 +41,6 @@ export class TaskDetailLogic {
     return this.taskDetailService.fetchMessagePerTask(taskId);
   }
 
-
   /**
    * Message内Attachmentが存在するItemに対してAttachmentのURLを取得します
    * @param items 配列でType: Messageを取得します。
