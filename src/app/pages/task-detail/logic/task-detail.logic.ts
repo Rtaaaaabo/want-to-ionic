@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, from, of, throwError, concat } from 'rxjs';
+import { Observable, from, of, throwError, interval, concat } from 'rxjs';
 import { concatMap, mergeMap, map, filter, toArray, concatMapTo, switchMap } from 'rxjs/operators';
 import { Storage } from 'aws-amplify';
 import { v4 as uuid } from 'uuid';
@@ -47,14 +47,14 @@ export class TaskDetailLogic {
    * @param items 配列でType: Messageを取得します。
    * @returns Observable型で AttachmentのUrlを返します。
    */
-  makeAttachmentUrl(items: Array<IMessageWithAttachUrl>): Observable<Array<IMessageWithAttachUrl | null>> {
+  makeAttachmentUrl(items: Array<IMessageWithAttachUrl>): Observable<Array<Array<string | null>>> {
     return from(items)
-      .pipe(mergeMap((item) =>
+      .pipe(concatMap((item) =>
         item.attachment !== null ? this.fetchMakeAttachmentUrl(item.attachment) : of([])))
       .pipe(toArray())
   }
 
-  fetchMakeAttachmentUrl(attachmentItem: Array<s3Object>): Observable<any> {
+  fetchMakeAttachmentUrl(attachmentItem: Array<s3Object>): Observable<Array<string>> {
     return from(attachmentItem)
       .pipe(concatMap((attachment) => this.getStorage(attachment.key)))
       .pipe(toArray());

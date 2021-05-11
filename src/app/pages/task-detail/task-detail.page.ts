@@ -63,8 +63,8 @@ export class TaskDetailPage implements OnInit {
     const observerFetchMessagePerTask = this.logic.fetchMessagePerTask(this.taskId);
     const observerMakeMessageAttachmentUrl = observerFetchMessagePerTask
       .pipe(map(result => resultMessage = result))
-      .pipe(concatMap((result) => this.logic.makeAttachmentUrl(result.items)))
-      .pipe(concatMap((arrayAttachment) => this.logic.modifiedMessageItems(arrayAttachment, resultMessage.items)))
+      .pipe(mergeMap((result) => this.logic.makeAttachmentUrl(result.items)))
+    // .pipe(mergeMap((arrayAttachment) => this.logic.modifiedMessageItems(arrayAttachment, resultMessage.items)))
 
     forkJoin({
       currentUserInfo: observerFetchCurrentUserInfo,
@@ -74,9 +74,8 @@ export class TaskDetailPage implements OnInit {
     }).subscribe((result) => {
       this.currentUserId = result.currentUserInfo.sub;
       this.roomMembers = result.anyTask.items;
-      // this.message = result.messagePerTask.items;
-      this.message = result.messageAttachment;
-      console.log('message', this.message);
+      this.message = result.messagePerTask.items;
+      console.log('messageAttachment', result.messageAttachment);
     });
   }
 
