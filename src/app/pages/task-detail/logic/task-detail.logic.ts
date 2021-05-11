@@ -60,6 +60,14 @@ export class TaskDetailLogic {
       .pipe(toArray());
   }
 
+  modifiedMessageItems(arrayAttachmentUrl, resultMessage): Observable<any> {
+    let result: Array<IMessageWithAttachUrl> = resultMessage;
+    resultMessage.forEach((element, index) => {
+      result[index].attachmentWithUrl = arrayAttachmentUrl[index];
+    });
+    return of(result);
+  }
+
   makeResultItems(items): Observable<any> {
     return of({});
   }
