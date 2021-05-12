@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AmplifyService, GetTaskQuery, UpdateTaskMutation, ModelSortDirection, CreateMessageInput, SubscriptionResponse, OnCreateMessageSubscription, TaskByCreatedAtQuery } from '../../../shared/service/amplify.service';
+import { AmplifyService, GetTaskQuery, UpdateTaskMutation, ModelSortDirection, CreateMessageInput, SubscriptionResponse, OnCreateMessageSubscription, TaskByCreatedAtQuery, CreateMessageMutation } from '../../../shared/service/amplify.service';
 import { Observable, from } from 'rxjs';
 
 @Injectable({
@@ -24,8 +24,7 @@ export class TaskDetailService {
     return from(this.amplifyService.UpdateTask(inputContent));
   }
 
-  createMessageItem(inputContent: CreateMessageInput): Observable<any> {
-    console.log('inputContent', inputContent);
+  createMessageItem(inputContent: CreateMessageInput): Observable<CreateMessageMutation> {
     return from(this.amplifyService.CreateMessage(inputContent));
   }
 

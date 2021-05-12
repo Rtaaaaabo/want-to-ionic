@@ -42,12 +42,17 @@ export class TaskDetailPage implements OnInit {
     private readonly platform: Platform,
     private readonly alertCtrl: AlertController,
   ) {
+    let resultMessage;
     this.initializeApp().subscribe(() => {
       this.subscriptionMessage = this.logic.onCreateMessageListener()
         .subscribe({
-          next: () => this.logic.fetchMessagePerTask(this.taskId).subscribe(({ items }) => {
-            this.message = items
-          }),
+          next: () => this.logic.fetchMessagePerTask(this.taskId)
+            .pipe(map(result => resultMessage = result))
+            .pipe(mergeMap((result) => this.logic.makeAttachmentUrl(result.items)))
+            .pipe(mergeMap((arrayAttachment) => this.logic.modifiedMessageItems(arrayAttachment, resultMessage.items)))
+            .subscribe((items) => {
+              this.message = items
+            }),
         });
     });
   }
@@ -75,7 +80,6 @@ export class TaskDetailPage implements OnInit {
       this.currentUserId = result.currentUserInfo.sub;
       this.roomMembers = result.anyTask.items;
       this.message = result.messageAttachment;
-      console.log('messageAttachment', result.messageAttachment);
     });
   }
 
