@@ -115,7 +115,7 @@ export class TaskDetailLogic {
   makeS3Object(key: string): Observable<IS3Object> {
     const region = 'ap-northeast-1';
     const bucket = 'wattofilestorage234052-dev';
-    const keyFile = `public/${key}`;
+    const keyFile = `${key}`;
     const returnResult = {
       key: keyFile,
       region: region,

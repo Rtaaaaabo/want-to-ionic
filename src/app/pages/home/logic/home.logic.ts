@@ -8,7 +8,7 @@ import { CreateRoomGroupMutation, CreateRoomMutation, CreateUserMutation, Delete
 import { ResponseListRoomGroupsQueryItems } from '../service/reponse/response.model';
 import { Storage } from 'aws-amplify';
 import { ILResponseFetchRoomMembers, InterfaceLogicArgsCreateRoom } from '../model/home.interface';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { IS3Object } from '../../task-detail/models/task-detail.interface';
 
 interface Attribute {
