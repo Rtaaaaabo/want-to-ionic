@@ -5,7 +5,6 @@ import { SettingLogic } from './logic/setting.logic';
 import { EditProfileModalComponent } from '../../shared/component/modal/edit-profile-modal/edit-profile-modal.component';
 import { from } from 'rxjs';
 import { concatMap, flatMap } from 'rxjs/operators';
-import { IOwnUser } from './interface /setting.interface';
 import { GetUserQuery } from 'src/app/shared/service/amplify.service';
 @Component({
   selector: 'app-setting',
@@ -40,6 +39,7 @@ export class SettingPage implements OnInit {
     this.logic.fetchCurrentUser()
       .pipe(flatMap((result) => this.logic.fetchUserInfo(result.username)))
       .subscribe((data) => {
+        console.log('Setting', data);
         this.user = data;
       });
   }
