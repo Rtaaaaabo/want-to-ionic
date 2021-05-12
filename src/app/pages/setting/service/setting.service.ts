@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, from } from 'rxjs';
-import { AmplifyService } from '../../../shared/service/amplify.service';
+import { AmplifyService, GetUserQuery } from '../../../shared/service/amplify.service';
 
 @Injectable({
   providedIn: 'root'
@@ -8,10 +8,10 @@ import { AmplifyService } from '../../../shared/service/amplify.service';
 export class SettingService {
 
   constructor(
-    private amplifyService: AmplifyService,
+    private readonly amplifyService: AmplifyService,
   ) { }
 
-  fetchUserInfo(userId: string): Observable<any> {
+  fetchUserInfo(userId: string): Observable<GetUserQuery> {
     return from(this.amplifyService.GetUser(userId));
   }
 }

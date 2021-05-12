@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { SessionService } from '../../../shared/service/session.service';
 import { Observable } from 'rxjs';
 import { SettingService } from '../service/setting.service';
+import { GetUserQuery } from 'src/app/shared/service/amplify.service';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,7 @@ export class SettingLogic {
     return this.sessionService.fetchCurrentUser();
   }
 
-  fetchUserInfo(userId: string): Observable<any> {
+  fetchUserInfo(userId: string): Observable<GetUserQuery> {
     return this.settingService.fetchUserInfo(userId);
   }
 }

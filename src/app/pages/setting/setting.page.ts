@@ -6,6 +6,7 @@ import { EditProfileModalComponent } from '../../shared/component/modal/edit-pro
 import { from } from 'rxjs';
 import { concatMap, flatMap } from 'rxjs/operators';
 import { IOwnUser } from './interface /setting.interface';
+import { GetUserQuery } from 'src/app/shared/service/amplify.service';
 @Component({
   selector: 'app-setting',
   templateUrl: './setting.page.html',
@@ -26,7 +27,7 @@ export class SettingPage implements OnInit {
       role: 'cancel',
     }
   ]
-  user: IOwnUser;
+  user: GetUserQuery;
 
   constructor(
     private logic: SettingLogic,
