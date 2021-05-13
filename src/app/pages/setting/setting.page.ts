@@ -72,6 +72,8 @@ export class SettingPage implements OnInit {
     dismissObservable
       .pipe(concatMap(() => this.logic.fetchCurrentUser()))
       .pipe(concatMap((result) => this.logic.fetchUserInfo(result.username)))
+      .pipe(map((result) => this.user = result))
+      .pipe(concatMap((userInfo) => this.logic.modifiedAvatarIconUrl(userInfo)))
       .subscribe((data) => {
         this.user = data;
       });
