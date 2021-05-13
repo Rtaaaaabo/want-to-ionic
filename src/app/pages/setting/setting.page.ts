@@ -3,9 +3,10 @@ import { Router } from '@angular/router';
 import { ActionSheetController, ModalController } from '@ionic/angular';
 import { SettingLogic } from './logic/setting.logic';
 import { EditProfileModalComponent } from '../../shared/component/modal/edit-profile-modal/edit-profile-modal.component';
-import { from } from 'rxjs';
-import { concatMap, flatMap } from 'rxjs/operators';
+import { concat, from } from 'rxjs';
+import { concatMap, flatMap, map } from 'rxjs/operators';
 import { GetUserQuery } from 'src/app/shared/service/amplify.service';
+import { IUser } from './interface /setting.interface';
 @Component({
   selector: 'app-setting',
   templateUrl: './setting.page.html',
@@ -26,7 +27,7 @@ export class SettingPage implements OnInit {
       role: 'cancel',
     }
   ]
-  user: GetUserQuery;
+  user: IUser;
 
   constructor(
     private logic: SettingLogic,
@@ -35,16 +36,17 @@ export class SettingPage implements OnInit {
     private readonly modalCtrl: ModalController,
   ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.logic.fetchCurrentUser()
-      .pipe(flatMap((result) => this.logic.fetchUserInfo(result.username)))
+      .pipe(concatMap((result) => this.logic.fetchUserInfo(result.username)))
+      .pipe(map((result) => this.user = result))
+      .pipe(concatMap((userInfo) => this.logic.modifiedAvatarIconUrl(userInfo)))
       .subscribe((data) => {
-        console.log('Setting', data);
         this.user = data;
       });
   }
 
-  async confirmLogout() {
+  async confirmLogout(): Promise<void> {
     const logoutActionSheet = await this.actionSheetCtrl.create({
       cssClass: 'my-custom-class',
       buttons: this.ButtonEdit,
@@ -52,7 +54,7 @@ export class SettingPage implements OnInit {
     return logoutActionSheet.present();
   }
 
-  actionLogout() {
+  actionLogout(): void {
     this.logic.signOut()
       .subscribe(() => this.router.navigate(['/login']));
   }
@@ -69,7 +71,7 @@ export class SettingPage implements OnInit {
     const dismissObservable = from(modal.onDidDismiss());
     dismissObservable
       .pipe(concatMap(() => this.logic.fetchCurrentUser()))
-      .pipe(flatMap((result) => this.logic.fetchUserInfo(result.username)))
+      .pipe(concatMap((result) => this.logic.fetchUserInfo(result.username)))
       .subscribe((data) => {
         this.user = data;
       });

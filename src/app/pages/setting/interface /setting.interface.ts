@@ -1,3 +1,4 @@
+import { GetUserQuery } from "src/app/shared/service/amplify.service";
 import { IS3Object } from "../../task-detail/models/task-detail.interface";
 
 export interface IOwnUser {
@@ -13,4 +14,8 @@ export interface IOwnUser {
     registered?: boolean
     createdAt: string;
     updatedAt: string;
+}
+
+export interface IUser extends GetUserQuery {
+    avatarUrl?: String | Object;
 }
