@@ -74,12 +74,12 @@ export class TaskDetailPage implements OnInit {
     forkJoin({
       currentUserInfo: observerFetchCurrentUserInfo,
       anyTask: observerFetchAnyTask,
-      messagePerTask: observerFetchMessagePerTask,
       messageAttachment: observerMakeMessageAttachmentUrl,
     }).subscribe((result) => {
       this.currentUserId = result.currentUserInfo.sub;
       this.roomMembers = result.anyTask.items;
       this.message = result.messageAttachment;
+      console.log('this.message', this.message);
     });
   }
 
