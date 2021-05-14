@@ -5716,63 +5716,82 @@ export class AmplifyService {
     condition?: ModelUserConditionInput
   ): Promise<UpdateUserMutation> {
     const statement = `mutation UpdateUser($input: UpdateUserInput!, $condition: ModelUserConditionInput) {
-        updateUser(input: $input, condition: $condition) {
+      updateUser(input: $input, condition: $condition) {
+        __typename
+        id
+        username
+        email
+        companyID
+        tel
+        positionName
+        iconImage {
           __typename
-          id
-          username
-          email
-          companyID
-          tel
-          positionName
-          iconImage
-          registered
-          authority
-          room {
-            __typename
-            items {
-              __typename
-              id
-              roomID
-              userID
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
-          task {
-            __typename
-            items {
-              __typename
-              id
-              taskID
-              userID
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
-          chargeTask {
-            __typename
-            items {
-              __typename
-              id
-              authorID
-              roomID
-              chargePersonID
-              title
-              description
-              scheduleDate
-              priority
-              status
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
-          createdAt
-          updatedAt
+          bucket
+          region
+          key
         }
-      }`;
+        registered
+        authority
+        messages {
+          __typename
+          items {
+            __typename
+            id
+            taskID
+            authorID
+            content
+            createdAt
+            isSent
+            updatedAt
+          }
+          nextToken
+        }
+        room {
+          __typename
+          items {
+            __typename
+            id
+            roomID
+            userID
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        task {
+          __typename
+          items {
+            __typename
+            id
+            taskID
+            userID
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        chargeTask {
+          __typename
+          items {
+            __typename
+            id
+            authorID
+            roomID
+            chargePersonID
+            title
+            description
+            scheduleDate
+            priority
+            status
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+    }`;
     const gqlAPIServiceArguments: any = {
       input
     };

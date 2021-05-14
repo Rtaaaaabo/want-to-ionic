@@ -77,11 +77,13 @@ export class HomeLogic {
       iconImage: avatarUserImage,
       registered: true,
     };
-    console.log('requestContent', requestContent);
     return this.homeService.createUser(requestContent);
   }
 
   updateUser(formContent: FormGroup): Observable<any> {
+    const resultFormIconImageUrl = formContent.get('keyAvatarImage').value;
+    const region = 'ap-northeast-1';
+    const bucket = 'wattofilestorage234052-dev';
     const requestContent = {
       id: formContent.get('id').value,
       companyID: 'takuCloudCom',
@@ -89,7 +91,11 @@ export class HomeLogic {
       username: formContent.get('userName').value,
       positionName: formContent.get('positionName').value,
       tel: formContent.get('tel').value,
-      iconImage: formContent.get('iconImage').value,
+      iconImage: {
+        key: resultFormIconImageUrl,
+        bucket: bucket,
+        region: region,
+      },
     };
     return this.homeService.updateUser(requestContent);
   }

@@ -5,7 +5,7 @@ import { HomeLogic } from '../../../../pages/home/logic/home.logic';
 import { Camera, CameraResultType } from '@capacitor/core';
 import { from, of } from 'rxjs';
 import { catchError, concatMap, filter, map, switchMap } from 'rxjs/operators';
-import { IOwnUser } from '../../../../pages/setting/interface /setting.interface';
+import { IOwnUser, IUser } from '../../../../pages/setting/interface /setting.interface';
 
 const optionPicture = {
   quality: 50,
@@ -36,10 +36,10 @@ export class EditProfileModalComponent implements OnInit {
   @Input() status: string;
   @Input() email: string;
   @Input() userId: string;
-  @Input() user: IOwnUser;
+  @Input() user: IUser;
   @Input() name: string;
   title: string;
-  iconImageUrl: string = '../../../../../assets/img/undefined.jpeg';
+  iconImageUrl: String | Object = '../../../../../assets/img/undefined.jpeg';
   keyAvatarImage: string;
 
   constructor(
@@ -56,6 +56,7 @@ export class EditProfileModalComponent implements OnInit {
         userName: this.name,
       });
     } else {
+      this.iconImageUrl = this.user.avatarUrl;
       this.title = 'プロフィールの編集';
       this.editProfileForm.patchValue({
         id: this.user.id,
@@ -83,7 +84,6 @@ export class EditProfileModalComponent implements OnInit {
       .pipe(filter((result) => result))
       .subscribe((avatarUrl) => {
         this.iconImageUrl = avatarUrl;
-        console.log('avatarImage', avatarImage);
         this.editProfileForm.patchValue({
           keyAvatarImage: avatarImage,
         });
