@@ -172,7 +172,6 @@ export class HomeLogic {
   }
 
   getDirString(dt: Date, userId: string): string {
-    console.log('dt', dt);
     return "" + userId + "/" +
       ("00" + dt.getUTCFullYear()).slice(-2) +
       ("00" + (dt.getMonth() + 1)).slice(-2) +

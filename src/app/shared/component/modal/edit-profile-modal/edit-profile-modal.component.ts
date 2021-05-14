@@ -40,7 +40,6 @@ export class EditProfileModalComponent implements OnInit {
   @Input() name: string;
   title: string;
   iconImageUrl: String | Object = '../../../../../assets/img/undefined.jpeg';
-  keyAvatarImage: string;
 
   constructor(
     private readonly modalCtrl: ModalController,
@@ -64,6 +63,7 @@ export class EditProfileModalComponent implements OnInit {
         userName: this.user.username,
         positionName: this.user.positionName,
         tel: this.user.tel,
+        keyAvatarImage: this.user.iconImage.key,
       });
     }
   }

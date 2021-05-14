@@ -230,7 +230,6 @@ export class TaskDetailPage implements OnInit {
       promptLabelPicture: 'カメラ'
     });
     this.arrayImageBase64Data.push(image.dataUrl);
-    console.log('[arrayImageBase64Data]', this.arrayImageBase64Data);
   }
 
   initializeApp(): Observable<string> {

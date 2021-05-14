@@ -14,7 +14,6 @@ export class SignupLogic {
   ) { }
 
   entrySignupUser(value: InterfaceSignup): Observable<string> {
-    console.log('[EntrySignupUser Value]', value);
     const signupContent = {
       username: value.email,
       password: value.passwordform,
