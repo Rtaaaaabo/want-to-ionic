@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { AmplifyService, GetTaskQuery, UpdateTaskMutation, ModelSortDirection, CreateMessageInput, SubscriptionResponse, OnCreateMessageSubscription, TaskByCreatedAtQuery, CreateMessageMutation } from '../../../shared/service/amplify.service';
-import { Observable, from } from 'rxjs';
+import { AmplifyService, GetTaskQuery, UpdateTaskMutation, ModelSortDirection, CreateMessageInput, SubscriptionResponse, OnCreateMessageSubscription, TaskByCreatedAtQuery, CreateMessageMutation, GetUserQuery, ListRoomGroupsQuery } from '../../../shared/service/amplify.service';
+import { Observable, from, of } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -32,11 +33,17 @@ export class TaskDetailService {
     return this.amplifyService.OnCreateMessageListener;
   }
 
-  fetchRoomMember(content): Observable<any> {
+  fetchRoomMember(content): Observable<ListRoomGroupsQuery> {
     return from(this.amplifyService.ListRoomGroups(content));
   }
 
-  fetchUserName(userId: string): Observable<any> {
+  fetchUserName(userId: string): Observable<GetUserQuery> {
     return from(this.amplifyService.GetUser(userId));
+  }
+
+  // MessageのAuthorのIconを取得します
+  fetchUserIconKey(authorID: string): Observable<string> {
+    return from(this.amplifyService.GetUser(authorID))
+      .pipe(map((result) => result.iconImage.key))
   }
 }

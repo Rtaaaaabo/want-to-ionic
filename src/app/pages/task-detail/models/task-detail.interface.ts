@@ -42,5 +42,6 @@ export interface IS3Object {
 }
 
 export interface IMessageWithAttachUrl extends Message {
+    authorImageWithUrl?: string;
     attachmentWithUrl?: Array<string>;
 }

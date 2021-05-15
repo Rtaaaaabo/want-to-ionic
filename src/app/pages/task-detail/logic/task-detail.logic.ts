@@ -53,6 +53,18 @@ export class TaskDetailLogic {
       .pipe(toArray())
   }
 
+  // 返す型は Observable<Array<IMessageWithAttachUrl>>
+  makeMessageAuthorImageUrl(items: Array<IMessageWithAttachUrl>): Observable<any> {
+    return from(items)
+      .pipe(concatMap((item) => this.fetchAnyUserInfo(item)))
+  }
+
+  // 返す型は Observable<IMessageWithAttachUrl>
+  fetchAnyUserInfo(items: IMessageWithAttachUrl): Observable<any> {
+    return this.taskDetailService.fetchUserIconKey(items.authorID)
+    // return this.getStorage()
+  }
+
   fetchMakeAttachmentUrl(attachmentItem: Array<s3Object>): Observable<Array<string>> {
     return from(attachmentItem)
       .pipe(concatMap((attachment) => this.getStorage(attachment.key)))
@@ -65,10 +77,6 @@ export class TaskDetailLogic {
       result[index].attachmentWithUrl = arrayAttachmentUrl[index];
     });
     return of(result);
-  }
-
-  makeResultItems(items): Observable<any> {
-    return of({});
   }
 
   /**

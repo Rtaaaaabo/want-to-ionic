@@ -6173,16 +6173,14 @@ export class AmplifyService {
             username
             registered
             authority
-            company {
-              __typename
-              id
-              name
-              domain
-              createdAt
-              updatedAt
-            }
             createdAt
             updatedAt
+            iconImage {
+              __typename
+              bucket
+              region
+              key
+            }
           }
           content
           createdAt
@@ -6401,7 +6399,6 @@ export class AmplifyService {
           }
           registered
           authority
-
           messages {
             __typename
             items {
