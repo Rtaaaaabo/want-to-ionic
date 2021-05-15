@@ -55,14 +55,19 @@ export class TaskDetailLogic {
 
   // 返す型は Observable<Array<IMessageWithAttachUrl>>
   makeMessageAuthorImageUrl(items: Array<IMessageWithAttachUrl>): Observable<any> {
+    let messageItems: IMessageWithAttachUrl;
     return from(items)
-      .pipe(concatMap((item) => this.fetchAnyUserInfo(item)))
+      .pipe(map(result => messageItems = result))
+      .pipe(concatMap((item) => this.fetchAnyUserIconUrl(item)))
+      .pipe(map((iconUrl) => messageItems.authorIconWithUrl = iconUrl))
+      .pipe(map(() => messageItems))
+      .pipe(toArray());
   }
 
   // 返す型は Observable<IMessageWithAttachUrl>
-  fetchAnyUserInfo(items: IMessageWithAttachUrl): Observable<any> {
+  fetchAnyUserIconUrl(items: IMessageWithAttachUrl): Observable<string> {
     return this.taskDetailService.fetchUserIconKey(items.authorID)
-    // return this.getStorage()
+      .pipe(concatMap((iconKey) => this.getStorage(iconKey)));
   }
 
   fetchMakeAttachmentUrl(attachmentItem: Array<s3Object>): Observable<Array<string>> {
