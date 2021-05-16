@@ -55,19 +55,25 @@ export class TaskDetailLogic {
 
   // 返す型は Observable<Array<IMessageWithAttachUrl>>
   makeMessageAuthorImageUrl(items: Array<IMessageWithAttachUrl>): Observable<any> {
-    let messageItems: IMessageWithAttachUrl;
+    let messageItem: IMessageWithAttachUrl;
     return from(items)
-      .pipe(map(result => messageItems = result))
+      .pipe(map((result) => messageItem = result))
       .pipe(concatMap((item) => this.fetchAnyUserIconUrl(item)))
-      .pipe(map((iconUrl) => messageItems.authorIconWithUrl = iconUrl))
-      .pipe(map(() => messageItems))
+      // .pipe(map((result) => messageItem.authorIconWithUrl = result))
+      // .pipe(map(() => messageItem))
+      // .pipe(concatMap((messageItem) => this.makeMessageItems(messageItem.authorIconWithUrl, messageItem)))
+      // .pipe(map((iconUrl) => messageItems.authorIconWithUrl = iconUrl))
+      // .pipe(map(() => messageItems))
       .pipe(toArray());
   }
 
   // 返す型は Observable<IMessageWithAttachUrl>
-  fetchAnyUserIconUrl(items: IMessageWithAttachUrl): Observable<string> {
+  fetchAnyUserIconUrl(items: IMessageWithAttachUrl): Observable<any> {
+    let messageWithAttachUrl = items;
     return this.taskDetailService.fetchUserIconKey(items.authorID)
-      .pipe(concatMap((iconKey) => this.getStorage(iconKey)));
+      .pipe(concatMap((iconKey) => this.getStorage(iconKey))) //　ここで AuthorImageのUrlを取得することができる
+      .pipe(map((result) => messageWithAttachUrl.authorIconWithUrl = result))
+      .pipe(map(() => messageWithAttachUrl))
   }
 
   fetchMakeAttachmentUrl(attachmentItem: Array<s3Object>): Observable<Array<string>> {
@@ -78,7 +84,7 @@ export class TaskDetailLogic {
 
   modifiedMessageItems(arrayAttachmentUrl, resultMessage): Observable<any> {
     let result: Array<IMessageWithAttachUrl> = resultMessage;
-    resultMessage.forEach((element, index) => {
+    resultMessage.forEach((el, index) => {
       result[index].attachmentWithUrl = arrayAttachmentUrl[index];
     });
     return of(result);
