@@ -5042,14 +5042,6 @@ export class AmplifyService {
           name
           companyID
           description
-          company {
-            __typename
-            id
-            name
-            domain
-            createdAt
-            updatedAt
-          }
           tasks {
             __typename
             nextToken
@@ -5082,14 +5074,6 @@ export class AmplifyService {
           }
           registered
           authority
-          company {
-            __typename
-            id
-            name
-            domain
-            createdAt
-            updatedAt
-          }
           messages {
             __typename
             nextToken
