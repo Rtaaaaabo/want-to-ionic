@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { ModalController, AlertController, IonItemSliding } from '@ionic/angular';
 import { AddRoomModalComponent } from '../../../../shared/component/modal/add-room-modal/add-room-modal.component';
 import { HomeLogic } from '../../logic/home.logic';
-import { from, Observable } from 'rxjs';
+import { from } from 'rxjs';
 import { concatMap, switchMap, map } from 'rxjs/operators';
 import { ResponseListRoomGroupsQueryItems } from '../../service/reponse/response.model';
 import { Room, RoomGroup } from 'src/app/shared/service/amplify.service';
@@ -72,7 +72,7 @@ export class ListRoomComponent implements OnInit {
     console.log(slideItem);
     this.logic.fetchRoomMembers(roomId, this.currentUserId)
       .pipe(switchMap((data) => data.length === 0 ?
-        this.deleteRoomItem(roomId) : this.removeOwnFromRoom(roomId, this.currentUserId))
+        this.logic.deleteRoomItem(roomId) : this.logic.removeMeFromRoom(roomId, this.currentUserId))
       )
       .pipe(concatMap(() => this.logic.fetchRoomList(this.currentUserId)))
       .pipe(concatMap((data) => this.logic.setExitsRoomAndUser(data)))
@@ -114,23 +114,4 @@ export class ListRoomComponent implements OnInit {
     alert.present();
   }
 
-  /**
-   * DeleteRoomを削除するロジックです
-   * @param roomId RoomID
-   * @returns Observableでルームを削除した結果を返します
-   */
-  deleteRoomItem(roomId: string): Observable<any> {
-    return this.logic.deleteRoomItem(roomId)
-  }
-
-
-  /**
-   * ルームに参加者がいる場合は自分のみ抜けるロジックです
-   * @param roomId RoomID
-   * @param currentUserId ログインしているユーザID
-   * @returns ルームか抜けたときの返り値です
-   */
-  removeOwnFromRoom(roomId: string, currentUserId: string): Observable<any> {
-    return this.logic.removeMeFromRoom(roomId, currentUserId);
-  }
 }
