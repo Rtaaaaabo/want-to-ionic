@@ -47,9 +47,10 @@ export class TaskDetailPage implements OnInit {
       this.subscriptionMessage = this.logic.onCreateMessageListener()
         .subscribe({
           next: () => this.logic.fetchMessagePerTask(this.taskId)
-            .pipe(map(result => resultMessage = result))
-            .pipe(mergeMap((result) => this.logic.makeAttachmentUrl(result.items)))
-            .pipe(mergeMap((arrayAttachment) => this.logic.modifiedMessageItems(arrayAttachment, resultMessage.items)))
+            .pipe(map(result => resultMessage = result.items))
+            .pipe(concatMap((result) => this.logic.makeMessageAuthorImageUrl(result)))
+            .pipe(mergeMap((result) => this.logic.makeAttachmentUrl(result)))
+            .pipe(mergeMap((arrayAttachment) => this.logic.modifiedMessageItems(arrayAttachment, resultMessage)))
             .subscribe((items) => {
               this.message = items
             }),
@@ -80,7 +81,6 @@ export class TaskDetailPage implements OnInit {
       this.currentUserId = result.currentUserInfo.sub;
       this.roomMembers = result.anyTask.items;
       this.message = result.messageAttachment;
-      console.log('MessageAttachment', result.messageAttachment);
     });
   }
 
