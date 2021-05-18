@@ -34,11 +34,14 @@ export class ListRoomComponent implements OnInit {
       })
   }
 
-  async presentAddRoomItem(companyId: string) {
+  /**
+   * Roomを作成するモーダルを表示させます
+   * @returns Roomを増やすためのモーダルを表示させます
+   */
+  async presentAddRoomItem(): Promise<void> {
     const modal = await this.modalCtrl.create({
       component: AddRoomModalComponent,
     });
-
     const observable = from(modal.onDidDismiss());
     observable
       .pipe(concatMap(({ data }) => this.logic.createRoom(data)))
