@@ -18,8 +18,6 @@ interface Attribute {
   sub: string,
 };
 
-const OneWeekSecond = 64480;
-
 @Injectable({
   providedIn: 'root',
 })
@@ -30,15 +28,29 @@ export class HomeLogic {
     private readonly sessionService: SessionService,
   ) { }
 
+  /**
+   * 登録しているユーザ情報をチェックします
+   * @param attribute 登録しているユーザ情報
+   * @returns 登録しているユーザ情報を取得する
+   */
   checkRegistrationUser(attribute: Attribute): Observable<ListUsersQuery> {
     return this.homeService.checkRegistrationUser(attribute.email);
   }
 
+  /**
+   * ログインしているユーザ情報を取得します
+   * @returns 現在ログインしているユーザー情報を取得する
+   */
   fetchCurrentUser(): Observable<Attribute> {
     return this.sessionService.fetchCurrentUser()
       .pipe(map((res) => res.attributes));
   }
 
+  /**
+  * Roomを新規で作成するメソッドです
+  * @param content ルーム作成するのに必要な情報
+  * @returns Roomを新規作成してその値を取得します
+  */
   createRoom(content: InterfaceLogicArgsCreateRoom): Observable<CreateRoomMutation> {
     const requestContent = {
       id: `${uuid()}`,
@@ -49,6 +61,11 @@ export class HomeLogic {
     return this.homeService.createRoom(requestContent);
   }
 
+  /**
+   * ユーザ情報を新規で作成します
+   * @param formContent Form型のユーザ
+   * @returns ユーザを新規で作成してその結果を返します
+   */
   createUser(formContent: FormGroup): Observable<CreateUserMutation> {
     const resultFormIconImageUrl = formContent.get('keyAvatarImage').value;
     const region = 'ap-northeast-1';
