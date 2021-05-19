@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Location } from '@angular/common';
+import { Location, LocationStrategy } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ItemReorderEventDetail } from '@ionic/core';
 import { ModalController, ToastController, AlertController } from '@ionic/angular';
@@ -145,9 +145,10 @@ export class TaskPage implements OnInit {
 
   segmentChanged(ev: CustomEvent): void {
     this.segment = ev.detail.value;
+    this.location.replaceState(`task/${this.roomId}`, `status=${this.segment}`);
     this.logic.fetchDoneTaskPerRoom(this.roomId).subscribe((data) => {
       this.taskDoneItems = data;
-    })
+    });
   }
 
   async presentDoneTaskAlert(alertBody): Promise<void> {

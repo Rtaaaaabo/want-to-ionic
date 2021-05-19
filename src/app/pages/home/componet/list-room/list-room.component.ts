@@ -57,7 +57,7 @@ export class ListRoomComponent implements OnInit {
 
   /**
    * タスク追加画面に遷移させます
-   * @param room 部屋の情報を表示させます
+   * @param room 部屋の情報
    */
   navigateToTask(room: Room): void {
     this.router.navigate(['task', `${room.id}`]);
