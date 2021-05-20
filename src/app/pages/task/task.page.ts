@@ -49,12 +49,13 @@ export class TaskPage implements OnInit {
       .pipe(filter((e: any) => e instanceof RoutesRecognized),
         pairwise()
       ).subscribe((e: any) => {
-        this.previousUrl = e[0].urlAfterRedirects;
-        if (this.previousUrl.includes('?')) {
-          this.previousParam = this.previousUrl.split('?')[1];
-        } else {
-          this.previousParam = undefined;
-        }
+        console.log('Event Subscribe', e);
+        // this.previousUrl = e[0].urlAfterRedirects;
+        // if (this.previousUrl.includes('?')) {
+        //   this.previousParam = this.previousUrl.split('?')[1];
+        // } else {
+        //   this.previousParam = undefined;
+        // }
       });
     this.locationStrate.onPopState((result) => {
       console.log(result);
