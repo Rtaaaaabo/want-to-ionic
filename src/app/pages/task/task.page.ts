@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Location, LocationStrategy } from '@angular/common';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, RoutesRecognized } from '@angular/router';
 import { ItemReorderEventDetail } from '@ionic/core';
 import { ModalController, ToastController, AlertController } from '@ionic/angular';
 import { forkJoin, from, of } from 'rxjs';
-import { flatMap, switchMap, tap, map, concatMap } from 'rxjs/operators';
+import { flatMap, switchMap, tap, map, concatMap, filter, pairwise } from 'rxjs/operators';
 import { GetRoomQuery, GetUserQuery, ListUsersQuery } from 'src/app/shared/service/amplify.service';
 import { TaskLogic } from './logic/task.logic';
 import { CurrentUserInfo } from './interface/current-user-info.interface';
@@ -32,8 +32,11 @@ export class TaskPage implements OnInit {
   taskFormData: TaskFormModel;
   taskActiveItems: Array<InterfaceTask>;
   taskDoneItems: Array<InterfaceTask>;
+  private previousUrl: string = undefined;
+  private previousParam: string = undefined;
 
   constructor(
+    private readonly locationStrate: LocationStrategy,
     private readonly router: Router,
     private readonly location: Location,
     private readonly alertCtrl: AlertController,
@@ -41,9 +44,29 @@ export class TaskPage implements OnInit {
     private readonly modalCtrl: ModalController,
     private readonly route: ActivatedRoute,
     private readonly logic: TaskLogic,
-  ) { }
+  ) {
+    this.router.events
+      .pipe(filter((e: any) => e instanceof RoutesRecognized),
+        pairwise()
+      ).subscribe((e: any) => {
+        this.previousUrl = e[0].urlAfterRedirects;
+        if (this.previousUrl.includes('?')) {
+          this.previousParam = this.previousUrl.split('?')[1];
+        } else {
+          this.previousParam = undefined;
+        }
+      });
+    this.locationStrate.onPopState((result) => {
+      console.log(result);
+    })
+  }
 
   ngOnInit() { }
+
+  // 前のURLだけを取得
+  public getPreviousParam() {
+    return this.previousParam;
+  }
 
   ionViewWillEnter(): void {
     this.isReorder = false;
