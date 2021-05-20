@@ -50,19 +50,21 @@ export class TaskPage implements OnInit {
         pairwise()
       ).subscribe((e: any) => {
         console.log('Event Subscribe', e);
-        // this.previousUrl = e[0].urlAfterRedirects;
-        // if (this.previousUrl.includes('?')) {
-        //   this.previousParam = this.previousUrl.split('?')[1];
-        // } else {
-        //   this.previousParam = undefined;
-        // }
+        this.previousUrl = e[0].urlAfterRedirects;
+        if (this.previousUrl.includes('?')) {
+          this.previousParam = this.previousUrl.split('?')[1];
+        } else {
+          this.previousParam = undefined;
+        }
       });
     this.locationStrate.onPopState((result) => {
       console.log(result);
     })
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.route.queryParams.subscribe((param) => this.segment = param.status);
+  }
 
   // 前のURLだけを取得
   public getPreviousParam() {
@@ -71,7 +73,7 @@ export class TaskPage implements OnInit {
 
   ionViewWillEnter(): void {
     this.isReorder = false;
-    this.segment = 'active';
+    // this.segment = 'active';
     this.roomId = this.route.snapshot.paramMap.get('id');
     forkJoin({
       companyUser: this.logic.fetchCurrentUserInfo()
