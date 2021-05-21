@@ -60,7 +60,7 @@ export class ListRoomComponent implements OnInit {
    * @param room 部屋の情報
    */
   navigateToTask(room: Room): void {
-    this.router.navigate(['task', `${room.id}`]);
+    this.router.navigate(['task', `${room.id}`], { queryParams: { status: 'active' } });
   }
 
   /**
