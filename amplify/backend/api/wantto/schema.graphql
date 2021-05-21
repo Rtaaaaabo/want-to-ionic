@@ -76,6 +76,9 @@ type Room @model @key(name: "byCompany", fields: ["companyID"]) {
 }
 
 type Message
+  # @auth(rules: [
+  #   { allow: owner},
+  # ])
   @model
   @key(name: "byTask", fields: ["taskID"])
   @key(name: "byUser", fields: ["authorID"])
