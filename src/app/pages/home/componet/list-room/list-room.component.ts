@@ -69,7 +69,6 @@ export class ListRoomComponent implements OnInit {
    * @param slideItem SlideItem情報を取得します
    */
   deleteRoom(roomId: string, slideItem: IonItemSliding): void {
-    console.log(slideItem);
     this.logic.fetchRoomMembers(roomId, this.currentUserId)
       .pipe(switchMap((data) => data.length === 0 ?
         this.logic.deleteRoomItem(roomId) : this.logic.removeMeFromRoom(roomId, this.currentUserId))
@@ -88,8 +87,6 @@ export class ListRoomComponent implements OnInit {
    * @param slideItem SlideItemの情報
    */
   async presentDeleteAlert(item: RoomGroup, slideItem: IonItemSliding): Promise<void> {
-    console.log('item', item);
-    console.log('slideItem', slideItem);
     const alert = await this.alertCtrl.create({
       header: '項目を削除します',
       subHeader: `${item.room.name}を削除します。よろしいでしょうか？`,

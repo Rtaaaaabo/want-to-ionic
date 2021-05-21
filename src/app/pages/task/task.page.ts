@@ -49,7 +49,6 @@ export class TaskPage implements OnInit {
       .pipe(filter((e: any) => e instanceof RoutesRecognized),
         pairwise()
       ).subscribe((e: any) => {
-        console.log('Event Subscribe', e);
         this.previousUrl = e[0].urlAfterRedirects;
         if (this.previousUrl.includes('?')) {
           this.previousParam = this.previousUrl.split('?')[1];
@@ -57,8 +56,8 @@ export class TaskPage implements OnInit {
           this.previousParam = undefined;
         }
       });
-    this.locationStrate.onPopState((result) => {
-      console.log(result);
+    this.locationStrate.onPopState(() => {
+      // システムの戻るボタンクリック時の挙動
     })
   }
 
