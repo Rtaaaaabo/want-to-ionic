@@ -1,4 +1,6 @@
-type Company @model @auth(rules: [{ allow: owner }]) {
+type Company
+  @model
+  @auth(rules: [{ allow: owner, operations: [create, update, delete] }]) {
   id: ID!
   name: String!
   domain: String!
@@ -41,7 +43,7 @@ type Task
 
 type User
   @model
-  @auth(rules: [{ allow: private }])
+  @auth(rules: [{ allow: owner, operations: [create, update, delete] }]) # 所有者のみがCreate, Update, Deleteが可能で, Readは誰でも可能
   @key(name: "byCompany", fields: ["companyID"]) {
   id: ID!
   username: String!
@@ -73,7 +75,16 @@ type RoomGroup
 
 type Room
   @model
-  @auth(rules: [{ allow: private }])
+  # ログインしている人かつ招待されているユーザーのみが Create, Read, Update, Deleteが可能とする
+  @auth(
+    rules: [
+      {
+        allow: owner
+        ownerField: "users"
+        operations: [create, read, update, delete]
+      }
+    ]
+  )
   @key(name: "byCompany", fields: ["companyID"]) {
   id: ID!
   name: String!
