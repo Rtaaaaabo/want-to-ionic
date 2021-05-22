@@ -1,4 +1,4 @@
-type Company @model {
+type Company @model @auth(rules: [{ allow: owner }]) {
   id: ID!
   name: String!
   domain: String!
@@ -8,6 +8,7 @@ type Company @model {
 
 type TaskGroup
   @model
+  @auth(rules: [{ allow: private }])
   @key(name: "byTask", fields: ["taskID"])
   @key(name: "byUser", fields: ["userID"]) {
   id: ID!
@@ -19,6 +20,7 @@ type TaskGroup
 
 type Task
   @model
+  @auth(rules: [{ allow: private }])
   @key(name: "byRoom", fields: ["roomID"])
   @key(name: "byUser", fields: ["chargePersonID"]) {
   id: ID!
@@ -37,7 +39,10 @@ type Task
   users: [TaskGroup] @connection(keyName: "byTask", fields: ["id"])
 }
 
-type User @model @key(name: "byCompany", fields: ["companyID"]) {
+type User
+  @model
+  @auth(rules: [{ allow: private }])
+  @key(name: "byCompany", fields: ["companyID"]) {
   id: ID!
   username: String!
   email: String!
@@ -56,6 +61,7 @@ type User @model @key(name: "byCompany", fields: ["companyID"]) {
 
 type RoomGroup
   @model
+  @auth(rules: [{ allow: private }])
   @key(name: "byRoom", fields: ["roomID"])
   @key(name: "byUser", fields: ["userID"]) {
   id: ID!
@@ -65,7 +71,10 @@ type RoomGroup
   user: User @connection(fields: ["userID"])
 }
 
-type Room @model @key(name: "byCompany", fields: ["companyID"]) {
+type Room
+  @model
+  @auth(rules: [{ allow: private }])
+  @key(name: "byCompany", fields: ["companyID"]) {
   id: ID!
   name: String!
   companyID: ID!
@@ -76,10 +85,8 @@ type Room @model @key(name: "byCompany", fields: ["companyID"]) {
 }
 
 type Message
-  # @auth(rules: [
-  #   { allow: owner},
-  # ])
   @model
+  @auth(rules: [{ allow: owner, operations: [create, update, delete] }])
   @key(name: "byTask", fields: ["taskID"])
   @key(name: "byUser", fields: ["authorID"])
   @key(
