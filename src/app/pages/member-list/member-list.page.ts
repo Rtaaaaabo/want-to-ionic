@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { Location } from '@angular/common';
 @Component({
   selector: 'app-member-list',
   templateUrl: './member-list.page.html',
@@ -7,9 +7,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MemberListPage implements OnInit {
 
-  constructor() { }
+  constructor(
+    private readonly location: Location,
+  ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
+  }
+
+  goBackToSetting(): void {
+    this.location.back();
   }
 
 }
