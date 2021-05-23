@@ -25,12 +25,14 @@ export class ConfirmPage implements OnInit {
     this.confirmTargetEmail = this.router.getCurrentNavigation().extras.state.data.email;
   }
 
-  confirmSignup() {
+  confirmSignUp() {
     this.logic.sendConfirmUser(this.confirmTargetEmail, this.confirmForm.get('confirmNumber').value).subscribe(() => {
       this.router.navigate(['/login']);
     })
   }
 
-  reSendSignup() { }
+  reSendSignUp() {
+    console.log('ReSendSignUp');
+  }
 
 }
