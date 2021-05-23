@@ -46,6 +46,10 @@ const routes: Routes = [
     loadChildren: () => import('./pages/room-members/room-members.module').then(m => m.RoomMembersPageModule),
     canActivate: [AuthGuard],
   },
+  {
+    path: 'member-list',
+    loadChildren: () => import('./pages/member-list/member-list.module').then( m => m.MemberListPageModule)
+  },
 ];
 @NgModule({
   imports: [

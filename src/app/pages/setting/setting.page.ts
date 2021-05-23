@@ -80,4 +80,8 @@ export class SettingPage implements OnInit {
     return modal.present();
   }
 
+
+  navigateToMemberList(): void {
+    this.router.navigate(['/member-list']);
+  }
 }
