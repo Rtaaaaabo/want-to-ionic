@@ -76,15 +76,7 @@ type RoomGroup
 type Room
   @model
   # ログインしている人かつ招待されているユーザーのみが Create, Read, Update, Deleteが可能とする
-  @auth(
-    rules: [
-      {
-        allow: owner
-        ownerField: "users"
-        operations: [create, read, update, delete]
-      }
-    ]
-  )
+  @auth(rules: [{ allow: private }])
   @key(name: "byCompany", fields: ["companyID"]) {
   id: ID!
   name: String!
