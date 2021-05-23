@@ -80,8 +80,18 @@ export class SettingPage implements OnInit {
     return modal.present();
   }
 
-
+  /**
+   * Companyに紐づくメンバーリストページへ遷移する
+   */
   navigateToMemberList(): void {
     this.router.navigate(['/member-list']);
+  }
+
+  /**
+   * Create Company Pageに遷移する
+   * Tempで作成、LPから作成するようにする
+   */
+  navigateToCreateCompany(): void {
+    this.router.navigate(['/create-company']);
   }
 }
