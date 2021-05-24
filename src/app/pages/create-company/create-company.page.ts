@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-create-company',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CreateCompanyPage implements OnInit {
 
-  constructor() { }
+  constructor(
+    private readonly location: Location,
+  ) { }
 
   ngOnInit() {
+  }
+
+  goBackToSetting(): void {
+    this.location.back();
   }
 
 }
