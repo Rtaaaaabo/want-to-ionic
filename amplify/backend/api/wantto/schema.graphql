@@ -3,7 +3,7 @@ type Company
   @auth(rules: [{ allow: owner, operations: [create, update, delete] }]) {
   id: ID!
   name: String!
-  domain: String!
+  officerEmail: String!
   room: [Room] @connection(keyName: "byCompany", fields: ["id"])
   companyMembers: [User] @connection(keyName: "byCompany", fields: ["id"])
 }
