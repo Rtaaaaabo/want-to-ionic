@@ -20,7 +20,13 @@ export class CreateCompanyPage implements OnInit {
     'email': [
       { type: 'required', message: 'メールアドレスは必須です' },
     ]
-  }
+  };
+
+  createCompanyForm = new FormGroup({
+    id: new FormControl('', Validators.compose([Validators.required])),
+    name: new FormControl('', Validators.compose([Validators.required])),
+    domain: new FormControl('', Validators.compose([Validators.required]))
+  });
 
   constructor(
     private readonly location: Location,
