@@ -4750,22 +4750,24 @@ export class AmplifyService {
             items {
               __typename
               id
-              companyID
               name
+              companyID
               description
               createdAt
               updatedAt
             }
             nextToken
           }
-          members {
+          companyMembers {
             __typename
             items {
               __typename
               id
+              username
               email
               companyID
-              username
+              tel
+              positionName
               registered
               authority
               createdAt
@@ -4803,22 +4805,24 @@ export class AmplifyService {
             items {
               __typename
               id
-              companyID
               name
+              companyID
               description
               createdAt
               updatedAt
             }
             nextToken
           }
-          members {
+          companyMembers {
             __typename
             items {
               __typename
               id
+              username
               email
               companyID
-              username
+              tel
+              positionName
               registered
               authority
               createdAt
@@ -4856,22 +4860,24 @@ export class AmplifyService {
             items {
               __typename
               id
-              companyID
               name
+              companyID
               description
               createdAt
               updatedAt
             }
             nextToken
           }
-          members {
+          companyMembers {
             __typename
             items {
               __typename
               id
+              username
               email
               companyID
-              username
+              tel
+              positionName
               registered
               authority
               createdAt
