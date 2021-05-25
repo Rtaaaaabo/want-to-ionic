@@ -553,7 +553,13 @@ export type CreateCompanyMutation = {
   __typename: "Company";
   id: string;
   name: string;
-  domain: string;
+  officerEmail: string;
+  iconCompany?: {
+    __typename: "S3Object";
+    bucket: string;
+    region: string;
+    key: string;
+  } | null;
   room?: {
     __typename: "ModelRoomConnection";
     items?: Array<{
@@ -581,11 +587,13 @@ export type CreateCompanyMutation = {
       authority?: string | null;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     } | null> | null;
     nextToken?: string | null;
   } | null;
   createdAt: string;
   updatedAt: string;
+  owner?: string | null;
 };
 
 export type UpdateCompanyMutation = {

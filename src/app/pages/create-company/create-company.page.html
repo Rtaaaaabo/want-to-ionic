@@ -27,18 +27,12 @@
         </ion-item>
         <ion-item>
           <ion-label position="stacked"
-            >Email<ion-text color="danger">*</ion-text></ion-label
+            >担当者Email<ion-text color="danger">*</ion-text></ion-label
           >
           <ion-input type="email"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label position="stacked"
-            >Domain<ion-text color="danger">*</ion-text></ion-label
-          >
-          <ion-input type="text" formControlName="domain"></ion-input>
         </ion-item>
       </form>
     </ion-card-content>
   </ion-card>
-  <ion-button expand="full">登録</ion-button>
+  <ion-button expand="full" (click)="registerCompany()">登録</ion-button>
 </ion-content>
