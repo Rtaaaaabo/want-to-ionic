@@ -1,0 +1,899 @@
+# this is an auto generated file. This will be overwritten
+query GetCompany($id: ID!) {
+  getCompany(id: $id) {
+    id
+    name
+    officerEmail
+    iconCompany {
+      bucket
+      region
+      key
+    }
+    room {
+      items {
+        id
+        name
+        companyID
+        description
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    companyMembers {
+      items {
+        id
+        username
+        email
+        companyID
+        tel
+        positionName
+        registered
+        authority
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+    owner
+  }
+}
+query ListCompanys(
+  $filter: ModelCompanyFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listCompanys(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      name
+      officerEmail
+      iconCompany {
+        bucket
+        region
+        key
+      }
+      room {
+        nextToken
+      }
+      companyMembers {
+        nextToken
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+    nextToken
+  }
+}
+query GetTaskGroup($id: ID!) {
+  getTaskGroup(id: $id) {
+    id
+    taskID
+    userID
+    task {
+      id
+      authorID
+      roomID
+      chargePersonID
+      title
+      room {
+        id
+        name
+        companyID
+        description
+        createdAt
+        updatedAt
+      }
+      description
+      iconTask {
+        bucket
+        region
+        key
+      }
+      scheduleDate
+      priority
+      status
+      createdAt
+      chargePerson {
+        id
+        username
+        email
+        companyID
+        tel
+        positionName
+        registered
+        authority
+        createdAt
+        updatedAt
+        owner
+      }
+      messages {
+        nextToken
+      }
+      users {
+        nextToken
+      }
+      updatedAt
+    }
+    user {
+      id
+      username
+      email
+      companyID
+      tel
+      positionName
+      iconImage {
+        bucket
+        region
+        key
+      }
+      registered
+      authority
+      company {
+        id
+        name
+        officerEmail
+        createdAt
+        updatedAt
+        owner
+      }
+      messages {
+        nextToken
+      }
+      room {
+        nextToken
+      }
+      task {
+        nextToken
+      }
+      chargeTask {
+        nextToken
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+    createdAt
+    updatedAt
+  }
+}
+query ListTaskGroups(
+  $filter: ModelTaskGroupFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listTaskGroups(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      taskID
+      userID
+      task {
+        id
+        authorID
+        roomID
+        chargePersonID
+        title
+        description
+        scheduleDate
+        priority
+        status
+        createdAt
+        updatedAt
+      }
+      user {
+        id
+        username
+        email
+        companyID
+        tel
+        positionName
+        registered
+        authority
+        createdAt
+        updatedAt
+        owner
+      }
+      createdAt
+      updatedAt
+    }
+    nextToken
+  }
+}
+query GetTask($id: ID!) {
+  getTask(id: $id) {
+    id
+    authorID
+    roomID
+    chargePersonID
+    title
+    room {
+      id
+      name
+      companyID
+      description
+      company {
+        id
+        name
+        officerEmail
+        createdAt
+        updatedAt
+        owner
+      }
+      tasks {
+        nextToken
+      }
+      users {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    description
+    iconTask {
+      bucket
+      region
+      key
+    }
+    scheduleDate
+    priority
+    status
+    createdAt
+    chargePerson {
+      id
+      username
+      email
+      companyID
+      tel
+      positionName
+      iconImage {
+        bucket
+        region
+        key
+      }
+      registered
+      authority
+      company {
+        id
+        name
+        officerEmail
+        createdAt
+        updatedAt
+        owner
+      }
+      messages {
+        nextToken
+      }
+      room {
+        nextToken
+      }
+      task {
+        nextToken
+      }
+      chargeTask {
+        nextToken
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+    messages {
+      items {
+        id
+        taskID
+        authorID
+        content
+        createdAt
+        isSent
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+    users {
+      items {
+        id
+        taskID
+        userID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    updatedAt
+  }
+}
+query ListTasks(
+  $filter: ModelTaskFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listTasks(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      authorID
+      roomID
+      chargePersonID
+      title
+      room {
+        id
+        name
+        companyID
+        description
+        createdAt
+        updatedAt
+      }
+      description
+      iconTask {
+        bucket
+        region
+        key
+      }
+      scheduleDate
+      priority
+      status
+      createdAt
+      chargePerson {
+        id
+        username
+        email
+        companyID
+        tel
+        positionName
+        registered
+        authority
+        createdAt
+        updatedAt
+        owner
+      }
+      messages {
+        nextToken
+      }
+      users {
+        nextToken
+      }
+      updatedAt
+    }
+    nextToken
+  }
+}
+query GetUser($id: ID!) {
+  getUser(id: $id) {
+    id
+    username
+    email
+    companyID
+    tel
+    positionName
+    iconImage {
+      bucket
+      region
+      key
+    }
+    registered
+    authority
+    company {
+      id
+      name
+      officerEmail
+      iconCompany {
+        bucket
+        region
+        key
+      }
+      room {
+        nextToken
+      }
+      companyMembers {
+        nextToken
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+    messages {
+      items {
+        id
+        taskID
+        authorID
+        content
+        createdAt
+        isSent
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+    room {
+      items {
+        id
+        roomID
+        userID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    task {
+      items {
+        id
+        taskID
+        userID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    chargeTask {
+      items {
+        id
+        authorID
+        roomID
+        chargePersonID
+        title
+        description
+        scheduleDate
+        priority
+        status
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+    owner
+  }
+}
+query ListUsers(
+  $filter: ModelUserFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      username
+      email
+      companyID
+      tel
+      positionName
+      iconImage {
+        bucket
+        region
+        key
+      }
+      registered
+      authority
+      company {
+        id
+        name
+        officerEmail
+        createdAt
+        updatedAt
+        owner
+      }
+      messages {
+        nextToken
+      }
+      room {
+        nextToken
+      }
+      task {
+        nextToken
+      }
+      chargeTask {
+        nextToken
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+    nextToken
+  }
+}
+query GetRoomGroup($id: ID!) {
+  getRoomGroup(id: $id) {
+    id
+    roomID
+    userID
+    room {
+      id
+      name
+      companyID
+      description
+      company {
+        id
+        name
+        officerEmail
+        createdAt
+        updatedAt
+        owner
+      }
+      tasks {
+        nextToken
+      }
+      users {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    user {
+      id
+      username
+      email
+      companyID
+      tel
+      positionName
+      iconImage {
+        bucket
+        region
+        key
+      }
+      registered
+      authority
+      company {
+        id
+        name
+        officerEmail
+        createdAt
+        updatedAt
+        owner
+      }
+      messages {
+        nextToken
+      }
+      room {
+        nextToken
+      }
+      task {
+        nextToken
+      }
+      chargeTask {
+        nextToken
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+    createdAt
+    updatedAt
+  }
+}
+query ListRoomGroups(
+  $filter: ModelRoomGroupFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listRoomGroups(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      roomID
+      userID
+      room {
+        id
+        name
+        companyID
+        description
+        createdAt
+        updatedAt
+      }
+      user {
+        id
+        username
+        email
+        companyID
+        tel
+        positionName
+        registered
+        authority
+        createdAt
+        updatedAt
+        owner
+      }
+      createdAt
+      updatedAt
+    }
+    nextToken
+  }
+}
+query GetRoom($id: ID!) {
+  getRoom(id: $id) {
+    id
+    name
+    companyID
+    description
+    company {
+      id
+      name
+      officerEmail
+      iconCompany {
+        bucket
+        region
+        key
+      }
+      room {
+        nextToken
+      }
+      companyMembers {
+        nextToken
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+    tasks {
+      items {
+        id
+        authorID
+        roomID
+        chargePersonID
+        title
+        description
+        scheduleDate
+        priority
+        status
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    users {
+      items {
+        id
+        roomID
+        userID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+  }
+}
+query ListRooms(
+  $filter: ModelRoomFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listRooms(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      name
+      companyID
+      description
+      company {
+        id
+        name
+        officerEmail
+        createdAt
+        updatedAt
+        owner
+      }
+      tasks {
+        nextToken
+      }
+      users {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    nextToken
+  }
+}
+query GetMessage($id: ID!) {
+  getMessage(id: $id) {
+    id
+    taskID
+    authorID
+    content
+    createdAt
+    isSent
+    attachment {
+      bucket
+      region
+      key
+    }
+    author {
+      id
+      username
+      email
+      companyID
+      tel
+      positionName
+      iconImage {
+        bucket
+        region
+        key
+      }
+      registered
+      authority
+      company {
+        id
+        name
+        officerEmail
+        createdAt
+        updatedAt
+        owner
+      }
+      messages {
+        nextToken
+      }
+      room {
+        nextToken
+      }
+      task {
+        nextToken
+      }
+      chargeTask {
+        nextToken
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+    task {
+      id
+      authorID
+      roomID
+      chargePersonID
+      title
+      room {
+        id
+        name
+        companyID
+        description
+        createdAt
+        updatedAt
+      }
+      description
+      iconTask {
+        bucket
+        region
+        key
+      }
+      scheduleDate
+      priority
+      status
+      createdAt
+      chargePerson {
+        id
+        username
+        email
+        companyID
+        tel
+        positionName
+        registered
+        authority
+        createdAt
+        updatedAt
+        owner
+      }
+      messages {
+        nextToken
+      }
+      users {
+        nextToken
+      }
+      updatedAt
+    }
+    updatedAt
+    owner
+  }
+}
+query ListMessages(
+  $filter: ModelMessageFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listMessages(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      taskID
+      authorID
+      content
+      createdAt
+      isSent
+      attachment {
+        bucket
+        region
+        key
+      }
+      author {
+        id
+        username
+        email
+        companyID
+        tel
+        positionName
+        registered
+        authority
+        createdAt
+        updatedAt
+        owner
+      }
+      task {
+        id
+        authorID
+        roomID
+        chargePersonID
+        title
+        description
+        scheduleDate
+        priority
+        status
+        createdAt
+        updatedAt
+      }
+      updatedAt
+      owner
+    }
+    nextToken
+  }
+}
+query TaskByCreatedAt(
+  $taskID: ID
+  $createdAt: ModelStringKeyConditionInput
+  $sortDirection: ModelSortDirection
+  $filter: ModelMessageFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  taskByCreatedAt(
+    taskID: $taskID
+    createdAt: $createdAt
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      taskID
+      authorID
+      content
+      createdAt
+      isSent
+      attachment {
+        bucket
+        region
+        key
+      }
+      author {
+        id
+        username
+        email
+        companyID
+        tel
+        positionName
+        registered
+        authority
+        createdAt
+        updatedAt
+        owner
+      }
+      task {
+        id
+        authorID
+        roomID
+        chargePersonID
+        title
+        description
+        scheduleDate
+        priority
+        status
+        createdAt
+        updatedAt
+      }
+      updatedAt
+      owner
+    }
+    nextToken
+  }
+}

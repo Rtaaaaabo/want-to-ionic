@@ -1,0 +1,1711 @@
+# this is an auto generated file. This will be overwritten
+mutation CreateCompany(
+  $input: CreateCompanyInput!
+  $condition: ModelCompanyConditionInput
+) {
+  createCompany(input: $input, condition: $condition) {
+    id
+    name
+    officerEmail
+    iconCompany {
+      bucket
+      region
+      key
+    }
+    room {
+      items {
+        id
+        name
+        companyID
+        description
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    companyMembers {
+      items {
+        id
+        username
+        email
+        companyID
+        tel
+        positionName
+        registered
+        authority
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+    owner
+  }
+}
+mutation UpdateCompany(
+  $input: UpdateCompanyInput!
+  $condition: ModelCompanyConditionInput
+) {
+  updateCompany(input: $input, condition: $condition) {
+    id
+    name
+    officerEmail
+    iconCompany {
+      bucket
+      region
+      key
+    }
+    room {
+      items {
+        id
+        name
+        companyID
+        description
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    companyMembers {
+      items {
+        id
+        username
+        email
+        companyID
+        tel
+        positionName
+        registered
+        authority
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+    owner
+  }
+}
+mutation DeleteCompany(
+  $input: DeleteCompanyInput!
+  $condition: ModelCompanyConditionInput
+) {
+  deleteCompany(input: $input, condition: $condition) {
+    id
+    name
+    officerEmail
+    iconCompany {
+      bucket
+      region
+      key
+    }
+    room {
+      items {
+        id
+        name
+        companyID
+        description
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    companyMembers {
+      items {
+        id
+        username
+        email
+        companyID
+        tel
+        positionName
+        registered
+        authority
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+    owner
+  }
+}
+mutation CreateTaskGroup(
+  $input: CreateTaskGroupInput!
+  $condition: ModelTaskGroupConditionInput
+) {
+  createTaskGroup(input: $input, condition: $condition) {
+    id
+    taskID
+    userID
+    task {
+      id
+      authorID
+      roomID
+      chargePersonID
+      title
+      room {
+        id
+        name
+        companyID
+        description
+        createdAt
+        updatedAt
+      }
+      description
+      iconTask {
+        bucket
+        region
+        key
+      }
+      scheduleDate
+      priority
+      status
+      createdAt
+      chargePerson {
+        id
+        username
+        email
+        companyID
+        tel
+        positionName
+        registered
+        authority
+        createdAt
+        updatedAt
+        owner
+      }
+      messages {
+        nextToken
+      }
+      users {
+        nextToken
+      }
+      updatedAt
+    }
+    user {
+      id
+      username
+      email
+      companyID
+      tel
+      positionName
+      iconImage {
+        bucket
+        region
+        key
+      }
+      registered
+      authority
+      company {
+        id
+        name
+        officerEmail
+        createdAt
+        updatedAt
+        owner
+      }
+      messages {
+        nextToken
+      }
+      room {
+        nextToken
+      }
+      task {
+        nextToken
+      }
+      chargeTask {
+        nextToken
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+    createdAt
+    updatedAt
+  }
+}
+mutation UpdateTaskGroup(
+  $input: UpdateTaskGroupInput!
+  $condition: ModelTaskGroupConditionInput
+) {
+  updateTaskGroup(input: $input, condition: $condition) {
+    id
+    taskID
+    userID
+    task {
+      id
+      authorID
+      roomID
+      chargePersonID
+      title
+      room {
+        id
+        name
+        companyID
+        description
+        createdAt
+        updatedAt
+      }
+      description
+      iconTask {
+        bucket
+        region
+        key
+      }
+      scheduleDate
+      priority
+      status
+      createdAt
+      chargePerson {
+        id
+        username
+        email
+        companyID
+        tel
+        positionName
+        registered
+        authority
+        createdAt
+        updatedAt
+        owner
+      }
+      messages {
+        nextToken
+      }
+      users {
+        nextToken
+      }
+      updatedAt
+    }
+    user {
+      id
+      username
+      email
+      companyID
+      tel
+      positionName
+      iconImage {
+        bucket
+        region
+        key
+      }
+      registered
+      authority
+      company {
+        id
+        name
+        officerEmail
+        createdAt
+        updatedAt
+        owner
+      }
+      messages {
+        nextToken
+      }
+      room {
+        nextToken
+      }
+      task {
+        nextToken
+      }
+      chargeTask {
+        nextToken
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+    createdAt
+    updatedAt
+  }
+}
+mutation DeleteTaskGroup(
+  $input: DeleteTaskGroupInput!
+  $condition: ModelTaskGroupConditionInput
+) {
+  deleteTaskGroup(input: $input, condition: $condition) {
+    id
+    taskID
+    userID
+    task {
+      id
+      authorID
+      roomID
+      chargePersonID
+      title
+      room {
+        id
+        name
+        companyID
+        description
+        createdAt
+        updatedAt
+      }
+      description
+      iconTask {
+        bucket
+        region
+        key
+      }
+      scheduleDate
+      priority
+      status
+      createdAt
+      chargePerson {
+        id
+        username
+        email
+        companyID
+        tel
+        positionName
+        registered
+        authority
+        createdAt
+        updatedAt
+        owner
+      }
+      messages {
+        nextToken
+      }
+      users {
+        nextToken
+      }
+      updatedAt
+    }
+    user {
+      id
+      username
+      email
+      companyID
+      tel
+      positionName
+      iconImage {
+        bucket
+        region
+        key
+      }
+      registered
+      authority
+      company {
+        id
+        name
+        officerEmail
+        createdAt
+        updatedAt
+        owner
+      }
+      messages {
+        nextToken
+      }
+      room {
+        nextToken
+      }
+      task {
+        nextToken
+      }
+      chargeTask {
+        nextToken
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+    createdAt
+    updatedAt
+  }
+}
+mutation CreateTask(
+  $input: CreateTaskInput!
+  $condition: ModelTaskConditionInput
+) {
+  createTask(input: $input, condition: $condition) {
+    id
+    authorID
+    roomID
+    chargePersonID
+    title
+    room {
+      id
+      name
+      companyID
+      description
+      company {
+        id
+        name
+        officerEmail
+        createdAt
+        updatedAt
+        owner
+      }
+      tasks {
+        nextToken
+      }
+      users {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    description
+    iconTask {
+      bucket
+      region
+      key
+    }
+    scheduleDate
+    priority
+    status
+    createdAt
+    chargePerson {
+      id
+      username
+      email
+      companyID
+      tel
+      positionName
+      iconImage {
+        bucket
+        region
+        key
+      }
+      registered
+      authority
+      company {
+        id
+        name
+        officerEmail
+        createdAt
+        updatedAt
+        owner
+      }
+      messages {
+        nextToken
+      }
+      room {
+        nextToken
+      }
+      task {
+        nextToken
+      }
+      chargeTask {
+        nextToken
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+    messages {
+      items {
+        id
+        taskID
+        authorID
+        content
+        createdAt
+        isSent
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+    users {
+      items {
+        id
+        taskID
+        userID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    updatedAt
+  }
+}
+mutation UpdateTask(
+  $input: UpdateTaskInput!
+  $condition: ModelTaskConditionInput
+) {
+  updateTask(input: $input, condition: $condition) {
+    id
+    authorID
+    roomID
+    chargePersonID
+    title
+    room {
+      id
+      name
+      companyID
+      description
+      company {
+        id
+        name
+        officerEmail
+        createdAt
+        updatedAt
+        owner
+      }
+      tasks {
+        nextToken
+      }
+      users {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    description
+    iconTask {
+      bucket
+      region
+      key
+    }
+    scheduleDate
+    priority
+    status
+    createdAt
+    chargePerson {
+      id
+      username
+      email
+      companyID
+      tel
+      positionName
+      iconImage {
+        bucket
+        region
+        key
+      }
+      registered
+      authority
+      company {
+        id
+        name
+        officerEmail
+        createdAt
+        updatedAt
+        owner
+      }
+      messages {
+        nextToken
+      }
+      room {
+        nextToken
+      }
+      task {
+        nextToken
+      }
+      chargeTask {
+        nextToken
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+    messages {
+      items {
+        id
+        taskID
+        authorID
+        content
+        createdAt
+        isSent
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+    users {
+      items {
+        id
+        taskID
+        userID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    updatedAt
+  }
+}
+mutation DeleteTask(
+  $input: DeleteTaskInput!
+  $condition: ModelTaskConditionInput
+) {
+  deleteTask(input: $input, condition: $condition) {
+    id
+    authorID
+    roomID
+    chargePersonID
+    title
+    room {
+      id
+      name
+      companyID
+      description
+      company {
+        id
+        name
+        officerEmail
+        createdAt
+        updatedAt
+        owner
+      }
+      tasks {
+        nextToken
+      }
+      users {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    description
+    iconTask {
+      bucket
+      region
+      key
+    }
+    scheduleDate
+    priority
+    status
+    createdAt
+    chargePerson {
+      id
+      username
+      email
+      companyID
+      tel
+      positionName
+      iconImage {
+        bucket
+        region
+        key
+      }
+      registered
+      authority
+      company {
+        id
+        name
+        officerEmail
+        createdAt
+        updatedAt
+        owner
+      }
+      messages {
+        nextToken
+      }
+      room {
+        nextToken
+      }
+      task {
+        nextToken
+      }
+      chargeTask {
+        nextToken
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+    messages {
+      items {
+        id
+        taskID
+        authorID
+        content
+        createdAt
+        isSent
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+    users {
+      items {
+        id
+        taskID
+        userID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    updatedAt
+  }
+}
+mutation CreateUser(
+  $input: CreateUserInput!
+  $condition: ModelUserConditionInput
+) {
+  createUser(input: $input, condition: $condition) {
+    id
+    username
+    email
+    companyID
+    tel
+    positionName
+    iconImage {
+      bucket
+      region
+      key
+    }
+    registered
+    authority
+    company {
+      id
+      name
+      officerEmail
+      iconCompany {
+        bucket
+        region
+        key
+      }
+      room {
+        nextToken
+      }
+      companyMembers {
+        nextToken
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+    messages {
+      items {
+        id
+        taskID
+        authorID
+        content
+        createdAt
+        isSent
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+    room {
+      items {
+        id
+        roomID
+        userID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    task {
+      items {
+        id
+        taskID
+        userID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    chargeTask {
+      items {
+        id
+        authorID
+        roomID
+        chargePersonID
+        title
+        description
+        scheduleDate
+        priority
+        status
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+    owner
+  }
+}
+mutation UpdateUser(
+  $input: UpdateUserInput!
+  $condition: ModelUserConditionInput
+) {
+  updateUser(input: $input, condition: $condition) {
+    id
+    username
+    email
+    companyID
+    tel
+    positionName
+    iconImage {
+      bucket
+      region
+      key
+    }
+    registered
+    authority
+    company {
+      id
+      name
+      officerEmail
+      iconCompany {
+        bucket
+        region
+        key
+      }
+      room {
+        nextToken
+      }
+      companyMembers {
+        nextToken
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+    messages {
+      items {
+        id
+        taskID
+        authorID
+        content
+        createdAt
+        isSent
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+    room {
+      items {
+        id
+        roomID
+        userID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    task {
+      items {
+        id
+        taskID
+        userID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    chargeTask {
+      items {
+        id
+        authorID
+        roomID
+        chargePersonID
+        title
+        description
+        scheduleDate
+        priority
+        status
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+    owner
+  }
+}
+mutation DeleteUser(
+  $input: DeleteUserInput!
+  $condition: ModelUserConditionInput
+) {
+  deleteUser(input: $input, condition: $condition) {
+    id
+    username
+    email
+    companyID
+    tel
+    positionName
+    iconImage {
+      bucket
+      region
+      key
+    }
+    registered
+    authority
+    company {
+      id
+      name
+      officerEmail
+      iconCompany {
+        bucket
+        region
+        key
+      }
+      room {
+        nextToken
+      }
+      companyMembers {
+        nextToken
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+    messages {
+      items {
+        id
+        taskID
+        authorID
+        content
+        createdAt
+        isSent
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+    room {
+      items {
+        id
+        roomID
+        userID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    task {
+      items {
+        id
+        taskID
+        userID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    chargeTask {
+      items {
+        id
+        authorID
+        roomID
+        chargePersonID
+        title
+        description
+        scheduleDate
+        priority
+        status
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+    owner
+  }
+}
+mutation CreateRoomGroup(
+  $input: CreateRoomGroupInput!
+  $condition: ModelRoomGroupConditionInput
+) {
+  createRoomGroup(input: $input, condition: $condition) {
+    id
+    roomID
+    userID
+    room {
+      id
+      name
+      companyID
+      description
+      company {
+        id
+        name
+        officerEmail
+        createdAt
+        updatedAt
+        owner
+      }
+      tasks {
+        nextToken
+      }
+      users {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    user {
+      id
+      username
+      email
+      companyID
+      tel
+      positionName
+      iconImage {
+        bucket
+        region
+        key
+      }
+      registered
+      authority
+      company {
+        id
+        name
+        officerEmail
+        createdAt
+        updatedAt
+        owner
+      }
+      messages {
+        nextToken
+      }
+      room {
+        nextToken
+      }
+      task {
+        nextToken
+      }
+      chargeTask {
+        nextToken
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+    createdAt
+    updatedAt
+  }
+}
+mutation UpdateRoomGroup(
+  $input: UpdateRoomGroupInput!
+  $condition: ModelRoomGroupConditionInput
+) {
+  updateRoomGroup(input: $input, condition: $condition) {
+    id
+    roomID
+    userID
+    room {
+      id
+      name
+      companyID
+      description
+      company {
+        id
+        name
+        officerEmail
+        createdAt
+        updatedAt
+        owner
+      }
+      tasks {
+        nextToken
+      }
+      users {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    user {
+      id
+      username
+      email
+      companyID
+      tel
+      positionName
+      iconImage {
+        bucket
+        region
+        key
+      }
+      registered
+      authority
+      company {
+        id
+        name
+        officerEmail
+        createdAt
+        updatedAt
+        owner
+      }
+      messages {
+        nextToken
+      }
+      room {
+        nextToken
+      }
+      task {
+        nextToken
+      }
+      chargeTask {
+        nextToken
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+    createdAt
+    updatedAt
+  }
+}
+mutation DeleteRoomGroup(
+  $input: DeleteRoomGroupInput!
+  $condition: ModelRoomGroupConditionInput
+) {
+  deleteRoomGroup(input: $input, condition: $condition) {
+    id
+    roomID
+    userID
+    room {
+      id
+      name
+      companyID
+      description
+      company {
+        id
+        name
+        officerEmail
+        createdAt
+        updatedAt
+        owner
+      }
+      tasks {
+        nextToken
+      }
+      users {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    user {
+      id
+      username
+      email
+      companyID
+      tel
+      positionName
+      iconImage {
+        bucket
+        region
+        key
+      }
+      registered
+      authority
+      company {
+        id
+        name
+        officerEmail
+        createdAt
+        updatedAt
+        owner
+      }
+      messages {
+        nextToken
+      }
+      room {
+        nextToken
+      }
+      task {
+        nextToken
+      }
+      chargeTask {
+        nextToken
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+    createdAt
+    updatedAt
+  }
+}
+mutation CreateRoom(
+  $input: CreateRoomInput!
+  $condition: ModelRoomConditionInput
+) {
+  createRoom(input: $input, condition: $condition) {
+    id
+    name
+    companyID
+    description
+    company {
+      id
+      name
+      officerEmail
+      iconCompany {
+        bucket
+        region
+        key
+      }
+      room {
+        nextToken
+      }
+      companyMembers {
+        nextToken
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+    tasks {
+      items {
+        id
+        authorID
+        roomID
+        chargePersonID
+        title
+        description
+        scheduleDate
+        priority
+        status
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    users {
+      items {
+        id
+        roomID
+        userID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+  }
+}
+mutation UpdateRoom(
+  $input: UpdateRoomInput!
+  $condition: ModelRoomConditionInput
+) {
+  updateRoom(input: $input, condition: $condition) {
+    id
+    name
+    companyID
+    description
+    company {
+      id
+      name
+      officerEmail
+      iconCompany {
+        bucket
+        region
+        key
+      }
+      room {
+        nextToken
+      }
+      companyMembers {
+        nextToken
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+    tasks {
+      items {
+        id
+        authorID
+        roomID
+        chargePersonID
+        title
+        description
+        scheduleDate
+        priority
+        status
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    users {
+      items {
+        id
+        roomID
+        userID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+  }
+}
+mutation DeleteRoom(
+  $input: DeleteRoomInput!
+  $condition: ModelRoomConditionInput
+) {
+  deleteRoom(input: $input, condition: $condition) {
+    id
+    name
+    companyID
+    description
+    company {
+      id
+      name
+      officerEmail
+      iconCompany {
+        bucket
+        region
+        key
+      }
+      room {
+        nextToken
+      }
+      companyMembers {
+        nextToken
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+    tasks {
+      items {
+        id
+        authorID
+        roomID
+        chargePersonID
+        title
+        description
+        scheduleDate
+        priority
+        status
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    users {
+      items {
+        id
+        roomID
+        userID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+  }
+}
+mutation CreateMessage(
+  $input: CreateMessageInput!
+  $condition: ModelMessageConditionInput
+) {
+  createMessage(input: $input, condition: $condition) {
+    id
+    taskID
+    authorID
+    content
+    createdAt
+    isSent
+    attachment {
+      bucket
+      region
+      key
+    }
+    author {
+      id
+      username
+      email
+      companyID
+      tel
+      positionName
+      iconImage {
+        bucket
+        region
+        key
+      }
+      registered
+      authority
+      company {
+        id
+        name
+        officerEmail
+        createdAt
+        updatedAt
+        owner
+      }
+      messages {
+        nextToken
+      }
+      room {
+        nextToken
+      }
+      task {
+        nextToken
+      }
+      chargeTask {
+        nextToken
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+    task {
+      id
+      authorID
+      roomID
+      chargePersonID
+      title
+      room {
+        id
+        name
+        companyID
+        description
+        createdAt
+        updatedAt
+      }
+      description
+      iconTask {
+        bucket
+        region
+        key
+      }
+      scheduleDate
+      priority
+      status
+      createdAt
+      chargePerson {
+        id
+        username
+        email
+        companyID
+        tel
+        positionName
+        registered
+        authority
+        createdAt
+        updatedAt
+        owner
+      }
+      messages {
+        nextToken
+      }
+      users {
+        nextToken
+      }
+      updatedAt
+    }
+    updatedAt
+    owner
+  }
+}
+mutation UpdateMessage(
+  $input: UpdateMessageInput!
+  $condition: ModelMessageConditionInput
+) {
+  updateMessage(input: $input, condition: $condition) {
+    id
+    taskID
+    authorID
+    content
+    createdAt
+    isSent
+    attachment {
+      bucket
+      region
+      key
+    }
+    author {
+      id
+      username
+      email
+      companyID
+      tel
+      positionName
+      iconImage {
+        bucket
+        region
+        key
+      }
+      registered
+      authority
+      company {
+        id
+        name
+        officerEmail
+        createdAt
+        updatedAt
+        owner
+      }
+      messages {
+        nextToken
+      }
+      room {
+        nextToken
+      }
+      task {
+        nextToken
+      }
+      chargeTask {
+        nextToken
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+    task {
+      id
+      authorID
+      roomID
+      chargePersonID
+      title
+      room {
+        id
+        name
+        companyID
+        description
+        createdAt
+        updatedAt
+      }
+      description
+      iconTask {
+        bucket
+        region
+        key
+      }
+      scheduleDate
+      priority
+      status
+      createdAt
+      chargePerson {
+        id
+        username
+        email
+        companyID
+        tel
+        positionName
+        registered
+        authority
+        createdAt
+        updatedAt
+        owner
+      }
+      messages {
+        nextToken
+      }
+      users {
+        nextToken
+      }
+      updatedAt
+    }
+    updatedAt
+    owner
+  }
+}
+mutation DeleteMessage(
+  $input: DeleteMessageInput!
+  $condition: ModelMessageConditionInput
+) {
+  deleteMessage(input: $input, condition: $condition) {
+    id
+    taskID
+    authorID
+    content
+    createdAt
+    isSent
+    attachment {
+      bucket
+      region
+      key
+    }
+    author {
+      id
+      username
+      email
+      companyID
+      tel
+      positionName
+      iconImage {
+        bucket
+        region
+        key
+      }
+      registered
+      authority
+      company {
+        id
+        name
+        officerEmail
+        createdAt
+        updatedAt
+        owner
+      }
+      messages {
+        nextToken
+      }
+      room {
+        nextToken
+      }
+      task {
+        nextToken
+      }
+      chargeTask {
+        nextToken
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+    task {
+      id
+      authorID
+      roomID
+      chargePersonID
+      title
+      room {
+        id
+        name
+        companyID
+        description
+        createdAt
+        updatedAt
+      }
+      description
+      iconTask {
+        bucket
+        region
+        key
+      }
+      scheduleDate
+      priority
+      status
+      createdAt
+      chargePerson {
+        id
+        username
+        email
+        companyID
+        tel
+        positionName
+        registered
+        authority
+        createdAt
+        updatedAt
+        owner
+      }
+      messages {
+        nextToken
+      }
+      users {
+        nextToken
+      }
+      updatedAt
+    }
+    updatedAt
+    owner
+  }
+}

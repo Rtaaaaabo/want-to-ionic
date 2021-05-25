@@ -12,12 +12,19 @@ export interface SubscriptionResponse<T> {
 export type CreateCompanyInput = {
   id?: string | null;
   name: string;
-  domain: string;
+  officerEmail: string;
+  iconCompany?: S3ObjectInput | null;
+};
+
+export type S3ObjectInput = {
+  bucket: string;
+  region: string;
+  key: string;
 };
 
 export type ModelCompanyConditionInput = {
   name?: ModelStringInput | null;
-  domain?: ModelStringInput | null;
+  officerEmail?: ModelStringInput | null;
   and?: Array<ModelCompanyConditionInput | null> | null;
   or?: Array<ModelCompanyConditionInput | null> | null;
   not?: ModelCompanyConditionInput | null;
@@ -66,11 +73,20 @@ export type Company = {
   __typename: "Company";
   id?: string;
   name?: string;
-  domain?: string;
+  officerEmail?: string;
+  iconCompany?: S3Object;
   room?: ModelRoomConnection;
   companyMembers?: ModelUserConnection;
   createdAt?: string;
   updatedAt?: string;
+  owner?: string | null;
+};
+
+export type S3Object = {
+  __typename: "S3Object";
+  bucket?: string;
+  region?: string;
+  key?: string;
 };
 
 export type ModelRoomConnection = {
@@ -107,6 +123,7 @@ export type Task = {
   title?: string;
   room?: Room;
   description?: string | null;
+  iconTask?: S3Object;
   scheduleDate?: string | null;
   priority?: number | null;
   status?: number | null;
@@ -125,7 +142,7 @@ export type User = {
   companyID?: string;
   tel?: string | null;
   positionName?: string | null;
-  iconImage?: s3Object;
+  iconImage?: S3Object;
   registered?: boolean | null;
   authority?: string | null;
   company?: Company;
@@ -135,13 +152,7 @@ export type User = {
   chargeTask?: ModelTaskConnection;
   createdAt?: string;
   updatedAt?: string;
-};
-
-export type s3Object = {
-  __typename: "s3Object";
-  bucket?: string;
-  region?: string;
-  key?: string;
+  owner?: string | null;
 };
 
 export type ModelMessageConnection = {
@@ -158,10 +169,11 @@ export type Message = {
   content?: string;
   createdAt?: string;
   isSent?: boolean | null;
-  attachment?: Array<s3Object | null> | null;
+  attachment?: Array<S3Object | null> | null;
   author?: User;
   task?: Task;
   updatedAt?: string;
+  owner?: string | null;
 };
 
 export type ModelRoomGroupConnection = {
@@ -207,11 +219,12 @@ export type ModelUserConnection = {
 export type UpdateCompanyInput = {
   id: string;
   name?: string | null;
-  domain?: string | null;
+  officerEmail?: string | null;
+  iconCompany?: S3ObjectInput | null;
 };
 
 export type DeleteCompanyInput = {
-  id?: string | null;
+  id: string;
 };
 
 export type CreateTaskGroupInput = {
@@ -251,7 +264,7 @@ export type UpdateTaskGroupInput = {
 };
 
 export type DeleteTaskGroupInput = {
-  id?: string | null;
+  id: string;
 };
 
 export type CreateTaskInput = {
@@ -261,6 +274,7 @@ export type CreateTaskInput = {
   chargePersonID: string;
   title: string;
   description?: string | null;
+  iconTask?: S3ObjectInput | null;
   scheduleDate?: string | null;
   priority?: number | null;
   status?: number | null;
@@ -301,6 +315,7 @@ export type UpdateTaskInput = {
   chargePersonID?: string | null;
   title?: string | null;
   description?: string | null;
+  iconTask?: S3ObjectInput | null;
   scheduleDate?: string | null;
   priority?: number | null;
   status?: number | null;
@@ -308,7 +323,7 @@ export type UpdateTaskInput = {
 };
 
 export type DeleteTaskInput = {
-  id?: string | null;
+  id: string;
 };
 
 export type CreateUserInput = {
@@ -321,12 +336,6 @@ export type CreateUserInput = {
   iconImage?: S3ObjectInput | null;
   registered?: boolean | null;
   authority?: string | null;
-};
-
-export type S3ObjectInput = {
-  bucket: string;
-  region: string;
-  key: string;
 };
 
 export type ModelUserConditionInput = {
@@ -362,7 +371,7 @@ export type UpdateUserInput = {
 };
 
 export type DeleteUserInput = {
-  id?: string | null;
+  id: string;
 };
 
 export type CreateRoomGroupInput = {
@@ -386,7 +395,7 @@ export type UpdateRoomGroupInput = {
 };
 
 export type DeleteRoomGroupInput = {
-  id?: string | null;
+  id: string;
 };
 
 export type CreateRoomInput = {
@@ -413,7 +422,7 @@ export type UpdateRoomInput = {
 };
 
 export type DeleteRoomInput = {
-  id?: string | null;
+  id: string;
 };
 
 export type CreateMessageInput = {
@@ -448,13 +457,13 @@ export type UpdateMessageInput = {
 };
 
 export type DeleteMessageInput = {
-  id?: string | null;
+  id: string;
 };
 
 export type ModelCompanyFilterInput = {
   id?: ModelIDInput | null;
   name?: ModelStringInput | null;
-  domain?: ModelStringInput | null;
+  officerEmail?: ModelStringInput | null;
   and?: Array<ModelCompanyFilterInput | null> | null;
   or?: Array<ModelCompanyFilterInput | null> | null;
   not?: ModelCompanyFilterInput | null;
@@ -555,7 +564,13 @@ export type CreateCompanyMutation = {
   __typename: "Company";
   id: string;
   name: string;
-  domain: string;
+  officerEmail: string;
+  iconCompany?: {
+    __typename: "S3Object";
+    bucket: string;
+    region: string;
+    key: string;
+  } | null;
   room?: {
     __typename: "ModelRoomConnection";
     items?: Array<{
@@ -583,18 +598,26 @@ export type CreateCompanyMutation = {
       authority?: string | null;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     } | null> | null;
     nextToken?: string | null;
   } | null;
   createdAt: string;
   updatedAt: string;
+  owner?: string | null;
 };
 
 export type UpdateCompanyMutation = {
   __typename: "Company";
   id: string;
   name: string;
-  domain: string;
+  officerEmail: string;
+  iconCompany?: {
+    __typename: "S3Object";
+    bucket: string;
+    region: string;
+    key: string;
+  } | null;
   room?: {
     __typename: "ModelRoomConnection";
     items?: Array<{
@@ -622,18 +645,26 @@ export type UpdateCompanyMutation = {
       authority?: string | null;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     } | null> | null;
     nextToken?: string | null;
   } | null;
   createdAt: string;
   updatedAt: string;
+  owner?: string | null;
 };
 
 export type DeleteCompanyMutation = {
   __typename: "Company";
   id: string;
   name: string;
-  domain: string;
+  officerEmail: string;
+  iconCompany?: {
+    __typename: "S3Object";
+    bucket: string;
+    region: string;
+    key: string;
+  } | null;
   room?: {
     __typename: "ModelRoomConnection";
     items?: Array<{
@@ -661,11 +692,13 @@ export type DeleteCompanyMutation = {
       authority?: string | null;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     } | null> | null;
     nextToken?: string | null;
   } | null;
   createdAt: string;
   updatedAt: string;
+  owner?: string | null;
 };
 
 export type CreateTaskGroupMutation = {
@@ -690,6 +723,12 @@ export type CreateTaskGroupMutation = {
       updatedAt: string;
     };
     description?: string | null;
+    iconTask?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
     scheduleDate?: string | null;
     priority?: number | null;
     status?: number | null;
@@ -706,6 +745,7 @@ export type CreateTaskGroupMutation = {
       authority?: string | null;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     };
     messages?: {
       __typename: "ModelMessageConnection";
@@ -726,7 +766,7 @@ export type CreateTaskGroupMutation = {
     tel?: string | null;
     positionName?: string | null;
     iconImage?: {
-      __typename: "s3Object";
+      __typename: "S3Object";
       bucket: string;
       region: string;
       key: string;
@@ -737,9 +777,10 @@ export type CreateTaskGroupMutation = {
       __typename: "Company";
       id: string;
       name: string;
-      domain: string;
+      officerEmail: string;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     };
     messages?: {
       __typename: "ModelMessageConnection";
@@ -759,6 +800,7 @@ export type CreateTaskGroupMutation = {
     } | null;
     createdAt: string;
     updatedAt: string;
+    owner?: string | null;
   } | null;
   createdAt: string;
   updatedAt: string;
@@ -786,6 +828,12 @@ export type UpdateTaskGroupMutation = {
       updatedAt: string;
     };
     description?: string | null;
+    iconTask?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
     scheduleDate?: string | null;
     priority?: number | null;
     status?: number | null;
@@ -802,6 +850,7 @@ export type UpdateTaskGroupMutation = {
       authority?: string | null;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     };
     messages?: {
       __typename: "ModelMessageConnection";
@@ -822,7 +871,7 @@ export type UpdateTaskGroupMutation = {
     tel?: string | null;
     positionName?: string | null;
     iconImage?: {
-      __typename: "s3Object";
+      __typename: "S3Object";
       bucket: string;
       region: string;
       key: string;
@@ -833,9 +882,10 @@ export type UpdateTaskGroupMutation = {
       __typename: "Company";
       id: string;
       name: string;
-      domain: string;
+      officerEmail: string;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     };
     messages?: {
       __typename: "ModelMessageConnection";
@@ -855,6 +905,7 @@ export type UpdateTaskGroupMutation = {
     } | null;
     createdAt: string;
     updatedAt: string;
+    owner?: string | null;
   } | null;
   createdAt: string;
   updatedAt: string;
@@ -882,6 +933,12 @@ export type DeleteTaskGroupMutation = {
       updatedAt: string;
     };
     description?: string | null;
+    iconTask?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
     scheduleDate?: string | null;
     priority?: number | null;
     status?: number | null;
@@ -898,6 +955,7 @@ export type DeleteTaskGroupMutation = {
       authority?: string | null;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     };
     messages?: {
       __typename: "ModelMessageConnection";
@@ -918,7 +976,7 @@ export type DeleteTaskGroupMutation = {
     tel?: string | null;
     positionName?: string | null;
     iconImage?: {
-      __typename: "s3Object";
+      __typename: "S3Object";
       bucket: string;
       region: string;
       key: string;
@@ -929,9 +987,10 @@ export type DeleteTaskGroupMutation = {
       __typename: "Company";
       id: string;
       name: string;
-      domain: string;
+      officerEmail: string;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     };
     messages?: {
       __typename: "ModelMessageConnection";
@@ -951,6 +1010,7 @@ export type DeleteTaskGroupMutation = {
     } | null;
     createdAt: string;
     updatedAt: string;
+    owner?: string | null;
   } | null;
   createdAt: string;
   updatedAt: string;
@@ -973,9 +1033,10 @@ export type CreateTaskMutation = {
       __typename: "Company";
       id: string;
       name: string;
-      domain: string;
+      officerEmail: string;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     };
     tasks?: {
       __typename: "ModelTaskConnection";
@@ -989,6 +1050,12 @@ export type CreateTaskMutation = {
     updatedAt: string;
   };
   description?: string | null;
+  iconTask?: {
+    __typename: "S3Object";
+    bucket: string;
+    region: string;
+    key: string;
+  } | null;
   scheduleDate?: string | null;
   priority?: number | null;
   status?: number | null;
@@ -1002,7 +1069,7 @@ export type CreateTaskMutation = {
     tel?: string | null;
     positionName?: string | null;
     iconImage?: {
-      __typename: "s3Object";
+      __typename: "S3Object";
       bucket: string;
       region: string;
       key: string;
@@ -1013,9 +1080,10 @@ export type CreateTaskMutation = {
       __typename: "Company";
       id: string;
       name: string;
-      domain: string;
+      officerEmail: string;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     };
     messages?: {
       __typename: "ModelMessageConnection";
@@ -1035,6 +1103,7 @@ export type CreateTaskMutation = {
     } | null;
     createdAt: string;
     updatedAt: string;
+    owner?: string | null;
   };
   messages?: {
     __typename: "ModelMessageConnection";
@@ -1047,6 +1116,7 @@ export type CreateTaskMutation = {
       createdAt: string;
       isSent?: boolean | null;
       updatedAt: string;
+      owner?: string | null;
     } | null> | null;
     nextToken?: string | null;
   } | null;
@@ -1082,9 +1152,10 @@ export type UpdateTaskMutation = {
       __typename: "Company";
       id: string;
       name: string;
-      domain: string;
+      officerEmail: string;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     };
     tasks?: {
       __typename: "ModelTaskConnection";
@@ -1098,6 +1169,12 @@ export type UpdateTaskMutation = {
     updatedAt: string;
   };
   description?: string | null;
+  iconTask?: {
+    __typename: "S3Object";
+    bucket: string;
+    region: string;
+    key: string;
+  } | null;
   scheduleDate?: string | null;
   priority?: number | null;
   status?: number | null;
@@ -1111,7 +1188,7 @@ export type UpdateTaskMutation = {
     tel?: string | null;
     positionName?: string | null;
     iconImage?: {
-      __typename: "s3Object";
+      __typename: "S3Object";
       bucket: string;
       region: string;
       key: string;
@@ -1122,9 +1199,10 @@ export type UpdateTaskMutation = {
       __typename: "Company";
       id: string;
       name: string;
-      domain: string;
+      officerEmail: string;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     };
     messages?: {
       __typename: "ModelMessageConnection";
@@ -1144,6 +1222,7 @@ export type UpdateTaskMutation = {
     } | null;
     createdAt: string;
     updatedAt: string;
+    owner?: string | null;
   };
   messages?: {
     __typename: "ModelMessageConnection";
@@ -1156,6 +1235,7 @@ export type UpdateTaskMutation = {
       createdAt: string;
       isSent?: boolean | null;
       updatedAt: string;
+      owner?: string | null;
     } | null> | null;
     nextToken?: string | null;
   } | null;
@@ -1191,9 +1271,10 @@ export type DeleteTaskMutation = {
       __typename: "Company";
       id: string;
       name: string;
-      domain: string;
+      officerEmail: string;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     };
     tasks?: {
       __typename: "ModelTaskConnection";
@@ -1207,6 +1288,12 @@ export type DeleteTaskMutation = {
     updatedAt: string;
   };
   description?: string | null;
+  iconTask?: {
+    __typename: "S3Object";
+    bucket: string;
+    region: string;
+    key: string;
+  } | null;
   scheduleDate?: string | null;
   priority?: number | null;
   status?: number | null;
@@ -1220,7 +1307,7 @@ export type DeleteTaskMutation = {
     tel?: string | null;
     positionName?: string | null;
     iconImage?: {
-      __typename: "s3Object";
+      __typename: "S3Object";
       bucket: string;
       region: string;
       key: string;
@@ -1231,9 +1318,10 @@ export type DeleteTaskMutation = {
       __typename: "Company";
       id: string;
       name: string;
-      domain: string;
+      officerEmail: string;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     };
     messages?: {
       __typename: "ModelMessageConnection";
@@ -1253,6 +1341,7 @@ export type DeleteTaskMutation = {
     } | null;
     createdAt: string;
     updatedAt: string;
+    owner?: string | null;
   };
   messages?: {
     __typename: "ModelMessageConnection";
@@ -1265,6 +1354,7 @@ export type DeleteTaskMutation = {
       createdAt: string;
       isSent?: boolean | null;
       updatedAt: string;
+      owner?: string | null;
     } | null> | null;
     nextToken?: string | null;
   } | null;
@@ -1292,7 +1382,7 @@ export type CreateUserMutation = {
   tel?: string | null;
   positionName?: string | null;
   iconImage?: {
-    __typename: "s3Object";
+    __typename: "S3Object";
     bucket: string;
     region: string;
     key: string;
@@ -1303,7 +1393,13 @@ export type CreateUserMutation = {
     __typename: "Company";
     id: string;
     name: string;
-    domain: string;
+    officerEmail: string;
+    iconCompany?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
     room?: {
       __typename: "ModelRoomConnection";
       nextToken?: string | null;
@@ -1314,6 +1410,7 @@ export type CreateUserMutation = {
     } | null;
     createdAt: string;
     updatedAt: string;
+    owner?: string | null;
   };
   messages?: {
     __typename: "ModelMessageConnection";
@@ -1326,6 +1423,7 @@ export type CreateUserMutation = {
       createdAt: string;
       isSent?: boolean | null;
       updatedAt: string;
+      owner?: string | null;
     } | null> | null;
     nextToken?: string | null;
   } | null;
@@ -1373,6 +1471,7 @@ export type CreateUserMutation = {
   } | null;
   createdAt: string;
   updatedAt: string;
+  owner?: string | null;
 };
 
 export type UpdateUserMutation = {
@@ -1384,7 +1483,7 @@ export type UpdateUserMutation = {
   tel?: string | null;
   positionName?: string | null;
   iconImage?: {
-    __typename: "s3Object";
+    __typename: "S3Object";
     bucket: string;
     region: string;
     key: string;
@@ -1395,7 +1494,13 @@ export type UpdateUserMutation = {
     __typename: "Company";
     id: string;
     name: string;
-    domain: string;
+    officerEmail: string;
+    iconCompany?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
     room?: {
       __typename: "ModelRoomConnection";
       nextToken?: string | null;
@@ -1406,6 +1511,7 @@ export type UpdateUserMutation = {
     } | null;
     createdAt: string;
     updatedAt: string;
+    owner?: string | null;
   };
   messages?: {
     __typename: "ModelMessageConnection";
@@ -1418,6 +1524,7 @@ export type UpdateUserMutation = {
       createdAt: string;
       isSent?: boolean | null;
       updatedAt: string;
+      owner?: string | null;
     } | null> | null;
     nextToken?: string | null;
   } | null;
@@ -1465,6 +1572,7 @@ export type UpdateUserMutation = {
   } | null;
   createdAt: string;
   updatedAt: string;
+  owner?: string | null;
 };
 
 export type DeleteUserMutation = {
@@ -1476,7 +1584,7 @@ export type DeleteUserMutation = {
   tel?: string | null;
   positionName?: string | null;
   iconImage?: {
-    __typename: "s3Object";
+    __typename: "S3Object";
     bucket: string;
     region: string;
     key: string;
@@ -1487,7 +1595,13 @@ export type DeleteUserMutation = {
     __typename: "Company";
     id: string;
     name: string;
-    domain: string;
+    officerEmail: string;
+    iconCompany?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
     room?: {
       __typename: "ModelRoomConnection";
       nextToken?: string | null;
@@ -1498,6 +1612,7 @@ export type DeleteUserMutation = {
     } | null;
     createdAt: string;
     updatedAt: string;
+    owner?: string | null;
   };
   messages?: {
     __typename: "ModelMessageConnection";
@@ -1510,6 +1625,7 @@ export type DeleteUserMutation = {
       createdAt: string;
       isSent?: boolean | null;
       updatedAt: string;
+      owner?: string | null;
     } | null> | null;
     nextToken?: string | null;
   } | null;
@@ -1557,6 +1673,7 @@ export type DeleteUserMutation = {
   } | null;
   createdAt: string;
   updatedAt: string;
+  owner?: string | null;
 };
 
 export type CreateRoomGroupMutation = {
@@ -1574,9 +1691,10 @@ export type CreateRoomGroupMutation = {
       __typename: "Company";
       id: string;
       name: string;
-      domain: string;
+      officerEmail: string;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     };
     tasks?: {
       __typename: "ModelTaskConnection";
@@ -1598,7 +1716,7 @@ export type CreateRoomGroupMutation = {
     tel?: string | null;
     positionName?: string | null;
     iconImage?: {
-      __typename: "s3Object";
+      __typename: "S3Object";
       bucket: string;
       region: string;
       key: string;
@@ -1609,9 +1727,10 @@ export type CreateRoomGroupMutation = {
       __typename: "Company";
       id: string;
       name: string;
-      domain: string;
+      officerEmail: string;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     };
     messages?: {
       __typename: "ModelMessageConnection";
@@ -1631,6 +1750,7 @@ export type CreateRoomGroupMutation = {
     } | null;
     createdAt: string;
     updatedAt: string;
+    owner?: string | null;
   } | null;
   createdAt: string;
   updatedAt: string;
@@ -1651,9 +1771,10 @@ export type UpdateRoomGroupMutation = {
       __typename: "Company";
       id: string;
       name: string;
-      domain: string;
+      officerEmail: string;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     };
     tasks?: {
       __typename: "ModelTaskConnection";
@@ -1675,7 +1796,7 @@ export type UpdateRoomGroupMutation = {
     tel?: string | null;
     positionName?: string | null;
     iconImage?: {
-      __typename: "s3Object";
+      __typename: "S3Object";
       bucket: string;
       region: string;
       key: string;
@@ -1686,9 +1807,10 @@ export type UpdateRoomGroupMutation = {
       __typename: "Company";
       id: string;
       name: string;
-      domain: string;
+      officerEmail: string;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     };
     messages?: {
       __typename: "ModelMessageConnection";
@@ -1708,6 +1830,7 @@ export type UpdateRoomGroupMutation = {
     } | null;
     createdAt: string;
     updatedAt: string;
+    owner?: string | null;
   } | null;
   createdAt: string;
   updatedAt: string;
@@ -1728,9 +1851,10 @@ export type DeleteRoomGroupMutation = {
       __typename: "Company";
       id: string;
       name: string;
-      domain: string;
+      officerEmail: string;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     };
     tasks?: {
       __typename: "ModelTaskConnection";
@@ -1752,7 +1876,7 @@ export type DeleteRoomGroupMutation = {
     tel?: string | null;
     positionName?: string | null;
     iconImage?: {
-      __typename: "s3Object";
+      __typename: "S3Object";
       bucket: string;
       region: string;
       key: string;
@@ -1763,9 +1887,10 @@ export type DeleteRoomGroupMutation = {
       __typename: "Company";
       id: string;
       name: string;
-      domain: string;
+      officerEmail: string;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     };
     messages?: {
       __typename: "ModelMessageConnection";
@@ -1785,6 +1910,7 @@ export type DeleteRoomGroupMutation = {
     } | null;
     createdAt: string;
     updatedAt: string;
+    owner?: string | null;
   } | null;
   createdAt: string;
   updatedAt: string;
@@ -1800,7 +1926,13 @@ export type CreateRoomMutation = {
     __typename: "Company";
     id: string;
     name: string;
-    domain: string;
+    officerEmail: string;
+    iconCompany?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
     room?: {
       __typename: "ModelRoomConnection";
       nextToken?: string | null;
@@ -1811,6 +1943,7 @@ export type CreateRoomMutation = {
     } | null;
     createdAt: string;
     updatedAt: string;
+    owner?: string | null;
   };
   tasks?: {
     __typename: "ModelTaskConnection";
@@ -1856,7 +1989,13 @@ export type UpdateRoomMutation = {
     __typename: "Company";
     id: string;
     name: string;
-    domain: string;
+    officerEmail: string;
+    iconCompany?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
     room?: {
       __typename: "ModelRoomConnection";
       nextToken?: string | null;
@@ -1867,6 +2006,7 @@ export type UpdateRoomMutation = {
     } | null;
     createdAt: string;
     updatedAt: string;
+    owner?: string | null;
   };
   tasks?: {
     __typename: "ModelTaskConnection";
@@ -1912,7 +2052,13 @@ export type DeleteRoomMutation = {
     __typename: "Company";
     id: string;
     name: string;
-    domain: string;
+    officerEmail: string;
+    iconCompany?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
     room?: {
       __typename: "ModelRoomConnection";
       nextToken?: string | null;
@@ -1923,6 +2069,7 @@ export type DeleteRoomMutation = {
     } | null;
     createdAt: string;
     updatedAt: string;
+    owner?: string | null;
   };
   tasks?: {
     __typename: "ModelTaskConnection";
@@ -1967,7 +2114,7 @@ export type CreateMessageMutation = {
   createdAt: string;
   isSent?: boolean | null;
   attachment?: Array<{
-    __typename: "s3Object";
+    __typename: "S3Object";
     bucket: string;
     region: string;
     key: string;
@@ -1981,7 +2128,7 @@ export type CreateMessageMutation = {
     tel?: string | null;
     positionName?: string | null;
     iconImage?: {
-      __typename: "s3Object";
+      __typename: "S3Object";
       bucket: string;
       region: string;
       key: string;
@@ -1992,9 +2139,10 @@ export type CreateMessageMutation = {
       __typename: "Company";
       id: string;
       name: string;
-      domain: string;
+      officerEmail: string;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     };
     messages?: {
       __typename: "ModelMessageConnection";
@@ -2014,6 +2162,7 @@ export type CreateMessageMutation = {
     } | null;
     createdAt: string;
     updatedAt: string;
+    owner?: string | null;
   };
   task: {
     __typename: "Task";
@@ -2032,6 +2181,12 @@ export type CreateMessageMutation = {
       updatedAt: string;
     };
     description?: string | null;
+    iconTask?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
     scheduleDate?: string | null;
     priority?: number | null;
     status?: number | null;
@@ -2048,6 +2203,7 @@ export type CreateMessageMutation = {
       authority?: string | null;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     };
     messages?: {
       __typename: "ModelMessageConnection";
@@ -2060,6 +2216,7 @@ export type CreateMessageMutation = {
     updatedAt: string;
   };
   updatedAt: string;
+  owner?: string | null;
 };
 
 export type UpdateMessageMutation = {
@@ -2071,7 +2228,7 @@ export type UpdateMessageMutation = {
   createdAt: string;
   isSent?: boolean | null;
   attachment?: Array<{
-    __typename: "s3Object";
+    __typename: "S3Object";
     bucket: string;
     region: string;
     key: string;
@@ -2085,7 +2242,7 @@ export type UpdateMessageMutation = {
     tel?: string | null;
     positionName?: string | null;
     iconImage?: {
-      __typename: "s3Object";
+      __typename: "S3Object";
       bucket: string;
       region: string;
       key: string;
@@ -2096,9 +2253,10 @@ export type UpdateMessageMutation = {
       __typename: "Company";
       id: string;
       name: string;
-      domain: string;
+      officerEmail: string;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     };
     messages?: {
       __typename: "ModelMessageConnection";
@@ -2118,6 +2276,7 @@ export type UpdateMessageMutation = {
     } | null;
     createdAt: string;
     updatedAt: string;
+    owner?: string | null;
   };
   task: {
     __typename: "Task";
@@ -2136,6 +2295,12 @@ export type UpdateMessageMutation = {
       updatedAt: string;
     };
     description?: string | null;
+    iconTask?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
     scheduleDate?: string | null;
     priority?: number | null;
     status?: number | null;
@@ -2152,6 +2317,7 @@ export type UpdateMessageMutation = {
       authority?: string | null;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     };
     messages?: {
       __typename: "ModelMessageConnection";
@@ -2164,6 +2330,7 @@ export type UpdateMessageMutation = {
     updatedAt: string;
   };
   updatedAt: string;
+  owner?: string | null;
 };
 
 export type DeleteMessageMutation = {
@@ -2175,7 +2342,7 @@ export type DeleteMessageMutation = {
   createdAt: string;
   isSent?: boolean | null;
   attachment?: Array<{
-    __typename: "s3Object";
+    __typename: "S3Object";
     bucket: string;
     region: string;
     key: string;
@@ -2189,7 +2356,7 @@ export type DeleteMessageMutation = {
     tel?: string | null;
     positionName?: string | null;
     iconImage?: {
-      __typename: "s3Object";
+      __typename: "S3Object";
       bucket: string;
       region: string;
       key: string;
@@ -2200,9 +2367,10 @@ export type DeleteMessageMutation = {
       __typename: "Company";
       id: string;
       name: string;
-      domain: string;
+      officerEmail: string;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     };
     messages?: {
       __typename: "ModelMessageConnection";
@@ -2222,6 +2390,7 @@ export type DeleteMessageMutation = {
     } | null;
     createdAt: string;
     updatedAt: string;
+    owner?: string | null;
   };
   task: {
     __typename: "Task";
@@ -2240,6 +2409,12 @@ export type DeleteMessageMutation = {
       updatedAt: string;
     };
     description?: string | null;
+    iconTask?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
     scheduleDate?: string | null;
     priority?: number | null;
     status?: number | null;
@@ -2256,6 +2431,7 @@ export type DeleteMessageMutation = {
       authority?: string | null;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     };
     messages?: {
       __typename: "ModelMessageConnection";
@@ -2268,13 +2444,20 @@ export type DeleteMessageMutation = {
     updatedAt: string;
   };
   updatedAt: string;
+  owner?: string | null;
 };
 
 export type GetCompanyQuery = {
   __typename: "Company";
   id: string;
   name: string;
-  domain: string;
+  officerEmail: string;
+  iconCompany?: {
+    __typename: "S3Object";
+    bucket: string;
+    region: string;
+    key: string;
+  } | null;
   room?: {
     __typename: "ModelRoomConnection";
     items?: Array<{
@@ -2302,11 +2485,13 @@ export type GetCompanyQuery = {
       authority?: string | null;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     } | null> | null;
     nextToken?: string | null;
   } | null;
   createdAt: string;
   updatedAt: string;
+  owner?: string | null;
 };
 
 export type ListCompanysQuery = {
@@ -2315,7 +2500,13 @@ export type ListCompanysQuery = {
     __typename: "Company";
     id: string;
     name: string;
-    domain: string;
+    officerEmail: string;
+    iconCompany?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
     room?: {
       __typename: "ModelRoomConnection";
       nextToken?: string | null;
@@ -2326,6 +2517,7 @@ export type ListCompanysQuery = {
     } | null;
     createdAt: string;
     updatedAt: string;
+    owner?: string | null;
   } | null> | null;
   nextToken?: string | null;
 };
@@ -2352,6 +2544,12 @@ export type GetTaskGroupQuery = {
       updatedAt: string;
     };
     description?: string | null;
+    iconTask?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
     scheduleDate?: string | null;
     priority?: number | null;
     status?: number | null;
@@ -2368,6 +2566,7 @@ export type GetTaskGroupQuery = {
       authority?: string | null;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     };
     messages?: {
       __typename: "ModelMessageConnection";
@@ -2388,7 +2587,7 @@ export type GetTaskGroupQuery = {
     tel?: string | null;
     positionName?: string | null;
     iconImage?: {
-      __typename: "s3Object";
+      __typename: "S3Object";
       bucket: string;
       region: string;
       key: string;
@@ -2399,9 +2598,10 @@ export type GetTaskGroupQuery = {
       __typename: "Company";
       id: string;
       name: string;
-      domain: string;
+      officerEmail: string;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     };
     messages?: {
       __typename: "ModelMessageConnection";
@@ -2421,6 +2621,7 @@ export type GetTaskGroupQuery = {
     } | null;
     createdAt: string;
     updatedAt: string;
+    owner?: string | null;
   } | null;
   createdAt: string;
   updatedAt: string;
@@ -2459,6 +2660,7 @@ export type ListTaskGroupsQuery = {
       authority?: string | null;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     } | null;
     createdAt: string;
     updatedAt: string;
@@ -2483,9 +2685,10 @@ export type GetTaskQuery = {
       __typename: "Company";
       id: string;
       name: string;
-      domain: string;
+      officerEmail: string;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     };
     tasks?: {
       __typename: "ModelTaskConnection";
@@ -2499,6 +2702,12 @@ export type GetTaskQuery = {
     updatedAt: string;
   };
   description?: string | null;
+  iconTask?: {
+    __typename: "S3Object";
+    bucket: string;
+    region: string;
+    key: string;
+  } | null;
   scheduleDate?: string | null;
   priority?: number | null;
   status?: number | null;
@@ -2512,7 +2721,7 @@ export type GetTaskQuery = {
     tel?: string | null;
     positionName?: string | null;
     iconImage?: {
-      __typename: "s3Object";
+      __typename: "S3Object";
       bucket: string;
       region: string;
       key: string;
@@ -2523,9 +2732,10 @@ export type GetTaskQuery = {
       __typename: "Company";
       id: string;
       name: string;
-      domain: string;
+      officerEmail: string;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     };
     messages?: {
       __typename: "ModelMessageConnection";
@@ -2545,6 +2755,7 @@ export type GetTaskQuery = {
     } | null;
     createdAt: string;
     updatedAt: string;
+    owner?: string | null;
   };
   messages?: {
     __typename: "ModelMessageConnection";
@@ -2557,6 +2768,7 @@ export type GetTaskQuery = {
       createdAt: string;
       isSent?: boolean | null;
       updatedAt: string;
+      owner?: string | null;
     } | null> | null;
     nextToken?: string | null;
   } | null;
@@ -2594,6 +2806,12 @@ export type ListTasksQuery = {
       updatedAt: string;
     };
     description?: string | null;
+    iconTask?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
     scheduleDate?: string | null;
     priority?: number | null;
     status?: number | null;
@@ -2610,6 +2828,7 @@ export type ListTasksQuery = {
       authority?: string | null;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     };
     messages?: {
       __typename: "ModelMessageConnection";
@@ -2633,7 +2852,7 @@ export type GetUserQuery = {
   tel?: string | null;
   positionName?: string | null;
   iconImage?: {
-    __typename: "s3Object";
+    __typename: "S3Object";
     bucket: string;
     region: string;
     key: string;
@@ -2644,7 +2863,13 @@ export type GetUserQuery = {
     __typename: "Company";
     id: string;
     name: string;
-    domain: string;
+    officerEmail: string;
+    iconCompany?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
     room?: {
       __typename: "ModelRoomConnection";
       nextToken?: string | null;
@@ -2655,6 +2880,7 @@ export type GetUserQuery = {
     } | null;
     createdAt: string;
     updatedAt: string;
+    owner?: string | null;
   };
   messages?: {
     __typename: "ModelMessageConnection";
@@ -2667,6 +2893,7 @@ export type GetUserQuery = {
       createdAt: string;
       isSent?: boolean | null;
       updatedAt: string;
+      owner?: string | null;
     } | null> | null;
     nextToken?: string | null;
   } | null;
@@ -2714,6 +2941,7 @@ export type GetUserQuery = {
   } | null;
   createdAt: string;
   updatedAt: string;
+  owner?: string | null;
 };
 
 export type ListUsersQuery = {
@@ -2727,7 +2955,7 @@ export type ListUsersQuery = {
     tel?: string | null;
     positionName?: string | null;
     iconImage?: {
-      __typename: "s3Object";
+      __typename: "S3Object";
       bucket: string;
       region: string;
       key: string;
@@ -2738,9 +2966,10 @@ export type ListUsersQuery = {
       __typename: "Company";
       id: string;
       name: string;
-      domain: string;
+      officerEmail: string;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     };
     messages?: {
       __typename: "ModelMessageConnection";
@@ -2760,6 +2989,7 @@ export type ListUsersQuery = {
     } | null;
     createdAt: string;
     updatedAt: string;
+    owner?: string | null;
   } | null> | null;
   nextToken?: string | null;
 };
@@ -2779,9 +3009,10 @@ export type GetRoomGroupQuery = {
       __typename: "Company";
       id: string;
       name: string;
-      domain: string;
+      officerEmail: string;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     };
     tasks?: {
       __typename: "ModelTaskConnection";
@@ -2803,7 +3034,7 @@ export type GetRoomGroupQuery = {
     tel?: string | null;
     positionName?: string | null;
     iconImage?: {
-      __typename: "s3Object";
+      __typename: "S3Object";
       bucket: string;
       region: string;
       key: string;
@@ -2814,9 +3045,10 @@ export type GetRoomGroupQuery = {
       __typename: "Company";
       id: string;
       name: string;
-      domain: string;
+      officerEmail: string;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     };
     messages?: {
       __typename: "ModelMessageConnection";
@@ -2836,6 +3068,7 @@ export type GetRoomGroupQuery = {
     } | null;
     createdAt: string;
     updatedAt: string;
+    owner?: string | null;
   } | null;
   createdAt: string;
   updatedAt: string;
@@ -2869,6 +3102,7 @@ export type ListRoomGroupsQuery = {
       authority?: string | null;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     } | null;
     createdAt: string;
     updatedAt: string;
@@ -2886,7 +3120,13 @@ export type GetRoomQuery = {
     __typename: "Company";
     id: string;
     name: string;
-    domain: string;
+    officerEmail: string;
+    iconCompany?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
     room?: {
       __typename: "ModelRoomConnection";
       nextToken?: string | null;
@@ -2897,6 +3137,7 @@ export type GetRoomQuery = {
     } | null;
     createdAt: string;
     updatedAt: string;
+    owner?: string | null;
   };
   tasks?: {
     __typename: "ModelTaskConnection";
@@ -2944,9 +3185,10 @@ export type ListRoomsQuery = {
       __typename: "Company";
       id: string;
       name: string;
-      domain: string;
+      officerEmail: string;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     };
     tasks?: {
       __typename: "ModelTaskConnection";
@@ -2971,7 +3213,7 @@ export type GetMessageQuery = {
   createdAt: string;
   isSent?: boolean | null;
   attachment?: Array<{
-    __typename: "s3Object";
+    __typename: "S3Object";
     bucket: string;
     region: string;
     key: string;
@@ -2985,7 +3227,7 @@ export type GetMessageQuery = {
     tel?: string | null;
     positionName?: string | null;
     iconImage?: {
-      __typename: "s3Object";
+      __typename: "S3Object";
       bucket: string;
       region: string;
       key: string;
@@ -2996,9 +3238,10 @@ export type GetMessageQuery = {
       __typename: "Company";
       id: string;
       name: string;
-      domain: string;
+      officerEmail: string;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     };
     messages?: {
       __typename: "ModelMessageConnection";
@@ -3018,6 +3261,7 @@ export type GetMessageQuery = {
     } | null;
     createdAt: string;
     updatedAt: string;
+    owner?: string | null;
   };
   task: {
     __typename: "Task";
@@ -3036,6 +3280,12 @@ export type GetMessageQuery = {
       updatedAt: string;
     };
     description?: string | null;
+    iconTask?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
     scheduleDate?: string | null;
     priority?: number | null;
     status?: number | null;
@@ -3052,6 +3302,7 @@ export type GetMessageQuery = {
       authority?: string | null;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     };
     messages?: {
       __typename: "ModelMessageConnection";
@@ -3064,6 +3315,7 @@ export type GetMessageQuery = {
     updatedAt: string;
   };
   updatedAt: string;
+  owner?: string | null;
 };
 
 export type ListMessagesQuery = {
@@ -3077,7 +3329,7 @@ export type ListMessagesQuery = {
     createdAt: string;
     isSent?: boolean | null;
     attachment?: Array<{
-      __typename: "s3Object";
+      __typename: "S3Object";
       bucket: string;
       region: string;
       key: string;
@@ -3094,6 +3346,7 @@ export type ListMessagesQuery = {
       authority?: string | null;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     };
     task: {
       __typename: "Task";
@@ -3110,6 +3363,7 @@ export type ListMessagesQuery = {
       updatedAt: string;
     };
     updatedAt: string;
+    owner?: string | null;
   } | null> | null;
   nextToken?: string | null;
 };
@@ -3125,7 +3379,7 @@ export type TaskByCreatedAtQuery = {
     createdAt: string;
     isSent?: boolean | null;
     attachment?: Array<{
-      __typename: "s3Object";
+      __typename: "S3Object";
       bucket: string;
       region: string;
       key: string;
@@ -3142,6 +3396,7 @@ export type TaskByCreatedAtQuery = {
       authority?: string | null;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     };
     task: {
       __typename: "Task";
@@ -3158,6 +3413,7 @@ export type TaskByCreatedAtQuery = {
       updatedAt: string;
     };
     updatedAt: string;
+    owner?: string | null;
   } | null> | null;
   nextToken?: string | null;
 };
@@ -3166,7 +3422,13 @@ export type OnCreateCompanySubscription = {
   __typename: "Company";
   id: string;
   name: string;
-  domain: string;
+  officerEmail: string;
+  iconCompany?: {
+    __typename: "S3Object";
+    bucket: string;
+    region: string;
+    key: string;
+  } | null;
   room?: {
     __typename: "ModelRoomConnection";
     items?: Array<{
@@ -3194,18 +3456,26 @@ export type OnCreateCompanySubscription = {
       authority?: string | null;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     } | null> | null;
     nextToken?: string | null;
   } | null;
   createdAt: string;
   updatedAt: string;
+  owner?: string | null;
 };
 
 export type OnUpdateCompanySubscription = {
   __typename: "Company";
   id: string;
   name: string;
-  domain: string;
+  officerEmail: string;
+  iconCompany?: {
+    __typename: "S3Object";
+    bucket: string;
+    region: string;
+    key: string;
+  } | null;
   room?: {
     __typename: "ModelRoomConnection";
     items?: Array<{
@@ -3233,18 +3503,26 @@ export type OnUpdateCompanySubscription = {
       authority?: string | null;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     } | null> | null;
     nextToken?: string | null;
   } | null;
   createdAt: string;
   updatedAt: string;
+  owner?: string | null;
 };
 
 export type OnDeleteCompanySubscription = {
   __typename: "Company";
   id: string;
   name: string;
-  domain: string;
+  officerEmail: string;
+  iconCompany?: {
+    __typename: "S3Object";
+    bucket: string;
+    region: string;
+    key: string;
+  } | null;
   room?: {
     __typename: "ModelRoomConnection";
     items?: Array<{
@@ -3272,11 +3550,13 @@ export type OnDeleteCompanySubscription = {
       authority?: string | null;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     } | null> | null;
     nextToken?: string | null;
   } | null;
   createdAt: string;
   updatedAt: string;
+  owner?: string | null;
 };
 
 export type OnCreateTaskGroupSubscription = {
@@ -3301,6 +3581,12 @@ export type OnCreateTaskGroupSubscription = {
       updatedAt: string;
     };
     description?: string | null;
+    iconTask?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
     scheduleDate?: string | null;
     priority?: number | null;
     status?: number | null;
@@ -3317,6 +3603,7 @@ export type OnCreateTaskGroupSubscription = {
       authority?: string | null;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     };
     messages?: {
       __typename: "ModelMessageConnection";
@@ -3337,7 +3624,7 @@ export type OnCreateTaskGroupSubscription = {
     tel?: string | null;
     positionName?: string | null;
     iconImage?: {
-      __typename: "s3Object";
+      __typename: "S3Object";
       bucket: string;
       region: string;
       key: string;
@@ -3348,9 +3635,10 @@ export type OnCreateTaskGroupSubscription = {
       __typename: "Company";
       id: string;
       name: string;
-      domain: string;
+      officerEmail: string;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     };
     messages?: {
       __typename: "ModelMessageConnection";
@@ -3370,6 +3658,7 @@ export type OnCreateTaskGroupSubscription = {
     } | null;
     createdAt: string;
     updatedAt: string;
+    owner?: string | null;
   } | null;
   createdAt: string;
   updatedAt: string;
@@ -3397,6 +3686,12 @@ export type OnUpdateTaskGroupSubscription = {
       updatedAt: string;
     };
     description?: string | null;
+    iconTask?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
     scheduleDate?: string | null;
     priority?: number | null;
     status?: number | null;
@@ -3413,6 +3708,7 @@ export type OnUpdateTaskGroupSubscription = {
       authority?: string | null;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     };
     messages?: {
       __typename: "ModelMessageConnection";
@@ -3433,7 +3729,7 @@ export type OnUpdateTaskGroupSubscription = {
     tel?: string | null;
     positionName?: string | null;
     iconImage?: {
-      __typename: "s3Object";
+      __typename: "S3Object";
       bucket: string;
       region: string;
       key: string;
@@ -3444,9 +3740,10 @@ export type OnUpdateTaskGroupSubscription = {
       __typename: "Company";
       id: string;
       name: string;
-      domain: string;
+      officerEmail: string;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     };
     messages?: {
       __typename: "ModelMessageConnection";
@@ -3466,6 +3763,7 @@ export type OnUpdateTaskGroupSubscription = {
     } | null;
     createdAt: string;
     updatedAt: string;
+    owner?: string | null;
   } | null;
   createdAt: string;
   updatedAt: string;
@@ -3493,6 +3791,12 @@ export type OnDeleteTaskGroupSubscription = {
       updatedAt: string;
     };
     description?: string | null;
+    iconTask?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
     scheduleDate?: string | null;
     priority?: number | null;
     status?: number | null;
@@ -3509,6 +3813,7 @@ export type OnDeleteTaskGroupSubscription = {
       authority?: string | null;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     };
     messages?: {
       __typename: "ModelMessageConnection";
@@ -3529,7 +3834,7 @@ export type OnDeleteTaskGroupSubscription = {
     tel?: string | null;
     positionName?: string | null;
     iconImage?: {
-      __typename: "s3Object";
+      __typename: "S3Object";
       bucket: string;
       region: string;
       key: string;
@@ -3540,9 +3845,10 @@ export type OnDeleteTaskGroupSubscription = {
       __typename: "Company";
       id: string;
       name: string;
-      domain: string;
+      officerEmail: string;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     };
     messages?: {
       __typename: "ModelMessageConnection";
@@ -3562,6 +3868,7 @@ export type OnDeleteTaskGroupSubscription = {
     } | null;
     createdAt: string;
     updatedAt: string;
+    owner?: string | null;
   } | null;
   createdAt: string;
   updatedAt: string;
@@ -3584,9 +3891,10 @@ export type OnCreateTaskSubscription = {
       __typename: "Company";
       id: string;
       name: string;
-      domain: string;
+      officerEmail: string;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     };
     tasks?: {
       __typename: "ModelTaskConnection";
@@ -3600,6 +3908,12 @@ export type OnCreateTaskSubscription = {
     updatedAt: string;
   };
   description?: string | null;
+  iconTask?: {
+    __typename: "S3Object";
+    bucket: string;
+    region: string;
+    key: string;
+  } | null;
   scheduleDate?: string | null;
   priority?: number | null;
   status?: number | null;
@@ -3613,7 +3927,7 @@ export type OnCreateTaskSubscription = {
     tel?: string | null;
     positionName?: string | null;
     iconImage?: {
-      __typename: "s3Object";
+      __typename: "S3Object";
       bucket: string;
       region: string;
       key: string;
@@ -3624,9 +3938,10 @@ export type OnCreateTaskSubscription = {
       __typename: "Company";
       id: string;
       name: string;
-      domain: string;
+      officerEmail: string;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     };
     messages?: {
       __typename: "ModelMessageConnection";
@@ -3646,6 +3961,7 @@ export type OnCreateTaskSubscription = {
     } | null;
     createdAt: string;
     updatedAt: string;
+    owner?: string | null;
   };
   messages?: {
     __typename: "ModelMessageConnection";
@@ -3658,6 +3974,7 @@ export type OnCreateTaskSubscription = {
       createdAt: string;
       isSent?: boolean | null;
       updatedAt: string;
+      owner?: string | null;
     } | null> | null;
     nextToken?: string | null;
   } | null;
@@ -3693,9 +4010,10 @@ export type OnUpdateTaskSubscription = {
       __typename: "Company";
       id: string;
       name: string;
-      domain: string;
+      officerEmail: string;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     };
     tasks?: {
       __typename: "ModelTaskConnection";
@@ -3709,6 +4027,12 @@ export type OnUpdateTaskSubscription = {
     updatedAt: string;
   };
   description?: string | null;
+  iconTask?: {
+    __typename: "S3Object";
+    bucket: string;
+    region: string;
+    key: string;
+  } | null;
   scheduleDate?: string | null;
   priority?: number | null;
   status?: number | null;
@@ -3722,7 +4046,7 @@ export type OnUpdateTaskSubscription = {
     tel?: string | null;
     positionName?: string | null;
     iconImage?: {
-      __typename: "s3Object";
+      __typename: "S3Object";
       bucket: string;
       region: string;
       key: string;
@@ -3733,9 +4057,10 @@ export type OnUpdateTaskSubscription = {
       __typename: "Company";
       id: string;
       name: string;
-      domain: string;
+      officerEmail: string;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     };
     messages?: {
       __typename: "ModelMessageConnection";
@@ -3755,6 +4080,7 @@ export type OnUpdateTaskSubscription = {
     } | null;
     createdAt: string;
     updatedAt: string;
+    owner?: string | null;
   };
   messages?: {
     __typename: "ModelMessageConnection";
@@ -3767,6 +4093,7 @@ export type OnUpdateTaskSubscription = {
       createdAt: string;
       isSent?: boolean | null;
       updatedAt: string;
+      owner?: string | null;
     } | null> | null;
     nextToken?: string | null;
   } | null;
@@ -3802,9 +4129,10 @@ export type OnDeleteTaskSubscription = {
       __typename: "Company";
       id: string;
       name: string;
-      domain: string;
+      officerEmail: string;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     };
     tasks?: {
       __typename: "ModelTaskConnection";
@@ -3818,6 +4146,12 @@ export type OnDeleteTaskSubscription = {
     updatedAt: string;
   };
   description?: string | null;
+  iconTask?: {
+    __typename: "S3Object";
+    bucket: string;
+    region: string;
+    key: string;
+  } | null;
   scheduleDate?: string | null;
   priority?: number | null;
   status?: number | null;
@@ -3831,7 +4165,7 @@ export type OnDeleteTaskSubscription = {
     tel?: string | null;
     positionName?: string | null;
     iconImage?: {
-      __typename: "s3Object";
+      __typename: "S3Object";
       bucket: string;
       region: string;
       key: string;
@@ -3842,9 +4176,10 @@ export type OnDeleteTaskSubscription = {
       __typename: "Company";
       id: string;
       name: string;
-      domain: string;
+      officerEmail: string;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     };
     messages?: {
       __typename: "ModelMessageConnection";
@@ -3864,6 +4199,7 @@ export type OnDeleteTaskSubscription = {
     } | null;
     createdAt: string;
     updatedAt: string;
+    owner?: string | null;
   };
   messages?: {
     __typename: "ModelMessageConnection";
@@ -3876,6 +4212,7 @@ export type OnDeleteTaskSubscription = {
       createdAt: string;
       isSent?: boolean | null;
       updatedAt: string;
+      owner?: string | null;
     } | null> | null;
     nextToken?: string | null;
   } | null;
@@ -3903,7 +4240,7 @@ export type OnCreateUserSubscription = {
   tel?: string | null;
   positionName?: string | null;
   iconImage?: {
-    __typename: "s3Object";
+    __typename: "S3Object";
     bucket: string;
     region: string;
     key: string;
@@ -3914,7 +4251,13 @@ export type OnCreateUserSubscription = {
     __typename: "Company";
     id: string;
     name: string;
-    domain: string;
+    officerEmail: string;
+    iconCompany?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
     room?: {
       __typename: "ModelRoomConnection";
       nextToken?: string | null;
@@ -3925,6 +4268,7 @@ export type OnCreateUserSubscription = {
     } | null;
     createdAt: string;
     updatedAt: string;
+    owner?: string | null;
   };
   messages?: {
     __typename: "ModelMessageConnection";
@@ -3937,6 +4281,7 @@ export type OnCreateUserSubscription = {
       createdAt: string;
       isSent?: boolean | null;
       updatedAt: string;
+      owner?: string | null;
     } | null> | null;
     nextToken?: string | null;
   } | null;
@@ -3984,6 +4329,7 @@ export type OnCreateUserSubscription = {
   } | null;
   createdAt: string;
   updatedAt: string;
+  owner?: string | null;
 };
 
 export type OnUpdateUserSubscription = {
@@ -3995,7 +4341,7 @@ export type OnUpdateUserSubscription = {
   tel?: string | null;
   positionName?: string | null;
   iconImage?: {
-    __typename: "s3Object";
+    __typename: "S3Object";
     bucket: string;
     region: string;
     key: string;
@@ -4006,7 +4352,13 @@ export type OnUpdateUserSubscription = {
     __typename: "Company";
     id: string;
     name: string;
-    domain: string;
+    officerEmail: string;
+    iconCompany?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
     room?: {
       __typename: "ModelRoomConnection";
       nextToken?: string | null;
@@ -4017,6 +4369,7 @@ export type OnUpdateUserSubscription = {
     } | null;
     createdAt: string;
     updatedAt: string;
+    owner?: string | null;
   };
   messages?: {
     __typename: "ModelMessageConnection";
@@ -4029,6 +4382,7 @@ export type OnUpdateUserSubscription = {
       createdAt: string;
       isSent?: boolean | null;
       updatedAt: string;
+      owner?: string | null;
     } | null> | null;
     nextToken?: string | null;
   } | null;
@@ -4076,6 +4430,7 @@ export type OnUpdateUserSubscription = {
   } | null;
   createdAt: string;
   updatedAt: string;
+  owner?: string | null;
 };
 
 export type OnDeleteUserSubscription = {
@@ -4087,7 +4442,7 @@ export type OnDeleteUserSubscription = {
   tel?: string | null;
   positionName?: string | null;
   iconImage?: {
-    __typename: "s3Object";
+    __typename: "S3Object";
     bucket: string;
     region: string;
     key: string;
@@ -4098,7 +4453,13 @@ export type OnDeleteUserSubscription = {
     __typename: "Company";
     id: string;
     name: string;
-    domain: string;
+    officerEmail: string;
+    iconCompany?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
     room?: {
       __typename: "ModelRoomConnection";
       nextToken?: string | null;
@@ -4109,6 +4470,7 @@ export type OnDeleteUserSubscription = {
     } | null;
     createdAt: string;
     updatedAt: string;
+    owner?: string | null;
   };
   messages?: {
     __typename: "ModelMessageConnection";
@@ -4121,6 +4483,7 @@ export type OnDeleteUserSubscription = {
       createdAt: string;
       isSent?: boolean | null;
       updatedAt: string;
+      owner?: string | null;
     } | null> | null;
     nextToken?: string | null;
   } | null;
@@ -4168,6 +4531,7 @@ export type OnDeleteUserSubscription = {
   } | null;
   createdAt: string;
   updatedAt: string;
+  owner?: string | null;
 };
 
 export type OnCreateRoomGroupSubscription = {
@@ -4185,9 +4549,10 @@ export type OnCreateRoomGroupSubscription = {
       __typename: "Company";
       id: string;
       name: string;
-      domain: string;
+      officerEmail: string;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     };
     tasks?: {
       __typename: "ModelTaskConnection";
@@ -4209,7 +4574,7 @@ export type OnCreateRoomGroupSubscription = {
     tel?: string | null;
     positionName?: string | null;
     iconImage?: {
-      __typename: "s3Object";
+      __typename: "S3Object";
       bucket: string;
       region: string;
       key: string;
@@ -4220,9 +4585,10 @@ export type OnCreateRoomGroupSubscription = {
       __typename: "Company";
       id: string;
       name: string;
-      domain: string;
+      officerEmail: string;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     };
     messages?: {
       __typename: "ModelMessageConnection";
@@ -4242,6 +4608,7 @@ export type OnCreateRoomGroupSubscription = {
     } | null;
     createdAt: string;
     updatedAt: string;
+    owner?: string | null;
   } | null;
   createdAt: string;
   updatedAt: string;
@@ -4262,9 +4629,10 @@ export type OnUpdateRoomGroupSubscription = {
       __typename: "Company";
       id: string;
       name: string;
-      domain: string;
+      officerEmail: string;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     };
     tasks?: {
       __typename: "ModelTaskConnection";
@@ -4286,7 +4654,7 @@ export type OnUpdateRoomGroupSubscription = {
     tel?: string | null;
     positionName?: string | null;
     iconImage?: {
-      __typename: "s3Object";
+      __typename: "S3Object";
       bucket: string;
       region: string;
       key: string;
@@ -4297,9 +4665,10 @@ export type OnUpdateRoomGroupSubscription = {
       __typename: "Company";
       id: string;
       name: string;
-      domain: string;
+      officerEmail: string;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     };
     messages?: {
       __typename: "ModelMessageConnection";
@@ -4319,6 +4688,7 @@ export type OnUpdateRoomGroupSubscription = {
     } | null;
     createdAt: string;
     updatedAt: string;
+    owner?: string | null;
   } | null;
   createdAt: string;
   updatedAt: string;
@@ -4339,9 +4709,10 @@ export type OnDeleteRoomGroupSubscription = {
       __typename: "Company";
       id: string;
       name: string;
-      domain: string;
+      officerEmail: string;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     };
     tasks?: {
       __typename: "ModelTaskConnection";
@@ -4363,7 +4734,7 @@ export type OnDeleteRoomGroupSubscription = {
     tel?: string | null;
     positionName?: string | null;
     iconImage?: {
-      __typename: "s3Object";
+      __typename: "S3Object";
       bucket: string;
       region: string;
       key: string;
@@ -4374,9 +4745,10 @@ export type OnDeleteRoomGroupSubscription = {
       __typename: "Company";
       id: string;
       name: string;
-      domain: string;
+      officerEmail: string;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     };
     messages?: {
       __typename: "ModelMessageConnection";
@@ -4396,6 +4768,7 @@ export type OnDeleteRoomGroupSubscription = {
     } | null;
     createdAt: string;
     updatedAt: string;
+    owner?: string | null;
   } | null;
   createdAt: string;
   updatedAt: string;
@@ -4411,7 +4784,13 @@ export type OnCreateRoomSubscription = {
     __typename: "Company";
     id: string;
     name: string;
-    domain: string;
+    officerEmail: string;
+    iconCompany?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
     room?: {
       __typename: "ModelRoomConnection";
       nextToken?: string | null;
@@ -4422,6 +4801,7 @@ export type OnCreateRoomSubscription = {
     } | null;
     createdAt: string;
     updatedAt: string;
+    owner?: string | null;
   };
   tasks?: {
     __typename: "ModelTaskConnection";
@@ -4467,7 +4847,13 @@ export type OnUpdateRoomSubscription = {
     __typename: "Company";
     id: string;
     name: string;
-    domain: string;
+    officerEmail: string;
+    iconCompany?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
     room?: {
       __typename: "ModelRoomConnection";
       nextToken?: string | null;
@@ -4478,6 +4864,7 @@ export type OnUpdateRoomSubscription = {
     } | null;
     createdAt: string;
     updatedAt: string;
+    owner?: string | null;
   };
   tasks?: {
     __typename: "ModelTaskConnection";
@@ -4523,7 +4910,13 @@ export type OnDeleteRoomSubscription = {
     __typename: "Company";
     id: string;
     name: string;
-    domain: string;
+    officerEmail: string;
+    iconCompany?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
     room?: {
       __typename: "ModelRoomConnection";
       nextToken?: string | null;
@@ -4534,6 +4927,7 @@ export type OnDeleteRoomSubscription = {
     } | null;
     createdAt: string;
     updatedAt: string;
+    owner?: string | null;
   };
   tasks?: {
     __typename: "ModelTaskConnection";
@@ -4578,7 +4972,7 @@ export type OnCreateMessageSubscription = {
   createdAt: string;
   isSent?: boolean | null;
   attachment?: Array<{
-    __typename: "s3Object";
+    __typename: "S3Object";
     bucket: string;
     region: string;
     key: string;
@@ -4592,7 +4986,7 @@ export type OnCreateMessageSubscription = {
     tel?: string | null;
     positionName?: string | null;
     iconImage?: {
-      __typename: "s3Object";
+      __typename: "S3Object";
       bucket: string;
       region: string;
       key: string;
@@ -4603,9 +4997,10 @@ export type OnCreateMessageSubscription = {
       __typename: "Company";
       id: string;
       name: string;
-      domain: string;
+      officerEmail: string;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     };
     messages?: {
       __typename: "ModelMessageConnection";
@@ -4625,6 +5020,7 @@ export type OnCreateMessageSubscription = {
     } | null;
     createdAt: string;
     updatedAt: string;
+    owner?: string | null;
   };
   task: {
     __typename: "Task";
@@ -4643,6 +5039,12 @@ export type OnCreateMessageSubscription = {
       updatedAt: string;
     };
     description?: string | null;
+    iconTask?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
     scheduleDate?: string | null;
     priority?: number | null;
     status?: number | null;
@@ -4659,6 +5061,7 @@ export type OnCreateMessageSubscription = {
       authority?: string | null;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     };
     messages?: {
       __typename: "ModelMessageConnection";
@@ -4671,6 +5074,7 @@ export type OnCreateMessageSubscription = {
     updatedAt: string;
   };
   updatedAt: string;
+  owner?: string | null;
 };
 
 export type OnUpdateMessageSubscription = {
@@ -4682,7 +5086,7 @@ export type OnUpdateMessageSubscription = {
   createdAt: string;
   isSent?: boolean | null;
   attachment?: Array<{
-    __typename: "s3Object";
+    __typename: "S3Object";
     bucket: string;
     region: string;
     key: string;
@@ -4696,7 +5100,7 @@ export type OnUpdateMessageSubscription = {
     tel?: string | null;
     positionName?: string | null;
     iconImage?: {
-      __typename: "s3Object";
+      __typename: "S3Object";
       bucket: string;
       region: string;
       key: string;
@@ -4707,9 +5111,10 @@ export type OnUpdateMessageSubscription = {
       __typename: "Company";
       id: string;
       name: string;
-      domain: string;
+      officerEmail: string;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     };
     messages?: {
       __typename: "ModelMessageConnection";
@@ -4729,6 +5134,7 @@ export type OnUpdateMessageSubscription = {
     } | null;
     createdAt: string;
     updatedAt: string;
+    owner?: string | null;
   };
   task: {
     __typename: "Task";
@@ -4747,6 +5153,12 @@ export type OnUpdateMessageSubscription = {
       updatedAt: string;
     };
     description?: string | null;
+    iconTask?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
     scheduleDate?: string | null;
     priority?: number | null;
     status?: number | null;
@@ -4763,6 +5175,7 @@ export type OnUpdateMessageSubscription = {
       authority?: string | null;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     };
     messages?: {
       __typename: "ModelMessageConnection";
@@ -4775,6 +5188,7 @@ export type OnUpdateMessageSubscription = {
     updatedAt: string;
   };
   updatedAt: string;
+  owner?: string | null;
 };
 
 export type OnDeleteMessageSubscription = {
@@ -4786,7 +5200,7 @@ export type OnDeleteMessageSubscription = {
   createdAt: string;
   isSent?: boolean | null;
   attachment?: Array<{
-    __typename: "s3Object";
+    __typename: "S3Object";
     bucket: string;
     region: string;
     key: string;
@@ -4800,7 +5214,7 @@ export type OnDeleteMessageSubscription = {
     tel?: string | null;
     positionName?: string | null;
     iconImage?: {
-      __typename: "s3Object";
+      __typename: "S3Object";
       bucket: string;
       region: string;
       key: string;
@@ -4811,9 +5225,10 @@ export type OnDeleteMessageSubscription = {
       __typename: "Company";
       id: string;
       name: string;
-      domain: string;
+      officerEmail: string;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     };
     messages?: {
       __typename: "ModelMessageConnection";
@@ -4833,6 +5248,7 @@ export type OnDeleteMessageSubscription = {
     } | null;
     createdAt: string;
     updatedAt: string;
+    owner?: string | null;
   };
   task: {
     __typename: "Task";
@@ -4851,6 +5267,12 @@ export type OnDeleteMessageSubscription = {
       updatedAt: string;
     };
     description?: string | null;
+    iconTask?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
     scheduleDate?: string | null;
     priority?: number | null;
     status?: number | null;
@@ -4867,6 +5289,7 @@ export type OnDeleteMessageSubscription = {
       authority?: string | null;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     };
     messages?: {
       __typename: "ModelMessageConnection";
@@ -4879,6 +5302,7 @@ export type OnDeleteMessageSubscription = {
     updatedAt: string;
   };
   updatedAt: string;
+  owner?: string | null;
 };
 
 @Injectable({
@@ -4894,7 +5318,13 @@ export class APIService {
           __typename
           id
           name
-          domain
+          officerEmail
+          iconCompany {
+            __typename
+            bucket
+            region
+            key
+          }
           room {
             __typename
             items {
@@ -4922,11 +5352,13 @@ export class APIService {
               authority
               createdAt
               updatedAt
+              owner
             }
             nextToken
           }
           createdAt
           updatedAt
+          owner
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -4949,7 +5381,13 @@ export class APIService {
           __typename
           id
           name
-          domain
+          officerEmail
+          iconCompany {
+            __typename
+            bucket
+            region
+            key
+          }
           room {
             __typename
             items {
@@ -4977,11 +5415,13 @@ export class APIService {
               authority
               createdAt
               updatedAt
+              owner
             }
             nextToken
           }
           createdAt
           updatedAt
+          owner
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -5004,7 +5444,13 @@ export class APIService {
           __typename
           id
           name
-          domain
+          officerEmail
+          iconCompany {
+            __typename
+            bucket
+            region
+            key
+          }
           room {
             __typename
             items {
@@ -5032,11 +5478,13 @@ export class APIService {
               authority
               createdAt
               updatedAt
+              owner
             }
             nextToken
           }
           createdAt
           updatedAt
+          owner
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -5077,6 +5525,12 @@ export class APIService {
               updatedAt
             }
             description
+            iconTask {
+              __typename
+              bucket
+              region
+              key
+            }
             scheduleDate
             priority
             status
@@ -5093,6 +5547,7 @@ export class APIService {
               authority
               createdAt
               updatedAt
+              owner
             }
             messages {
               __typename
@@ -5124,9 +5579,10 @@ export class APIService {
               __typename
               id
               name
-              domain
+              officerEmail
               createdAt
               updatedAt
+              owner
             }
             messages {
               __typename
@@ -5146,6 +5602,7 @@ export class APIService {
             }
             createdAt
             updatedAt
+            owner
           }
           createdAt
           updatedAt
@@ -5189,6 +5646,12 @@ export class APIService {
               updatedAt
             }
             description
+            iconTask {
+              __typename
+              bucket
+              region
+              key
+            }
             scheduleDate
             priority
             status
@@ -5205,6 +5668,7 @@ export class APIService {
               authority
               createdAt
               updatedAt
+              owner
             }
             messages {
               __typename
@@ -5236,9 +5700,10 @@ export class APIService {
               __typename
               id
               name
-              domain
+              officerEmail
               createdAt
               updatedAt
+              owner
             }
             messages {
               __typename
@@ -5258,6 +5723,7 @@ export class APIService {
             }
             createdAt
             updatedAt
+            owner
           }
           createdAt
           updatedAt
@@ -5301,6 +5767,12 @@ export class APIService {
               updatedAt
             }
             description
+            iconTask {
+              __typename
+              bucket
+              region
+              key
+            }
             scheduleDate
             priority
             status
@@ -5317,6 +5789,7 @@ export class APIService {
               authority
               createdAt
               updatedAt
+              owner
             }
             messages {
               __typename
@@ -5348,9 +5821,10 @@ export class APIService {
               __typename
               id
               name
-              domain
+              officerEmail
               createdAt
               updatedAt
+              owner
             }
             messages {
               __typename
@@ -5370,6 +5844,7 @@ export class APIService {
             }
             createdAt
             updatedAt
+            owner
           }
           createdAt
           updatedAt
@@ -5408,9 +5883,10 @@ export class APIService {
               __typename
               id
               name
-              domain
+              officerEmail
               createdAt
               updatedAt
+              owner
             }
             tasks {
               __typename
@@ -5424,6 +5900,12 @@ export class APIService {
             updatedAt
           }
           description
+          iconTask {
+            __typename
+            bucket
+            region
+            key
+          }
           scheduleDate
           priority
           status
@@ -5448,9 +5930,10 @@ export class APIService {
               __typename
               id
               name
-              domain
+              officerEmail
               createdAt
               updatedAt
+              owner
             }
             messages {
               __typename
@@ -5470,6 +5953,7 @@ export class APIService {
             }
             createdAt
             updatedAt
+            owner
           }
           messages {
             __typename
@@ -5482,6 +5966,7 @@ export class APIService {
               createdAt
               isSent
               updatedAt
+              owner
             }
             nextToken
           }
@@ -5533,9 +6018,10 @@ export class APIService {
               __typename
               id
               name
-              domain
+              officerEmail
               createdAt
               updatedAt
+              owner
             }
             tasks {
               __typename
@@ -5549,6 +6035,12 @@ export class APIService {
             updatedAt
           }
           description
+          iconTask {
+            __typename
+            bucket
+            region
+            key
+          }
           scheduleDate
           priority
           status
@@ -5573,9 +6065,10 @@ export class APIService {
               __typename
               id
               name
-              domain
+              officerEmail
               createdAt
               updatedAt
+              owner
             }
             messages {
               __typename
@@ -5595,6 +6088,7 @@ export class APIService {
             }
             createdAt
             updatedAt
+            owner
           }
           messages {
             __typename
@@ -5607,6 +6101,7 @@ export class APIService {
               createdAt
               isSent
               updatedAt
+              owner
             }
             nextToken
           }
@@ -5658,9 +6153,10 @@ export class APIService {
               __typename
               id
               name
-              domain
+              officerEmail
               createdAt
               updatedAt
+              owner
             }
             tasks {
               __typename
@@ -5674,6 +6170,12 @@ export class APIService {
             updatedAt
           }
           description
+          iconTask {
+            __typename
+            bucket
+            region
+            key
+          }
           scheduleDate
           priority
           status
@@ -5698,9 +6200,10 @@ export class APIService {
               __typename
               id
               name
-              domain
+              officerEmail
               createdAt
               updatedAt
+              owner
             }
             messages {
               __typename
@@ -5720,6 +6223,7 @@ export class APIService {
             }
             createdAt
             updatedAt
+            owner
           }
           messages {
             __typename
@@ -5732,6 +6236,7 @@ export class APIService {
               createdAt
               isSent
               updatedAt
+              owner
             }
             nextToken
           }
@@ -5786,7 +6291,13 @@ export class APIService {
             __typename
             id
             name
-            domain
+            officerEmail
+            iconCompany {
+              __typename
+              bucket
+              region
+              key
+            }
             room {
               __typename
               nextToken
@@ -5797,6 +6308,7 @@ export class APIService {
             }
             createdAt
             updatedAt
+            owner
           }
           messages {
             __typename
@@ -5809,6 +6321,7 @@ export class APIService {
               createdAt
               isSent
               updatedAt
+              owner
             }
             nextToken
           }
@@ -5856,6 +6369,7 @@ export class APIService {
           }
           createdAt
           updatedAt
+          owner
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -5894,7 +6408,13 @@ export class APIService {
             __typename
             id
             name
-            domain
+            officerEmail
+            iconCompany {
+              __typename
+              bucket
+              region
+              key
+            }
             room {
               __typename
               nextToken
@@ -5905,6 +6425,7 @@ export class APIService {
             }
             createdAt
             updatedAt
+            owner
           }
           messages {
             __typename
@@ -5917,6 +6438,7 @@ export class APIService {
               createdAt
               isSent
               updatedAt
+              owner
             }
             nextToken
           }
@@ -5964,6 +6486,7 @@ export class APIService {
           }
           createdAt
           updatedAt
+          owner
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -6002,7 +6525,13 @@ export class APIService {
             __typename
             id
             name
-            domain
+            officerEmail
+            iconCompany {
+              __typename
+              bucket
+              region
+              key
+            }
             room {
               __typename
               nextToken
@@ -6013,6 +6542,7 @@ export class APIService {
             }
             createdAt
             updatedAt
+            owner
           }
           messages {
             __typename
@@ -6025,6 +6555,7 @@ export class APIService {
               createdAt
               isSent
               updatedAt
+              owner
             }
             nextToken
           }
@@ -6072,6 +6603,7 @@ export class APIService {
           }
           createdAt
           updatedAt
+          owner
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -6105,9 +6637,10 @@ export class APIService {
               __typename
               id
               name
-              domain
+              officerEmail
               createdAt
               updatedAt
+              owner
             }
             tasks {
               __typename
@@ -6140,9 +6673,10 @@ export class APIService {
               __typename
               id
               name
-              domain
+              officerEmail
               createdAt
               updatedAt
+              owner
             }
             messages {
               __typename
@@ -6162,6 +6696,7 @@ export class APIService {
             }
             createdAt
             updatedAt
+            owner
           }
           createdAt
           updatedAt
@@ -6198,9 +6733,10 @@ export class APIService {
               __typename
               id
               name
-              domain
+              officerEmail
               createdAt
               updatedAt
+              owner
             }
             tasks {
               __typename
@@ -6233,9 +6769,10 @@ export class APIService {
               __typename
               id
               name
-              domain
+              officerEmail
               createdAt
               updatedAt
+              owner
             }
             messages {
               __typename
@@ -6255,6 +6792,7 @@ export class APIService {
             }
             createdAt
             updatedAt
+            owner
           }
           createdAt
           updatedAt
@@ -6291,9 +6829,10 @@ export class APIService {
               __typename
               id
               name
-              domain
+              officerEmail
               createdAt
               updatedAt
+              owner
             }
             tasks {
               __typename
@@ -6326,9 +6865,10 @@ export class APIService {
               __typename
               id
               name
-              domain
+              officerEmail
               createdAt
               updatedAt
+              owner
             }
             messages {
               __typename
@@ -6348,6 +6888,7 @@ export class APIService {
             }
             createdAt
             updatedAt
+            owner
           }
           createdAt
           updatedAt
@@ -6379,7 +6920,13 @@ export class APIService {
             __typename
             id
             name
-            domain
+            officerEmail
+            iconCompany {
+              __typename
+              bucket
+              region
+              key
+            }
             room {
               __typename
               nextToken
@@ -6390,6 +6937,7 @@ export class APIService {
             }
             createdAt
             updatedAt
+            owner
           }
           tasks {
             __typename
@@ -6451,7 +6999,13 @@ export class APIService {
             __typename
             id
             name
-            domain
+            officerEmail
+            iconCompany {
+              __typename
+              bucket
+              region
+              key
+            }
             room {
               __typename
               nextToken
@@ -6462,6 +7016,7 @@ export class APIService {
             }
             createdAt
             updatedAt
+            owner
           }
           tasks {
             __typename
@@ -6523,7 +7078,13 @@ export class APIService {
             __typename
             id
             name
-            domain
+            officerEmail
+            iconCompany {
+              __typename
+              bucket
+              region
+              key
+            }
             room {
               __typename
               nextToken
@@ -6534,6 +7095,7 @@ export class APIService {
             }
             createdAt
             updatedAt
+            owner
           }
           tasks {
             __typename
@@ -6619,9 +7181,10 @@ export class APIService {
               __typename
               id
               name
-              domain
+              officerEmail
               createdAt
               updatedAt
+              owner
             }
             messages {
               __typename
@@ -6641,6 +7204,7 @@ export class APIService {
             }
             createdAt
             updatedAt
+            owner
           }
           task {
             __typename
@@ -6659,6 +7223,12 @@ export class APIService {
               updatedAt
             }
             description
+            iconTask {
+              __typename
+              bucket
+              region
+              key
+            }
             scheduleDate
             priority
             status
@@ -6675,6 +7245,7 @@ export class APIService {
               authority
               createdAt
               updatedAt
+              owner
             }
             messages {
               __typename
@@ -6687,6 +7258,7 @@ export class APIService {
             updatedAt
           }
           updatedAt
+          owner
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -6739,9 +7311,10 @@ export class APIService {
               __typename
               id
               name
-              domain
+              officerEmail
               createdAt
               updatedAt
+              owner
             }
             messages {
               __typename
@@ -6761,6 +7334,7 @@ export class APIService {
             }
             createdAt
             updatedAt
+            owner
           }
           task {
             __typename
@@ -6779,6 +7353,12 @@ export class APIService {
               updatedAt
             }
             description
+            iconTask {
+              __typename
+              bucket
+              region
+              key
+            }
             scheduleDate
             priority
             status
@@ -6795,6 +7375,7 @@ export class APIService {
               authority
               createdAt
               updatedAt
+              owner
             }
             messages {
               __typename
@@ -6807,6 +7388,7 @@ export class APIService {
             updatedAt
           }
           updatedAt
+          owner
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -6859,9 +7441,10 @@ export class APIService {
               __typename
               id
               name
-              domain
+              officerEmail
               createdAt
               updatedAt
+              owner
             }
             messages {
               __typename
@@ -6881,6 +7464,7 @@ export class APIService {
             }
             createdAt
             updatedAt
+            owner
           }
           task {
             __typename
@@ -6899,6 +7483,12 @@ export class APIService {
               updatedAt
             }
             description
+            iconTask {
+              __typename
+              bucket
+              region
+              key
+            }
             scheduleDate
             priority
             status
@@ -6915,6 +7505,7 @@ export class APIService {
               authority
               createdAt
               updatedAt
+              owner
             }
             messages {
               __typename
@@ -6927,6 +7518,7 @@ export class APIService {
             updatedAt
           }
           updatedAt
+          owner
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -6946,7 +7538,13 @@ export class APIService {
           __typename
           id
           name
-          domain
+          officerEmail
+          iconCompany {
+            __typename
+            bucket
+            region
+            key
+          }
           room {
             __typename
             items {
@@ -6974,11 +7572,13 @@ export class APIService {
               authority
               createdAt
               updatedAt
+              owner
             }
             nextToken
           }
           createdAt
           updatedAt
+          owner
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -7001,7 +7601,13 @@ export class APIService {
             __typename
             id
             name
-            domain
+            officerEmail
+            iconCompany {
+              __typename
+              bucket
+              region
+              key
+            }
             room {
               __typename
               nextToken
@@ -7012,6 +7618,7 @@ export class APIService {
             }
             createdAt
             updatedAt
+            owner
           }
           nextToken
         }
@@ -7055,6 +7662,12 @@ export class APIService {
               updatedAt
             }
             description
+            iconTask {
+              __typename
+              bucket
+              region
+              key
+            }
             scheduleDate
             priority
             status
@@ -7071,6 +7684,7 @@ export class APIService {
               authority
               createdAt
               updatedAt
+              owner
             }
             messages {
               __typename
@@ -7102,9 +7716,10 @@ export class APIService {
               __typename
               id
               name
-              domain
+              officerEmail
               createdAt
               updatedAt
+              owner
             }
             messages {
               __typename
@@ -7124,6 +7739,7 @@ export class APIService {
             }
             createdAt
             updatedAt
+            owner
           }
           createdAt
           updatedAt
@@ -7176,6 +7792,7 @@ export class APIService {
               authority
               createdAt
               updatedAt
+              owner
             }
             createdAt
             updatedAt
@@ -7217,9 +7834,10 @@ export class APIService {
               __typename
               id
               name
-              domain
+              officerEmail
               createdAt
               updatedAt
+              owner
             }
             tasks {
               __typename
@@ -7233,6 +7851,12 @@ export class APIService {
             updatedAt
           }
           description
+          iconTask {
+            __typename
+            bucket
+            region
+            key
+          }
           scheduleDate
           priority
           status
@@ -7257,9 +7881,10 @@ export class APIService {
               __typename
               id
               name
-              domain
+              officerEmail
               createdAt
               updatedAt
+              owner
             }
             messages {
               __typename
@@ -7279,6 +7904,7 @@ export class APIService {
             }
             createdAt
             updatedAt
+            owner
           }
           messages {
             __typename
@@ -7291,6 +7917,7 @@ export class APIService {
               createdAt
               isSent
               updatedAt
+              owner
             }
             nextToken
           }
@@ -7342,6 +7969,12 @@ export class APIService {
               updatedAt
             }
             description
+            iconTask {
+              __typename
+              bucket
+              region
+              key
+            }
             scheduleDate
             priority
             status
@@ -7358,6 +7991,7 @@ export class APIService {
               authority
               createdAt
               updatedAt
+              owner
             }
             messages {
               __typename
@@ -7409,7 +8043,13 @@ export class APIService {
             __typename
             id
             name
-            domain
+            officerEmail
+            iconCompany {
+              __typename
+              bucket
+              region
+              key
+            }
             room {
               __typename
               nextToken
@@ -7420,6 +8060,7 @@ export class APIService {
             }
             createdAt
             updatedAt
+            owner
           }
           messages {
             __typename
@@ -7432,6 +8073,7 @@ export class APIService {
               createdAt
               isSent
               updatedAt
+              owner
             }
             nextToken
           }
@@ -7479,6 +8121,7 @@ export class APIService {
           }
           createdAt
           updatedAt
+          owner
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -7517,9 +8160,10 @@ export class APIService {
               __typename
               id
               name
-              domain
+              officerEmail
               createdAt
               updatedAt
+              owner
             }
             messages {
               __typename
@@ -7539,6 +8183,7 @@ export class APIService {
             }
             createdAt
             updatedAt
+            owner
           }
           nextToken
         }
@@ -7575,9 +8220,10 @@ export class APIService {
               __typename
               id
               name
-              domain
+              officerEmail
               createdAt
               updatedAt
+              owner
             }
             tasks {
               __typename
@@ -7610,9 +8256,10 @@ export class APIService {
               __typename
               id
               name
-              domain
+              officerEmail
               createdAt
               updatedAt
+              owner
             }
             messages {
               __typename
@@ -7632,6 +8279,7 @@ export class APIService {
             }
             createdAt
             updatedAt
+            owner
           }
           createdAt
           updatedAt
@@ -7679,6 +8327,7 @@ export class APIService {
               authority
               createdAt
               updatedAt
+              owner
             }
             createdAt
             updatedAt
@@ -7713,7 +8362,13 @@ export class APIService {
             __typename
             id
             name
-            domain
+            officerEmail
+            iconCompany {
+              __typename
+              bucket
+              region
+              key
+            }
             room {
               __typename
               nextToken
@@ -7724,6 +8379,7 @@ export class APIService {
             }
             createdAt
             updatedAt
+            owner
           }
           tasks {
             __typename
@@ -7785,9 +8441,10 @@ export class APIService {
               __typename
               id
               name
-              domain
+              officerEmail
               createdAt
               updatedAt
+              owner
             }
             tasks {
               __typename
@@ -7854,9 +8511,10 @@ export class APIService {
               __typename
               id
               name
-              domain
+              officerEmail
               createdAt
               updatedAt
+              owner
             }
             messages {
               __typename
@@ -7876,6 +8534,7 @@ export class APIService {
             }
             createdAt
             updatedAt
+            owner
           }
           task {
             __typename
@@ -7894,6 +8553,12 @@ export class APIService {
               updatedAt
             }
             description
+            iconTask {
+              __typename
+              bucket
+              region
+              key
+            }
             scheduleDate
             priority
             status
@@ -7910,6 +8575,7 @@ export class APIService {
               authority
               createdAt
               updatedAt
+              owner
             }
             messages {
               __typename
@@ -7922,6 +8588,7 @@ export class APIService {
             updatedAt
           }
           updatedAt
+          owner
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -7966,6 +8633,7 @@ export class APIService {
               authority
               createdAt
               updatedAt
+              owner
             }
             task {
               __typename
@@ -7982,6 +8650,7 @@ export class APIService {
               updatedAt
             }
             updatedAt
+            owner
           }
           nextToken
         }
@@ -8038,6 +8707,7 @@ export class APIService {
               authority
               createdAt
               updatedAt
+              owner
             }
             task {
               __typename
@@ -8054,6 +8724,7 @@ export class APIService {
               updatedAt
             }
             updatedAt
+            owner
           }
           nextToken
         }
@@ -8091,7 +8762,13 @@ export class APIService {
           __typename
           id
           name
-          domain
+          officerEmail
+          iconCompany {
+            __typename
+            bucket
+            region
+            key
+          }
           room {
             __typename
             items {
@@ -8119,11 +8796,13 @@ export class APIService {
               authority
               createdAt
               updatedAt
+              owner
             }
             nextToken
           }
           createdAt
           updatedAt
+          owner
         }
       }`
     )
@@ -8138,7 +8817,13 @@ export class APIService {
           __typename
           id
           name
-          domain
+          officerEmail
+          iconCompany {
+            __typename
+            bucket
+            region
+            key
+          }
           room {
             __typename
             items {
@@ -8166,11 +8851,13 @@ export class APIService {
               authority
               createdAt
               updatedAt
+              owner
             }
             nextToken
           }
           createdAt
           updatedAt
+          owner
         }
       }`
     )
@@ -8185,7 +8872,13 @@ export class APIService {
           __typename
           id
           name
-          domain
+          officerEmail
+          iconCompany {
+            __typename
+            bucket
+            region
+            key
+          }
           room {
             __typename
             items {
@@ -8213,11 +8906,13 @@ export class APIService {
               authority
               createdAt
               updatedAt
+              owner
             }
             nextToken
           }
           createdAt
           updatedAt
+          owner
         }
       }`
     )
@@ -8250,6 +8945,12 @@ export class APIService {
               updatedAt
             }
             description
+            iconTask {
+              __typename
+              bucket
+              region
+              key
+            }
             scheduleDate
             priority
             status
@@ -8266,6 +8967,7 @@ export class APIService {
               authority
               createdAt
               updatedAt
+              owner
             }
             messages {
               __typename
@@ -8297,9 +8999,10 @@ export class APIService {
               __typename
               id
               name
-              domain
+              officerEmail
               createdAt
               updatedAt
+              owner
             }
             messages {
               __typename
@@ -8319,6 +9022,7 @@ export class APIService {
             }
             createdAt
             updatedAt
+            owner
           }
           createdAt
           updatedAt
@@ -8354,6 +9058,12 @@ export class APIService {
               updatedAt
             }
             description
+            iconTask {
+              __typename
+              bucket
+              region
+              key
+            }
             scheduleDate
             priority
             status
@@ -8370,6 +9080,7 @@ export class APIService {
               authority
               createdAt
               updatedAt
+              owner
             }
             messages {
               __typename
@@ -8401,9 +9112,10 @@ export class APIService {
               __typename
               id
               name
-              domain
+              officerEmail
               createdAt
               updatedAt
+              owner
             }
             messages {
               __typename
@@ -8423,6 +9135,7 @@ export class APIService {
             }
             createdAt
             updatedAt
+            owner
           }
           createdAt
           updatedAt
@@ -8458,6 +9171,12 @@ export class APIService {
               updatedAt
             }
             description
+            iconTask {
+              __typename
+              bucket
+              region
+              key
+            }
             scheduleDate
             priority
             status
@@ -8474,6 +9193,7 @@ export class APIService {
               authority
               createdAt
               updatedAt
+              owner
             }
             messages {
               __typename
@@ -8505,9 +9225,10 @@ export class APIService {
               __typename
               id
               name
-              domain
+              officerEmail
               createdAt
               updatedAt
+              owner
             }
             messages {
               __typename
@@ -8527,6 +9248,7 @@ export class APIService {
             }
             createdAt
             updatedAt
+            owner
           }
           createdAt
           updatedAt
@@ -8557,9 +9279,10 @@ export class APIService {
               __typename
               id
               name
-              domain
+              officerEmail
               createdAt
               updatedAt
+              owner
             }
             tasks {
               __typename
@@ -8573,6 +9296,12 @@ export class APIService {
             updatedAt
           }
           description
+          iconTask {
+            __typename
+            bucket
+            region
+            key
+          }
           scheduleDate
           priority
           status
@@ -8597,9 +9326,10 @@ export class APIService {
               __typename
               id
               name
-              domain
+              officerEmail
               createdAt
               updatedAt
+              owner
             }
             messages {
               __typename
@@ -8619,6 +9349,7 @@ export class APIService {
             }
             createdAt
             updatedAt
+            owner
           }
           messages {
             __typename
@@ -8631,6 +9362,7 @@ export class APIService {
               createdAt
               isSent
               updatedAt
+              owner
             }
             nextToken
           }
@@ -8674,9 +9406,10 @@ export class APIService {
               __typename
               id
               name
-              domain
+              officerEmail
               createdAt
               updatedAt
+              owner
             }
             tasks {
               __typename
@@ -8690,6 +9423,12 @@ export class APIService {
             updatedAt
           }
           description
+          iconTask {
+            __typename
+            bucket
+            region
+            key
+          }
           scheduleDate
           priority
           status
@@ -8714,9 +9453,10 @@ export class APIService {
               __typename
               id
               name
-              domain
+              officerEmail
               createdAt
               updatedAt
+              owner
             }
             messages {
               __typename
@@ -8736,6 +9476,7 @@ export class APIService {
             }
             createdAt
             updatedAt
+            owner
           }
           messages {
             __typename
@@ -8748,6 +9489,7 @@ export class APIService {
               createdAt
               isSent
               updatedAt
+              owner
             }
             nextToken
           }
@@ -8791,9 +9533,10 @@ export class APIService {
               __typename
               id
               name
-              domain
+              officerEmail
               createdAt
               updatedAt
+              owner
             }
             tasks {
               __typename
@@ -8807,6 +9550,12 @@ export class APIService {
             updatedAt
           }
           description
+          iconTask {
+            __typename
+            bucket
+            region
+            key
+          }
           scheduleDate
           priority
           status
@@ -8831,9 +9580,10 @@ export class APIService {
               __typename
               id
               name
-              domain
+              officerEmail
               createdAt
               updatedAt
+              owner
             }
             messages {
               __typename
@@ -8853,6 +9603,7 @@ export class APIService {
             }
             createdAt
             updatedAt
+            owner
           }
           messages {
             __typename
@@ -8865,6 +9616,7 @@ export class APIService {
               createdAt
               isSent
               updatedAt
+              owner
             }
             nextToken
           }
@@ -8911,7 +9663,13 @@ export class APIService {
             __typename
             id
             name
-            domain
+            officerEmail
+            iconCompany {
+              __typename
+              bucket
+              region
+              key
+            }
             room {
               __typename
               nextToken
@@ -8922,6 +9680,7 @@ export class APIService {
             }
             createdAt
             updatedAt
+            owner
           }
           messages {
             __typename
@@ -8934,6 +9693,7 @@ export class APIService {
               createdAt
               isSent
               updatedAt
+              owner
             }
             nextToken
           }
@@ -8981,6 +9741,7 @@ export class APIService {
           }
           createdAt
           updatedAt
+          owner
         }
       }`
     )
@@ -9011,7 +9772,13 @@ export class APIService {
             __typename
             id
             name
-            domain
+            officerEmail
+            iconCompany {
+              __typename
+              bucket
+              region
+              key
+            }
             room {
               __typename
               nextToken
@@ -9022,6 +9789,7 @@ export class APIService {
             }
             createdAt
             updatedAt
+            owner
           }
           messages {
             __typename
@@ -9034,6 +9802,7 @@ export class APIService {
               createdAt
               isSent
               updatedAt
+              owner
             }
             nextToken
           }
@@ -9081,6 +9850,7 @@ export class APIService {
           }
           createdAt
           updatedAt
+          owner
         }
       }`
     )
@@ -9111,7 +9881,13 @@ export class APIService {
             __typename
             id
             name
-            domain
+            officerEmail
+            iconCompany {
+              __typename
+              bucket
+              region
+              key
+            }
             room {
               __typename
               nextToken
@@ -9122,6 +9898,7 @@ export class APIService {
             }
             createdAt
             updatedAt
+            owner
           }
           messages {
             __typename
@@ -9134,6 +9911,7 @@ export class APIService {
               createdAt
               isSent
               updatedAt
+              owner
             }
             nextToken
           }
@@ -9181,6 +9959,7 @@ export class APIService {
           }
           createdAt
           updatedAt
+          owner
         }
       }`
     )
@@ -9206,9 +9985,10 @@ export class APIService {
               __typename
               id
               name
-              domain
+              officerEmail
               createdAt
               updatedAt
+              owner
             }
             tasks {
               __typename
@@ -9241,9 +10021,10 @@ export class APIService {
               __typename
               id
               name
-              domain
+              officerEmail
               createdAt
               updatedAt
+              owner
             }
             messages {
               __typename
@@ -9263,6 +10044,7 @@ export class APIService {
             }
             createdAt
             updatedAt
+            owner
           }
           createdAt
           updatedAt
@@ -9291,9 +10073,10 @@ export class APIService {
               __typename
               id
               name
-              domain
+              officerEmail
               createdAt
               updatedAt
+              owner
             }
             tasks {
               __typename
@@ -9326,9 +10109,10 @@ export class APIService {
               __typename
               id
               name
-              domain
+              officerEmail
               createdAt
               updatedAt
+              owner
             }
             messages {
               __typename
@@ -9348,6 +10132,7 @@ export class APIService {
             }
             createdAt
             updatedAt
+            owner
           }
           createdAt
           updatedAt
@@ -9376,9 +10161,10 @@ export class APIService {
               __typename
               id
               name
-              domain
+              officerEmail
               createdAt
               updatedAt
+              owner
             }
             tasks {
               __typename
@@ -9411,9 +10197,10 @@ export class APIService {
               __typename
               id
               name
-              domain
+              officerEmail
               createdAt
               updatedAt
+              owner
             }
             messages {
               __typename
@@ -9433,6 +10220,7 @@ export class APIService {
             }
             createdAt
             updatedAt
+            owner
           }
           createdAt
           updatedAt
@@ -9456,7 +10244,13 @@ export class APIService {
             __typename
             id
             name
-            domain
+            officerEmail
+            iconCompany {
+              __typename
+              bucket
+              region
+              key
+            }
             room {
               __typename
               nextToken
@@ -9467,6 +10261,7 @@ export class APIService {
             }
             createdAt
             updatedAt
+            owner
           }
           tasks {
             __typename
@@ -9520,7 +10315,13 @@ export class APIService {
             __typename
             id
             name
-            domain
+            officerEmail
+            iconCompany {
+              __typename
+              bucket
+              region
+              key
+            }
             room {
               __typename
               nextToken
@@ -9531,6 +10332,7 @@ export class APIService {
             }
             createdAt
             updatedAt
+            owner
           }
           tasks {
             __typename
@@ -9584,7 +10386,13 @@ export class APIService {
             __typename
             id
             name
-            domain
+            officerEmail
+            iconCompany {
+              __typename
+              bucket
+              region
+              key
+            }
             room {
               __typename
               nextToken
@@ -9595,6 +10403,7 @@ export class APIService {
             }
             createdAt
             updatedAt
+            owner
           }
           tasks {
             __typename
@@ -9672,9 +10481,10 @@ export class APIService {
               __typename
               id
               name
-              domain
+              officerEmail
               createdAt
               updatedAt
+              owner
             }
             messages {
               __typename
@@ -9694,6 +10504,7 @@ export class APIService {
             }
             createdAt
             updatedAt
+            owner
           }
           task {
             __typename
@@ -9712,6 +10523,12 @@ export class APIService {
               updatedAt
             }
             description
+            iconTask {
+              __typename
+              bucket
+              region
+              key
+            }
             scheduleDate
             priority
             status
@@ -9728,6 +10545,7 @@ export class APIService {
               authority
               createdAt
               updatedAt
+              owner
             }
             messages {
               __typename
@@ -9740,6 +10558,7 @@ export class APIService {
             updatedAt
           }
           updatedAt
+          owner
         }
       }`
     )
@@ -9784,9 +10603,10 @@ export class APIService {
               __typename
               id
               name
-              domain
+              officerEmail
               createdAt
               updatedAt
+              owner
             }
             messages {
               __typename
@@ -9806,6 +10626,7 @@ export class APIService {
             }
             createdAt
             updatedAt
+            owner
           }
           task {
             __typename
@@ -9824,6 +10645,12 @@ export class APIService {
               updatedAt
             }
             description
+            iconTask {
+              __typename
+              bucket
+              region
+              key
+            }
             scheduleDate
             priority
             status
@@ -9840,6 +10667,7 @@ export class APIService {
               authority
               createdAt
               updatedAt
+              owner
             }
             messages {
               __typename
@@ -9852,6 +10680,7 @@ export class APIService {
             updatedAt
           }
           updatedAt
+          owner
         }
       }`
     )
@@ -9896,9 +10725,10 @@ export class APIService {
               __typename
               id
               name
-              domain
+              officerEmail
               createdAt
               updatedAt
+              owner
             }
             messages {
               __typename
@@ -9918,6 +10748,7 @@ export class APIService {
             }
             createdAt
             updatedAt
+            owner
           }
           task {
             __typename
@@ -9936,6 +10767,12 @@ export class APIService {
               updatedAt
             }
             description
+            iconTask {
+              __typename
+              bucket
+              region
+              key
+            }
             scheduleDate
             priority
             status
@@ -9952,6 +10789,7 @@ export class APIService {
               authority
               createdAt
               updatedAt
+              owner
             }
             messages {
               __typename
@@ -9964,6 +10802,7 @@ export class APIService {
             updatedAt
           }
           updatedAt
+          owner
         }
       }`
     )

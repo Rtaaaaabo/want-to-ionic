@@ -1,15 +1,15 @@
 projects:
-  wanttographql:
-    schemaPath: amplify/backend/api/wanttographql/build/schema.graphql
-    includes:
-      - src/graphql/**/*.graphql
-    excludes:
-      - ./amplify/**
-    extensions:
-      amplify:
-        codeGenTarget: angular
-        generatedFileName: src/app/API.service.ts
-        docsFilePath: src/graphql
+  # wanttographql:
+  #   schemaPath: amplify/backend/api/wanttographql/build/schema.graphql
+  #   includes:
+  #     - src/graphql/**/*.graphql
+  #   excludes:
+  #     - ./amplify/**
+  #   extensions:
+  #     amplify:
+  #       codeGenTarget: angular
+  #       generatedFileName: src/app/API.service.ts
+  #       docsFilePath: src/graphql
   wantto:
     schemaPath: amplify/backend/api/wantto/build/schema.graphql
     includes:

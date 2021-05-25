@@ -4,6 +4,7 @@ type Company
   id: ID!
   name: String!
   officerEmail: String!
+  iconCompany: S3Object
   room: [Room] @connection(keyName: "byCompany", fields: ["id"])
   companyMembers: [User] @connection(keyName: "byCompany", fields: ["id"])
 }
@@ -32,6 +33,7 @@ type Task
   title: String!
   room: Room! @connection(fields: ["roomID"])
   description: String
+  iconTask: S3Object
   scheduleDate: AWSDateTime
   priority: Int
   status: Int
