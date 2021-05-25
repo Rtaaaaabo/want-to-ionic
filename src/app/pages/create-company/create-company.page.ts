@@ -39,10 +39,16 @@ export class CreateCompanyPage implements OnInit {
   ngOnInit() {
   }
 
+  /**
+   * Setting pageに戻ります
+   */
   goBackToSetting(): void {
     this.location.back();
   }
 
+  /**
+   * 会社のアカウントを作成して、担当者のユーザーも作成します
+   */
   registerCompany(): void {
     const date = new Date();
     const timeStamp = date.getTime();
