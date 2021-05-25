@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { concatMap, map } from 'rxjs/operators';
 import { CreateCompanyLogic } from './logic/create-company.logic';
+import { v4 as uuid } from 'uuid';
 
 @Component({
   selector: 'app-create-company',
@@ -24,9 +26,9 @@ export class CreateCompanyPage implements OnInit {
   };
 
   createCompanyForm = new FormGroup({
-    id: new FormControl('', Validators.compose([Validators.required])),
-    name: new FormControl('', Validators.compose([Validators.required])),
-    email: new FormControl('', Validators.compose([Validators.required]))
+    companyName: new FormControl('', Validators.compose([Validators.required])),
+    officerName: new FormControl('', Validators.compose([Validators.required])),
+    officerEmail: new FormControl('', Validators.compose([Validators.required, Validators.email]))
   });
 
   constructor(
@@ -42,9 +44,17 @@ export class CreateCompanyPage implements OnInit {
   }
 
   registerCompany(): void {
-    // CreateCompany Serviceで会社を作成する
-    // CreateUserにCompanyIDを使用して担当者のアカウントを作成する
-    console.log('registerCompany');
+    const date = new Date();
+    const timeStamp = date.getTime();
+    const officerName = this.createCompanyForm.get('officerName').value;
+    const officerEmail = this.createCompanyForm.get('officerEmail').value;
+    const requestContent = {
+      id: `company_${timeStamp}_${uuid()}`,
+      name: officerName,
+      officerEmail: officerEmail,
+    }
+    this.logic.createCompany(requestContent)
+      .pipe(concatMap((companyId) => this.logic.createUserWithCompanyId(companyId, officerName, officerEmail)));
   }
 
 }
