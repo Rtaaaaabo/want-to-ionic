@@ -13,7 +13,8 @@ export interface SubscriptionResponse<T> {
 export type CreateCompanyInput = {
   id?: string | null;
   name: string;
-  domain: string;
+  officerEmail: string;
+  iconCompany?: S3ObjectInput | null;
 };
 
 export type ModelCompanyConditionInput = {
@@ -4744,7 +4745,13 @@ export class AmplifyService {
           __typename
           id
           name
-          domain
+          officerEmail
+          iconCompany {
+            __typename
+            bucket
+            region
+            key
+          }
           room {
             __typename
             items {
@@ -4772,11 +4779,13 @@ export class AmplifyService {
               authority
               createdAt
               updatedAt
+              owner
             }
             nextToken
           }
           createdAt
           updatedAt
+          owner
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -4799,7 +4808,13 @@ export class AmplifyService {
           __typename
           id
           name
-          domain
+          officerEmail
+          iconCompany {
+            __typename
+            bucket
+            region
+            key
+          }
           room {
             __typename
             items {
@@ -4827,11 +4842,13 @@ export class AmplifyService {
               authority
               createdAt
               updatedAt
+              owner
             }
             nextToken
           }
           createdAt
           updatedAt
+          owner
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -4854,7 +4871,13 @@ export class AmplifyService {
           __typename
           id
           name
-          domain
+          officerEmail
+          iconCompany {
+            __typename
+            bucket
+            region
+            key
+          }
           room {
             __typename
             items {
@@ -4882,11 +4905,13 @@ export class AmplifyService {
               authority
               createdAt
               updatedAt
+              owner
             }
             nextToken
           }
           createdAt
           updatedAt
+          owner
         }
       }`;
     const gqlAPIServiceArguments: any = {
