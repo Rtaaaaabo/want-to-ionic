@@ -683,7 +683,7 @@ export type CreateUserMutation = {
   tel?: string | null;
   positionName?: string | null;
   iconImage?: {
-    __typename: "s3Object";
+    __typename: "S3Object";
     bucket: string;
     region: string;
     key: string;
@@ -694,7 +694,13 @@ export type CreateUserMutation = {
     __typename: "Company";
     id: string;
     name: string;
-    domain: string;
+    officerEmail: string;
+    iconCompany?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
     room?: {
       __typename: "ModelRoomConnection";
       nextToken?: string | null;
@@ -705,6 +711,7 @@ export type CreateUserMutation = {
     } | null;
     createdAt: string;
     updatedAt: string;
+    owner?: string | null;
   };
   messages?: {
     __typename: "ModelMessageConnection";
@@ -717,6 +724,7 @@ export type CreateUserMutation = {
       createdAt: string;
       isSent?: boolean | null;
       updatedAt: string;
+      owner?: string | null;
     } | null> | null;
     nextToken?: string | null;
   } | null;
@@ -764,6 +772,7 @@ export type CreateUserMutation = {
   } | null;
   createdAt: string;
   updatedAt: string;
+  owner?: string | null;
 };
 
 export type UpdateUserMutation = {
@@ -5662,6 +5671,29 @@ export class AmplifyService {
           }
           registered
           authority
+          company {
+            __typename
+            id
+            name
+            officerEmail
+            iconCompany {
+              __typename
+              bucket
+              region
+              key
+            }
+            room {
+              __typename
+              nextToken
+            }
+            companyMembers {
+              __typename
+              nextToken
+            }
+            createdAt
+            updatedAt
+            owner
+          }
           messages {
             __typename
             items {
@@ -5673,6 +5705,7 @@ export class AmplifyService {
               createdAt
               isSent
               updatedAt
+              owner
             }
             nextToken
           }
@@ -5720,6 +5753,7 @@ export class AmplifyService {
           }
           createdAt
           updatedAt
+          owner
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -5733,88 +5767,112 @@ export class AmplifyService {
     )) as any;
     return <CreateUserMutation>response.data.createUser;
   }
-
   async UpdateUser(
     input: UpdateUserInput,
     condition?: ModelUserConditionInput
   ): Promise<UpdateUserMutation> {
     const statement = `mutation UpdateUser($input: UpdateUserInput!, $condition: ModelUserConditionInput) {
-      updateUser(input: $input, condition: $condition) {
-        __typename
-        id
-        username
-        email
-        companyID
-        tel
-        positionName
-        iconImage {
+        updateUser(input: $input, condition: $condition) {
           __typename
-          bucket
-          region
-          key
-        }
-        registered
-        authority
-        messages {
-          __typename
-          items {
+          id
+          username
+          email
+          companyID
+          tel
+          positionName
+          iconImage {
+            __typename
+            bucket
+            region
+            key
+          }
+          registered
+          authority
+          company {
             __typename
             id
-            taskID
-            authorID
-            content
+            name
+            officerEmail
+            iconCompany {
+              __typename
+              bucket
+              region
+              key
+            }
+            room {
+              __typename
+              nextToken
+            }
+            companyMembers {
+              __typename
+              nextToken
+            }
             createdAt
-            isSent
             updatedAt
+            owner
           }
-          nextToken
-        }
-        room {
-          __typename
-          items {
+          messages {
             __typename
-            id
-            roomID
-            userID
-            createdAt
-            updatedAt
+            items {
+              __typename
+              id
+              taskID
+              authorID
+              content
+              createdAt
+              isSent
+              updatedAt
+              owner
+            }
+            nextToken
           }
-          nextToken
-        }
-        task {
-          __typename
-          items {
+          room {
             __typename
-            id
-            taskID
-            userID
-            createdAt
-            updatedAt
+            items {
+              __typename
+              id
+              roomID
+              userID
+              createdAt
+              updatedAt
+            }
+            nextToken
           }
-          nextToken
-        }
-        chargeTask {
-          __typename
-          items {
+          task {
             __typename
-            id
-            authorID
-            roomID
-            chargePersonID
-            title
-            description
-            scheduleDate
-            priority
-            status
-            createdAt
-            updatedAt
+            items {
+              __typename
+              id
+              taskID
+              userID
+              createdAt
+              updatedAt
+            }
+            nextToken
           }
-          nextToken
+          chargeTask {
+            __typename
+            items {
+              __typename
+              id
+              authorID
+              roomID
+              chargePersonID
+              title
+              description
+              scheduleDate
+              priority
+              status
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          createdAt
+          updatedAt
+          owner
         }
-        createdAt
-        updatedAt
-      }
-    }`;
+      }`;
     const gqlAPIServiceArguments: any = {
       input
     };
@@ -5834,29 +5892,102 @@ export class AmplifyService {
         deleteUser(input: $input, condition: $condition) {
           __typename
           id
+          username
           email
           companyID
-          username
+          tel
+          positionName
+          iconImage {
+            __typename
+            bucket
+            region
+            key
+          }
           registered
           authority
           company {
             __typename
             id
             name
-            domain
+            officerEmail
+            iconCompany {
+              __typename
+              bucket
+              region
+              key
+            }
             room {
               __typename
               nextToken
             }
-            members {
+            companyMembers {
               __typename
               nextToken
             }
             createdAt
             updatedAt
+            owner
+          }
+          messages {
+            __typename
+            items {
+              __typename
+              id
+              taskID
+              authorID
+              content
+              createdAt
+              isSent
+              updatedAt
+              owner
+            }
+            nextToken
+          }
+          room {
+            __typename
+            items {
+              __typename
+              id
+              roomID
+              userID
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          task {
+            __typename
+            items {
+              __typename
+              id
+              taskID
+              userID
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          chargeTask {
+            __typename
+            items {
+              __typename
+              id
+              authorID
+              roomID
+              chargePersonID
+              title
+              description
+              scheduleDate
+              priority
+              status
+              createdAt
+              updatedAt
+            }
+            nextToken
           }
           createdAt
           updatedAt
+          owner
         }
       }`;
     const gqlAPIServiceArguments: any = {
