@@ -29,16 +29,6 @@ app.use(function (req, res, next) {
  * Example get method *
  **********************/
 
-app.get("/register", function (req, res) {
-  // Add your code here
-  res.json({ success: "get call succeed!", url: req.url });
-});
-
-app.get("/register/*", function (req, res) {
-  // Add your code here
-  res.json({ success: "get call succeed!", url: req.url });
-});
-
 /****************************
  * Example post method *
  ****************************/
@@ -81,38 +71,13 @@ app.post("/register/company", function (req, res) {
   }
 });
 
-app.post("/register/*", function (req, res) {
-  // Add your code here
-  res.json({ success: "post call succeed!", url: req.url, body: req.body });
-});
-
 /****************************
  * Example put method *
  ****************************/
 
-app.put("/register", function (req, res) {
-  // Add your code here
-  res.json({ success: "put call succeed!", url: req.url, body: req.body });
-});
-
-app.put("/register/*", function (req, res) {
-  // Add your code here
-  res.json({ success: "put call succeed!", url: req.url, body: req.body });
-});
-
 /****************************
  * Example delete method *
  ****************************/
-
-app.delete("/register", function (req, res) {
-  // Add your code here
-  res.json({ success: "delete call succeed!", url: req.url });
-});
-
-app.delete("/register/*", function (req, res) {
-  // Add your code here
-  res.json({ success: "delete call succeed!", url: req.url });
-});
 
 app.listen(3000, function () {
   console.log("App started");
