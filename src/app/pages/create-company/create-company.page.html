@@ -31,8 +31,33 @@
           >
           <ion-input type="email" formControlName="officerEmail"></ion-input>
         </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked"
+            >パスワード<ion-text color="danger">*</ion-text></ion-label
+          >
+          <ion-input
+            type="password"
+            formControlName="officerPassword"
+          ></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked"
+            >パスワード(確認用)<ion-text color="danger">*</ion-text></ion-label
+          >
+          <ion-input
+            type="password"
+            formControlName="officerPasswordConfirm"
+          ></ion-input>
+        </ion-item>
       </form>
     </ion-card-content>
   </ion-card>
-  <ion-button expand="full" (click)="registerCompany()">登録</ion-button>
+  <ion-button
+    expand="full"
+    [disabled]="createCompanyForm.invalid"
+    (click)="registerCompany()"
+    >登録</ion-button
+  >
 </ion-content>

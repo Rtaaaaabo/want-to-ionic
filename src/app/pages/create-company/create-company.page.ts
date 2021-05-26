@@ -28,8 +28,12 @@ export class CreateCompanyPage implements OnInit {
   createCompanyForm = new FormGroup({
     companyName: new FormControl('', Validators.compose([Validators.required])),
     officerName: new FormControl('', Validators.compose([Validators.required])),
-    officerEmail: new FormControl('', Validators.compose([Validators.required, Validators.email]))
-  });
+    officerEmail: new FormControl('', Validators.compose([Validators.required, Validators.email])),
+    // 8文字以上の英数字のPassword
+    // officerPassword: new FormControl('', Validators.compose([Validators.required, Validators.minLength(8), Validators.pattern(/^([a-zA-Z0-9]{8,})$/)]))
+    officerPassword: new FormControl('', Validators.compose([Validators.required, Validators.minLength(8)])),
+    officerPasswordConfirm: new FormControl('', Validators.compose([Validators.required, Validators.minLength(8)])),
+  }, this.checkPassword);
 
   constructor(
     private readonly location: Location,
@@ -37,6 +41,12 @@ export class CreateCompanyPage implements OnInit {
   ) { }
 
   ngOnInit() {
+  }
+
+  checkPassword(group: FormGroup): null | { notSame: boolean } {
+    let password = group.get('officerPassword').value;
+    const passwordConfirm = group.get('officerPasswordConfirm').value;
+    return password = passwordConfirm ? null : { notSame: true };
   }
 
   /**
@@ -47,7 +57,7 @@ export class CreateCompanyPage implements OnInit {
   }
 
   /**
-   * 会社のアカウントを作成して、担当者のユーザーも作成します
+   * 会社のアカウントを作成して、担当者のユーザーも作成します→ Authにも送る
    */
   registerCompany(): void {
     const date = new Date();
