@@ -1,6 +1,6 @@
 {
     "identityPoolName": "wanttoeca31dcb_identitypool_eca31dcb",
-    "allowUnauthenticatedIdentities": false,
+    "allowUnauthenticatedIdentities": true,
     "resourceNameTruncated": "wanttoeca31dcb",
     "userPoolName": "wanttoeca31dcb_userpool_eca31dcb",
     "autoVerifiedAttributes": [

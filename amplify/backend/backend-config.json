@@ -22,12 +22,33 @@
           "additionalAuthenticationProviders": []
         }
       }
+    },
+    "authSendEmail": {
+      "service": "API Gateway",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [
+        {
+          "category": "function",
+          "resourceName": "RegisterCompanyOfficer",
+          "attributes": [
+            "Name",
+            "Arn"
+          ]
+        }
+      ]
     }
   },
   "storage": {
     "wanttofilestorage": {
       "service": "S3",
       "providerPlugin": "awscloudformation"
+    }
+  },
+  "function": {
+    "RegisterCompanyOfficer": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
     }
   }
 }
