@@ -61,11 +61,9 @@ app.post("/register/company", function (req, res) {
   const ses = new AWS.SES();
   try {
     await ses.sendEmail(params).promise();
-    console.log("Success to send an email");
-    res.json({ success: "post call succeed!" });
+    res.json({});
     return;
   } catch (e) {
-    console.log(`Failed to send an Email: ${e}`);
     res.status(500).send("Internal Server Error");
     return;
   }
