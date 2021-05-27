@@ -70,7 +70,9 @@ export class CreateCompanyPage implements OnInit {
       officerEmail: officerEmail,
     }
     this.logic.createCompany(requestContent)
-      .pipe(concatMap((companyId) => this.logic.createUserWithCompanyId(companyId, officerName, officerEmail)));
+      .pipe(concatMap(() => this.logic.sendEmailForRegister(requestContent)))
+      .subscribe(data => console.log(data));
+    // .pipe(concatMap((companyId) => this.logic.createUserWithCompanyId(companyId, officerName, officerEmail)));
   }
 
 }

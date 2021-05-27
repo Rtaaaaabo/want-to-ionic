@@ -56,7 +56,6 @@ app.post("/register/company", function (req, res) {
     },
     Source: process.env.ADMIN_EMAIL,
   };
-  console.log("Set params to send an email");
   AWS.config.update({ region: "ap-northeast-1" });
   const ses = new AWS.SES();
   try {
