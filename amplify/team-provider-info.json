@@ -18,7 +18,7 @@
       "function": {
         "RegisterCompanyOfficer": {
           "deploymentBucketName": "amplify-wantto-dev-234052-deployment",
-          "s3Key": "amplify-builds/RegisterCompanyOfficer-34564e6d6f4c43772f67-build.zip"
+          "s3Key": "amplify-builds/RegisterCompanyOfficer-687736305a30484d3546-build.zip"
         }
       }
     }
