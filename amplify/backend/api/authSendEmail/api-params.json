@@ -1,49 +1,72 @@
 {
-  "paths": [
-    {
-      "name": "/register",
-      "lambdaFunction": "RegisterCompanyOfficer",
-      "privacy": {
-        "protected": true,
-        "auth": [
-          "/POST",
-          "/GET",
-          "/PUT",
-          "/PATCH",
-          "/DELETE"
-        ],
-        "unauth": [
-          "/POST",
-          "/GET",
-          "/PUT",
-          "/PATCH",
-          "/DELETE"
-        ]
-      },
-      "policyResourceName": "/register"
-    }
-  ],
-  "resourceName": "authSendEmail",
-  "apiName": "authSendEmail",
-  "functionArns": [
-    {
-      "lambdaFunction": "RegisterCompanyOfficer"
-    }
-  ],
-  "privacy": {
-    "auth": 1,
-    "unauth": 1,
-    "authRoleName": "amplify-wantto-dev-234052-authRole",
-    "unAuthRoleName": "amplify-wantto-dev-234052-unauthRole"
-  },
-  "dependsOn": [
-    {
-      "category": "function",
-      "resourceName": "RegisterCompanyOfficer",
-      "attributes": [
-        "Name",
-        "Arn"
-      ]
-    }
-  ]
+    "paths": [
+        {
+            "name": "/register",
+            "lambdaFunction": "RegisterCompanyOfficer",
+            "privacy": {
+                "protected": true,
+                "auth": [
+                    "/POST",
+                    "/GET",
+                    "/PUT",
+                    "/PATCH",
+                    "/DELETE"
+                ],
+                "unauth": [
+                    "/POST",
+                    "/GET",
+                    "/PUT",
+                    "/PATCH",
+                    "/DELETE"
+                ]
+            },
+            "policyResourceName": "/register"
+        },
+        {
+            "name": "/register/enterprise",
+            "lambdaFunction": "RegisterCompanyOfficer",
+            "privacy": {
+                "protected": true,
+                "auth": [
+                    "/POST",
+                    "/GET",
+                    "/PUT",
+                    "/PATCH",
+                    "/DELETE"
+                ],
+                "unauth": [
+                    "/POST",
+                    "/GET",
+                    "/PUT",
+                    "/PATCH",
+                    "/DELETE"
+                ]
+            },
+            "policyResourceName": "/register/enterprise"
+        }
+    ],
+    "resourceName": "authSendEmail",
+    "apiName": "authSendEmail",
+    "functionArns": [
+        {
+            "lambdaFunction": "RegisterCompanyOfficer"
+        }
+    ],
+    "privacy": {
+        "auth": 2,
+        "unauth": 2,
+        "authRoleName": "amplify-wantto-dev-234052-authRole",
+        "unAuthRoleName": "amplify-wantto-dev-234052-unauthRole"
+    },
+    "dependsOn": [
+        {
+            "category": "function",
+            "resourceName": "RegisterCompanyOfficer",
+            "attributes": [
+                "Name",
+                "Arn"
+            ]
+        }
+    ],
+    "uuid": "09e414e8"
 }

@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://192.168.68.105:20002',
+  apiUrl: 'https://gvr6cyp3r3.execute-api.ap-northeast-1.amazonaws.com/dev',
 };
 
 /*

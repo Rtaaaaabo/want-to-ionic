@@ -32,9 +32,13 @@ export class CreateCompanyLogic {
 
   sendEmailForRegister(content: { id: string, name: string, officerEmail: string }): Observable<any> {
     const requestBody = {
-      name: content.name,
-      email: content.officerEmail,
+      body: {
+        name: content.name,
+        email: content.officerEmail,
+      }
     }
-    return this.createCompanyService.sendEmailForRegister(requestBody).pipe(() => of('Send Success')).pipe(catchError((e) => 'Not Send for Register'));
+    return this.createCompanyService.sendEmailForRegister(requestBody)
+      .pipe(() => of('Send Success'))
+      .pipe(catchError((e) => 'Not Send for Register'));
   }
 }

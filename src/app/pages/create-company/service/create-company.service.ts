@@ -33,8 +33,9 @@ export class CreateCompanyService {
     return from(this.amplifyService.CreateUser(requestContent));
   }
 
-  sendEmailForRegister(requestBody: { name: string, email: string }): Observable<any> {
+  sendEmailForRegister(requestBody: { body: { name: string, email: string } }): Observable<any> {
     const path = '/register/company';
-    return this.httpClient.post(`${host}/${path}`, requestBody)
+    console.log('Service sendEmailForRegister', `${host}${path}`);
+    return this.httpClient.post(`${host}${path}`, requestBody)
   }
 }

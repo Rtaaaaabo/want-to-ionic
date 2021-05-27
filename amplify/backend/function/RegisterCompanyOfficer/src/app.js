@@ -33,7 +33,7 @@ app.use(function (req, res, next) {
  * Example post method *
  ****************************/
 
-app.post("/register/company", function (req, res) {
+app.post("/register/enterprise", function (req, res) {
   const params = {
     Destination: {
       ToAddresses: [process.env.ADMIN_EMAIL],
