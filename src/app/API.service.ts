@@ -71,22 +71,22 @@ export type ModelSizeInput = {
 
 export type Company = {
   __typename: "Company";
-  id?: string;
-  name?: string;
-  officerEmail?: string;
-  iconCompany?: S3Object;
-  room?: ModelRoomConnection;
-  companyMembers?: ModelUserConnection;
-  createdAt?: string;
-  updatedAt?: string;
+  id: string;
+  name: string;
+  officerEmail: string;
+  iconCompany?: S3Object | null;
+  room?: ModelRoomConnection | null;
+  companyMembers?: ModelUserConnection | null;
+  createdAt: string;
+  updatedAt: string;
   owner?: string | null;
 };
 
 export type S3Object = {
   __typename: "S3Object";
-  bucket?: string;
-  region?: string;
-  key?: string;
+  bucket: string;
+  region: string;
+  key: string;
 };
 
 export type ModelRoomConnection = {
@@ -97,15 +97,15 @@ export type ModelRoomConnection = {
 
 export type Room = {
   __typename: "Room";
-  id?: string;
-  name?: string;
-  companyID?: string;
-  description?: string;
-  company?: Company;
-  tasks?: ModelTaskConnection;
-  users?: ModelRoomGroupConnection;
-  createdAt?: string;
-  updatedAt?: string;
+  id: string;
+  name: string;
+  companyID: string;
+  description: string;
+  company: Company;
+  tasks?: ModelTaskConnection | null;
+  users?: ModelRoomGroupConnection | null;
+  createdAt: string;
+  updatedAt: string;
 };
 
 export type ModelTaskConnection = {
@@ -116,42 +116,42 @@ export type ModelTaskConnection = {
 
 export type Task = {
   __typename: "Task";
-  id?: string;
-  authorID?: string;
-  roomID?: string;
-  chargePersonID?: string;
-  title?: string;
-  room?: Room;
+  id: string;
+  authorID: string;
+  roomID: string;
+  chargePersonID: string;
+  title: string;
+  room: Room;
   description?: string | null;
-  iconTask?: S3Object;
+  iconTask?: S3Object | null;
   scheduleDate?: string | null;
   priority?: number | null;
   status?: number | null;
   createdAt?: string | null;
-  chargePerson?: User;
-  messages?: ModelMessageConnection;
-  users?: ModelTaskGroupConnection;
-  updatedAt?: string;
+  chargePerson: User;
+  messages?: ModelMessageConnection | null;
+  users?: ModelTaskGroupConnection | null;
+  updatedAt: string;
 };
 
 export type User = {
   __typename: "User";
-  id?: string;
-  username?: string;
-  email?: string;
-  companyID?: string;
+  id: string;
+  username: string;
+  email: string;
+  companyID: string;
   tel?: string | null;
   positionName?: string | null;
-  iconImage?: S3Object;
+  iconImage?: S3Object | null;
   registered?: boolean | null;
   authority?: string | null;
-  company?: Company;
-  messages?: ModelMessageConnection;
-  room?: ModelRoomGroupConnection;
-  task?: ModelTaskGroupConnection;
-  chargeTask?: ModelTaskConnection;
-  createdAt?: string;
-  updatedAt?: string;
+  company: Company;
+  messages?: ModelMessageConnection | null;
+  room?: ModelRoomGroupConnection | null;
+  task?: ModelTaskGroupConnection | null;
+  chargeTask?: ModelTaskConnection | null;
+  createdAt: string;
+  updatedAt: string;
   owner?: string | null;
 };
 
@@ -163,16 +163,16 @@ export type ModelMessageConnection = {
 
 export type Message = {
   __typename: "Message";
-  id?: string;
-  taskID?: string;
-  authorID?: string;
-  content?: string;
-  createdAt?: string;
+  id: string;
+  taskID: string;
+  authorID: string;
+  content: string;
+  createdAt: string;
   isSent?: boolean | null;
   attachment?: Array<S3Object | null> | null;
-  author?: User;
-  task?: Task;
-  updatedAt?: string;
+  author: User;
+  task: Task;
+  updatedAt: string;
   owner?: string | null;
 };
 
@@ -184,13 +184,13 @@ export type ModelRoomGroupConnection = {
 
 export type RoomGroup = {
   __typename: "RoomGroup";
-  id?: string;
-  roomID?: string;
-  userID?: string;
-  room?: Room;
-  user?: User;
-  createdAt?: string;
-  updatedAt?: string;
+  id: string;
+  roomID: string;
+  userID: string;
+  room?: Room | null;
+  user?: User | null;
+  createdAt: string;
+  updatedAt: string;
 };
 
 export type ModelTaskGroupConnection = {
@@ -201,13 +201,13 @@ export type ModelTaskGroupConnection = {
 
 export type TaskGroup = {
   __typename: "TaskGroup";
-  id?: string;
-  taskID?: string;
-  userID?: string;
-  task?: Task;
-  user?: User;
-  createdAt?: string;
-  updatedAt?: string;
+  id: string;
+  taskID: string;
+  userID: string;
+  task?: Task | null;
+  user?: User | null;
+  createdAt: string;
+  updatedAt: string;
 };
 
 export type ModelUserConnection = {

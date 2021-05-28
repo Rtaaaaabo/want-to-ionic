@@ -69,7 +69,8 @@
             },
             "REGION": {
               "Ref": "AWS::Region"
-            }
+            },
+            "ADMIN_EMAIL": "r.taaaaabo+ses@gmail.com"
           }
         },
         "Role": {

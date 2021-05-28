@@ -35,6 +35,7 @@ export class CreateCompanyService {
 
   sendEmailForRegister(requestBody: { body: { name: string, email: string } }): Observable<any> {
     const path = '/register/company';
+    console.log('[HostPath]: ', `${host}${path}`);
     console.log('Service sendEmailForRegister', requestBody);
     return this.httpClient.post(`${host}${path}`, requestBody)
   }
