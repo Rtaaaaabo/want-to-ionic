@@ -34,6 +34,14 @@
             "Name",
             "Arn"
           ]
+        },
+        {
+          "category": "function",
+          "resourceName": "createcompany",
+          "attributes": [
+            "Name",
+            "Arn"
+          ]
         }
       ]
     }
@@ -46,6 +54,12 @@
   },
   "function": {
     "RegisterCompanyOfficer": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": []
+    },
+    "createcompany": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda",

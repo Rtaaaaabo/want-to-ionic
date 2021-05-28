@@ -38,7 +38,7 @@ export class CreateCompanyLogic {
       }
     }
     return this.createCompanyService.sendEmailForRegister(requestBody)
+      .pipe(catchError((e) => 'Not Send for Register'))
       .pipe(() => of('Send Success'))
-      .pipe(catchError((e) => 'Not Send for Register'));
   }
 }
