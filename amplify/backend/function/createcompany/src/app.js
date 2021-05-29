@@ -34,9 +34,10 @@ app.use(async (req, res, next) => {
  ****************************/
 
 app.post("/register/company", async (req, res) => {
+  console.log("[RegisterCompany req]", req);
   const params = {
     Destination: {
-      ToAddresses: [process.env.ADMIN_EMAIL],
+      ToAddresses: [req.body.email],
     },
     Message: {
       Body: {
@@ -54,7 +55,7 @@ app.post("/register/company", async (req, res) => {
         Data: "お問い合わせを受け付けました",
       },
     },
-    Source: process.env.ADMIN_EMAIL,
+    Source: "r.taaaaabo+ses@gmail.com",
   };
   console.log("[Message params]", JSON.stringify(params));
   AWS.config.update({ region: "ap-northeast-1" });
