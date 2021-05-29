@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Observable, from } from 'rxjs';
+import { API } from 'aws-amplify';
 import { AmplifyService, CreateCompanyInput, CreateCompanyMutation, CreateUserInput, CreateUserMutation } from 'src/app/shared/service/amplify.service';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
 
-const host: string = environment.apiUrl;
+const apiName = 'authSendEmail';
+const path = '/register/company';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -12,7 +13,6 @@ export class CreateCompanyService {
 
   constructor(
     private amplifyService: AmplifyService,
-    private httpClient: HttpClient,
   ) { }
 
   /**
@@ -34,9 +34,9 @@ export class CreateCompanyService {
   }
 
   sendEmailForRegister(requestBody: { body: { name: string, email: string } }): Observable<any> {
-    const path = '/register/company';
-    console.log('[HostPath]: ', `${host}${path}`);
-    console.log('Service sendEmailForRegister', requestBody);
-    return this.httpClient.post(`${host}${path}`, requestBody)
+    const myInit = {
+      body: requestBody.body
+    }
+    return from(API.post(apiName, path, myInit));
   }
 }
