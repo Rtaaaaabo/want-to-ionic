@@ -37,7 +37,7 @@ app.post("/register/company", async (req, res) => {
   console.log("[RegisterCompany req]", req);
   const params = {
     Destination: {
-      ToAddresses: [req.body.email],
+      ToAddresses: ["r.taaaaabo+ses@gmail.com"],
     },
     Message: {
       Body: {
