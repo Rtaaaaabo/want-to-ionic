@@ -69,7 +69,8 @@
             },
             "REGION": {
               "Ref": "AWS::Region"
-            }
+            },
+            "ADMIN_EMAIL": "r.taaaaabo+ses@gmail.com"
           }
         },
         "Role": {
@@ -146,22 +147,7 @@
                 "ses:SendEmail",
                 "ses:SendRawEmail"
               ],
-              "Resource": {
-                "Fn::Sub": [
-                  "arn:aws:logs:${region}:${account}:log-group:/aws/lambda/${lambda}:log-stream:*",
-                  {
-                    "region": {
-                      "Ref": "AWS::Region"
-                    },
-                    "account": {
-                      "Ref": "AWS::AccountId"
-                    },
-                    "lambda": {
-                      "Ref": "LambdaFunction"
-                    }
-                  }
-                ]
-              }
+              "Resource": "*"
             }
           ]
         }
