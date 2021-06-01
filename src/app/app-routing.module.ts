@@ -54,6 +54,10 @@ const routes: Routes = [
     path: 'create-company',
     loadChildren: () => import('./pages/create-company/create-company.module').then( m => m.CreateCompanyPageModule)
   },
+  {
+    path: 'main-registration-company',
+    loadChildren: () => import('./pages/main-registration-company/main-registration-company.module').then( m => m.MainRegistrationCompanyPageModule)
+  },
 ];
 @NgModule({
   imports: [
