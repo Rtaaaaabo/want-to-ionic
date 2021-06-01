@@ -6,8 +6,10 @@ mutation CreateCompany(
   createCompany(input: $input, condition: $condition) {
     id
     name
-    officerEmail
-    officerName
+    officer {
+      officerEmail
+      officerName
+    }
     isRegistered
     tel
     officialEmail
@@ -55,8 +57,10 @@ mutation UpdateCompany(
   updateCompany(input: $input, condition: $condition) {
     id
     name
-    officerEmail
-    officerName
+    officer {
+      officerEmail
+      officerName
+    }
     isRegistered
     tel
     officialEmail
@@ -104,8 +108,10 @@ mutation DeleteCompany(
   deleteCompany(input: $input, condition: $condition) {
     id
     name
-    officerEmail
-    officerName
+    officer {
+      officerEmail
+      officerName
+    }
     isRegistered
     tel
     officialEmail
@@ -216,8 +222,6 @@ mutation CreateTaskGroup(
       company {
         id
         name
-        officerEmail
-        officerName
         isRegistered
         tel
         officialEmail
@@ -315,8 +319,6 @@ mutation UpdateTaskGroup(
       company {
         id
         name
-        officerEmail
-        officerName
         isRegistered
         tel
         officialEmail
@@ -414,8 +416,6 @@ mutation DeleteTaskGroup(
       company {
         id
         name
-        officerEmail
-        officerName
         isRegistered
         tel
         officialEmail
@@ -461,8 +461,6 @@ mutation CreateTask(
       company {
         id
         name
-        officerEmail
-        officerName
         isRegistered
         tel
         officialEmail
@@ -506,8 +504,6 @@ mutation CreateTask(
       company {
         id
         name
-        officerEmail
-        officerName
         isRegistered
         tel
         officialEmail
@@ -575,8 +571,6 @@ mutation UpdateTask(
       company {
         id
         name
-        officerEmail
-        officerName
         isRegistered
         tel
         officialEmail
@@ -620,8 +614,6 @@ mutation UpdateTask(
       company {
         id
         name
-        officerEmail
-        officerName
         isRegistered
         tel
         officialEmail
@@ -689,8 +681,6 @@ mutation DeleteTask(
       company {
         id
         name
-        officerEmail
-        officerName
         isRegistered
         tel
         officialEmail
@@ -734,8 +724,6 @@ mutation DeleteTask(
       company {
         id
         name
-        officerEmail
-        officerName
         isRegistered
         tel
         officialEmail
@@ -806,8 +794,10 @@ mutation CreateUser(
     company {
       id
       name
-      officerEmail
-      officerName
+      officer {
+        officerEmail
+        officerName
+      }
       isRegistered
       tel
       officialEmail
@@ -901,8 +891,10 @@ mutation UpdateUser(
     company {
       id
       name
-      officerEmail
-      officerName
+      officer {
+        officerEmail
+        officerName
+      }
       isRegistered
       tel
       officialEmail
@@ -996,8 +988,10 @@ mutation DeleteUser(
     company {
       id
       name
-      officerEmail
-      officerName
+      officer {
+        officerEmail
+        officerName
+      }
       isRegistered
       tel
       officialEmail
@@ -1086,8 +1080,6 @@ mutation CreateRoomGroup(
       company {
         id
         name
-        officerEmail
-        officerName
         isRegistered
         tel
         officialEmail
@@ -1121,8 +1113,6 @@ mutation CreateRoomGroup(
       company {
         id
         name
-        officerEmail
-        officerName
         isRegistered
         tel
         officialEmail
@@ -1166,8 +1156,6 @@ mutation UpdateRoomGroup(
       company {
         id
         name
-        officerEmail
-        officerName
         isRegistered
         tel
         officialEmail
@@ -1201,8 +1189,6 @@ mutation UpdateRoomGroup(
       company {
         id
         name
-        officerEmail
-        officerName
         isRegistered
         tel
         officialEmail
@@ -1246,8 +1232,6 @@ mutation DeleteRoomGroup(
       company {
         id
         name
-        officerEmail
-        officerName
         isRegistered
         tel
         officialEmail
@@ -1281,8 +1265,6 @@ mutation DeleteRoomGroup(
       company {
         id
         name
-        officerEmail
-        officerName
         isRegistered
         tel
         officialEmail
@@ -1322,8 +1304,10 @@ mutation CreateRoom(
     company {
       id
       name
-      officerEmail
-      officerName
+      officer {
+        officerEmail
+        officerName
+      }
       isRegistered
       tel
       officialEmail
@@ -1384,8 +1368,10 @@ mutation UpdateRoom(
     company {
       id
       name
-      officerEmail
-      officerName
+      officer {
+        officerEmail
+        officerName
+      }
       isRegistered
       tel
       officialEmail
@@ -1446,8 +1432,10 @@ mutation DeleteRoom(
     company {
       id
       name
-      officerEmail
-      officerName
+      officer {
+        officerEmail
+        officerName
+      }
       isRegistered
       tel
       officialEmail
@@ -1529,8 +1517,6 @@ mutation CreateMessage(
       company {
         id
         name
-        officerEmail
-        officerName
         isRegistered
         tel
         officialEmail
@@ -1636,8 +1622,6 @@ mutation UpdateMessage(
       company {
         id
         name
-        officerEmail
-        officerName
         isRegistered
         tel
         officialEmail
@@ -1743,8 +1727,6 @@ mutation DeleteMessage(
       company {
         id
         name
-        officerEmail
-        officerName
         isRegistered
         tel
         officialEmail

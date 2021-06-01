@@ -3,8 +3,10 @@ query GetCompany($id: ID!) {
   getCompany(id: $id) {
     id
     name
-    officerEmail
-    officerName
+    officer {
+      officerEmail
+      officerName
+    }
     isRegistered
     tel
     officialEmail
@@ -54,8 +56,10 @@ query ListCompanys(
     items {
       id
       name
-      officerEmail
-      officerName
+      officer {
+        officerEmail
+        officerName
+      }
       isRegistered
       tel
       officialEmail
@@ -144,8 +148,6 @@ query GetTaskGroup($id: ID!) {
       company {
         id
         name
-        officerEmail
-        officerName
         isRegistered
         tel
         officialEmail
@@ -230,8 +232,6 @@ query GetTask($id: ID!) {
       company {
         id
         name
-        officerEmail
-        officerName
         isRegistered
         tel
         officialEmail
@@ -275,8 +275,6 @@ query GetTask($id: ID!) {
       company {
         id
         name
-        officerEmail
-        officerName
         isRegistered
         tel
         officialEmail
@@ -398,8 +396,10 @@ query GetUser($id: ID!) {
     company {
       id
       name
-      officerEmail
-      officerName
+      officer {
+        officerEmail
+        officerName
+      }
       isRegistered
       tel
       officialEmail
@@ -495,8 +495,6 @@ query ListUsers(
       company {
         id
         name
-        officerEmail
-        officerName
         isRegistered
         tel
         officialEmail
@@ -536,8 +534,6 @@ query GetRoomGroup($id: ID!) {
       company {
         id
         name
-        officerEmail
-        officerName
         isRegistered
         tel
         officialEmail
@@ -571,8 +567,6 @@ query GetRoomGroup($id: ID!) {
       company {
         id
         name
-        officerEmail
-        officerName
         isRegistered
         tel
         officialEmail
@@ -646,8 +640,10 @@ query GetRoom($id: ID!) {
     company {
       id
       name
-      officerEmail
-      officerName
+      officer {
+        officerEmail
+        officerName
+      }
       isRegistered
       tel
       officialEmail
@@ -710,8 +706,6 @@ query ListRooms(
       company {
         id
         name
-        officerEmail
-        officerName
         isRegistered
         tel
         officialEmail
@@ -761,8 +755,6 @@ query GetMessage($id: ID!) {
       company {
         id
         name
-        officerEmail
-        officerName
         isRegistered
         tel
         officialEmail

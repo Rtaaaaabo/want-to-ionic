@@ -3,8 +3,10 @@ subscription OnCreateCompany {
   onCreateCompany {
     id
     name
-    officerEmail
-    officerName
+    officer {
+      officerEmail
+      officerName
+    }
     isRegistered
     tel
     officialEmail
@@ -49,8 +51,10 @@ subscription OnUpdateCompany {
   onUpdateCompany {
     id
     name
-    officerEmail
-    officerName
+    officer {
+      officerEmail
+      officerName
+    }
     isRegistered
     tel
     officialEmail
@@ -95,8 +99,10 @@ subscription OnDeleteCompany {
   onDeleteCompany {
     id
     name
-    officerEmail
-    officerName
+    officer {
+      officerEmail
+      officerName
+    }
     isRegistered
     tel
     officialEmail
@@ -204,8 +210,6 @@ subscription OnCreateTaskGroup {
       company {
         id
         name
-        officerEmail
-        officerName
         isRegistered
         tel
         officialEmail
@@ -300,8 +304,6 @@ subscription OnUpdateTaskGroup {
       company {
         id
         name
-        officerEmail
-        officerName
         isRegistered
         tel
         officialEmail
@@ -396,8 +398,6 @@ subscription OnDeleteTaskGroup {
       company {
         id
         name
-        officerEmail
-        officerName
         isRegistered
         tel
         officialEmail
@@ -440,8 +440,6 @@ subscription OnCreateTask {
       company {
         id
         name
-        officerEmail
-        officerName
         isRegistered
         tel
         officialEmail
@@ -485,8 +483,6 @@ subscription OnCreateTask {
       company {
         id
         name
-        officerEmail
-        officerName
         isRegistered
         tel
         officialEmail
@@ -551,8 +547,6 @@ subscription OnUpdateTask {
       company {
         id
         name
-        officerEmail
-        officerName
         isRegistered
         tel
         officialEmail
@@ -596,8 +590,6 @@ subscription OnUpdateTask {
       company {
         id
         name
-        officerEmail
-        officerName
         isRegistered
         tel
         officialEmail
@@ -662,8 +654,6 @@ subscription OnDeleteTask {
       company {
         id
         name
-        officerEmail
-        officerName
         isRegistered
         tel
         officialEmail
@@ -707,8 +697,6 @@ subscription OnDeleteTask {
       company {
         id
         name
-        officerEmail
-        officerName
         isRegistered
         tel
         officialEmail
@@ -776,8 +764,10 @@ subscription OnCreateUser {
     company {
       id
       name
-      officerEmail
-      officerName
+      officer {
+        officerEmail
+        officerName
+      }
       isRegistered
       tel
       officialEmail
@@ -868,8 +858,10 @@ subscription OnUpdateUser {
     company {
       id
       name
-      officerEmail
-      officerName
+      officer {
+        officerEmail
+        officerName
+      }
       isRegistered
       tel
       officialEmail
@@ -960,8 +952,10 @@ subscription OnDeleteUser {
     company {
       id
       name
-      officerEmail
-      officerName
+      officer {
+        officerEmail
+        officerName
+      }
       isRegistered
       tel
       officialEmail
@@ -1047,8 +1041,6 @@ subscription OnCreateRoomGroup {
       company {
         id
         name
-        officerEmail
-        officerName
         isRegistered
         tel
         officialEmail
@@ -1082,8 +1074,6 @@ subscription OnCreateRoomGroup {
       company {
         id
         name
-        officerEmail
-        officerName
         isRegistered
         tel
         officialEmail
@@ -1124,8 +1114,6 @@ subscription OnUpdateRoomGroup {
       company {
         id
         name
-        officerEmail
-        officerName
         isRegistered
         tel
         officialEmail
@@ -1159,8 +1147,6 @@ subscription OnUpdateRoomGroup {
       company {
         id
         name
-        officerEmail
-        officerName
         isRegistered
         tel
         officialEmail
@@ -1201,8 +1187,6 @@ subscription OnDeleteRoomGroup {
       company {
         id
         name
-        officerEmail
-        officerName
         isRegistered
         tel
         officialEmail
@@ -1236,8 +1220,6 @@ subscription OnDeleteRoomGroup {
       company {
         id
         name
-        officerEmail
-        officerName
         isRegistered
         tel
         officialEmail
@@ -1274,8 +1256,10 @@ subscription OnCreateRoom {
     company {
       id
       name
-      officerEmail
-      officerName
+      officer {
+        officerEmail
+        officerName
+      }
       isRegistered
       tel
       officialEmail
@@ -1333,8 +1317,10 @@ subscription OnUpdateRoom {
     company {
       id
       name
-      officerEmail
-      officerName
+      officer {
+        officerEmail
+        officerName
+      }
       isRegistered
       tel
       officialEmail
@@ -1392,8 +1378,10 @@ subscription OnDeleteRoom {
     company {
       id
       name
-      officerEmail
-      officerName
+      officer {
+        officerEmail
+        officerName
+      }
       isRegistered
       tel
       officialEmail
@@ -1472,8 +1460,6 @@ subscription OnCreateMessage {
       company {
         id
         name
-        officerEmail
-        officerName
         isRegistered
         tel
         officialEmail
@@ -1576,8 +1562,6 @@ subscription OnUpdateMessage {
       company {
         id
         name
-        officerEmail
-        officerName
         isRegistered
         tel
         officialEmail
@@ -1680,8 +1664,6 @@ subscription OnDeleteMessage {
       company {
         id
         name
-        officerEmail
-        officerName
         isRegistered
         tel
         officialEmail

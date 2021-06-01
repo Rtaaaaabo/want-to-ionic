@@ -12,12 +12,16 @@ export interface SubscriptionResponse<T> {
 export type CreateCompanyInput = {
   id?: string | null;
   name: string;
-  officerEmail: string;
-  officerName: string;
+  officer: Array<OfficerInput | null>;
   isRegistered: boolean;
   tel: string;
   officialEmail: string;
   iconCompany?: S3ObjectInput | null;
+};
+
+export type OfficerInput = {
+  officerEmail: string;
+  officerName: string;
 };
 
 export type S3ObjectInput = {
@@ -28,8 +32,6 @@ export type S3ObjectInput = {
 
 export type ModelCompanyConditionInput = {
   name?: ModelStringInput | null;
-  officerEmail?: ModelStringInput | null;
-  officerName?: ModelStringInput | null;
   isRegistered?: ModelBooleanInput | null;
   tel?: ModelStringInput | null;
   officialEmail?: ModelStringInput | null;
@@ -88,8 +90,7 @@ export type Company = {
   __typename: "Company";
   id: string;
   name: string;
-  officerEmail: string;
-  officerName: string;
+  officer: Array<Officer | null>;
   isRegistered: boolean;
   tel: string;
   officialEmail: string;
@@ -99,6 +100,12 @@ export type Company = {
   createdAt: string;
   updatedAt: string;
   owner?: string | null;
+};
+
+export type Officer = {
+  __typename: "Officer";
+  officerEmail: string;
+  officerName: string;
 };
 
 export type S3Object = {
@@ -238,8 +245,7 @@ export type ModelUserConnection = {
 export type UpdateCompanyInput = {
   id: string;
   name?: string | null;
-  officerEmail?: string | null;
-  officerName?: string | null;
+  officer?: Array<OfficerInput | null> | null;
   isRegistered?: boolean | null;
   tel?: string | null;
   officialEmail?: string | null;
@@ -479,8 +485,6 @@ export type DeleteMessageInput = {
 export type ModelCompanyFilterInput = {
   id?: ModelIDInput | null;
   name?: ModelStringInput | null;
-  officerEmail?: ModelStringInput | null;
-  officerName?: ModelStringInput | null;
   isRegistered?: ModelBooleanInput | null;
   tel?: ModelStringInput | null;
   officialEmail?: ModelStringInput | null;
@@ -584,8 +588,11 @@ export type CreateCompanyMutation = {
   __typename: "Company";
   id: string;
   name: string;
-  officerEmail: string;
-  officerName: string;
+  officer: Array<{
+    __typename: "Officer";
+    officerEmail: string;
+    officerName: string;
+  } | null>;
   isRegistered: boolean;
   tel: string;
   officialEmail: string;
@@ -635,8 +642,11 @@ export type UpdateCompanyMutation = {
   __typename: "Company";
   id: string;
   name: string;
-  officerEmail: string;
-  officerName: string;
+  officer: Array<{
+    __typename: "Officer";
+    officerEmail: string;
+    officerName: string;
+  } | null>;
   isRegistered: boolean;
   tel: string;
   officialEmail: string;
@@ -686,8 +696,11 @@ export type DeleteCompanyMutation = {
   __typename: "Company";
   id: string;
   name: string;
-  officerEmail: string;
-  officerName: string;
+  officer: Array<{
+    __typename: "Officer";
+    officerEmail: string;
+    officerName: string;
+  } | null>;
   isRegistered: boolean;
   tel: string;
   officialEmail: string;
@@ -809,8 +822,6 @@ export type CreateTaskGroupMutation = {
       __typename: "Company";
       id: string;
       name: string;
-      officerEmail: string;
-      officerName: string;
       isRegistered: boolean;
       tel: string;
       officialEmail: string;
@@ -918,8 +929,6 @@ export type UpdateTaskGroupMutation = {
       __typename: "Company";
       id: string;
       name: string;
-      officerEmail: string;
-      officerName: string;
       isRegistered: boolean;
       tel: string;
       officialEmail: string;
@@ -1027,8 +1036,6 @@ export type DeleteTaskGroupMutation = {
       __typename: "Company";
       id: string;
       name: string;
-      officerEmail: string;
-      officerName: string;
       isRegistered: boolean;
       tel: string;
       officialEmail: string;
@@ -1077,8 +1084,6 @@ export type CreateTaskMutation = {
       __typename: "Company";
       id: string;
       name: string;
-      officerEmail: string;
-      officerName: string;
       isRegistered: boolean;
       tel: string;
       officialEmail: string;
@@ -1128,8 +1133,6 @@ export type CreateTaskMutation = {
       __typename: "Company";
       id: string;
       name: string;
-      officerEmail: string;
-      officerName: string;
       isRegistered: boolean;
       tel: string;
       officialEmail: string;
@@ -1204,8 +1207,6 @@ export type UpdateTaskMutation = {
       __typename: "Company";
       id: string;
       name: string;
-      officerEmail: string;
-      officerName: string;
       isRegistered: boolean;
       tel: string;
       officialEmail: string;
@@ -1255,8 +1256,6 @@ export type UpdateTaskMutation = {
       __typename: "Company";
       id: string;
       name: string;
-      officerEmail: string;
-      officerName: string;
       isRegistered: boolean;
       tel: string;
       officialEmail: string;
@@ -1331,8 +1330,6 @@ export type DeleteTaskMutation = {
       __typename: "Company";
       id: string;
       name: string;
-      officerEmail: string;
-      officerName: string;
       isRegistered: boolean;
       tel: string;
       officialEmail: string;
@@ -1382,8 +1379,6 @@ export type DeleteTaskMutation = {
       __typename: "Company";
       id: string;
       name: string;
-      officerEmail: string;
-      officerName: string;
       isRegistered: boolean;
       tel: string;
       officialEmail: string;
@@ -1461,8 +1456,11 @@ export type CreateUserMutation = {
     __typename: "Company";
     id: string;
     name: string;
-    officerEmail: string;
-    officerName: string;
+    officer: Array<{
+      __typename: "Officer";
+      officerEmail: string;
+      officerName: string;
+    } | null>;
     isRegistered: boolean;
     tel: string;
     officialEmail: string;
@@ -1566,8 +1564,11 @@ export type UpdateUserMutation = {
     __typename: "Company";
     id: string;
     name: string;
-    officerEmail: string;
-    officerName: string;
+    officer: Array<{
+      __typename: "Officer";
+      officerEmail: string;
+      officerName: string;
+    } | null>;
     isRegistered: boolean;
     tel: string;
     officialEmail: string;
@@ -1671,8 +1672,11 @@ export type DeleteUserMutation = {
     __typename: "Company";
     id: string;
     name: string;
-    officerEmail: string;
-    officerName: string;
+    officer: Array<{
+      __typename: "Officer";
+      officerEmail: string;
+      officerName: string;
+    } | null>;
     isRegistered: boolean;
     tel: string;
     officialEmail: string;
@@ -1771,8 +1775,6 @@ export type CreateRoomGroupMutation = {
       __typename: "Company";
       id: string;
       name: string;
-      officerEmail: string;
-      officerName: string;
       isRegistered: boolean;
       tel: string;
       officialEmail: string;
@@ -1811,8 +1813,6 @@ export type CreateRoomGroupMutation = {
       __typename: "Company";
       id: string;
       name: string;
-      officerEmail: string;
-      officerName: string;
       isRegistered: boolean;
       tel: string;
       officialEmail: string;
@@ -1859,8 +1859,6 @@ export type UpdateRoomGroupMutation = {
       __typename: "Company";
       id: string;
       name: string;
-      officerEmail: string;
-      officerName: string;
       isRegistered: boolean;
       tel: string;
       officialEmail: string;
@@ -1899,8 +1897,6 @@ export type UpdateRoomGroupMutation = {
       __typename: "Company";
       id: string;
       name: string;
-      officerEmail: string;
-      officerName: string;
       isRegistered: boolean;
       tel: string;
       officialEmail: string;
@@ -1947,8 +1943,6 @@ export type DeleteRoomGroupMutation = {
       __typename: "Company";
       id: string;
       name: string;
-      officerEmail: string;
-      officerName: string;
       isRegistered: boolean;
       tel: string;
       officialEmail: string;
@@ -1987,8 +1981,6 @@ export type DeleteRoomGroupMutation = {
       __typename: "Company";
       id: string;
       name: string;
-      officerEmail: string;
-      officerName: string;
       isRegistered: boolean;
       tel: string;
       officialEmail: string;
@@ -2030,8 +2022,11 @@ export type CreateRoomMutation = {
     __typename: "Company";
     id: string;
     name: string;
-    officerEmail: string;
-    officerName: string;
+    officer: Array<{
+      __typename: "Officer";
+      officerEmail: string;
+      officerName: string;
+    } | null>;
     isRegistered: boolean;
     tel: string;
     officialEmail: string;
@@ -2097,8 +2092,11 @@ export type UpdateRoomMutation = {
     __typename: "Company";
     id: string;
     name: string;
-    officerEmail: string;
-    officerName: string;
+    officer: Array<{
+      __typename: "Officer";
+      officerEmail: string;
+      officerName: string;
+    } | null>;
     isRegistered: boolean;
     tel: string;
     officialEmail: string;
@@ -2164,8 +2162,11 @@ export type DeleteRoomMutation = {
     __typename: "Company";
     id: string;
     name: string;
-    officerEmail: string;
-    officerName: string;
+    officer: Array<{
+      __typename: "Officer";
+      officerEmail: string;
+      officerName: string;
+    } | null>;
     isRegistered: boolean;
     tel: string;
     officialEmail: string;
@@ -2255,8 +2256,6 @@ export type CreateMessageMutation = {
       __typename: "Company";
       id: string;
       name: string;
-      officerEmail: string;
-      officerName: string;
       isRegistered: boolean;
       tel: string;
       officialEmail: string;
@@ -2373,8 +2372,6 @@ export type UpdateMessageMutation = {
       __typename: "Company";
       id: string;
       name: string;
-      officerEmail: string;
-      officerName: string;
       isRegistered: boolean;
       tel: string;
       officialEmail: string;
@@ -2491,8 +2488,6 @@ export type DeleteMessageMutation = {
       __typename: "Company";
       id: string;
       name: string;
-      officerEmail: string;
-      officerName: string;
       isRegistered: boolean;
       tel: string;
       officialEmail: string;
@@ -2579,8 +2574,11 @@ export type GetCompanyQuery = {
   __typename: "Company";
   id: string;
   name: string;
-  officerEmail: string;
-  officerName: string;
+  officer: Array<{
+    __typename: "Officer";
+    officerEmail: string;
+    officerName: string;
+  } | null>;
   isRegistered: boolean;
   tel: string;
   officialEmail: string;
@@ -2632,8 +2630,11 @@ export type ListCompanysQuery = {
     __typename: "Company";
     id: string;
     name: string;
-    officerEmail: string;
-    officerName: string;
+    officer: Array<{
+      __typename: "Officer";
+      officerEmail: string;
+      officerName: string;
+    } | null>;
     isRegistered: boolean;
     tel: string;
     officialEmail: string;
@@ -2734,8 +2735,6 @@ export type GetTaskGroupQuery = {
       __typename: "Company";
       id: string;
       name: string;
-      officerEmail: string;
-      officerName: string;
       isRegistered: boolean;
       tel: string;
       officialEmail: string;
@@ -2825,8 +2824,6 @@ export type GetTaskQuery = {
       __typename: "Company";
       id: string;
       name: string;
-      officerEmail: string;
-      officerName: string;
       isRegistered: boolean;
       tel: string;
       officialEmail: string;
@@ -2876,8 +2873,6 @@ export type GetTaskQuery = {
       __typename: "Company";
       id: string;
       name: string;
-      officerEmail: string;
-      officerName: string;
       isRegistered: boolean;
       tel: string;
       officialEmail: string;
@@ -3011,8 +3006,11 @@ export type GetUserQuery = {
     __typename: "Company";
     id: string;
     name: string;
-    officerEmail: string;
-    officerName: string;
+    officer: Array<{
+      __typename: "Officer";
+      officerEmail: string;
+      officerName: string;
+    } | null>;
     isRegistered: boolean;
     tel: string;
     officialEmail: string;
@@ -3118,8 +3116,6 @@ export type ListUsersQuery = {
       __typename: "Company";
       id: string;
       name: string;
-      officerEmail: string;
-      officerName: string;
       isRegistered: boolean;
       tel: string;
       officialEmail: string;
@@ -3165,8 +3161,6 @@ export type GetRoomGroupQuery = {
       __typename: "Company";
       id: string;
       name: string;
-      officerEmail: string;
-      officerName: string;
       isRegistered: boolean;
       tel: string;
       officialEmail: string;
@@ -3205,8 +3199,6 @@ export type GetRoomGroupQuery = {
       __typename: "Company";
       id: string;
       name: string;
-      officerEmail: string;
-      officerName: string;
       isRegistered: boolean;
       tel: string;
       officialEmail: string;
@@ -3284,8 +3276,11 @@ export type GetRoomQuery = {
     __typename: "Company";
     id: string;
     name: string;
-    officerEmail: string;
-    officerName: string;
+    officer: Array<{
+      __typename: "Officer";
+      officerEmail: string;
+      officerName: string;
+    } | null>;
     isRegistered: boolean;
     tel: string;
     officialEmail: string;
@@ -3353,8 +3348,6 @@ export type ListRoomsQuery = {
       __typename: "Company";
       id: string;
       name: string;
-      officerEmail: string;
-      officerName: string;
       isRegistered: boolean;
       tel: string;
       officialEmail: string;
@@ -3410,8 +3403,6 @@ export type GetMessageQuery = {
       __typename: "Company";
       id: string;
       name: string;
-      officerEmail: string;
-      officerName: string;
       isRegistered: boolean;
       tel: string;
       officialEmail: string;
@@ -3598,8 +3589,11 @@ export type OnCreateCompanySubscription = {
   __typename: "Company";
   id: string;
   name: string;
-  officerEmail: string;
-  officerName: string;
+  officer: Array<{
+    __typename: "Officer";
+    officerEmail: string;
+    officerName: string;
+  } | null>;
   isRegistered: boolean;
   tel: string;
   officialEmail: string;
@@ -3649,8 +3643,11 @@ export type OnUpdateCompanySubscription = {
   __typename: "Company";
   id: string;
   name: string;
-  officerEmail: string;
-  officerName: string;
+  officer: Array<{
+    __typename: "Officer";
+    officerEmail: string;
+    officerName: string;
+  } | null>;
   isRegistered: boolean;
   tel: string;
   officialEmail: string;
@@ -3700,8 +3697,11 @@ export type OnDeleteCompanySubscription = {
   __typename: "Company";
   id: string;
   name: string;
-  officerEmail: string;
-  officerName: string;
+  officer: Array<{
+    __typename: "Officer";
+    officerEmail: string;
+    officerName: string;
+  } | null>;
   isRegistered: boolean;
   tel: string;
   officialEmail: string;
@@ -3823,8 +3823,6 @@ export type OnCreateTaskGroupSubscription = {
       __typename: "Company";
       id: string;
       name: string;
-      officerEmail: string;
-      officerName: string;
       isRegistered: boolean;
       tel: string;
       officialEmail: string;
@@ -3932,8 +3930,6 @@ export type OnUpdateTaskGroupSubscription = {
       __typename: "Company";
       id: string;
       name: string;
-      officerEmail: string;
-      officerName: string;
       isRegistered: boolean;
       tel: string;
       officialEmail: string;
@@ -4041,8 +4037,6 @@ export type OnDeleteTaskGroupSubscription = {
       __typename: "Company";
       id: string;
       name: string;
-      officerEmail: string;
-      officerName: string;
       isRegistered: boolean;
       tel: string;
       officialEmail: string;
@@ -4091,8 +4085,6 @@ export type OnCreateTaskSubscription = {
       __typename: "Company";
       id: string;
       name: string;
-      officerEmail: string;
-      officerName: string;
       isRegistered: boolean;
       tel: string;
       officialEmail: string;
@@ -4142,8 +4134,6 @@ export type OnCreateTaskSubscription = {
       __typename: "Company";
       id: string;
       name: string;
-      officerEmail: string;
-      officerName: string;
       isRegistered: boolean;
       tel: string;
       officialEmail: string;
@@ -4218,8 +4208,6 @@ export type OnUpdateTaskSubscription = {
       __typename: "Company";
       id: string;
       name: string;
-      officerEmail: string;
-      officerName: string;
       isRegistered: boolean;
       tel: string;
       officialEmail: string;
@@ -4269,8 +4257,6 @@ export type OnUpdateTaskSubscription = {
       __typename: "Company";
       id: string;
       name: string;
-      officerEmail: string;
-      officerName: string;
       isRegistered: boolean;
       tel: string;
       officialEmail: string;
@@ -4345,8 +4331,6 @@ export type OnDeleteTaskSubscription = {
       __typename: "Company";
       id: string;
       name: string;
-      officerEmail: string;
-      officerName: string;
       isRegistered: boolean;
       tel: string;
       officialEmail: string;
@@ -4396,8 +4380,6 @@ export type OnDeleteTaskSubscription = {
       __typename: "Company";
       id: string;
       name: string;
-      officerEmail: string;
-      officerName: string;
       isRegistered: boolean;
       tel: string;
       officialEmail: string;
@@ -4475,8 +4457,11 @@ export type OnCreateUserSubscription = {
     __typename: "Company";
     id: string;
     name: string;
-    officerEmail: string;
-    officerName: string;
+    officer: Array<{
+      __typename: "Officer";
+      officerEmail: string;
+      officerName: string;
+    } | null>;
     isRegistered: boolean;
     tel: string;
     officialEmail: string;
@@ -4580,8 +4565,11 @@ export type OnUpdateUserSubscription = {
     __typename: "Company";
     id: string;
     name: string;
-    officerEmail: string;
-    officerName: string;
+    officer: Array<{
+      __typename: "Officer";
+      officerEmail: string;
+      officerName: string;
+    } | null>;
     isRegistered: boolean;
     tel: string;
     officialEmail: string;
@@ -4685,8 +4673,11 @@ export type OnDeleteUserSubscription = {
     __typename: "Company";
     id: string;
     name: string;
-    officerEmail: string;
-    officerName: string;
+    officer: Array<{
+      __typename: "Officer";
+      officerEmail: string;
+      officerName: string;
+    } | null>;
     isRegistered: boolean;
     tel: string;
     officialEmail: string;
@@ -4785,8 +4776,6 @@ export type OnCreateRoomGroupSubscription = {
       __typename: "Company";
       id: string;
       name: string;
-      officerEmail: string;
-      officerName: string;
       isRegistered: boolean;
       tel: string;
       officialEmail: string;
@@ -4825,8 +4814,6 @@ export type OnCreateRoomGroupSubscription = {
       __typename: "Company";
       id: string;
       name: string;
-      officerEmail: string;
-      officerName: string;
       isRegistered: boolean;
       tel: string;
       officialEmail: string;
@@ -4873,8 +4860,6 @@ export type OnUpdateRoomGroupSubscription = {
       __typename: "Company";
       id: string;
       name: string;
-      officerEmail: string;
-      officerName: string;
       isRegistered: boolean;
       tel: string;
       officialEmail: string;
@@ -4913,8 +4898,6 @@ export type OnUpdateRoomGroupSubscription = {
       __typename: "Company";
       id: string;
       name: string;
-      officerEmail: string;
-      officerName: string;
       isRegistered: boolean;
       tel: string;
       officialEmail: string;
@@ -4961,8 +4944,6 @@ export type OnDeleteRoomGroupSubscription = {
       __typename: "Company";
       id: string;
       name: string;
-      officerEmail: string;
-      officerName: string;
       isRegistered: boolean;
       tel: string;
       officialEmail: string;
@@ -5001,8 +4982,6 @@ export type OnDeleteRoomGroupSubscription = {
       __typename: "Company";
       id: string;
       name: string;
-      officerEmail: string;
-      officerName: string;
       isRegistered: boolean;
       tel: string;
       officialEmail: string;
@@ -5044,8 +5023,11 @@ export type OnCreateRoomSubscription = {
     __typename: "Company";
     id: string;
     name: string;
-    officerEmail: string;
-    officerName: string;
+    officer: Array<{
+      __typename: "Officer";
+      officerEmail: string;
+      officerName: string;
+    } | null>;
     isRegistered: boolean;
     tel: string;
     officialEmail: string;
@@ -5111,8 +5093,11 @@ export type OnUpdateRoomSubscription = {
     __typename: "Company";
     id: string;
     name: string;
-    officerEmail: string;
-    officerName: string;
+    officer: Array<{
+      __typename: "Officer";
+      officerEmail: string;
+      officerName: string;
+    } | null>;
     isRegistered: boolean;
     tel: string;
     officialEmail: string;
@@ -5178,8 +5163,11 @@ export type OnDeleteRoomSubscription = {
     __typename: "Company";
     id: string;
     name: string;
-    officerEmail: string;
-    officerName: string;
+    officer: Array<{
+      __typename: "Officer";
+      officerEmail: string;
+      officerName: string;
+    } | null>;
     isRegistered: boolean;
     tel: string;
     officialEmail: string;
@@ -5269,8 +5257,6 @@ export type OnCreateMessageSubscription = {
       __typename: "Company";
       id: string;
       name: string;
-      officerEmail: string;
-      officerName: string;
       isRegistered: boolean;
       tel: string;
       officialEmail: string;
@@ -5387,8 +5373,6 @@ export type OnUpdateMessageSubscription = {
       __typename: "Company";
       id: string;
       name: string;
-      officerEmail: string;
-      officerName: string;
       isRegistered: boolean;
       tel: string;
       officialEmail: string;
@@ -5505,8 +5489,6 @@ export type OnDeleteMessageSubscription = {
       __typename: "Company";
       id: string;
       name: string;
-      officerEmail: string;
-      officerName: string;
       isRegistered: boolean;
       tel: string;
       officialEmail: string;
@@ -5602,8 +5584,11 @@ export class APIService {
           __typename
           id
           name
-          officerEmail
-          officerName
+          officer {
+            __typename
+            officerEmail
+            officerName
+          }
           isRegistered
           tel
           officialEmail
@@ -5669,8 +5654,11 @@ export class APIService {
           __typename
           id
           name
-          officerEmail
-          officerName
+          officer {
+            __typename
+            officerEmail
+            officerName
+          }
           isRegistered
           tel
           officialEmail
@@ -5736,8 +5724,11 @@ export class APIService {
           __typename
           id
           name
-          officerEmail
-          officerName
+          officer {
+            __typename
+            officerEmail
+            officerName
+          }
           isRegistered
           tel
           officialEmail
@@ -5875,8 +5866,6 @@ export class APIService {
               __typename
               id
               name
-              officerEmail
-              officerName
               isRegistered
               tel
               officialEmail
@@ -6000,8 +5989,6 @@ export class APIService {
               __typename
               id
               name
-              officerEmail
-              officerName
               isRegistered
               tel
               officialEmail
@@ -6125,8 +6112,6 @@ export class APIService {
               __typename
               id
               name
-              officerEmail
-              officerName
               isRegistered
               tel
               officialEmail
@@ -6191,8 +6176,6 @@ export class APIService {
               __typename
               id
               name
-              officerEmail
-              officerName
               isRegistered
               tel
               officialEmail
@@ -6242,8 +6225,6 @@ export class APIService {
               __typename
               id
               name
-              officerEmail
-              officerName
               isRegistered
               tel
               officialEmail
@@ -6334,8 +6315,6 @@ export class APIService {
               __typename
               id
               name
-              officerEmail
-              officerName
               isRegistered
               tel
               officialEmail
@@ -6385,8 +6364,6 @@ export class APIService {
               __typename
               id
               name
-              officerEmail
-              officerName
               isRegistered
               tel
               officialEmail
@@ -6477,8 +6454,6 @@ export class APIService {
               __typename
               id
               name
-              officerEmail
-              officerName
               isRegistered
               tel
               officialEmail
@@ -6528,8 +6503,6 @@ export class APIService {
               __typename
               id
               name
-              officerEmail
-              officerName
               isRegistered
               tel
               officialEmail
@@ -6623,8 +6596,11 @@ export class APIService {
             __typename
             id
             name
-            officerEmail
-            officerName
+            officer {
+              __typename
+              officerEmail
+              officerName
+            }
             isRegistered
             tel
             officialEmail
@@ -6744,8 +6720,11 @@ export class APIService {
             __typename
             id
             name
-            officerEmail
-            officerName
+            officer {
+              __typename
+              officerEmail
+              officerName
+            }
             isRegistered
             tel
             officialEmail
@@ -6865,8 +6844,11 @@ export class APIService {
             __typename
             id
             name
-            officerEmail
-            officerName
+            officer {
+              __typename
+              officerEmail
+              officerName
+            }
             isRegistered
             tel
             officialEmail
@@ -6981,8 +6963,6 @@ export class APIService {
               __typename
               id
               name
-              officerEmail
-              officerName
               isRegistered
               tel
               officialEmail
@@ -7021,8 +7001,6 @@ export class APIService {
               __typename
               id
               name
-              officerEmail
-              officerName
               isRegistered
               tel
               officialEmail
@@ -7085,8 +7063,6 @@ export class APIService {
               __typename
               id
               name
-              officerEmail
-              officerName
               isRegistered
               tel
               officialEmail
@@ -7125,8 +7101,6 @@ export class APIService {
               __typename
               id
               name
-              officerEmail
-              officerName
               isRegistered
               tel
               officialEmail
@@ -7189,8 +7163,6 @@ export class APIService {
               __typename
               id
               name
-              officerEmail
-              officerName
               isRegistered
               tel
               officialEmail
@@ -7229,8 +7201,6 @@ export class APIService {
               __typename
               id
               name
-              officerEmail
-              officerName
               isRegistered
               tel
               officialEmail
@@ -7288,8 +7258,11 @@ export class APIService {
             __typename
             id
             name
-            officerEmail
-            officerName
+            officer {
+              __typename
+              officerEmail
+              officerName
+            }
             isRegistered
             tel
             officialEmail
@@ -7371,8 +7344,11 @@ export class APIService {
             __typename
             id
             name
-            officerEmail
-            officerName
+            officer {
+              __typename
+              officerEmail
+              officerName
+            }
             isRegistered
             tel
             officialEmail
@@ -7454,8 +7430,11 @@ export class APIService {
             __typename
             id
             name
-            officerEmail
-            officerName
+            officer {
+              __typename
+              officerEmail
+              officerName
+            }
             isRegistered
             tel
             officialEmail
@@ -7561,8 +7540,6 @@ export class APIService {
               __typename
               id
               name
-              officerEmail
-              officerName
               isRegistered
               tel
               officialEmail
@@ -7695,8 +7672,6 @@ export class APIService {
               __typename
               id
               name
-              officerEmail
-              officerName
               isRegistered
               tel
               officialEmail
@@ -7829,8 +7804,6 @@ export class APIService {
               __typename
               id
               name
-              officerEmail
-              officerName
               isRegistered
               tel
               officialEmail
@@ -7930,8 +7903,11 @@ export class APIService {
           __typename
           id
           name
-          officerEmail
-          officerName
+          officer {
+            __typename
+            officerEmail
+            officerName
+          }
           isRegistered
           tel
           officialEmail
@@ -7997,8 +7973,11 @@ export class APIService {
             __typename
             id
             name
-            officerEmail
-            officerName
+            officer {
+              __typename
+              officerEmail
+              officerName
+            }
             isRegistered
             tel
             officialEmail
@@ -8116,8 +8095,6 @@ export class APIService {
               __typename
               id
               name
-              officerEmail
-              officerName
               isRegistered
               tel
               officialEmail
@@ -8238,8 +8215,6 @@ export class APIService {
               __typename
               id
               name
-              officerEmail
-              officerName
               isRegistered
               tel
               officialEmail
@@ -8289,8 +8264,6 @@ export class APIService {
               __typename
               id
               name
-              officerEmail
-              officerName
               isRegistered
               tel
               officialEmail
@@ -8455,8 +8428,11 @@ export class APIService {
             __typename
             id
             name
-            officerEmail
-            officerName
+            officer {
+              __typename
+              officerEmail
+              officerName
+            }
             isRegistered
             tel
             officialEmail
@@ -8576,8 +8552,6 @@ export class APIService {
               __typename
               id
               name
-              officerEmail
-              officerName
               isRegistered
               tel
               officialEmail
@@ -8640,8 +8614,6 @@ export class APIService {
               __typename
               id
               name
-              officerEmail
-              officerName
               isRegistered
               tel
               officialEmail
@@ -8680,8 +8652,6 @@ export class APIService {
               __typename
               id
               name
-              officerEmail
-              officerName
               isRegistered
               tel
               officialEmail
@@ -8790,8 +8760,11 @@ export class APIService {
             __typename
             id
             name
-            officerEmail
-            officerName
+            officer {
+              __typename
+              officerEmail
+              officerName
+            }
             isRegistered
             tel
             officialEmail
@@ -8873,8 +8846,6 @@ export class APIService {
               __typename
               id
               name
-              officerEmail
-              officerName
               isRegistered
               tel
               officialEmail
@@ -8947,8 +8918,6 @@ export class APIService {
               __typename
               id
               name
-              officerEmail
-              officerName
               isRegistered
               tel
               officialEmail
@@ -9202,8 +9171,11 @@ export class APIService {
           __typename
           id
           name
-          officerEmail
-          officerName
+          officer {
+            __typename
+            officerEmail
+            officerName
+          }
           isRegistered
           tel
           officialEmail
@@ -9261,8 +9233,11 @@ export class APIService {
           __typename
           id
           name
-          officerEmail
-          officerName
+          officer {
+            __typename
+            officerEmail
+            officerName
+          }
           isRegistered
           tel
           officialEmail
@@ -9320,8 +9295,11 @@ export class APIService {
           __typename
           id
           name
-          officerEmail
-          officerName
+          officer {
+            __typename
+            officerEmail
+            officerName
+          }
           isRegistered
           tel
           officialEmail
@@ -9451,8 +9429,6 @@ export class APIService {
               __typename
               id
               name
-              officerEmail
-              officerName
               isRegistered
               tel
               officialEmail
@@ -9568,8 +9544,6 @@ export class APIService {
               __typename
               id
               name
-              officerEmail
-              officerName
               isRegistered
               tel
               officialEmail
@@ -9685,8 +9659,6 @@ export class APIService {
               __typename
               id
               name
-              officerEmail
-              officerName
               isRegistered
               tel
               officialEmail
@@ -9743,8 +9715,6 @@ export class APIService {
               __typename
               id
               name
-              officerEmail
-              officerName
               isRegistered
               tel
               officialEmail
@@ -9794,8 +9764,6 @@ export class APIService {
               __typename
               id
               name
-              officerEmail
-              officerName
               isRegistered
               tel
               officialEmail
@@ -9878,8 +9846,6 @@ export class APIService {
               __typename
               id
               name
-              officerEmail
-              officerName
               isRegistered
               tel
               officialEmail
@@ -9929,8 +9895,6 @@ export class APIService {
               __typename
               id
               name
-              officerEmail
-              officerName
               isRegistered
               tel
               officialEmail
@@ -10013,8 +9977,6 @@ export class APIService {
               __typename
               id
               name
-              officerEmail
-              officerName
               isRegistered
               tel
               officialEmail
@@ -10064,8 +10026,6 @@ export class APIService {
               __typename
               id
               name
-              officerEmail
-              officerName
               isRegistered
               tel
               officialEmail
@@ -10151,8 +10111,11 @@ export class APIService {
             __typename
             id
             name
-            officerEmail
-            officerName
+            officer {
+              __typename
+              officerEmail
+              officerName
+            }
             isRegistered
             tel
             officialEmail
@@ -10264,8 +10227,11 @@ export class APIService {
             __typename
             id
             name
-            officerEmail
-            officerName
+            officer {
+              __typename
+              officerEmail
+              officerName
+            }
             isRegistered
             tel
             officialEmail
@@ -10377,8 +10343,11 @@ export class APIService {
             __typename
             id
             name
-            officerEmail
-            officerName
+            officer {
+              __typename
+              officerEmail
+              officerName
+            }
             isRegistered
             tel
             officialEmail
@@ -10485,8 +10454,6 @@ export class APIService {
               __typename
               id
               name
-              officerEmail
-              officerName
               isRegistered
               tel
               officialEmail
@@ -10525,8 +10492,6 @@ export class APIService {
               __typename
               id
               name
-              officerEmail
-              officerName
               isRegistered
               tel
               officialEmail
@@ -10581,8 +10546,6 @@ export class APIService {
               __typename
               id
               name
-              officerEmail
-              officerName
               isRegistered
               tel
               officialEmail
@@ -10621,8 +10584,6 @@ export class APIService {
               __typename
               id
               name
-              officerEmail
-              officerName
               isRegistered
               tel
               officialEmail
@@ -10677,8 +10638,6 @@ export class APIService {
               __typename
               id
               name
-              officerEmail
-              officerName
               isRegistered
               tel
               officialEmail
@@ -10717,8 +10676,6 @@ export class APIService {
               __typename
               id
               name
-              officerEmail
-              officerName
               isRegistered
               tel
               officialEmail
@@ -10768,8 +10725,11 @@ export class APIService {
             __typename
             id
             name
-            officerEmail
-            officerName
+            officer {
+              __typename
+              officerEmail
+              officerName
+            }
             isRegistered
             tel
             officialEmail
@@ -10843,8 +10803,11 @@ export class APIService {
             __typename
             id
             name
-            officerEmail
-            officerName
+            officer {
+              __typename
+              officerEmail
+              officerName
+            }
             isRegistered
             tel
             officialEmail
@@ -10918,8 +10881,11 @@ export class APIService {
             __typename
             id
             name
-            officerEmail
-            officerName
+            officer {
+              __typename
+              officerEmail
+              officerName
+            }
             isRegistered
             tel
             officialEmail
@@ -11017,8 +10983,6 @@ export class APIService {
               __typename
               id
               name
-              officerEmail
-              officerName
               isRegistered
               tel
               officialEmail
@@ -11143,8 +11107,6 @@ export class APIService {
               __typename
               id
               name
-              officerEmail
-              officerName
               isRegistered
               tel
               officialEmail
@@ -11269,8 +11231,6 @@ export class APIService {
               __typename
               id
               name
-              officerEmail
-              officerName
               isRegistered
               tel
               officialEmail
