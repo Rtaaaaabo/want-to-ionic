@@ -13,6 +13,10 @@ export type CreateCompanyInput = {
   id?: string | null;
   name: string;
   officerEmail: string;
+  officerName: string;
+  isRegistered: boolean;
+  tel: string;
+  officialEmail: string;
   iconCompany?: S3ObjectInput | null;
 };
 
@@ -25,6 +29,10 @@ export type S3ObjectInput = {
 export type ModelCompanyConditionInput = {
   name?: ModelStringInput | null;
   officerEmail?: ModelStringInput | null;
+  officerName?: ModelStringInput | null;
+  isRegistered?: ModelBooleanInput | null;
+  tel?: ModelStringInput | null;
+  officialEmail?: ModelStringInput | null;
   and?: Array<ModelCompanyConditionInput | null> | null;
   or?: Array<ModelCompanyConditionInput | null> | null;
   not?: ModelCompanyConditionInput | null;
@@ -69,11 +77,22 @@ export type ModelSizeInput = {
   between?: Array<number | null> | null;
 };
 
+export type ModelBooleanInput = {
+  ne?: boolean | null;
+  eq?: boolean | null;
+  attributeExists?: boolean | null;
+  attributeType?: ModelAttributeTypes | null;
+};
+
 export type Company = {
   __typename: "Company";
   id: string;
   name: string;
   officerEmail: string;
+  officerName: string;
+  isRegistered: boolean;
+  tel: string;
+  officialEmail: string;
   iconCompany?: S3Object | null;
   room?: ModelRoomConnection | null;
   companyMembers?: ModelUserConnection | null;
@@ -144,7 +163,7 @@ export type User = {
   positionName?: string | null;
   iconImage?: S3Object | null;
   registered?: boolean | null;
-  authority?: string | null;
+  authority?: boolean | null;
   company: Company;
   messages?: ModelMessageConnection | null;
   room?: ModelRoomGroupConnection | null;
@@ -220,6 +239,10 @@ export type UpdateCompanyInput = {
   id: string;
   name?: string | null;
   officerEmail?: string | null;
+  officerName?: string | null;
+  isRegistered?: boolean | null;
+  tel?: string | null;
+  officialEmail?: string | null;
   iconCompany?: S3ObjectInput | null;
 };
 
@@ -335,7 +358,7 @@ export type CreateUserInput = {
   positionName?: string | null;
   iconImage?: S3ObjectInput | null;
   registered?: boolean | null;
-  authority?: string | null;
+  authority?: boolean | null;
 };
 
 export type ModelUserConditionInput = {
@@ -345,17 +368,10 @@ export type ModelUserConditionInput = {
   tel?: ModelStringInput | null;
   positionName?: ModelStringInput | null;
   registered?: ModelBooleanInput | null;
-  authority?: ModelStringInput | null;
+  authority?: ModelBooleanInput | null;
   and?: Array<ModelUserConditionInput | null> | null;
   or?: Array<ModelUserConditionInput | null> | null;
   not?: ModelUserConditionInput | null;
-};
-
-export type ModelBooleanInput = {
-  ne?: boolean | null;
-  eq?: boolean | null;
-  attributeExists?: boolean | null;
-  attributeType?: ModelAttributeTypes | null;
 };
 
 export type UpdateUserInput = {
@@ -367,7 +383,7 @@ export type UpdateUserInput = {
   positionName?: string | null;
   iconImage?: S3ObjectInput | null;
   registered?: boolean | null;
-  authority?: string | null;
+  authority?: boolean | null;
 };
 
 export type DeleteUserInput = {
@@ -464,6 +480,10 @@ export type ModelCompanyFilterInput = {
   id?: ModelIDInput | null;
   name?: ModelStringInput | null;
   officerEmail?: ModelStringInput | null;
+  officerName?: ModelStringInput | null;
+  isRegistered?: ModelBooleanInput | null;
+  tel?: ModelStringInput | null;
+  officialEmail?: ModelStringInput | null;
   and?: Array<ModelCompanyFilterInput | null> | null;
   or?: Array<ModelCompanyFilterInput | null> | null;
   not?: ModelCompanyFilterInput | null;
@@ -508,7 +528,7 @@ export type ModelUserFilterInput = {
   tel?: ModelStringInput | null;
   positionName?: ModelStringInput | null;
   registered?: ModelBooleanInput | null;
-  authority?: ModelStringInput | null;
+  authority?: ModelBooleanInput | null;
   and?: Array<ModelUserFilterInput | null> | null;
   or?: Array<ModelUserFilterInput | null> | null;
   not?: ModelUserFilterInput | null;
@@ -565,6 +585,10 @@ export type CreateCompanyMutation = {
   id: string;
   name: string;
   officerEmail: string;
+  officerName: string;
+  isRegistered: boolean;
+  tel: string;
+  officialEmail: string;
   iconCompany?: {
     __typename: "S3Object";
     bucket: string;
@@ -595,7 +619,7 @@ export type CreateCompanyMutation = {
       tel?: string | null;
       positionName?: string | null;
       registered?: boolean | null;
-      authority?: string | null;
+      authority?: boolean | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -612,6 +636,10 @@ export type UpdateCompanyMutation = {
   id: string;
   name: string;
   officerEmail: string;
+  officerName: string;
+  isRegistered: boolean;
+  tel: string;
+  officialEmail: string;
   iconCompany?: {
     __typename: "S3Object";
     bucket: string;
@@ -642,7 +670,7 @@ export type UpdateCompanyMutation = {
       tel?: string | null;
       positionName?: string | null;
       registered?: boolean | null;
-      authority?: string | null;
+      authority?: boolean | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -659,6 +687,10 @@ export type DeleteCompanyMutation = {
   id: string;
   name: string;
   officerEmail: string;
+  officerName: string;
+  isRegistered: boolean;
+  tel: string;
+  officialEmail: string;
   iconCompany?: {
     __typename: "S3Object";
     bucket: string;
@@ -689,7 +721,7 @@ export type DeleteCompanyMutation = {
       tel?: string | null;
       positionName?: string | null;
       registered?: boolean | null;
-      authority?: string | null;
+      authority?: boolean | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -742,7 +774,7 @@ export type CreateTaskGroupMutation = {
       tel?: string | null;
       positionName?: string | null;
       registered?: boolean | null;
-      authority?: string | null;
+      authority?: boolean | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -772,12 +804,16 @@ export type CreateTaskGroupMutation = {
       key: string;
     } | null;
     registered?: boolean | null;
-    authority?: string | null;
+    authority?: boolean | null;
     company: {
       __typename: "Company";
       id: string;
       name: string;
       officerEmail: string;
+      officerName: string;
+      isRegistered: boolean;
+      tel: string;
+      officialEmail: string;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -847,7 +883,7 @@ export type UpdateTaskGroupMutation = {
       tel?: string | null;
       positionName?: string | null;
       registered?: boolean | null;
-      authority?: string | null;
+      authority?: boolean | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -877,12 +913,16 @@ export type UpdateTaskGroupMutation = {
       key: string;
     } | null;
     registered?: boolean | null;
-    authority?: string | null;
+    authority?: boolean | null;
     company: {
       __typename: "Company";
       id: string;
       name: string;
       officerEmail: string;
+      officerName: string;
+      isRegistered: boolean;
+      tel: string;
+      officialEmail: string;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -952,7 +992,7 @@ export type DeleteTaskGroupMutation = {
       tel?: string | null;
       positionName?: string | null;
       registered?: boolean | null;
-      authority?: string | null;
+      authority?: boolean | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -982,12 +1022,16 @@ export type DeleteTaskGroupMutation = {
       key: string;
     } | null;
     registered?: boolean | null;
-    authority?: string | null;
+    authority?: boolean | null;
     company: {
       __typename: "Company";
       id: string;
       name: string;
       officerEmail: string;
+      officerName: string;
+      isRegistered: boolean;
+      tel: string;
+      officialEmail: string;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -1034,6 +1078,10 @@ export type CreateTaskMutation = {
       id: string;
       name: string;
       officerEmail: string;
+      officerName: string;
+      isRegistered: boolean;
+      tel: string;
+      officialEmail: string;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -1075,12 +1123,16 @@ export type CreateTaskMutation = {
       key: string;
     } | null;
     registered?: boolean | null;
-    authority?: string | null;
+    authority?: boolean | null;
     company: {
       __typename: "Company";
       id: string;
       name: string;
       officerEmail: string;
+      officerName: string;
+      isRegistered: boolean;
+      tel: string;
+      officialEmail: string;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -1153,6 +1205,10 @@ export type UpdateTaskMutation = {
       id: string;
       name: string;
       officerEmail: string;
+      officerName: string;
+      isRegistered: boolean;
+      tel: string;
+      officialEmail: string;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -1194,12 +1250,16 @@ export type UpdateTaskMutation = {
       key: string;
     } | null;
     registered?: boolean | null;
-    authority?: string | null;
+    authority?: boolean | null;
     company: {
       __typename: "Company";
       id: string;
       name: string;
       officerEmail: string;
+      officerName: string;
+      isRegistered: boolean;
+      tel: string;
+      officialEmail: string;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -1272,6 +1332,10 @@ export type DeleteTaskMutation = {
       id: string;
       name: string;
       officerEmail: string;
+      officerName: string;
+      isRegistered: boolean;
+      tel: string;
+      officialEmail: string;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -1313,12 +1377,16 @@ export type DeleteTaskMutation = {
       key: string;
     } | null;
     registered?: boolean | null;
-    authority?: string | null;
+    authority?: boolean | null;
     company: {
       __typename: "Company";
       id: string;
       name: string;
       officerEmail: string;
+      officerName: string;
+      isRegistered: boolean;
+      tel: string;
+      officialEmail: string;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -1388,12 +1456,16 @@ export type CreateUserMutation = {
     key: string;
   } | null;
   registered?: boolean | null;
-  authority?: string | null;
+  authority?: boolean | null;
   company: {
     __typename: "Company";
     id: string;
     name: string;
     officerEmail: string;
+    officerName: string;
+    isRegistered: boolean;
+    tel: string;
+    officialEmail: string;
     iconCompany?: {
       __typename: "S3Object";
       bucket: string;
@@ -1489,12 +1561,16 @@ export type UpdateUserMutation = {
     key: string;
   } | null;
   registered?: boolean | null;
-  authority?: string | null;
+  authority?: boolean | null;
   company: {
     __typename: "Company";
     id: string;
     name: string;
     officerEmail: string;
+    officerName: string;
+    isRegistered: boolean;
+    tel: string;
+    officialEmail: string;
     iconCompany?: {
       __typename: "S3Object";
       bucket: string;
@@ -1590,12 +1666,16 @@ export type DeleteUserMutation = {
     key: string;
   } | null;
   registered?: boolean | null;
-  authority?: string | null;
+  authority?: boolean | null;
   company: {
     __typename: "Company";
     id: string;
     name: string;
     officerEmail: string;
+    officerName: string;
+    isRegistered: boolean;
+    tel: string;
+    officialEmail: string;
     iconCompany?: {
       __typename: "S3Object";
       bucket: string;
@@ -1692,6 +1772,10 @@ export type CreateRoomGroupMutation = {
       id: string;
       name: string;
       officerEmail: string;
+      officerName: string;
+      isRegistered: boolean;
+      tel: string;
+      officialEmail: string;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -1722,12 +1806,16 @@ export type CreateRoomGroupMutation = {
       key: string;
     } | null;
     registered?: boolean | null;
-    authority?: string | null;
+    authority?: boolean | null;
     company: {
       __typename: "Company";
       id: string;
       name: string;
       officerEmail: string;
+      officerName: string;
+      isRegistered: boolean;
+      tel: string;
+      officialEmail: string;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -1772,6 +1860,10 @@ export type UpdateRoomGroupMutation = {
       id: string;
       name: string;
       officerEmail: string;
+      officerName: string;
+      isRegistered: boolean;
+      tel: string;
+      officialEmail: string;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -1802,12 +1894,16 @@ export type UpdateRoomGroupMutation = {
       key: string;
     } | null;
     registered?: boolean | null;
-    authority?: string | null;
+    authority?: boolean | null;
     company: {
       __typename: "Company";
       id: string;
       name: string;
       officerEmail: string;
+      officerName: string;
+      isRegistered: boolean;
+      tel: string;
+      officialEmail: string;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -1852,6 +1948,10 @@ export type DeleteRoomGroupMutation = {
       id: string;
       name: string;
       officerEmail: string;
+      officerName: string;
+      isRegistered: boolean;
+      tel: string;
+      officialEmail: string;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -1882,12 +1982,16 @@ export type DeleteRoomGroupMutation = {
       key: string;
     } | null;
     registered?: boolean | null;
-    authority?: string | null;
+    authority?: boolean | null;
     company: {
       __typename: "Company";
       id: string;
       name: string;
       officerEmail: string;
+      officerName: string;
+      isRegistered: boolean;
+      tel: string;
+      officialEmail: string;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -1927,6 +2031,10 @@ export type CreateRoomMutation = {
     id: string;
     name: string;
     officerEmail: string;
+    officerName: string;
+    isRegistered: boolean;
+    tel: string;
+    officialEmail: string;
     iconCompany?: {
       __typename: "S3Object";
       bucket: string;
@@ -1990,6 +2098,10 @@ export type UpdateRoomMutation = {
     id: string;
     name: string;
     officerEmail: string;
+    officerName: string;
+    isRegistered: boolean;
+    tel: string;
+    officialEmail: string;
     iconCompany?: {
       __typename: "S3Object";
       bucket: string;
@@ -2053,6 +2165,10 @@ export type DeleteRoomMutation = {
     id: string;
     name: string;
     officerEmail: string;
+    officerName: string;
+    isRegistered: boolean;
+    tel: string;
+    officialEmail: string;
     iconCompany?: {
       __typename: "S3Object";
       bucket: string;
@@ -2134,12 +2250,16 @@ export type CreateMessageMutation = {
       key: string;
     } | null;
     registered?: boolean | null;
-    authority?: string | null;
+    authority?: boolean | null;
     company: {
       __typename: "Company";
       id: string;
       name: string;
       officerEmail: string;
+      officerName: string;
+      isRegistered: boolean;
+      tel: string;
+      officialEmail: string;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -2200,7 +2320,7 @@ export type CreateMessageMutation = {
       tel?: string | null;
       positionName?: string | null;
       registered?: boolean | null;
-      authority?: string | null;
+      authority?: boolean | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -2248,12 +2368,16 @@ export type UpdateMessageMutation = {
       key: string;
     } | null;
     registered?: boolean | null;
-    authority?: string | null;
+    authority?: boolean | null;
     company: {
       __typename: "Company";
       id: string;
       name: string;
       officerEmail: string;
+      officerName: string;
+      isRegistered: boolean;
+      tel: string;
+      officialEmail: string;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -2314,7 +2438,7 @@ export type UpdateMessageMutation = {
       tel?: string | null;
       positionName?: string | null;
       registered?: boolean | null;
-      authority?: string | null;
+      authority?: boolean | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -2362,12 +2486,16 @@ export type DeleteMessageMutation = {
       key: string;
     } | null;
     registered?: boolean | null;
-    authority?: string | null;
+    authority?: boolean | null;
     company: {
       __typename: "Company";
       id: string;
       name: string;
       officerEmail: string;
+      officerName: string;
+      isRegistered: boolean;
+      tel: string;
+      officialEmail: string;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -2428,7 +2556,7 @@ export type DeleteMessageMutation = {
       tel?: string | null;
       positionName?: string | null;
       registered?: boolean | null;
-      authority?: string | null;
+      authority?: boolean | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -2452,6 +2580,10 @@ export type GetCompanyQuery = {
   id: string;
   name: string;
   officerEmail: string;
+  officerName: string;
+  isRegistered: boolean;
+  tel: string;
+  officialEmail: string;
   iconCompany?: {
     __typename: "S3Object";
     bucket: string;
@@ -2482,7 +2614,7 @@ export type GetCompanyQuery = {
       tel?: string | null;
       positionName?: string | null;
       registered?: boolean | null;
-      authority?: string | null;
+      authority?: boolean | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -2501,6 +2633,10 @@ export type ListCompanysQuery = {
     id: string;
     name: string;
     officerEmail: string;
+    officerName: string;
+    isRegistered: boolean;
+    tel: string;
+    officialEmail: string;
     iconCompany?: {
       __typename: "S3Object";
       bucket: string;
@@ -2563,7 +2699,7 @@ export type GetTaskGroupQuery = {
       tel?: string | null;
       positionName?: string | null;
       registered?: boolean | null;
-      authority?: string | null;
+      authority?: boolean | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -2593,12 +2729,16 @@ export type GetTaskGroupQuery = {
       key: string;
     } | null;
     registered?: boolean | null;
-    authority?: string | null;
+    authority?: boolean | null;
     company: {
       __typename: "Company";
       id: string;
       name: string;
       officerEmail: string;
+      officerName: string;
+      isRegistered: boolean;
+      tel: string;
+      officialEmail: string;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -2657,7 +2797,7 @@ export type ListTaskGroupsQuery = {
       tel?: string | null;
       positionName?: string | null;
       registered?: boolean | null;
-      authority?: string | null;
+      authority?: boolean | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -2686,6 +2826,10 @@ export type GetTaskQuery = {
       id: string;
       name: string;
       officerEmail: string;
+      officerName: string;
+      isRegistered: boolean;
+      tel: string;
+      officialEmail: string;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -2727,12 +2871,16 @@ export type GetTaskQuery = {
       key: string;
     } | null;
     registered?: boolean | null;
-    authority?: string | null;
+    authority?: boolean | null;
     company: {
       __typename: "Company";
       id: string;
       name: string;
       officerEmail: string;
+      officerName: string;
+      isRegistered: boolean;
+      tel: string;
+      officialEmail: string;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -2825,7 +2973,7 @@ export type ListTasksQuery = {
       tel?: string | null;
       positionName?: string | null;
       registered?: boolean | null;
-      authority?: string | null;
+      authority?: boolean | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -2858,12 +3006,16 @@ export type GetUserQuery = {
     key: string;
   } | null;
   registered?: boolean | null;
-  authority?: string | null;
+  authority?: boolean | null;
   company: {
     __typename: "Company";
     id: string;
     name: string;
     officerEmail: string;
+    officerName: string;
+    isRegistered: boolean;
+    tel: string;
+    officialEmail: string;
     iconCompany?: {
       __typename: "S3Object";
       bucket: string;
@@ -2961,12 +3113,16 @@ export type ListUsersQuery = {
       key: string;
     } | null;
     registered?: boolean | null;
-    authority?: string | null;
+    authority?: boolean | null;
     company: {
       __typename: "Company";
       id: string;
       name: string;
       officerEmail: string;
+      officerName: string;
+      isRegistered: boolean;
+      tel: string;
+      officialEmail: string;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -3010,6 +3166,10 @@ export type GetRoomGroupQuery = {
       id: string;
       name: string;
       officerEmail: string;
+      officerName: string;
+      isRegistered: boolean;
+      tel: string;
+      officialEmail: string;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -3040,12 +3200,16 @@ export type GetRoomGroupQuery = {
       key: string;
     } | null;
     registered?: boolean | null;
-    authority?: string | null;
+    authority?: boolean | null;
     company: {
       __typename: "Company";
       id: string;
       name: string;
       officerEmail: string;
+      officerName: string;
+      isRegistered: boolean;
+      tel: string;
+      officialEmail: string;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -3099,7 +3263,7 @@ export type ListRoomGroupsQuery = {
       tel?: string | null;
       positionName?: string | null;
       registered?: boolean | null;
-      authority?: string | null;
+      authority?: boolean | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -3121,6 +3285,10 @@ export type GetRoomQuery = {
     id: string;
     name: string;
     officerEmail: string;
+    officerName: string;
+    isRegistered: boolean;
+    tel: string;
+    officialEmail: string;
     iconCompany?: {
       __typename: "S3Object";
       bucket: string;
@@ -3186,6 +3354,10 @@ export type ListRoomsQuery = {
       id: string;
       name: string;
       officerEmail: string;
+      officerName: string;
+      isRegistered: boolean;
+      tel: string;
+      officialEmail: string;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -3233,12 +3405,16 @@ export type GetMessageQuery = {
       key: string;
     } | null;
     registered?: boolean | null;
-    authority?: string | null;
+    authority?: boolean | null;
     company: {
       __typename: "Company";
       id: string;
       name: string;
       officerEmail: string;
+      officerName: string;
+      isRegistered: boolean;
+      tel: string;
+      officialEmail: string;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -3299,7 +3475,7 @@ export type GetMessageQuery = {
       tel?: string | null;
       positionName?: string | null;
       registered?: boolean | null;
-      authority?: string | null;
+      authority?: boolean | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -3343,7 +3519,7 @@ export type ListMessagesQuery = {
       tel?: string | null;
       positionName?: string | null;
       registered?: boolean | null;
-      authority?: string | null;
+      authority?: boolean | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -3393,7 +3569,7 @@ export type TaskByCreatedAtQuery = {
       tel?: string | null;
       positionName?: string | null;
       registered?: boolean | null;
-      authority?: string | null;
+      authority?: boolean | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -3423,6 +3599,10 @@ export type OnCreateCompanySubscription = {
   id: string;
   name: string;
   officerEmail: string;
+  officerName: string;
+  isRegistered: boolean;
+  tel: string;
+  officialEmail: string;
   iconCompany?: {
     __typename: "S3Object";
     bucket: string;
@@ -3453,7 +3633,7 @@ export type OnCreateCompanySubscription = {
       tel?: string | null;
       positionName?: string | null;
       registered?: boolean | null;
-      authority?: string | null;
+      authority?: boolean | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -3470,6 +3650,10 @@ export type OnUpdateCompanySubscription = {
   id: string;
   name: string;
   officerEmail: string;
+  officerName: string;
+  isRegistered: boolean;
+  tel: string;
+  officialEmail: string;
   iconCompany?: {
     __typename: "S3Object";
     bucket: string;
@@ -3500,7 +3684,7 @@ export type OnUpdateCompanySubscription = {
       tel?: string | null;
       positionName?: string | null;
       registered?: boolean | null;
-      authority?: string | null;
+      authority?: boolean | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -3517,6 +3701,10 @@ export type OnDeleteCompanySubscription = {
   id: string;
   name: string;
   officerEmail: string;
+  officerName: string;
+  isRegistered: boolean;
+  tel: string;
+  officialEmail: string;
   iconCompany?: {
     __typename: "S3Object";
     bucket: string;
@@ -3547,7 +3735,7 @@ export type OnDeleteCompanySubscription = {
       tel?: string | null;
       positionName?: string | null;
       registered?: boolean | null;
-      authority?: string | null;
+      authority?: boolean | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -3600,7 +3788,7 @@ export type OnCreateTaskGroupSubscription = {
       tel?: string | null;
       positionName?: string | null;
       registered?: boolean | null;
-      authority?: string | null;
+      authority?: boolean | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -3630,12 +3818,16 @@ export type OnCreateTaskGroupSubscription = {
       key: string;
     } | null;
     registered?: boolean | null;
-    authority?: string | null;
+    authority?: boolean | null;
     company: {
       __typename: "Company";
       id: string;
       name: string;
       officerEmail: string;
+      officerName: string;
+      isRegistered: boolean;
+      tel: string;
+      officialEmail: string;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -3705,7 +3897,7 @@ export type OnUpdateTaskGroupSubscription = {
       tel?: string | null;
       positionName?: string | null;
       registered?: boolean | null;
-      authority?: string | null;
+      authority?: boolean | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -3735,12 +3927,16 @@ export type OnUpdateTaskGroupSubscription = {
       key: string;
     } | null;
     registered?: boolean | null;
-    authority?: string | null;
+    authority?: boolean | null;
     company: {
       __typename: "Company";
       id: string;
       name: string;
       officerEmail: string;
+      officerName: string;
+      isRegistered: boolean;
+      tel: string;
+      officialEmail: string;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -3810,7 +4006,7 @@ export type OnDeleteTaskGroupSubscription = {
       tel?: string | null;
       positionName?: string | null;
       registered?: boolean | null;
-      authority?: string | null;
+      authority?: boolean | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -3840,12 +4036,16 @@ export type OnDeleteTaskGroupSubscription = {
       key: string;
     } | null;
     registered?: boolean | null;
-    authority?: string | null;
+    authority?: boolean | null;
     company: {
       __typename: "Company";
       id: string;
       name: string;
       officerEmail: string;
+      officerName: string;
+      isRegistered: boolean;
+      tel: string;
+      officialEmail: string;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -3892,6 +4092,10 @@ export type OnCreateTaskSubscription = {
       id: string;
       name: string;
       officerEmail: string;
+      officerName: string;
+      isRegistered: boolean;
+      tel: string;
+      officialEmail: string;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -3933,12 +4137,16 @@ export type OnCreateTaskSubscription = {
       key: string;
     } | null;
     registered?: boolean | null;
-    authority?: string | null;
+    authority?: boolean | null;
     company: {
       __typename: "Company";
       id: string;
       name: string;
       officerEmail: string;
+      officerName: string;
+      isRegistered: boolean;
+      tel: string;
+      officialEmail: string;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -4011,6 +4219,10 @@ export type OnUpdateTaskSubscription = {
       id: string;
       name: string;
       officerEmail: string;
+      officerName: string;
+      isRegistered: boolean;
+      tel: string;
+      officialEmail: string;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -4052,12 +4264,16 @@ export type OnUpdateTaskSubscription = {
       key: string;
     } | null;
     registered?: boolean | null;
-    authority?: string | null;
+    authority?: boolean | null;
     company: {
       __typename: "Company";
       id: string;
       name: string;
       officerEmail: string;
+      officerName: string;
+      isRegistered: boolean;
+      tel: string;
+      officialEmail: string;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -4130,6 +4346,10 @@ export type OnDeleteTaskSubscription = {
       id: string;
       name: string;
       officerEmail: string;
+      officerName: string;
+      isRegistered: boolean;
+      tel: string;
+      officialEmail: string;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -4171,12 +4391,16 @@ export type OnDeleteTaskSubscription = {
       key: string;
     } | null;
     registered?: boolean | null;
-    authority?: string | null;
+    authority?: boolean | null;
     company: {
       __typename: "Company";
       id: string;
       name: string;
       officerEmail: string;
+      officerName: string;
+      isRegistered: boolean;
+      tel: string;
+      officialEmail: string;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -4246,12 +4470,16 @@ export type OnCreateUserSubscription = {
     key: string;
   } | null;
   registered?: boolean | null;
-  authority?: string | null;
+  authority?: boolean | null;
   company: {
     __typename: "Company";
     id: string;
     name: string;
     officerEmail: string;
+    officerName: string;
+    isRegistered: boolean;
+    tel: string;
+    officialEmail: string;
     iconCompany?: {
       __typename: "S3Object";
       bucket: string;
@@ -4347,12 +4575,16 @@ export type OnUpdateUserSubscription = {
     key: string;
   } | null;
   registered?: boolean | null;
-  authority?: string | null;
+  authority?: boolean | null;
   company: {
     __typename: "Company";
     id: string;
     name: string;
     officerEmail: string;
+    officerName: string;
+    isRegistered: boolean;
+    tel: string;
+    officialEmail: string;
     iconCompany?: {
       __typename: "S3Object";
       bucket: string;
@@ -4448,12 +4680,16 @@ export type OnDeleteUserSubscription = {
     key: string;
   } | null;
   registered?: boolean | null;
-  authority?: string | null;
+  authority?: boolean | null;
   company: {
     __typename: "Company";
     id: string;
     name: string;
     officerEmail: string;
+    officerName: string;
+    isRegistered: boolean;
+    tel: string;
+    officialEmail: string;
     iconCompany?: {
       __typename: "S3Object";
       bucket: string;
@@ -4550,6 +4786,10 @@ export type OnCreateRoomGroupSubscription = {
       id: string;
       name: string;
       officerEmail: string;
+      officerName: string;
+      isRegistered: boolean;
+      tel: string;
+      officialEmail: string;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -4580,12 +4820,16 @@ export type OnCreateRoomGroupSubscription = {
       key: string;
     } | null;
     registered?: boolean | null;
-    authority?: string | null;
+    authority?: boolean | null;
     company: {
       __typename: "Company";
       id: string;
       name: string;
       officerEmail: string;
+      officerName: string;
+      isRegistered: boolean;
+      tel: string;
+      officialEmail: string;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -4630,6 +4874,10 @@ export type OnUpdateRoomGroupSubscription = {
       id: string;
       name: string;
       officerEmail: string;
+      officerName: string;
+      isRegistered: boolean;
+      tel: string;
+      officialEmail: string;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -4660,12 +4908,16 @@ export type OnUpdateRoomGroupSubscription = {
       key: string;
     } | null;
     registered?: boolean | null;
-    authority?: string | null;
+    authority?: boolean | null;
     company: {
       __typename: "Company";
       id: string;
       name: string;
       officerEmail: string;
+      officerName: string;
+      isRegistered: boolean;
+      tel: string;
+      officialEmail: string;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -4710,6 +4962,10 @@ export type OnDeleteRoomGroupSubscription = {
       id: string;
       name: string;
       officerEmail: string;
+      officerName: string;
+      isRegistered: boolean;
+      tel: string;
+      officialEmail: string;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -4740,12 +4996,16 @@ export type OnDeleteRoomGroupSubscription = {
       key: string;
     } | null;
     registered?: boolean | null;
-    authority?: string | null;
+    authority?: boolean | null;
     company: {
       __typename: "Company";
       id: string;
       name: string;
       officerEmail: string;
+      officerName: string;
+      isRegistered: boolean;
+      tel: string;
+      officialEmail: string;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -4785,6 +5045,10 @@ export type OnCreateRoomSubscription = {
     id: string;
     name: string;
     officerEmail: string;
+    officerName: string;
+    isRegistered: boolean;
+    tel: string;
+    officialEmail: string;
     iconCompany?: {
       __typename: "S3Object";
       bucket: string;
@@ -4848,6 +5112,10 @@ export type OnUpdateRoomSubscription = {
     id: string;
     name: string;
     officerEmail: string;
+    officerName: string;
+    isRegistered: boolean;
+    tel: string;
+    officialEmail: string;
     iconCompany?: {
       __typename: "S3Object";
       bucket: string;
@@ -4911,6 +5179,10 @@ export type OnDeleteRoomSubscription = {
     id: string;
     name: string;
     officerEmail: string;
+    officerName: string;
+    isRegistered: boolean;
+    tel: string;
+    officialEmail: string;
     iconCompany?: {
       __typename: "S3Object";
       bucket: string;
@@ -4992,12 +5264,16 @@ export type OnCreateMessageSubscription = {
       key: string;
     } | null;
     registered?: boolean | null;
-    authority?: string | null;
+    authority?: boolean | null;
     company: {
       __typename: "Company";
       id: string;
       name: string;
       officerEmail: string;
+      officerName: string;
+      isRegistered: boolean;
+      tel: string;
+      officialEmail: string;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -5058,7 +5334,7 @@ export type OnCreateMessageSubscription = {
       tel?: string | null;
       positionName?: string | null;
       registered?: boolean | null;
-      authority?: string | null;
+      authority?: boolean | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -5106,12 +5382,16 @@ export type OnUpdateMessageSubscription = {
       key: string;
     } | null;
     registered?: boolean | null;
-    authority?: string | null;
+    authority?: boolean | null;
     company: {
       __typename: "Company";
       id: string;
       name: string;
       officerEmail: string;
+      officerName: string;
+      isRegistered: boolean;
+      tel: string;
+      officialEmail: string;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -5172,7 +5452,7 @@ export type OnUpdateMessageSubscription = {
       tel?: string | null;
       positionName?: string | null;
       registered?: boolean | null;
-      authority?: string | null;
+      authority?: boolean | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -5220,12 +5500,16 @@ export type OnDeleteMessageSubscription = {
       key: string;
     } | null;
     registered?: boolean | null;
-    authority?: string | null;
+    authority?: boolean | null;
     company: {
       __typename: "Company";
       id: string;
       name: string;
       officerEmail: string;
+      officerName: string;
+      isRegistered: boolean;
+      tel: string;
+      officialEmail: string;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -5286,7 +5570,7 @@ export type OnDeleteMessageSubscription = {
       tel?: string | null;
       positionName?: string | null;
       registered?: boolean | null;
-      authority?: string | null;
+      authority?: boolean | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -5319,6 +5603,10 @@ export class APIService {
           id
           name
           officerEmail
+          officerName
+          isRegistered
+          tel
+          officialEmail
           iconCompany {
             __typename
             bucket
@@ -5382,6 +5670,10 @@ export class APIService {
           id
           name
           officerEmail
+          officerName
+          isRegistered
+          tel
+          officialEmail
           iconCompany {
             __typename
             bucket
@@ -5445,6 +5737,10 @@ export class APIService {
           id
           name
           officerEmail
+          officerName
+          isRegistered
+          tel
+          officialEmail
           iconCompany {
             __typename
             bucket
@@ -5580,6 +5876,10 @@ export class APIService {
               id
               name
               officerEmail
+              officerName
+              isRegistered
+              tel
+              officialEmail
               createdAt
               updatedAt
               owner
@@ -5701,6 +6001,10 @@ export class APIService {
               id
               name
               officerEmail
+              officerName
+              isRegistered
+              tel
+              officialEmail
               createdAt
               updatedAt
               owner
@@ -5822,6 +6126,10 @@ export class APIService {
               id
               name
               officerEmail
+              officerName
+              isRegistered
+              tel
+              officialEmail
               createdAt
               updatedAt
               owner
@@ -5884,6 +6192,10 @@ export class APIService {
               id
               name
               officerEmail
+              officerName
+              isRegistered
+              tel
+              officialEmail
               createdAt
               updatedAt
               owner
@@ -5931,6 +6243,10 @@ export class APIService {
               id
               name
               officerEmail
+              officerName
+              isRegistered
+              tel
+              officialEmail
               createdAt
               updatedAt
               owner
@@ -6019,6 +6335,10 @@ export class APIService {
               id
               name
               officerEmail
+              officerName
+              isRegistered
+              tel
+              officialEmail
               createdAt
               updatedAt
               owner
@@ -6066,6 +6386,10 @@ export class APIService {
               id
               name
               officerEmail
+              officerName
+              isRegistered
+              tel
+              officialEmail
               createdAt
               updatedAt
               owner
@@ -6154,6 +6478,10 @@ export class APIService {
               id
               name
               officerEmail
+              officerName
+              isRegistered
+              tel
+              officialEmail
               createdAt
               updatedAt
               owner
@@ -6201,6 +6529,10 @@ export class APIService {
               id
               name
               officerEmail
+              officerName
+              isRegistered
+              tel
+              officialEmail
               createdAt
               updatedAt
               owner
@@ -6292,6 +6624,10 @@ export class APIService {
             id
             name
             officerEmail
+            officerName
+            isRegistered
+            tel
+            officialEmail
             iconCompany {
               __typename
               bucket
@@ -6409,6 +6745,10 @@ export class APIService {
             id
             name
             officerEmail
+            officerName
+            isRegistered
+            tel
+            officialEmail
             iconCompany {
               __typename
               bucket
@@ -6526,6 +6866,10 @@ export class APIService {
             id
             name
             officerEmail
+            officerName
+            isRegistered
+            tel
+            officialEmail
             iconCompany {
               __typename
               bucket
@@ -6638,6 +6982,10 @@ export class APIService {
               id
               name
               officerEmail
+              officerName
+              isRegistered
+              tel
+              officialEmail
               createdAt
               updatedAt
               owner
@@ -6674,6 +7022,10 @@ export class APIService {
               id
               name
               officerEmail
+              officerName
+              isRegistered
+              tel
+              officialEmail
               createdAt
               updatedAt
               owner
@@ -6734,6 +7086,10 @@ export class APIService {
               id
               name
               officerEmail
+              officerName
+              isRegistered
+              tel
+              officialEmail
               createdAt
               updatedAt
               owner
@@ -6770,6 +7126,10 @@ export class APIService {
               id
               name
               officerEmail
+              officerName
+              isRegistered
+              tel
+              officialEmail
               createdAt
               updatedAt
               owner
@@ -6830,6 +7190,10 @@ export class APIService {
               id
               name
               officerEmail
+              officerName
+              isRegistered
+              tel
+              officialEmail
               createdAt
               updatedAt
               owner
@@ -6866,6 +7230,10 @@ export class APIService {
               id
               name
               officerEmail
+              officerName
+              isRegistered
+              tel
+              officialEmail
               createdAt
               updatedAt
               owner
@@ -6921,6 +7289,10 @@ export class APIService {
             id
             name
             officerEmail
+            officerName
+            isRegistered
+            tel
+            officialEmail
             iconCompany {
               __typename
               bucket
@@ -7000,6 +7372,10 @@ export class APIService {
             id
             name
             officerEmail
+            officerName
+            isRegistered
+            tel
+            officialEmail
             iconCompany {
               __typename
               bucket
@@ -7079,6 +7455,10 @@ export class APIService {
             id
             name
             officerEmail
+            officerName
+            isRegistered
+            tel
+            officialEmail
             iconCompany {
               __typename
               bucket
@@ -7182,6 +7562,10 @@ export class APIService {
               id
               name
               officerEmail
+              officerName
+              isRegistered
+              tel
+              officialEmail
               createdAt
               updatedAt
               owner
@@ -7312,6 +7696,10 @@ export class APIService {
               id
               name
               officerEmail
+              officerName
+              isRegistered
+              tel
+              officialEmail
               createdAt
               updatedAt
               owner
@@ -7442,6 +7830,10 @@ export class APIService {
               id
               name
               officerEmail
+              officerName
+              isRegistered
+              tel
+              officialEmail
               createdAt
               updatedAt
               owner
@@ -7539,6 +7931,10 @@ export class APIService {
           id
           name
           officerEmail
+          officerName
+          isRegistered
+          tel
+          officialEmail
           iconCompany {
             __typename
             bucket
@@ -7602,6 +7998,10 @@ export class APIService {
             id
             name
             officerEmail
+            officerName
+            isRegistered
+            tel
+            officialEmail
             iconCompany {
               __typename
               bucket
@@ -7717,6 +8117,10 @@ export class APIService {
               id
               name
               officerEmail
+              officerName
+              isRegistered
+              tel
+              officialEmail
               createdAt
               updatedAt
               owner
@@ -7835,6 +8239,10 @@ export class APIService {
               id
               name
               officerEmail
+              officerName
+              isRegistered
+              tel
+              officialEmail
               createdAt
               updatedAt
               owner
@@ -7882,6 +8290,10 @@ export class APIService {
               id
               name
               officerEmail
+              officerName
+              isRegistered
+              tel
+              officialEmail
               createdAt
               updatedAt
               owner
@@ -8044,6 +8456,10 @@ export class APIService {
             id
             name
             officerEmail
+            officerName
+            isRegistered
+            tel
+            officialEmail
             iconCompany {
               __typename
               bucket
@@ -8161,6 +8577,10 @@ export class APIService {
               id
               name
               officerEmail
+              officerName
+              isRegistered
+              tel
+              officialEmail
               createdAt
               updatedAt
               owner
@@ -8221,6 +8641,10 @@ export class APIService {
               id
               name
               officerEmail
+              officerName
+              isRegistered
+              tel
+              officialEmail
               createdAt
               updatedAt
               owner
@@ -8257,6 +8681,10 @@ export class APIService {
               id
               name
               officerEmail
+              officerName
+              isRegistered
+              tel
+              officialEmail
               createdAt
               updatedAt
               owner
@@ -8363,6 +8791,10 @@ export class APIService {
             id
             name
             officerEmail
+            officerName
+            isRegistered
+            tel
+            officialEmail
             iconCompany {
               __typename
               bucket
@@ -8442,6 +8874,10 @@ export class APIService {
               id
               name
               officerEmail
+              officerName
+              isRegistered
+              tel
+              officialEmail
               createdAt
               updatedAt
               owner
@@ -8512,6 +8948,10 @@ export class APIService {
               id
               name
               officerEmail
+              officerName
+              isRegistered
+              tel
+              officialEmail
               createdAt
               updatedAt
               owner
@@ -8763,6 +9203,10 @@ export class APIService {
           id
           name
           officerEmail
+          officerName
+          isRegistered
+          tel
+          officialEmail
           iconCompany {
             __typename
             bucket
@@ -8818,6 +9262,10 @@ export class APIService {
           id
           name
           officerEmail
+          officerName
+          isRegistered
+          tel
+          officialEmail
           iconCompany {
             __typename
             bucket
@@ -8873,6 +9321,10 @@ export class APIService {
           id
           name
           officerEmail
+          officerName
+          isRegistered
+          tel
+          officialEmail
           iconCompany {
             __typename
             bucket
@@ -9000,6 +9452,10 @@ export class APIService {
               id
               name
               officerEmail
+              officerName
+              isRegistered
+              tel
+              officialEmail
               createdAt
               updatedAt
               owner
@@ -9113,6 +9569,10 @@ export class APIService {
               id
               name
               officerEmail
+              officerName
+              isRegistered
+              tel
+              officialEmail
               createdAt
               updatedAt
               owner
@@ -9226,6 +9686,10 @@ export class APIService {
               id
               name
               officerEmail
+              officerName
+              isRegistered
+              tel
+              officialEmail
               createdAt
               updatedAt
               owner
@@ -9280,6 +9744,10 @@ export class APIService {
               id
               name
               officerEmail
+              officerName
+              isRegistered
+              tel
+              officialEmail
               createdAt
               updatedAt
               owner
@@ -9327,6 +9795,10 @@ export class APIService {
               id
               name
               officerEmail
+              officerName
+              isRegistered
+              tel
+              officialEmail
               createdAt
               updatedAt
               owner
@@ -9407,6 +9879,10 @@ export class APIService {
               id
               name
               officerEmail
+              officerName
+              isRegistered
+              tel
+              officialEmail
               createdAt
               updatedAt
               owner
@@ -9454,6 +9930,10 @@ export class APIService {
               id
               name
               officerEmail
+              officerName
+              isRegistered
+              tel
+              officialEmail
               createdAt
               updatedAt
               owner
@@ -9534,6 +10014,10 @@ export class APIService {
               id
               name
               officerEmail
+              officerName
+              isRegistered
+              tel
+              officialEmail
               createdAt
               updatedAt
               owner
@@ -9581,6 +10065,10 @@ export class APIService {
               id
               name
               officerEmail
+              officerName
+              isRegistered
+              tel
+              officialEmail
               createdAt
               updatedAt
               owner
@@ -9664,6 +10152,10 @@ export class APIService {
             id
             name
             officerEmail
+            officerName
+            isRegistered
+            tel
+            officialEmail
             iconCompany {
               __typename
               bucket
@@ -9773,6 +10265,10 @@ export class APIService {
             id
             name
             officerEmail
+            officerName
+            isRegistered
+            tel
+            officialEmail
             iconCompany {
               __typename
               bucket
@@ -9882,6 +10378,10 @@ export class APIService {
             id
             name
             officerEmail
+            officerName
+            isRegistered
+            tel
+            officialEmail
             iconCompany {
               __typename
               bucket
@@ -9986,6 +10486,10 @@ export class APIService {
               id
               name
               officerEmail
+              officerName
+              isRegistered
+              tel
+              officialEmail
               createdAt
               updatedAt
               owner
@@ -10022,6 +10526,10 @@ export class APIService {
               id
               name
               officerEmail
+              officerName
+              isRegistered
+              tel
+              officialEmail
               createdAt
               updatedAt
               owner
@@ -10074,6 +10582,10 @@ export class APIService {
               id
               name
               officerEmail
+              officerName
+              isRegistered
+              tel
+              officialEmail
               createdAt
               updatedAt
               owner
@@ -10110,6 +10622,10 @@ export class APIService {
               id
               name
               officerEmail
+              officerName
+              isRegistered
+              tel
+              officialEmail
               createdAt
               updatedAt
               owner
@@ -10162,6 +10678,10 @@ export class APIService {
               id
               name
               officerEmail
+              officerName
+              isRegistered
+              tel
+              officialEmail
               createdAt
               updatedAt
               owner
@@ -10198,6 +10718,10 @@ export class APIService {
               id
               name
               officerEmail
+              officerName
+              isRegistered
+              tel
+              officialEmail
               createdAt
               updatedAt
               owner
@@ -10245,6 +10769,10 @@ export class APIService {
             id
             name
             officerEmail
+            officerName
+            isRegistered
+            tel
+            officialEmail
             iconCompany {
               __typename
               bucket
@@ -10316,6 +10844,10 @@ export class APIService {
             id
             name
             officerEmail
+            officerName
+            isRegistered
+            tel
+            officialEmail
             iconCompany {
               __typename
               bucket
@@ -10387,6 +10919,10 @@ export class APIService {
             id
             name
             officerEmail
+            officerName
+            isRegistered
+            tel
+            officialEmail
             iconCompany {
               __typename
               bucket
@@ -10482,6 +11018,10 @@ export class APIService {
               id
               name
               officerEmail
+              officerName
+              isRegistered
+              tel
+              officialEmail
               createdAt
               updatedAt
               owner
@@ -10604,6 +11144,10 @@ export class APIService {
               id
               name
               officerEmail
+              officerName
+              isRegistered
+              tel
+              officialEmail
               createdAt
               updatedAt
               owner
@@ -10726,6 +11270,10 @@ export class APIService {
               id
               name
               officerEmail
+              officerName
+              isRegistered
+              tel
+              officialEmail
               createdAt
               updatedAt
               owner

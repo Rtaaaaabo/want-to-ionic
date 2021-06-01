@@ -4,6 +4,10 @@ subscription OnCreateCompany {
     id
     name
     officerEmail
+    officerName
+    isRegistered
+    tel
+    officialEmail
     iconCompany {
       bucket
       region
@@ -46,6 +50,10 @@ subscription OnUpdateCompany {
     id
     name
     officerEmail
+    officerName
+    isRegistered
+    tel
+    officialEmail
     iconCompany {
       bucket
       region
@@ -88,6 +96,10 @@ subscription OnDeleteCompany {
     id
     name
     officerEmail
+    officerName
+    isRegistered
+    tel
+    officialEmail
     iconCompany {
       bucket
       region
@@ -193,6 +205,10 @@ subscription OnCreateTaskGroup {
         id
         name
         officerEmail
+        officerName
+        isRegistered
+        tel
+        officialEmail
         createdAt
         updatedAt
         owner
@@ -285,6 +301,10 @@ subscription OnUpdateTaskGroup {
         id
         name
         officerEmail
+        officerName
+        isRegistered
+        tel
+        officialEmail
         createdAt
         updatedAt
         owner
@@ -377,6 +397,10 @@ subscription OnDeleteTaskGroup {
         id
         name
         officerEmail
+        officerName
+        isRegistered
+        tel
+        officialEmail
         createdAt
         updatedAt
         owner
@@ -417,6 +441,10 @@ subscription OnCreateTask {
         id
         name
         officerEmail
+        officerName
+        isRegistered
+        tel
+        officialEmail
         createdAt
         updatedAt
         owner
@@ -458,6 +486,10 @@ subscription OnCreateTask {
         id
         name
         officerEmail
+        officerName
+        isRegistered
+        tel
+        officialEmail
         createdAt
         updatedAt
         owner
@@ -520,6 +552,10 @@ subscription OnUpdateTask {
         id
         name
         officerEmail
+        officerName
+        isRegistered
+        tel
+        officialEmail
         createdAt
         updatedAt
         owner
@@ -561,6 +597,10 @@ subscription OnUpdateTask {
         id
         name
         officerEmail
+        officerName
+        isRegistered
+        tel
+        officialEmail
         createdAt
         updatedAt
         owner
@@ -623,6 +663,10 @@ subscription OnDeleteTask {
         id
         name
         officerEmail
+        officerName
+        isRegistered
+        tel
+        officialEmail
         createdAt
         updatedAt
         owner
@@ -664,6 +708,10 @@ subscription OnDeleteTask {
         id
         name
         officerEmail
+        officerName
+        isRegistered
+        tel
+        officialEmail
         createdAt
         updatedAt
         owner
@@ -729,6 +777,10 @@ subscription OnCreateUser {
       id
       name
       officerEmail
+      officerName
+      isRegistered
+      tel
+      officialEmail
       iconCompany {
         bucket
         region
@@ -817,6 +869,10 @@ subscription OnUpdateUser {
       id
       name
       officerEmail
+      officerName
+      isRegistered
+      tel
+      officialEmail
       iconCompany {
         bucket
         region
@@ -905,6 +961,10 @@ subscription OnDeleteUser {
       id
       name
       officerEmail
+      officerName
+      isRegistered
+      tel
+      officialEmail
       iconCompany {
         bucket
         region
@@ -988,6 +1048,10 @@ subscription OnCreateRoomGroup {
         id
         name
         officerEmail
+        officerName
+        isRegistered
+        tel
+        officialEmail
         createdAt
         updatedAt
         owner
@@ -1019,6 +1083,10 @@ subscription OnCreateRoomGroup {
         id
         name
         officerEmail
+        officerName
+        isRegistered
+        tel
+        officialEmail
         createdAt
         updatedAt
         owner
@@ -1057,6 +1125,10 @@ subscription OnUpdateRoomGroup {
         id
         name
         officerEmail
+        officerName
+        isRegistered
+        tel
+        officialEmail
         createdAt
         updatedAt
         owner
@@ -1088,6 +1160,10 @@ subscription OnUpdateRoomGroup {
         id
         name
         officerEmail
+        officerName
+        isRegistered
+        tel
+        officialEmail
         createdAt
         updatedAt
         owner
@@ -1126,6 +1202,10 @@ subscription OnDeleteRoomGroup {
         id
         name
         officerEmail
+        officerName
+        isRegistered
+        tel
+        officialEmail
         createdAt
         updatedAt
         owner
@@ -1157,6 +1237,10 @@ subscription OnDeleteRoomGroup {
         id
         name
         officerEmail
+        officerName
+        isRegistered
+        tel
+        officialEmail
         createdAt
         updatedAt
         owner
@@ -1191,6 +1275,10 @@ subscription OnCreateRoom {
       id
       name
       officerEmail
+      officerName
+      isRegistered
+      tel
+      officialEmail
       iconCompany {
         bucket
         region
@@ -1246,6 +1334,10 @@ subscription OnUpdateRoom {
       id
       name
       officerEmail
+      officerName
+      isRegistered
+      tel
+      officialEmail
       iconCompany {
         bucket
         region
@@ -1301,6 +1393,10 @@ subscription OnDeleteRoom {
       id
       name
       officerEmail
+      officerName
+      isRegistered
+      tel
+      officialEmail
       iconCompany {
         bucket
         region
@@ -1377,6 +1473,10 @@ subscription OnCreateMessage {
         id
         name
         officerEmail
+        officerName
+        isRegistered
+        tel
+        officialEmail
         createdAt
         updatedAt
         owner
@@ -1477,6 +1577,10 @@ subscription OnUpdateMessage {
         id
         name
         officerEmail
+        officerName
+        isRegistered
+        tel
+        officialEmail
         createdAt
         updatedAt
         owner
@@ -1577,6 +1681,10 @@ subscription OnDeleteMessage {
         id
         name
         officerEmail
+        officerName
+        isRegistered
+        tel
+        officialEmail
         createdAt
         updatedAt
         owner

@@ -4,6 +4,10 @@ type Company
   id: ID!
   name: String!
   officerEmail: String!
+  officerName: String!
+  isRegistered: Boolean!
+  tel: String!
+  officialEmail: String!
   iconCompany: S3Object
   room: [Room] @connection(keyName: "byCompany", fields: ["id"])
   companyMembers: [User] @connection(keyName: "byCompany", fields: ["id"])
@@ -55,7 +59,7 @@ type User
   positionName: String
   iconImage: S3Object
   registered: Boolean
-  authority: String
+  authority: Boolean
   company: Company! @connection(fields: ["companyID"])
   messages: [Message] @connection(keyName: "byUser", fields: ["id"])
   room: [RoomGroup] @connection(keyName: "byUser", fields: ["id"])

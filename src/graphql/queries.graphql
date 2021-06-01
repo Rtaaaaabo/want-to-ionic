@@ -4,6 +4,10 @@ query GetCompany($id: ID!) {
     id
     name
     officerEmail
+    officerName
+    isRegistered
+    tel
+    officialEmail
     iconCompany {
       bucket
       region
@@ -51,6 +55,10 @@ query ListCompanys(
       id
       name
       officerEmail
+      officerName
+      isRegistered
+      tel
+      officialEmail
       iconCompany {
         bucket
         region
@@ -137,6 +145,10 @@ query GetTaskGroup($id: ID!) {
         id
         name
         officerEmail
+        officerName
+        isRegistered
+        tel
+        officialEmail
         createdAt
         updatedAt
         owner
@@ -219,6 +231,10 @@ query GetTask($id: ID!) {
         id
         name
         officerEmail
+        officerName
+        isRegistered
+        tel
+        officialEmail
         createdAt
         updatedAt
         owner
@@ -260,6 +276,10 @@ query GetTask($id: ID!) {
         id
         name
         officerEmail
+        officerName
+        isRegistered
+        tel
+        officialEmail
         createdAt
         updatedAt
         owner
@@ -379,6 +399,10 @@ query GetUser($id: ID!) {
       id
       name
       officerEmail
+      officerName
+      isRegistered
+      tel
+      officialEmail
       iconCompany {
         bucket
         region
@@ -472,6 +496,10 @@ query ListUsers(
         id
         name
         officerEmail
+        officerName
+        isRegistered
+        tel
+        officialEmail
         createdAt
         updatedAt
         owner
@@ -509,6 +537,10 @@ query GetRoomGroup($id: ID!) {
         id
         name
         officerEmail
+        officerName
+        isRegistered
+        tel
+        officialEmail
         createdAt
         updatedAt
         owner
@@ -540,6 +572,10 @@ query GetRoomGroup($id: ID!) {
         id
         name
         officerEmail
+        officerName
+        isRegistered
+        tel
+        officialEmail
         createdAt
         updatedAt
         owner
@@ -611,6 +647,10 @@ query GetRoom($id: ID!) {
       id
       name
       officerEmail
+      officerName
+      isRegistered
+      tel
+      officialEmail
       iconCompany {
         bucket
         region
@@ -671,6 +711,10 @@ query ListRooms(
         id
         name
         officerEmail
+        officerName
+        isRegistered
+        tel
+        officialEmail
         createdAt
         updatedAt
         owner
@@ -718,6 +762,10 @@ query GetMessage($id: ID!) {
         id
         name
         officerEmail
+        officerName
+        isRegistered
+        tel
+        officialEmail
         createdAt
         updatedAt
         owner
