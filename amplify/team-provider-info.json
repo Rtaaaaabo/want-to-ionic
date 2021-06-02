@@ -23,6 +23,10 @@
         "createcompany": {
           "deploymentBucketName": "amplify-wantto-dev-234052-deployment",
           "s3Key": "amplify-builds/createcompany-7a655069483566464b55-build.zip"
+        },
+        "verifyToken": {
+          "deploymentBucketName": "amplify-wantto-dev-234052-deployment",
+          "s3Key": "amplify-builds/verifyToken-74777542795046787867-build.zip"
         }
       }
     }
