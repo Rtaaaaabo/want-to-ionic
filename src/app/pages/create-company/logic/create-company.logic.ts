@@ -41,4 +41,12 @@ export class CreateCompanyLogic {
       .pipe(catchError((e) => 'Not Send for Register'))
       .pipe(() => of('Send Success'))
   }
+
+  /**
+   * OneTimePasswordを生成するものです
+   * @returns {string} oneTimePasswordを返します
+   */
+  generateOneTimePassword(): Observable<string> {
+    return this.createCompanyService.generateOTP().pipe(map((result) => result.otp));
+  }
 }

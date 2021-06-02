@@ -22,11 +22,11 @@
         },
         "createcompany": {
           "deploymentBucketName": "amplify-wantto-dev-234052-deployment",
-          "s3Key": "amplify-builds/createcompany-7a655069483566464b55-build.zip"
+          "s3Key": "amplify-builds/createcompany-6a786a472b7a7a5a4950-build.zip"
         },
         "verifyToken": {
           "deploymentBucketName": "amplify-wantto-dev-234052-deployment",
-          "s3Key": "amplify-builds/verifyToken-66372f53474569726864-build.zip"
+          "s3Key": "amplify-builds/verifyToken-624b3432635576547054-build.zip"
         }
       }
     }

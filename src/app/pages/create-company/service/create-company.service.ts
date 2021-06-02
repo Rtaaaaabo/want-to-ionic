@@ -3,8 +3,11 @@ import { Observable, from } from 'rxjs';
 import { API } from 'aws-amplify';
 import { AmplifyService, CreateCompanyInput, CreateCompanyMutation, CreateUserInput, CreateUserMutation } from 'src/app/shared/service/amplify.service';
 
-const apiName = 'authSendEmail';
-const path = '/register/company';
+const apiAuthSendEmail = 'authSendEmail';
+const apiVerifyOTPGenerate = 'verifyotp';
+
+const pathRegisterCompany = '/register/company';
+const pathVerifyGenerate = '/verify-otp/generate';
 
 @Injectable({
   providedIn: 'root'
@@ -37,6 +40,17 @@ export class CreateCompanyService {
     const myInit = {
       body: requestBody.body
     }
-    return from(API.post(apiName, path, myInit));
+    return from(API.post(apiAuthSendEmail, pathRegisterCompany, myInit));
+  }
+
+  /**
+   * OneTimePasswordを生成して返す関数です
+   * @returns {string} oneTimePasswordを返します
+   */
+  generateOTP(): Observable<{ success: string, otp: string }> {
+    const requestBody = {
+      body: null,
+    };
+    return from(API.get(apiVerifyOTPGenerate, pathVerifyGenerate, requestBody));
   }
 }

@@ -6,10 +6,9 @@ or in the "license" file accompanying this file. This file is distributed on an 
 See the License for the specific language governing permissions and limitations under the License.
 */
 
-const AWS = require("aws-sdk");
 var express = require("express");
 var awsServerlessExpressMiddleware = require("aws-serverless-express/middleware");
-import { authenticator } from "otplib";
+var authenticator = require("otplib").authenticator;
 require("dotenv").config();
 
 // declare a new express app
@@ -18,13 +17,13 @@ app.use(express.json());
 app.use(awsServerlessExpressMiddleware.eventContext());
 
 // Enable CORS for all methods
-app.use(function (req, res, next) {
+app.use(async (req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header(
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept"
   );
-  next();
+  await next();
 });
 
 app.get("/verify-otp", function (req, res) {
@@ -35,6 +34,8 @@ app.get("/verify-otp", function (req, res) {
 app.get("/verify-otp/generate", function (req, res) {
   // One time passwordを生成する
   const token = authenticator.generate(process.env.OTP_SECRET_DEV);
+  console.log("[token]", token);
+  console.log("[OTP_SECRET_DEV]", process.env.OTP_SECRET_DEV);
   res.json({ success: "succeed!", opt: token });
 });
 

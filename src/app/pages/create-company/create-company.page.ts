@@ -69,10 +69,11 @@ export class CreateCompanyPage implements OnInit {
       name: officerName,
       officerEmail: officerEmail,
     }
-    this.logic.sendEmailForRegister(requestContent)
+    this.logic.generateOneTimePassword()
+      // this.logic.sendEmailForRegister(requestContent)
       // this.logic.createCompany(requestContent)
       //   .pipe(concatMap(() => this.logic.sendEmailForRegister, data(requestContent)))
-      .subscribe(data => console.log('[sendEmailForRegister, data]', data));
+      .subscribe(data => console.log('[generateOneTimePassword]', data));
     // .pipe(concatMap((companyId) => this.logic.createUserWithCompanyId(companyId, officerName, officerEmail)));
   }
 
