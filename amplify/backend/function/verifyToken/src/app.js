@@ -35,7 +35,7 @@ app.get("/verify-otp", function (req, res) {
 app.get("/verify-otp/generate", function (req, res) {
   // One time passwordを生成する
   const token = authenticator.generate(process.env.OTP_SECRET_DEV);
-  res.json({ success: "post call succeed!", opt: token });
+  res.json({ success: "succeed!", opt: token });
 });
 
 app.post("/verify-otp", function (req, res) {
@@ -44,7 +44,7 @@ app.post("/verify-otp", function (req, res) {
     authenticator.check(token, process.env.OTP_SECRET_DEV); // 受け取ったtokenは正であるか確認
     res.json({}); // 受け取ったTokenが正であれば
   } catch (err) {
-    res.json({ error: err });
+    res.json({ error: "error!", message: err });
   }
 });
 
