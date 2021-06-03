@@ -47,6 +47,6 @@ export class CreateCompanyLogic {
    * @returns {string} oneTimePasswordを返します
    */
   generateOneTimePassword(): Observable<string> {
-    return this.createCompanyService.generateOTP().pipe(map((result) => result.otp));
+    return this.createCompanyService.generateOTP().pipe(map(({ otp }) => otp));
   }
 }
