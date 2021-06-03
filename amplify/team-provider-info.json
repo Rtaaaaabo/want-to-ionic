@@ -26,7 +26,7 @@
         },
         "verifyToken": {
           "deploymentBucketName": "amplify-wantto-dev-234052-deployment",
-          "s3Key": "amplify-builds/verifyToken-624b3432635576547054-build.zip"
+          "s3Key": "amplify-builds/verifyToken-32446a514e766f4e6c2f-build.zip"
         }
       }
     }
