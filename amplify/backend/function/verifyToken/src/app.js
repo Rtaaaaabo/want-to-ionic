@@ -32,10 +32,7 @@ app.get("/verify-otp", function (req, res) {
 });
 
 app.get("/verify-otp/generate", function (req, res) {
-  // One time passwordを生成する
-  console.log("[OTP_SECRET_DEV]", process.env.OTP_SECRET_DEV);
   const token = authenticator.generate(process.env.OTP_SECRET_DEV);
-  console.log("[token]", token);
   res.json({ success: "succeed!", otp: token });
 });
 
