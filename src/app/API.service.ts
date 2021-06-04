@@ -14,8 +14,8 @@ export type CreateCompanyInput = {
   name: string;
   officer: Array<OfficerInput | null>;
   isRegistered: boolean;
-  tel: string;
-  officialEmail: string;
+  tel?: string | null;
+  officialEmail?: string | null;
   iconCompany?: S3ObjectInput | null;
 };
 
@@ -92,8 +92,8 @@ export type Company = {
   name: string;
   officer: Array<Officer | null>;
   isRegistered: boolean;
-  tel: string;
-  officialEmail: string;
+  tel?: string | null;
+  officialEmail?: string | null;
   iconCompany?: S3Object | null;
   room?: ModelRoomConnection | null;
   companyMembers?: ModelUserConnection | null;
@@ -594,8 +594,8 @@ export type CreateCompanyMutation = {
     officerName: string;
   } | null>;
   isRegistered: boolean;
-  tel: string;
-  officialEmail: string;
+  tel?: string | null;
+  officialEmail?: string | null;
   iconCompany?: {
     __typename: "S3Object";
     bucket: string;
@@ -648,8 +648,8 @@ export type UpdateCompanyMutation = {
     officerName: string;
   } | null>;
   isRegistered: boolean;
-  tel: string;
-  officialEmail: string;
+  tel?: string | null;
+  officialEmail?: string | null;
   iconCompany?: {
     __typename: "S3Object";
     bucket: string;
@@ -702,8 +702,8 @@ export type DeleteCompanyMutation = {
     officerName: string;
   } | null>;
   isRegistered: boolean;
-  tel: string;
-  officialEmail: string;
+  tel?: string | null;
+  officialEmail?: string | null;
   iconCompany?: {
     __typename: "S3Object";
     bucket: string;
@@ -823,8 +823,8 @@ export type CreateTaskGroupMutation = {
       id: string;
       name: string;
       isRegistered: boolean;
-      tel: string;
-      officialEmail: string;
+      tel?: string | null;
+      officialEmail?: string | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -930,8 +930,8 @@ export type UpdateTaskGroupMutation = {
       id: string;
       name: string;
       isRegistered: boolean;
-      tel: string;
-      officialEmail: string;
+      tel?: string | null;
+      officialEmail?: string | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -1037,8 +1037,8 @@ export type DeleteTaskGroupMutation = {
       id: string;
       name: string;
       isRegistered: boolean;
-      tel: string;
-      officialEmail: string;
+      tel?: string | null;
+      officialEmail?: string | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -1085,8 +1085,8 @@ export type CreateTaskMutation = {
       id: string;
       name: string;
       isRegistered: boolean;
-      tel: string;
-      officialEmail: string;
+      tel?: string | null;
+      officialEmail?: string | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -1134,8 +1134,8 @@ export type CreateTaskMutation = {
       id: string;
       name: string;
       isRegistered: boolean;
-      tel: string;
-      officialEmail: string;
+      tel?: string | null;
+      officialEmail?: string | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -1208,8 +1208,8 @@ export type UpdateTaskMutation = {
       id: string;
       name: string;
       isRegistered: boolean;
-      tel: string;
-      officialEmail: string;
+      tel?: string | null;
+      officialEmail?: string | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -1257,8 +1257,8 @@ export type UpdateTaskMutation = {
       id: string;
       name: string;
       isRegistered: boolean;
-      tel: string;
-      officialEmail: string;
+      tel?: string | null;
+      officialEmail?: string | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -1331,8 +1331,8 @@ export type DeleteTaskMutation = {
       id: string;
       name: string;
       isRegistered: boolean;
-      tel: string;
-      officialEmail: string;
+      tel?: string | null;
+      officialEmail?: string | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -1380,8 +1380,8 @@ export type DeleteTaskMutation = {
       id: string;
       name: string;
       isRegistered: boolean;
-      tel: string;
-      officialEmail: string;
+      tel?: string | null;
+      officialEmail?: string | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -1462,8 +1462,8 @@ export type CreateUserMutation = {
       officerName: string;
     } | null>;
     isRegistered: boolean;
-    tel: string;
-    officialEmail: string;
+    tel?: string | null;
+    officialEmail?: string | null;
     iconCompany?: {
       __typename: "S3Object";
       bucket: string;
@@ -1570,8 +1570,8 @@ export type UpdateUserMutation = {
       officerName: string;
     } | null>;
     isRegistered: boolean;
-    tel: string;
-    officialEmail: string;
+    tel?: string | null;
+    officialEmail?: string | null;
     iconCompany?: {
       __typename: "S3Object";
       bucket: string;
@@ -1678,8 +1678,8 @@ export type DeleteUserMutation = {
       officerName: string;
     } | null>;
     isRegistered: boolean;
-    tel: string;
-    officialEmail: string;
+    tel?: string | null;
+    officialEmail?: string | null;
     iconCompany?: {
       __typename: "S3Object";
       bucket: string;
@@ -1776,8 +1776,8 @@ export type CreateRoomGroupMutation = {
       id: string;
       name: string;
       isRegistered: boolean;
-      tel: string;
-      officialEmail: string;
+      tel?: string | null;
+      officialEmail?: string | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -1814,8 +1814,8 @@ export type CreateRoomGroupMutation = {
       id: string;
       name: string;
       isRegistered: boolean;
-      tel: string;
-      officialEmail: string;
+      tel?: string | null;
+      officialEmail?: string | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -1860,8 +1860,8 @@ export type UpdateRoomGroupMutation = {
       id: string;
       name: string;
       isRegistered: boolean;
-      tel: string;
-      officialEmail: string;
+      tel?: string | null;
+      officialEmail?: string | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -1898,8 +1898,8 @@ export type UpdateRoomGroupMutation = {
       id: string;
       name: string;
       isRegistered: boolean;
-      tel: string;
-      officialEmail: string;
+      tel?: string | null;
+      officialEmail?: string | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -1944,8 +1944,8 @@ export type DeleteRoomGroupMutation = {
       id: string;
       name: string;
       isRegistered: boolean;
-      tel: string;
-      officialEmail: string;
+      tel?: string | null;
+      officialEmail?: string | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -1982,8 +1982,8 @@ export type DeleteRoomGroupMutation = {
       id: string;
       name: string;
       isRegistered: boolean;
-      tel: string;
-      officialEmail: string;
+      tel?: string | null;
+      officialEmail?: string | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -2028,8 +2028,8 @@ export type CreateRoomMutation = {
       officerName: string;
     } | null>;
     isRegistered: boolean;
-    tel: string;
-    officialEmail: string;
+    tel?: string | null;
+    officialEmail?: string | null;
     iconCompany?: {
       __typename: "S3Object";
       bucket: string;
@@ -2098,8 +2098,8 @@ export type UpdateRoomMutation = {
       officerName: string;
     } | null>;
     isRegistered: boolean;
-    tel: string;
-    officialEmail: string;
+    tel?: string | null;
+    officialEmail?: string | null;
     iconCompany?: {
       __typename: "S3Object";
       bucket: string;
@@ -2168,8 +2168,8 @@ export type DeleteRoomMutation = {
       officerName: string;
     } | null>;
     isRegistered: boolean;
-    tel: string;
-    officialEmail: string;
+    tel?: string | null;
+    officialEmail?: string | null;
     iconCompany?: {
       __typename: "S3Object";
       bucket: string;
@@ -2257,8 +2257,8 @@ export type CreateMessageMutation = {
       id: string;
       name: string;
       isRegistered: boolean;
-      tel: string;
-      officialEmail: string;
+      tel?: string | null;
+      officialEmail?: string | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -2373,8 +2373,8 @@ export type UpdateMessageMutation = {
       id: string;
       name: string;
       isRegistered: boolean;
-      tel: string;
-      officialEmail: string;
+      tel?: string | null;
+      officialEmail?: string | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -2489,8 +2489,8 @@ export type DeleteMessageMutation = {
       id: string;
       name: string;
       isRegistered: boolean;
-      tel: string;
-      officialEmail: string;
+      tel?: string | null;
+      officialEmail?: string | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -2580,8 +2580,8 @@ export type GetCompanyQuery = {
     officerName: string;
   } | null>;
   isRegistered: boolean;
-  tel: string;
-  officialEmail: string;
+  tel?: string | null;
+  officialEmail?: string | null;
   iconCompany?: {
     __typename: "S3Object";
     bucket: string;
@@ -2636,8 +2636,8 @@ export type ListCompanysQuery = {
       officerName: string;
     } | null>;
     isRegistered: boolean;
-    tel: string;
-    officialEmail: string;
+    tel?: string | null;
+    officialEmail?: string | null;
     iconCompany?: {
       __typename: "S3Object";
       bucket: string;
@@ -2736,8 +2736,8 @@ export type GetTaskGroupQuery = {
       id: string;
       name: string;
       isRegistered: boolean;
-      tel: string;
-      officialEmail: string;
+      tel?: string | null;
+      officialEmail?: string | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -2825,8 +2825,8 @@ export type GetTaskQuery = {
       id: string;
       name: string;
       isRegistered: boolean;
-      tel: string;
-      officialEmail: string;
+      tel?: string | null;
+      officialEmail?: string | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -2874,8 +2874,8 @@ export type GetTaskQuery = {
       id: string;
       name: string;
       isRegistered: boolean;
-      tel: string;
-      officialEmail: string;
+      tel?: string | null;
+      officialEmail?: string | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -3012,8 +3012,8 @@ export type GetUserQuery = {
       officerName: string;
     } | null>;
     isRegistered: boolean;
-    tel: string;
-    officialEmail: string;
+    tel?: string | null;
+    officialEmail?: string | null;
     iconCompany?: {
       __typename: "S3Object";
       bucket: string;
@@ -3117,8 +3117,8 @@ export type ListUsersQuery = {
       id: string;
       name: string;
       isRegistered: boolean;
-      tel: string;
-      officialEmail: string;
+      tel?: string | null;
+      officialEmail?: string | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -3162,8 +3162,8 @@ export type GetRoomGroupQuery = {
       id: string;
       name: string;
       isRegistered: boolean;
-      tel: string;
-      officialEmail: string;
+      tel?: string | null;
+      officialEmail?: string | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -3200,8 +3200,8 @@ export type GetRoomGroupQuery = {
       id: string;
       name: string;
       isRegistered: boolean;
-      tel: string;
-      officialEmail: string;
+      tel?: string | null;
+      officialEmail?: string | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -3282,8 +3282,8 @@ export type GetRoomQuery = {
       officerName: string;
     } | null>;
     isRegistered: boolean;
-    tel: string;
-    officialEmail: string;
+    tel?: string | null;
+    officialEmail?: string | null;
     iconCompany?: {
       __typename: "S3Object";
       bucket: string;
@@ -3349,8 +3349,8 @@ export type ListRoomsQuery = {
       id: string;
       name: string;
       isRegistered: boolean;
-      tel: string;
-      officialEmail: string;
+      tel?: string | null;
+      officialEmail?: string | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -3404,8 +3404,8 @@ export type GetMessageQuery = {
       id: string;
       name: string;
       isRegistered: boolean;
-      tel: string;
-      officialEmail: string;
+      tel?: string | null;
+      officialEmail?: string | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -3595,8 +3595,8 @@ export type OnCreateCompanySubscription = {
     officerName: string;
   } | null>;
   isRegistered: boolean;
-  tel: string;
-  officialEmail: string;
+  tel?: string | null;
+  officialEmail?: string | null;
   iconCompany?: {
     __typename: "S3Object";
     bucket: string;
@@ -3649,8 +3649,8 @@ export type OnUpdateCompanySubscription = {
     officerName: string;
   } | null>;
   isRegistered: boolean;
-  tel: string;
-  officialEmail: string;
+  tel?: string | null;
+  officialEmail?: string | null;
   iconCompany?: {
     __typename: "S3Object";
     bucket: string;
@@ -3703,8 +3703,8 @@ export type OnDeleteCompanySubscription = {
     officerName: string;
   } | null>;
   isRegistered: boolean;
-  tel: string;
-  officialEmail: string;
+  tel?: string | null;
+  officialEmail?: string | null;
   iconCompany?: {
     __typename: "S3Object";
     bucket: string;
@@ -3824,8 +3824,8 @@ export type OnCreateTaskGroupSubscription = {
       id: string;
       name: string;
       isRegistered: boolean;
-      tel: string;
-      officialEmail: string;
+      tel?: string | null;
+      officialEmail?: string | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -3931,8 +3931,8 @@ export type OnUpdateTaskGroupSubscription = {
       id: string;
       name: string;
       isRegistered: boolean;
-      tel: string;
-      officialEmail: string;
+      tel?: string | null;
+      officialEmail?: string | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -4038,8 +4038,8 @@ export type OnDeleteTaskGroupSubscription = {
       id: string;
       name: string;
       isRegistered: boolean;
-      tel: string;
-      officialEmail: string;
+      tel?: string | null;
+      officialEmail?: string | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -4086,8 +4086,8 @@ export type OnCreateTaskSubscription = {
       id: string;
       name: string;
       isRegistered: boolean;
-      tel: string;
-      officialEmail: string;
+      tel?: string | null;
+      officialEmail?: string | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -4135,8 +4135,8 @@ export type OnCreateTaskSubscription = {
       id: string;
       name: string;
       isRegistered: boolean;
-      tel: string;
-      officialEmail: string;
+      tel?: string | null;
+      officialEmail?: string | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -4209,8 +4209,8 @@ export type OnUpdateTaskSubscription = {
       id: string;
       name: string;
       isRegistered: boolean;
-      tel: string;
-      officialEmail: string;
+      tel?: string | null;
+      officialEmail?: string | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -4258,8 +4258,8 @@ export type OnUpdateTaskSubscription = {
       id: string;
       name: string;
       isRegistered: boolean;
-      tel: string;
-      officialEmail: string;
+      tel?: string | null;
+      officialEmail?: string | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -4332,8 +4332,8 @@ export type OnDeleteTaskSubscription = {
       id: string;
       name: string;
       isRegistered: boolean;
-      tel: string;
-      officialEmail: string;
+      tel?: string | null;
+      officialEmail?: string | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -4381,8 +4381,8 @@ export type OnDeleteTaskSubscription = {
       id: string;
       name: string;
       isRegistered: boolean;
-      tel: string;
-      officialEmail: string;
+      tel?: string | null;
+      officialEmail?: string | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -4463,8 +4463,8 @@ export type OnCreateUserSubscription = {
       officerName: string;
     } | null>;
     isRegistered: boolean;
-    tel: string;
-    officialEmail: string;
+    tel?: string | null;
+    officialEmail?: string | null;
     iconCompany?: {
       __typename: "S3Object";
       bucket: string;
@@ -4571,8 +4571,8 @@ export type OnUpdateUserSubscription = {
       officerName: string;
     } | null>;
     isRegistered: boolean;
-    tel: string;
-    officialEmail: string;
+    tel?: string | null;
+    officialEmail?: string | null;
     iconCompany?: {
       __typename: "S3Object";
       bucket: string;
@@ -4679,8 +4679,8 @@ export type OnDeleteUserSubscription = {
       officerName: string;
     } | null>;
     isRegistered: boolean;
-    tel: string;
-    officialEmail: string;
+    tel?: string | null;
+    officialEmail?: string | null;
     iconCompany?: {
       __typename: "S3Object";
       bucket: string;
@@ -4777,8 +4777,8 @@ export type OnCreateRoomGroupSubscription = {
       id: string;
       name: string;
       isRegistered: boolean;
-      tel: string;
-      officialEmail: string;
+      tel?: string | null;
+      officialEmail?: string | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -4815,8 +4815,8 @@ export type OnCreateRoomGroupSubscription = {
       id: string;
       name: string;
       isRegistered: boolean;
-      tel: string;
-      officialEmail: string;
+      tel?: string | null;
+      officialEmail?: string | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -4861,8 +4861,8 @@ export type OnUpdateRoomGroupSubscription = {
       id: string;
       name: string;
       isRegistered: boolean;
-      tel: string;
-      officialEmail: string;
+      tel?: string | null;
+      officialEmail?: string | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -4899,8 +4899,8 @@ export type OnUpdateRoomGroupSubscription = {
       id: string;
       name: string;
       isRegistered: boolean;
-      tel: string;
-      officialEmail: string;
+      tel?: string | null;
+      officialEmail?: string | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -4945,8 +4945,8 @@ export type OnDeleteRoomGroupSubscription = {
       id: string;
       name: string;
       isRegistered: boolean;
-      tel: string;
-      officialEmail: string;
+      tel?: string | null;
+      officialEmail?: string | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -4983,8 +4983,8 @@ export type OnDeleteRoomGroupSubscription = {
       id: string;
       name: string;
       isRegistered: boolean;
-      tel: string;
-      officialEmail: string;
+      tel?: string | null;
+      officialEmail?: string | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -5029,8 +5029,8 @@ export type OnCreateRoomSubscription = {
       officerName: string;
     } | null>;
     isRegistered: boolean;
-    tel: string;
-    officialEmail: string;
+    tel?: string | null;
+    officialEmail?: string | null;
     iconCompany?: {
       __typename: "S3Object";
       bucket: string;
@@ -5099,8 +5099,8 @@ export type OnUpdateRoomSubscription = {
       officerName: string;
     } | null>;
     isRegistered: boolean;
-    tel: string;
-    officialEmail: string;
+    tel?: string | null;
+    officialEmail?: string | null;
     iconCompany?: {
       __typename: "S3Object";
       bucket: string;
@@ -5169,8 +5169,8 @@ export type OnDeleteRoomSubscription = {
       officerName: string;
     } | null>;
     isRegistered: boolean;
-    tel: string;
-    officialEmail: string;
+    tel?: string | null;
+    officialEmail?: string | null;
     iconCompany?: {
       __typename: "S3Object";
       bucket: string;
@@ -5258,8 +5258,8 @@ export type OnCreateMessageSubscription = {
       id: string;
       name: string;
       isRegistered: boolean;
-      tel: string;
-      officialEmail: string;
+      tel?: string | null;
+      officialEmail?: string | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -5374,8 +5374,8 @@ export type OnUpdateMessageSubscription = {
       id: string;
       name: string;
       isRegistered: boolean;
-      tel: string;
-      officialEmail: string;
+      tel?: string | null;
+      officialEmail?: string | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -5490,8 +5490,8 @@ export type OnDeleteMessageSubscription = {
       id: string;
       name: string;
       isRegistered: boolean;
-      tel: string;
-      officialEmail: string;
+      tel?: string | null;
+      officialEmail?: string | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;

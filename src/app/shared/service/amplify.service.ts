@@ -13,8 +13,16 @@ export interface SubscriptionResponse<T> {
 export type CreateCompanyInput = {
   id?: string | null;
   name: string;
-  officerEmail: string;
+  officer: Array<OfficerInput | null>;
+  isRegistered: boolean;
+  tel: string;
+  officialEmail: string;
   iconCompany?: S3ObjectInput | null;
+};
+
+export type OfficerInput = {
+  officerEmail: string;
+  officerName: string;
 };
 
 export type ModelCompanyConditionInput = {
@@ -4762,7 +4770,14 @@ export class AmplifyService {
           __typename
           id
           name
-          officerEmail
+          officer {
+            __typename
+            officerEmail
+            officerName
+          }
+          isRegistered
+          tel
+          officialEmail
           iconCompany {
             __typename
             bucket

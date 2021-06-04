@@ -5,8 +5,8 @@ type Company
   name: String!
   officer: [Officer]! # 担当者は複数人であるべき
   isRegistered: Boolean!
-  tel: String!
-  officialEmail: String!
+  tel: String
+  officialEmail: String
   iconCompany: S3Object
   room: [Room] @connection(keyName: "byCompany", fields: ["id"])
   companyMembers: [User] @connection(keyName: "byCompany", fields: ["id"])
