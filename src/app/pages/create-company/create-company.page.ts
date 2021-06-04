@@ -4,6 +4,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { concatMap, map } from 'rxjs/operators';
 import { CreateCompanyLogic } from './logic/create-company.logic';
 import { v4 as uuid } from 'uuid';
+import { concat } from 'rxjs';
 
 @Component({
   selector: 'app-create-company',
@@ -70,8 +71,8 @@ export class CreateCompanyPage implements OnInit {
       officerEmail: officerEmail,
     }
     this.logic.generateOneTimePassword()
-      .pipe(concatMap((token) => this.logic.sendEmailForRegister(requestContent, token)))
-      // this.logic.sendEmailForRegister(requestContent)
+      // .pipe(concatMap((token) => this.logic.sendEmailForRegister(requestContent, token)))
+      // .pipe(concatMap(() => this.logic.createCompanyToDynamoDB(requestContent)))
       // this.logic.createCompany(requestContent)
       //   .pipe(concatMap(() => this.logic.sendEmailForRegister, data(requestContent)))
       .subscribe(data => console.log('[generateOneTimePassword]', data));

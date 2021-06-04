@@ -15,7 +15,7 @@ export class CreateCompanyLogic {
   ) { }
 
 
-  createCompany(requestContent: CreateCompanyInput): Observable<string> {
+  createCompanyToDynamoDB(requestContent: CreateCompanyInput): Observable<string> {
     return this.createCompanyService.createCompany(requestContent)
       .pipe(map((result) => result.id));
   }

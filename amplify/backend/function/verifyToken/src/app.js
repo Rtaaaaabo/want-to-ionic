@@ -8,7 +8,7 @@ See the License for the specific language governing permissions and limitations 
 
 var express = require("express");
 var awsServerlessExpressMiddleware = require("aws-serverless-express/middleware");
-var authenticator = require("otplib").authenticator;
+var hotp = require("otplib").hotp;
 require("dotenv").config();
 
 // declare a new express app
@@ -32,7 +32,8 @@ app.get("/verify-otp", function (req, res) {
 });
 
 app.get("/verify-otp/generate", function (req, res) {
-  const token = authenticator.generate(process.env.OTP_SECRET_DEV);
+  const counter = 1;
+  const token = hotp.generate(process.env.OTP_SECRET_DEV, counter);
   res.json({ success: "succeed!", otp: token });
 });
 
