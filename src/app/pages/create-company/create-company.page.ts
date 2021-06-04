@@ -70,6 +70,7 @@ export class CreateCompanyPage implements OnInit {
       officerEmail: officerEmail,
     }
     this.logic.generateOneTimePassword()
+      .pipe(concatMap((token) => this.logic.sendEmailForRegister(requestContent, token)))
       // this.logic.sendEmailForRegister(requestContent)
       // this.logic.createCompany(requestContent)
       //   .pipe(concatMap(() => this.logic.sendEmailForRegister, data(requestContent)))

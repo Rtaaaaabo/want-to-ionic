@@ -30,11 +30,12 @@ export class CreateCompanyLogic {
     return this.createCompanyService.createUser(requestContent);
   }
 
-  sendEmailForRegister(content: { id: string, name: string, officerEmail: string }): Observable<any> {
+  sendEmailForRegister(content: { id: string, name: string, officerEmail: string }, otpToken: string): Observable<any> {
     const requestBody = {
       body: {
         name: content.name,
         email: content.officerEmail,
+        otp: otpToken,
       }
     }
     return this.createCompanyService.sendEmailForRegister(requestBody)
@@ -48,5 +49,14 @@ export class CreateCompanyLogic {
    */
   generateOneTimePassword(): Observable<string> {
     return this.createCompanyService.generateOTP().pipe(map(({ otp }) => otp));
+  }
+
+  /**
+   * Token値が正であるか判断します
+   * @param token One time token
+   * @returns {boolean} ParamもTokenは正しいか間違いかを返します
+   */
+  isValidOneTimePassword(token: string): Observable<any> {
+    return this.createCompanyService.isValidOTP(token);
   }
 }

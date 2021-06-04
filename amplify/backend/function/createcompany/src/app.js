@@ -35,7 +35,8 @@ app.post("/register/company", async (req, res) => {
       Body: {
         Html: {
           Charset: "UTF-8",
-          Data: `<html lang="ja"><head><meta charset="utf-8"></head><body><h3>名前</h3><br/><p>${req.body.name}</p><br/><h3>メールアドレス</h3><br><p>${req.body.email}</p></body></html>`,
+          Data: `<html lang="ja"><head><meta charset="utf-8"></head><body><h3>名前</h3><br/><p>${req.body.name}</p><br/><h3>メールアドレス</h3><br><p>${req.body.email}</p>
+          <p>下記をクリックしてな</p><br /><p>${req.body.otp}</p></body></html>`,
         },
         Text: {
           Charset: "UTF-8",

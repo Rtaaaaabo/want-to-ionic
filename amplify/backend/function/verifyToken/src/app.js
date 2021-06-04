@@ -36,11 +36,11 @@ app.get("/verify-otp/generate", function (req, res) {
   res.json({ success: "succeed!", otp: token });
 });
 
-app.post("/verify-otp", function (req, res) {
+app.get("/verify-otp", function (req, res) {
   const token = req.body.otp; // OneTimePasswordを取得
   try {
     authenticator.check(token, process.env.OTP_SECRET_DEV); // 受け取ったtokenは正であるか確認
-    res.json({}); // 受け取ったTokenが正であれば
+    res.json({});
   } catch (err) {
     res.json({ error: "error!", message: err });
   }
