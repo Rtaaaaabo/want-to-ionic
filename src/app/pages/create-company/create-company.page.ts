@@ -71,7 +71,7 @@ export class CreateCompanyPage implements OnInit {
       officerEmail: officerEmail,
     }
     this.logic.generateOneTimePassword()
-      // .pipe(concatMap((token) => this.logic.sendEmailForRegister(requestContent, token)))
+      .pipe(concatMap((token) => this.logic.sendEmailForRegister(requestContent, token)))
       // .pipe(concatMap(() => this.logic.createCompanyToDynamoDB(requestContent)))
       // this.logic.createCompany(requestContent)
       //   .pipe(concatMap(() => this.logic.sendEmailForRegister, data(requestContent)))
