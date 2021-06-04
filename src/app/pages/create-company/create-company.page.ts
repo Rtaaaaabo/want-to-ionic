@@ -63,12 +63,15 @@ export class CreateCompanyPage implements OnInit {
   registerCompany(): void {
     const date = new Date();
     const timeStamp = date.getTime();
+    const companyName = this.createCompanyForm.get('companyName').value;
     const officerName = this.createCompanyForm.get('officerName').value;
     const officerEmail = this.createCompanyForm.get('officerEmail').value;
     const requestContent = {
       id: `company_${timeStamp}_${uuid()}`,
-      name: officerName,
-      officerEmail: officerEmail,
+      name: companyName,
+      officer: [{ officerEmail: officerEmail, officerName: officerName }],
+      isRegistered: false,
+      // officerEmail: officerEmail,
     }
     this.logic.generateOneTimePassword()
       .pipe(concatMap((token) => this.logic.sendEmailForRegister(requestContent, token)))

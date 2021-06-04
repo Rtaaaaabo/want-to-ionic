@@ -30,11 +30,13 @@ export class CreateCompanyLogic {
     return this.createCompanyService.createUser(requestContent);
   }
 
-  sendEmailForRegister(content: { id: string, name: string, officerEmail: string }, otpToken: string): Observable<any> {
+  sendEmailForRegister(content: CreateCompanyInput, otpToken: string): Observable<any> {
+    const officerName = content.officer[0].officerName;
+    const officerEmail = content.officer[0].officerEmail;
     const requestBody = {
       body: {
-        name: content.name,
-        email: content.officerEmail,
+        name: officerName,
+        email: officerEmail,
         otp: otpToken,
       }
     }

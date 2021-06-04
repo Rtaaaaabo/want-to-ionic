@@ -15,8 +15,8 @@ export type CreateCompanyInput = {
   name: string;
   officer: Array<OfficerInput | null>;
   isRegistered: boolean;
-  tel: string;
-  officialEmail: string;
+  tel?: string | null;
+  officialEmail?: string | null;
   iconCompany?: S3ObjectInput | null;
 };
 
