@@ -27,7 +27,6 @@ app.use(async (req, res, next) => {
 });
 
 app.get("/verify-otp", function (req, res) {
-  // Add your code here
   res.json({ success: "get call succeed!", url: req.url });
 });
 
@@ -45,26 +44,6 @@ app.get("/verify-otp", function (req, res) {
   } catch (err) {
     res.json({ error: "error!", message: err });
   }
-});
-
-app.put("/verify-otp", function (req, res) {
-  // Add your code here
-  res.json({ success: "put call succeed!", url: req.url, body: req.body });
-});
-
-app.put("/verify-otp/*", function (req, res) {
-  // Add your code here
-  res.json({ success: "put call succeed!", url: req.url, body: req.body });
-});
-
-app.delete("/verify-otp", function (req, res) {
-  // Add your code here
-  res.json({ success: "delete call succeed!", url: req.url });
-});
-
-app.delete("/verify-otp/*", function (req, res) {
-  // Add your code here
-  res.json({ success: "delete call succeed!", url: req.url });
 });
 
 app.listen(3000, function () {

@@ -71,13 +71,13 @@ export class CreateCompanyPage implements OnInit {
       name: companyName,
       officer: [{ officerEmail: officerEmail, officerName: officerName }],
       isRegistered: false,
-      // officerEmail: officerEmail,
     }
     this.logic.generateOneTimePassword()
       .pipe(concatMap((token) => this.logic.sendEmailForRegister(requestContent, token)))
       .pipe(concatMap(() => this.logic.createCompanyToDynamoDB(requestContent)))
-      .subscribe(data => console.log('[generateOneTimePassword]', data));
-    // .pipe(concatMap((companyId) => this.logic.createUserWithCompanyId(companyId, officerName, officerEmail)));
+      .subscribe((data) => {
+        console.log('[generateOneTimePassword]', data);
+      });
   }
 
 }

@@ -48,15 +48,15 @@ const routes: Routes = [
   },
   {
     path: 'member-list',
-    loadChildren: () => import('./pages/member-list/member-list.module').then( m => m.MemberListPageModule)
+    loadChildren: () => import('./pages/member-list/member-list.module').then(m => m.MemberListPageModule)
   },
   {
     path: 'create-company',
-    loadChildren: () => import('./pages/create-company/create-company.module').then( m => m.CreateCompanyPageModule)
+    loadChildren: () => import('./pages/create-company/create-company.module').then(m => m.CreateCompanyPageModule)
   },
   {
-    path: 'main-registration-company',
-    loadChildren: () => import('./pages/main-registration-company/main-registration-company.module').then( m => m.MainRegistrationCompanyPageModule)
+    path: 'registration-company',
+    loadChildren: () => import('./pages/main-registration-company/main-registration-company.module').then(m => m.MainRegistrationCompanyPageModule)
   },
 ];
 @NgModule({
