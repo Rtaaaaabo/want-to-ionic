@@ -48,7 +48,8 @@ const routes: Routes = [
   },
   {
     path: 'member-list',
-    loadChildren: () => import('./pages/member-list/member-list.module').then(m => m.MemberListPageModule)
+    loadChildren: () => import('./pages/member-list/member-list.module').then(m => m.MemberListPageModule),
+    canActivate: [AuthGuard],
   },
   {
     path: 'create-company',
