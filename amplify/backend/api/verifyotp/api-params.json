@@ -43,6 +43,14 @@
                 ]
             },
             "policyResourceName": "/verify-otp/generate"
+        },
+        {
+            "name": "/verify-otp/check",
+            "lambdaFunction": "verifyToken",
+            "privacy": {
+                "open": true
+            },
+            "policyResourceName": "/verify-otp/check"
         }
     ],
     "resourceName": "verifyotp",
@@ -68,5 +76,5 @@
             ]
         }
     ],
-    "uuid": "0c7df135"
+    "uuid": "c268ad25"
 }

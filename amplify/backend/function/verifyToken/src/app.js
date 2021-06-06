@@ -36,7 +36,7 @@ app.get("/verify-otp/generate", function (req, res) {
   res.json({ success: "succeed!", otp: token });
 });
 
-app.get("/verify-otp", function (req, res) {
+app.get("/verify-otp/check", function (req, res) {
   const token = req.body.otp; // OneTimePasswordを取得
   try {
     authenticator.check(token, process.env.OTP_SECRET_DEV); // 受け取ったtokenは正であるか確認
