@@ -8,6 +8,7 @@ subscription OnCreateCompany {
       officerName
     }
     isRegistered
+    otp
     tel
     officialEmail
     iconCompany {
@@ -56,6 +57,7 @@ subscription OnUpdateCompany {
       officerName
     }
     isRegistered
+    otp
     tel
     officialEmail
     iconCompany {
@@ -104,6 +106,7 @@ subscription OnDeleteCompany {
       officerName
     }
     isRegistered
+    otp
     tel
     officialEmail
     iconCompany {
@@ -211,6 +214,7 @@ subscription OnCreateTaskGroup {
         id
         name
         isRegistered
+        otp
         tel
         officialEmail
         createdAt
@@ -305,6 +309,7 @@ subscription OnUpdateTaskGroup {
         id
         name
         isRegistered
+        otp
         tel
         officialEmail
         createdAt
@@ -399,6 +404,7 @@ subscription OnDeleteTaskGroup {
         id
         name
         isRegistered
+        otp
         tel
         officialEmail
         createdAt
@@ -441,6 +447,7 @@ subscription OnCreateTask {
         id
         name
         isRegistered
+        otp
         tel
         officialEmail
         createdAt
@@ -484,6 +491,7 @@ subscription OnCreateTask {
         id
         name
         isRegistered
+        otp
         tel
         officialEmail
         createdAt
@@ -548,6 +556,7 @@ subscription OnUpdateTask {
         id
         name
         isRegistered
+        otp
         tel
         officialEmail
         createdAt
@@ -591,6 +600,7 @@ subscription OnUpdateTask {
         id
         name
         isRegistered
+        otp
         tel
         officialEmail
         createdAt
@@ -655,6 +665,7 @@ subscription OnDeleteTask {
         id
         name
         isRegistered
+        otp
         tel
         officialEmail
         createdAt
@@ -698,6 +709,7 @@ subscription OnDeleteTask {
         id
         name
         isRegistered
+        otp
         tel
         officialEmail
         createdAt
@@ -769,6 +781,7 @@ subscription OnCreateUser {
         officerName
       }
       isRegistered
+      otp
       tel
       officialEmail
       iconCompany {
@@ -863,6 +876,7 @@ subscription OnUpdateUser {
         officerName
       }
       isRegistered
+      otp
       tel
       officialEmail
       iconCompany {
@@ -957,6 +971,7 @@ subscription OnDeleteUser {
         officerName
       }
       isRegistered
+      otp
       tel
       officialEmail
       iconCompany {
@@ -1042,6 +1057,7 @@ subscription OnCreateRoomGroup {
         id
         name
         isRegistered
+        otp
         tel
         officialEmail
         createdAt
@@ -1075,6 +1091,7 @@ subscription OnCreateRoomGroup {
         id
         name
         isRegistered
+        otp
         tel
         officialEmail
         createdAt
@@ -1115,6 +1132,7 @@ subscription OnUpdateRoomGroup {
         id
         name
         isRegistered
+        otp
         tel
         officialEmail
         createdAt
@@ -1148,6 +1166,7 @@ subscription OnUpdateRoomGroup {
         id
         name
         isRegistered
+        otp
         tel
         officialEmail
         createdAt
@@ -1188,6 +1207,7 @@ subscription OnDeleteRoomGroup {
         id
         name
         isRegistered
+        otp
         tel
         officialEmail
         createdAt
@@ -1221,6 +1241,7 @@ subscription OnDeleteRoomGroup {
         id
         name
         isRegistered
+        otp
         tel
         officialEmail
         createdAt
@@ -1261,6 +1282,7 @@ subscription OnCreateRoom {
         officerName
       }
       isRegistered
+      otp
       tel
       officialEmail
       iconCompany {
@@ -1322,6 +1344,7 @@ subscription OnUpdateRoom {
         officerName
       }
       isRegistered
+      otp
       tel
       officialEmail
       iconCompany {
@@ -1383,6 +1406,7 @@ subscription OnDeleteRoom {
         officerName
       }
       isRegistered
+      otp
       tel
       officialEmail
       iconCompany {
@@ -1461,6 +1485,7 @@ subscription OnCreateMessage {
         id
         name
         isRegistered
+        otp
         tel
         officialEmail
         createdAt
@@ -1563,6 +1588,7 @@ subscription OnUpdateMessage {
         id
         name
         isRegistered
+        otp
         tel
         officialEmail
         createdAt
@@ -1665,6 +1691,7 @@ subscription OnDeleteMessage {
         id
         name
         isRegistered
+        otp
         tel
         officialEmail
         createdAt

@@ -41,8 +41,7 @@ export class CreateCompanyPage implements OnInit {
     private logic: CreateCompanyLogic,
   ) { }
 
-  ngOnInit() {
-  }
+  ngOnInit(): void { }
 
   checkPassword(group: FormGroup): null | { notSame: boolean } {
     let password = group.get('officerPassword').value;
@@ -72,9 +71,11 @@ export class CreateCompanyPage implements OnInit {
       officer: [{ officerEmail: officerEmail, officerName: officerName }],
       isRegistered: false,
     }
+    let otpToken: string;
     this.logic.generateOneTimePassword()
-      .pipe(concatMap((token) => this.logic.sendEmailForRegister(requestContent, token)))
-      .pipe(concatMap(() => this.logic.createCompanyToDynamoDB(requestContent)))
+      .pipe(map((token) => otpToken = token))
+      .pipe(concatMap(() => this.logic.sendEmailForRegister(requestContent, otpToken)))
+      .pipe(concatMap(() => this.logic.createCompanyToDynamoDB(requestContent, otpToken)))
       .subscribe((data) => {
         console.log('[generateOneTimePassword]', data);
       });

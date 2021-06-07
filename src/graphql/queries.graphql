@@ -8,6 +8,7 @@ query GetCompany($id: ID!) {
       officerName
     }
     isRegistered
+    otp
     tel
     officialEmail
     iconCompany {
@@ -61,6 +62,7 @@ query ListCompanys(
         officerName
       }
       isRegistered
+      otp
       tel
       officialEmail
       iconCompany {
@@ -149,6 +151,7 @@ query GetTaskGroup($id: ID!) {
         id
         name
         isRegistered
+        otp
         tel
         officialEmail
         createdAt
@@ -233,6 +236,7 @@ query GetTask($id: ID!) {
         id
         name
         isRegistered
+        otp
         tel
         officialEmail
         createdAt
@@ -276,6 +280,7 @@ query GetTask($id: ID!) {
         id
         name
         isRegistered
+        otp
         tel
         officialEmail
         createdAt
@@ -401,6 +406,7 @@ query GetUser($id: ID!) {
         officerName
       }
       isRegistered
+      otp
       tel
       officialEmail
       iconCompany {
@@ -496,6 +502,7 @@ query ListUsers(
         id
         name
         isRegistered
+        otp
         tel
         officialEmail
         createdAt
@@ -535,6 +542,7 @@ query GetRoomGroup($id: ID!) {
         id
         name
         isRegistered
+        otp
         tel
         officialEmail
         createdAt
@@ -568,6 +576,7 @@ query GetRoomGroup($id: ID!) {
         id
         name
         isRegistered
+        otp
         tel
         officialEmail
         createdAt
@@ -645,6 +654,7 @@ query GetRoom($id: ID!) {
         officerName
       }
       isRegistered
+      otp
       tel
       officialEmail
       iconCompany {
@@ -707,6 +717,7 @@ query ListRooms(
         id
         name
         isRegistered
+        otp
         tel
         officialEmail
         createdAt
@@ -756,6 +767,7 @@ query GetMessage($id: ID!) {
         id
         name
         isRegistered
+        otp
         tel
         officialEmail
         createdAt

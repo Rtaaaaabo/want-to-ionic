@@ -11,6 +11,7 @@ mutation CreateCompany(
       officerName
     }
     isRegistered
+    otp
     tel
     officialEmail
     iconCompany {
@@ -62,6 +63,7 @@ mutation UpdateCompany(
       officerName
     }
     isRegistered
+    otp
     tel
     officialEmail
     iconCompany {
@@ -113,6 +115,7 @@ mutation DeleteCompany(
       officerName
     }
     isRegistered
+    otp
     tel
     officialEmail
     iconCompany {
@@ -223,6 +226,7 @@ mutation CreateTaskGroup(
         id
         name
         isRegistered
+        otp
         tel
         officialEmail
         createdAt
@@ -320,6 +324,7 @@ mutation UpdateTaskGroup(
         id
         name
         isRegistered
+        otp
         tel
         officialEmail
         createdAt
@@ -417,6 +422,7 @@ mutation DeleteTaskGroup(
         id
         name
         isRegistered
+        otp
         tel
         officialEmail
         createdAt
@@ -462,6 +468,7 @@ mutation CreateTask(
         id
         name
         isRegistered
+        otp
         tel
         officialEmail
         createdAt
@@ -505,6 +512,7 @@ mutation CreateTask(
         id
         name
         isRegistered
+        otp
         tel
         officialEmail
         createdAt
@@ -572,6 +580,7 @@ mutation UpdateTask(
         id
         name
         isRegistered
+        otp
         tel
         officialEmail
         createdAt
@@ -615,6 +624,7 @@ mutation UpdateTask(
         id
         name
         isRegistered
+        otp
         tel
         officialEmail
         createdAt
@@ -682,6 +692,7 @@ mutation DeleteTask(
         id
         name
         isRegistered
+        otp
         tel
         officialEmail
         createdAt
@@ -725,6 +736,7 @@ mutation DeleteTask(
         id
         name
         isRegistered
+        otp
         tel
         officialEmail
         createdAt
@@ -799,6 +811,7 @@ mutation CreateUser(
         officerName
       }
       isRegistered
+      otp
       tel
       officialEmail
       iconCompany {
@@ -896,6 +909,7 @@ mutation UpdateUser(
         officerName
       }
       isRegistered
+      otp
       tel
       officialEmail
       iconCompany {
@@ -993,6 +1007,7 @@ mutation DeleteUser(
         officerName
       }
       isRegistered
+      otp
       tel
       officialEmail
       iconCompany {
@@ -1081,6 +1096,7 @@ mutation CreateRoomGroup(
         id
         name
         isRegistered
+        otp
         tel
         officialEmail
         createdAt
@@ -1114,6 +1130,7 @@ mutation CreateRoomGroup(
         id
         name
         isRegistered
+        otp
         tel
         officialEmail
         createdAt
@@ -1157,6 +1174,7 @@ mutation UpdateRoomGroup(
         id
         name
         isRegistered
+        otp
         tel
         officialEmail
         createdAt
@@ -1190,6 +1208,7 @@ mutation UpdateRoomGroup(
         id
         name
         isRegistered
+        otp
         tel
         officialEmail
         createdAt
@@ -1233,6 +1252,7 @@ mutation DeleteRoomGroup(
         id
         name
         isRegistered
+        otp
         tel
         officialEmail
         createdAt
@@ -1266,6 +1286,7 @@ mutation DeleteRoomGroup(
         id
         name
         isRegistered
+        otp
         tel
         officialEmail
         createdAt
@@ -1309,6 +1330,7 @@ mutation CreateRoom(
         officerName
       }
       isRegistered
+      otp
       tel
       officialEmail
       iconCompany {
@@ -1373,6 +1395,7 @@ mutation UpdateRoom(
         officerName
       }
       isRegistered
+      otp
       tel
       officialEmail
       iconCompany {
@@ -1437,6 +1460,7 @@ mutation DeleteRoom(
         officerName
       }
       isRegistered
+      otp
       tel
       officialEmail
       iconCompany {
@@ -1518,6 +1542,7 @@ mutation CreateMessage(
         id
         name
         isRegistered
+        otp
         tel
         officialEmail
         createdAt
@@ -1623,6 +1648,7 @@ mutation UpdateMessage(
         id
         name
         isRegistered
+        otp
         tel
         officialEmail
         createdAt
@@ -1728,6 +1754,7 @@ mutation DeleteMessage(
         id
         name
         isRegistered
+        otp
         tel
         officialEmail
         createdAt
