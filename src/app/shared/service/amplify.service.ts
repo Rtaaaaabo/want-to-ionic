@@ -15,6 +15,7 @@ export type CreateCompanyInput = {
   name: string;
   officer: Array<OfficerInput | null>;
   isRegistered: boolean;
+  otp: string;
   tel?: string | null;
   officialEmail?: string | null;
   iconCompany?: S3ObjectInput | null;
@@ -4776,6 +4777,7 @@ export class AmplifyService {
             officerName
           }
           isRegistered
+          otp
           tel
           officialEmail
           iconCompany {
