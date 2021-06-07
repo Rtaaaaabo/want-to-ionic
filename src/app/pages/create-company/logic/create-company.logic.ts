@@ -15,7 +15,7 @@ export class CreateCompanyLogic {
   ) { }
 
 
-  createCompanyToDynamoDB(content: CreateCompanyInput, otpToken: string): Observable<string> {
+  createCompanyToDynamoDB(content: CreateCompanyInput): Observable<string> {
     const requestContent = content;
     return this.createCompanyService.createCompany(requestContent)
       .pipe(map((result) => result.id));
@@ -31,9 +31,10 @@ export class CreateCompanyLogic {
     return this.createCompanyService.createUser(requestContent);
   }
 
-  sendEmailForRegister(content: CreateCompanyInput, otpToken: string): Observable<any> {
+  sendEmailForRegister(content: CreateCompanyInput): Observable<any> {
     const officerName = content.officer[0].officerName;
     const officerEmail = content.officer[0].officerEmail;
+    const otpToken = content.otp;
     const requestBody = {
       body: {
         name: officerName,
