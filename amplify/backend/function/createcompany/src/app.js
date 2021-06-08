@@ -37,7 +37,7 @@ app.post("/register/company", async (req, res) => {
           Charset: "UTF-8",
           Data: `
           <html lang="ja"><head><meta charset="utf-8"></head><body><h3>名前</h3><p>${req.body.name}</p><br/><h3>メールアドレス</h3><p>${req.body.email}</p>
-          <p>下記をクリックしてな</p><p>${req.body.otp}</p></body></html>
+          <p>下記をクリックしてな</p><p>http://localhost:8100/registration-company?token=${req.body.otp}</p></body></html>
           `,
         },
         Text: {
