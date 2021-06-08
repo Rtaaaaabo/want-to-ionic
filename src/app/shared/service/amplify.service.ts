@@ -465,7 +465,10 @@ export type DeleteMessageInput = {
 export type ModelCompanyFilterInput = {
   id?: ModelIDInput | null;
   name?: ModelStringInput | null;
-  domain?: ModelStringInput | null;
+  isRegistered?: ModelBooleanInput | null;
+  otp?: ModelStringInput | null;
+  tel?: ModelStringInput | null;
+  officialEmail?: ModelStringInput | null;
   and?: Array<ModelCompanyFilterInput | null> | null;
   or?: Array<ModelCompanyFilterInput | null> | null;
   not?: ModelCompanyFilterInput | null;
@@ -6077,17 +6080,32 @@ export class AmplifyService {
             __typename
             id
             name
-            domain
+            officer {
+              __typename
+              officerEmail
+              officerName
+            }
+            isRegistered
+            otp
+            tel
+            officialEmail
+            iconCompany {
+              __typename
+              bucket
+              region
+              key
+            }
             room {
               __typename
               nextToken
             }
-            members {
+            companyMembers {
               __typename
               nextToken
             }
             createdAt
             updatedAt
+            owner
           }
           nextToken
         }
@@ -6107,6 +6125,7 @@ export class AmplifyService {
     )) as any;
     return <ListCompanysQuery>response.data.listCompanys;
   }
+
   async GetRoom(id: string): Promise<GetRoomQuery> {
     const statement = `query GetRoom($id: ID!) {
         getRoom(id: $id) {
