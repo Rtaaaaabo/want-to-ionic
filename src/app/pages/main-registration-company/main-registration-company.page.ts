@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { AlertController } from '@ionic/angular';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-main-registration-company',
@@ -10,10 +12,15 @@ export class MainRegistrationCompanyPage implements OnInit {
 
   constructor(
     private readonly alertCtrl: AlertController,
+    private readonly route: ActivatedRoute,
   ) { }
 
   ngOnInit() {
-    this.presentCorrectToken();
+    this.route.queryParams.pipe(filter(params => params.token))
+      .subscribe(({ token }) => {
+        console.log('Token: ', token);
+        this.presentCorrectToken();
+      })
   }
 
   async presentCorrectToken(): Promise<void> {
