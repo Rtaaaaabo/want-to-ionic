@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
-import { concatMap, filter, take, map } from 'rxjs/operators';
+import { concatMap, filter, map } from 'rxjs/operators';
 import { Company } from 'src/app/shared/service/amplify.service';
 import { MainRegistrationCompanyLogic } from './logic/main-registration-company.logic';
 
@@ -11,6 +12,13 @@ import { MainRegistrationCompanyLogic } from './logic/main-registration-company.
   styleUrls: ['./main-registration-company.page.scss'],
 })
 export class MainRegistrationCompanyPage implements OnInit {
+  companyOfficer = new FormArray([]);
+  companyForm = new FormGroup({
+    companyIcon: new FormControl(''),
+    companyName: new FormControl('', [Validators.required]),
+    companyOfficialEmail: new FormControl('', [Validators.required, Validators.email]),
+    tel: new FormControl('', [Validators.required]),
+  });
   companyInfo: Company;
 
   constructor(
@@ -19,7 +27,7 @@ export class MainRegistrationCompanyPage implements OnInit {
     private logic: MainRegistrationCompanyLogic,
   ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.route.queryParams.pipe(filter(params => params.token))
       .pipe(concatMap(({ token }) => this.logic.fetchCompanyInfo(token)))
       .pipe(map(({ items }) => items))
