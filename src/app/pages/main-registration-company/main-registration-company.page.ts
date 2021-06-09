@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AlertController } from '@ionic/angular';
-import { of } from 'rxjs';
 import { concatMap, filter, take, map } from 'rxjs/operators';
+import { Company } from 'src/app/shared/service/amplify.service';
 import { MainRegistrationCompanyLogic } from './logic/main-registration-company.logic';
 
 @Component({
@@ -11,7 +11,7 @@ import { MainRegistrationCompanyLogic } from './logic/main-registration-company.
   styleUrls: ['./main-registration-company.page.scss'],
 })
 export class MainRegistrationCompanyPage implements OnInit {
-  // companyInfo: 
+  companyInfo: Company;
 
   constructor(
     private readonly alertCtrl: AlertController,
@@ -24,7 +24,8 @@ export class MainRegistrationCompanyPage implements OnInit {
       .pipe(concatMap(({ token }) => this.logic.fetchCompanyInfo(token)))
       .pipe(map(({ items }) => items))
       .subscribe((result) => {
-
+        this.companyInfo = result[0];
+        console.log('companyInfo: ', this.companyInfo);
         this.presentCorrectToken();
       })
   }
