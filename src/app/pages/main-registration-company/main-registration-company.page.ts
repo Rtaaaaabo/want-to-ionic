@@ -33,6 +33,13 @@ export class MainRegistrationCompanyPage implements OnInit {
       .pipe(map(({ items }) => items))
       .subscribe((result) => {
         this.companyInfo = result[0];
+        this.companyForm.patchValue({
+          companyName: this.companyInfo.name,
+        });
+        this.companyOfficer.push(new FormGroup({
+          officerName: new FormControl(this.companyInfo.officer[0].officerName),
+          officerEmail: new FormControl(this.companyInfo.officer[0].officerEmail),
+        }));
         console.log('companyInfo: ', this.companyInfo);
         this.presentCorrectToken();
       })
