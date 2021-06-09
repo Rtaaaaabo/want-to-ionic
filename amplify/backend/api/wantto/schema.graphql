@@ -5,7 +5,7 @@ type Company
   name: String!
   officer: [Officer]! # 担当者は複数人であるべき
   isRegistered: Boolean!
-  otp: String! # Tokenを入れて、ここで企業情報を取得する
+  otp: String # Tokenを入れて、ここで企業情報を取得する
   tel: String
   officialEmail: String
   iconCompany: S3Object

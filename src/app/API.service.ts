@@ -14,7 +14,7 @@ export type CreateCompanyInput = {
   name: string;
   officer: Array<OfficerInput | null>;
   isRegistered: boolean;
-  otp: string;
+  otp?: string | null;
   tel?: string | null;
   officialEmail?: string | null;
   iconCompany?: S3ObjectInput | null;
@@ -94,7 +94,7 @@ export type Company = {
   name: string;
   officer: Array<Officer | null>;
   isRegistered: boolean;
-  otp: string;
+  otp?: string | null;
   tel?: string | null;
   officialEmail?: string | null;
   iconCompany?: S3Object | null;
@@ -599,7 +599,7 @@ export type CreateCompanyMutation = {
     officerName: string;
   } | null>;
   isRegistered: boolean;
-  otp: string;
+  otp?: string | null;
   tel?: string | null;
   officialEmail?: string | null;
   iconCompany?: {
@@ -654,7 +654,7 @@ export type UpdateCompanyMutation = {
     officerName: string;
   } | null>;
   isRegistered: boolean;
-  otp: string;
+  otp?: string | null;
   tel?: string | null;
   officialEmail?: string | null;
   iconCompany?: {
@@ -709,7 +709,7 @@ export type DeleteCompanyMutation = {
     officerName: string;
   } | null>;
   isRegistered: boolean;
-  otp: string;
+  otp?: string | null;
   tel?: string | null;
   officialEmail?: string | null;
   iconCompany?: {
@@ -831,7 +831,7 @@ export type CreateTaskGroupMutation = {
       id: string;
       name: string;
       isRegistered: boolean;
-      otp: string;
+      otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
       createdAt: string;
@@ -939,7 +939,7 @@ export type UpdateTaskGroupMutation = {
       id: string;
       name: string;
       isRegistered: boolean;
-      otp: string;
+      otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
       createdAt: string;
@@ -1047,7 +1047,7 @@ export type DeleteTaskGroupMutation = {
       id: string;
       name: string;
       isRegistered: boolean;
-      otp: string;
+      otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
       createdAt: string;
@@ -1096,7 +1096,7 @@ export type CreateTaskMutation = {
       id: string;
       name: string;
       isRegistered: boolean;
-      otp: string;
+      otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
       createdAt: string;
@@ -1146,7 +1146,7 @@ export type CreateTaskMutation = {
       id: string;
       name: string;
       isRegistered: boolean;
-      otp: string;
+      otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
       createdAt: string;
@@ -1221,7 +1221,7 @@ export type UpdateTaskMutation = {
       id: string;
       name: string;
       isRegistered: boolean;
-      otp: string;
+      otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
       createdAt: string;
@@ -1271,7 +1271,7 @@ export type UpdateTaskMutation = {
       id: string;
       name: string;
       isRegistered: boolean;
-      otp: string;
+      otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
       createdAt: string;
@@ -1346,7 +1346,7 @@ export type DeleteTaskMutation = {
       id: string;
       name: string;
       isRegistered: boolean;
-      otp: string;
+      otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
       createdAt: string;
@@ -1396,7 +1396,7 @@ export type DeleteTaskMutation = {
       id: string;
       name: string;
       isRegistered: boolean;
-      otp: string;
+      otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
       createdAt: string;
@@ -1479,7 +1479,7 @@ export type CreateUserMutation = {
       officerName: string;
     } | null>;
     isRegistered: boolean;
-    otp: string;
+    otp?: string | null;
     tel?: string | null;
     officialEmail?: string | null;
     iconCompany?: {
@@ -1588,7 +1588,7 @@ export type UpdateUserMutation = {
       officerName: string;
     } | null>;
     isRegistered: boolean;
-    otp: string;
+    otp?: string | null;
     tel?: string | null;
     officialEmail?: string | null;
     iconCompany?: {
@@ -1697,7 +1697,7 @@ export type DeleteUserMutation = {
       officerName: string;
     } | null>;
     isRegistered: boolean;
-    otp: string;
+    otp?: string | null;
     tel?: string | null;
     officialEmail?: string | null;
     iconCompany?: {
@@ -1796,7 +1796,7 @@ export type CreateRoomGroupMutation = {
       id: string;
       name: string;
       isRegistered: boolean;
-      otp: string;
+      otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
       createdAt: string;
@@ -1835,7 +1835,7 @@ export type CreateRoomGroupMutation = {
       id: string;
       name: string;
       isRegistered: boolean;
-      otp: string;
+      otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
       createdAt: string;
@@ -1882,7 +1882,7 @@ export type UpdateRoomGroupMutation = {
       id: string;
       name: string;
       isRegistered: boolean;
-      otp: string;
+      otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
       createdAt: string;
@@ -1921,7 +1921,7 @@ export type UpdateRoomGroupMutation = {
       id: string;
       name: string;
       isRegistered: boolean;
-      otp: string;
+      otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
       createdAt: string;
@@ -1968,7 +1968,7 @@ export type DeleteRoomGroupMutation = {
       id: string;
       name: string;
       isRegistered: boolean;
-      otp: string;
+      otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
       createdAt: string;
@@ -2007,7 +2007,7 @@ export type DeleteRoomGroupMutation = {
       id: string;
       name: string;
       isRegistered: boolean;
-      otp: string;
+      otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
       createdAt: string;
@@ -2054,7 +2054,7 @@ export type CreateRoomMutation = {
       officerName: string;
     } | null>;
     isRegistered: boolean;
-    otp: string;
+    otp?: string | null;
     tel?: string | null;
     officialEmail?: string | null;
     iconCompany?: {
@@ -2125,7 +2125,7 @@ export type UpdateRoomMutation = {
       officerName: string;
     } | null>;
     isRegistered: boolean;
-    otp: string;
+    otp?: string | null;
     tel?: string | null;
     officialEmail?: string | null;
     iconCompany?: {
@@ -2196,7 +2196,7 @@ export type DeleteRoomMutation = {
       officerName: string;
     } | null>;
     isRegistered: boolean;
-    otp: string;
+    otp?: string | null;
     tel?: string | null;
     officialEmail?: string | null;
     iconCompany?: {
@@ -2286,7 +2286,7 @@ export type CreateMessageMutation = {
       id: string;
       name: string;
       isRegistered: boolean;
-      otp: string;
+      otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
       createdAt: string;
@@ -2403,7 +2403,7 @@ export type UpdateMessageMutation = {
       id: string;
       name: string;
       isRegistered: boolean;
-      otp: string;
+      otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
       createdAt: string;
@@ -2520,7 +2520,7 @@ export type DeleteMessageMutation = {
       id: string;
       name: string;
       isRegistered: boolean;
-      otp: string;
+      otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
       createdAt: string;
@@ -2612,7 +2612,7 @@ export type GetCompanyQuery = {
     officerName: string;
   } | null>;
   isRegistered: boolean;
-  otp: string;
+  otp?: string | null;
   tel?: string | null;
   officialEmail?: string | null;
   iconCompany?: {
@@ -2669,7 +2669,7 @@ export type ListCompanysQuery = {
       officerName: string;
     } | null>;
     isRegistered: boolean;
-    otp: string;
+    otp?: string | null;
     tel?: string | null;
     officialEmail?: string | null;
     iconCompany?: {
@@ -2770,7 +2770,7 @@ export type GetTaskGroupQuery = {
       id: string;
       name: string;
       isRegistered: boolean;
-      otp: string;
+      otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
       createdAt: string;
@@ -2860,7 +2860,7 @@ export type GetTaskQuery = {
       id: string;
       name: string;
       isRegistered: boolean;
-      otp: string;
+      otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
       createdAt: string;
@@ -2910,7 +2910,7 @@ export type GetTaskQuery = {
       id: string;
       name: string;
       isRegistered: boolean;
-      otp: string;
+      otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
       createdAt: string;
@@ -3049,7 +3049,7 @@ export type GetUserQuery = {
       officerName: string;
     } | null>;
     isRegistered: boolean;
-    otp: string;
+    otp?: string | null;
     tel?: string | null;
     officialEmail?: string | null;
     iconCompany?: {
@@ -3155,7 +3155,7 @@ export type ListUsersQuery = {
       id: string;
       name: string;
       isRegistered: boolean;
-      otp: string;
+      otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
       createdAt: string;
@@ -3201,7 +3201,7 @@ export type GetRoomGroupQuery = {
       id: string;
       name: string;
       isRegistered: boolean;
-      otp: string;
+      otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
       createdAt: string;
@@ -3240,7 +3240,7 @@ export type GetRoomGroupQuery = {
       id: string;
       name: string;
       isRegistered: boolean;
-      otp: string;
+      otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
       createdAt: string;
@@ -3323,7 +3323,7 @@ export type GetRoomQuery = {
       officerName: string;
     } | null>;
     isRegistered: boolean;
-    otp: string;
+    otp?: string | null;
     tel?: string | null;
     officialEmail?: string | null;
     iconCompany?: {
@@ -3391,7 +3391,7 @@ export type ListRoomsQuery = {
       id: string;
       name: string;
       isRegistered: boolean;
-      otp: string;
+      otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
       createdAt: string;
@@ -3447,7 +3447,7 @@ export type GetMessageQuery = {
       id: string;
       name: string;
       isRegistered: boolean;
-      otp: string;
+      otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
       createdAt: string;
@@ -3639,7 +3639,7 @@ export type OnCreateCompanySubscription = {
     officerName: string;
   } | null>;
   isRegistered: boolean;
-  otp: string;
+  otp?: string | null;
   tel?: string | null;
   officialEmail?: string | null;
   iconCompany?: {
@@ -3694,7 +3694,7 @@ export type OnUpdateCompanySubscription = {
     officerName: string;
   } | null>;
   isRegistered: boolean;
-  otp: string;
+  otp?: string | null;
   tel?: string | null;
   officialEmail?: string | null;
   iconCompany?: {
@@ -3749,7 +3749,7 @@ export type OnDeleteCompanySubscription = {
     officerName: string;
   } | null>;
   isRegistered: boolean;
-  otp: string;
+  otp?: string | null;
   tel?: string | null;
   officialEmail?: string | null;
   iconCompany?: {
@@ -3871,7 +3871,7 @@ export type OnCreateTaskGroupSubscription = {
       id: string;
       name: string;
       isRegistered: boolean;
-      otp: string;
+      otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
       createdAt: string;
@@ -3979,7 +3979,7 @@ export type OnUpdateTaskGroupSubscription = {
       id: string;
       name: string;
       isRegistered: boolean;
-      otp: string;
+      otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
       createdAt: string;
@@ -4087,7 +4087,7 @@ export type OnDeleteTaskGroupSubscription = {
       id: string;
       name: string;
       isRegistered: boolean;
-      otp: string;
+      otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
       createdAt: string;
@@ -4136,7 +4136,7 @@ export type OnCreateTaskSubscription = {
       id: string;
       name: string;
       isRegistered: boolean;
-      otp: string;
+      otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
       createdAt: string;
@@ -4186,7 +4186,7 @@ export type OnCreateTaskSubscription = {
       id: string;
       name: string;
       isRegistered: boolean;
-      otp: string;
+      otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
       createdAt: string;
@@ -4261,7 +4261,7 @@ export type OnUpdateTaskSubscription = {
       id: string;
       name: string;
       isRegistered: boolean;
-      otp: string;
+      otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
       createdAt: string;
@@ -4311,7 +4311,7 @@ export type OnUpdateTaskSubscription = {
       id: string;
       name: string;
       isRegistered: boolean;
-      otp: string;
+      otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
       createdAt: string;
@@ -4386,7 +4386,7 @@ export type OnDeleteTaskSubscription = {
       id: string;
       name: string;
       isRegistered: boolean;
-      otp: string;
+      otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
       createdAt: string;
@@ -4436,7 +4436,7 @@ export type OnDeleteTaskSubscription = {
       id: string;
       name: string;
       isRegistered: boolean;
-      otp: string;
+      otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
       createdAt: string;
@@ -4519,7 +4519,7 @@ export type OnCreateUserSubscription = {
       officerName: string;
     } | null>;
     isRegistered: boolean;
-    otp: string;
+    otp?: string | null;
     tel?: string | null;
     officialEmail?: string | null;
     iconCompany?: {
@@ -4628,7 +4628,7 @@ export type OnUpdateUserSubscription = {
       officerName: string;
     } | null>;
     isRegistered: boolean;
-    otp: string;
+    otp?: string | null;
     tel?: string | null;
     officialEmail?: string | null;
     iconCompany?: {
@@ -4737,7 +4737,7 @@ export type OnDeleteUserSubscription = {
       officerName: string;
     } | null>;
     isRegistered: boolean;
-    otp: string;
+    otp?: string | null;
     tel?: string | null;
     officialEmail?: string | null;
     iconCompany?: {
@@ -4836,7 +4836,7 @@ export type OnCreateRoomGroupSubscription = {
       id: string;
       name: string;
       isRegistered: boolean;
-      otp: string;
+      otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
       createdAt: string;
@@ -4875,7 +4875,7 @@ export type OnCreateRoomGroupSubscription = {
       id: string;
       name: string;
       isRegistered: boolean;
-      otp: string;
+      otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
       createdAt: string;
@@ -4922,7 +4922,7 @@ export type OnUpdateRoomGroupSubscription = {
       id: string;
       name: string;
       isRegistered: boolean;
-      otp: string;
+      otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
       createdAt: string;
@@ -4961,7 +4961,7 @@ export type OnUpdateRoomGroupSubscription = {
       id: string;
       name: string;
       isRegistered: boolean;
-      otp: string;
+      otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
       createdAt: string;
@@ -5008,7 +5008,7 @@ export type OnDeleteRoomGroupSubscription = {
       id: string;
       name: string;
       isRegistered: boolean;
-      otp: string;
+      otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
       createdAt: string;
@@ -5047,7 +5047,7 @@ export type OnDeleteRoomGroupSubscription = {
       id: string;
       name: string;
       isRegistered: boolean;
-      otp: string;
+      otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
       createdAt: string;
@@ -5094,7 +5094,7 @@ export type OnCreateRoomSubscription = {
       officerName: string;
     } | null>;
     isRegistered: boolean;
-    otp: string;
+    otp?: string | null;
     tel?: string | null;
     officialEmail?: string | null;
     iconCompany?: {
@@ -5165,7 +5165,7 @@ export type OnUpdateRoomSubscription = {
       officerName: string;
     } | null>;
     isRegistered: boolean;
-    otp: string;
+    otp?: string | null;
     tel?: string | null;
     officialEmail?: string | null;
     iconCompany?: {
@@ -5236,7 +5236,7 @@ export type OnDeleteRoomSubscription = {
       officerName: string;
     } | null>;
     isRegistered: boolean;
-    otp: string;
+    otp?: string | null;
     tel?: string | null;
     officialEmail?: string | null;
     iconCompany?: {
@@ -5326,7 +5326,7 @@ export type OnCreateMessageSubscription = {
       id: string;
       name: string;
       isRegistered: boolean;
-      otp: string;
+      otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
       createdAt: string;
@@ -5443,7 +5443,7 @@ export type OnUpdateMessageSubscription = {
       id: string;
       name: string;
       isRegistered: boolean;
-      otp: string;
+      otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
       createdAt: string;
@@ -5560,7 +5560,7 @@ export type OnDeleteMessageSubscription = {
       id: string;
       name: string;
       isRegistered: boolean;
-      otp: string;
+      otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
       createdAt: string;

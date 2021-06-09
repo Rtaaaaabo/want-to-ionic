@@ -7,7 +7,7 @@ import { SessionService } from 'src/app/shared/service/session.service';
 import { CurrentUserInfo } from '../../task/interface/current-user-info.interface';
 import { TaskDetailService } from '../service/task-detail.service';
 import { Filesystem, FilesystemDirectory, FilesystemEncoding, FileWriteResult, FileReadResult, FileDeleteResult } from "@capacitor/core";
-import { CreateMessageInput, GetTaskQuery, Message, s3Object, S3ObjectInput, TaskByCreatedAtQuery, UpdateTaskMutation } from 'src/app/shared/service/amplify.service';
+import { CreateMessageInput, GetTaskQuery, Message, S3Object, S3ObjectInput, TaskByCreatedAtQuery, UpdateTaskMutation } from 'src/app/shared/service/amplify.service';
 import { IImageFile, IS3Object, IsMessageContent, IMessageWithAttachUrl, MessageContent } from '../models/task-detail.interface';
 
 const OneWeekSecond = 604800;
@@ -76,7 +76,7 @@ export class TaskDetailLogic {
       .pipe(map(() => messageWithAttachUrl))
   }
 
-  fetchMakeAttachmentUrl(attachmentItem: Array<s3Object>): Observable<Array<string>> {
+  fetchMakeAttachmentUrl(attachmentItem: Array<S3Object>): Observable<Array<string>> {
     return from(attachmentItem)
       .pipe(concatMap((attachment) => this.getStorage(attachment.key)))
       .pipe(toArray());

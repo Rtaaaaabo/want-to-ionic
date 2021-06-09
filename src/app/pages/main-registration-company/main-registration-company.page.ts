@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AlertController } from '@ionic/angular';
-import { filter } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { concatMap, filter, take, map } from 'rxjs/operators';
+import { MainRegistrationCompanyLogic } from './logic/main-registration-company.logic';
 
 @Component({
   selector: 'app-main-registration-company',
@@ -9,16 +11,20 @@ import { filter } from 'rxjs/operators';
   styleUrls: ['./main-registration-company.page.scss'],
 })
 export class MainRegistrationCompanyPage implements OnInit {
+  // companyInfo: 
 
   constructor(
     private readonly alertCtrl: AlertController,
     private readonly route: ActivatedRoute,
+    private logic: MainRegistrationCompanyLogic,
   ) { }
 
   ngOnInit() {
     this.route.queryParams.pipe(filter(params => params.token))
-      .subscribe(({ token }) => {
-        console.log('Token: ', token);
+      .pipe(concatMap(({ token }) => this.logic.fetchCompanyInfo(token)))
+      .pipe(map(({ items }) => items))
+      .subscribe((result) => {
+
         this.presentCorrectToken();
       })
   }

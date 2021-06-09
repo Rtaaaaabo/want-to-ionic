@@ -75,13 +75,25 @@ export type ModelSizeInput = {
 
 export type Company = {
   __typename: "Company";
-  id?: string;
-  name?: string;
-  domain?: string;
-  room?: ModelRoomConnection;
-  companyMembers?: ModelUserConnection;
-  createdAt?: string;
-  updatedAt?: string;
+  id: string;
+  name: string;
+  officer: Array<Officer | null>;
+  isRegistered: boolean;
+  otp?: string | null;
+  tel?: string | null;
+  officialEmail?: string | null;
+  iconCompany?: S3Object | null;
+  room?: ModelRoomConnection | null;
+  companyMembers?: ModelUserConnection | null;
+  createdAt: string;
+  updatedAt: string;
+  owner?: string | null;
+};
+
+export type Officer = {
+  __typename: "Officer";
+  officerEmail: string;
+  officerName: string;
 };
 
 export type ModelRoomConnection = {
@@ -136,7 +148,7 @@ export type User = {
   companyID?: string;
   tel?: string | null;
   positionName?: string | null;
-  iconImage?: s3Object;
+  iconImage?: S3Object;
   registered?: boolean | null;
   authority?: string | null;
   company?: Company;
@@ -148,11 +160,11 @@ export type User = {
   updatedAt?: string;
 };
 
-export type s3Object = {
-  __typename: "s3Object";
-  bucket?: string;
-  region?: string;
-  key?: string;
+export type S3Object = {
+  __typename: "S3Object";
+  bucket: string;
+  region: string;
+  key: string;
 };
 
 export type ModelMessageConnection = {
@@ -169,7 +181,7 @@ export type Message = {
   content?: string;
   createdAt?: string;
   isSent?: boolean | null;
-  attachment?: Array<s3Object | null> | null;
+  attachment?: Array<S3Object | null> | null;
   author?: User;
   task?: Task;
   updatedAt?: string;
@@ -796,7 +808,7 @@ export type UpdateUserMutation = {
   tel?: string | null;
   positionName?: string | null;
   iconImage?: {
-    __typename: "s3Object";
+    __typename: "S3Object";
     bucket: string;
     region: string;
     key: string;
@@ -888,7 +900,7 @@ export type DeleteUserMutation = {
   tel?: string | null;
   positionName?: string | null;
   iconImage?: {
-    __typename: "s3Object";
+    __typename: "S3Object";
     bucket: string;
     region: string;
     key: string;
@@ -1029,7 +1041,7 @@ export type CreateTaskGroupMutation = {
     tel?: string | null;
     positionName?: string | null;
     iconImage?: {
-      __typename: "s3Object";
+      __typename: "S3Object";
       bucket: string;
       region: string;
       key: string;
@@ -1297,7 +1309,7 @@ export type CreateTaskMutation = {
     tel?: string | null;
     positionName?: string | null;
     iconImage?: {
-      __typename: "s3Object";
+      __typename: "S3Object";
       bucket: string;
       region: string;
       key: string;
@@ -1961,7 +1973,7 @@ export type CreateMessageMutation = {
   createdAt: string;
   isSent?: boolean | null;
   attachment?: Array<{
-    __typename: "s3Object";
+    __typename: "S3Object";
     bucket: string;
     region: string;
     key: string;
@@ -1975,7 +1987,7 @@ export type CreateMessageMutation = {
     tel?: string | null;
     positionName?: string | null;
     iconImage?: {
-      __typename: "s3Object";
+      __typename: "S3Object";
       bucket: string;
       region: string;
       key: string;
@@ -2065,7 +2077,7 @@ export type UpdateMessageMutation = {
   createdAt: string;
   isSent?: boolean | null;
   attachment?: Array<{
-    __typename: "s3Object";
+    __typename: "S3Object";
     bucket: string;
     region: string;
     key: string;
@@ -2079,7 +2091,7 @@ export type UpdateMessageMutation = {
     tel?: string | null;
     positionName?: string | null;
     iconImage?: {
-      __typename: "s3Object";
+      __typename: "S3Object";
       bucket: string;
       region: string;
       key: string;
@@ -2324,7 +2336,7 @@ export type GetUserQuery = {
   tel?: string | null;
   positionName?: string | null;
   iconImage?: {
-    __typename: "s3Object";
+    __typename: "S3Object";
     bucket: string;
     region: string;
     key: string;
@@ -2418,7 +2430,7 @@ export type ListUsersQuery = {
     tel?: string | null;
     positionName?: string | null;
     iconImage?: {
-      __typename: "s3Object";
+      __typename: "S3Object";
       bucket: string;
       region: string;
       key: string;
@@ -3041,7 +3053,7 @@ export type TaskByCreatedAtQuery = {
     createdAt: string;
     isSent?: boolean | null;
     attachment?: Array<{
-      __typename: "s3Object";
+      __typename: "S3Object";
       bucket: string;
       region: string;
       key: string;
@@ -3089,7 +3101,7 @@ export type ListMessagesQuery = {
     createdAt: string;
     isSent?: boolean | null;
     attachment?: Array<{
-      __typename: "s3Object";
+      __typename: "S3Object";
       bucket: string;
       region: string;
       key: string;
