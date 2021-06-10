@@ -31,7 +31,7 @@ export class MainRegistrationCompanyPage implements OnInit {
   }
 
   get aliasOfficer(): FormArray {
-    return <FormArray>this.companyOfficer;
+    return <FormArray>this.companyForm.get('companyOfficer');
   }
 
   constructor(
