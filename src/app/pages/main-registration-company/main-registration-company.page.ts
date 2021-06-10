@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
-import { AlertController } from '@ionic/angular';
+import { AlertController, IonSlides } from '@ionic/angular';
 import { concatMap, filter, map } from 'rxjs/operators';
 import { Company } from 'src/app/shared/service/amplify.service';
 import { MainRegistrationCompanyLogic } from './logic/main-registration-company.logic';
@@ -12,14 +12,19 @@ import { MainRegistrationCompanyLogic } from './logic/main-registration-company.
   styleUrls: ['./main-registration-company.page.scss'],
 })
 export class MainRegistrationCompanyPage implements OnInit {
+  @ViewChild('companySlides', { static: false }) slides: IonSlides;
   companyOfficer = new FormArray([]);
+  companyInfo: Company;
   companyForm = new FormGroup({
     companyIcon: new FormControl(''),
     companyName: new FormControl('', [Validators.required]),
-    companyOfficialEmail: new FormControl('', [Validators.required, Validators.email]),
-    tel: new FormControl('', [Validators.required]),
+    companyEmail: new FormControl('', Validators.compose([Validators.required, Validators.email])),
+    companyTel: new FormControl('', Validators.compose([Validators.required, Validators.pattern(/\d{10}/)])), // 数字10桁
   });
-  companyInfo: Company;
+
+  get aliasCompanyIcon(): FormControl {
+    return <FormControl>this.companyForm.get('companyIcon');
+  }
 
   constructor(
     private readonly alertCtrl: AlertController,
@@ -40,7 +45,7 @@ export class MainRegistrationCompanyPage implements OnInit {
           officerName: new FormControl(this.companyInfo.officer[0].officerName),
           officerEmail: new FormControl(this.companyInfo.officer[0].officerEmail),
         }));
-        console.log('companyInfo: ', this.companyInfo);
+        console.log('companyOfficer: ', this.companyOfficer.value);
         this.presentCorrectToken();
       })
   }
@@ -69,5 +74,9 @@ export class MainRegistrationCompanyPage implements OnInit {
       ],
     });
     await alert.present();
+  }
+
+  SlideToRegisterOfficer(): void {
+    this.slides.slideNext();
   }
 }
