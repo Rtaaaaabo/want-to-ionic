@@ -20,10 +20,18 @@ export class MainRegistrationCompanyPage implements OnInit {
     companyName: new FormControl('', [Validators.required]),
     companyEmail: new FormControl('', Validators.compose([Validators.required, Validators.email])),
     companyTel: new FormControl('', Validators.compose([Validators.required, Validators.pattern(/\d{10}/)])), // 数字10桁
+    companyOfficer: new FormArray([new FormGroup({
+      officerName: new FormControl(''),
+      officerEmail: new FormControl('', Validators.compose([Validators.email]))
+    })])
   });
 
   get aliasCompanyIcon(): FormControl {
     return <FormControl>this.companyForm.get('companyIcon');
+  }
+
+  get aliasOfficer(): FormArray {
+    return <FormArray>this.companyOfficer;
   }
 
   constructor(
@@ -41,11 +49,11 @@ export class MainRegistrationCompanyPage implements OnInit {
         this.companyForm.patchValue({
           companyName: this.companyInfo.name,
         });
-        this.companyOfficer.push(new FormGroup({
-          officerName: new FormControl(this.companyInfo.officer[0].officerName),
-          officerEmail: new FormControl(this.companyInfo.officer[0].officerEmail),
-        }));
-        console.log('companyOfficer: ', this.companyOfficer.value);
+        // this.companyOfficer.push(new FormGroup({
+        //   officerName: new FormControl(this.companyInfo.officer[0].officerName),
+        //   officerEmail: new FormControl(this.companyInfo.officer[0].officerEmail),
+        // }));
+        console.log('[companyForm]', this.companyForm.value);
         this.presentCorrectToken();
       })
   }
@@ -78,5 +86,9 @@ export class MainRegistrationCompanyPage implements OnInit {
 
   SlideToRegisterOfficer(): void {
     this.slides.slideNext();
+  }
+
+  addOfficerMember() {
+    // this.aliasOfficer.push(this.)
   }
 }
