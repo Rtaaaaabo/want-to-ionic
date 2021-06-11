@@ -13,26 +13,34 @@ import { MainRegistrationCompanyLogic } from './logic/main-registration-company.
 })
 export class MainRegistrationCompanyPage implements OnInit {
   @ViewChild('companySlides', { static: false }) slides: IonSlides;
-  companyOfficer = new FormArray([]);
   companyInfo: Company;
   companyForm = new FormGroup({
     companyIcon: new FormControl(''),
     companyName: new FormControl('', [Validators.required]),
     companyEmail: new FormControl('', Validators.compose([Validators.required, Validators.email])),
     companyTel: new FormControl('', Validators.compose([Validators.required, Validators.pattern(/\d{10}/)])), // 数字10桁
-    companyOfficer: new FormArray([new FormGroup({
-      officerName: new FormControl(''),
-      officerEmail: new FormControl('', Validators.compose([Validators.email]))
-    })])
+    companyOfficer: new FormArray([
+      // new FormGroup({
+      //   officerName: new FormControl(''),
+      //   officerEmail: new FormControl('', Validators.compose([Validators.email]))
+      // })
+    ])
   });
 
+  get aliasOfficerForm(): FormGroup {
+    return new FormGroup({
+      officerName: new FormControl(''),
+      officerEmail: new FormControl('', Validators.compose([Validators.email]))
+    })
+  }
+
+  get companyOfficer(): FormArray {
+    return <FormArray>this.companyForm.get('companyOfficer');
+  }
   get aliasCompanyIcon(): FormControl {
     return <FormControl>this.companyForm.get('companyIcon');
   }
 
-  get aliasOfficer(): FormArray {
-    return <FormArray>this.companyForm.get('companyOfficer');
-  }
 
   constructor(
     private readonly alertCtrl: AlertController,
@@ -49,6 +57,7 @@ export class MainRegistrationCompanyPage implements OnInit {
         this.companyForm.patchValue({
           companyName: this.companyInfo.name,
         });
+        // this.aliasOfficer.push(this.aliasOfficerForm);
         // this.companyOfficer.push(new FormGroup({
         //   officerName: new FormControl(this.companyInfo.officer[0].officerName),
         //   officerEmail: new FormControl(this.companyInfo.officer[0].officerEmail),
@@ -89,6 +98,6 @@ export class MainRegistrationCompanyPage implements OnInit {
   }
 
   addOfficerMember() {
-    // this.aliasOfficer.push(this.)
+    // this.aliasOfficer.push(this.companyForm.get('companyOfficer'));
   }
 }
