@@ -25,10 +25,6 @@ export class MainRegistrationCompanyPage implements OnInit {
     })])
   });
 
-  get aliasCompanyIcon(): FormControl {
-    return <FormControl>this.companyForm.get('companyIcon');
-  }
-
   get officerForm(): FormGroup {
     return new FormGroup({
       officerName: new FormControl(''),
@@ -59,8 +55,7 @@ export class MainRegistrationCompanyPage implements OnInit {
           officerName: this.companyInfo.officer[0].officerName,
           officerEmail: this.companyInfo.officer[0].officerEmail,
         }])
-        console.log('[companyInfo]', this.companyInfo);
-        console.log('[companyForm]', this.companyForm.value);
+        console.log('[officerArray controls]', this.officerArray.controls);
         this.presentCorrectToken();
       })
   }
@@ -92,7 +87,7 @@ export class MainRegistrationCompanyPage implements OnInit {
   }
 
   SlideToRegisterOfficer(): void {
-    this.slides.slideNext();
+    console.log('[SlideToRegisterOfficer]');
   }
 
   addOfficerMember() {

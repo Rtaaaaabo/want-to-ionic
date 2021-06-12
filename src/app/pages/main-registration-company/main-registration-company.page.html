@@ -22,22 +22,25 @@
         <ion-label position="stacked">会社の電話番号</ion-label>
         <ion-input formControlName="companyTel"></ion-input>
       </ion-item>
+
       <ng-container formArrayName="companyOfficer">
         <ion-list-header>
           <ion-label>担当者</ion-label>
           <ion-button (click)="addOfficerMember()">追加</ion-button>
         </ion-list-header>
-        <ng-container>
-          <ion-item
-            *ngFor="let officer of officerArray.controls; let i = index"
-          >
-            <ion-label position="stacked">担当者名</ion-label>
-            <ion-input></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label position="stacked">担当者Email</ion-label>
-            <ion-input></ion-input>
-          </ion-item>
+        <ng-container
+          *ngFor="let officerGroup of officerArray.controls; let i = index"
+        >
+          <ng-container [formGroupName]="i">
+            <ion-item>
+              <ion-label position="stacked">担当者名</ion-label>
+              <ion-input formControlName="officerName"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="stacked">担当者Email</ion-label>
+              <ion-input formControlName="officerEmail"></ion-input>
+            </ion-item>
+          </ng-container>
         </ng-container>
       </ng-container>
     </ion-list>
