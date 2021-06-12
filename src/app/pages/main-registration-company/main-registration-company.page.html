@@ -32,6 +32,18 @@
           *ngFor="let officerGroup of officerArray.controls; let i = index"
         >
           <ng-container [formGroupName]="i">
+            <ion-item-divider>
+              <ion-buttons slot="start">
+                <ion-button
+                  *ngIf="i!=0"
+                  color="danger"
+                  (click)="removeOfficer(i)"
+                >
+                  <ion-icon name="close-circle-outline"></ion-icon>
+                </ion-button>
+              </ion-buttons>
+              <ion-label> {{i+1}} 人目 </ion-label>
+            </ion-item-divider>
             <ion-item>
               <ion-label position="stacked">担当者名</ion-label>
               <ion-input formControlName="officerName"></ion-input>
@@ -48,7 +60,10 @@
 </ion-content>
 <ion-footer>
   <ion-toolbar>
-    <ion-button expand="block" (click)="SlideToRegisterOfficer()"
+    <ion-button
+      expand="block"
+      [disabled]="companyForm.invalid"
+      (click)="registerCompany()"
       >次へ</ion-button
     >
   </ion-toolbar>

@@ -27,9 +27,9 @@ export class MainRegistrationCompanyPage implements OnInit {
 
   get officerForm(): FormGroup {
     return new FormGroup({
-      officerName: new FormControl(''),
-      officerEmail: new FormControl('', Validators.email),
-    })
+      officerName: new FormControl('', Validators.compose([Validators.required])),
+      officerEmail: new FormControl('', Validators.compose([Validators.required, Validators.email])),
+    });
   }
 
   get officerArray(): FormArray {
@@ -86,11 +86,15 @@ export class MainRegistrationCompanyPage implements OnInit {
     await alert.present();
   }
 
-  SlideToRegisterOfficer(): void {
-    console.log('[SlideToRegisterOfficer]');
+  registerCompany(): void {
+    console.log('[registerCompany]');
   }
 
-  addOfficerMember() {
+  addOfficerMember(): void {
     this.officerArray.push(this.officerForm);
+  }
+
+  removeOfficer(index: number): void {
+    this.officerArray.removeAt(index);
   }
 }
