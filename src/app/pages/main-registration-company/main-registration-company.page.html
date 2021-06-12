@@ -5,49 +5,48 @@
 </ion-header>
 
 <ion-content>
-  <ion-slides #companySlides>
-    <ion-slide class="swiper-slide swiper-slide-active">
-      <form [formGroup]="companyForm" class="form-content">
-        <!-- Icon系はまだ早い -->
-        <!-- <ion-item>
-      <ion-avatar class="profile-icon">
-        <img [src]="aliasCompanyIcon.value" />
-      </ion-avatar>
-    </ion-item> -->
-        <ion-item>
-          <ion-label position="stacked">会社名</ion-label>
-          <ion-input formControlName="companyName"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label position="stacked">会社のメールアドレス</ion-label>
-          <ion-input formControlName="companyEmail"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label position="stacked">会社の電話番号</ion-label>
-          <ion-input formControlName="companyTel"></ion-input>
-        </ion-item>
-      </form>
-    </ion-slide>
-    <ion-slide>
-      <form [formGroup]="companyForm">
-        <div formArrayName="companyOfficer">
-          <div *ngFor="let member of companyOfficer.controls; let i = index">
-            <div [formGroupName]="i">
-              <ion-item>
-                <ion-label position="stacked">氏名</ion-label>
-                <ion-input formControl="officerName"></ion-input>
-              </ion-item>
-              <ion-item>
-                <ion-label position="stacked">メールアドレス</ion-label>
-                <ion-input formControl="officerEmail"></ion-input>
-              </ion-item>
-            </div>
-          </div>
-        </div>
-      </form>
-    </ion-slide>
-  </ion-slides>
-  <ion-button expand="block" (click)="SlideToRegisterOfficer()"
-    >次へ</ion-button
-  >
+  <form [formGroup]="companyForm" class="form-content">
+    <ion-list>
+      <ion-list-header>
+        <ion-label>基本情報</ion-label>
+      </ion-list-header>
+      <ion-item>
+        <ion-label position="stacked">会社名</ion-label>
+        <ion-input formControlName="companyName"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">会社のメールアドレス</ion-label>
+        <ion-input formControlName="companyEmail"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">会社の電話番号</ion-label>
+        <ion-input formControlName="companyTel"></ion-input>
+      </ion-item>
+      <ng-container formArrayName="companyOfficer">
+        <ion-list-header>
+          <ion-label>担当者</ion-label>
+          <ion-button (click)="addOfficerMember()">追加</ion-button>
+        </ion-list-header>
+        <ng-container>
+          <ion-item
+            *ngFor="let officer of officerArray.controls; let i = index"
+          >
+            <ion-label position="stacked">担当者名</ion-label>
+            <ion-input></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="stacked">担当者Email</ion-label>
+            <ion-input></ion-input>
+          </ion-item>
+        </ng-container>
+      </ng-container>
+    </ion-list>
+  </form>
 </ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <ion-button expand="block" (click)="SlideToRegisterOfficer()"
+      >次へ</ion-button
+    >
+  </ion-toolbar>
+</ion-footer>
