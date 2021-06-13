@@ -230,7 +230,12 @@ export type ModelUserConnection = {
 export type UpdateCompanyInput = {
   id: string;
   name?: string | null;
-  domain?: string | null;
+  officer?: Array<OfficerInput | null> | null;
+  isRegistered?: boolean | null;
+  otp?: string | null;
+  tel?: string | null;
+  officialEmail?: string | null;
+  iconCompany?: S3ObjectInput | null;
 };
 
 export type DeleteCompanyInput = {
