@@ -4,8 +4,8 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { HomeLogic } from '../../../../pages/home/logic/home.logic';
 import { Camera, CameraResultType } from '@capacitor/core';
 import { from, of } from 'rxjs';
-import { catchError, concatMap, filter, map, switchMap } from 'rxjs/operators';
-import { IOwnUser, IUser } from '../../../../pages/setting/interface /setting.interface';
+import { catchError, concatMap, filter, map } from 'rxjs/operators';
+import { IUser } from '../../../../pages/setting/interface /setting.interface';
 
 const optionPicture = {
   quality: 50,

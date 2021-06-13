@@ -251,7 +251,7 @@ export type CreateUserInput = {
   positionName?: string | null;
   iconImage?: S3ObjectInput | null;
   registered?: boolean | null;
-  authority?: string | null;
+  authority?: boolean | null;
 };
 
 export type S3ObjectInput = {
@@ -5735,13 +5735,22 @@ export class AmplifyService {
             __typename
             id
             name
-            officerEmail
+            officer {
+              __typename
+              officerEmail
+              officerName
+            }
+            isRegistered
+            otp
+            tel
+            officialEmail
             iconCompany {
               __typename
               bucket
               region
               key
             }
+            billing
             room {
               __typename
               nextToken
@@ -5852,13 +5861,22 @@ export class AmplifyService {
             __typename
             id
             name
-            officerEmail
+            officer {
+              __typename
+              officerEmail
+              officerName
+            }
+            isRegistered
+            otp
+            tel
+            officialEmail
             iconCompany {
               __typename
               bucket
               region
               key
             }
+            billing
             room {
               __typename
               nextToken
@@ -5969,13 +5987,22 @@ export class AmplifyService {
             __typename
             id
             name
-            officerEmail
+            officer {
+              __typename
+              officerEmail
+              officerName
+            }
+            isRegistered
+            otp
+            tel
+            officialEmail
             iconCompany {
               __typename
               bucket
               region
               key
             }
+            billing
             room {
               __typename
               nextToken

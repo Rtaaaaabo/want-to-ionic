@@ -26,15 +26,15 @@ export class HomePage {
   ) { }
 
   ionViewWillEnter(): void {
-    this.logic.fetchCurrentUser()
-      .pipe(map((attributes) => {
-        this.attributes = attributes;
-      }))
-      .pipe(flatMap(() => this.logic.checkRegistrationUser(this.attributes)))
-      .pipe(filter(({ items }) => items.length === 0))
-      .subscribe(() => {
-        this.presentRegistrationUser()
-      });
+    // this.logic.fetchCurrentUser()
+    //   .pipe(map((attributes) => {
+    //     this.attributes = attributes;
+    //   }))
+    //   .pipe(flatMap(() => this.logic.checkRegistrationUser(this.attributes)))
+    //   .pipe(filter(({ items }) => items.length === 0))
+    //   .subscribe(() => {
+    //     this.presentRegistrationUser()
+    //   });
   }
 
   async presentRegistrationUser(): Promise<void> {
