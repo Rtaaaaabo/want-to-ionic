@@ -14,13 +14,24 @@ export class CreateCompanyLogic {
     private createCompanyService: CreateCompanyService,
   ) { }
 
-
+  /**
+   * Company一次登録の情報をDynamoDBにいれます
+   * @param {CreateCompanyInput} content DynamoDBに保存するPram
+   * @returns {string} CompanyID
+   */
   createCompanyToDynamoDB(content: CreateCompanyInput): Observable<string> {
     const requestContent = content;
     return this.createCompanyService.createCompany(requestContent)
       .pipe(map((result) => result.id));
   }
 
+  /**
+   * 会社に紐づく担当者(User)を作成します。
+   * @param { string } companyId CompanyID
+   * @param { string} username 会社の担当者氏名
+   * @param {string} officerEmail 会社のEmailアドレス
+   * @returns DynamoDBに保存した結果
+   */
   createUserWithCompanyId(companyId: string, username: string, officerEmail: string): Observable<CreateUserMutation> {
     const requestContent: CreateUserInput = {
       id: `${uuid()}`,
@@ -31,7 +42,12 @@ export class CreateCompanyLogic {
     return this.createCompanyService.createUser(requestContent);
   }
 
-  sendEmailForRegister(content: CreateCompanyInput): Observable<any> {
+  /**
+   * 会社の本登録を促すメールを送信します
+   * @param {CreateCompanyInput} content 会社登録に必要なParam
+   * @returns 成功時とエラー時で返す値
+   */
+  sendEmailForRegister(content: CreateCompanyInput): Observable<string> {
     const officerName = content.officer[0].officerName;
     const officerEmail = content.officer[0].officerEmail;
     const otpToken = content.otp;
@@ -48,11 +64,12 @@ export class CreateCompanyLogic {
   }
 
   /**
-   * OneTimePasswordを生成するものです
+   * OneTimePasswordを生成します
    * @returns {string} oneTimePasswordを返します
    */
   generateOneTimePassword(): Observable<string> {
-    return this.createCompanyService.generateOTP().pipe(map(({ otp }) => otp));
+    return this.createCompanyService.generateOTP()
+      .pipe(map(({ otp }) => otp));
   }
 
   /**

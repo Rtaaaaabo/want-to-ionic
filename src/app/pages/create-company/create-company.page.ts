@@ -4,7 +4,6 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { concatMap, map } from 'rxjs/operators';
 import { CreateCompanyLogic } from './logic/create-company.logic';
 import { v4 as uuid } from 'uuid';
-import { concat } from 'rxjs';
 
 @Component({
   selector: 'app-create-company',
@@ -30,10 +29,10 @@ export class CreateCompanyPage implements OnInit {
     companyName: new FormControl('', Validators.compose([Validators.required])),
     officerName: new FormControl('', Validators.compose([Validators.required])),
     officerEmail: new FormControl('', Validators.compose([Validators.required, Validators.email])),
-    // 8文字以上の英数字のPassword
-    // officerPassword: new FormControl('', Validators.compose([Validators.required, Validators.minLength(8), Validators.pattern(/^([a-zA-Z0-9]{8,})$/)]))
     officerPassword: new FormControl('', Validators.compose([Validators.required, Validators.minLength(8)])),
     officerPasswordConfirm: new FormControl('', Validators.compose([Validators.required, Validators.minLength(8)])),
+    // officerPassword: new FormControl('', Validators.compose([Validators.required, Validators.minLength(8), Validators.pattern(/^([a-zA-Z0-9]{8,})$/)]))
+    // 8文字以上の英数字のPassword
   }, this.checkPassword);
 
   constructor(
@@ -45,7 +44,8 @@ export class CreateCompanyPage implements OnInit {
 
   checkPassword(group: FormGroup): null | { notSame: boolean } {
     let password = group.get('officerPassword').value;
-    const passwordConfirm = group.get('officerPasswordConfirm').value;
+    let passwordConfirm = group.get('officerPasswordConfirm').value;
+    console.log(password = passwordConfirm ? null : { notSame: true });
     return password = passwordConfirm ? null : { notSame: true };
   }
 

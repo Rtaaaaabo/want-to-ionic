@@ -26,10 +26,6 @@ app.use(async (req, res, next) => {
   await next();
 });
 
-app.get("/verify-otp", function (req, res) {
-  res.json({ success: "get call succeed!", url: req.url });
-});
-
 app.get("/verify-otp/generate", function (req, res) {
   const counter = 1;
   const token = hotp.generate(process.env.OTP_SECRET_DEV, counter);
