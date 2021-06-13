@@ -4857,7 +4857,15 @@ export class AmplifyService {
           __typename
           id
           name
-          officerEmail
+          officer {
+            __typename
+            officerEmail
+            officerName
+          }
+          isRegistered
+          otp
+          tel
+          officialEmail
           iconCompany {
             __typename
             bucket

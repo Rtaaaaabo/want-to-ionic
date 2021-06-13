@@ -20,8 +20,8 @@ export class MainRegistrationCompanyPage implements OnInit {
     companyEmail: new FormControl('', Validators.compose([Validators.required, Validators.email])),
     companyTel: new FormControl('', Validators.compose([Validators.required, Validators.pattern(/\d{10}/)])), // 数字10桁
     companyOfficer: new FormArray([new FormGroup({
-      officerName: new FormControl(''),
-      officerEmail: new FormControl('', Validators.email),
+      officerName: new FormControl('', Validators.compose([Validators.required])),
+      officerEmail: new FormControl('', Validators.compose([Validators.required, Validators.email])),
     })])
   });
 
@@ -55,11 +55,13 @@ export class MainRegistrationCompanyPage implements OnInit {
           officerName: this.companyInfo.officer[0].officerName,
           officerEmail: this.companyInfo.officer[0].officerEmail,
         }])
-        console.log('[officerArray controls]', this.officerArray.controls);
         this.presentCorrectToken();
       })
   }
 
+  /**
+   * Tokenが正常のときに表示します
+   */
   async presentCorrectToken(): Promise<void> {
     const alert = await this.alertCtrl.create({
       header: '確認いたしました',
@@ -69,6 +71,9 @@ export class MainRegistrationCompanyPage implements OnInit {
     await alert.present();
   }
 
+  /**
+   * Tokenが間違っていれば、ホーム画面に戻す注意書きと一緒に表示します。
+   */
   async presentIncorrectToken(): Promise<void> {
     const alert = await this.alertCtrl.create({
       header: '不正です',
@@ -86,14 +91,24 @@ export class MainRegistrationCompanyPage implements OnInit {
     await alert.present();
   }
 
+  /**
+   *  会社を本登録するします
+   */
   registerCompany(): void {
-    console.log('[registerCompany]');
+
   }
 
+  /**
+   * 担当者を画面に追加します
+   */
   addOfficerMember(): void {
     this.officerArray.push(this.officerForm);
   }
 
+  /**
+   * 担当者を画面から削除します
+   * @param index FormArrayのIndex値
+   */
   removeOfficer(index: number): void {
     this.officerArray.removeAt(index);
   }
