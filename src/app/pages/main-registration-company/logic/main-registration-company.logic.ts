@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { from, Observable } from 'rxjs';
+import { concatMap, map } from 'rxjs/operators';
 import { Company, ListCompanysQuery, ModelCompanyFilterInput, UpdateCompanyInput } from 'src/app/shared/service/amplify.service';
 import { CompanyRegister } from '../interface/company-register.interface';
 import { MainRegistrationCompanyService } from '../service/main-registration-company.service';
@@ -27,6 +28,15 @@ export class MainRegistrationCompanyLogic {
 
   updateCompanyInfo(companyInfo: Company, companyFormValue: CompanyRegister): Observable<UpdateCompanyInput> {
     let requestContent: UpdateCompanyInput;
+    requestContent = {
+      id: companyInfo.id,
+      name: companyFormValue.companyName,
+      officer: companyFormValue.companyOfficer,
+      isRegistered: true,
+      tel: companyFormValue.companyTel,
+      officialEmail: companyFormValue.companyEmail,
+      iconCompany: null,
+    }
     return this.registerCompanyService.updateCompanyInfo(requestContent);
   }
 }

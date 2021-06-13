@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 import { AlertController, IonSlides } from '@ionic/angular';
 import { concatMap, filter, map } from 'rxjs/operators';
@@ -39,6 +39,7 @@ export class MainRegistrationCompanyPage implements OnInit {
   constructor(
     private readonly alertCtrl: AlertController,
     private readonly route: ActivatedRoute,
+    private readonly router: Router,
     private logic: MainRegistrationCompanyLogic,
   ) { }
 
@@ -95,9 +96,9 @@ export class MainRegistrationCompanyPage implements OnInit {
    *  会社を本登録するします
    */
   registerCompany(): void {
-    console.log('companyInfo: ', this.companyInfo);
-    console.log('companyForm: ', this.companyForm);
-    // this.logic.updateCompanyInfo(this.companyInfo, this.companyForm.value);
+    this.logic.updateCompanyInfo(this.companyInfo, this.companyForm.value).subscribe(() => {
+      this.router.navigate(['']);
+    });
   }
 
   /**
