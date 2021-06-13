@@ -2313,23 +2313,38 @@ export type GetCompanyQuery = {
 
 export type ListCompanysQuery = {
   __typename: "ModelCompanyConnection";
-  items: Array<{
+  items?: Array<{
     __typename: "Company";
     id: string;
     name: string;
-    domain: string;
-    room: {
-      __typename: "ModelRoomConnection";
-      nextToken: string | null;
+    officer: Array<{
+      __typename: "Officer";
+      officerEmail: string;
+      officerName: string;
+    } | null>;
+    isRegistered: boolean;
+    otp?: string | null;
+    tel?: string | null;
+    officialEmail?: string | null;
+    iconCompany?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
     } | null;
-    companyMembers: {
+    room?: {
+      __typename: "ModelRoomConnection";
+      nextToken?: string | null;
+    } | null;
+    companyMembers?: {
       __typename: "ModelUserConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
     createdAt: string;
     updatedAt: string;
+    owner?: string | null;
   } | null> | null;
-  nextToken: string | null;
+  nextToken?: string | null;
 };
 
 export type GetUserQuery = {
