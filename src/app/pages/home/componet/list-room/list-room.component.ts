@@ -25,7 +25,7 @@ export class ListRoomComponent implements OnInit {
     private readonly alertCtrl: AlertController,
   ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.logic.fetchCurrentUser()
       .pipe(map((data) => this.currentUserId = data.sub))
       .pipe(concatMap(() => this.logic.fetchRoomList(this.currentUserId)))

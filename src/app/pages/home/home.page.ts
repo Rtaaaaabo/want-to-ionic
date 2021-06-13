@@ -21,8 +21,8 @@ export class HomePage {
   }
 
   constructor(
-    private logic: HomeLogic,
     private readonly modalCtrl: ModalController,
+    private logic: HomeLogic,
   ) { }
 
   ionViewWillEnter(): void {
