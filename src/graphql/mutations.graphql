@@ -19,6 +19,7 @@ mutation CreateCompany(
       region
       key
     }
+    billing
     room {
       items {
         id
@@ -71,6 +72,7 @@ mutation UpdateCompany(
       region
       key
     }
+    billing
     room {
       items {
         id
@@ -123,6 +125,7 @@ mutation DeleteCompany(
       region
       key
     }
+    billing
     room {
       items {
         id
@@ -229,6 +232,7 @@ mutation CreateTaskGroup(
         otp
         tel
         officialEmail
+        billing
         createdAt
         updatedAt
         owner
@@ -327,6 +331,7 @@ mutation UpdateTaskGroup(
         otp
         tel
         officialEmail
+        billing
         createdAt
         updatedAt
         owner
@@ -425,6 +430,7 @@ mutation DeleteTaskGroup(
         otp
         tel
         officialEmail
+        billing
         createdAt
         updatedAt
         owner
@@ -471,6 +477,7 @@ mutation CreateTask(
         otp
         tel
         officialEmail
+        billing
         createdAt
         updatedAt
         owner
@@ -515,6 +522,7 @@ mutation CreateTask(
         otp
         tel
         officialEmail
+        billing
         createdAt
         updatedAt
         owner
@@ -583,6 +591,7 @@ mutation UpdateTask(
         otp
         tel
         officialEmail
+        billing
         createdAt
         updatedAt
         owner
@@ -627,6 +636,7 @@ mutation UpdateTask(
         otp
         tel
         officialEmail
+        billing
         createdAt
         updatedAt
         owner
@@ -695,6 +705,7 @@ mutation DeleteTask(
         otp
         tel
         officialEmail
+        billing
         createdAt
         updatedAt
         owner
@@ -739,6 +750,7 @@ mutation DeleteTask(
         otp
         tel
         officialEmail
+        billing
         createdAt
         updatedAt
         owner
@@ -819,6 +831,7 @@ mutation CreateUser(
         region
         key
       }
+      billing
       room {
         nextToken
       }
@@ -917,6 +930,7 @@ mutation UpdateUser(
         region
         key
       }
+      billing
       room {
         nextToken
       }
@@ -1015,6 +1029,7 @@ mutation DeleteUser(
         region
         key
       }
+      billing
       room {
         nextToken
       }
@@ -1099,6 +1114,7 @@ mutation CreateRoomGroup(
         otp
         tel
         officialEmail
+        billing
         createdAt
         updatedAt
         owner
@@ -1133,6 +1149,7 @@ mutation CreateRoomGroup(
         otp
         tel
         officialEmail
+        billing
         createdAt
         updatedAt
         owner
@@ -1177,6 +1194,7 @@ mutation UpdateRoomGroup(
         otp
         tel
         officialEmail
+        billing
         createdAt
         updatedAt
         owner
@@ -1211,6 +1229,7 @@ mutation UpdateRoomGroup(
         otp
         tel
         officialEmail
+        billing
         createdAt
         updatedAt
         owner
@@ -1255,6 +1274,7 @@ mutation DeleteRoomGroup(
         otp
         tel
         officialEmail
+        billing
         createdAt
         updatedAt
         owner
@@ -1289,6 +1309,7 @@ mutation DeleteRoomGroup(
         otp
         tel
         officialEmail
+        billing
         createdAt
         updatedAt
         owner
@@ -1338,6 +1359,7 @@ mutation CreateRoom(
         region
         key
       }
+      billing
       room {
         nextToken
       }
@@ -1403,6 +1425,7 @@ mutation UpdateRoom(
         region
         key
       }
+      billing
       room {
         nextToken
       }
@@ -1468,6 +1491,7 @@ mutation DeleteRoom(
         region
         key
       }
+      billing
       room {
         nextToken
       }
@@ -1545,6 +1569,7 @@ mutation CreateMessage(
         otp
         tel
         officialEmail
+        billing
         createdAt
         updatedAt
         owner
@@ -1651,6 +1676,7 @@ mutation UpdateMessage(
         otp
         tel
         officialEmail
+        billing
         createdAt
         updatedAt
         owner
@@ -1757,6 +1783,7 @@ mutation DeleteMessage(
         otp
         tel
         officialEmail
+        billing
         createdAt
         updatedAt
         owner

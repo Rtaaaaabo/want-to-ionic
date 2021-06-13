@@ -16,6 +16,7 @@ query GetCompany($id: ID!) {
       region
       key
     }
+    billing
     room {
       items {
         id
@@ -70,6 +71,7 @@ query ListCompanys(
         region
         key
       }
+      billing
       room {
         nextToken
       }
@@ -154,6 +156,7 @@ query GetTaskGroup($id: ID!) {
         otp
         tel
         officialEmail
+        billing
         createdAt
         updatedAt
         owner
@@ -239,6 +242,7 @@ query GetTask($id: ID!) {
         otp
         tel
         officialEmail
+        billing
         createdAt
         updatedAt
         owner
@@ -283,6 +287,7 @@ query GetTask($id: ID!) {
         otp
         tel
         officialEmail
+        billing
         createdAt
         updatedAt
         owner
@@ -414,6 +419,7 @@ query GetUser($id: ID!) {
         region
         key
       }
+      billing
       room {
         nextToken
       }
@@ -505,6 +511,7 @@ query ListUsers(
         otp
         tel
         officialEmail
+        billing
         createdAt
         updatedAt
         owner
@@ -545,6 +552,7 @@ query GetRoomGroup($id: ID!) {
         otp
         tel
         officialEmail
+        billing
         createdAt
         updatedAt
         owner
@@ -579,6 +587,7 @@ query GetRoomGroup($id: ID!) {
         otp
         tel
         officialEmail
+        billing
         createdAt
         updatedAt
         owner
@@ -662,6 +671,7 @@ query GetRoom($id: ID!) {
         region
         key
       }
+      billing
       room {
         nextToken
       }
@@ -720,6 +730,7 @@ query ListRooms(
         otp
         tel
         officialEmail
+        billing
         createdAt
         updatedAt
         owner
@@ -770,6 +781,7 @@ query GetMessage($id: ID!) {
         otp
         tel
         officialEmail
+        billing
         createdAt
         updatedAt
         owner

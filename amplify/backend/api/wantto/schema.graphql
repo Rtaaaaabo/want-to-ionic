@@ -9,6 +9,7 @@ type Company
   tel: String
   officialEmail: String
   iconCompany: S3Object
+  billing: Boolean
   room: [Room] @connection(keyName: "byCompany", fields: ["id"])
   companyMembers: [User] @connection(keyName: "byCompany", fields: ["id"])
 }

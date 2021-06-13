@@ -18,6 +18,7 @@ export type CreateCompanyInput = {
   tel?: string | null;
   officialEmail?: string | null;
   iconCompany?: S3ObjectInput | null;
+  billing?: boolean | null;
 };
 
 export type OfficerInput = {
@@ -37,6 +38,7 @@ export type ModelCompanyConditionInput = {
   otp?: ModelStringInput | null;
   tel?: ModelStringInput | null;
   officialEmail?: ModelStringInput | null;
+  billing?: ModelBooleanInput | null;
   and?: Array<ModelCompanyConditionInput | null> | null;
   or?: Array<ModelCompanyConditionInput | null> | null;
   not?: ModelCompanyConditionInput | null;
@@ -98,6 +100,7 @@ export type Company = {
   tel?: string | null;
   officialEmail?: string | null;
   iconCompany?: S3Object | null;
+  billing?: boolean | null;
   room?: ModelRoomConnection | null;
   companyMembers?: ModelUserConnection | null;
   createdAt: string;
@@ -254,6 +257,7 @@ export type UpdateCompanyInput = {
   tel?: string | null;
   officialEmail?: string | null;
   iconCompany?: S3ObjectInput | null;
+  billing?: boolean | null;
 };
 
 export type DeleteCompanyInput = {
@@ -493,6 +497,7 @@ export type ModelCompanyFilterInput = {
   otp?: ModelStringInput | null;
   tel?: ModelStringInput | null;
   officialEmail?: ModelStringInput | null;
+  billing?: ModelBooleanInput | null;
   and?: Array<ModelCompanyFilterInput | null> | null;
   or?: Array<ModelCompanyFilterInput | null> | null;
   not?: ModelCompanyFilterInput | null;
@@ -608,6 +613,7 @@ export type CreateCompanyMutation = {
     region: string;
     key: string;
   } | null;
+  billing?: boolean | null;
   room?: {
     __typename: "ModelRoomConnection";
     items?: Array<{
@@ -663,6 +669,7 @@ export type UpdateCompanyMutation = {
     region: string;
     key: string;
   } | null;
+  billing?: boolean | null;
   room?: {
     __typename: "ModelRoomConnection";
     items?: Array<{
@@ -718,6 +725,7 @@ export type DeleteCompanyMutation = {
     region: string;
     key: string;
   } | null;
+  billing?: boolean | null;
   room?: {
     __typename: "ModelRoomConnection";
     items?: Array<{
@@ -834,6 +842,7 @@ export type CreateTaskGroupMutation = {
       otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
+      billing?: boolean | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -942,6 +951,7 @@ export type UpdateTaskGroupMutation = {
       otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
+      billing?: boolean | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -1050,6 +1060,7 @@ export type DeleteTaskGroupMutation = {
       otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
+      billing?: boolean | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -1099,6 +1110,7 @@ export type CreateTaskMutation = {
       otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
+      billing?: boolean | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -1149,6 +1161,7 @@ export type CreateTaskMutation = {
       otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
+      billing?: boolean | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -1224,6 +1237,7 @@ export type UpdateTaskMutation = {
       otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
+      billing?: boolean | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -1274,6 +1288,7 @@ export type UpdateTaskMutation = {
       otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
+      billing?: boolean | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -1349,6 +1364,7 @@ export type DeleteTaskMutation = {
       otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
+      billing?: boolean | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -1399,6 +1415,7 @@ export type DeleteTaskMutation = {
       otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
+      billing?: boolean | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -1488,6 +1505,7 @@ export type CreateUserMutation = {
       region: string;
       key: string;
     } | null;
+    billing?: boolean | null;
     room?: {
       __typename: "ModelRoomConnection";
       nextToken?: string | null;
@@ -1597,6 +1615,7 @@ export type UpdateUserMutation = {
       region: string;
       key: string;
     } | null;
+    billing?: boolean | null;
     room?: {
       __typename: "ModelRoomConnection";
       nextToken?: string | null;
@@ -1706,6 +1725,7 @@ export type DeleteUserMutation = {
       region: string;
       key: string;
     } | null;
+    billing?: boolean | null;
     room?: {
       __typename: "ModelRoomConnection";
       nextToken?: string | null;
@@ -1799,6 +1819,7 @@ export type CreateRoomGroupMutation = {
       otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
+      billing?: boolean | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -1838,6 +1859,7 @@ export type CreateRoomGroupMutation = {
       otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
+      billing?: boolean | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -1885,6 +1907,7 @@ export type UpdateRoomGroupMutation = {
       otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
+      billing?: boolean | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -1924,6 +1947,7 @@ export type UpdateRoomGroupMutation = {
       otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
+      billing?: boolean | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -1971,6 +1995,7 @@ export type DeleteRoomGroupMutation = {
       otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
+      billing?: boolean | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -2010,6 +2035,7 @@ export type DeleteRoomGroupMutation = {
       otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
+      billing?: boolean | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -2063,6 +2089,7 @@ export type CreateRoomMutation = {
       region: string;
       key: string;
     } | null;
+    billing?: boolean | null;
     room?: {
       __typename: "ModelRoomConnection";
       nextToken?: string | null;
@@ -2134,6 +2161,7 @@ export type UpdateRoomMutation = {
       region: string;
       key: string;
     } | null;
+    billing?: boolean | null;
     room?: {
       __typename: "ModelRoomConnection";
       nextToken?: string | null;
@@ -2205,6 +2233,7 @@ export type DeleteRoomMutation = {
       region: string;
       key: string;
     } | null;
+    billing?: boolean | null;
     room?: {
       __typename: "ModelRoomConnection";
       nextToken?: string | null;
@@ -2289,6 +2318,7 @@ export type CreateMessageMutation = {
       otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
+      billing?: boolean | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -2406,6 +2436,7 @@ export type UpdateMessageMutation = {
       otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
+      billing?: boolean | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -2523,6 +2554,7 @@ export type DeleteMessageMutation = {
       otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
+      billing?: boolean | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -2621,6 +2653,7 @@ export type GetCompanyQuery = {
     region: string;
     key: string;
   } | null;
+  billing?: boolean | null;
   room?: {
     __typename: "ModelRoomConnection";
     items?: Array<{
@@ -2678,6 +2711,7 @@ export type ListCompanysQuery = {
       region: string;
       key: string;
     } | null;
+    billing?: boolean | null;
     room?: {
       __typename: "ModelRoomConnection";
       nextToken?: string | null;
@@ -2773,6 +2807,7 @@ export type GetTaskGroupQuery = {
       otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
+      billing?: boolean | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -2863,6 +2898,7 @@ export type GetTaskQuery = {
       otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
+      billing?: boolean | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -2913,6 +2949,7 @@ export type GetTaskQuery = {
       otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
+      billing?: boolean | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -3058,6 +3095,7 @@ export type GetUserQuery = {
       region: string;
       key: string;
     } | null;
+    billing?: boolean | null;
     room?: {
       __typename: "ModelRoomConnection";
       nextToken?: string | null;
@@ -3158,6 +3196,7 @@ export type ListUsersQuery = {
       otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
+      billing?: boolean | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -3204,6 +3243,7 @@ export type GetRoomGroupQuery = {
       otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
+      billing?: boolean | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -3243,6 +3283,7 @@ export type GetRoomGroupQuery = {
       otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
+      billing?: boolean | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -3332,6 +3373,7 @@ export type GetRoomQuery = {
       region: string;
       key: string;
     } | null;
+    billing?: boolean | null;
     room?: {
       __typename: "ModelRoomConnection";
       nextToken?: string | null;
@@ -3394,6 +3436,7 @@ export type ListRoomsQuery = {
       otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
+      billing?: boolean | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -3450,6 +3493,7 @@ export type GetMessageQuery = {
       otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
+      billing?: boolean | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -3648,6 +3692,7 @@ export type OnCreateCompanySubscription = {
     region: string;
     key: string;
   } | null;
+  billing?: boolean | null;
   room?: {
     __typename: "ModelRoomConnection";
     items?: Array<{
@@ -3703,6 +3748,7 @@ export type OnUpdateCompanySubscription = {
     region: string;
     key: string;
   } | null;
+  billing?: boolean | null;
   room?: {
     __typename: "ModelRoomConnection";
     items?: Array<{
@@ -3758,6 +3804,7 @@ export type OnDeleteCompanySubscription = {
     region: string;
     key: string;
   } | null;
+  billing?: boolean | null;
   room?: {
     __typename: "ModelRoomConnection";
     items?: Array<{
@@ -3874,6 +3921,7 @@ export type OnCreateTaskGroupSubscription = {
       otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
+      billing?: boolean | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -3982,6 +4030,7 @@ export type OnUpdateTaskGroupSubscription = {
       otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
+      billing?: boolean | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -4090,6 +4139,7 @@ export type OnDeleteTaskGroupSubscription = {
       otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
+      billing?: boolean | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -4139,6 +4189,7 @@ export type OnCreateTaskSubscription = {
       otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
+      billing?: boolean | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -4189,6 +4240,7 @@ export type OnCreateTaskSubscription = {
       otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
+      billing?: boolean | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -4264,6 +4316,7 @@ export type OnUpdateTaskSubscription = {
       otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
+      billing?: boolean | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -4314,6 +4367,7 @@ export type OnUpdateTaskSubscription = {
       otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
+      billing?: boolean | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -4389,6 +4443,7 @@ export type OnDeleteTaskSubscription = {
       otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
+      billing?: boolean | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -4439,6 +4494,7 @@ export type OnDeleteTaskSubscription = {
       otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
+      billing?: boolean | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -4528,6 +4584,7 @@ export type OnCreateUserSubscription = {
       region: string;
       key: string;
     } | null;
+    billing?: boolean | null;
     room?: {
       __typename: "ModelRoomConnection";
       nextToken?: string | null;
@@ -4637,6 +4694,7 @@ export type OnUpdateUserSubscription = {
       region: string;
       key: string;
     } | null;
+    billing?: boolean | null;
     room?: {
       __typename: "ModelRoomConnection";
       nextToken?: string | null;
@@ -4746,6 +4804,7 @@ export type OnDeleteUserSubscription = {
       region: string;
       key: string;
     } | null;
+    billing?: boolean | null;
     room?: {
       __typename: "ModelRoomConnection";
       nextToken?: string | null;
@@ -4839,6 +4898,7 @@ export type OnCreateRoomGroupSubscription = {
       otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
+      billing?: boolean | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -4878,6 +4938,7 @@ export type OnCreateRoomGroupSubscription = {
       otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
+      billing?: boolean | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -4925,6 +4986,7 @@ export type OnUpdateRoomGroupSubscription = {
       otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
+      billing?: boolean | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -4964,6 +5026,7 @@ export type OnUpdateRoomGroupSubscription = {
       otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
+      billing?: boolean | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -5011,6 +5074,7 @@ export type OnDeleteRoomGroupSubscription = {
       otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
+      billing?: boolean | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -5050,6 +5114,7 @@ export type OnDeleteRoomGroupSubscription = {
       otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
+      billing?: boolean | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -5103,6 +5168,7 @@ export type OnCreateRoomSubscription = {
       region: string;
       key: string;
     } | null;
+    billing?: boolean | null;
     room?: {
       __typename: "ModelRoomConnection";
       nextToken?: string | null;
@@ -5174,6 +5240,7 @@ export type OnUpdateRoomSubscription = {
       region: string;
       key: string;
     } | null;
+    billing?: boolean | null;
     room?: {
       __typename: "ModelRoomConnection";
       nextToken?: string | null;
@@ -5245,6 +5312,7 @@ export type OnDeleteRoomSubscription = {
       region: string;
       key: string;
     } | null;
+    billing?: boolean | null;
     room?: {
       __typename: "ModelRoomConnection";
       nextToken?: string | null;
@@ -5329,6 +5397,7 @@ export type OnCreateMessageSubscription = {
       otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
+      billing?: boolean | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -5446,6 +5515,7 @@ export type OnUpdateMessageSubscription = {
       otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
+      billing?: boolean | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -5563,6 +5633,7 @@ export type OnDeleteMessageSubscription = {
       otp?: string | null;
       tel?: string | null;
       officialEmail?: string | null;
+      billing?: boolean | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -5670,6 +5741,7 @@ export class APIService {
             region
             key
           }
+          billing
           room {
             __typename
             items {
@@ -5741,6 +5813,7 @@ export class APIService {
             region
             key
           }
+          billing
           room {
             __typename
             items {
@@ -5812,6 +5885,7 @@ export class APIService {
             region
             key
           }
+          billing
           room {
             __typename
             items {
@@ -5944,6 +6018,7 @@ export class APIService {
               otp
               tel
               officialEmail
+              billing
               createdAt
               updatedAt
               owner
@@ -6068,6 +6143,7 @@ export class APIService {
               otp
               tel
               officialEmail
+              billing
               createdAt
               updatedAt
               owner
@@ -6192,6 +6268,7 @@ export class APIService {
               otp
               tel
               officialEmail
+              billing
               createdAt
               updatedAt
               owner
@@ -6257,6 +6334,7 @@ export class APIService {
               otp
               tel
               officialEmail
+              billing
               createdAt
               updatedAt
               owner
@@ -6307,6 +6385,7 @@ export class APIService {
               otp
               tel
               officialEmail
+              billing
               createdAt
               updatedAt
               owner
@@ -6398,6 +6477,7 @@ export class APIService {
               otp
               tel
               officialEmail
+              billing
               createdAt
               updatedAt
               owner
@@ -6448,6 +6528,7 @@ export class APIService {
               otp
               tel
               officialEmail
+              billing
               createdAt
               updatedAt
               owner
@@ -6539,6 +6620,7 @@ export class APIService {
               otp
               tel
               officialEmail
+              billing
               createdAt
               updatedAt
               owner
@@ -6589,6 +6671,7 @@ export class APIService {
               otp
               tel
               officialEmail
+              billing
               createdAt
               updatedAt
               owner
@@ -6694,6 +6777,7 @@ export class APIService {
               region
               key
             }
+            billing
             room {
               __typename
               nextToken
@@ -6819,6 +6903,7 @@ export class APIService {
               region
               key
             }
+            billing
             room {
               __typename
               nextToken
@@ -6944,6 +7029,7 @@ export class APIService {
               region
               key
             }
+            billing
             room {
               __typename
               nextToken
@@ -7053,6 +7139,7 @@ export class APIService {
               otp
               tel
               officialEmail
+              billing
               createdAt
               updatedAt
               owner
@@ -7092,6 +7179,7 @@ export class APIService {
               otp
               tel
               officialEmail
+              billing
               createdAt
               updatedAt
               owner
@@ -7155,6 +7243,7 @@ export class APIService {
               otp
               tel
               officialEmail
+              billing
               createdAt
               updatedAt
               owner
@@ -7194,6 +7283,7 @@ export class APIService {
               otp
               tel
               officialEmail
+              billing
               createdAt
               updatedAt
               owner
@@ -7257,6 +7347,7 @@ export class APIService {
               otp
               tel
               officialEmail
+              billing
               createdAt
               updatedAt
               owner
@@ -7296,6 +7387,7 @@ export class APIService {
               otp
               tel
               officialEmail
+              billing
               createdAt
               updatedAt
               owner
@@ -7365,6 +7457,7 @@ export class APIService {
               region
               key
             }
+            billing
             room {
               __typename
               nextToken
@@ -7452,6 +7545,7 @@ export class APIService {
               region
               key
             }
+            billing
             room {
               __typename
               nextToken
@@ -7539,6 +7633,7 @@ export class APIService {
               region
               key
             }
+            billing
             room {
               __typename
               nextToken
@@ -7639,6 +7734,7 @@ export class APIService {
               otp
               tel
               officialEmail
+              billing
               createdAt
               updatedAt
               owner
@@ -7772,6 +7868,7 @@ export class APIService {
               otp
               tel
               officialEmail
+              billing
               createdAt
               updatedAt
               owner
@@ -7905,6 +8002,7 @@ export class APIService {
               otp
               tel
               officialEmail
+              billing
               createdAt
               updatedAt
               owner
@@ -8016,6 +8114,7 @@ export class APIService {
             region
             key
           }
+          billing
           room {
             __typename
             items {
@@ -8087,6 +8186,7 @@ export class APIService {
               region
               key
             }
+            billing
             room {
               __typename
               nextToken
@@ -8199,6 +8299,7 @@ export class APIService {
               otp
               tel
               officialEmail
+              billing
               createdAt
               updatedAt
               owner
@@ -8320,6 +8421,7 @@ export class APIService {
               otp
               tel
               officialEmail
+              billing
               createdAt
               updatedAt
               owner
@@ -8370,6 +8472,7 @@ export class APIService {
               otp
               tel
               officialEmail
+              billing
               createdAt
               updatedAt
               owner
@@ -8546,6 +8649,7 @@ export class APIService {
               region
               key
             }
+            billing
             room {
               __typename
               nextToken
@@ -8660,6 +8764,7 @@ export class APIService {
               otp
               tel
               officialEmail
+              billing
               createdAt
               updatedAt
               owner
@@ -8723,6 +8828,7 @@ export class APIService {
               otp
               tel
               officialEmail
+              billing
               createdAt
               updatedAt
               owner
@@ -8762,6 +8868,7 @@ export class APIService {
               otp
               tel
               officialEmail
+              billing
               createdAt
               updatedAt
               owner
@@ -8882,6 +8989,7 @@ export class APIService {
               region
               key
             }
+            billing
             room {
               __typename
               nextToken
@@ -8958,6 +9066,7 @@ export class APIService {
               otp
               tel
               officialEmail
+              billing
               createdAt
               updatedAt
               owner
@@ -9031,6 +9140,7 @@ export class APIService {
               otp
               tel
               officialEmail
+              billing
               createdAt
               updatedAt
               owner
@@ -9296,6 +9406,7 @@ export class APIService {
             region
             key
           }
+          billing
           room {
             __typename
             items {
@@ -9359,6 +9470,7 @@ export class APIService {
             region
             key
           }
+          billing
           room {
             __typename
             items {
@@ -9422,6 +9534,7 @@ export class APIService {
             region
             key
           }
+          billing
           room {
             __typename
             items {
@@ -9546,6 +9659,7 @@ export class APIService {
               otp
               tel
               officialEmail
+              billing
               createdAt
               updatedAt
               owner
@@ -9662,6 +9776,7 @@ export class APIService {
               otp
               tel
               officialEmail
+              billing
               createdAt
               updatedAt
               owner
@@ -9778,6 +9893,7 @@ export class APIService {
               otp
               tel
               officialEmail
+              billing
               createdAt
               updatedAt
               owner
@@ -9835,6 +9951,7 @@ export class APIService {
               otp
               tel
               officialEmail
+              billing
               createdAt
               updatedAt
               owner
@@ -9885,6 +10002,7 @@ export class APIService {
               otp
               tel
               officialEmail
+              billing
               createdAt
               updatedAt
               owner
@@ -9968,6 +10086,7 @@ export class APIService {
               otp
               tel
               officialEmail
+              billing
               createdAt
               updatedAt
               owner
@@ -10018,6 +10137,7 @@ export class APIService {
               otp
               tel
               officialEmail
+              billing
               createdAt
               updatedAt
               owner
@@ -10101,6 +10221,7 @@ export class APIService {
               otp
               tel
               officialEmail
+              billing
               createdAt
               updatedAt
               owner
@@ -10151,6 +10272,7 @@ export class APIService {
               otp
               tel
               officialEmail
+              billing
               createdAt
               updatedAt
               owner
@@ -10248,6 +10370,7 @@ export class APIService {
               region
               key
             }
+            billing
             room {
               __typename
               nextToken
@@ -10365,6 +10488,7 @@ export class APIService {
               region
               key
             }
+            billing
             room {
               __typename
               nextToken
@@ -10482,6 +10606,7 @@ export class APIService {
               region
               key
             }
+            billing
             room {
               __typename
               nextToken
@@ -10583,6 +10708,7 @@ export class APIService {
               otp
               tel
               officialEmail
+              billing
               createdAt
               updatedAt
               owner
@@ -10622,6 +10748,7 @@ export class APIService {
               otp
               tel
               officialEmail
+              billing
               createdAt
               updatedAt
               owner
@@ -10677,6 +10804,7 @@ export class APIService {
               otp
               tel
               officialEmail
+              billing
               createdAt
               updatedAt
               owner
@@ -10716,6 +10844,7 @@ export class APIService {
               otp
               tel
               officialEmail
+              billing
               createdAt
               updatedAt
               owner
@@ -10771,6 +10900,7 @@ export class APIService {
               otp
               tel
               officialEmail
+              billing
               createdAt
               updatedAt
               owner
@@ -10810,6 +10940,7 @@ export class APIService {
               otp
               tel
               officialEmail
+              billing
               createdAt
               updatedAt
               owner
@@ -10871,6 +11002,7 @@ export class APIService {
               region
               key
             }
+            billing
             room {
               __typename
               nextToken
@@ -10950,6 +11082,7 @@ export class APIService {
               region
               key
             }
+            billing
             room {
               __typename
               nextToken
@@ -11029,6 +11162,7 @@ export class APIService {
               region
               key
             }
+            billing
             room {
               __typename
               nextToken
@@ -11121,6 +11255,7 @@ export class APIService {
               otp
               tel
               officialEmail
+              billing
               createdAt
               updatedAt
               owner
@@ -11246,6 +11381,7 @@ export class APIService {
               otp
               tel
               officialEmail
+              billing
               createdAt
               updatedAt
               owner
@@ -11371,6 +11507,7 @@ export class APIService {
               otp
               tel
               officialEmail
+              billing
               createdAt
               updatedAt
               owner

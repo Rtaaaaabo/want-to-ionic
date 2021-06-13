@@ -16,6 +16,7 @@ subscription OnCreateCompany {
       region
       key
     }
+    billing
     room {
       items {
         id
@@ -65,6 +66,7 @@ subscription OnUpdateCompany {
       region
       key
     }
+    billing
     room {
       items {
         id
@@ -114,6 +116,7 @@ subscription OnDeleteCompany {
       region
       key
     }
+    billing
     room {
       items {
         id
@@ -217,6 +220,7 @@ subscription OnCreateTaskGroup {
         otp
         tel
         officialEmail
+        billing
         createdAt
         updatedAt
         owner
@@ -312,6 +316,7 @@ subscription OnUpdateTaskGroup {
         otp
         tel
         officialEmail
+        billing
         createdAt
         updatedAt
         owner
@@ -407,6 +412,7 @@ subscription OnDeleteTaskGroup {
         otp
         tel
         officialEmail
+        billing
         createdAt
         updatedAt
         owner
@@ -450,6 +456,7 @@ subscription OnCreateTask {
         otp
         tel
         officialEmail
+        billing
         createdAt
         updatedAt
         owner
@@ -494,6 +501,7 @@ subscription OnCreateTask {
         otp
         tel
         officialEmail
+        billing
         createdAt
         updatedAt
         owner
@@ -559,6 +567,7 @@ subscription OnUpdateTask {
         otp
         tel
         officialEmail
+        billing
         createdAt
         updatedAt
         owner
@@ -603,6 +612,7 @@ subscription OnUpdateTask {
         otp
         tel
         officialEmail
+        billing
         createdAt
         updatedAt
         owner
@@ -668,6 +678,7 @@ subscription OnDeleteTask {
         otp
         tel
         officialEmail
+        billing
         createdAt
         updatedAt
         owner
@@ -712,6 +723,7 @@ subscription OnDeleteTask {
         otp
         tel
         officialEmail
+        billing
         createdAt
         updatedAt
         owner
@@ -789,6 +801,7 @@ subscription OnCreateUser {
         region
         key
       }
+      billing
       room {
         nextToken
       }
@@ -884,6 +897,7 @@ subscription OnUpdateUser {
         region
         key
       }
+      billing
       room {
         nextToken
       }
@@ -979,6 +993,7 @@ subscription OnDeleteUser {
         region
         key
       }
+      billing
       room {
         nextToken
       }
@@ -1060,6 +1075,7 @@ subscription OnCreateRoomGroup {
         otp
         tel
         officialEmail
+        billing
         createdAt
         updatedAt
         owner
@@ -1094,6 +1110,7 @@ subscription OnCreateRoomGroup {
         otp
         tel
         officialEmail
+        billing
         createdAt
         updatedAt
         owner
@@ -1135,6 +1152,7 @@ subscription OnUpdateRoomGroup {
         otp
         tel
         officialEmail
+        billing
         createdAt
         updatedAt
         owner
@@ -1169,6 +1187,7 @@ subscription OnUpdateRoomGroup {
         otp
         tel
         officialEmail
+        billing
         createdAt
         updatedAt
         owner
@@ -1210,6 +1229,7 @@ subscription OnDeleteRoomGroup {
         otp
         tel
         officialEmail
+        billing
         createdAt
         updatedAt
         owner
@@ -1244,6 +1264,7 @@ subscription OnDeleteRoomGroup {
         otp
         tel
         officialEmail
+        billing
         createdAt
         updatedAt
         owner
@@ -1290,6 +1311,7 @@ subscription OnCreateRoom {
         region
         key
       }
+      billing
       room {
         nextToken
       }
@@ -1352,6 +1374,7 @@ subscription OnUpdateRoom {
         region
         key
       }
+      billing
       room {
         nextToken
       }
@@ -1414,6 +1437,7 @@ subscription OnDeleteRoom {
         region
         key
       }
+      billing
       room {
         nextToken
       }
@@ -1488,6 +1512,7 @@ subscription OnCreateMessage {
         otp
         tel
         officialEmail
+        billing
         createdAt
         updatedAt
         owner
@@ -1591,6 +1616,7 @@ subscription OnUpdateMessage {
         otp
         tel
         officialEmail
+        billing
         createdAt
         updatedAt
         owner
@@ -1694,6 +1720,7 @@ subscription OnDeleteMessage {
         otp
         tel
         officialEmail
+        billing
         createdAt
         updatedAt
         owner

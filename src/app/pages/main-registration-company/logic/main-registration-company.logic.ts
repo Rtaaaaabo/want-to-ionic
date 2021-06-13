@@ -25,7 +25,7 @@ export class MainRegistrationCompanyLogic {
     return this.registerCompanyService.fetchCompanyInfo(requestContent);
   }
 
-  updateCompanyInfo(companyInfo: Company, companyForm: CompanyRegister): Observable<UpdateCompanyInput> {
+  updateCompanyInfo(companyInfo: Company, companyFormValue: CompanyRegister): Observable<UpdateCompanyInput> {
     let requestContent: UpdateCompanyInput;
     return this.registerCompanyService.updateCompanyInfo(requestContent);
   }
