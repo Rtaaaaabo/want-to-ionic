@@ -62,17 +62,18 @@ export class CreateCompanyPage implements OnInit {
   registerCompany(): void {
     const date = new Date();
     const timeStamp = date.getTime();
+    const companyId = `company_${timeStamp}_${uuid()}`;
     const companyName = this.createCompanyForm.get('companyName').value;
     const officerName = this.createCompanyForm.get('officerName').value;
     const officerEmail = this.createCompanyForm.get('officerEmail').value;
     let requestContent = {
-      id: `company_${timeStamp}_${uuid()}`,
-      name: companyName,
+      id: companyId,
+      name: `${companyName}`,
       officer: [{ officerEmail: officerEmail, officerName: officerName }],
       isRegistered: false,
       otp: '',
     }
-    this.logic.generateOneTimePassword()
+    this.logic.generateOneTimePassword(companyId)
       .pipe(map((token) => requestContent.otp = token))
       .pipe(concatMap(() => this.logic.sendEmailForRegister(requestContent)))
       .pipe(concatMap(() => this.logic.createCompanyToDynamoDB(requestContent)))

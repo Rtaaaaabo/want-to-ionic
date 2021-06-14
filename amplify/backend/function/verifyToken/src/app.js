@@ -27,8 +27,12 @@ app.use(async (req, res, next) => {
 });
 
 app.get("/verify-otp/generate", function (req, res) {
+  const companyId = req.body.company_id;
   const counter = 1;
-  const token = hotp.generate(process.env.OTP_SECRET_DEV, counter);
+  const token = hotp.generate(
+    `${companyId}-${process.env.OTP_SECRET_DEV}`,
+    counter
+  );
   res.json({ success: "succeed!", otp: token });
 });
 
