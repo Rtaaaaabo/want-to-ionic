@@ -60,7 +60,7 @@ export class CreateCompanyLogic {
     }
     return this.createCompanyService.sendEmailForRegister(requestBody)
       .pipe(catchError((e) => `Not Send for Register Message: ${e}`))
-      .pipe(() => of('Send Success'))
+    // .pipe(() => of('Send Success'))
   }
 
   /**
@@ -68,6 +68,7 @@ export class CreateCompanyLogic {
    * @returns {string} oneTimePasswordを返します
    */
   generateOneTimePassword(companyId: string): Observable<string> {
+    console.log('CompanyId: ', companyId);
     return this.createCompanyService.generateOTP(companyId)
       .pipe(map(({ otp }) => otp));
   }

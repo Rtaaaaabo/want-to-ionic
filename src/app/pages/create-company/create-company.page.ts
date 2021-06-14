@@ -45,7 +45,6 @@ export class CreateCompanyPage implements OnInit {
   checkPassword(group: FormGroup): null | { notSame: boolean } {
     let password = group.get('officerPassword').value;
     let passwordConfirm = group.get('officerPasswordConfirm').value;
-    console.log(password = passwordConfirm ? null : { notSame: true });
     return password = passwordConfirm ? null : { notSame: true };
   }
 
@@ -74,11 +73,11 @@ export class CreateCompanyPage implements OnInit {
       otp: '',
     }
     this.logic.generateOneTimePassword(companyId)
-      .pipe(map((token) => requestContent.otp = token))
-      .pipe(concatMap(() => this.logic.sendEmailForRegister(requestContent)))
-      .pipe(concatMap(() => this.logic.createCompanyToDynamoDB(requestContent)))
+      // .pipe(map((token) => requestContent.otp = token))
+      // .pipe(concatMap(() => this.logic.sendEmailForRegister(requestContent)))
+      // .pipe(concatMap(() => this.logic.createCompanyToDynamoDB(requestContent)))
       .subscribe((data) => {
-        console.log('[generateOneTimePassword ID]', data);
+        console.log('[sendEmailForRegister ID]', data);
       });
   }
 
