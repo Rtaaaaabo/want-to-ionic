@@ -53,6 +53,7 @@ export class CreateCompanyService {
     const requestBody = {
       body: { company_id: companyId },
     };
+    console.log('requestBody', requestBody);
     return from(API.get(apiVerifyOTP, pathVerifyGenerate, requestBody));
   }
 
