@@ -311,6 +311,12 @@
                     "schema": {
                       "$ref": "#/definitions/RequestSchema"
                     }
+                  },
+                  {
+                    "name": "company-id",
+                    "in": "query",
+                    "required": true,
+                    "type": "string"
                   }
                 ],
                 "responses": {
@@ -356,17 +362,6 @@
                   "httpMethod": "POST",
                   "type": "aws_proxy"
                 }
-              },
-              "Type": "AWS::ApiGateway::Method",
-              "Properties": {
-                "RequestParameters": { "company-id": true },
-                "Integration": {
-                  "Type": "AWS",
-                  "IntegrationHttpMethod": "GET",
-                  "RequestParameters": {
-                    "integration.request.querystring.company-id": "company-id"
-                  }
-                }
               }
             },
             "/verify-otp/generate/{proxy+}": {
@@ -403,6 +398,7 @@
                   "requestTemplates": {
                     "application/json": "{\"statusCode\": 200}"
                   },
+
                   "passthroughBehavior": "when_no_match",
                   "type": "mock"
                 }
