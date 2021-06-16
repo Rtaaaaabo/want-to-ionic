@@ -27,7 +27,9 @@ app.use(async (req, res, next) => {
 
 app.get("/verify-otp/generate", function (req, res) {
   // const companyId = req.body.company_id;
-  console.log("[generate req]", req);
+  console.log("[verify-otp req]", req);
+  console.log("[verify-otp req query]", req.query);
+  const companyId = req.query.companyId;
   const counter = 1;
   const hotpOptions = {
     algorithm: "sha1",
@@ -37,7 +39,10 @@ app.get("/verify-otp/generate", function (req, res) {
   };
   try {
     hotp.options = hotpOptions;
-    const token = hotp.generate(`${process.env.OTP_SECRET_DEV}`, counter);
+    const token = hotp.generate(
+      `${companyId}-${process.env.OTP_SECRET_DEV}`,
+      counter
+    );
     res.json({ success: "succeed!", otp: token });
   } catch (error) {
     res.json({ error: "error!" });

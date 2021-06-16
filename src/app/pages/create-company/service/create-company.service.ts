@@ -50,11 +50,12 @@ export class CreateCompanyService {
    * @returns {string} oneTimePasswordを返します
    */
   generateOTP(companyId: string): Observable<{ success: string, otp: string }> {
-    const requestBody = {
-      body: { company_id: companyId },
+    const requestInit = {
+      queryStringParameters: {
+        companyId: companyId
+      }
     };
-    console.log('requestBody', requestBody);
-    return from(API.get(apiVerifyOTP, pathVerifyGenerate, requestBody));
+    return from(API.get(apiVerifyOTP, pathVerifyGenerate, requestInit));
   }
 
   /**

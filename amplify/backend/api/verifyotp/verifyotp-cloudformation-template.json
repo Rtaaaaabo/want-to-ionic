@@ -313,7 +313,7 @@
                     }
                   },
                   {
-                    "name": "company-id",
+                    "name": "companyId",
                     "in": "query",
                     "required": true,
                     "type": "string"
