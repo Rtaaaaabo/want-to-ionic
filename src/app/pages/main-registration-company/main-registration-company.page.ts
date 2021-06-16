@@ -96,9 +96,10 @@ export class MainRegistrationCompanyPage implements OnInit {
    *  会社を本登録するします
    */
   registerCompany(): void {
-    this.logic.updateCompanyInfo(this.companyInfo, this.companyForm.value).subscribe(() => {
-      this.router.navigate(['']);
-    });
+    this.logic.updateCompanyInfo(this.companyInfo, this.companyForm.value)
+      .subscribe(() => {
+        this.router.navigate(['']);
+      });
   }
 
   /**
