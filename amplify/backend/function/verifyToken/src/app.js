@@ -33,16 +33,16 @@ app.get("/verify-otp/generate", function (req, res) {
   const counter = 1;
   const hotpOptions = {
     algorithm: "sha1",
-    digits: 10,
+    digits: 30,
     encoding: "ascii",
     // creteHmacKey: hotpCreateHmacKey(),
   };
   try {
-    hotp.options = hotpOptions;
     const token = hotp.generate(
       `${companyId}-${process.env.OTP_SECRET_DEV}`,
       counter
     );
+    hotp.options = hotpOptions;
     res.json({ success: "succeed!", otp: token });
   } catch (error) {
     res.json({ error: "error!" });
