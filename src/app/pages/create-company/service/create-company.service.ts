@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Observable, from } from 'rxjs';
 import { API } from 'aws-amplify';
 import { AmplifyService, CreateCompanyInput, CreateCompanyMutation, CreateUserInput, CreateUserMutation } from 'src/app/shared/service/amplify.service';
-import { request } from 'http';
 
 const apiAuthSendEmail = 'authSendEmail';
 const apiVerifyOTP = 'verifyotp';

@@ -5,6 +5,7 @@ import { AlertController, IonSlides } from '@ionic/angular';
 import { concatMap, filter, map } from 'rxjs/operators';
 import { Company } from 'src/app/shared/service/amplify.service';
 import { MainRegistrationCompanyLogic } from './logic/main-registration-company.logic';
+import { i18nMetaToJSDoc } from '@angular/compiler/src/render3/view/i18n/meta';
 
 @Component({
   selector: 'app-main-registration-company',
@@ -36,6 +37,8 @@ export class MainRegistrationCompanyPage implements OnInit {
     return <FormArray>this.companyForm.get('companyOfficer');
   }
 
+  token: string;
+
   constructor(
     private readonly alertCtrl: AlertController,
     private readonly route: ActivatedRoute,
@@ -45,7 +48,8 @@ export class MainRegistrationCompanyPage implements OnInit {
 
   ngOnInit(): void {
     this.route.queryParams.pipe(filter(params => params.token))
-      .pipe(concatMap(({ token }) => this.logic.fetchCompanyInfo(token)))
+      .pipe(map(({ token }) => this.token = token))
+      .pipe(concatMap((token) => this.logic.fetchCompanyInfo(token)))
       .pipe(map(({ items }) => items))
       .subscribe((result) => {
         this.companyInfo = result[0];
@@ -97,7 +101,9 @@ export class MainRegistrationCompanyPage implements OnInit {
    */
   registerCompany(): void {
     this.logic.updateCompanyInfo(this.companyInfo, this.companyForm.value)
-      .subscribe(() => {
+      .pipe(concatMap(() => this.logic.isValidOneTimePassword(this.token)))
+      .subscribe((result) => {
+        console.log(result);
         this.router.navigate(['']);
       });
   }

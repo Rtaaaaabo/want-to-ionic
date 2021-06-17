@@ -72,13 +72,4 @@ export class CreateCompanyLogic {
     return this.createCompanyService.generateOTP(companyId)
       .pipe(map(({ otp }) => otp));
   }
-
-  /**
-   * Token値が正であるか判断します
-   * @param token One time token
-   * @returns {boolean} ParamもTokenは正しいか間違いかを返します
-   */
-  isValidOneTimePassword(token: string): Observable<any> {
-    return this.createCompanyService.isValidOTP(token);
-  }
 }

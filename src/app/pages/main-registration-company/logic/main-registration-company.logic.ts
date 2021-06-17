@@ -39,4 +39,13 @@ export class MainRegistrationCompanyLogic {
     }
     return this.registerCompanyService.updateCompanyInfo(requestContent);
   }
+
+  /**
+ * Token値が正であるか判断します
+ * @param token One time token
+ * @returns {boolean} ParamもTokenは正しいか間違いかを返します
+ */
+  isValidOneTimePassword(token: string): Observable<any> {
+    return this.registerCompanyService.isValidOTP(token);
+  }
 }
