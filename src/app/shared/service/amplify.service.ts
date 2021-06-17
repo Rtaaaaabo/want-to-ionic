@@ -15,10 +15,11 @@ export type CreateCompanyInput = {
   name: string;
   officer: Array<OfficerInput | null>;
   isRegistered: boolean;
-  otp: string;
+  otp?: string | null;
   tel?: string | null;
   officialEmail?: string | null;
   iconCompany?: S3ObjectInput | null;
+  billing?: boolean | null;
 };
 
 export type OfficerInput = {
@@ -4821,6 +4822,7 @@ export class AmplifyService {
             region
             key
           }
+          billing
           room {
             __typename
             items {

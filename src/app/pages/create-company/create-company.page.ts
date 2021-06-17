@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { concatMap, map } from 'rxjs/operators';
 import { CreateCompanyLogic } from './logic/create-company.logic';
 import { v4 as uuid } from 'uuid';
@@ -36,6 +37,7 @@ export class CreateCompanyPage implements OnInit {
   }, this.checkPassword);
 
   constructor(
+    private readonly router: Router,
     private readonly location: Location,
     private logic: CreateCompanyLogic,
   ) { }
@@ -78,6 +80,7 @@ export class CreateCompanyPage implements OnInit {
       .pipe(concatMap(() => this.logic.createCompanyToDynamoDB(requestContent)))
       .subscribe((data) => {
         console.log('[sendEmailForRegister ID]', data);
+        this.router.navigate(['/']);
       });
   }
 
