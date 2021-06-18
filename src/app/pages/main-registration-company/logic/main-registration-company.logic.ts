@@ -45,7 +45,7 @@ export class MainRegistrationCompanyLogic {
  * @param token One time token
  * @returns {boolean} ParamもTokenは正しいか間違いかを返します
  */
-  isValidOneTimePassword(token: string): Observable<any> {
-    return this.registerCompanyService.isValidOTP(token);
+  isValidOneTimePassword(token: string, email: string): Observable<any> {
+    return this.registerCompanyService.isValidOTP(token, email);
   }
 }

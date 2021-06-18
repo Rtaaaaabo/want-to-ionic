@@ -100,7 +100,7 @@ export class MainRegistrationCompanyPage implements OnInit {
    */
   registerCompany(): void {
     this.logic.updateCompanyInfo(this.companyInfo, this.companyForm.value)
-      .pipe(concatMap(() => this.logic.isValidOneTimePassword(this.token)))
+      .pipe(concatMap(() => this.logic.isValidOneTimePassword(this.token, this.companyInfo.officer[0].officerEmail)))
       .subscribe((result) => {
         console.log(result);
         this.router.navigate(['']); //これは登録完了のページに飛ぶ

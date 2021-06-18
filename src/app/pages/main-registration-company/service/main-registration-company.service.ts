@@ -28,10 +28,13 @@ export class MainRegistrationCompanyService {
    * @param token One time password token
    * @returns 結果を返します
    */
-  isValidOTP(token: string): Observable<{} | { error: string, message: string }> {
-    const requestBody = {
-      body: token,
+  isValidOTP(token: string, email: string): Observable<{} | { error: string, message: string }> {
+    const requestContent = {
+      body: {
+        token: token,
+        email: email,
+      }
     }
-    return from(API.get(apiVerifyOTP, pathCheckVerify, requestBody));
+    return from(API.post(apiVerifyOTP, pathCheckVerify, requestContent));
   }
 }

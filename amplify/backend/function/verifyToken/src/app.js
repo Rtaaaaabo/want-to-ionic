@@ -59,6 +59,14 @@ app.get("/verify-otp/check", function (req, res) {
   }
 });
 
+app.post("/verify-opt/check", function (req, res) {
+  try {
+    res.json({});
+  } catch (error) {
+    res.json({ error: "error", message: error });
+  }
+});
+
 app.listen(3000, function () {
   console.log("App started");
 });

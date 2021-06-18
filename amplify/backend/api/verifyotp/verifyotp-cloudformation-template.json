@@ -513,6 +513,14 @@
                     }
                   },
                   {
+                    "in": "body",
+                    "name": "token",
+                    "required": false,
+                    "schema": {
+                      "$ref": "#/definitions/TokenSchema"
+                    }
+                  },
+                  {
                     "in": "query",
                     "name": "token",
                     "required": true,
