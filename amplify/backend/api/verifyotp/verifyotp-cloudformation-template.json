@@ -511,6 +511,14 @@
                     "schema": {
                       "$ref": "#/definitions/RequestSchema"
                     }
+                  },
+                  {
+                    "in": "body",
+                    "name": "token",
+                    "required": true,
+                    "schema": {
+                      "$ref": "#/definitions/TokenSchema"
+                    }
                   }
                 ],
                 "responses": {
@@ -671,6 +679,15 @@
                 }
               },
               "title": "Response Schema"
+            },
+            "TokenSchema": {
+              "type": "object",
+              "required": ["token"],
+              "properties": {
+                "token": {
+                  "type": "string"
+                }
+              }
             }
           }
         },

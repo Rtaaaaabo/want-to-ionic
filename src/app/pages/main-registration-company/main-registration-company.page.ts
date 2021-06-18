@@ -5,7 +5,6 @@ import { AlertController, IonSlides } from '@ionic/angular';
 import { concatMap, filter, map } from 'rxjs/operators';
 import { Company } from 'src/app/shared/service/amplify.service';
 import { MainRegistrationCompanyLogic } from './logic/main-registration-company.logic';
-import { i18nMetaToJSDoc } from '@angular/compiler/src/render3/view/i18n/meta';
 
 @Component({
   selector: 'app-main-registration-company',
@@ -104,7 +103,7 @@ export class MainRegistrationCompanyPage implements OnInit {
       .pipe(concatMap(() => this.logic.isValidOneTimePassword(this.token)))
       .subscribe((result) => {
         console.log(result);
-        this.router.navigate(['']);
+        this.router.navigate(['']); //これは登録完了のページに飛ぶ
       });
   }
 
