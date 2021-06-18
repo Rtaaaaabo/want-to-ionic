@@ -51,8 +51,9 @@ app.get("/verify-otp/generate", function (req, res) {
 
 app.get("/verify-otp/check", function (req, res) {
   const token = req.body.otp; // OneTimePasswordを取得
+  const companyId = req.body.companyId;
   try {
-    authenticator.check(token, process.env.OTP_SECRET_DEV); // 受け取ったtokenは正であるか確認
+    // authenticator.check(token, process.env.OTP_SECRET_DEV); // 受け取ったtokenは正であるか確認
     res.json({});
   } catch (err) {
     res.json({ error: "error!", message: err });
@@ -62,9 +63,9 @@ app.get("/verify-otp/check", function (req, res) {
 app.post("/verify-otp/check", async function (req, res) {
   console.log("[verify-opt/check req]", req.body);
   const token = req.body.token;
-  const email = req.body.email;
+  const companyId = req.body.companyId;
   try {
-    authenticator.check(token, process.env.OTP_SECRET_DEV); // 受け取ったtokenは正であるか確認
+    // authenticator.check(token, process.env.OTP_SECRET_DEV); // 受け取ったtokenは正であるか確認
     await res.json({});
   } catch (error) {
     await res.json({ error: "error", message: error });
