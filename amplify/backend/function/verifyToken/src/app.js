@@ -65,7 +65,7 @@ app.post("/verify-otp/check", async function (req, res) {
   const token = req.body.token;
   const companyId = req.body.companyId;
   try {
-    // authenticator.check(token, process.env.OTP_SECRET_DEV); // 受け取ったtokenは正であるか確認
+    authenticator.check(token, `${companyId}-${process.env.OTP_SECRET_DEV}`); // 受け取ったtokenは正であるか確認
     await res.json({});
   } catch (error) {
     await res.json({ error: "error", message: error });
