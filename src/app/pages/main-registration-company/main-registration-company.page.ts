@@ -51,6 +51,7 @@ export class MainRegistrationCompanyPage implements OnInit {
       .pipe(concatMap((token) => this.logic.fetchCompanyInfo(token)))
       .pipe(map(({ items }) => items))
       .subscribe((result) => {
+        console.log('RESULT', result);
         this.companyInfo = result[0];
         this.companyForm.patchValue({
           companyName: this.companyInfo.name,
@@ -96,7 +97,7 @@ export class MainRegistrationCompanyPage implements OnInit {
   }
 
   /**
-   *  会社を本登録するします
+   *  会社を本登録します
    */
   registerCompany(): void {
     this.logic.updateCompanyInfo(this.companyInfo, this.companyForm.value)

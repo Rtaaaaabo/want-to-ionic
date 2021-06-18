@@ -44,11 +44,11 @@
               </ion-buttons>
               <ion-label> {{i+1}} 人目 </ion-label>
             </ion-item-divider>
-            <ion-item>
+            <ion-item [disabled]="i === 0">
               <ion-label position="stacked">担当者名</ion-label>
               <ion-input formControlName="officerName"></ion-input>
             </ion-item>
-            <ion-item>
+            <ion-item [disabled]="i === 0">
               <ion-label position="stacked">担当者Email</ion-label>
               <ion-input formControlName="officerEmail"></ion-input>
             </ion-item>

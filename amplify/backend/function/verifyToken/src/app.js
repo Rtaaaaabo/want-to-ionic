@@ -59,11 +59,15 @@ app.get("/verify-otp/check", function (req, res) {
   }
 });
 
-app.post("/verify-opt/check", function (req, res) {
+app.post("/verify-otp/check", async function (req, res) {
+  console.log("[verify-opt/check req]", req.body);
+  const token = req.body.token;
+  const email = req.body.email;
   try {
-    res.json({});
+    authenticator.check(token, process.env.OTP_SECRET_DEV); // 受け取ったtokenは正であるか確認
+    await res.json({});
   } catch (error) {
-    res.json({ error: "error", message: error });
+    await res.json({ error: "error", message: error });
   }
 });
 
