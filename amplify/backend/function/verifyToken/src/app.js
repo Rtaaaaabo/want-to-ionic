@@ -26,16 +26,12 @@ app.use(async (req, res, next) => {
 });
 
 app.get("/verify-otp/generate", function (req, res) {
-  // const companyId = req.body.company_id;
-  console.log("[verify-otp req]", req);
-  console.log("[verify-otp req query]", req.query);
   const companyId = req.query.companyId;
   const counter = 1;
   const hotpOptions = {
     algorithm: "sha1",
     digits: 30,
     encoding: "ascii",
-    // creteHmacKey: hotpCreateHmacKey(),
   };
   try {
     const token = hotp.generate(
@@ -49,17 +45,6 @@ app.get("/verify-otp/generate", function (req, res) {
   }
 });
 
-app.get("/verify-otp/check", function (req, res) {
-  const token = req.body.otp; // OneTimePasswordを取得
-  const companyId = req.body.companyId;
-  try {
-    // hotp.check(token, process.env.OTP_SECRET_DEV); // 受け取ったtokenは正であるか確認
-    res.json({});
-  } catch (err) {
-    res.json({ error: "error!", message: err });
-  }
-});
-
 app.post("/verify-otp/check", async function (req, res) {
   const token = req.body.token;
   const companyId = req.body.companyId;
@@ -70,6 +55,7 @@ app.post("/verify-otp/check", async function (req, res) {
       `${companyId}-${process.env.OTP_SECRET_DEV}`,
       counter
     );
+    console.log("[verify-otp isChecked]", isChecked);
     if (!isChecked) {
       throw "Not match token";
     }
