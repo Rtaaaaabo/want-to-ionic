@@ -9,7 +9,7 @@ const pathCheckVerify = '/verify-otp/check';
 @Injectable({
   providedIn: 'root'
 })
-export class MainRegistrationCompanyService {
+export class RegistrationCompanyService {
 
   constructor(
     private amplifyService: AmplifyService,

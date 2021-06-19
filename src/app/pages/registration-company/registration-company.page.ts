@@ -4,14 +4,14 @@ import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 import { AlertController, IonSlides } from '@ionic/angular';
 import { concatMap, filter, map } from 'rxjs/operators';
 import { Company } from 'src/app/shared/service/amplify.service';
-import { MainRegistrationCompanyLogic } from './logic/main-registration-company.logic';
+import { RegistrationCompanyLogic } from './logic/registration-company.logic';
 
 @Component({
-  selector: 'app-main-registration-company',
-  templateUrl: './main-registration-company.page.html',
-  styleUrls: ['./main-registration-company.page.scss'],
+  selector: 'app-registration-company',
+  templateUrl: './registration-company.page.html',
+  styleUrls: ['./registration-company.page.scss'],
 })
-export class MainRegistrationCompanyPage implements OnInit {
+export class RegistrationCompanyPage implements OnInit {
   @ViewChild('companySlides', { static: false }) slides: IonSlides;
   companyInfo: Company;
   companyForm = new FormGroup({
@@ -42,7 +42,7 @@ export class MainRegistrationCompanyPage implements OnInit {
     private readonly alertCtrl: AlertController,
     private readonly route: ActivatedRoute,
     private readonly router: Router,
-    private logic: MainRegistrationCompanyLogic,
+    private logic: RegistrationCompanyLogic,
   ) { }
 
   ngOnInit(): void {

@@ -57,11 +57,11 @@ const routes: Routes = [
   },
   {
     path: 'registration-company',
-    loadChildren: () => import('./pages/main-registration-company/main-registration-company.module').then(m => m.MainRegistrationCompanyPageModule)
+    loadChildren: () => import('./pages/registration-company/registration-company.module').then(m => m.MainRegistrationCompanyPageModule)
   },
   {
     path: 'complete-register',
-    loadChildren: () => import('./pages/complete-register/complete-register.module').then( m => m.CompleteRegisterPageModule)
+    loadChildren: () => import('./pages/complete-register/complete-register.module').then(m => m.CompleteRegisterPageModule)
   },
 ];
 @NgModule({

@@ -1,17 +1,16 @@
 import { Injectable } from '@angular/core';
-import { from, Observable } from 'rxjs';
-import { concatMap, map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 import { Company, ListCompanysQuery, ModelCompanyFilterInput, UpdateCompanyInput } from 'src/app/shared/service/amplify.service';
 import { CompanyRegister } from '../interface/company-register.interface';
-import { MainRegistrationCompanyService } from '../service/main-registration-company.service';
+import { RegistrationCompanyService } from '../service/registration-company.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class MainRegistrationCompanyLogic {
+export class RegistrationCompanyLogic {
 
   constructor(
-    private registerCompanyService: MainRegistrationCompanyService,
+    private registerCompanyService: RegistrationCompanyService,
   ) { }
 
   /**
