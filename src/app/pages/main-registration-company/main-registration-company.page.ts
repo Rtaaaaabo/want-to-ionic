@@ -104,7 +104,7 @@ export class MainRegistrationCompanyPage implements OnInit {
       .pipe(concatMap(() => this.logic.isValidOneTimePassword(this.token, this.companyInfo.id)))
       .subscribe((result) => {
         console.log(result);
-        this.router.navigate(['']); //これは登録完了のページに飛ぶ
+        // this.router.navigate(['']); //これは登録完了のページに飛ぶ
       });
   }
 

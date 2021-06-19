@@ -61,17 +61,17 @@ app.get("/verify-otp/check", function (req, res) {
 });
 
 app.post("/verify-otp/check", async function (req, res) {
-  console.log("[verify-opt/check req]", req.body);
   const token = req.body.token;
   const companyId = req.body.companyId;
+  const counter = 1;
   try {
     const isChecked = hotp.check(
       token,
       `${companyId}-${process.env.OTP_SECRET_DEV}`,
-      1
-    ); // 受け取ったtokenは正であるか確認
+      counter
+    );
     if (!isChecked) {
-      throw "Not match";
+      throw "Not match token";
     }
     await res.json({});
   } catch (error) {
