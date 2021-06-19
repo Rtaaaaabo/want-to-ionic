@@ -64,6 +64,57 @@ app.post("/register/company", async (req, res) => {
   }
 });
 
+app.post("/update/company", async (req, res) => {
+  console.log("[UpdateCompany]", req);
+  const params = {
+    Destination: {
+      ToAddresses: ["r.taaaaabo+ses@gmail.com"],
+    },
+    Message: {
+      Subject: {
+        Charset: "UTF-8",
+        Data: "本登録が完了しました",
+      },
+      Body: {
+        Html: {
+          Charset: "UTF-8",
+          Data: `
+          <html lang="ja">
+          <head><meta charset="utf-8"></head>
+          <body>
+          <h3>${req.body.name}</h3>様<br/>
+          <p>会社情報の本登録が完了しました。</p>
+          <p>下記からログインを行い、ユーザーを招待し、初めてください。</p>
+          <p>http://localhost:8100/login</p>
+          </body>
+          </html>
+          `,
+        },
+        Text: {
+          Charset: "UTF-8",
+          Data: `
+          名前: ${req.body.name}\n
+          会社情報の本登録が完了しました。
+          下記からログインを行い、ユーザーを招待し、初めてください。
+          http://localhost:8100/login
+          `,
+        },
+      },
+    },
+    Source: "r.taaaaabo+ses@gmail.com",
+  };
+  AWS.config.update({ region: "ap-northeast-1" });
+  const ses = new AWS.SES();
+  try {
+    await ses.sendEmail(params).promise();
+    res.json({});
+    return;
+  } catch (e) {
+    res.status(500).send(`Internal Server Error Message: ${e}`);
+    return;
+  }
+});
+
 app.listen(3000, function () {
   console.log("App started");
 });

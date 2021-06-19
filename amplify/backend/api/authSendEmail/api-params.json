@@ -51,6 +51,14 @@
                 "open": true
             },
             "policyResourceName": "/register/company"
+        },
+        {
+            "name": "/update/company",
+            "lambdaFunction": "createcompany",
+            "privacy": {
+                "open": true
+            },
+            "policyResourceName": "/update/company"
         }
     ],
     "resourceName": "authSendEmail",
@@ -87,5 +95,5 @@
             ]
         }
     ],
-    "uuid": "e200777c"
+    "uuid": "36fc497f"
 }
