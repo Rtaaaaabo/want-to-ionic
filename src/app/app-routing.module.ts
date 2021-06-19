@@ -57,7 +57,7 @@ const routes: Routes = [
   },
   {
     path: 'registration-company',
-    loadChildren: () => import('./pages/registration-company/registration-company.module').then(m => m.MainRegistrationCompanyPageModule)
+    loadChildren: () => import('./pages/registration-company/registration-company.module').then(m => m.RegistrationCompanyPageModule)
   },
   {
     path: 'complete-register',
