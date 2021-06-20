@@ -101,10 +101,10 @@ export class RegistrationCompanyPage implements OnInit {
    */
   registerCompany(): void {
     this.logic.updateCompanyInfo(this.companyInfo, this.companyForm.value)
+      // これはNgOnInitの処理とする
       .pipe(concatMap(() => this.logic.isValidOneTimePassword(this.token, this.companyInfo.id)))
-      .subscribe((result) => {
-        console.log(result);
-        // this.router.navigate(['']); //これは登録完了のページに飛ぶ
+      .subscribe(() => {
+        this.router.navigate(['/registration-company?status=complete']); //これは登録完了のページに飛ぶ
       });
   }
 

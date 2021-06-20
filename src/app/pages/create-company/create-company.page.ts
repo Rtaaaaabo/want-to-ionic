@@ -78,9 +78,8 @@ export class CreateCompanyPage implements OnInit {
       .pipe(map((token) => requestContent.otp = token))
       .pipe(concatMap(() => this.logic.sendEmailForRegister(requestContent)))
       .pipe(concatMap(() => this.logic.createCompanyToDynamoDB(requestContent)))
-      .subscribe((data) => {
-        console.log('[sendEmailForRegister ID]', data);
-        this.router.navigate(['/']);
+      .subscribe(() => {
+        this.router.navigate(['/registration-company?status=progress']);
       });
   }
 
