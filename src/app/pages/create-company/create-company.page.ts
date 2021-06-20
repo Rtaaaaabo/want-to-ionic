@@ -81,7 +81,7 @@ export class CreateCompanyPage implements OnInit {
     //   .subscribe(() => {
     //     this.router.navigate(['/registration-company?status=progress']);
     //   });
-    this.router.navigate(['/complete-register'], { queryParams: { status: 'progress' } });
+    this.router.navigate(['/complete-register'], { queryParams: { status: 'progress', email: 'test@gmail.com' } });
   }
 
 }
