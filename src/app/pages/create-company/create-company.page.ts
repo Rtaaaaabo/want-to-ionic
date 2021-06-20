@@ -61,26 +61,27 @@ export class CreateCompanyPage implements OnInit {
    * 会社のアカウントを作成して、担当者のユーザーも作成します→ Authにも送る
    */
   registerCompany(): void {
-    const date = new Date();
-    const timeStamp = date.getTime();
-    const companyId = `company_${timeStamp}_${uuid()}`;
-    const companyName = this.createCompanyForm.get('companyName').value;
-    const officerName = this.createCompanyForm.get('officerName').value;
-    const officerEmail = this.createCompanyForm.get('officerEmail').value;
-    let requestContent = {
-      id: companyId,
-      name: `${companyName}`,
-      officer: [{ officerEmail: officerEmail, officerName: officerName }],
-      isRegistered: false,
-      otp: '',
-    }
-    this.logic.generateOneTimePassword(companyId)
-      .pipe(map((token) => requestContent.otp = token))
-      .pipe(concatMap(() => this.logic.sendEmailForRegister(requestContent)))
-      .pipe(concatMap(() => this.logic.createCompanyToDynamoDB(requestContent)))
-      .subscribe(() => {
-        this.router.navigate(['/registration-company?status=progress']);
-      });
+    // const date = new Date();
+    // const timeStamp = date.getTime();
+    // const companyId = `company_${timeStamp}_${uuid()}`;
+    // const companyName = this.createCompanyForm.get('companyName').value;
+    // const officerName = this.createCompanyForm.get('officerName').value;
+    // const officerEmail = this.createCompanyForm.get('officerEmail').value;
+    // let requestContent = {
+    //   id: companyId,
+    //   name: `${companyName}`,
+    //   officer: [{ officerEmail: officerEmail, officerName: officerName }],
+    //   isRegistered: false,
+    //   otp: '',
+    // }
+    // this.logic.generateOneTimePassword(companyId)
+    //   .pipe(map((token) => requestContent.otp = token))
+    //   .pipe(concatMap(() => this.logic.sendEmailForRegister(requestContent)))
+    //   .pipe(concatMap(() => this.logic.createCompanyToDynamoDB(requestContent)))
+    //   .subscribe(() => {
+    //     this.router.navigate(['/registration-company?status=progress']);
+    //   });
+    this.router.navigate(['/complete-register'], { queryParams: { status: 'progress' } });
   }
 
 }

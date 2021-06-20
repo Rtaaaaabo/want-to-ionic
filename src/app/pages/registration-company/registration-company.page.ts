@@ -88,7 +88,7 @@ export class RegistrationCompanyPage implements OnInit {
           text: 'OK',
           role: 'incorrect',
           handler: () => {
-            console.log('LPに戻すでよいか?')
+            this.router.navigate(['/create-company']);
           },
         }
       ],
