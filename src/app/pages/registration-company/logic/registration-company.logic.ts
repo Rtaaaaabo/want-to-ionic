@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { Company, ListCompanysQuery, ModelCompanyFilterInput, UpdateCompanyInput } from 'src/app/shared/service/amplify.service';
 import { CompanyRegister } from '../interface/company-register.interface';
+import { SessionService } from '../../../shared/service/session.service';
 import { RegistrationCompanyService } from '../service/registration-company.service';
 
 @Injectable({
@@ -11,6 +12,7 @@ export class RegistrationCompanyLogic {
 
   constructor(
     private registerCompanyService: RegistrationCompanyService,
+    private sessionService: SessionService,
   ) { }
 
   /**
@@ -46,5 +48,9 @@ export class RegistrationCompanyLogic {
  */
   isValidOneTimePassword(token: string, companyId: string): Observable<any> {
     return this.registerCompanyService.isValidOTP(token, companyId);
+  }
+
+  registrationUserOfficer(): Observable<any> {
+    return of({});
   }
 }

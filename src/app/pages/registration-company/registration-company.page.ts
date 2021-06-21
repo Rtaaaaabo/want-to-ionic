@@ -22,7 +22,7 @@ export class RegistrationCompanyPage implements OnInit {
     companyOfficer: new FormArray([new FormGroup({
       officerName: new FormControl('', Validators.compose([Validators.required])),
       officerEmail: new FormControl('', Validators.compose([Validators.required, Validators.email])),
-    })])
+    })]),
   });
 
   get officerForm(): FormGroup {
@@ -51,7 +51,6 @@ export class RegistrationCompanyPage implements OnInit {
       .pipe(concatMap((token) => this.logic.fetchCompanyInfo(token)))
       .pipe(map(({ items }) => items))
       .subscribe((result) => {
-        console.log('RESULT', result);
         this.companyInfo = result[0];
         this.companyForm.patchValue({
           companyName: this.companyInfo.name,
@@ -101,6 +100,8 @@ export class RegistrationCompanyPage implements OnInit {
    */
   registerCompany(): void {
     this.logic.updateCompanyInfo(this.companyInfo, this.companyForm.value)
+      // Officerに会員登録用のURLを送信する
+      // .pipe(concatMap(() => this.logic.registrationUserOfficer()))
       // これはNgOnInitの処理とする
       .pipe(concatMap(() => this.logic.isValidOneTimePassword(this.token, this.companyInfo.id)))
       .subscribe(() => {
