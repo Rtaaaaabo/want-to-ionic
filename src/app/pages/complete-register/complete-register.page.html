@@ -1,13 +1,9 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>{{viewContent.title}}</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
-  <ion-card class="card-css">
-    <ion-card-content class="card-content">
-      {{ viewContent.content }}
-    </ion-card-content>
-  </ion-card>
+  <div class="text-content">
+    <h2>{{viewContent.title}}</h2>
+    <ion-text>{{viewContent.content}}</ion-text>
+  </div>
+  <ion-button (click)="navigateTo()" class="btn btn-ok" expand="block"
+    >{{viewContent.button}}</ion-button
+  >
 </ion-content>
