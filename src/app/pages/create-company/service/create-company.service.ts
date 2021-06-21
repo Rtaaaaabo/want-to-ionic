@@ -25,7 +25,6 @@ export class CreateCompanyService {
    * @returns CreateCompanyした結果がCreateCompanyMutation形式で返る
    */
   createCompany(requestContent: CreateCompanyInput): Observable<CreateCompanyMutation> {
-    console.log('[CreateCompanyService createCompany]', requestContent);
     return from(this.amplifyService.CreateCompany(requestContent));
   }
 
