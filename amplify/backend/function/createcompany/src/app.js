@@ -80,7 +80,6 @@ app.post("/register/company", async (req, res) => {
 });
 
 app.post("/update/company", async (req, res) => {
-  console.log("[UpdateCompany]", req);
   const params = {
     Destination: {
       ToAddresses: ["r.taaaaabo+ses@gmail.com"],

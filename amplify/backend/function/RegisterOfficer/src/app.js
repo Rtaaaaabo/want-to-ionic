@@ -26,7 +26,7 @@ app.use(function (req, res, next) {
 });
 
 app.post("/register/officer", async function (req, res) {
-  console.log("[RegisterOfficer]", req);
+  console.log("[RegisterOfficer body]", req.body);
   const params = {
     Destination: {
       ToAddresses: ["r.taaaaabo+ses@gmail.com"],
@@ -64,15 +64,15 @@ app.post("/register/officer", async function (req, res) {
     },
     Source: "r.taaaaabo+ses@gmail.com",
   };
+  AWS.config.update({ region: "ap-northeast-1" });
   const ses = new AWS.SES();
+
   try {
     await ses.sendEmail(params).promise();
-    res.json({});
     return res.status(200).json({});
-  } catch {
-    return res
-      .status(500)
-      .json({ success: "post call succeed!", url: req.url, body: req.body });
+  } catch (error) {
+    console.log("[register error]", error);
+    return res.status(500).send(`Internal Server Error Message: ${error}`);
   }
 });
 
