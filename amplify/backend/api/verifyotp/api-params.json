@@ -1,80 +1,53 @@
 {
-    "paths": [
-        {
-            "name": "/verify-otp",
-            "lambdaFunction": "verifyToken",
-            "privacy": {
-                "protected": true,
-                "auth": [
-                    "/POST",
-                    "/GET",
-                    "/PUT",
-                    "/PATCH",
-                    "/DELETE"
-                ],
-                "unauth": [
-                    "/POST",
-                    "/GET",
-                    "/PUT",
-                    "/PATCH",
-                    "/DELETE"
-                ]
-            },
-            "policyResourceName": "/verify-otp"
-        },
-        {
-            "name": "/verify-otp/generate",
-            "lambdaFunction": "verifyToken",
-            "privacy": {
-                "protected": true,
-                "auth": [
-                    "/POST",
-                    "/GET",
-                    "/PUT",
-                    "/PATCH",
-                    "/DELETE"
-                ],
-                "unauth": [
-                    "/POST",
-                    "/GET",
-                    "/PUT",
-                    "/PATCH",
-                    "/DELETE"
-                ]
-            },
-            "policyResourceName": "/verify-otp/generate"
-        },
-        {
-            "name": "/verify-otp/check",
-            "lambdaFunction": "verifyToken",
-            "privacy": {
-                "open": true
-            },
-            "policyResourceName": "/verify-otp/check"
-        }
-    ],
-    "resourceName": "verifyotp",
-    "apiName": "verifyotp",
-    "functionArns": [
-        {
-            "lambdaFunction": "verifyToken"
-        }
-    ],
-    "privacy": {
-        "auth": 2,
-        "unauth": 2,
-        "authRoleName": "amplify-wantto-dev-234052-authRole",
-        "unAuthRoleName": "amplify-wantto-dev-234052-unauthRole"
+  "paths": [
+    {
+      "name": "/verify-otp",
+      "lambdaFunction": "verifyToken",
+      "privacy": {
+        "protected": true,
+        "auth": ["/POST", "/GET", "/PUT", "/PATCH", "/DELETE"],
+        "unauth": ["/POST", "/GET", "/PUT", "/PATCH", "/DELETE"]
+      },
+      "policyResourceName": "/verify-otp"
     },
-    "dependsOn": [
-        {
-            "category": "function",
-            "resourceName": "verifyToken",
-            "attributes": [
-                "Name",
-                "Arn"
-            ]
-        }
-    ],
-    "uuid": "c268ad25"
+    {
+      "name": "/verify-otp/generate",
+      "lambdaFunction": "verifyToken",
+      "privacy": {
+        "protected": true,
+        "auth": ["/POST", "/GET", "/PUT", "/PATCH", "/DELETE"],
+        "unauth": ["/POST", "/GET", "/PUT", "/PATCH", "/DELETE"]
+      },
+      "policyResourceName": "/verify-otp/generate"
+    },
+    {
+      "name": "/verify-otp/check",
+      "lambdaFunction": "verifyToken",
+      "privacy": {
+        "open": true
+      },
+      "policyResourceName": "/verify-otp/check"
+    }
+  ],
+  "resourceName": "verifyotp",
+  "apiName": "verifyotp",
+  "functionArns": [
+    {
+      "lambdaFunction": "verifyToken"
+    }
+  ],
+  "privacy": {
+    "auth": 2,
+    "unauth": 2,
+    "authRoleName": "amplify-wantto-dev-234052-authRole",
+    "unAuthRoleName": "amplify-wantto-dev-234052-unauthRole"
+  },
+  "dependsOn": [
+    {
+      "category": "function",
+      "resourceName": "verifyToken",
+      "attributes": ["Name", "Arn"]
+    }
+  ],
+  "uuid": "c268ad25"
 }
