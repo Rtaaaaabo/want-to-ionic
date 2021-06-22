@@ -6,6 +6,9 @@ import { API } from 'aws-amplify';
 const apiVerifyOTP = 'verifyotp';
 const pathCheckVerify = '/verify-otp/check';
 
+const apiSendEmail = 'authSendEmail';
+const pathRegisterOfficer = '/register/officer';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -36,5 +39,17 @@ export class RegistrationCompanyService {
       }
     }
     return from(API.post(apiVerifyOTP, pathCheckVerify, requestContent));
+  }
+
+  sendEmailOfficerForRegister(companyId: string, officer: { officerName: string, officerEmail: string }): Observable<any> {
+    console.log('[sendEmailOfficerForRegister service]', companyId, officer);
+    const requestContent = {
+      body: {
+        companyId: companyId,
+        name: officer.officerName,
+        email: officer.officerEmail,
+      }
+    }
+    return from(API.post(apiSendEmail, pathRegisterOfficer, requestContent));
   }
 }

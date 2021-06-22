@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { from, Observable, of } from 'rxjs';
+import { concatMap } from 'rxjs/operators';
 import { Company, ListCompanysQuery, ModelCompanyFilterInput, UpdateCompanyInput } from 'src/app/shared/service/amplify.service';
 import { CompanyRegister } from '../interface/company-register.interface';
 import { SessionService } from '../../../shared/service/session.service';
@@ -54,8 +55,10 @@ export class RegistrationCompanyLogic {
     return of({});
   }
 
-  sendToOfficerForRegister(companyInfo: Company): Observable<any> {
-    return of(companyInfo);
+  sendToOfficerForRegister(companyInfo: Company, officerArray: Array<{ officerName: string, officerEmail: string }>): Observable<any> {
+    console.log('[sendToOfficerForRegister]', companyInfo, officerArray);
+    return from(officerArray)
+      .pipe(concatMap((officer) => this.registerCompanyService.sendEmailOfficerForRegister(companyInfo.id, officer)));
   }
 
 }

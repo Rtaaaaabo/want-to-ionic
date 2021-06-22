@@ -30,7 +30,7 @@
         },
         "RegisterOfficer": {
           "deploymentBucketName": "amplify-wantto-dev-234052-deployment",
-          "s3Key": "amplify-builds/RegisterOfficer-4c4747415337684d395a-build.zip"
+          "s3Key": "amplify-builds/RegisterOfficer-3566335670346c56794a-build.zip"
         }
       }
     }

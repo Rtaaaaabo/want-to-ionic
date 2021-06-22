@@ -25,7 +25,8 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.post("/register/officer", function (req, res) {
+app.post("/register/officer", async function (req, res) {
+  console.log("[RegisterOfficer]", req);
   const params = {
     Destination: {
       ToAddresses: ["r.taaaaabo+ses@gmail.com"],
