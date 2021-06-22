@@ -26,8 +26,53 @@ app.use(function (req, res, next) {
 });
 
 app.post("/register/officer", function (req, res) {
-  // Add your code here
-  res.json({ success: "post call succeed!", url: req.url, body: req.body });
+  const params = {
+    Destination: {
+      ToAddresses: ["r.taaaaabo+ses@gmail.com"],
+    },
+    Message: {
+      Body: {
+        Html: {
+          Charset: "UTF-8",
+          Data: `
+          <html lang="ja">
+          <head><meta charset="utf-8"></head>
+          <body>
+          <h3>${req.body.name} さん</h3><br/>
+          <p>登録をありがとうございます。</p>
+          <p>下記をクリック後にユーザー登録をお願いいたします。</p>
+          <p>http://localhost:8100/signup?companyId=${req.body.companyId}&email=${req.body.email}</p>
+          </body>
+          </html>
+          `,
+        },
+        Text: {
+          Charset: "UTF-8",
+          Data: `
+          ${req.body.name}さん \n
+          登録ありがとうございます。\n
+          下記をクリック後にユーザー登録をお願いいたします。
+          http://localhost:8100/signup?companyId=${req.body.companyId}&email=${req.body.email}
+          `,
+        },
+      },
+      Subject: {
+        Charset: "UTF-8",
+        Data: "担当者のユーザー登録をお願いいたします",
+      },
+    },
+    Source: "r.taaaaabo+ses@gmail.com",
+  };
+  const ses = new AWS.SES();
+  try {
+    await ses.sendEmail(params).promise();
+    res.json({});
+    return res.status(200).json({});
+  } catch {
+    return res
+      .status(500)
+      .json({ success: "post call succeed!", url: req.url, body: req.body });
+  }
 });
 
 app.listen(3000, function () {

@@ -26,7 +26,6 @@ app.use(async (req, res, next) => {
 });
 
 app.post("/register/company", async (req, res) => {
-  console.log("[RegisterCompany req]", req);
   const params = {
     Destination: {
       ToAddresses: ["r.taaaaabo+ses@gmail.com"],
