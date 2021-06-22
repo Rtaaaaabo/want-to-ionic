@@ -100,11 +100,13 @@ export class RegistrationCompanyPage implements OnInit {
    */
   registerCompany(): void {
     this.logic.updateCompanyInfo(this.companyInfo, this.companyForm.value)
-      // Officerに会員登録用のURLを送信する
-      // .pipe(concatMap(() => this.logic.registrationUserOfficer()))
+      // Officerに会員登録用のURLをメール送信し、そこにはCompanyと紐付けられるようにする
+      .pipe(concatMap(() => this.logic.sendToOfficerForRegister(this.companyInfo)))
+
       // これはNgOnInitの処理とする
       .pipe(concatMap(() => this.logic.isValidOneTimePassword(this.token, this.companyInfo.id)))
       .subscribe(() => {
+
         this.router.navigate(['/registration-company?status=complete']); //これは登録完了のページに飛ぶ
       });
   }

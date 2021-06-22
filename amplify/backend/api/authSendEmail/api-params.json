@@ -59,6 +59,14 @@
                 "open": true
             },
             "policyResourceName": "/update/company"
+        },
+        {
+            "name": "/register/officer",
+            "lambdaFunction": "RegisterOfficer",
+            "privacy": {
+                "open": true
+            },
+            "policyResourceName": "/register/officer"
         }
     ],
     "resourceName": "authSendEmail",
@@ -69,6 +77,9 @@
         },
         {
             "lambdaFunction": "createcompany"
+        },
+        {
+            "lambdaFunction": "RegisterOfficer"
         }
     ],
     "privacy": {
@@ -93,7 +104,15 @@
                 "Name",
                 "Arn"
             ]
+        },
+        {
+            "category": "function",
+            "resourceName": "RegisterOfficer",
+            "attributes": [
+                "Name",
+                "Arn"
+            ]
         }
     ],
-    "uuid": "36fc497f"
+    "uuid": "63cb3c94"
 }

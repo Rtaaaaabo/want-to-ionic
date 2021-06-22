@@ -50,7 +50,12 @@ export class RegistrationCompanyLogic {
     return this.registerCompanyService.isValidOTP(token, companyId);
   }
 
-  registrationUserOfficer(): Observable<any> {
+  registrationUserOfficer(companyInfo: Company): Observable<any> {
     return of({});
   }
+
+  sendToOfficerForRegister(companyInfo: Company): Observable<any> {
+    return of(companyInfo);
+  }
+
 }
