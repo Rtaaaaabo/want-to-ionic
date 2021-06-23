@@ -1,7 +1,7 @@
 # want-to-ionic
 
-- node v12.18.4
-- npm v6.14.8
+- node v14.17.0
+- npm v7.18.1
 
 # 開発
 
