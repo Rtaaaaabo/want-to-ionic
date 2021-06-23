@@ -99,19 +99,14 @@ export class RegistrationCompanyPage implements OnInit {
    *  会社を本登録します
    */
   registerCompany(): void {
-    console.log('Registration component');
-    this.logic.sendToOfficerForRegister(this.companyInfo, this.officerArray.value)
-
-      // this.logic.updateCompanyInfo(this.companyInfo, this.companyForm.value)
-      //   // Officerに会員登録用のURLをメール送信し、そこにはCompanyと紐付けられるようにする
-      //   .pipe(concatMap(() => this.logic.sendToOfficerForRegister(this.companyInfo, this.officerArray.value)))
-
+    this.logic.updateCompanyInfo(this.companyInfo, this.companyForm.value)
+      // Officerに会員登録用のURLをメール送信し、そこにはCompanyと紐付けられるようにする
+      .pipe(concatMap(() => this.logic.sendToOfficerForRegister(this.companyInfo, this.officerArray.value)))
       //   // これはNgOnInitの処理とする
       //   .pipe(concatMap(() => this.logic.isValidOneTimePassword(this.token, this.companyInfo.id)))
 
-      .subscribe((data) => {
-        console.log('[registrationComponent registerCompany data]', data);
-        //     this.router.navigate(['/registration-company?status=complete']); //これは登録完了のページに飛ぶ
+      .subscribe(() => {
+        this.router.navigate(['/complete-register'], { queryParams: { status: 'done' } });
       });
   }
 
