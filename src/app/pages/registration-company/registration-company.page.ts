@@ -104,7 +104,6 @@ export class RegistrationCompanyPage implements OnInit {
       .pipe(concatMap(() => this.logic.sendToOfficerForRegister(this.companyInfo, this.officerArray.value)))
       //   // これはNgOnInitの処理とする
       //   .pipe(concatMap(() => this.logic.isValidOneTimePassword(this.token, this.companyInfo.id)))
-
       .subscribe(() => {
         this.router.navigate(['/complete-register'], { queryParams: { status: 'done' } });
       });
