@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { SignupLogic } from './logic/signup.logic';
 import { InterfaceSignup } from '../../interfaces/signup.interface';
@@ -18,13 +18,21 @@ export class SignupPage implements OnInit {
     confirmPasswordform: new FormControl('', [Validators.required, Validators.minLength(8)])
   }, this.checkPasswords);
 
+  companyId: string;
+
   constructor(
     private readonly router: Router,
+    private readonly route: ActivatedRoute,
     private readonly location: Location,
     private logic: SignupLogic
   ) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.route.queryParams.subscribe((params) => {
+      this.signUpForm.patchValue({ email: params.email });
+      // console.log(params);
+    })
+  }
 
   checkPasswords(group: FormGroup): null | { notSame: boolean } {
     let password = group.get('passwordform').value;

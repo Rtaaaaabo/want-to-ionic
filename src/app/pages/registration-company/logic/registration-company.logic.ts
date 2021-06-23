@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { from, Observable, of } from 'rxjs';
-import { concatMap } from 'rxjs/operators';
-import { Company, ListCompanysQuery, ModelCompanyFilterInput, UpdateCompanyInput } from 'src/app/shared/service/amplify.service';
+import { concatMap, map } from 'rxjs/operators';
+import { Company, ListCompanysQuery, ModelCompanyFilterInput, UpdateCompanyInput, CreateUserInput } from 'src/app/shared/service/amplify.service';
 import { CompanyRegister } from '../interface/company-register.interface';
 import { SessionService } from '../../../shared/service/session.service';
 import { RegistrationCompanyService } from '../service/registration-company.service';
+import { v4 as uuid } from 'uuid';
 
 @Injectable({
   providedIn: 'root'
@@ -56,9 +57,13 @@ export class RegistrationCompanyLogic {
   }
 
   sendToOfficerForRegister(companyInfo: Company, officerArray: Array<{ officerName: string, officerEmail: string }>): Observable<any> {
-    console.log('[sendToOfficerForRegister]', companyInfo, officerArray);
     return from(officerArray)
       .pipe(concatMap((officer) => this.registerCompanyService.sendEmailOfficerForRegister(companyInfo.id, officer)));
+  }
+
+  createCompanyMembersToDynamoDb(companyInfo: Company, officerArray: Array<{ officerName: string, officerEmail: string }>): Observable<any> {
+    return from(officerArray)
+      .pipe(concatMap((officer) => this.registerCompanyService.createUserToDynamoDb(companyInfo.id, officer)))
   }
 
 }

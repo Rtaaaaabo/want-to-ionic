@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable, from } from 'rxjs';
-import { AmplifyService, ListCompanysQuery, ModelCompanyFilterInput, UpdateCompanyInput, UpdateCompanyMutation } from 'src/app/shared/service/amplify.service';
+import { AmplifyService, ListCompanysQuery, ModelCompanyFilterInput, UpdateCompanyInput, UpdateCompanyMutation, CreateUserInput } from 'src/app/shared/service/amplify.service';
 import { API } from 'aws-amplify';
+import { v4 as uuid } from 'uuid';
 
 const apiVerifyOTP = 'verifyotp';
 const pathCheckVerify = '/verify-otp/check';
@@ -42,7 +43,6 @@ export class RegistrationCompanyService {
   }
 
   sendEmailOfficerForRegister(companyId: string, officer: { officerName: string, officerEmail: string }): Observable<any> {
-    console.log('[sendEmailOfficerForRegister service]', companyId, officer);
     const requestContent = {
       body: {
         companyId: companyId,
@@ -51,5 +51,16 @@ export class RegistrationCompanyService {
       }
     }
     return from(API.post(apiSendEmail, pathRegisterOfficer, requestContent));
+  }
+
+  createUserToDynamoDb(companyId: string, officer: { officerName: string, officerEmail: string }): Observable<any> {
+    const requestContent: CreateUserInput = {
+      id: `${uuid()}`,
+      username: `${officer.officerName}`,
+      email: `${officer.officerEmail}`,
+      companyID: companyId,
+      registered: false,
+    }
+    return from(this.amplifyService.CreateUser(requestContent));
   }
 }
