@@ -22,7 +22,8 @@ export class CreateCompanyLogic {
   createCompanyToDynamoDB(content: CreateCompanyInput): Observable<string> {
     const requestContent = content;
     return this.createCompanyService.createCompany(requestContent)
-      .pipe(map((result) => result.id));
+      .pipe(map((result) => result.id))
+      .pipe(catchError((error) => of(`ErrorMessage: ${error}`)))
   }
 
   /**
@@ -60,7 +61,6 @@ export class CreateCompanyLogic {
     }
     return this.createCompanyService.sendEmailForRegister(requestBody)
       .pipe(catchError((e) => `Not Send for Register Message: ${e}`))
-    // .pipe(() => of('Send Success'))
   }
 
   /**
@@ -69,6 +69,7 @@ export class CreateCompanyLogic {
    */
   generateOneTimePassword(companyId: string): Observable<string> {
     return this.createCompanyService.generateOTP(companyId)
-      .pipe(map(({ otp }) => otp));
+      .pipe(map(({ otp }) => otp))
+    // .pipe(catchError((e) => this.handleError<string>('generateOneTimePassword', '')));
   }
 }

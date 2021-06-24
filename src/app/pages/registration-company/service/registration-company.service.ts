@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, from } from 'rxjs';
-import { AmplifyService, ListCompanysQuery, ModelCompanyFilterInput, UpdateCompanyInput, UpdateCompanyMutation, CreateUserInput } from 'src/app/shared/service/amplify.service';
+import { AmplifyService, ListCompanysQuery, ModelCompanyFilterInput, UpdateCompanyInput, UpdateCompanyMutation, CreateUserInput, CreateUserMutation } from 'src/app/shared/service/amplify.service';
 import { API } from 'aws-amplify';
 import { v4 as uuid } from 'uuid';
 
@@ -52,14 +52,14 @@ export class RegistrationCompanyService {
     }
     return from(API.post(apiSendEmail, pathRegisterOfficer, requestContent));
   }
-
-  createUserToDynamoDb(companyId: string, officer: { officerName: string, officerEmail: string }): Observable<any> {
+  // CreateUserMutation
+  createUserToDynamoDb(companyId: string, officer: { officerName: string, officerEmail: string }): Observable<CreateUserMutation> {
     const requestContent: CreateUserInput = {
       id: `${uuid()}`,
       username: `${officer.officerName}`,
       email: `${officer.officerEmail}`,
       companyID: companyId,
-      registered: false,
+      registered: false, // Cognitoに登録しているかいないかで分けるか
     }
     return from(this.amplifyService.CreateUser(requestContent));
   }

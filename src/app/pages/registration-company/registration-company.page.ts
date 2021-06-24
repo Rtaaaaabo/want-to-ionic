@@ -46,11 +46,14 @@ export class RegistrationCompanyPage implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    // これはNgOnInitの処理とする
+    // this.logic.isValidOneTimePassword(this.token, this.companyInfo.id)
     this.route.queryParams.pipe(filter(params => params.token))
       .pipe(map(({ token }) => this.token = token))
       .pipe(concatMap((token) => this.logic.fetchCompanyInfo(token)))
       .pipe(map(({ items }) => items))
       .subscribe((result) => {
+        console.log('[RegistrationCompany ]', result);
         this.companyInfo = result[0];
         this.companyForm.patchValue({
           companyName: this.companyInfo.name,
@@ -100,10 +103,9 @@ export class RegistrationCompanyPage implements OnInit {
    */
   registerCompany(): void {
     this.logic.updateCompanyInfo(this.companyInfo, this.companyForm.value)
+      .pipe(concatMap(() => this.logic.createCompanyMembersToDynamoDb(this.companyInfo, this.officerArray.value)))
       // Officerに会員登録用のURLをメール送信し、そこにはCompanyと紐付けられるようにする
       .pipe(concatMap(() => this.logic.sendToOfficerForRegister(this.companyInfo, this.officerArray.value)))
-      //   // これはNgOnInitの処理とする
-      //   .pipe(concatMap(() => this.logic.isValidOneTimePassword(this.token, this.companyInfo.id)))
       .subscribe(() => {
         this.router.navigate(['/complete-register'], { queryParams: { status: 'done' } });
       });
