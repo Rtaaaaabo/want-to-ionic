@@ -1,0 +1,37 @@
+[ログイン]
+*input Email
+*input パスワード
+--
+click ログイン
+==> ホーム
+
+[企業アカウントの作成]
+*input 会社名
+*input 担当者名
+*input 担当者Email
+*input パスワード
+*input パスワード(確認用)
+--
+click 登録(メール送信)
+==> 仮登録完了
+click メール送信
+==> 送信
+
+
+[仮登録完了]
+仮登録完了
+--
+click OK
+==> ログイン
+
+[会社を登録する]
+(モーダルの表示)
+*input 会社名
+*input 会社のメールアドレス
+*input 会社の電話番号
+*input 担当者氏名
+*input 担当者Email
+--
+click 登録
+==> 仮登録完了
+
