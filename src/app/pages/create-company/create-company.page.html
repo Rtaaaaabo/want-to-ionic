@@ -1,63 +1,67 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>企業アカウントの作成</ion-title>
-    <ion-buttons slot="start">
-      <ion-button (click)="goBackToSetting()">
-        <ion-icon name="chevron-back-outline"></ion-icon>
-      </ion-button>
-    </ion-buttons>
+    <ion-title>会社情報を登録する</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <form [formGroup]="createCompanyForm" class="form-content">
+  <form [formGroup]="companyForm" class="form-content">
     <ion-list>
+      <ion-list-header>
+        <ion-label>基本情報</ion-label>
+      </ion-list-header>
       <ion-item>
-        <ion-label position="stacked"
-          >会社名<ion-text color="danger">*</ion-text></ion-label
-        >
-        <ion-input type="text" formControlName="companyName"></ion-input>
+        <ion-label position="stacked">会社名</ion-label>
+        <ion-input formControlName="companyName"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label position="stacked"
-          >担当者名<ion-text color="danger">*</ion-text></ion-label
-        >
-        <ion-input type="text" formControlName="officerName"></ion-input>
+        <ion-label position="stacked">会社のメールアドレス</ion-label>
+        <ion-input formControlName="companyEmail"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label position="stacked"
-          >担当者Email<ion-text color="danger">*</ion-text></ion-label
-        >
-        <ion-input type="email" formControlName="officerEmail"></ion-input>
+        <ion-label position="stacked">会社の電話番号</ion-label>
+        <ion-input formControlName="companyTel"></ion-input>
       </ion-item>
 
-      <ion-item>
-        <ion-label position="stacked"
-          >パスワード<ion-text color="danger">*</ion-text></ion-label
-        >
-        <ion-input
-          type="password"
-          formControlName="officerPassword"
-        ></ion-input>
-      </ion-item>
-
-      <ion-item>
-        <ion-label position="stacked"
-          >パスワード(確認用)<ion-text color="danger">*</ion-text></ion-label
-        >
-        <ion-input
-          type="password"
-          formControlName="officerPasswordConfirm"
-        ></ion-input>
-      </ion-item>
+      <ng-container formGroupName="officerForm">
+        <ion-list-header>
+          <ion-label>担当者</ion-label>
+        </ion-list-header>
+        <ng-container>
+          <ng-container>
+            <ion-item>
+              <ion-label position="stacked">担当者名</ion-label>
+              <ion-input formControlName="officerName"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="stacked">担当者Email</ion-label>
+              <ion-input formControlName="officerEmail"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="stacked">パスワード</ion-label>
+              <ion-input
+                type="password"
+                formControlName="officerPassword"
+              ></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="stacked">パスワード(確認用)</ion-label>
+              <ion-input
+                type="password"
+                formControlName="officerPasswordConfirm"
+              ></ion-input>
+            </ion-item>
+          </ng-container>
+        </ng-container>
+      </ng-container>
     </ion-list>
   </form>
 </ion-content>
 <ion-footer>
   <ion-toolbar>
     <ion-button
-      expand="full"
-      [disabled]="createCompanyForm.invalid"
+      expand="block"
+      [disabled]="companyForm.invalid"
       (click)="registerCompany()"
       >登録</ion-button
     >

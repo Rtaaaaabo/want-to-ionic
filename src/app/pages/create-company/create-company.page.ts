@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { Router } from '@angular/router';
 import { concatMap, map } from 'rxjs/operators';
 import { CreateCompanyLogic } from './logic/create-company.logic';
@@ -26,15 +26,18 @@ export class CreateCompanyPage implements OnInit {
     ]
   };
 
-  createCompanyForm = new FormGroup({
-    companyName: new FormControl('', Validators.compose([Validators.required])),
-    officerName: new FormControl('', Validators.compose([Validators.required])),
-    officerEmail: new FormControl('', Validators.compose([Validators.required, Validators.email])),
-    officerPassword: new FormControl('', Validators.compose([Validators.required, Validators.minLength(8)])),
-    officerPasswordConfirm: new FormControl('', Validators.compose([Validators.required, Validators.minLength(8)])),
-    // officerPassword: new FormControl('', Validators.compose([Validators.required, Validators.minLength(8), Validators.pattern(/^([a-zA-Z0-9]{8,})$/)]))
-    // 8文字以上の英数字のPassword
-  }, this.checkPassword);
+  companyForm = new FormGroup({
+    companyIcon: new FormControl(''),
+    companyName: new FormControl('', [Validators.required]),
+    companyEmail: new FormControl('', Validators.compose([Validators.required, Validators.email])),
+    companyTel: new FormControl('', Validators.compose([Validators.required, Validators.pattern(/\d{10}/)])), // 数字10桁
+    officerForm: new FormGroup({
+      officerName: new FormControl('', Validators.compose([Validators.required])),
+      officerEmail: new FormControl('', Validators.compose([Validators.required, Validators.email])),
+      officerPassword: new FormControl('', Validators.compose([Validators.required, Validators.minLength(8)])),
+      officerPasswordConfirm: new FormControl('', Validators.compose([Validators.required, Validators.minLength(8)])),
+    }, this.checkPassword)
+  });
 
   constructor(
     private readonly router: Router,
@@ -58,45 +61,46 @@ export class CreateCompanyPage implements OnInit {
   }
 
   get aliasGetCompanyName(): FormControl {
-    return <FormControl>this.createCompanyForm.get('companyName');
+    return <FormControl>this.companyForm.get('companyName');
   }
 
   get aliasGetOfficerName(): FormControl {
-    return <FormControl>this.createCompanyForm.get('officerName');
+    return <FormControl>this.companyForm.get('officerName');
   }
 
   get aliasGetOfficerEmail(): FormControl {
-    return <FormControl>this.createCompanyForm.get('officerEmail');
+    return <FormControl>this.companyForm.get('officerEmail');
   }
 
   /**
    * 会社のアカウントを作成して、担当者のユーザーも作成します→ Authにも送る
    */
   registerCompany(): void {
-    const date = new Date();
-    const timeStamp = date.getTime();
-    const companyId = `company_${timeStamp}_${uuid()}`;
-    const companyName = this.aliasGetCompanyName.value;
-    const officerName = this.aliasGetOfficerName.value;
-    const officerEmail = this.aliasGetOfficerEmail.value;
-    let requestContent = {
-      id: companyId,
-      name: `${companyName}`,
-      officer: [{
-        officerEmail: officerEmail,
-        officerName: officerName
-      }],
-      isRegistered: false,
-      otp: '',
-    }
-    this.logic.generateOneTimePassword(companyId)
-      .pipe(map((token) => requestContent.otp = token))
-      .pipe(concatMap(() => this.logic.sendEmailForRegister(requestContent)))
-      .pipe(concatMap(() => this.logic.createCompanyToDynamoDB(requestContent)))
-      .subscribe((data) => {
-        console.log('[CreateCompany data]', data);
-        this.router.navigate(['/complete-register'], { queryParams: { status: 'progress' } });
-      });
+    console.log(this.companyForm.value);
+    // const date = new Date();
+    // const timeStamp = date.getTime();
+    // const companyId = `company_${timeStamp}_${uuid()}`;
+    // const companyName = this.aliasGetCompanyName.value;
+    // const officerName = this.aliasGetOfficerName.value;
+    // const officerEmail = this.aliasGetOfficerEmail.value;
+    // let requestContent = {
+    //   id: companyId,
+    //   name: `${companyName}`,
+    //   officer: [{
+    //     officerEmail: officerEmail,
+    //     officerName: officerName
+    //   }],
+    //   isRegistered: false,
+    //   otp: '',
+    // }
+    // this.logic.generateOneTimePassword(companyId)
+    //   .pipe(map((token) => requestContent.otp = token))
+    //   .pipe(concatMap(() => this.logic.sendEmailForRegister(requestContent)))
+    //   .pipe(concatMap(() => this.logic.createCompanyToDynamoDB(requestContent)))
+    //   .subscribe((data) => {
+    //     console.log('[CreateCompany data]', data);
+    //     this.router.navigate(['/complete-register'], { queryParams: { status: 'progress' } });
+    //   });
   }
 
 }
