@@ -12,16 +12,19 @@ click ログイン
 *input 会社の電話番号
 *input 担当者名
 *input 担当者Email
+*input パスワード
+*input パスワード(確認用)
 --
 click 登録(メール送信)
-==> 仮登録完了
-click メール送信
-==> 送信
+==> Onetimepassword確認
+(担当者にonepassword入力ページへ遷移するメールを送信)
 
-[支払い画面]
+[Onetimepassword確認]
+(Cognitoから発行されたOTPを入力する)
+*input 確認コード
 --
-click 登録
-==> 
+click 確認
+==> メール送信(会員登録の有無)
 
 [担当者アカウントの作成]
 *input 担当者名

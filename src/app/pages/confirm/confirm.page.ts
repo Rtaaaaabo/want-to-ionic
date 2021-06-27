@@ -25,10 +25,15 @@ export class ConfirmPage implements OnInit {
     this.confirmTargetEmail = this.router.getCurrentNavigation().extras.state.data.email;
   }
 
+  get aliasConfirmNumber(): FormControl {
+    return <FormControl>this.confirmForm.get('confirmNumber');
+  }
+
   confirmSignUp() {
-    this.logic.sendConfirmUser(this.confirmTargetEmail, this.confirmForm.get('confirmNumber').value).subscribe(() => {
-      this.router.navigate(['/login']);
-    })
+    this.logic.sendConfirmUser(this.confirmTargetEmail, this.aliasConfirmNumber.value)
+      .subscribe(() => {
+        this.router.navigate(['/login']);
+      });
   }
 
   reSendSignUp() {

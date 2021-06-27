@@ -34,9 +34,9 @@ export class CreateCompanyPage implements OnInit {
     officerForm: new FormGroup({
       officerName: new FormControl('', Validators.compose([Validators.required])),
       officerEmail: new FormControl('', Validators.compose([Validators.required, Validators.email])),
-      // officerPassword: new FormControl('', Validators.compose([Validators.required, Validators.minLength(8)])),
-      // officerPasswordConfirm: new FormControl('', Validators.compose([Validators.required, Validators.minLength(8)])),
-    })
+      officerPassword: new FormControl('', Validators.compose([Validators.required, Validators.minLength(8)])),
+      officerPasswordConfirm: new FormControl('', Validators.compose([Validators.required, Validators.minLength(8)])),
+    }, this.checkPassword),
   });
 
   constructor(
@@ -47,11 +47,11 @@ export class CreateCompanyPage implements OnInit {
 
   ngOnInit(): void { }
 
-  // checkPassword(group: FormGroup): null | { notSame: boolean } {
-  //   // let password = group.get('officerPassword').value;
-  //   // let passwordConfirm = group.get('officerPasswordConfirm').value;
-  //   // return password = passwordConfirm ? null : { notSame: true };
-  // }
+  checkPassword(group: FormGroup): null | { notSame: boolean } {
+    let password = group.get('officerPassword').value;
+    let passwordConfirm = group.get('officerPasswordConfirm').value;
+    return password = passwordConfirm ? null : { notSame: true };
+  }
 
   /**
    * Setting pageに戻ります
