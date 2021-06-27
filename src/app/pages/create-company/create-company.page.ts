@@ -97,7 +97,7 @@ export class CreateCompanyPage implements OnInit {
       isRegistered: false,
       otp: '',
     };
-    let requestUserContent = {
+    const requestUserContent = {
       name: officerName,
       email: officerEmail,
       password: officerPassword,
@@ -109,8 +109,9 @@ export class CreateCompanyPage implements OnInit {
       //   .pipe(map((token) => requestCompanyContent.otp = token))
       // .pipe(concatMap(() => this.logic.sendEmailForRegister(requestCompanyContent)))
       // .pipe(concatMap(() => this.logic.createCompanyToDynamoDB(requestCompanyContent)))
-      .subscribe(() => {
-        this.router.navigate(['/complete-register'], { queryParams: { status: 'progress' } });
+      .subscribe((data) => {
+        console.log('CreateCompanyToDynamoDB data', data);
+        // this.router.navigate(['/complete-register'], { queryParams: { status: 'progress' } });
       });
   }
 
