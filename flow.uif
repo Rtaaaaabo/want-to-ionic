@@ -6,16 +6,37 @@ click ログイン
 ==> ホーム
 
 [企業アカウントの作成]
+(会社アカウントの作成)
 *input 会社名
+*input 会社のメールアドレス
+*input 会社の電話番号
 *input 担当者名
 *input 担当者Email
-*input パスワード
-*input パスワード(確認用)
 --
 click 登録(メール送信)
 ==> 仮登録完了
 click メール送信
 ==> 送信
+
+[支払い画面]
+--
+click 登録
+==> 
+
+[担当者アカウントの作成]
+*input 担当者名
+*input 担当者Email
+*input パスワード
+*input パスワード(確認用)
+--
+click 登録
+==> Onetimeパスワード確認
+
+[Onetimeパスワード確認]
+*input OneTimeパスワード
+--
+click 確認
+==> ログイン
 
 
 [仮登録完了]
@@ -34,4 +55,6 @@ click OK
 --
 click 登録
 ==> 仮登録完了
+
+
 

@@ -34,9 +34,9 @@ export class CreateCompanyPage implements OnInit {
     officerForm: new FormGroup({
       officerName: new FormControl('', Validators.compose([Validators.required])),
       officerEmail: new FormControl('', Validators.compose([Validators.required, Validators.email])),
-      officerPassword: new FormControl('', Validators.compose([Validators.required, Validators.minLength(8)])),
-      officerPasswordConfirm: new FormControl('', Validators.compose([Validators.required, Validators.minLength(8)])),
-    }, this.checkPassword)
+      // officerPassword: new FormControl('', Validators.compose([Validators.required, Validators.minLength(8)])),
+      // officerPasswordConfirm: new FormControl('', Validators.compose([Validators.required, Validators.minLength(8)])),
+    })
   });
 
   constructor(
@@ -47,11 +47,11 @@ export class CreateCompanyPage implements OnInit {
 
   ngOnInit(): void { }
 
-  checkPassword(group: FormGroup): null | { notSame: boolean } {
-    let password = group.get('officerPassword').value;
-    let passwordConfirm = group.get('officerPasswordConfirm').value;
-    return password = passwordConfirm ? null : { notSame: true };
-  }
+  // checkPassword(group: FormGroup): null | { notSame: boolean } {
+  //   // let password = group.get('officerPassword').value;
+  //   // let passwordConfirm = group.get('officerPasswordConfirm').value;
+  //   // return password = passwordConfirm ? null : { notSame: true };
+  // }
 
   /**
    * Setting pageに戻ります
@@ -65,42 +65,41 @@ export class CreateCompanyPage implements OnInit {
   }
 
   get aliasGetOfficerName(): FormControl {
-    return <FormControl>this.companyForm.get('officerName');
+    return <FormControl>this.companyForm.get('officerForm.officerName');
   }
 
   get aliasGetOfficerEmail(): FormControl {
-    return <FormControl>this.companyForm.get('officerEmail');
+    return <FormControl>this.companyForm.get('officerForm.officerEmail');
   }
+
 
   /**
    * 会社のアカウントを作成して、担当者のユーザーも作成します→ Authにも送る
    */
   registerCompany(): void {
-    console.log(this.companyForm.value);
-    // const date = new Date();
-    // const timeStamp = date.getTime();
-    // const companyId = `company_${timeStamp}_${uuid()}`;
-    // const companyName = this.aliasGetCompanyName.value;
-    // const officerName = this.aliasGetOfficerName.value;
-    // const officerEmail = this.aliasGetOfficerEmail.value;
-    // let requestContent = {
-    //   id: companyId,
-    //   name: `${companyName}`,
-    //   officer: [{
-    //     officerEmail: officerEmail,
-    //     officerName: officerName
-    //   }],
-    //   isRegistered: false,
-    //   otp: '',
-    // }
-    // this.logic.generateOneTimePassword(companyId)
-    //   .pipe(map((token) => requestContent.otp = token))
-    //   .pipe(concatMap(() => this.logic.sendEmailForRegister(requestContent)))
-    //   .pipe(concatMap(() => this.logic.createCompanyToDynamoDB(requestContent)))
-    //   .subscribe((data) => {
-    //     console.log('[CreateCompany data]', data);
-    //     this.router.navigate(['/complete-register'], { queryParams: { status: 'progress' } });
-    //   });
+    const date = new Date();
+    const timeStamp = date.getTime();
+    const companyId = `company_${timeStamp}_${uuid()}`;
+    const companyName = this.aliasGetCompanyName.value;
+    const officerName = this.aliasGetOfficerName.value;
+    const officerEmail = this.aliasGetOfficerEmail.value;
+    let requestContent = {
+      id: companyId,
+      name: `${companyName}`,
+      officer: [{
+        officerEmail: officerEmail,
+        officerName: officerName
+      }],
+      isRegistered: false,
+      otp: '',
+    }
+    this.logic.generateOneTimePassword(companyId)
+      .pipe(map((token) => requestContent.otp = token))
+      .pipe(concatMap(() => this.logic.sendEmailForRegister(requestContent)))
+      .pipe(concatMap(() => this.logic.createCompanyToDynamoDB(requestContent)))
+      .subscribe(() => {
+        this.router.navigate(['/complete-register'], { queryParams: { status: 'progress' } });
+      });
   }
 
 }
