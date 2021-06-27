@@ -15,7 +15,9 @@ export class SessionService {
   }
 
   entryUserSignup(valueObj: IArgsEntrySignup): Observable<string> {
-    return from(Auth.signUp(valueObj)).pipe(map(() => 'Access Success')).pipe(catchError((error) => 'access Denied'));
+    return from(Auth.signUp(valueObj))
+      .pipe(map(() => 'Success'))
+      .pipe(catchError(() => 'Denied'));
   }
 
   isAuthenticated(): Observable<boolean> {

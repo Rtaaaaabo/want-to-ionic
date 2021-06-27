@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { CreateCompanyInput, CreateUserInput, CreateUserMutation } from 'src/app/shared/service/amplify.service';
+import { SessionService } from '../../../shared/service/session.service';
 import { CreateCompanyService } from '../service/create-company.service';
+import { SignUpValue } from '../models/signup.interface';
 import { v4 as uuid } from 'uuid';
 
 @Injectable({
@@ -12,6 +14,7 @@ export class CreateCompanyLogic {
 
   constructor(
     private createCompanyService: CreateCompanyService,
+    private sessionService: SessionService,
   ) { }
 
   /**
@@ -71,5 +74,22 @@ export class CreateCompanyLogic {
     return this.createCompanyService.generateOTP(companyId)
       .pipe(map(({ otp }) => otp))
     // .pipe(catchError((e) => this.handleError<string>('generateOneTimePassword', '')));
+  }
+
+  /**
+   * 担当者を会員登録します
+   * @param value 会員登録に必要な情報
+   * @returns 成功時はSuccessが返ってきて、失敗時はDeniedが返ってくる
+   */
+  entrySignUpUser(value: SignUpValue): Observable<string> {
+    const signUpContent = {
+      username: value.email,
+      password: value.password,
+      attributes: {
+        name: value.name,
+        email: value.email,
+      }
+    }
+    return this.sessionService.entryUserSignup(signUpContent);
   }
 }

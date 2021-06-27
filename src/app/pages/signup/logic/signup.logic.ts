@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { SessionService } from '../../../shared/service/session.service';
-import { Observable, of } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 import { InterfaceSignup } from 'src/app/interfaces/signup.interface';
 
 @Injectable({

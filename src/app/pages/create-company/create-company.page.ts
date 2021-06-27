@@ -72,6 +72,9 @@ export class CreateCompanyPage implements OnInit {
     return <FormControl>this.companyForm.get('officerForm.officerEmail');
   }
 
+  get aliasGetOfficerPassword(): FormControl {
+    return <FormControl>this.companyForm.get('officerForm.officerPassword');
+  }
 
   /**
    * 会社のアカウントを作成して、担当者のユーザーも作成します→ Authにも送る
@@ -83,7 +86,8 @@ export class CreateCompanyPage implements OnInit {
     const companyName = this.aliasGetCompanyName.value;
     const officerName = this.aliasGetOfficerName.value;
     const officerEmail = this.aliasGetOfficerEmail.value;
-    let requestContent = {
+    const officerPassword = this.aliasGetOfficerPassword.value;
+    let requestCompanyContent = {
       id: companyId,
       name: `${companyName}`,
       officer: [{
@@ -92,11 +96,19 @@ export class CreateCompanyPage implements OnInit {
       }],
       isRegistered: false,
       otp: '',
+    };
+    let requestUserContent = {
+      name: officerName,
+      email: officerEmail,
+      password: officerPassword,
     }
-    this.logic.generateOneTimePassword(companyId)
-      .pipe(map((token) => requestContent.otp = token))
-      .pipe(concatMap(() => this.logic.sendEmailForRegister(requestContent)))
-      .pipe(concatMap(() => this.logic.createCompanyToDynamoDB(requestContent)))
+
+    this.logic.createCompanyToDynamoDB(requestCompanyContent)
+      .pipe(concatMap(() => this.logic.entrySignUpUser(requestUserContent)))
+      // this.logic.generateOneTimePassword(companyId)
+      //   .pipe(map((token) => requestCompanyContent.otp = token))
+      // .pipe(concatMap(() => this.logic.sendEmailForRegister(requestCompanyContent)))
+      // .pipe(concatMap(() => this.logic.createCompanyToDynamoDB(requestCompanyContent)))
       .subscribe(() => {
         this.router.navigate(['/complete-register'], { queryParams: { status: 'progress' } });
       });
