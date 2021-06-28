@@ -10,6 +10,7 @@ import { ConfirmLogic } from './logic/confirm.logic';
 })
 
 export class ConfirmPage implements OnInit {
+  companyId: string;
   confirmTargetEmail: string;
   confirmForm = new FormGroup({
     confirmNumber: new FormControl('', [Validators.required])
@@ -21,23 +22,36 @@ export class ConfirmPage implements OnInit {
   ) {
   }
 
-  ngOnInit() {
-    this.confirmTargetEmail = this.router.getCurrentNavigation().extras.state.data.email;
-    console.log('[confirmTargetEmail]', this.confirmTargetEmail);
-  }
-
+  /**
+   * 確認コードのFormControlのGetterです
+   */
   get aliasConfirmNumber(): FormControl {
     return <FormControl>this.confirmForm.get('confirmNumber');
   }
 
-  confirmSignUp() {
+  /**
+   * 初期読み込み時
+   * 確認するEmailとCompanyIdを取得します
+   */
+  ngOnInit(): void {
+    this.confirmTargetEmail = this.router.getCurrentNavigation().extras.state.data.email;
+    this.companyId = this.router.getCurrentNavigation().extras.state.data.companyId;
+  }
+
+  /**
+   * 確認コードが正しいユーザーであるかLogicに記載します
+   */
+  confirmSignUp(): void {
     this.logic.sendConfirmUser(this.confirmTargetEmail, this.aliasConfirmNumber.value)
       .subscribe(() => {
         this.router.navigate(['/login']);
       });
   }
 
-  reSendSignUp() {
+  /**
+   * 確認コードを再送信する処理です
+   */
+  reSendSignUp(): void {
     console.log('ReSendSignUp');
   }
 
