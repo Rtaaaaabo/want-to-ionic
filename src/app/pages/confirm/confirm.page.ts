@@ -16,13 +16,14 @@ export class ConfirmPage implements OnInit {
   });
 
   constructor(
+    private readonly router: Router,
     private logic: ConfirmLogic,
-    private router: Router,
   ) {
   }
 
   ngOnInit() {
     this.confirmTargetEmail = this.router.getCurrentNavigation().extras.state.data.email;
+    console.log('[confirmTargetEmail]', this.confirmTargetEmail);
   }
 
   get aliasConfirmNumber(): FormControl {
