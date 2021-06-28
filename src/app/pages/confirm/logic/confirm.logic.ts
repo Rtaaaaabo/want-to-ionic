@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { SessionService } from '../../../shared/service/session.service';
-import { Observable } from 'rxjs';
+import { ConfirmService } from '../service/confirm.service';
+import { Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +10,7 @@ export class ConfirmLogic {
 
   constructor(
     private sessionService: SessionService,
+    private confirmService: ConfirmService,
   ) { }
 
   /**
@@ -28,5 +30,9 @@ export class ConfirmLogic {
    */
   resendConfirm(username: string): Observable<string> {
     return this.sessionService.resendConfirmNumberForSignUp(username);
+  }
+
+  createUserToCognito(companyId: string, userId: string): Observable<any> {
+    return of({});
   }
 }

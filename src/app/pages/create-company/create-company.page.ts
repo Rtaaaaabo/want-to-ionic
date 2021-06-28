@@ -87,7 +87,7 @@ export class CreateCompanyPage implements OnInit {
     const officerName = this.aliasGetOfficerName.value;
     const officerEmail = this.aliasGetOfficerEmail.value;
     const officerPassword = this.aliasGetOfficerPassword.value;
-    let requestCompanyContent = {
+    const requestCompanyContent = {
       id: companyId,
       name: `${companyName}`,
       officer: [{
