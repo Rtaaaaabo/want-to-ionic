@@ -11,7 +11,7 @@ export class ConfirmService {
     private amplifyService: AmplifyService,
   ) { }
 
-  createUserToCognito(requestContent: CreateUserInput): Observable<any> {
+  createUserToDynamo(requestContent: CreateUserInput): Observable<any> {
     return from(this.amplifyService.CreateUser(requestContent))
   }
 }

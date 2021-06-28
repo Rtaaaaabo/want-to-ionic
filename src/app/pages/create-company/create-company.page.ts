@@ -104,7 +104,8 @@ export class CreateCompanyPage implements OnInit {
     }
 
     this.logic.createCompanyToDynamoDB(requestCompanyContent)
-      .pipe(concatMap((companyId) => this.logic.entrySignUpUser(requestUserContent, companyId)))
+      .pipe(concatMap(() => this.logic.entrySignUpUser(requestUserContent, companyId)))
+      .pipe(concatMap(() => this.logic.createUserWithCompanyId(companyId, officerName, officerEmail)))
       .subscribe(() => {
         this.router.navigate(['/confirm'], { state: { data: { email: officerEmail, companyId: companyId } } });
       });
