@@ -14,7 +14,7 @@ export class SessionService {
     this.loggedIn = new BehaviorSubject<boolean>(false);
   }
 
-  entryUserSignup(valueObj: IArgsEntrySignup): Observable<string> {
+  entryUserSignup(valueObj: IArgsEntrySignup, companyId?: string): Observable<string> {
     return from(Auth.signUp(valueObj))
       .pipe(map(() => 'Success'))
       .pipe(catchError(() => 'Denied'));

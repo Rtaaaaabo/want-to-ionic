@@ -81,7 +81,7 @@ export class CreateCompanyLogic {
    * @param value 会員登録に必要な情報
    * @returns 成功時はSuccessが返ってきて、失敗時はDeniedが返ってくる
    */
-  entrySignUpUser(value: SignUpValue): Observable<string> {
+  entrySignUpUser(value: SignUpValue, companyId: string): Observable<string> {
     const signUpContent = {
       username: value.email,
       password: value.password,
@@ -90,6 +90,7 @@ export class CreateCompanyLogic {
         email: value.email,
       }
     }
-    return this.sessionService.entryUserSignup(signUpContent);
+    console.log('[entrySignUpUser signUpContent]', signUpContent);
+    return this.sessionService.entryUserSignup(signUpContent, companyId);
   }
 }

@@ -104,14 +104,14 @@ export class CreateCompanyPage implements OnInit {
     }
 
     this.logic.createCompanyToDynamoDB(requestCompanyContent)
-      .pipe(concatMap(() => this.logic.entrySignUpUser(requestUserContent)))
+      .pipe(concatMap((companyId) => this.logic.entrySignUpUser(requestUserContent, companyId)))
       // this.logic.generateOneTimePassword(companyId)
       //   .pipe(map((token) => requestCompanyContent.otp = token))
       // .pipe(concatMap(() => this.logic.sendEmailForRegister(requestCompanyContent)))
       // .pipe(concatMap(() => this.logic.createCompanyToDynamoDB(requestCompanyContent)))
       .subscribe((data) => {
         console.log('CreateCompanyToDynamoDB data', data);
-        // this.router.navigate(['/complete-register'], { queryParams: { status: 'progress' } });
+        this.router.navigate(['/confirm']);
       });
   }
 
