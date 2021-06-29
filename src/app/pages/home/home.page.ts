@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { of, from } from 'rxjs';
-import { catchError, concatMap, filter, flatMap, map } from 'rxjs/operators';
+import { from } from 'rxjs';
+import { concatMap, map } from 'rxjs/operators';
 import { EditProfileModalComponent } from 'src/app/shared/component/modal/edit-profile-modal/edit-profile-modal.component';
 import { HomeLogic } from './logic/home.logic';
 
@@ -25,17 +25,7 @@ export class HomePage {
     private logic: HomeLogic,
   ) { }
 
-  ionViewWillEnter(): void {
-    // this.logic.fetchCurrentUser()
-    //   .pipe(map((attributes) => {
-    //     this.attributes = attributes;
-    //   }))
-    //   .pipe(flatMap(() => this.logic.checkRegistrationUser(this.attributes)))
-    //   .pipe(filter(({ items }) => items.length === 0))
-    //   .subscribe(() => {
-    //     this.presentRegistrationUser()
-    //   });
-  }
+  ionViewWillEnter(): void { }
 
   async presentRegistrationUser(): Promise<void> {
     const modal = await this.modalCtrl.create({

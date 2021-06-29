@@ -38,7 +38,7 @@ export class HomeLogic {
   }
 
   /**
-   * ログインしているユーザ情報を取得します
+   * ログインしているユーザ情報をCognitoから取得します
    * @returns 現在ログインしているユーザー情報を取得する
    */
   fetchCurrentUser(): Observable<Attribute> {

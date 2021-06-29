@@ -38,7 +38,7 @@ export class SettingPage implements OnInit {
 
   ngOnInit(): void {
     this.logic.fetchCurrentUser()
-      .pipe(concatMap((result) => this.logic.fetchUserInfo(result.username)))
+      .pipe(concatMap(({ username }) => this.logic.fetchUserInfo(username)))
       .pipe(map((result) => this.user = result))
       .pipe(concatMap((userInfo) => this.logic.modifiedAvatarIconUrl(userInfo)))
       .subscribe((data) => {

@@ -16,7 +16,6 @@ import { Room, RoomGroup } from 'src/app/shared/service/amplify.service';
 export class ListRoomComponent implements OnInit {
   currentUserId: string;
   roomGroupsItems: Array<ResponseListRoomGroupsQueryItems>;
-  companyId = 'takuCloudCon';
 
   constructor(
     private logic: HomeLogic,

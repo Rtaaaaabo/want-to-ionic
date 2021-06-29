@@ -18,15 +18,15 @@ export class AddRoomModalComponent implements OnInit {
     private modalCtrl: ModalController,
   ) { }
 
-  get nameItem() {
-    return this.roomItemGroup.get('nameItem');
+  get nameItem(): FormControl {
+    return <FormControl>this.roomItemGroup.get('nameItem');
   }
 
-  get descriptionItem() {
-    return this.roomItemGroup.get('descriptionItem');
+  get descriptionItem(): FormControl {
+    return <FormControl>this.roomItemGroup.get('descriptionItem');
   }
 
-  ngOnInit() { }
+  ngOnInit(): void { }
 
   dismissModal(): void {
     this.modalCtrl.dismiss();
