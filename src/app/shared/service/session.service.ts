@@ -33,7 +33,7 @@ export class SessionService {
     );
   }
 
-  confirmSignUp(username, code): Observable<void> {
+  confirmSignUp(username: string, code: string): Observable<void> {
     return from(Auth.confirmSignUp(username, code));
   }
 

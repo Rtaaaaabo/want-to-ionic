@@ -30,7 +30,7 @@ export class CreateCompanyLogic {
   }
 
   /**
-   * 会社に紐づく担当者(User)を作成します。
+   * 会社に紐づく担当者(User)をDynamoDBに登録します
    * @param { string } companyId CompanyID
    * @param { string} username 会社の担当者氏名
    * @param {string} officerEmail 会社のEmailアドレス
@@ -72,12 +72,11 @@ export class CreateCompanyLogic {
    */
   generateOneTimePassword(companyId: string): Observable<string> {
     return this.createCompanyService.generateOTP(companyId)
-      .pipe(map(({ otp }) => otp))
-    // .pipe(catchError((e) => this.handleError<string>('generateOneTimePassword', '')));
+      .pipe(map(({ otp }) => otp));
   }
 
   /**
-   * 担当者を会員登録します
+   * 担当者をCognitoに登録します
    * @param value 会員登録に必要な情報
    * @returns 成功時はSuccessが返ってきて、失敗時はDeniedが返ってくる
    */
@@ -90,7 +89,6 @@ export class CreateCompanyLogic {
         email: value.email,
       }
     }
-    console.log('[entrySignUpUser signUpContent]', signUpContent);
     return this.sessionService.entryUserSignup(signUpContent, companyId);
   }
 }

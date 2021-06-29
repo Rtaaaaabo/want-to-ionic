@@ -12,6 +12,7 @@ import { ConfirmLogic } from './logic/confirm.logic';
 export class ConfirmPage implements OnInit {
   companyId: string;
   confirmTargetEmail: string;
+  userId: string;
   confirmForm = new FormGroup({
     confirmNumber: new FormControl('', [Validators.required])
   });
@@ -36,6 +37,8 @@ export class ConfirmPage implements OnInit {
   ngOnInit(): void {
     this.confirmTargetEmail = this.router.getCurrentNavigation().extras.state.data.email;
     this.companyId = this.router.getCurrentNavigation().extras.state.data.companyId;
+    this.userId = this.router.getCurrentNavigation().extras.state.data.userId;
+    console.log('userId', this.userId);
   }
 
   /**
