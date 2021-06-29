@@ -1,6 +1,6 @@
 # this is an auto generated file. This will be overwritten
-subscription OnCreateCompany {
-  onCreateCompany {
+subscription OnCreateCompany($owner: String!) {
+  onCreateCompany(owner: $owner) {
     id
     name
     officer {
@@ -49,8 +49,8 @@ subscription OnCreateCompany {
     owner
   }
 }
-subscription OnUpdateCompany {
-  onUpdateCompany {
+subscription OnUpdateCompany($owner: String!) {
+  onUpdateCompany(owner: $owner) {
     id
     name
     officer {
@@ -99,8 +99,8 @@ subscription OnUpdateCompany {
     owner
   }
 }
-subscription OnDeleteCompany {
-  onDeleteCompany {
+subscription OnDeleteCompany($owner: String!) {
+  onDeleteCompany(owner: $owner) {
     id
     name
     officer {

@@ -1,6 +1,6 @@
 type Company
   @model
-  @auth(rules: [{ allow: owner, operations: [create, update, delete] }]) {
+  @auth(rules: [{ allow: owner, operations: [update, read, delete] }]) {
   id: ID!
   name: String!
   officer: [Officer]! # 担当者は複数人であるべき

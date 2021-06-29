@@ -9382,12 +9382,11 @@ export class APIService {
     )) as any;
     return <TaskByCreatedAtQuery>response.data.taskByCreatedAt;
   }
-  OnCreateCompanyListener: Observable<
-    SubscriptionResponse<OnCreateCompanySubscription>
-  > = API.graphql(
-    graphqlOperation(
-      `subscription OnCreateCompany {
-        onCreateCompany {
+  OnCreateCompanyListener(
+    owner: string
+  ): Observable<SubscriptionResponse<OnCreateCompanySubscription>> {
+    const statement = `subscription OnCreateCompany($owner: String!) {
+        onCreateCompany(owner: $owner) {
           __typename
           id
           name
@@ -9442,16 +9441,20 @@ export class APIService {
           updatedAt
           owner
         }
-      }`
-    )
-  ) as Observable<SubscriptionResponse<OnCreateCompanySubscription>>;
+      }`;
+    const gqlAPIServiceArguments: any = {
+      owner
+    };
+    return API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    ) as Observable<SubscriptionResponse<OnCreateCompanySubscription>>;
+  }
 
-  OnUpdateCompanyListener: Observable<
-    SubscriptionResponse<OnUpdateCompanySubscription>
-  > = API.graphql(
-    graphqlOperation(
-      `subscription OnUpdateCompany {
-        onUpdateCompany {
+  OnUpdateCompanyListener(
+    owner: string
+  ): Observable<SubscriptionResponse<OnUpdateCompanySubscription>> {
+    const statement = `subscription OnUpdateCompany($owner: String!) {
+        onUpdateCompany(owner: $owner) {
           __typename
           id
           name
@@ -9506,16 +9509,20 @@ export class APIService {
           updatedAt
           owner
         }
-      }`
-    )
-  ) as Observable<SubscriptionResponse<OnUpdateCompanySubscription>>;
+      }`;
+    const gqlAPIServiceArguments: any = {
+      owner
+    };
+    return API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    ) as Observable<SubscriptionResponse<OnUpdateCompanySubscription>>;
+  }
 
-  OnDeleteCompanyListener: Observable<
-    SubscriptionResponse<OnDeleteCompanySubscription>
-  > = API.graphql(
-    graphqlOperation(
-      `subscription OnDeleteCompany {
-        onDeleteCompany {
+  OnDeleteCompanyListener(
+    owner: string
+  ): Observable<SubscriptionResponse<OnDeleteCompanySubscription>> {
+    const statement = `subscription OnDeleteCompany($owner: String!) {
+        onDeleteCompany(owner: $owner) {
           __typename
           id
           name
@@ -9570,9 +9577,14 @@ export class APIService {
           updatedAt
           owner
         }
-      }`
-    )
-  ) as Observable<SubscriptionResponse<OnDeleteCompanySubscription>>;
+      }`;
+    const gqlAPIServiceArguments: any = {
+      owner
+    };
+    return API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    ) as Observable<SubscriptionResponse<OnDeleteCompanySubscription>>;
+  }
 
   OnCreateTaskGroupListener: Observable<
     SubscriptionResponse<OnCreateTaskGroupSubscription>
