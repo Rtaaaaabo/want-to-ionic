@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { from, Observable } from 'rxjs';
-import { AmplifyService, CreateUserInput } from 'src/app/shared/service/amplify.service';
+import { AmplifyService, UpdateUserInput } from 'src/app/shared/service/amplify.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +11,7 @@ export class ConfirmService {
     private amplifyService: AmplifyService,
   ) { }
 
-  createUserToDynamo(requestContent: CreateUserInput): Observable<any> {
-    return from(this.amplifyService.CreateUser(requestContent))
+  updateUserToDynamo(requestContent: UpdateUserInput): Observable<any> {
+    return from(this.amplifyService.UpdateUser(requestContent))
   }
 }

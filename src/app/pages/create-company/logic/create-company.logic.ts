@@ -38,10 +38,12 @@ export class CreateCompanyLogic {
    */
   createUserWithCompanyId(companyId: string, username: string, officerEmail: string): Observable<CreateUserMutation> {
     const requestContent: CreateUserInput = {
-      id: `${uuid()}`,
-      username: username,
-      email: officerEmail,
-      companyID: companyId,
+      id: `${companyId}_user_${uuid()}`,
+      username: `${username}`,
+      email: `${officerEmail}`,
+      companyID: `${companyId}`,
+      registered: false,
+      authority: true,
     }
     return this.createCompanyService.createUser(requestContent);
   }

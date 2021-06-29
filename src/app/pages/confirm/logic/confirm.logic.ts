@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { v4 as uuid } from 'uuid';
 import { SessionService } from '../../../shared/service/session.service';
-import { CreateUserInput } from '../../../shared/service/amplify.service';
+import { UpdateUserInput } from '../../../shared/service/amplify.service';
 import { ConfirmService } from '../service/confirm.service';
 import { Observable, of } from 'rxjs';
 
@@ -35,18 +35,16 @@ export class ConfirmLogic {
   }
 
   /**
-   * DynamoDBにユーザーを登録します
+   * DynamoDBにユーザーのRegistrationをTrueにします
    * @param companyId CompanyID
    * @param userId UserID
    * @returns DynamoDBに登録した結果を返します
    */
-  createUserToDynamo(companyId: string, userId: string): Observable<any> {
-    // const requestContent: CreateUserInput = {
-    //   // id: `${companyId}_user_${uuid()}`,
-    //   // username: 'userName',
-    //   // email: 
-    // }
-    // return this.confirmService.createUserToDynamo(companyId);
-    return of({});
+  updateUserToDynamo(userId: string): Observable<any> {
+    const requestContent: UpdateUserInput = {
+      id: `${userId}`,
+      registered: true,
+    }
+    return this.confirmService.updateUserToDynamo(requestContent);
   }
 }

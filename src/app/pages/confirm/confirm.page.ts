@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { concatMap } from 'rxjs/operators';
 import { ConfirmLogic } from './logic/confirm.logic';
 
 @Component({
@@ -38,7 +39,6 @@ export class ConfirmPage implements OnInit {
     this.confirmTargetEmail = this.router.getCurrentNavigation().extras.state.data.email;
     this.companyId = this.router.getCurrentNavigation().extras.state.data.companyId;
     this.userId = this.router.getCurrentNavigation().extras.state.data.userId;
-    console.log('userId', this.userId);
   }
 
   /**
@@ -46,7 +46,9 @@ export class ConfirmPage implements OnInit {
    */
   confirmSignUp(): void {
     this.logic.sendConfirmUser(this.confirmTargetEmail, this.aliasConfirmNumber.value)
-      .subscribe(() => {
+      .pipe(concatMap(() => this.logic.updateUserToDynamo(this.userId)))
+      .subscribe((data) => {
+        console.log('[confirmSignUp]', data);
         this.router.navigate(['/login']);
       });
   }

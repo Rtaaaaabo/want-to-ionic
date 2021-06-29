@@ -267,9 +267,8 @@ export type ModelUserConditionInput = {
   companyID?: ModelIDInput | null;
   tel?: ModelStringInput | null;
   positionName?: ModelStringInput | null;
-  iconImage?: ModelStringInput | null;
   registered?: ModelBooleanInput | null;
-  authority?: ModelStringInput | null;
+  authority?: ModelBooleanInput | null;
   and?: Array<ModelUserConditionInput | null> | null;
   or?: Array<ModelUserConditionInput | null> | null;
   not?: ModelUserConditionInput | null;
@@ -307,7 +306,7 @@ export type UpdateUserInput = {
   positionName?: string | null;
   iconImage?: S3ObjectInput | null;
   registered?: boolean | null;
-  authority?: string | null;
+  authority?: boolean | null;
 };
 
 export type DeleteUserInput = {
