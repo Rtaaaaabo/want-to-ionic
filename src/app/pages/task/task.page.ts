@@ -35,6 +35,7 @@ export class TaskPage implements OnInit {
   private previousUrl: string = undefined;
   private previousParam: string = undefined;
 
+
   constructor(
     private readonly locationStrate: LocationStrategy,
     private readonly router: Router,
@@ -72,29 +73,31 @@ export class TaskPage implements OnInit {
 
   ionViewWillEnter(): void {
     this.isReorder = false;
-    // this.segment = 'active';
     this.roomId = this.route.snapshot.paramMap.get('id');
-    forkJoin({
-      companyUser: this.logic.fetchCurrentUserInfo()
-        .pipe(map((res: CurrentUserInfo) => {
-          this.currentUserEmail = res.email;
-          this.currentUserId = res.sub;
-        }))
-        .pipe(concatMap(() => this.logic.fetchUserInfoFromAmplify(this.currentUserId)))
-        .pipe(map((user) => this.user = user))
-        .pipe(map((user) => this.companyId = user.companyID))
-        .pipe(concatMap(() => this.logic.fetchCompanyMember(this.user.companyID))),
-      activeTaskItems: this.logic.fetchActiveTaskPerRoom(this.roomId),
-      doneTaskItems: this.logic.fetchDoneTaskPerRoom(this.roomId),
-      room: this.logic.fetchRoomInfo(this.roomId),
-      roomMembers: this.logic.fetchMemberListOnRoom(this.roomId).pipe(map(({ items }) => items)),
-    }).subscribe((data) => {
-      this.companyMembers = data.companyUser.items;
-      this.taskActiveItems = data.activeTaskItems.sort(this.logic.compareTaskArray);
-      this.taskDoneItems = data.doneTaskItems;
-      this.room = data.room;
-      this.roomMembers = data.roomMembers;
-    });
+    console.log('roomId', this.roomId);
+    this.companyId = this.roomId.split(/(.*)_room/)[1];
+    // forkJoin({
+    //   // companyUser: this.logic.fetchCurrentUserInfo()
+    //   //   .pipe(map((res: CurrentUserInfo) => {
+    //   //     this.currentUserEmail = res.email;
+    //   //     this.currentUserId = res.sub;
+    //   //   }))
+    //   //   .pipe(concatMap(() => this.logic.fetchUserInfoFromAmplify(this.currentUserId)))
+    //   //   .pipe(map((user) => this.user = user))
+    //   //   .pipe(map((user) => this.companyId = user.companyID))
+    //   //   .pipe(concatMap(() => this.logic.fetchCompanyMember(this.user.companyID))),
+    //   companyUser: this.logic.fetchCompanyMembers(this.companyId),
+    //   activeTaskItems: this.logic.fetchActiveTaskPerRoom(this.roomId),
+    //   doneTaskItems: this.logic.fetchDoneTaskPerRoom(this.roomId),
+    //   room: this.logic.fetchRoomInfo(this.roomId),
+    //   roomMembers: this.logic.fetchMemberListOnRoom(this.roomId).pipe(map(({ items }) => items)),
+    // }).subscribe((data) => {
+    //   this.companyMembers = data.companyUser.items;
+    //   this.taskActiveItems = data.activeTaskItems.sort(this.logic.compareTaskArray);
+    //   this.taskDoneItems = data.doneTaskItems;
+    //   this.room = data.room;
+    //   this.roomMembers = data.roomMembers;
+    // });
   }
 
   async presentDoneToast(): Promise<void> {

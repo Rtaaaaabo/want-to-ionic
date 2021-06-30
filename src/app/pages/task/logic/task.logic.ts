@@ -204,4 +204,8 @@ export class TaskLogic {
     }
     return this.taskService.updateMessage(createContent);
   }
+
+  fetchCompanyMembers(companyId: string) {
+
+  }
 }
