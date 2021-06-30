@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
-import { HomeService } from '../service/home.service';
-import { SessionService } from '../../../shared/service/session.service';
-import { v4 as uuid } from 'uuid';
+import { FormGroup } from '@angular/forms';
 import { Observable, from, of } from 'rxjs';
 import { concatMap, map, filter, toArray } from 'rxjs/operators';
-import { CreateRoomGroupMutation, CreateRoomMutation, CreateUserMutation, DeleteRoomMutation, ListUsersQuery, ModelRoomGroupFilterInput, S3Object } from 'src/app/shared/service/amplify.service';
+import { v4 as uuid } from 'uuid';
+import { HomeService } from '../service/home.service';
+import { SessionService } from '../../../shared/service/session.service';
+import { CreateRoomGroupMutation, CreateRoomMutation, CreateUserMutation, DeleteRoomMutation, ListUsersQuery, ModelRoomGroupFilterInput, S3Object, User } from 'src/app/shared/service/amplify.service';
 import { ResponseListRoomGroupsQueryItems } from '../service/reponse/response.model';
 import { Storage } from 'aws-amplify';
 import { ILResponseFetchRoomMembers, InterfaceLogicArgsCreateRoom } from '../model/home.interface';
-import { FormGroup } from '@angular/forms';
 import { IS3Object } from '../../task-detail/models/task-detail.interface';
 
 interface Attribute {
@@ -51,10 +51,10 @@ export class HomeLogic {
   * @param content ルーム作成するのに必要な情報
   * @returns Roomを新規作成してその値を取得します
   */
-  createRoom(content: InterfaceLogicArgsCreateRoom): Observable<CreateRoomMutation> {
+  createRoom(content: InterfaceLogicArgsCreateRoom, currentUser: User): Observable<CreateRoomMutation> {
     const requestContent = {
-      id: `${uuid()}`,
-      companyID: 'takuCloudCom',
+      id: `${currentUser.companyID}_room_${uuid()}`,
+      companyID: `${currentUser.companyID}`,
       name: content.nameItem,
       description: content.descriptionItem,
     };
@@ -198,7 +198,7 @@ export class HomeLogic {
       ("00" + dt.getUTCSeconds()).slice(-2);
   }
 
-  setExitsRoomAndUser(data): Observable<any> {
+  setExitsRoomAndUser(data: Array<ResponseListRoomGroupsQueryItems>): Observable<any> {
     return from(data)
       .pipe(filter((item: ResponseListRoomGroupsQueryItems) => item.room !== null))
       .pipe(filter((item: ResponseListRoomGroupsQueryItems) => item.user !== null))
@@ -251,6 +251,10 @@ export class HomeLogic {
 
   getStorage(filePathName: string): Observable<any> {
     return from(Storage.get(filePathName));
+  }
+
+  fetchAnyUserInfoFromList(email: string): Observable<any> {
+    return this.homeService.checkRegistrationUser(email);
   }
 
 }

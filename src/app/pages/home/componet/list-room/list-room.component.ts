@@ -6,8 +6,14 @@ import { HomeLogic } from '../../logic/home.logic';
 import { from } from 'rxjs';
 import { concatMap, switchMap, map } from 'rxjs/operators';
 import { ResponseListRoomGroupsQueryItems } from '../../service/reponse/response.model';
-import { Room, RoomGroup } from 'src/app/shared/service/amplify.service';
+import { Room, RoomGroup, User } from 'src/app/shared/service/amplify.service';
 
+interface Attribute {
+  name: string,
+  email: string,
+  email_verified: boolean,
+  sub: string,
+};
 @Component({
   selector: 'app-list-room',
   templateUrl: './list-room.component.html',
@@ -16,6 +22,8 @@ import { Room, RoomGroup } from 'src/app/shared/service/amplify.service';
 export class ListRoomComponent implements OnInit {
   currentUserId: string;
   roomGroupsItems: Array<ResponseListRoomGroupsQueryItems>;
+  currentUserAttribute: Attribute;
+  currentUser: User;
 
   constructor(
     private logic: HomeLogic,
@@ -26,12 +34,15 @@ export class ListRoomComponent implements OnInit {
 
   ngOnInit(): void {
     this.logic.fetchCurrentUser()
-      .pipe(map((data) => this.currentUserId = data.sub))
-      .pipe(concatMap(() => this.logic.fetchRoomList(this.currentUserId)))
+      .pipe(map((data) => this.currentUserAttribute = data))
+      .pipe(concatMap(() => this.logic.fetchAnyUserInfoFromList(this.currentUserAttribute.email)))
+      .pipe(map(({ items }) => this.currentUser = items[0]))
+      .pipe(concatMap(() => this.logic.fetchRoomList(this.currentUser.id)))
       .pipe(concatMap((data) => this.logic.setExitsRoomAndUser(data)))
-      .subscribe((data: Array<ResponseListRoomGroupsQueryItems>) => {
+      .subscribe((data) => {
+        console.log('[ListRoom]', data);
         this.roomGroupsItems = data;
-      })
+      });
   }
 
   /**
@@ -44,11 +55,12 @@ export class ListRoomComponent implements OnInit {
     });
     const observable = from(modal.onDidDismiss());
     observable
-      .pipe(concatMap(({ data }) => this.logic.createRoom(data)))
-      .pipe(concatMap((room) => this.logic.createUserRoomGroup(this.currentUserId, room.id)))
-      .pipe(concatMap(() => this.logic.fetchRoomList(this.currentUserId)))
+      .pipe(concatMap(({ data }) => this.logic.createRoom(data, this.currentUser)))
+      .pipe(concatMap((room) => this.logic.createUserRoomGroup(this.currentUser.id, room.id)))
+      .pipe(concatMap(() => this.logic.fetchRoomList(this.currentUser.id)))
       .pipe(concatMap((data) => this.logic.setExitsRoomAndUser(data)))
       .subscribe((response) => {
+        console.log('[ListRoomComponent response]', response);
         this.roomGroupsItems = response;
       })
     return modal.present();

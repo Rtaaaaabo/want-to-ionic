@@ -47,10 +47,10 @@ export class TaskDetailPage implements OnInit {
       this.subscriptionMessage = this.logic.onCreateMessageListener()
         .subscribe({
           next: () => this.logic.fetchMessagePerTask(this.taskId)
-            .pipe(map(result => resultMessage = result.items))
+            .pipe(map((result) => resultMessage = result.items))
             .pipe(concatMap((result) => this.logic.makeMessageAuthorImageUrl(result)))
-            .pipe(mergeMap((result) => this.logic.makeAttachmentUrl(result)))
-            .pipe(mergeMap((arrayAttachment) => this.logic.modifiedMessageItems(arrayAttachment, resultMessage)))
+            .pipe(concatMap((result) => this.logic.makeAttachmentUrl(result)))
+            .pipe(concatMap((arrayAttachment) => this.logic.modifiedMessageItems(arrayAttachment, resultMessage)))
             .subscribe((items) => {
               this.message = items
             }),

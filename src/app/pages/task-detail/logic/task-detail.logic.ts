@@ -54,7 +54,8 @@ export class TaskDetailLogic {
   }
 
   // 返す型は Observable<Array<IMessageWithAttachUrl>>
-  makeMessageAuthorImageUrl(items: Array<IMessageWithAttachUrl>): Observable<any> {
+  makeMessageAuthorImageUrl(items: Array<any>): Observable<any> {
+
     let messageItem: IMessageWithAttachUrl;
     return from(items)
       .pipe(map((result) => messageItem = result))

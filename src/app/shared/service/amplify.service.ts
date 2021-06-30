@@ -84,6 +84,7 @@ export type Company = {
   tel?: string | null;
   officialEmail?: string | null;
   iconCompany?: S3Object | null;
+  billing?: boolean | null;
   room?: ModelRoomConnection | null;
   companyMembers?: ModelUserConnection | null;
   createdAt: string;
@@ -143,22 +144,23 @@ export type Task = {
 
 export type User = {
   __typename: "User";
-  id?: string;
-  username?: string;
-  email?: string;
-  companyID?: string;
+  id: string;
+  username: string;
+  email: string;
+  companyID: string;
   tel?: string | null;
   positionName?: string | null;
-  iconImage?: S3Object;
+  iconImage?: S3Object | null;
   registered?: boolean | null;
-  authority?: string | null;
-  company?: Company;
-  messages?: ModelMessageConnection;
-  room?: ModelRoomGroupConnection;
-  task?: ModelTaskGroupConnection;
-  chargeTask?: ModelTaskConnection;
-  createdAt?: string;
-  updatedAt?: string;
+  authority?: boolean | null;
+  company: Company;
+  messages?: ModelMessageConnection | null;
+  room?: ModelRoomGroupConnection | null;
+  task?: ModelTaskGroupConnection | null;
+  chargeTask?: ModelTaskConnection | null;
+  createdAt: string;
+  updatedAt: string;
+  owner?: string | null;
 };
 
 export type S3Object = {
@@ -176,16 +178,17 @@ export type ModelMessageConnection = {
 
 export type Message = {
   __typename: "Message";
-  id?: string;
-  taskID?: string;
-  authorID?: string;
-  content?: string;
-  createdAt?: string;
+  id: string;
+  taskID: string;
+  authorID: string;
+  content: string;
+  createdAt: string;
   isSent?: boolean | null;
   attachment?: Array<S3Object | null> | null;
-  author?: User;
-  task?: Task;
-  updatedAt?: string;
+  author: User;
+  task: Task;
+  updatedAt: string;
+  owner?: string | null;
 };
 
 export type ModelRoomGroupConnection = {
@@ -498,9 +501,8 @@ export type ModelUserFilterInput = {
   companyID?: ModelIDInput | null;
   tel?: ModelStringInput | null;
   positionName?: ModelStringInput | null;
-  iconImage?: ModelStringInput | null;
   registered?: ModelBooleanInput | null;
-  authority?: ModelStringInput | null;
+  authority?: ModelBooleanInput | null;
   and?: Array<ModelUserFilterInput | null> | null;
   or?: Array<ModelUserFilterInput | null> | null;
   not?: ModelUserFilterInput | null;
@@ -3087,9 +3089,10 @@ export type TaskByCreatedAtQuery = {
       tel?: string | null;
       positionName?: string | null;
       registered?: boolean | null;
-      authority?: string | null;
+      authority?: boolean | null;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     };
     task: {
       __typename: "Task";
@@ -3106,6 +3109,7 @@ export type TaskByCreatedAtQuery = {
       updatedAt: string;
     };
     updatedAt: string;
+    owner?: string | null;
   } | null> | null;
   nextToken?: string | null;
 };
@@ -4517,45 +4521,62 @@ export type OnCreateMessageSubscription = {
   taskID: string;
   authorID: string;
   content: string;
-  createdAt: string | null;
-  isSent: boolean | null;
+  createdAt: string;
+  isSent?: boolean | null;
+  attachment?: Array<{
+    __typename: "S3Object";
+    bucket: string;
+    region: string;
+    key: string;
+  } | null> | null;
   author: {
     __typename: "User";
     id: string;
     username: string;
     email: string;
     companyID: string;
-    tel: string | null;
-    positionName: string | null;
-    iconImage: string | null;
-    registered: boolean | null;
-    authority: string | null;
+    tel?: string | null;
+    positionName?: string | null;
+    iconImage?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
+    registered?: boolean | null;
+    authority?: boolean | null;
     company: {
       __typename: "Company";
       id: string;
       name: string;
-      domain: string;
+      isRegistered: boolean;
+      otp?: string | null;
+      tel?: string | null;
+      officialEmail?: string | null;
+      billing?: boolean | null;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     };
-    messages: {
+    messages?: {
       __typename: "ModelMessageConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    room: {
+    room?: {
       __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    task: {
+    task?: {
       __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    chargeTask: {
+    chargeTask?: {
       __typename: "ModelTaskConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
     createdAt: string;
     updatedAt: string;
+    owner?: string | null;
   };
   task: {
     __typename: "Task";
@@ -4573,36 +4594,43 @@ export type OnCreateMessageSubscription = {
       createdAt: string;
       updatedAt: string;
     };
-    description: string | null;
-    scheduleDate: string | null;
-    priority: number | null;
-    status: number | null;
-    createdAt: string | null;
-    messages: {
-      __typename: "ModelMessageConnection";
-      nextToken: string | null;
+    description?: string | null;
+    iconTask?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
     } | null;
-    users: {
-      __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
-    } | null;
+    scheduleDate?: string | null;
+    priority?: number | null;
+    status?: number | null;
+    createdAt?: string | null;
     chargePerson: {
       __typename: "User";
       id: string;
       username: string;
       email: string;
       companyID: string;
-      tel: string | null;
-      positionName: string | null;
-      iconImage: string | null;
-      registered: boolean | null;
-      authority: string | null;
+      tel?: string | null;
+      positionName?: string | null;
+      registered?: boolean | null;
+      authority?: boolean | null;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
+    };
+    messages?: {
+      __typename: "ModelMessageConnection";
+      nextToken?: string | null;
+    } | null;
+    users?: {
+      __typename: "ModelTaskGroupConnection";
+      nextToken?: string | null;
     } | null;
     updatedAt: string;
   };
   updatedAt: string;
+  owner?: string | null;
 };
 
 export type OnUpdateMessageSubscription = {
@@ -6741,8 +6769,27 @@ export class AmplifyService {
             companyID
             tel
             positionName
+            iconImage {
+              __typename
+              bucket
+              region
+              key
+            }
             registered
             authority
+            company {
+              __typename
+              id
+              name
+              isRegistered
+              otp
+              tel
+              officialEmail
+              billing
+              createdAt
+              updatedAt
+              owner
+            }
             messages {
               __typename
               nextToken
@@ -6761,6 +6808,7 @@ export class AmplifyService {
             }
             createdAt
             updatedAt
+            owner
           }
           nextToken
         }
@@ -6780,6 +6828,7 @@ export class AmplifyService {
     )) as any;
     return <ListUsersQuery>response.data.listUsers;
   }
+
   async GetRoomGroup(id: string): Promise<GetRoomGroupQuery> {
     const statement = `query GetRoomGroup($id: ID!) {
         getRoomGroup(id: $id) {
