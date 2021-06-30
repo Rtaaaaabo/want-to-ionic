@@ -11,6 +11,7 @@ import {
   ListTasksQuery,
   ListUsersQuery,
   UpdateTaskMutation,
+  GetCompanyQuery,
 } from "../../../shared/service/amplify.service";
 import { Observable, from } from "rxjs";
 
@@ -82,7 +83,7 @@ export class TaskService {
     return from(this.amplifyService.CreateMessage(content));
   }
 
-  fetchAnyCompany(companyId: string): Observable<any> {
+  fetchAnyCompany(companyId: string): Observable<GetCompanyQuery> {
     return from(this.amplifyService.GetCompany(companyId));
   }
 }
