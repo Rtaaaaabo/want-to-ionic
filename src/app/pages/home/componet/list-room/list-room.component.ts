@@ -40,7 +40,6 @@ export class ListRoomComponent implements OnInit {
       .pipe(concatMap(() => this.logic.fetchRoomList(this.currentUser.id)))
       .pipe(concatMap((data) => this.logic.setExitsRoomAndUser(data)))
       .subscribe((data) => {
-        console.log('[ListRoom]', data);
         this.roomGroupsItems = data;
       });
   }
@@ -60,7 +59,6 @@ export class ListRoomComponent implements OnInit {
       .pipe(concatMap(() => this.logic.fetchRoomList(this.currentUser.id)))
       .pipe(concatMap((data) => this.logic.setExitsRoomAndUser(data)))
       .subscribe((response) => {
-        console.log('[ListRoomComponent response]', response);
         this.roomGroupsItems = response;
       })
     return modal.present();
@@ -80,11 +78,11 @@ export class ListRoomComponent implements OnInit {
    * @param slideItem SlideItem情報を取得します
    */
   deleteRoom(roomId: string, slideItem: IonItemSliding): void {
-    this.logic.fetchRoomMembers(roomId, this.currentUserId)
+    this.logic.fetchRoomMembers(roomId, this.currentUser.id)
       .pipe(switchMap((data) => data.length === 0 ?
-        this.logic.deleteRoomItem(roomId) : this.logic.removeMeFromRoom(roomId, this.currentUserId))
+        this.logic.deleteRoomItem(roomId) : this.logic.removeMeFromRoom(roomId, this.currentUser.id))
       )
-      .pipe(concatMap(() => this.logic.fetchRoomList(this.currentUserId)))
+      .pipe(concatMap(() => this.logic.fetchRoomList(this.currentUser.id)))
       .pipe(concatMap((data) => this.logic.setExitsRoomAndUser(data)))
       .subscribe((result) => {
         this.roomGroupsItems = result;
