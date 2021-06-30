@@ -74,7 +74,6 @@ export class TaskPage implements OnInit {
   ionViewWillEnter(): void {
     this.isReorder = false;
     this.roomId = this.route.snapshot.paramMap.get('id');
-    console.log('roomId', this.roomId);
     this.companyId = this.roomId.split(/(.*)_room/)[1];
     forkJoin({
       companyUser: this.logic.fetchCompanyMembers(this.companyId),
