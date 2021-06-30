@@ -81,4 +81,8 @@ export class TaskService {
   updateMessage(content: CreateMessageInput): Observable<any> {
     return from(this.amplifyService.CreateMessage(content));
   }
+
+  fetchAnyCompany(companyId: string): Observable<any> {
+    return from(this.amplifyService.GetCompany(companyId));
+  }
 }

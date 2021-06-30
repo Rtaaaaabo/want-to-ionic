@@ -206,6 +206,7 @@ export class TaskLogic {
   }
 
   fetchCompanyMembers(companyId: string) {
-
+    console.log('[fetchCompanyMembers]', companyId);
+    return this.taskService.fetchAnyCompany(companyId);
   }
 }
