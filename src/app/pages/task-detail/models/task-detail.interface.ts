@@ -89,3 +89,51 @@ export interface CurrentUser {
     createdAt: string;
     updatedAt: string;
 };
+
+
+export interface TaskByCreatedAtItems {
+    __typename: "Message";
+    id: string;
+    taskID: string;
+    authorID: string;
+    content: string;
+    createdAt: string;
+    isSent?: boolean | null;
+    attachment?: Array<{
+        __typename: "S3Object";
+        bucket: string;
+        region: string;
+        key: string;
+    } | null> | null;
+    author: {
+        __typename: "User";
+        id: string;
+        username: string;
+        email: string;
+        companyID: string;
+        tel?: string | null;
+        positionName?: string | null;
+        registered?: boolean | null;
+        authority?: boolean | null;
+        createdAt: string;
+        updatedAt: string;
+        owner?: string | null;
+    };
+    task: {
+        __typename: "Task";
+        id: string;
+        authorID: string;
+        roomID: string;
+        chargePersonID: string;
+        title: string;
+        description?: string | null;
+        scheduleDate?: string | null;
+        priority?: number | null;
+        status?: number | null;
+        createdAt?: string | null;
+        updatedAt: string;
+    };
+    updatedAt: string;
+    owner?: string | null;
+    authorIconWithUrl?: string | null;
+}

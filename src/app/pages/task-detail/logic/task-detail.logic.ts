@@ -8,7 +8,7 @@ import { CurrentUserInfo } from '../../task/interface/current-user-info.interfac
 import { TaskDetailService } from '../service/task-detail.service';
 import { Filesystem, FilesystemDirectory, FilesystemEncoding, FileWriteResult, FileReadResult, FileDeleteResult } from "@capacitor/core";
 import { CreateMessageInput, GetTaskQuery, Message, S3Object, S3ObjectInput, TaskByCreatedAtQuery, UpdateTaskMutation } from 'src/app/shared/service/amplify.service';
-import { IImageFile, IS3Object, IsMessageContent, IMessageWithAttachUrl, MessageContent } from '../models/task-detail.interface';
+import { IImageFile, IS3Object, IsMessageContent, IMessageWithAttachUrl, MessageContent, TaskByCreatedAtItems } from '../models/task-detail.interface';
 
 const OneWeekSecond = 604800;
 
@@ -46,17 +46,16 @@ export class TaskDetailLogic {
    * @param items 配列でType: Messageを取得します。
    * @returns Observable型で AttachmentのUrlを返します。
    */
-  makeAttachmentUrl(items: Array<IMessageWithAttachUrl>): Observable<Array<Array<string | null>>> {
+  makeAttachmentUrl(items: Array<TaskByCreatedAtItems>): Observable<Array<Array<string | null>>> {
     return from(items)
       .pipe(concatMap((item) =>
         item.attachment !== null ? this.fetchMakeAttachmentUrl(item.attachment) : of([])))
       .pipe(toArray())
   }
 
-  // 返す型は Observable<Array<IMessageWithAttachUrl>>
-  makeMessageAuthorImageUrl(items: Array<any>): Observable<any> {
-
-    let messageItem: IMessageWithAttachUrl;
+  makeMessageAuthorImageUrl(items: Array<TaskByCreatedAtItems>): Observable<Array<TaskByCreatedAtItems>> {
+    console.log('makeMessageAuthorImageUrl items', items);
+    let messageItem: TaskByCreatedAtItems;
     return from(items)
       .pipe(map((result) => messageItem = result))
       .pipe(concatMap((item) => this.fetchAnyUserIconUrl(item)))
@@ -69,10 +68,10 @@ export class TaskDetailLogic {
   }
 
   // 返す型は Observable<IMessageWithAttachUrl>
-  fetchAnyUserIconUrl(items: IMessageWithAttachUrl): Observable<any> {
-    let messageWithAttachUrl = items;
+  fetchAnyUserIconUrl(items: TaskByCreatedAtItems): Observable<any> {
+    let messageWithAttachUrl: TaskByCreatedAtItems;
     return this.taskDetailService.fetchUserIconKey(items.authorID)
-      .pipe(concatMap((iconKey) => this.getStorage(iconKey))) //　ここで AuthorImageのUrlを取得することができる
+      .pipe(concatMap((iconKey) => this.getStorage(iconKey)))
       .pipe(map((result) => messageWithAttachUrl.authorIconWithUrl = result))
       .pipe(map(() => messageWithAttachUrl))
   }

@@ -8,7 +8,7 @@ import { TaskDetailLogic } from './logic/task-detail.logic';
 import { AddTaskModalComponent } from 'src/app/shared/component/modal/add-task-modal/add-task-modal.component';
 import { filter, tap, map, concatMap, toArray, mergeMap } from 'rxjs/operators';
 import { GetTaskQuery, ListRoomGroupsQuery, Message } from 'src/app/shared/service/amplify.service';
-import { IMessageWithAttachUrl, CurrentUser } from './models/task-detail.interface';
+import { IMessageWithAttachUrl, CurrentUser, TaskByCreatedAtItems } from './models/task-detail.interface';
 const { Camera } = Plugins;
 
 
@@ -52,14 +52,14 @@ export class TaskDetailPage implements OnInit {
     private readonly platform: Platform,
     private readonly alertCtrl: AlertController,
   ) {
-    let resultMessage;
+    let resultMessage: Array<TaskByCreatedAtItems>;
     this.taskId = this.route.snapshot.paramMap.get('id');
     this.initializeApp().subscribe(() => {
       this.subscriptionMessage = this.logic.onCreateMessageListener()
         .subscribe({
           next: () => this.logic.fetchMessagePerTask(this.taskId)
             .pipe(map((result) => resultMessage = result.items))
-            .pipe(concatMap((result) => this.logic.makeMessageAuthorImageUrl(result)))
+            .pipe(concatMap(() => this.logic.makeMessageAuthorImageUrl(resultMessage)))
             .pipe(concatMap((result) => this.logic.makeAttachmentUrl(result)))
             .pipe(concatMap((arrayAttachment) => this.logic.modifiedMessageItems(arrayAttachment, resultMessage)))
             .subscribe((items) => {
@@ -93,7 +93,6 @@ export class TaskDetailPage implements OnInit {
       this.currentUserInfo = result.currentUserInfo.items[0];
       this.roomMembers = result.anyTask.items;
       this.message = result.messageAttachment;
-      console.log('RESULT', this.currentUserInfo);
     });
   }
 
