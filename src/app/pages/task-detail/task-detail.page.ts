@@ -49,14 +49,12 @@ export class TaskDetailPage implements OnInit {
       this.subscriptionMessage = this.logic.onCreateMessageListener()
         .subscribe({
           next: () => this.logic.fetchMessagePerTask(this.taskId)
-            // .pipe(map((result) => resultMessage = result.items))
-            // .pipe(concatMap((result) => this.logic.makeMessageAuthorImageUrl(result)))
-            // .pipe(concatMap((result) => this.logic.makeAttachmentUrl(result)))
-            // .pipe(concatMap((arrayAttachment) => this.logic.modifiedMessageItems(arrayAttachment, resultMessage)))
+            .pipe(map((result) => resultMessage = result.items))
+            .pipe(concatMap((result) => this.logic.makeMessageAuthorImageUrl(result)))
+            .pipe(concatMap((result) => this.logic.makeAttachmentUrl(result)))
+            .pipe(concatMap((arrayAttachment) => this.logic.modifiedMessageItems(arrayAttachment, resultMessage)))
             .subscribe((items) => {
-              console.log('TaskId', this.taskId);
-              // console.log('[FetchMessagePerTask items]', items);
-              // this.message = items
+              this.message = items
             }),
         });
     });
