@@ -43,25 +43,28 @@ export class TaskDetailPage implements OnInit {
     private readonly alertCtrl: AlertController,
   ) {
     let resultMessage;
+    this.taskId = this.route.snapshot.paramMap.get('id');
+    // console.log('taskId', this.taskId);
     this.initializeApp().subscribe(() => {
       this.subscriptionMessage = this.logic.onCreateMessageListener()
         .subscribe({
           next: () => this.logic.fetchMessagePerTask(this.taskId)
-            .pipe(map((result) => resultMessage = result.items))
-            .pipe(concatMap((result) => this.logic.makeMessageAuthorImageUrl(result)))
-            .pipe(concatMap((result) => this.logic.makeAttachmentUrl(result)))
-            .pipe(concatMap((arrayAttachment) => this.logic.modifiedMessageItems(arrayAttachment, resultMessage)))
+            // .pipe(map((result) => resultMessage = result.items))
+            // .pipe(concatMap((result) => this.logic.makeMessageAuthorImageUrl(result)))
+            // .pipe(concatMap((result) => this.logic.makeAttachmentUrl(result)))
+            // .pipe(concatMap((arrayAttachment) => this.logic.modifiedMessageItems(arrayAttachment, resultMessage)))
             .subscribe((items) => {
-              this.message = items
+              console.log('TaskId', this.taskId);
+              // console.log('[FetchMessagePerTask items]', items);
+              // this.message = items
             }),
         });
     });
   }
 
   ngOnInit(): void {
-    this.taskId = this.route.snapshot.paramMap.get('id');
-    this.segment = this.route.snapshot.paramMap.get('segment');
     let resultMessage;
+    this.segment = this.route.snapshot.paramMap.get('segment');
     const observerFetchCurrentUserInfo = this.logic.fetchCurrentUserInfo();
     const observerFetchAnyTask = this.logic.fetchAnyTask(this.taskId)
       .pipe(map((data) => this.taskDetail = data))
@@ -78,9 +81,10 @@ export class TaskDetailPage implements OnInit {
       anyTask: observerFetchAnyTask,
       messageAttachment: observerMakeMessageAttachmentUrl,
     }).subscribe((result) => {
+      console.log('ForkJoin', result);
       this.currentUserId = result.currentUserInfo.sub;
-      this.roomMembers = result.anyTask.items;
-      this.message = result.messageAttachment;
+      // this.roomMembers = result.anyTask.items;
+      // this.message = result.messageAttachment;
     });
   }
 
