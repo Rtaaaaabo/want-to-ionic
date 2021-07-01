@@ -44,7 +44,6 @@ export class TaskDetailPage implements OnInit {
   ) {
     let resultMessage;
     this.taskId = this.route.snapshot.paramMap.get('id');
-    // console.log('taskId', this.taskId);
     this.initializeApp().subscribe(() => {
       this.subscriptionMessage = this.logic.onCreateMessageListener()
         .subscribe({
@@ -79,10 +78,9 @@ export class TaskDetailPage implements OnInit {
       anyTask: observerFetchAnyTask,
       messageAttachment: observerMakeMessageAttachmentUrl,
     }).subscribe((result) => {
-      console.log('ForkJoin', result);
       this.currentUserId = result.currentUserInfo.sub;
-      // this.roomMembers = result.anyTask.items;
-      // this.message = result.messageAttachment;
+      this.roomMembers = result.anyTask.items;
+      this.message = result.messageAttachment;
     });
   }
 
