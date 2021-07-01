@@ -455,7 +455,7 @@ export type CreateMessageInput = {
   content: string;
   createdAt?: string | null;
   isSent?: boolean | null;
-  attachment?: Array<S3ObjectInput> | null,
+  attachment?: Array<S3ObjectInput | null> | null;
 };
 
 export type ModelMessageConditionInput = {
@@ -2000,14 +2000,19 @@ export type CreateMessageMutation = {
       key: string;
     } | null;
     registered?: boolean | null;
-    authority?: string | null;
+    authority?: boolean | null;
     company: {
       __typename: "Company";
       id: string;
       name: string;
-      domain: string;
+      isRegistered: boolean;
+      otp?: string | null;
+      tel?: string | null;
+      officialEmail?: string | null;
+      billing?: boolean | null;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     };
     messages?: {
       __typename: "ModelMessageConnection";
@@ -2027,6 +2032,7 @@ export type CreateMessageMutation = {
     } | null;
     createdAt: string;
     updatedAt: string;
+    owner?: string | null;
   };
   task: {
     __typename: "Task";
@@ -2045,6 +2051,12 @@ export type CreateMessageMutation = {
       updatedAt: string;
     };
     description?: string | null;
+    iconTask?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
     scheduleDate?: string | null;
     priority?: number | null;
     status?: number | null;
@@ -2058,9 +2070,10 @@ export type CreateMessageMutation = {
       tel?: string | null;
       positionName?: string | null;
       registered?: boolean | null;
-      authority?: string | null;
+      authority?: boolean | null;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     };
     messages?: {
       __typename: "ModelMessageConnection";
@@ -2073,6 +2086,7 @@ export type CreateMessageMutation = {
     updatedAt: string;
   };
   updatedAt: string;
+  owner?: string | null;
 };
 
 export type UpdateMessageMutation = {
@@ -5452,8 +5466,27 @@ export class AmplifyService {
             companyID
             tel
             positionName
+            iconImage {
+              __typename
+              bucket
+              region
+              key
+            }
             registered
             authority
+            company {
+              __typename
+              id
+              name
+              isRegistered
+              otp
+              tel
+              officialEmail
+              billing
+              createdAt
+              updatedAt
+              owner
+            }
             messages {
               __typename
               nextToken
@@ -5472,6 +5505,7 @@ export class AmplifyService {
             }
             createdAt
             updatedAt
+            owner
           }
           task {
             __typename
@@ -5490,6 +5524,12 @@ export class AmplifyService {
               updatedAt
             }
             description
+            iconTask {
+              __typename
+              bucket
+              region
+              key
+            }
             scheduleDate
             priority
             status
@@ -5506,6 +5546,7 @@ export class AmplifyService {
               authority
               createdAt
               updatedAt
+              owner
             }
             messages {
               __typename
@@ -5518,6 +5559,7 @@ export class AmplifyService {
             updatedAt
           }
           updatedAt
+          owner
         }
       }`;
     const gqlAPIServiceArguments: any = {

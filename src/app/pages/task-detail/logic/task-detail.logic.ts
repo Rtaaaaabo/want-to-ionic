@@ -115,7 +115,7 @@ export class TaskDetailLogic {
    */
   sendNewMessage(taskId: string, messageContent: string, userId: string, arrayAttachment?: Array<IS3Object>): Observable<any> {
     let inputContent: CreateMessageInput = {
-      id: `${uuid()}`,
+      id: `${taskId}_message_${uuid()}`,
       authorID: `${userId}`,
       content: messageContent,
       taskID: taskId,
