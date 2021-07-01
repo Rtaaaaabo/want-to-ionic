@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AmplifyService, GetTaskQuery, UpdateTaskMutation, ModelSortDirection, CreateMessageInput, SubscriptionResponse, OnCreateMessageSubscription, TaskByCreatedAtQuery, CreateMessageMutation, GetUserQuery, ListRoomGroupsQuery, ModelUserFilterInput } from '../../../shared/service/amplify.service';
 import { Observable, from, of } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
 
 @Injectable({
   providedIn: 'root'
@@ -42,9 +43,10 @@ export class TaskDetailService {
   }
 
   // MessageのAuthorのIconを取得します
-  fetchUserIconKey(authorID: string): Observable<string> {
+  fetchUserIconKey(authorID: string): Observable<any> {
+    console.log('fetchUserIconKey authorID', authorID);
     return from(this.amplifyService.GetUser(authorID))
-      .pipe(map((result) => result.iconImage.key))
+    // .pipe(map((result) => result.iconImage.key))
   }
 
   checkRegistrationUser(email: string): Observable<any> {

@@ -6747,6 +6747,7 @@ export class AmplifyService {
   }
 
   async GetUser(id: string): Promise<GetUserQuery> {
+    console.log('[GetUser id]', id);
     const statement = `query GetUser($id: ID!) {
         getUser(id: $id) {
           __typename
@@ -6764,6 +6765,38 @@ export class AmplifyService {
           }
           registered
           authority
+          company {
+            __typename
+            id
+            name
+            officer {
+              __typename
+              officerEmail
+              officerName
+            }
+            isRegistered
+            otp
+            tel
+            officialEmail
+            iconCompany {
+              __typename
+              bucket
+              region
+              key
+            }
+            billing
+            room {
+              __typename
+              nextToken
+            }
+            companyMembers {
+              __typename
+              nextToken
+            }
+            createdAt
+            updatedAt
+            owner
+          }
           messages {
             __typename
             items {
@@ -6775,6 +6808,7 @@ export class AmplifyService {
               createdAt
               isSent
               updatedAt
+              owner
             }
             nextToken
           }
@@ -6822,6 +6856,7 @@ export class AmplifyService {
           }
           createdAt
           updatedAt
+          owner
         }
       }`;
     const gqlAPIServiceArguments: any = {

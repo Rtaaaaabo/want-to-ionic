@@ -60,10 +60,11 @@ export class TaskDetailPage implements OnInit {
           next: () => this.logic.fetchMessagePerTask(this.taskId)
             .pipe(map((result) => resultMessage = result.items))
             .pipe(concatMap(() => this.logic.makeMessageAuthorImageUrl(resultMessage)))
-            .pipe(concatMap((result) => this.logic.makeAttachmentUrl(result)))
-            .pipe(concatMap((arrayAttachment) => this.logic.modifiedMessageItems(arrayAttachment, resultMessage)))
+            // .pipe(concatMap((result) => this.logic.makeAttachmentUrl(result)))
+            // .pipe(concatMap((arrayAttachment) => this.logic.modifiedMessageItems(arrayAttachment, resultMessage)))
             .subscribe((items) => {
-              this.message = items
+              console.log('[TaskDetail items]', items);
+              // this.message = items
             }),
         });
     });
