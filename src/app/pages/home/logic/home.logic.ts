@@ -10,6 +10,7 @@ import { ResponseListRoomGroupsQueryItems } from '../service/reponse/response.mo
 import { Storage } from 'aws-amplify';
 import { ILResponseFetchRoomMembers, InterfaceLogicArgsCreateRoom } from '../model/home.interface';
 import { IS3Object } from '../../task-detail/models/task-detail.interface';
+import { CurrentUser } from '../model/home.interface';
 
 interface Attribute {
   name: string,
@@ -51,7 +52,7 @@ export class HomeLogic {
   * @param content ルーム作成するのに必要な情報
   * @returns Roomを新規作成してその値を取得します
   */
-  createRoom(content: InterfaceLogicArgsCreateRoom, currentUser: User): Observable<CreateRoomMutation> {
+  createRoom(content: InterfaceLogicArgsCreateRoom, currentUser: CurrentUser): Observable<CreateRoomMutation> {
     const requestContent = {
       id: `${currentUser.companyID}_room_${uuid()}`,
       companyID: `${currentUser.companyID}`,
@@ -253,7 +254,7 @@ export class HomeLogic {
     return from(Storage.get(filePathName));
   }
 
-  fetchAnyUserInfoFromList(email: string): Observable<any> {
+  fetchAnyUserInfoFromList(email: string): Observable<ListUsersQuery> {
     return this.homeService.checkRegistrationUser(email);
   }
 

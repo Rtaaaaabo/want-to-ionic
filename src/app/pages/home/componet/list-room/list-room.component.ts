@@ -7,6 +7,7 @@ import { from } from 'rxjs';
 import { concatMap, switchMap, map } from 'rxjs/operators';
 import { ResponseListRoomGroupsQueryItems } from '../../service/reponse/response.model';
 import { Room, RoomGroup, User } from 'src/app/shared/service/amplify.service';
+import { CurrentUser } from '../../model/home.interface';
 
 interface Attribute {
   name: string,
@@ -20,10 +21,9 @@ interface Attribute {
   styleUrls: ['./list-room.component.scss'],
 })
 export class ListRoomComponent implements OnInit {
-  currentUserId: string;
   roomGroupsItems: Array<ResponseListRoomGroupsQueryItems>;
   currentUserAttribute: Attribute;
-  currentUser: User;
+  currentUser: CurrentUser;
 
   constructor(
     private logic: HomeLogic,

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AmplifyService, GetTaskQuery, UpdateTaskMutation, ModelSortDirection, CreateMessageInput, SubscriptionResponse, OnCreateMessageSubscription, TaskByCreatedAtQuery, CreateMessageMutation, GetUserQuery, ListRoomGroupsQuery } from '../../../shared/service/amplify.service';
+import { AmplifyService, GetTaskQuery, UpdateTaskMutation, ModelSortDirection, CreateMessageInput, SubscriptionResponse, OnCreateMessageSubscription, TaskByCreatedAtQuery, CreateMessageMutation, GetUserQuery, ListRoomGroupsQuery, ModelUserFilterInput } from '../../../shared/service/amplify.service';
 import { Observable, from, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -45,5 +45,14 @@ export class TaskDetailService {
   fetchUserIconKey(authorID: string): Observable<string> {
     return from(this.amplifyService.GetUser(authorID))
       .pipe(map((result) => result.iconImage.key))
+  }
+
+  checkRegistrationUser(email: string): Observable<any> {
+    const filterContent: ModelUserFilterInput = {
+      email: {
+        eq: `${email}`,
+      }
+    }
+    return from(this.amplifyService.ListUsers(filterContent));
   }
 }

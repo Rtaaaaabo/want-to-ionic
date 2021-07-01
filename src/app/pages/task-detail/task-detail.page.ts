@@ -8,9 +8,16 @@ import { TaskDetailLogic } from './logic/task-detail.logic';
 import { AddTaskModalComponent } from 'src/app/shared/component/modal/add-task-modal/add-task-modal.component';
 import { filter, tap, map, concatMap, toArray, mergeMap } from 'rxjs/operators';
 import { GetTaskQuery, ListRoomGroupsQuery, Message } from 'src/app/shared/service/amplify.service';
-import { IMessageWithAttachUrl } from './models/task-detail.interface';
+import { IMessageWithAttachUrl, CurrentUser } from './models/task-detail.interface';
 const { Camera } = Plugins;
 
+
+interface Attribute {
+  name: string,
+  email: string,
+  email_verified: boolean,
+  sub: string,
+};
 @Component({
   selector: 'app-task-detail',
   templateUrl: './task-detail.page.html',
@@ -30,6 +37,9 @@ export class TaskDetailPage implements OnInit {
   link = "comment"
   fragmentComment = '';
   newMsg: string = '';
+
+  currentUserAttribute: Attribute;
+  currentUserInfo: CurrentUser;
 
   constructor(
     private logic: TaskDetailLogic,
@@ -62,7 +72,9 @@ export class TaskDetailPage implements OnInit {
   ngOnInit(): void {
     let resultMessage;
     this.segment = this.route.snapshot.paramMap.get('segment');
-    const observerFetchCurrentUserInfo = this.logic.fetchCurrentUserInfo();
+    const observerFetchCurrentUserInfo = this.logic.fetchCurrentUserInfo()
+      .pipe(map((data) => this.currentUserAttribute = data))
+      .pipe(concatMap(() => this.logic.fetchAnyUserInfoFromList(this.currentUserAttribute.email)))
     const observerFetchAnyTask = this.logic.fetchAnyTask(this.taskId)
       .pipe(map((data) => this.taskDetail = data))
       .pipe(concatMap(() => this.logic.fetchMemberListOnRoom(this.taskDetail.roomID)));
@@ -78,21 +90,22 @@ export class TaskDetailPage implements OnInit {
       anyTask: observerFetchAnyTask,
       messageAttachment: observerMakeMessageAttachmentUrl,
     }).subscribe((result) => {
-      this.currentUserId = result.currentUserInfo.sub;
+      this.currentUserInfo = result.currentUserInfo.items[0];
       this.roomMembers = result.anyTask.items;
       this.message = result.messageAttachment;
+      console.log('RESULT', this.currentUserInfo);
     });
   }
 
   sendMessage(): void {
     if (this.arrayImageBase64Data.length === 0) {
-      this.logic.sendNewMessage(this.taskId, this.newMsg, this.currentUserId)
+      this.logic.sendNewMessage(this.taskId, this.newMsg, this.currentUserInfo.id)
         .subscribe(() => this.newMsg = '');
     } else {
-      this.logic.uploadFile(this.arrayImageBase64Data, this.taskId, this.currentUserId)
+      this.logic.uploadFile(this.arrayImageBase64Data, this.taskId, this.currentUserInfo.id)
         .pipe(concatMap(({ key }) => this.logic.makeS3Object(key)))
         .pipe(toArray())
-        .pipe(concatMap((imageContent) => this.logic.sendNewMessage(this.taskId, this.newMsg, this.currentUserId, imageContent)))
+        .pipe(concatMap((imageContent) => this.logic.sendNewMessage(this.taskId, this.newMsg, this.currentUserInfo.id, imageContent)))
         .subscribe(() => {
           this.newMsg = '';
           this.arrayImageBase64Data = [];

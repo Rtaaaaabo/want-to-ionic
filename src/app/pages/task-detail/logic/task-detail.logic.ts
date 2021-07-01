@@ -328,4 +328,8 @@ export class TaskDetailLogic {
     return of(content);
   }
 
+  fetchAnyUserInfoFromList(email: string): Observable<any> {
+    return this.taskDetailService.checkRegistrationUser(email);
+  }
+
 }

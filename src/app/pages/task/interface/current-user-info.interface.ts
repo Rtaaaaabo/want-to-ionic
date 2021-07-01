@@ -1,7 +1,8 @@
 export interface CurrentUserInfo {
-    email: string;
-    email_verified: boolean;
-    sub: string;
+    name: string,
+    email: string,
+    email_verified: boolean,
+    sub: string,
 }
 
 export interface CompanyMembersInfo {
