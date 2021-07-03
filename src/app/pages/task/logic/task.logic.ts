@@ -12,20 +12,18 @@ import {
   CreateMessageInput,
   CreateRoomGroupMutation,
   CreateTaskMutation,
-  DeleteTaskMutation,
   GetRoomQuery,
   GetUserQuery,
   ListRoomGroupsQuery,
   ListUsersQuery,
-  UpdateMessageInput,
   UpdateTaskMutation,
+  GetCompanyQuery,
 } from "src/app/shared/service/amplify.service";
 import { SessionService } from "../../../shared/service/session.service";
 import { v4 as uuid } from "uuid";
 import { TaskService } from "../service/task.service";
 import { CurrentUserInfo } from "../interface/current-user-info.interface";
 import { InterfaceTask } from "src/app/interfaces/task.interface";
-import { TaskPageModule } from '../task.module';
 
 
 @Injectable({
@@ -41,7 +39,7 @@ export class TaskLogic {
     return this.taskService.fetchRoomInfo(roomId);
   }
 
-  fetchCurrentUserInfo(): Observable<CurrentUserInfo> {
+  fetchCurrentUserCognitoInfo(): Observable<CurrentUserInfo> {
     return this.sessionService
       .fetchCurrentUser()
       .pipe(map((res) => res.attributes));
@@ -205,7 +203,11 @@ export class TaskLogic {
     return this.taskService.updateMessage(createContent);
   }
 
-  fetchCompanyMembers(companyId: string) {
+  fetchCompanyMembers(companyId: string): Observable<GetCompanyQuery> {
     return this.taskService.fetchAnyCompany(companyId);
+  }
+
+  fetchAnyUserInfoFromList(email: string): Observable<ListUsersQuery> {
+    return this.taskService.fetchAnyUserInfoFromList(email);
   }
 }

@@ -12,6 +12,7 @@ import {
   ListUsersQuery,
   UpdateTaskMutation,
   GetCompanyQuery,
+  ModelUserFilterInput,
 } from "../../../shared/service/amplify.service";
 import { Observable, from } from "rxjs";
 
@@ -86,4 +87,14 @@ export class TaskService {
   fetchAnyCompany(companyId: string): Observable<GetCompanyQuery> {
     return from(this.amplifyService.GetCompany(companyId));
   }
+
+  fetchAnyUserInfoFromList(email: string): Observable<ListUsersQuery> {
+    const filterContent: ModelUserFilterInput = {
+      email: {
+        eq: `${email}`,
+      }
+    }
+    return from(this.amplifyService.ListUsers(filterContent));
+  }
+
 }

@@ -4,14 +4,21 @@ import { Router, ActivatedRoute, RoutesRecognized } from '@angular/router';
 import { ItemReorderEventDetail } from '@ionic/core';
 import { ModalController, ToastController, AlertController } from '@ionic/angular';
 import { forkJoin, from, of } from 'rxjs';
-import { flatMap, switchMap, tap, map, concatMap, filter, pairwise } from 'rxjs/operators';
+import { flatMap, tap, map, concatMap, filter, pairwise } from 'rxjs/operators';
 import { GetRoomQuery, GetUserQuery } from 'src/app/shared/service/amplify.service';
 import { TaskLogic } from './logic/task.logic';
 import { CompanyMembersInfo } from './interface/current-user-info.interface';
 import { AddTaskModalComponent } from '../../shared/component/modal/add-task-modal/add-task-modal.component';
 import { InterfaceTask } from 'src/app/interfaces/task.interface';
 import { TaskFormModel } from 'src/app/shared/model/task-form.model';
-import { CompanyMembers } from './model/task-member.model';
+import { CompanyMembers, CurrentUser } from './model/task-member.model';
+
+interface Attribute {
+  name: string,
+  email: string,
+  email_verified: boolean,
+  sub: string,
+}
 
 @Component({
   selector: 'app-task',
@@ -21,8 +28,6 @@ import { CompanyMembers } from './model/task-member.model';
 export class TaskPage implements OnInit {
   room = {} as GetRoomQuery;
   roomId: string;
-  currentUserId: string;
-  currentUserEmail: string;
   isReorder: boolean;
   segment: string;
   companyId: number | string;
@@ -34,6 +39,10 @@ export class TaskPage implements OnInit {
   taskDoneItems: Array<InterfaceTask>;
   private previousUrl: string = undefined;
   private previousParam: string = undefined;
+
+
+  currentUserAttribute: Attribute;
+  currentUser: CurrentUser;
 
 
   constructor(
@@ -63,7 +72,16 @@ export class TaskPage implements OnInit {
   }
 
   ngOnInit() {
-    this.route.queryParams.subscribe((param) => this.segment = param.status);
+    this.logic.fetchCurrentUserCognitoInfo()
+      .pipe(map((data) => this.currentUserAttribute = data))
+      .pipe(concatMap(() => this.logic.fetchAnyUserInfoFromList(this.currentUserAttribute.email)))
+      .pipe(map(({ items }) => this.currentUser = items[0]))
+      .subscribe(() => {
+        console.log('CurrentUser', this.currentUser);
+        this.route.queryParams
+          .subscribe((param) => this.segment = param.status);
+      })
+
   }
 
   // 前のURLだけを取得
@@ -103,7 +121,7 @@ export class TaskPage implements OnInit {
       component: AddTaskModalComponent,
       componentProps: {
         room: this.room,
-        userId: this.currentUserId,
+        userId: this.currentUser.id,
         roomMembers: this.roomMembers
       },
     });
@@ -111,10 +129,10 @@ export class TaskPage implements OnInit {
     dismissObservable
       .pipe(filter(({ data }) => data !== undefined))
       .pipe(map(({ data }) => this.taskFormData = data.taskValue))
-      .pipe(switchMap(() => this.taskActiveItems.length !== 0 ?
+      .pipe(concatMap(() => this.taskActiveItems.length !== 0 ?
         this.logic.updateStatusTaskItems(this.taskActiveItems) : of(this.taskActiveItems)
       ))
-      .pipe(concatMap(() => this.logic.createTaskToRoom(this.taskFormData, this.roomId, this.currentUserId)))
+      .pipe(concatMap(() => this.logic.createTaskToRoom(this.taskFormData, this.roomId, this.currentUser.id)))
       .pipe(concatMap(() => this.logic.fetchActiveTaskPerRoom(this.roomId)))
       .subscribe((items) => {
         console.log(items);
