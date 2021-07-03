@@ -135,7 +135,6 @@ export class TaskPage implements OnInit {
       .pipe(concatMap(() => this.logic.createTaskToRoom(this.taskFormData, this.roomId, this.currentUser.id)))
       .pipe(concatMap(() => this.logic.fetchActiveTaskPerRoom(this.roomId)))
       .subscribe((items) => {
-        console.log(items);
         this.taskActiveItems = items.sort(this.logic.compareTaskArray);;
       });
     return modal.present();
