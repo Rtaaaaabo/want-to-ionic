@@ -39,7 +39,14 @@
       </ion-list-header>
       <ion-item *ngFor="let item of message">
         <ion-avatar slot="start">
-          <img [src]="item.authorIconWithUrl" />
+          <img
+            *ngIf="item.authorIconWithUrl !== ''"
+            [src]="item.authorIconWithUrl"
+          />
+          <img
+            *ngIf="item.authorIconWithUrl === ''"
+            src="../../../assets/img/undefined.jpeg"
+          />
         </ion-avatar>
         <ion-label class="label-wrap">
           <p>{{item.author.username}}</p>
