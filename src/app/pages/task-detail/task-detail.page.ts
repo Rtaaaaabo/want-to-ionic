@@ -59,7 +59,7 @@ export class TaskDetailPage implements OnInit {
         .subscribe({
           next: () => this.logic.fetchMessagePerTask(this.taskId)
             .pipe(map((result) => resultMessage = result.items))
-            .pipe(concatMap(() => this.logic.makeMessageAuthorImageUrl(resultMessage)))
+            // .pipe(concatMap(() => this.logic.makeMessageAuthorImageUrl(resultMessage)))
             // .pipe(concatMap((result) => this.logic.makeAttachmentUrl(result)))
             // .pipe(concatMap((arrayAttachment) => this.logic.modifiedMessageItems(arrayAttachment, resultMessage)))
             .subscribe((items) => {
@@ -81,16 +81,17 @@ export class TaskDetailPage implements OnInit {
       .pipe(concatMap(() => this.logic.fetchMemberListOnRoom(this.taskDetail.roomID)));
     const observerFetchMessagePerTask = this.logic.fetchMessagePerTask(this.taskId);
     const observerMakeMessageAttachmentUrl = observerFetchMessagePerTask
-      .pipe(map(result => resultMessage = result.items))
-      .pipe(concatMap((result) => this.logic.makeMessageAuthorImageUrl(result)))
+      .pipe(map((result) => resultMessage = result.items))
+      .pipe(concatMap((result) => this.logic.makeMessageAuthorImageUrl(result))) //AuthorIconのURLを設定する
       .pipe(concatMap((result) => this.logic.makeAttachmentUrl(result)))
-      .pipe(mergeMap((arrayAttachment) => this.logic.modifiedMessageItems(arrayAttachment, resultMessage)))
+      .pipe(concatMap((arrayAttachment) => this.logic.modifiedMessageItems(arrayAttachment, resultMessage)))
 
     forkJoin({
       currentUserInfo: observerFetchCurrentUserInfo,
       anyTask: observerFetchAnyTask,
       messageAttachment: observerMakeMessageAttachmentUrl,
     }).subscribe((result) => {
+      console.log(result);
       this.currentUserInfo = result.currentUserInfo.items[0];
       this.roomMembers = result.anyTask.items;
       this.message = result.messageAttachment;

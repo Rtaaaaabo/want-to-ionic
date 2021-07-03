@@ -10,8 +10,6 @@ import { Filesystem, FilesystemDirectory, FilesystemEncoding, FileWriteResult, F
 import { CreateMessageInput, GetTaskQuery, Message, S3Object, S3ObjectInput, TaskByCreatedAtQuery, UpdateTaskMutation } from 'src/app/shared/service/amplify.service';
 import { IImageFile, IS3Object, IsMessageContent, IMessageWithAttachUrl, MessageContent, TaskByCreatedAtItems } from '../models/task-detail.interface';
 
-const OneWeekSecond = 604800;
-
 @Injectable({
   providedIn: 'root'
 })
@@ -35,10 +33,35 @@ export class TaskDetailLogic {
    * タスクあたりのMessageを返します
    * @param taskId TaskIDです
    * @returns Observable型で タスクあたりのMessageを返します
-   * TaskByCreatedAtQuery
    */
   fetchMessagePerTask(taskId: string): Observable<TaskByCreatedAtQuery> {
     return this.taskDetailService.fetchMessagePerTask(taskId);
+  }
+
+  /**
+   * Messageを送信したAuthorのImageUrlを取得します
+   * @param items 昇降順になっているMessage Items
+   * @returns 昇降順になっているMessageItems(authorIconWithUrlも含まれる)
+   */
+  makeMessageAuthorImageUrl(items: Array<TaskByCreatedAtItems>): Observable<Array<TaskByCreatedAtItems>> {
+    let messageItem: TaskByCreatedAtItems;
+    return from(items)
+      .pipe(map((result) => messageItem = result))
+      .pipe(concatMap(() => this.fetchAnyUserIconUrl(messageItem)))
+      .pipe(toArray());
+  }
+
+  /**
+   * UserのImageIconのURLを取得して、MessageItems内のauthorIconWithUrlに格納します
+   * @param item 昇降順になっているMessage Item
+   * @returns TaskByCreatedAtItemsになっているItemを返します
+   */
+  fetchAnyUserIconUrl(item: TaskByCreatedAtItems): Observable<TaskByCreatedAtItems> {
+    let messageWithAttachUrl: TaskByCreatedAtItems = item;
+    return this.taskDetailService.fetchUserIconKey(item.authorID)
+      .pipe(concatMap((iconKey) => iconKey !== '' ? this.getStorage(iconKey) : of('')))
+      .pipe(map((result) => messageWithAttachUrl.authorIconWithUrl = result))
+      .pipe(map(() => messageWithAttachUrl))
   }
 
   /**
@@ -53,31 +76,24 @@ export class TaskDetailLogic {
       .pipe(toArray())
   }
 
-  makeMessageAuthorImageUrl(items: Array<TaskByCreatedAtItems>): Observable<Array<TaskByCreatedAtItems>> {
-    let messageItem: TaskByCreatedAtItems;
-    return from(items)
-      .pipe(map((result) => messageItem = result))
-      .pipe(concatMap(() => this.fetchAnyUserIconUrl(messageItem)))
-    // .pipe(toArray());
-  }
-
-  // 返す型は Observable<IMessageWithAttachUrl>
-  fetchAnyUserIconUrl(items: TaskByCreatedAtItems): Observable<any> {
-    let messageWithAttachUrl: TaskByCreatedAtItems;
-    return this.taskDetailService.fetchUserIconKey(items.authorID)
-    // .pipe(concatMap((iconKey) => this.getStorage(iconKey)))
-    // .pipe(map((result) => messageWithAttachUrl.authorIconWithUrl = result))
-    // .pipe(map(() => messageWithAttachUrl))
-  }
-
+  /**
+   * Message内のAttachmentのURLを取得します
+   * @param {S3Object} attachmentItem Message内の添付ファイル情報の配列です
+   * @returns AttachmentのURLを取得し、配列で返します
+   */
   fetchMakeAttachmentUrl(attachmentItem: Array<S3Object>): Observable<Array<string>> {
-    console.log('[fetchMakeAttachmentUrl attachmentItem]', attachmentItem);
     return from(attachmentItem)
       .pipe(concatMap((attachment) => this.getStorage(attachment.key)))
       .pipe(toArray());
   }
 
-  modifiedMessageItems(arrayAttachmentUrl, resultMessage): Observable<any> {
+  /**
+   * Message内にAttachment情報を入れて成形します
+   * @param arrayAttachmentUrl 配列のAttachmentのURL
+   * @param {Array<IMessageWithAttachUrl>} resultMessage 配列のMessage
+   * @returns Message内に AttachmentとAttachmentWithUrlを入れて返します
+   */
+  modifiedMessageItems(arrayAttachmentUrl, resultMessage: Array<IMessageWithAttachUrl>): Observable<Array<IMessageWithAttachUrl>> {
     let result: Array<IMessageWithAttachUrl> = resultMessage;
     resultMessage.forEach((el, index) => {
       result[index].attachmentWithUrl = arrayAttachmentUrl[index];
@@ -228,7 +244,6 @@ export class TaskDetailLogic {
   }
 
   getStorage(fileName: string): Observable<any> {
-    console.log('GetStorage file:', fileName)
     return from(Storage.get(fileName))
   }
 
