@@ -52,19 +52,19 @@ export class TaskDetailPage implements OnInit {
     private readonly platform: Platform,
     private readonly alertCtrl: AlertController,
   ) {
-    let resultMessage: Array<TaskByCreatedAtItems>;
+    let resultMessage;
     this.taskId = this.route.snapshot.paramMap.get('id');
     this.initializeApp().subscribe(() => {
       this.subscriptionMessage = this.logic.onCreateMessageListener()
         .subscribe({
           next: () => this.logic.fetchMessagePerTask(this.taskId)
             .pipe(map((result) => resultMessage = result.items))
-            // .pipe(concatMap(() => this.logic.makeMessageAuthorImageUrl(resultMessage)))
-            // .pipe(concatMap((result) => this.logic.makeAttachmentUrl(result)))
-            // .pipe(concatMap((arrayAttachment) => this.logic.modifiedMessageItems(arrayAttachment, resultMessage)))
+            .pipe(concatMap(() => this.logic.makeMessageAuthorImageUrl(resultMessage)))
+            .pipe(concatMap((result) => this.logic.makeAttachmentUrl(result)))
+            .pipe(concatMap((arrayAttachment) => this.logic.modifiedMessageItems(arrayAttachment, resultMessage)))
             .subscribe((items) => {
               console.log('[TaskDetail items]', items);
-              // this.message = items
+              this.message = items
             }),
         });
     });
