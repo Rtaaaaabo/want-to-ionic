@@ -63,7 +63,6 @@ export class TaskDetailPage implements OnInit {
             .pipe(concatMap((result) => this.logic.makeAttachmentUrl(result)))
             .pipe(concatMap((arrayAttachment) => this.logic.modifiedMessageItems(arrayAttachment, resultMessage)))
             .subscribe((items) => {
-              console.log('[TaskDetail items]', items);
               this.message = items
             }),
         });
