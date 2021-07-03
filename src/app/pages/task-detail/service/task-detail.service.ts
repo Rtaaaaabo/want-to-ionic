@@ -44,7 +44,6 @@ export class TaskDetailService {
 
   // MessageのAuthorのIconを取得します
   fetchUserIconKey(authorID: string): Observable<string> {
-    console.log('fetchUserIconKey authorID', authorID);
     return from(this.amplifyService.GetUser(authorID))
       .pipe(map((result) => result.iconImage.key))
       .pipe(catchError(() => of('')));

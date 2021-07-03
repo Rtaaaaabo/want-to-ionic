@@ -6747,7 +6747,6 @@ export class AmplifyService {
   }
 
   async GetUser(id: string): Promise<GetUserQuery> {
-    console.log('[GetUser id]', id);
     const statement = `query GetUser($id: ID!) {
         getUser(id: $id) {
           __typename
