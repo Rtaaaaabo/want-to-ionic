@@ -5,7 +5,7 @@ import { ItemReorderEventDetail } from '@ionic/core';
 import { ModalController, ToastController, AlertController } from '@ionic/angular';
 import { forkJoin, from, of } from 'rxjs';
 import { flatMap, switchMap, tap, map, concatMap, filter, pairwise } from 'rxjs/operators';
-import { GetRoomQuery, GetUserQuery, ListUsersQuery, User } from 'src/app/shared/service/amplify.service';
+import { GetRoomQuery, GetUserQuery } from 'src/app/shared/service/amplify.service';
 import { TaskLogic } from './logic/task.logic';
 import { CompanyMembersInfo } from './interface/current-user-info.interface';
 import { AddTaskModalComponent } from '../../shared/component/modal/add-task-modal/add-task-modal.component';
@@ -109,6 +109,7 @@ export class TaskPage implements OnInit {
     });
     const dismissObservable = from(modal.onDidDismiss());
     dismissObservable
+      .pipe(filter(({ data }) => data !== undefined))
       .pipe(map(({ data }) => this.taskFormData = data.taskValue))
       .pipe(switchMap(() => this.taskActiveItems.length !== 0 ?
         this.logic.updateStatusTaskItems(this.taskActiveItems) : of(this.taskActiveItems)
@@ -116,6 +117,7 @@ export class TaskPage implements OnInit {
       .pipe(concatMap(() => this.logic.createTaskToRoom(this.taskFormData, this.roomId, this.currentUserId)))
       .pipe(concatMap(() => this.logic.fetchActiveTaskPerRoom(this.roomId)))
       .subscribe((items) => {
+        console.log(items);
         this.taskActiveItems = items.sort(this.logic.compareTaskArray);;
       });
     return modal.present();
