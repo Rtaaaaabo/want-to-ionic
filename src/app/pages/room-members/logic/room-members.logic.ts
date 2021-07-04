@@ -89,6 +89,12 @@ export class RoomMembersLogic {
       .pipe(map(({ items }) => items));
   }
 
+  /**
+   * 自分以外のメンバーを取得します
+   * @param items RoomGroupMember 
+   * @param currentUserId 
+   * @returns 
+   */
   setRoomMembers(items: Array<RoomGroupItems>, currentUserId: string): Observable<Array<RoomGroupUser>> {
     return from(items)
       .pipe(filter((item) => item.userID !== currentUserId))

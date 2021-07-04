@@ -44,14 +44,11 @@ export class RoomMembersPage implements OnInit {
       .pipe(concatMap((result) => this.logic.setRoomMembers(result, this.currentUser.id)))
       .pipe(map((members) => this.roomMembers = members))
       .pipe(concatMap(() => this.logic.fetchCompanyMember(this.companyId)))
-      .subscribe(data => {
-        console.log('[RoomMembersPage data]', data);
-      })
-    // .subscribe(({ items: companyMembers }) => {
-    //   this.companyMembers = companyMembers;
-    //   this.roomMembers.unshift(this.currentUser);
-    //   this.notAssignMembers = this.checkNotAssignMember(this.companyMembers, this.roomMembers);
-    // });
+      .subscribe((data) => {
+        this.companyMembers = data.items;
+        this.roomMembers.unshift(this.currentUser);
+        this.notAssignMembers = this.checkNotAssignMember(this.companyMembers, this.roomMembers);
+      });
   }
 
   checkNotAssignMember(companyMembers, roomMembers): Array<any> {
