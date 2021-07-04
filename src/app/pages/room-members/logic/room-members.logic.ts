@@ -5,7 +5,7 @@ import { SessionService } from 'src/app/shared/service/session.service';
 import { ListUsersQuery } from 'src/app/shared/service/amplify.service';
 import { RoomMemberService } from '../service/room-member.service';
 import { InterfaceRoomMembers } from '../interface/room-members.interface';
-import { ListRoomMembersInfo, ListUserInfo, Attribute } from '../models/room-members.model';
+import { ListRoomMembersInfo, ListUserInfo, Attribute, RoomGroupItems } from '../models/room-members.model';
 
 @Injectable({
   providedIn: 'root'
@@ -30,7 +30,7 @@ export class RoomMembersLogic {
     }
   };
 
-  fetchRoomMemberGroup(roomId: string): Observable<Array<ListRoomMembersInfo>> {
+  fetchRoomMemberGroup(roomId: string): Observable<Array<RoomGroupItems>> {
     const filterContent = {
       roomID: {
         eq: `${roomId}`

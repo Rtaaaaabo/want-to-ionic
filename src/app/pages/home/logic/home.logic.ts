@@ -8,9 +8,8 @@ import { SessionService } from '../../../shared/service/session.service';
 import { CreateRoomGroupMutation, CreateRoomMutation, CreateUserMutation, DeleteRoomMutation, ListUsersQuery, ModelRoomGroupFilterInput, S3Object, User } from 'src/app/shared/service/amplify.service';
 import { ResponseListRoomGroupsQueryItems } from '../service/reponse/response.model';
 import { Storage } from 'aws-amplify';
-import { ILResponseFetchRoomMembers, InterfaceLogicArgsCreateRoom } from '../model/home.interface';
+import { CurrentUser, RoomGroupItems, InterfaceLogicArgsCreateRoom } from '../model/home.interface';
 import { IS3Object } from '../../task-detail/models/task-detail.interface';
-import { CurrentUser } from '../model/home.interface';
 
 interface Attribute {
   name: string,
@@ -131,7 +130,7 @@ export class HomeLogic {
     return this.homeService.createUserRoomGroup(content);
   }
 
-  fetchRoomMembers(roomId: string, currentUserId: string): Observable<Array<ILResponseFetchRoomMembers>> {
+  fetchRoomMembers(roomId: string, currentUserId: string): Observable<Array<RoomGroupItems>> {
     const filterContent: ModelRoomGroupFilterInput = {
       roomID: {
         eq: `${roomId}`
@@ -162,7 +161,7 @@ export class HomeLogic {
       .pipe(map(({ items }) => items[0].id));
   }
 
-  fetchRoomList(currentUseId: string): Observable<Array<ResponseListRoomGroupsQueryItems>> {
+  fetchRoomList(currentUseId: string): Observable<Array<RoomGroupItems>> {
     const filterContent = {
       userID: {
         eq: currentUseId
@@ -199,10 +198,10 @@ export class HomeLogic {
       ("00" + dt.getUTCSeconds()).slice(-2);
   }
 
-  setExitsRoomAndUser(data: Array<ResponseListRoomGroupsQueryItems>): Observable<any> {
+  setExitsRoomAndUser(data: Array<RoomGroupItems>): Observable<any> {
     return from(data)
-      .pipe(filter((item: ResponseListRoomGroupsQueryItems) => item.room !== null))
-      .pipe(filter((item: ResponseListRoomGroupsQueryItems) => item.user !== null))
+      .pipe(filter((item: RoomGroupItems) => item.room !== null))
+      .pipe(filter((item: RoomGroupItems) => item.user !== null))
       .pipe(toArray());
   }
 
