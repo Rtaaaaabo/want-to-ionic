@@ -91,9 +91,9 @@ export class RoomMembersLogic {
 
   /**
    * 自分以外のメンバーを取得します
-   * @param items RoomGroupMember 
-   * @param currentUserId 
-   * @returns 
+   * @param items RoomGroupMember
+   * @param currentUserId 自分自身のID
+   * @returns 配列でRoomGroupUserを返す
    */
   setRoomMembers(items: Array<RoomGroupItems>, currentUserId: string): Observable<Array<RoomGroupUser>> {
     return from(items)
@@ -110,9 +110,5 @@ export class RoomMembersLogic {
   fetchAnyUserInfoFromList(email: string): Observable<ListUsersQuery> {
     return this.roomMemberService.fetchUserInfo(email);
   }
-
-  // fetchCurrentUser(currentUserId: string): Observable<any> {
-  //   return this.roomMemberService.fetchCurrentUser(currentUserId)
-  // }
 
 }
