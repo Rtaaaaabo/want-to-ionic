@@ -21,11 +21,11 @@ export class RoomMembersPage implements OnInit {
   notAssignMembers = [];
 
   constructor(
-    private logic: RoomMembersLogic,
-    private location: Location,
-    private modalCtrl: ModalController,
-    private router: Router,
-    private route: ActivatedRoute,
+    private readonly logic: RoomMembersLogic,
+    private readonly modalCtrl: ModalController,
+    private readonly location: Location,
+    private readonly router: Router,
+    private readonly route: ActivatedRoute,
   ) { }
 
   ngOnInit(): void {
