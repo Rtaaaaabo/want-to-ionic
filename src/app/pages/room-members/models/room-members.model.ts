@@ -118,3 +118,18 @@ export interface RoomGroupItems {
     createdAt: string;
     updatedAt: string;
 }
+
+export interface RoomGroupUser {
+    __typename: "User";
+    id: string;
+    username: string;
+    email: string;
+    companyID: string;
+    tel?: string | null;
+    positionName?: string | null;
+    registered?: boolean | null;
+    authority?: boolean | null;
+    createdAt: string;
+    updatedAt: string;
+    owner?: string | null;
+}

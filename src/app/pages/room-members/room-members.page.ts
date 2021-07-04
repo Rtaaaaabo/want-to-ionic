@@ -41,9 +41,9 @@ export class RoomMembersPage implements OnInit {
       .pipe(concatMap(() => this.logic.fetchAnyUserInfoFromList(this.currentUserAttribute.email)))
       .pipe(map(({ items }) => this.currentUser = items[0]))
       .pipe(concatMap(() => this.logic.fetchRoomMemberGroup(this.roomId)))
-      // .pipe(concatMap((result) => this.logic.setRoomMembers(result, this.currentUser.id)))
-      // .pipe(map((members) => this.roomMembers = members))
-      // .pipe(concatMap(() => this.logic.fetchCompanyMember(this.companyId)))
+      .pipe(concatMap((result) => this.logic.setRoomMembers(result, this.currentUser.id)))
+      .pipe(map((members) => this.roomMembers = members))
+      .pipe(concatMap(() => this.logic.fetchCompanyMember(this.companyId)))
       .subscribe(data => {
         console.log('[RoomMembersPage data]', data);
       })
