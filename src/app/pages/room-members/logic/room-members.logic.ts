@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { from, Observable, of } from 'rxjs';
+import { filter, map, toArray, concatMap } from 'rxjs/operators';
+import { SessionService } from 'src/app/shared/service/session.service';
+import { ListUsersQuery } from 'src/app/shared/service/amplify.service';
 import { RoomMemberService } from '../service/room-member.service';
 import { InterfaceRoomMembers } from '../interface/room-members.interface';
-import { filter, map, toArray, concatMap } from 'rxjs/operators';
-import { ListRoomMembersInfo, ListUserInfo } from '../models/room-members.model';
-import { SessionService } from 'src/app/shared/service/session.service';
+import { ListRoomMembersInfo, ListUserInfo, Attribute } from '../models/room-members.model';
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +13,8 @@ import { SessionService } from 'src/app/shared/service/session.service';
 export class RoomMembersLogic {
 
   constructor(
-    private roomMemberService: RoomMemberService,
-    private sessionService: SessionService,
+    private readonly roomMemberService: RoomMemberService,
+    private readonly sessionService: SessionService,
   ) { }
 
   fetchCompanyMember(companyId: number | string, queryFilterUser?: Array<InterfaceRoomMembers>): Observable<any> {
@@ -95,13 +96,17 @@ export class RoomMembersLogic {
       .pipe(toArray());
   }
 
-  fetchCurrentUserId(): Observable<string> {
+  fetchCurrentUser(): Observable<Attribute> {
     return this.sessionService.fetchCurrentUser()
-      .pipe(map((res) => res.attributes.sub))
+      .pipe(map(data => data.attributes));
   }
 
-  fetchCurrentUser(currentUserId: string): Observable<any> {
-    return this.roomMemberService.fetchCurrentUser(currentUserId)
+  fetchAnyUserInfoFromList(email: string): Observable<ListUsersQuery> {
+    return this.roomMemberService.fetchUserInfo(email);
   }
+
+  // fetchCurrentUser(currentUserId: string): Observable<any> {
+  //   return this.roomMemberService.fetchCurrentUser(currentUserId)
+  // }
 
 }

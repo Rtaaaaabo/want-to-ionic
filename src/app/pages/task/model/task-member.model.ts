@@ -17,34 +17,35 @@ export interface MemberTask {
 }
 
 export interface CompanyMembers {
-    createdAt: string,
-    id: string,
-    room: {
-        id: string,
-        companyID: string,
-        name: string,
-        description: string,
-        createdAt: string
-        updatedAt: string,
-        __typename: string,
-    }
-    roomID: string
-    updatedAt: string,
-    user: {
-        authority: string,
-        companyID: string,
-        createdAt: string,
-        email: string,
-        iconImage: string,
-        id: string,
-        positionName: string,
-        registered: boolean,
-        tel: string,
-        updatedAt: string,
-        username: string
-        __typename: string,
-    }
-    userID: string,
+    __typename: "RoomGroup";
+    id: string;
+    roomID: string;
+    userID: string;
+    room?: {
+        __typename: "Room";
+        id: string;
+        name: string;
+        companyID: string;
+        description: string;
+        createdAt: string;
+        updatedAt: string;
+    } | null;
+    user?: {
+        __typename: "User";
+        id: string;
+        username: string;
+        email: string;
+        companyID: string;
+        tel?: string | null;
+        positionName?: string | null;
+        registered?: boolean | null;
+        authority?: boolean | null;
+        createdAt: string;
+        updatedAt: string;
+        owner?: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
 }
 
 export interface CurrentUser {

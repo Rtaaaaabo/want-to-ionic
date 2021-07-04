@@ -77,7 +77,6 @@ export class TaskPage implements OnInit {
       .pipe(concatMap(() => this.logic.fetchAnyUserInfoFromList(this.currentUserAttribute.email)))
       .pipe(map(({ items }) => this.currentUser = items[0]))
       .subscribe(() => {
-        console.log('CurrentUser', this.currentUser);
         this.route.queryParams
           .subscribe((param) => this.segment = param.status);
       })

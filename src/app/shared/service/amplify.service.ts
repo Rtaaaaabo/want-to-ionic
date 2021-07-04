@@ -2880,12 +2880,12 @@ export type GetRoomGroupQuery = {
 
 export type ListRoomGroupsQuery = {
   __typename: "ModelRoomGroupConnection";
-  items: Array<{
+  items?: Array<{
     __typename: "RoomGroup";
     id: string;
     roomID: string;
     userID: string;
-    room: {
+    room?: {
       __typename: "Room";
       id: string;
       name: string;
@@ -2894,24 +2894,24 @@ export type ListRoomGroupsQuery = {
       createdAt: string;
       updatedAt: string;
     } | null;
-    user: {
+    user?: {
       __typename: "User";
       id: string;
       username: string;
       email: string;
       companyID: string;
-      tel: string | null;
-      positionName: string | null;
-      iconImage: string | null;
-      registered: boolean | null;
-      authority: string | null;
+      tel?: string | null;
+      positionName?: string | null;
+      registered?: boolean | null;
+      authority?: boolean | null;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     } | null;
     createdAt: string;
     updatedAt: string;
   } | null> | null;
-  nextToken: string | null;
+  nextToken?: string | null;
 };
 
 export type GetRoomQuery = {
@@ -8041,41 +8041,42 @@ export class AmplifyService {
     nextToken?: string
   ): Promise<ListRoomGroupsQuery> {
     const statement = `query ListRoomGroups($filter: ModelRoomGroupFilterInput, $limit: Int, $nextToken: String) {
-        listRoomGroups(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      listRoomGroups(filter: $filter, limit: $limit, nextToken: $nextToken) {
+        __typename
+        items {
           __typename
-          items {
+          id
+          roomID
+          userID
+          room {
             __typename
             id
-            roomID
-            userID
-            room {
-              __typename
-              id
-              name
-              companyID
-              description
-              createdAt
-              updatedAt
-            }
-            user {
-              __typename
-              id
-              username
-              email
-              companyID
-              tel
-              positionName
-              registered
-              authority
-              createdAt
-              updatedAt
-            }
+            name
+            companyID
+            description
             createdAt
             updatedAt
           }
-          nextToken
+          user {
+            __typename
+            id
+            username
+            email
+            companyID
+            tel
+            positionName
+            registered
+            authority
+            createdAt
+            updatedAt
+            owner
+          }
+          createdAt
+          updatedAt
         }
-      }`;
+        nextToken
+      }
+    }`;
     const gqlAPIServiceArguments: any = {};
     if (filter) {
       gqlAPIServiceArguments.filter = filter;

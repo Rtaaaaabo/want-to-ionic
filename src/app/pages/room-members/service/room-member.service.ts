@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { from, Observable } from 'rxjs';
-import { AmplifyService, ListRoomGroupsQuery, ModelRoomGroupFilterInput } from '../../../shared/service/amplify.service';
+import { AmplifyService, ListRoomGroupsQuery, ModelRoomGroupFilterInput, ModelUserFilterInput, ListUsersQuery } from '../../../shared/service/amplify.service';
 
 @Injectable({
   providedIn: 'root'
@@ -43,5 +43,14 @@ export class RoomMemberService {
       id: roomGroupId
     }
     return from(this.amplifyService.DeleteRoomGroup(requestContent));
+  }
+
+  fetchUserInfo(email: string): Observable<ListUsersQuery> {
+    const filterContent: ModelUserFilterInput = {
+      email: {
+        eq: `${email}`,
+      }
+    }
+    return from(this.amplifyService.ListUsers(filterContent));
   }
 }
