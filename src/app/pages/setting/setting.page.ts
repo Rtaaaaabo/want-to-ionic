@@ -30,7 +30,7 @@ export class SettingPage implements OnInit {
 
   currentUserAttribute: Attribute;
   currentUser: CurrentUser;
-  currentUserIcon: string;
+  currentUserIcon: string | null;
 
   constructor(
     private logic: SettingLogic,
@@ -47,7 +47,7 @@ export class SettingPage implements OnInit {
       .pipe(concatMap(() => this.logic.modifiedAvatarIconUrl(this.currentUser.iconImage)))
       .subscribe((data) => {
         console.log(data);
-        // this.user = data;
+        this.currentUserIcon = data;
       });
   }
 
@@ -65,11 +65,13 @@ export class SettingPage implements OnInit {
   }
 
   async presentEditModal(): Promise<void> {
+    console.log('presentEditModal', this.currentUserIcon);
     const modal = await this.modalCtrl.create({
       component: EditProfileModalComponent,
       componentProps: {
         'status': 'already',
-        'user': this.user,
+        'user': this.currentUser,
+        'userIcon': this.currentUserIcon,
       }
     });
 

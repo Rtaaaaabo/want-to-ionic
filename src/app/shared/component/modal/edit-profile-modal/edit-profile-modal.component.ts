@@ -5,7 +5,7 @@ import { HomeLogic } from '../../../../pages/home/logic/home.logic';
 import { Camera, CameraResultType } from '@capacitor/core';
 import { from, of } from 'rxjs';
 import { catchError, concatMap, filter, map } from 'rxjs/operators';
-import { IUser } from '../../../../pages/setting/interface/setting.interface';
+import { CurrentUser } from '../../../../pages/setting/interface/setting.interface';
 
 const optionPicture = {
   quality: 50,
@@ -24,22 +24,23 @@ const optionPicture = {
 })
 
 export class EditProfileModalComponent implements OnInit {
+  @Input() status: string;
+  @Input() email: string;
+  @Input() userId: string;
+  @Input() user: CurrentUser;
+  @Input() name: string;
+  @Input() userIcon: string;
+
   editProfileForm = new FormGroup({
     id: new FormControl(''),
-    keyAvatarImage: new FormControl(''),
+    keyAvatarImage: new FormControl(),
     userName: new FormControl('', [Validators.required]),
     positionName: new FormControl(''),
     targetEmail: new FormControl('', [Validators.required, Validators.email]),
     tel: new FormControl(''),
   });
-
-  @Input() status: string;
-  @Input() email: string;
-  @Input() userId: string;
-  @Input() user: IUser;
-  @Input() name: string;
   title: string;
-  iconImageUrl: String | Object = '../../../../../assets/img/undefined.jpeg';
+  defaultIconImageUrl = '../../../../../assets/img/undefined.jpeg';
 
   constructor(
     private readonly modalCtrl: ModalController,
@@ -55,7 +56,8 @@ export class EditProfileModalComponent implements OnInit {
         userName: this.name,
       });
     } else {
-      this.iconImageUrl = this.user.avatarUrl;
+      console.log('userIcon', this.userIcon);
+      this.userIcon = this.userIcon;
       this.title = 'プロフィールの編集';
       this.editProfileForm.patchValue({
         id: this.user.id,
@@ -63,7 +65,7 @@ export class EditProfileModalComponent implements OnInit {
         userName: this.user.username,
         positionName: this.user.positionName,
         tel: this.user.tel,
-        keyAvatarImage: this.user.iconImage.key,
+        keyAvatarImage: this.user.iconImage,
       });
     }
   }
@@ -83,7 +85,7 @@ export class EditProfileModalComponent implements OnInit {
       .pipe(catchError(() => of(false)))
       .pipe(filter((result) => result))
       .subscribe((avatarUrl) => {
-        this.iconImageUrl = avatarUrl;
+        this.userIcon = avatarUrl;
         this.editProfileForm.patchValue({
           keyAvatarImage: avatarImage,
         });

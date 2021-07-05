@@ -19,7 +19,18 @@
     <div class="card">
       <div class="header">
         <div class="avatar">
-          <img (click)="pickerImage()" [src]="iconImageUrl" alt="icon-image" />
+          <img
+            *ngIf="!userIcon"
+            (click)="pickerImage()"
+            [src]="defaultIconImageUrl"
+            alt="icon-image"
+          />
+          <img
+            *ngIf="userIcon"
+            (click)="pickerImage()"
+            [src]="userIcon"
+            alt="icon-image"
+          />
         </div>
       </div>
     </div>
