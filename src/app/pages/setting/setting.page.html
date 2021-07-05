@@ -7,11 +7,12 @@
 <ion-content>
   <ion-item>
     <ion-avatar class="profile-icon">
-      <img [src]="user?.avatarUrl" />
+      <img *ngIf="currentUserIcon" [src]="currentUserIcon" />
+      <img *ngIf="!currentUserIcon" src="../../../assets/img/undefined.jpeg" />
     </ion-avatar>
     <ion-label class="margin-left">
-      <h2>{{ user?.username }}</h2>
-      <p>{{ user?.positionName }}</p>
+      <h2>{{ currentUser?.username }}</h2>
+      <p>{{ currentUser?.positionName }}</p>
       <a (click)="presentEditModal()">編集</a>
     </ion-label>
   </ion-item>

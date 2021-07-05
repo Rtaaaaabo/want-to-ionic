@@ -31,14 +31,13 @@ export class SettingLogic {
   }
 
 
-  modifiedAvatarIconUrl(currentUser: IconImage | null): Observable<any> {
+  modifiedAvatarIconUrl(currentUser: IconImage | null): Observable<string | null> {
     return of(currentUser)
-      .pipe(filter((data) => !data))
-      .pipe(concatMap((data) => this.getStorage(data)))
+      .pipe(concatMap((data) => data !== null ? this.getStorage(data) : of(null)))
   }
 
-  getStorage(dataKey): Observable<any> {
-    return from(Storage.get(dataKey.iconImage.key));
+  getStorage(dataKey: IconImage): Observable<any> {
+    return from(Storage.get(dataKey.key));
   }
 
   fetchAnyUserInfoFromList(email: string): Observable<ListUsersQuery> {

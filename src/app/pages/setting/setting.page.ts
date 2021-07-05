@@ -75,11 +75,12 @@ export class SettingPage implements OnInit {
 
     const dismissObservable = from(modal.onDidDismiss());
     dismissObservable
-      .pipe(concatMap(() => this.logic.fetchCurrentUser()))
-      .pipe(concatMap((result) => this.logic.fetchUserInfo(result.username)))
-      .pipe(map((result) => this.user = result))
-      .pipe(concatMap((userInfo) => this.logic.modifiedAvatarIconUrl(userInfo)))
+      // .pipe(concatMap(() => this.logic.fetchCurrentUser()))
+      // .pipe(concatMap((result) => this.logic.fetchUserInfo(result.username)))
+      // .pipe(map((result) => this.user = result))
+      // .pipe(concatMap((userInfo) => this.logic.modifiedAvatarIconUrl(userInfo)))
       .subscribe((data) => {
+        console.log('[DismissObservable data]', data);
         // this.user = data;
       });
     return modal.present();
