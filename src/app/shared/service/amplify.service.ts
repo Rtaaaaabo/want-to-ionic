@@ -821,12 +821,27 @@ export type UpdateUserMutation = {
     key: string;
   } | null;
   registered?: boolean | null;
-  authority?: string | null;
+  authority?: boolean | null;
   company: {
     __typename: "Company";
     id: string;
     name: string;
-    domain: string;
+    officer: Array<{
+      __typename: "Officer";
+      officerEmail: string;
+      officerName: string;
+    } | null>;
+    isRegistered: boolean;
+    otp?: string | null;
+    tel?: string | null;
+    officialEmail?: string | null;
+    iconCompany?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
+    billing?: boolean | null;
     room?: {
       __typename: "ModelRoomConnection";
       nextToken?: string | null;
@@ -837,6 +852,7 @@ export type UpdateUserMutation = {
     } | null;
     createdAt: string;
     updatedAt: string;
+    owner?: string | null;
   };
   messages?: {
     __typename: "ModelMessageConnection";
@@ -849,6 +865,7 @@ export type UpdateUserMutation = {
       createdAt: string;
       isSent?: boolean | null;
       updatedAt: string;
+      owner?: string | null;
     } | null> | null;
     nextToken?: string | null;
   } | null;
@@ -896,6 +913,7 @@ export type UpdateUserMutation = {
   } | null;
   createdAt: string;
   updatedAt: string;
+  owner?: string | null;
 };
 
 export type DeleteUserMutation = {
