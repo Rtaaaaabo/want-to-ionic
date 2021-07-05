@@ -3,9 +3,8 @@ import { Router } from '@angular/router';
 import { ActionSheetController, ModalController } from '@ionic/angular';
 import { SettingLogic } from './logic/setting.logic';
 import { EditProfileModalComponent } from '../../shared/component/modal/edit-profile-modal/edit-profile-modal.component';
-import { concat, from } from 'rxjs';
-import { concatMap, flatMap, map } from 'rxjs/operators';
-import { GetUserQuery } from 'src/app/shared/service/amplify.service';
+import { from } from 'rxjs';
+import { concatMap, map } from 'rxjs/operators';
 import { IUser } from './interface /setting.interface';
 @Component({
   selector: 'app-setting',
