@@ -5,7 +5,7 @@ import { Storage } from 'aws-amplify';
 import { SessionService } from '../../../shared/service/session.service';
 import { SettingService } from '../service/setting.service';
 import { GetUserQuery } from 'src/app/shared/service/amplify.service';
-import { IUser } from '../interface /setting.interface';
+import { IUser } from '../interface/setting.interface';
 
 @Injectable({
   providedIn: 'root'

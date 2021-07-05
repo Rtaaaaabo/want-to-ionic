@@ -5,7 +5,7 @@ import { HomeLogic } from '../../../../pages/home/logic/home.logic';
 import { Camera, CameraResultType } from '@capacitor/core';
 import { from, of } from 'rxjs';
 import { catchError, concatMap, filter, map } from 'rxjs/operators';
-import { IUser } from '../../../../pages/setting/interface /setting.interface';
+import { IUser } from '../../../../pages/setting/interface/setting.interface';
 
 const optionPicture = {
   quality: 50,

@@ -6,15 +6,9 @@ import { HomeLogic } from '../../logic/home.logic';
 import { from } from 'rxjs';
 import { concatMap, switchMap, map } from 'rxjs/operators';
 import { ResponseListRoomGroupsQueryItems } from '../../service/reponse/response.model';
-import { Room, RoomGroup, User } from 'src/app/shared/service/amplify.service';
-import { CurrentUser } from '../../model/home.interface';
+import { Room, RoomGroup } from 'src/app/shared/service/amplify.service';
+import { CurrentUser, Attribute } from '../../model/home.interface';
 
-interface Attribute {
-  name: string,
-  email: string,
-  email_verified: boolean,
-  sub: string,
-};
 @Component({
   selector: 'app-list-room',
   templateUrl: './list-room.component.html',

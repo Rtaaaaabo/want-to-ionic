@@ -5,7 +5,7 @@ import { SettingLogic } from './logic/setting.logic';
 import { EditProfileModalComponent } from '../../shared/component/modal/edit-profile-modal/edit-profile-modal.component';
 import { from } from 'rxjs';
 import { concatMap, map } from 'rxjs/operators';
-import { IUser } from './interface /setting.interface';
+import { IUser, Attribute, CurrentUser } from './interface/setting.interface';
 @Component({
   selector: 'app-setting',
   templateUrl: './setting.page.html',
@@ -27,6 +27,9 @@ export class SettingPage implements OnInit {
     }
   ]
   user: IUser;
+
+  currentUserAttribute: Attribute;
+  currentUser: CurrentUser;
 
   constructor(
     private logic: SettingLogic,
