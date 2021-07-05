@@ -21,11 +21,12 @@
     <ion-item-divider>
       <ion-label>メンバー</ion-label>
     </ion-item-divider>
-    <ion-item *ngFor="let member of roomMembers">
+    <ion-item *ngFor="let member of roomMembers; index as i">
       <ion-label>
         <h2>{{ member.username}}</h2>
         <p>{{ member.positionName}}</p>
       </ion-label>
+      <ion-badge *ngIf="i === 0" slot="end" color="medium">本人</ion-badge>
     </ion-item>
   </ion-list>
 </ion-content>
