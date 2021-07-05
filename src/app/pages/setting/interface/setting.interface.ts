@@ -102,3 +102,10 @@ export interface RoomGroupItems {
     createdAt: string;
     updatedAt: string;
 }
+
+export interface IconImage {
+    __typename: "S3Object";
+    bucket: string;
+    region: string;
+    key: string;
+}

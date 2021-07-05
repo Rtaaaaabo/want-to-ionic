@@ -30,6 +30,7 @@ export class SettingPage implements OnInit {
 
   currentUserAttribute: Attribute;
   currentUser: CurrentUser;
+  currentUserIcon: string;
 
   constructor(
     private logic: SettingLogic,
@@ -40,11 +41,13 @@ export class SettingPage implements OnInit {
 
   ngOnInit(): void {
     this.logic.fetchCurrentUser()
-      .pipe(concatMap(({ username }) => this.logic.fetchUserInfo(username)))
-      .pipe(map((result) => this.user = result))
-      .pipe(concatMap((userInfo) => this.logic.modifiedAvatarIconUrl(userInfo)))
+      .pipe(map((data) => this.currentUserAttribute = data))
+      .pipe(concatMap(() => this.logic.fetchAnyUserInfoFromList(this.currentUserAttribute.email)))
+      .pipe(map(({ items }) => this.currentUser = items[0]))
+      .pipe(concatMap(() => this.logic.modifiedAvatarIconUrl(this.currentUser.iconImage)))
       .subscribe((data) => {
-        this.user = data;
+        console.log(data);
+        // this.user = data;
       });
   }
 
@@ -77,7 +80,7 @@ export class SettingPage implements OnInit {
       .pipe(map((result) => this.user = result))
       .pipe(concatMap((userInfo) => this.logic.modifiedAvatarIconUrl(userInfo)))
       .subscribe((data) => {
-        this.user = data;
+        // this.user = data;
       });
     return modal.present();
   }

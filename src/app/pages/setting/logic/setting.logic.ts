@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { from, of, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, filter, concatMap } from 'rxjs/operators';
 import { Storage } from 'aws-amplify';
+import { CreateRoomGroupMutation, CreateRoomMutation, CreateUserMutation, DeleteRoomMutation, ListUsersQuery, ModelRoomGroupFilterInput, S3Object, User } from 'src/app/shared/service/amplify.service';
 import { SessionService } from '../../../shared/service/session.service';
 import { SettingService } from '../service/setting.service';
 import { GetUserQuery } from 'src/app/shared/service/amplify.service';
-import { IUser } from '../interface/setting.interface';
+import { IconImage } from '../interface/setting.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -22,17 +23,25 @@ export class SettingLogic {
   }
 
   fetchCurrentUser(): Observable<any> {
-    return this.sessionService.fetchCurrentUser();
+    return this.sessionService.fetchCurrentUser().pipe(map((result) => result.attributes));
   }
 
   fetchUserInfo(userId: string): Observable<GetUserQuery> {
     return this.settingService.fetchUserInfo(userId);
   }
 
-  modifiedAvatarIconUrl(avatarInfo: IUser): Observable<IUser> {
-    let resultAvatarInfo: IUser = avatarInfo;
-    return from(Storage.get(avatarInfo.iconImage.key))
-      .pipe(map((url) => resultAvatarInfo.avatarUrl = url))
-      .pipe(map(() => resultAvatarInfo));
+
+  modifiedAvatarIconUrl(currentUser: IconImage | null): Observable<any> {
+    return of(currentUser)
+      .pipe(filter((data) => !data))
+      .pipe(concatMap((data) => this.getStorage(data)))
+  }
+
+  getStorage(dataKey): Observable<any> {
+    return from(Storage.get(dataKey.iconImage.key));
+  }
+
+  fetchAnyUserInfoFromList(email: string): Observable<ListUsersQuery> {
+    return this.settingService.fetchAnyUserInfoFromList(email);
   }
 }
