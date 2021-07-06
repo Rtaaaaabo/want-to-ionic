@@ -40,6 +40,7 @@ export class SettingPage implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    console.log('SettingPage currentUser', this.currentUser);
     this.logic.fetchCurrentUser()
       .pipe(map((data) => this.currentUserAttribute = data))
       .pipe(concatMap(() => this.logic.fetchAnyUserInfoFromList(this.currentUserAttribute.email)))
@@ -65,7 +66,7 @@ export class SettingPage implements OnInit {
   }
 
   async presentEditModal(): Promise<void> {
-    console.log('presentEditModal', this.currentUserIcon);
+    console.log('[PresentEditModal currentUser]', this.currentUser);
     const modal = await this.modalCtrl.create({
       component: EditProfileModalComponent,
       componentProps: {

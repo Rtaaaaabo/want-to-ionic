@@ -5,7 +5,7 @@ import { concatMap, map, filter, toArray } from 'rxjs/operators';
 import { v4 as uuid } from 'uuid';
 import { HomeService } from '../service/home.service';
 import { SessionService } from '../../../shared/service/session.service';
-import { CreateRoomGroupMutation, CreateRoomMutation, CreateUserMutation, DeleteRoomMutation, ListUsersQuery, ModelRoomGroupFilterInput, S3Object, User } from 'src/app/shared/service/amplify.service';
+import { CreateRoomGroupMutation, CreateRoomMutation, CreateUserMutation, DeleteRoomMutation, ListUsersQuery, ModelRoomGroupFilterInput, S3Object, User, UpdateUserInput } from 'src/app/shared/service/amplify.service';
 import { Storage } from 'aws-amplify';
 import { CurrentUser, RoomGroupItems, InterfaceLogicArgsCreateRoom } from '../model/home.interface';
 import { IS3Object } from '../../task-detail/models/task-detail.interface';
@@ -96,23 +96,26 @@ export class HomeLogic {
     return this.homeService.createUser(requestContent);
   }
 
-  updateUser(formContent: FormGroup): Observable<any> {
+  updateUser(formContent: FormGroup, extraData): Observable<any> {
+    console.log('updateUser formContent', formContent.value);
     const resultFormIconImageUrl = formContent.get('keyAvatarImage').value;
     const region = 'ap-northeast-1';
     const bucket = 'wattofilestorage234052-dev';
-    const requestContent = {
+    const requestContent: UpdateUserInput = {
       id: formContent.get('id').value,
-      companyID: 'takuCloudCom',
-      email: formContent.get('targetEmail').value,
       username: formContent.get('userName').value,
-      positionName: formContent.get('positionName').value,
-      tel: formContent.get('tel').value,
-      iconImage: {
+      email: formContent.get('targetEmail').value,
+      companyID: extraData.companyId,
+      tel: formContent.get('tel').value ? formContent.get('tel').value : '',
+      positionName: formContent.get('positionName').value ? formContent.get('positionName').value : '',
+    };
+    if (resultFormIconImageUrl !== null) {
+      requestContent.iconImage = {
         key: resultFormIconImageUrl,
         bucket: bucket,
         region: region,
-      },
-    };
+      }
+    }
     return this.homeService.updateUser(requestContent);
   }
 

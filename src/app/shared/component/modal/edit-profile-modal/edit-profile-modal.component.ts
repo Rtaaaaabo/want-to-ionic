@@ -56,7 +56,7 @@ export class EditProfileModalComponent implements OnInit {
         userName: this.name,
       });
     } else {
-      console.log('userIcon', this.userIcon);
+      console.log('[EditProfileModal user]', this.user);
       this.userIcon = this.userIcon;
       this.title = 'プロフィールの編集';
       this.editProfileForm.patchValue({
@@ -93,8 +93,11 @@ export class EditProfileModalComponent implements OnInit {
   }
 
   saveProfile(): void {
+    const extraData = {
+      companyId: this.user.companyID,
+    }
     const observableRegister = this.status === 'new' ?
-      this.logic.createUser(this.editProfileForm) : this.logic.updateUser(this.editProfileForm);
+      this.logic.createUser(this.editProfileForm) : this.logic.updateUser(this.editProfileForm, extraData);
     observableRegister.subscribe(() => this.modalCtrl.dismiss());
   }
 }

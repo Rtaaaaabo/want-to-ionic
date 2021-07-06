@@ -9301,10 +9301,10 @@ export class APIService {
   }
   async TaskByCreatedAt(
     taskID?: string,
-    sortDirection?: ModelSortDirection,
-    limit?: number,
     createdAt?: ModelStringKeyConditionInput,
+    sortDirection?: ModelSortDirection,
     filter?: ModelMessageFilterInput,
+    limit?: number,
     nextToken?: string
   ): Promise<TaskByCreatedAtQuery> {
     const statement = `query TaskByCreatedAt($taskID: ID, $createdAt: ModelStringKeyConditionInput, $sortDirection: ModelSortDirection, $filter: ModelMessageFilterInput, $limit: Int, $nextToken: String) {
