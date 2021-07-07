@@ -9,6 +9,6 @@ export class InviteMembersComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
 }
