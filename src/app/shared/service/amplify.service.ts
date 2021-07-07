@@ -5945,6 +5945,7 @@ export class AmplifyService {
     input: UpdateUserInput,
     condition?: ModelUserConditionInput
   ): Promise<UpdateUserMutation> {
+    console.log('[UpdateUser input]', input);
     const statement = `mutation UpdateUser($input: UpdateUserInput!, $condition: ModelUserConditionInput) {
         updateUser(input: $input, condition: $condition) {
           __typename

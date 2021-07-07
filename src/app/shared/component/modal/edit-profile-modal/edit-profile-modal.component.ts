@@ -29,7 +29,7 @@ export class EditProfileModalComponent implements OnInit {
   @Input() userId: string;
   @Input() user: CurrentUser;
   @Input() name: string;
-  @Input() userIcon: string;
+  @Input() userIcon: string | null;
 
   editProfileForm = new FormGroup({
     id: new FormControl(''),

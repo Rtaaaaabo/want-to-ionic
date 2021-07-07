@@ -5,7 +5,7 @@ import { concatMap, map, filter, toArray } from 'rxjs/operators';
 import { v4 as uuid } from 'uuid';
 import { HomeService } from '../service/home.service';
 import { SessionService } from '../../../shared/service/session.service';
-import { CreateRoomGroupMutation, CreateRoomMutation, CreateUserMutation, DeleteRoomMutation, ListUsersQuery, ModelRoomGroupFilterInput, S3Object, User, UpdateUserInput } from 'src/app/shared/service/amplify.service';
+import { CreateRoomGroupMutation, CreateRoomMutation, CreateUserMutation, DeleteRoomMutation, ListUsersQuery, ModelRoomGroupFilterInput, S3Object, User, UpdateUserInput, UpdateUserMutation } from 'src/app/shared/service/amplify.service';
 import { Storage } from 'aws-amplify';
 import { CurrentUser, RoomGroupItems, InterfaceLogicArgsCreateRoom } from '../model/home.interface';
 import { IS3Object } from '../../task-detail/models/task-detail.interface';
