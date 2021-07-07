@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ModalController } from '@ionic/angular';
 import { Location } from '@angular/common';
+import { from } from 'rxjs';
 @Component({
   selector: 'app-member-list',
   templateUrl: './member-list.page.html',
@@ -9,6 +11,7 @@ export class MemberListPage implements OnInit {
 
   constructor(
     private readonly location: Location,
+    private readonly modalCtrl: ModalController,
   ) { }
 
   ngOnInit(): void { }
@@ -20,8 +23,12 @@ export class MemberListPage implements OnInit {
     this.location.back();
   }
 
-  inviteMembers(): void {
-
+  async presentInviteMembers(): Promise<void> {
+    const modal = await this.modalCtrl.create({
+      component: 'ModalComponent',
+    });
+    const dismissObservable = from(modal.onDidDismiss());
+    return modal.present();
   }
 
 }

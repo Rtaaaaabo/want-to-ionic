@@ -36,7 +36,7 @@ export class HomePage {
         'email': this.attributes.email,
         'userId': this.attributes.sub,
       },
-    })
+    });
     const dismissObservable = from(modal.onDidDismiss());
     dismissObservable
       .pipe(concatMap(() => this.logic.fetchCurrentUser()))
