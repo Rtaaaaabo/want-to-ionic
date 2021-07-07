@@ -11,11 +11,17 @@ export class MemberListPage implements OnInit {
     private readonly location: Location,
   ) { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 
+  /**
+   * 前ページに戻ります
+   */
   goBackToSetting(): void {
     this.location.back();
+  }
+
+  inviteMembers(): void {
+
   }
 
 }
