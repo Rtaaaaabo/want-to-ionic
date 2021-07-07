@@ -1,3 +1,23 @@
-<p>
-  invite-member works!
-</p>
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>メンバーの追加</ion-title>
+    <ion-buttons slot="start">
+      <ion-button (click)="dismissModal()">
+        <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <form [formGroup]="companyMembersForm">
+      <ng-container formArrayName="companyMembers">
+        <ion-list-header>
+          <ion-label>メンバー</ion-label>
+          <ion-button (click)="addCompanyMember()">追加</ion-button>
+        </ion-list-header>
+      </ng-container>
+    </form>
+  </ion-list>
+</ion-content>

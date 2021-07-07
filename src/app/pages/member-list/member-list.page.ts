@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { Location } from '@angular/common';
 import { from } from 'rxjs';
+
+import { InviteMemberComponent } from './component/modal/invite-member/invite-member.component';
+
 @Component({
   selector: 'app-member-list',
   templateUrl: './member-list.page.html',
@@ -25,7 +28,7 @@ export class MemberListPage implements OnInit {
 
   async presentInviteMembers(): Promise<void> {
     const modal = await this.modalCtrl.create({
-      component: 'ModalComponent',
+      component: InviteMemberComponent,
     });
     const dismissObservable = from(modal.onDidDismiss());
     return modal.present();

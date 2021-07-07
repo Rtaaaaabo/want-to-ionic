@@ -25,6 +25,8 @@ export class RegistrationCompanyPage implements OnInit {
     })]),
   });
 
+  token: string;
+
   get officerForm(): FormGroup {
     return new FormGroup({
       officerName: new FormControl('', Validators.compose([Validators.required])),
@@ -35,8 +37,6 @@ export class RegistrationCompanyPage implements OnInit {
   get officerArray(): FormArray {
     return <FormArray>this.companyForm.get('companyOfficer');
   }
-
-  token: string;
 
   constructor(
     private readonly alertCtrl: AlertController,
