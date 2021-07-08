@@ -10,7 +10,6 @@ const AWS = require("aws-sdk");
 const express = require("express");
 var awsServerlessExpressMiddleware = require("aws-serverless-express/middleware");
 
-// declare a new express app
 var app = express();
 app.use(express.json());
 app.use(awsServerlessExpressMiddleware.eventContext());
