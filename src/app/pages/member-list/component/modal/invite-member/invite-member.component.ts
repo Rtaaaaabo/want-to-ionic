@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 import { of, Observable } from 'rxjs';
+import { MemberListLogic } from '../../../logic/member-list.logic';
 
 @Component({
   selector: 'app-invite-member',
@@ -29,7 +30,8 @@ export class InviteMemberComponent implements OnInit {
   }
 
   constructor(
-    private modalCtrl: ModalController,
+    private readonly modalCtrl: ModalController,
+    private logic: MemberListLogic,
   ) { }
 
   ngOnInit(): void { }
@@ -46,9 +48,8 @@ export class InviteMemberComponent implements OnInit {
     this.companyMemberArray.removeAt(index);
   }
 
-  registerCompanyMembers(): Observable<any> {
-    console.log(this.companyMemberArray.value);
-    return of({});
+  registerCompanyMembers(): void {
+    this.logic.registerCompanyMembers(this.companyMemberArray.value).subscribe(data => console.log(data));
   }
 }
 
