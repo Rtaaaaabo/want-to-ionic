@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
+import { of, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-invite-member',
@@ -45,8 +46,9 @@ export class InviteMemberComponent implements OnInit {
     this.companyMemberArray.removeAt(index);
   }
 
-  registerCompanyMembers(): void {
+  registerCompanyMembers(): Observable<any> {
     console.log(this.companyMemberArray.value);
+    return of({});
   }
 }
 
