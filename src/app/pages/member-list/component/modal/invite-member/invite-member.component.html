@@ -17,11 +17,17 @@
           <ion-label>メンバー</ion-label>
           <ion-button (click)="addCompanyMember()">追加</ion-button>
         </ion-list-header>
-        <ng-container *ngFor="let item of companyMemberArray; let i = index">
+        <ng-container
+          *ngFor="let item of companyMemberArray.controls; let i = index"
+        >
           <ng-container [formGroupName]="i">
             <ion-item-divider>
               <ion-buttons slot="start">
-                <ion-button color="danger" (click)="removeCompanyMember(i)">
+                <ion-button
+                  *ngIf="i !== 0"
+                  color="danger"
+                  (click)="removeCompanyMember(i)"
+                >
                   <ion-icon name="close-circle-outline"></ion-icon>
                 </ion-button>
               </ion-buttons>
@@ -37,3 +43,15 @@
     </form>
   </ion-list>
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-button
+      expand="block"
+      [disabled]="companyMembersForm.invalid"
+      (click)="registerCompanyMembers()"
+    >
+      登録
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>

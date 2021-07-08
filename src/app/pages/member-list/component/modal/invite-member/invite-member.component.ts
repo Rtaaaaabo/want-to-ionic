@@ -44,5 +44,9 @@ export class InviteMemberComponent implements OnInit {
   removeCompanyMember(index: number): void {
     this.companyMemberArray.removeAt(index);
   }
+
+  registerCompanyMembers(): void {
+    console.log(this.companyMemberArray.value);
+  }
 }
 
