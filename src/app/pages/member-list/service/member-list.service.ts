@@ -13,4 +13,9 @@ export class MemberListService {
     console.log('registerCompanyMembers', registerEmail);
     return of();
   }
+
+  // 招待を送ったユーザーをリストに表示させておく
+  registerCompanyMembersToDynamoDB(): Observable<any> {
+    return of();
+  }
 }

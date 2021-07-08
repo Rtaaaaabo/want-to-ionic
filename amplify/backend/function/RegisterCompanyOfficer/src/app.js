@@ -25,14 +25,6 @@ app.use(function (req, res, next) {
   next();
 });
 
-/**********************
- * Example get method *
- **********************/
-
-/****************************
- * Example post method *
- ****************************/
-
 app.post("/register/enterprise", function (req, res) {
   const params = {
     Destination: {
@@ -68,19 +60,8 @@ app.post("/register/enterprise", function (req, res) {
   }
 });
 
-/****************************
- * Example put method *
- ****************************/
-
-/****************************
- * Example delete method *
- ****************************/
-
 app.listen(3000, function () {
   console.log("App started");
 });
 
-// Export the app object. When executing the application local this does nothing. However,
-// to port it to AWS Lambda we will create a wrapper around that will load the app from
-// this file
 module.exports = app;

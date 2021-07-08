@@ -67,6 +67,14 @@
                 "open": true
             },
             "policyResourceName": "/register/officer"
+        },
+        {
+            "name": "/register/member",
+            "lambdaFunction": "sendRegisterMembers",
+            "privacy": {
+                "open": true
+            },
+            "policyResourceName": "/register/member"
         }
     ],
     "resourceName": "authSendEmail",
@@ -80,6 +88,9 @@
         },
         {
             "lambdaFunction": "RegisterOfficer"
+        },
+        {
+            "lambdaFunction": "sendRegisterMembers"
         }
     ],
     "privacy": {
@@ -112,7 +123,15 @@
                 "Name",
                 "Arn"
             ]
+        },
+        {
+            "category": "function",
+            "resourceName": "sendRegisterMembers",
+            "attributes": [
+                "Name",
+                "Arn"
+            ]
         }
     ],
-    "uuid": "63cb3c94"
+    "uuid": "7289521f"
 }

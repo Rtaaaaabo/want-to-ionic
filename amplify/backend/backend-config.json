@@ -50,6 +50,14 @@
             "Name",
             "Arn"
           ]
+        },
+        {
+          "category": "function",
+          "resourceName": "sendRegisterMembers",
+          "attributes": [
+            "Name",
+            "Arn"
+          ]
         }
       ]
     },
@@ -93,6 +101,11 @@
       "service": "Lambda"
     },
     "RegisterOfficer": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "sendRegisterMembers": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"

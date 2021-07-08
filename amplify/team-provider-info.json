@@ -18,7 +18,7 @@
       "function": {
         "RegisterCompanyOfficer": {
           "deploymentBucketName": "amplify-wantto-dev-234052-deployment",
-          "s3Key": "amplify-builds/RegisterCompanyOfficer-71447849646c72755142-build.zip"
+          "s3Key": "amplify-builds/RegisterCompanyOfficer-6c307a2f456c4f4c3639-build.zip"
         },
         "createcompany": {
           "deploymentBucketName": "amplify-wantto-dev-234052-deployment",
@@ -31,6 +31,10 @@
         "RegisterOfficer": {
           "deploymentBucketName": "amplify-wantto-dev-234052-deployment",
           "s3Key": "amplify-builds/RegisterOfficer-5a64627932786a345268-build.zip"
+        },
+        "sendRegisterMembers": {
+          "deploymentBucketName": "amplify-wantto-dev-234052-deployment",
+          "s3Key": "amplify-builds/sendRegisterMembers-305856355874724a424f-build.zip"
         }
       }
     }
