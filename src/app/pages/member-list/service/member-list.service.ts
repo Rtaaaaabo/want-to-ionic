@@ -9,7 +9,7 @@ export class MemberListService {
 
   constructor() { }
 
-  registerCompanyMembers(registerEmail: RequestRegisterCompanyMember): Observable<any> {
+  sendRegisterCompanyMembers(registerEmail: RequestRegisterCompanyMember): Observable<any> {
     console.log('registerCompanyMembers', registerEmail);
     return of();
   }

@@ -15,6 +15,6 @@ export class MemberListLogic {
 
   registerCompanyMembers(arrayRegisterEmail: Array<RequestRegisterCompanyMember>): Observable<any> {
     return from(arrayRegisterEmail)
-      .pipe(concatMap((registerEmail) => this.memberListService.registerCompanyMembers(registerEmail)))
+      .pipe(concatMap((registerEmail) => this.memberListService.sendRegisterCompanyMembers(registerEmail)))
   }
 }
