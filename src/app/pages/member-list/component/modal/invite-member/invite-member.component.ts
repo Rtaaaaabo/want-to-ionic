@@ -40,4 +40,9 @@ export class InviteMemberComponent implements OnInit {
   addCompanyMember(): void {
     this.companyMemberArray.push(this.companyMemberForm);
   }
+
+  removeCompanyMember(index: number): void {
+    this.companyMemberArray.removeAt(index);
+  }
 }
+

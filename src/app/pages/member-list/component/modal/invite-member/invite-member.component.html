@@ -18,7 +18,20 @@
           <ion-button (click)="addCompanyMember()">追加</ion-button>
         </ion-list-header>
         <ng-container *ngFor="let item of companyMemberArray; let i = index">
-          <ng-container [formGroupName]="i"> </ng-container>
+          <ng-container [formGroupName]="i">
+            <ion-item-divider>
+              <ion-buttons slot="start">
+                <ion-button color="danger" (click)="removeCompanyMember(i)">
+                  <ion-icon name="close-circle-outline"></ion-icon>
+                </ion-button>
+              </ion-buttons>
+              <ion-label>{{ i + 1 }} 人目 </ion-label>
+            </ion-item-divider>
+            <ion-item>
+              <ion-label position="stacked">Email</ion-label>
+              <ion-input formControlName="companyMemberEmail"></ion-input>
+            </ion-item>
+          </ng-container>
         </ng-container>
       </ng-container>
     </form>
