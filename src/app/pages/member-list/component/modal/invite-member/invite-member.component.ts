@@ -49,7 +49,8 @@ export class InviteMemberComponent implements OnInit {
   }
 
   registerCompanyMembers(): void {
-    this.logic.registerCompanyMembers(this.companyMemberArray.value).subscribe(data => console.log(data));
+    this.logic.registerCompanyMembers(this.companyMemberArray.value)
+      .subscribe((data) => console.log(data));
   }
 }
 

@@ -17,7 +17,6 @@ export class RoomMembersPage implements OnInit {
   companyId: number | string;
   roomId: string;
   companyMembers;
-  // currentUser;
   roomMembers = [];
   notAssignMembers = [];
 

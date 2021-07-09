@@ -3,6 +3,7 @@ import { Auth } from "aws-amplify";
 import { Observable, from, BehaviorSubject, of } from "rxjs";
 import { map, tap, catchError } from "rxjs/operators";
 import { IArgsEntrySignup } from "../model/task-form.model";
+import { AmplifyService, ModelUserFilterInput } from './amplify.service';
 
 @Injectable({
   providedIn: "root",
@@ -10,7 +11,9 @@ import { IArgsEntrySignup } from "../model/task-form.model";
 export class SessionService {
   loggedIn: BehaviorSubject<boolean>;
 
-  constructor() {
+  constructor(
+    private amplifyService: AmplifyService,
+  ) {
     this.loggedIn = new BehaviorSubject<boolean>(false);
   }
 
@@ -48,6 +51,15 @@ export class SessionService {
 
   fetchCurrentUser(): Observable<any> {
     return from(Auth.currentAuthenticatedUser());
+  }
+
+  fetchUserInfo(email: string): Observable<any> {
+    const filterContent: ModelUserFilterInput = {
+      email: {
+        eq: `${email}`
+      }
+    }
+    return from(this.amplifyService.ListUsers(filterContent));
   }
 
   signOut() {

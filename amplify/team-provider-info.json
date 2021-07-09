@@ -30,11 +30,11 @@
         },
         "RegisterOfficer": {
           "deploymentBucketName": "amplify-wantto-dev-234052-deployment",
-          "s3Key": "amplify-builds/RegisterOfficer-5a64627932786a345268-build.zip"
+          "s3Key": "amplify-builds/RegisterOfficer-7a6e377339376d796654-build.zip"
         },
         "sendRegisterMembers": {
           "deploymentBucketName": "amplify-wantto-dev-234052-deployment",
-          "s3Key": "amplify-builds/sendRegisterMembers-305856355874724a424f-build.zip"
+          "s3Key": "amplify-builds/sendRegisterMembers-58784542373032565a62-build.zip"
         }
       }
     }

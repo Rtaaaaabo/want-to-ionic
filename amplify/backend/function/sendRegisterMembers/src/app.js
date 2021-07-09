@@ -30,7 +30,7 @@ app.post("/register/member", async (req, res) => {
           <head><meta charset="utf-8"></head>
           <body>
           <h3>${req.body.email} さん</h3><br/>
-          <p>${req.body.companyName} の ${req.body.officer}から招待されております。</p>
+          <p>${req.body.companyName} の ${req.body.officerName}から招待されております。</p>
           <p>下記をクリック後にユーザー登録をお願いいたします。</p>
           <p>http://localhost:8100/signup?companyId=${req.body.companyId}&email=${req.body.email}</p>
           </body>
