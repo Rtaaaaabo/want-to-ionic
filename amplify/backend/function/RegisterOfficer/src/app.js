@@ -25,7 +25,6 @@ app.use(function (req, res, next) {
 });
 
 app.post("/register/officer", async function (req, res) {
-  console.log("[RegisterOfficer body]", req.body);
   const params = {
     Destination: {
       ToAddresses: ["r.taaaaabo+ses@gmail.com"],
@@ -51,7 +50,7 @@ app.post("/register/officer", async function (req, res) {
           Data: `
           ${req.body.name}さん \n
           登録ありがとうございます。\n
-          下記をクリック後にユーザー登録をお願いいたします。
+          下記をクリック後にユーザー登録をお願いいたします。\n
           http://localhost:8100/signup?companyId=${req.body.companyId}&email=${req.body.email}
           `,
         },
