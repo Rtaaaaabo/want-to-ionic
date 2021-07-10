@@ -39,11 +39,10 @@ export class MemberListPage implements OnInit {
   }
 
   async presentInviteMembers(): Promise<void> {
-    console.log('this.currentUser', this.currentUser);
     const modal = await this.modalCtrl.create({
       component: InviteMemberComponent,
       componentProps: {
-        currentUserInfo: this.currentUser,
+        'currentUserInfo': this.currentUser,
       }
     });
     const dismissObservable = from(modal.onDidDismiss());

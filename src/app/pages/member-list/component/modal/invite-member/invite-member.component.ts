@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 import { of, Observable } from 'rxjs';
 import { MemberListLogic } from '../../../logic/member-list.logic';
+import { CurrentUser } from '../../../models/member-list.interface';
 
 @Component({
   selector: 'app-invite-member',
@@ -10,6 +11,7 @@ import { MemberListLogic } from '../../../logic/member-list.logic';
   styleUrls: ['./invite-member.component.scss'],
 })
 export class InviteMemberComponent implements OnInit {
+  @Input() currentUserInfo: CurrentUser
 
   companyMembersForm = new FormGroup({
     companyMembers: new FormArray([
@@ -34,7 +36,9 @@ export class InviteMemberComponent implements OnInit {
     private logic: MemberListLogic,
   ) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    console.log('CurrentUser', this.currentUserInfo);
+  }
 
   dismissModal(): void {
     this.modalCtrl.dismiss();
