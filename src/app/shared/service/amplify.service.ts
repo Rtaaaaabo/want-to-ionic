@@ -145,7 +145,7 @@ export type Task = {
 export type User = {
   __typename: "User";
   id: string;
-  username: string;
+  username?: string | null;
   email: string;
   companyID: string;
   tel?: string | null;
@@ -248,7 +248,7 @@ export type DeleteCompanyInput = {
 
 export type CreateUserInput = {
   id?: string | null;
-  username: string;
+  username?: string | null;
   email: string;
   companyID: string;
   tel?: string | null;

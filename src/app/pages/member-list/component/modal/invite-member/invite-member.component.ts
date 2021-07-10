@@ -1,7 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
-import { of, Observable } from 'rxjs';
+import { of, Observable, from } from 'rxjs';
+import { concatMap } from 'rxjs/operators';
 import { MemberListLogic } from '../../../logic/member-list.logic';
 import { CurrentUser } from '../../../models/member-list.interface';
 
@@ -40,8 +41,8 @@ export class InviteMemberComponent implements OnInit {
     console.log('currentUserInfo', this.currentUserInfo);
   }
 
-  dismissModal(): void {
-    this.modalCtrl.dismiss();
+  dismissModal(): Observable<boolean> {
+    return from(this.modalCtrl.dismiss());
   }
 
   addCompanyMember(): void {
@@ -54,6 +55,7 @@ export class InviteMemberComponent implements OnInit {
 
   registerCompanyMembers(): void {
     this.logic.registerCompanyMembers(this.companyMemberArray.value, this.currentUserInfo)
+      .pipe(concatMap(() => this.dismissModal()))
       .subscribe((data) => console.log(data));
   }
 }

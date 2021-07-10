@@ -43,7 +43,7 @@ export class MemberListPage implements OnInit {
       component: InviteMemberComponent,
       componentProps: {
         'currentUserInfo': this.currentUser,
-      }
+      },
     });
     const dismissObservable = from(modal.onDidDismiss());
     return modal.present();

@@ -169,7 +169,7 @@ export type Task = {
 export type User = {
   __typename: "User";
   id: string;
-  username: string;
+  username?: string | null;
   email: string;
   companyID: string;
   tel?: string | null;
@@ -365,7 +365,7 @@ export type DeleteTaskInput = {
 
 export type CreateUserInput = {
   id?: string | null;
-  username: string;
+  username?: string | null;
   email: string;
   companyID: string;
   tel?: string | null;
@@ -632,7 +632,7 @@ export type CreateCompanyMutation = {
     items?: Array<{
       __typename: "User";
       id: string;
-      username: string;
+      username?: string | null;
       email: string;
       companyID: string;
       tel?: string | null;
@@ -688,7 +688,7 @@ export type UpdateCompanyMutation = {
     items?: Array<{
       __typename: "User";
       id: string;
-      username: string;
+      username?: string | null;
       email: string;
       companyID: string;
       tel?: string | null;
@@ -744,7 +744,7 @@ export type DeleteCompanyMutation = {
     items?: Array<{
       __typename: "User";
       id: string;
-      username: string;
+      username?: string | null;
       email: string;
       companyID: string;
       tel?: string | null;
@@ -797,7 +797,7 @@ export type CreateTaskGroupMutation = {
     chargePerson: {
       __typename: "User";
       id: string;
-      username: string;
+      username?: string | null;
       email: string;
       companyID: string;
       tel?: string | null;
@@ -821,7 +821,7 @@ export type CreateTaskGroupMutation = {
   user?: {
     __typename: "User";
     id: string;
-    username: string;
+    username?: string | null;
     email: string;
     companyID: string;
     tel?: string | null;
@@ -906,7 +906,7 @@ export type UpdateTaskGroupMutation = {
     chargePerson: {
       __typename: "User";
       id: string;
-      username: string;
+      username?: string | null;
       email: string;
       companyID: string;
       tel?: string | null;
@@ -930,7 +930,7 @@ export type UpdateTaskGroupMutation = {
   user?: {
     __typename: "User";
     id: string;
-    username: string;
+    username?: string | null;
     email: string;
     companyID: string;
     tel?: string | null;
@@ -1015,7 +1015,7 @@ export type DeleteTaskGroupMutation = {
     chargePerson: {
       __typename: "User";
       id: string;
-      username: string;
+      username?: string | null;
       email: string;
       companyID: string;
       tel?: string | null;
@@ -1039,7 +1039,7 @@ export type DeleteTaskGroupMutation = {
   user?: {
     __typename: "User";
     id: string;
-    username: string;
+    username?: string | null;
     email: string;
     companyID: string;
     tel?: string | null;
@@ -1140,7 +1140,7 @@ export type CreateTaskMutation = {
   chargePerson: {
     __typename: "User";
     id: string;
-    username: string;
+    username?: string | null;
     email: string;
     companyID: string;
     tel?: string | null;
@@ -1267,7 +1267,7 @@ export type UpdateTaskMutation = {
   chargePerson: {
     __typename: "User";
     id: string;
-    username: string;
+    username?: string | null;
     email: string;
     companyID: string;
     tel?: string | null;
@@ -1394,7 +1394,7 @@ export type DeleteTaskMutation = {
   chargePerson: {
     __typename: "User";
     id: string;
-    username: string;
+    username?: string | null;
     email: string;
     companyID: string;
     tel?: string | null;
@@ -1473,7 +1473,7 @@ export type DeleteTaskMutation = {
 export type CreateUserMutation = {
   __typename: "User";
   id: string;
-  username: string;
+  username?: string | null;
   email: string;
   companyID: string;
   tel?: string | null;
@@ -1583,7 +1583,7 @@ export type CreateUserMutation = {
 export type UpdateUserMutation = {
   __typename: "User";
   id: string;
-  username: string;
+  username?: string | null;
   email: string;
   companyID: string;
   tel?: string | null;
@@ -1693,7 +1693,7 @@ export type UpdateUserMutation = {
 export type DeleteUserMutation = {
   __typename: "User";
   id: string;
-  username: string;
+  username?: string | null;
   email: string;
   companyID: string;
   tel?: string | null;
@@ -1838,7 +1838,7 @@ export type CreateRoomGroupMutation = {
   user?: {
     __typename: "User";
     id: string;
-    username: string;
+    username?: string | null;
     email: string;
     companyID: string;
     tel?: string | null;
@@ -1926,7 +1926,7 @@ export type UpdateRoomGroupMutation = {
   user?: {
     __typename: "User";
     id: string;
-    username: string;
+    username?: string | null;
     email: string;
     companyID: string;
     tel?: string | null;
@@ -2014,7 +2014,7 @@ export type DeleteRoomGroupMutation = {
   user?: {
     __typename: "User";
     id: string;
-    username: string;
+    username?: string | null;
     email: string;
     companyID: string;
     tel?: string | null;
@@ -2297,7 +2297,7 @@ export type CreateMessageMutation = {
   author: {
     __typename: "User";
     id: string;
-    username: string;
+    username?: string | null;
     email: string;
     companyID: string;
     tel?: string | null;
@@ -2373,7 +2373,7 @@ export type CreateMessageMutation = {
     chargePerson: {
       __typename: "User";
       id: string;
-      username: string;
+      username?: string | null;
       email: string;
       companyID: string;
       tel?: string | null;
@@ -2415,7 +2415,7 @@ export type UpdateMessageMutation = {
   author: {
     __typename: "User";
     id: string;
-    username: string;
+    username?: string | null;
     email: string;
     companyID: string;
     tel?: string | null;
@@ -2491,7 +2491,7 @@ export type UpdateMessageMutation = {
     chargePerson: {
       __typename: "User";
       id: string;
-      username: string;
+      username?: string | null;
       email: string;
       companyID: string;
       tel?: string | null;
@@ -2533,7 +2533,7 @@ export type DeleteMessageMutation = {
   author: {
     __typename: "User";
     id: string;
-    username: string;
+    username?: string | null;
     email: string;
     companyID: string;
     tel?: string | null;
@@ -2609,7 +2609,7 @@ export type DeleteMessageMutation = {
     chargePerson: {
       __typename: "User";
       id: string;
-      username: string;
+      username?: string | null;
       email: string;
       companyID: string;
       tel?: string | null;
@@ -2672,7 +2672,7 @@ export type GetCompanyQuery = {
     items?: Array<{
       __typename: "User";
       id: string;
-      username: string;
+      username?: string | null;
       email: string;
       companyID: string;
       tel?: string | null;
@@ -2762,7 +2762,7 @@ export type GetTaskGroupQuery = {
     chargePerson: {
       __typename: "User";
       id: string;
-      username: string;
+      username?: string | null;
       email: string;
       companyID: string;
       tel?: string | null;
@@ -2786,7 +2786,7 @@ export type GetTaskGroupQuery = {
   user?: {
     __typename: "User";
     id: string;
-    username: string;
+    username?: string | null;
     email: string;
     companyID: string;
     tel?: string | null;
@@ -2860,7 +2860,7 @@ export type ListTaskGroupsQuery = {
     user?: {
       __typename: "User";
       id: string;
-      username: string;
+      username?: string | null;
       email: string;
       companyID: string;
       tel?: string | null;
@@ -2928,7 +2928,7 @@ export type GetTaskQuery = {
   chargePerson: {
     __typename: "User";
     id: string;
-    username: string;
+    username?: string | null;
     email: string;
     companyID: string;
     tel?: string | null;
@@ -3036,7 +3036,7 @@ export type ListTasksQuery = {
     chargePerson: {
       __typename: "User";
       id: string;
-      username: string;
+      username?: string | null;
       email: string;
       companyID: string;
       tel?: string | null;
@@ -3063,7 +3063,7 @@ export type ListTasksQuery = {
 export type GetUserQuery = {
   __typename: "User";
   id: string;
-  username: string;
+  username?: string | null;
   email: string;
   companyID: string;
   tel?: string | null;
@@ -3175,7 +3175,7 @@ export type ListUsersQuery = {
   items?: Array<{
     __typename: "User";
     id: string;
-    username: string;
+    username?: string | null;
     email: string;
     companyID: string;
     tel?: string | null;
@@ -3262,7 +3262,7 @@ export type GetRoomGroupQuery = {
   user?: {
     __typename: "User";
     id: string;
-    username: string;
+    username?: string | null;
     email: string;
     companyID: string;
     tel?: string | null;
@@ -3331,7 +3331,7 @@ export type ListRoomGroupsQuery = {
     user?: {
       __typename: "User";
       id: string;
-      username: string;
+      username?: string | null;
       email: string;
       companyID: string;
       tel?: string | null;
@@ -3472,7 +3472,7 @@ export type GetMessageQuery = {
   author: {
     __typename: "User";
     id: string;
-    username: string;
+    username?: string | null;
     email: string;
     companyID: string;
     tel?: string | null;
@@ -3548,7 +3548,7 @@ export type GetMessageQuery = {
     chargePerson: {
       __typename: "User";
       id: string;
-      username: string;
+      username?: string | null;
       email: string;
       companyID: string;
       tel?: string | null;
@@ -3592,7 +3592,7 @@ export type ListMessagesQuery = {
     author: {
       __typename: "User";
       id: string;
-      username: string;
+      username?: string | null;
       email: string;
       companyID: string;
       tel?: string | null;
@@ -3642,7 +3642,7 @@ export type TaskByCreatedAtQuery = {
     author: {
       __typename: "User";
       id: string;
-      username: string;
+      username?: string | null;
       email: string;
       companyID: string;
       tel?: string | null;
@@ -3711,7 +3711,7 @@ export type OnCreateCompanySubscription = {
     items?: Array<{
       __typename: "User";
       id: string;
-      username: string;
+      username?: string | null;
       email: string;
       companyID: string;
       tel?: string | null;
@@ -3767,7 +3767,7 @@ export type OnUpdateCompanySubscription = {
     items?: Array<{
       __typename: "User";
       id: string;
-      username: string;
+      username?: string | null;
       email: string;
       companyID: string;
       tel?: string | null;
@@ -3823,7 +3823,7 @@ export type OnDeleteCompanySubscription = {
     items?: Array<{
       __typename: "User";
       id: string;
-      username: string;
+      username?: string | null;
       email: string;
       companyID: string;
       tel?: string | null;
@@ -3876,7 +3876,7 @@ export type OnCreateTaskGroupSubscription = {
     chargePerson: {
       __typename: "User";
       id: string;
-      username: string;
+      username?: string | null;
       email: string;
       companyID: string;
       tel?: string | null;
@@ -3900,7 +3900,7 @@ export type OnCreateTaskGroupSubscription = {
   user?: {
     __typename: "User";
     id: string;
-    username: string;
+    username?: string | null;
     email: string;
     companyID: string;
     tel?: string | null;
@@ -3985,7 +3985,7 @@ export type OnUpdateTaskGroupSubscription = {
     chargePerson: {
       __typename: "User";
       id: string;
-      username: string;
+      username?: string | null;
       email: string;
       companyID: string;
       tel?: string | null;
@@ -4009,7 +4009,7 @@ export type OnUpdateTaskGroupSubscription = {
   user?: {
     __typename: "User";
     id: string;
-    username: string;
+    username?: string | null;
     email: string;
     companyID: string;
     tel?: string | null;
@@ -4094,7 +4094,7 @@ export type OnDeleteTaskGroupSubscription = {
     chargePerson: {
       __typename: "User";
       id: string;
-      username: string;
+      username?: string | null;
       email: string;
       companyID: string;
       tel?: string | null;
@@ -4118,7 +4118,7 @@ export type OnDeleteTaskGroupSubscription = {
   user?: {
     __typename: "User";
     id: string;
-    username: string;
+    username?: string | null;
     email: string;
     companyID: string;
     tel?: string | null;
@@ -4219,7 +4219,7 @@ export type OnCreateTaskSubscription = {
   chargePerson: {
     __typename: "User";
     id: string;
-    username: string;
+    username?: string | null;
     email: string;
     companyID: string;
     tel?: string | null;
@@ -4346,7 +4346,7 @@ export type OnUpdateTaskSubscription = {
   chargePerson: {
     __typename: "User";
     id: string;
-    username: string;
+    username?: string | null;
     email: string;
     companyID: string;
     tel?: string | null;
@@ -4473,7 +4473,7 @@ export type OnDeleteTaskSubscription = {
   chargePerson: {
     __typename: "User";
     id: string;
-    username: string;
+    username?: string | null;
     email: string;
     companyID: string;
     tel?: string | null;
@@ -4552,7 +4552,7 @@ export type OnDeleteTaskSubscription = {
 export type OnCreateUserSubscription = {
   __typename: "User";
   id: string;
-  username: string;
+  username?: string | null;
   email: string;
   companyID: string;
   tel?: string | null;
@@ -4662,7 +4662,7 @@ export type OnCreateUserSubscription = {
 export type OnUpdateUserSubscription = {
   __typename: "User";
   id: string;
-  username: string;
+  username?: string | null;
   email: string;
   companyID: string;
   tel?: string | null;
@@ -4772,7 +4772,7 @@ export type OnUpdateUserSubscription = {
 export type OnDeleteUserSubscription = {
   __typename: "User";
   id: string;
-  username: string;
+  username?: string | null;
   email: string;
   companyID: string;
   tel?: string | null;
@@ -4917,7 +4917,7 @@ export type OnCreateRoomGroupSubscription = {
   user?: {
     __typename: "User";
     id: string;
-    username: string;
+    username?: string | null;
     email: string;
     companyID: string;
     tel?: string | null;
@@ -5005,7 +5005,7 @@ export type OnUpdateRoomGroupSubscription = {
   user?: {
     __typename: "User";
     id: string;
-    username: string;
+    username?: string | null;
     email: string;
     companyID: string;
     tel?: string | null;
@@ -5093,7 +5093,7 @@ export type OnDeleteRoomGroupSubscription = {
   user?: {
     __typename: "User";
     id: string;
-    username: string;
+    username?: string | null;
     email: string;
     companyID: string;
     tel?: string | null;
@@ -5376,7 +5376,7 @@ export type OnCreateMessageSubscription = {
   author: {
     __typename: "User";
     id: string;
-    username: string;
+    username?: string | null;
     email: string;
     companyID: string;
     tel?: string | null;
@@ -5452,7 +5452,7 @@ export type OnCreateMessageSubscription = {
     chargePerson: {
       __typename: "User";
       id: string;
-      username: string;
+      username?: string | null;
       email: string;
       companyID: string;
       tel?: string | null;
@@ -5494,7 +5494,7 @@ export type OnUpdateMessageSubscription = {
   author: {
     __typename: "User";
     id: string;
-    username: string;
+    username?: string | null;
     email: string;
     companyID: string;
     tel?: string | null;
@@ -5570,7 +5570,7 @@ export type OnUpdateMessageSubscription = {
     chargePerson: {
       __typename: "User";
       id: string;
-      username: string;
+      username?: string | null;
       email: string;
       companyID: string;
       tel?: string | null;
@@ -5612,7 +5612,7 @@ export type OnDeleteMessageSubscription = {
   author: {
     __typename: "User";
     id: string;
-    username: string;
+    username?: string | null;
     email: string;
     companyID: string;
     tel?: string | null;
@@ -5688,7 +5688,7 @@ export type OnDeleteMessageSubscription = {
     chargePerson: {
       __typename: "User";
       id: string;
-      username: string;
+      username?: string | null;
       email: string;
       companyID: string;
       tel?: string | null;
