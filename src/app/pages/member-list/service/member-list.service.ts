@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { of, Observable, from } from 'rxjs';
 import { API } from 'aws-amplify';
 import { v4 as uuid } from 'uuid';
-import { AmplifyService, CreateUserInput } from 'src/app/shared/service/amplify.service';
+import { AmplifyService, CreateUserInput, CreateUserMutation } from 'src/app/shared/service/amplify.service';
 import { RequestRegisterCompanyMember, OptionData } from '../models/member-list.interface';
 
 const apiSendInvite = 'authSendEmail';
@@ -31,7 +31,7 @@ export class MemberListService {
   }
 
   // 招待を送ったユーザーをリストに表示させておく
-  registerCompanyMembersToDynamoDB(content: CreateUserInput): Observable<any> {
+  registerCompanyMembersToDynamoDB(content: CreateUserInput): Observable<CreateUserMutation> {
     return from(this.amplifyService.CreateUser(content));
   }
 }

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { from, Observable } from 'rxjs';
 import { concatMap, map, toArray } from 'rxjs/operators';
 import { SessionService } from '../../../shared/service/session.service';
-import { ListUsersQuery, CreateUserInput } from '../../../shared/service/amplify.service';
+import { ListUsersQuery, CreateUserInput, CreateUserMutation } from '../../../shared/service/amplify.service';
 import { MemberListService } from '../service/member-list.service';
 import { RequestRegisterCompanyMember, CurrentUser, OptionData } from '../models/member-list.interface';
 import { v4 as uuid } from 'uuid';
@@ -17,7 +17,7 @@ export class MemberListLogic {
     private sessionService: SessionService,
   ) { }
 
-  registerCompanyMembers(arrayRegisterEmail: Array<RequestRegisterCompanyMember>, currentUser: CurrentUser): Observable<any> {
+  registerCompanyMembers(arrayRegisterEmail: Array<RequestRegisterCompanyMember>, currentUser: CurrentUser): Observable<Array<CreateUserMutation>> {
     const optionData: OptionData = {
       companyId: currentUser.companyID,
       companyName: currentUser.company.name,
@@ -27,7 +27,8 @@ export class MemberListLogic {
     return from(arrayRegisterEmail)
       .pipe(map((registerEmail) => targetEmail = registerEmail.companyMemberEmail))
       .pipe(concatMap(() => this.memberListService.sendRegisterCompanyMembers(targetEmail, optionData)))
-      .pipe(toArray())
+      .pipe(concatMap(() => this.createCompanyUserToDynamoDB(targetEmail, optionData)))
+      .pipe(toArray());
   }
 
   fetchCurrentUser(): Observable<any> {
@@ -39,7 +40,7 @@ export class MemberListLogic {
     return this.sessionService.fetchUserInfo(email);
   }
 
-  createCompanyUserToDynamoDB(registerEmail: string, optionData: OptionData): Observable<any> {
+  createCompanyUserToDynamoDB(registerEmail: string, optionData: OptionData): Observable<CreateUserMutation> {
     const content: CreateUserInput = {
       id: `${optionData.companyId}_user_${uuid()}`,
       email: `${registerEmail}`,
@@ -47,6 +48,6 @@ export class MemberListLogic {
       registered: false,
       authority: false,
     }
-    return this.memberListService.registerCompanyMembersToDynamoDB(content)
+    return this.memberListService.registerCompanyMembersToDynamoDB(content);
   }
 }

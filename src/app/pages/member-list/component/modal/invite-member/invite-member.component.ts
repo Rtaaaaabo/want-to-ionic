@@ -3,6 +3,7 @@ import { FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 import { of, Observable, from } from 'rxjs';
 import { concatMap } from 'rxjs/operators';
+import { CreateUserMutation } from 'src/app/shared/service/amplify.service';
 import { MemberListLogic } from '../../../logic/member-list.logic';
 import { CurrentUser } from '../../../models/member-list.interface';
 
@@ -41,8 +42,8 @@ export class InviteMemberComponent implements OnInit {
     console.log('currentUserInfo', this.currentUserInfo);
   }
 
-  dismissModal(): Observable<boolean> {
-    return from(this.modalCtrl.dismiss());
+  dismissModal(result: Array<CreateUserMutation>): Observable<boolean> {
+    return from(this.modalCtrl.dismiss(result));
   }
 
   addCompanyMember(): void {
@@ -55,7 +56,7 @@ export class InviteMemberComponent implements OnInit {
 
   registerCompanyMembers(): void {
     this.logic.registerCompanyMembers(this.companyMemberArray.value, this.currentUserInfo)
-      .pipe(concatMap(() => this.dismissModal()))
+      .pipe(concatMap((data) => this.dismissModal(data)))
       .subscribe((data) => console.log(data));
   }
 }
