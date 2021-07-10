@@ -48,7 +48,7 @@ app.post("/register/member", async (req, res) => {
         },
       },
       Subject: {
-        charset: "UTF-8",
+        Charset: "UTF-8",
         Data: `${req.body.companyName} へのスペースの会員登録をお願いいたします。`,
       },
     },

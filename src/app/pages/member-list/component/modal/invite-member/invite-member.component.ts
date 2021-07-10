@@ -36,7 +36,9 @@ export class InviteMemberComponent implements OnInit {
     private logic: MemberListLogic,
   ) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    console.log('currentUserInfo', this.currentUserInfo);
+  }
 
   dismissModal(): void {
     this.modalCtrl.dismiss();
