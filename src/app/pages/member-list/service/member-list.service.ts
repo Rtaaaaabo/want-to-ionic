@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { of, Observable, from } from 'rxjs';
 import { API } from 'aws-amplify';
 import { v4 as uuid } from 'uuid';
-import { RequestRegisterCompanyMember } from '../models/member-list.interface';
+import { RequestRegisterCompanyMember, OptionData } from '../models/member-list.interface';
 
 const apiSendInvite = 'authSendEmail';
 const pathRegisterInvite = '/register/member';
@@ -15,14 +15,14 @@ export class MemberListService {
   constructor() { }
 
   // 対象ユーザーに招待メールを送信する
-  sendRegisterCompanyMembers(registerEmail: RequestRegisterCompanyMember): Observable<any> {
-    console.log('registerCompanyMembers', registerEmail);
+  sendRegisterCompanyMembers(registerEmail: RequestRegisterCompanyMember, optionData: OptionData): Observable<any> {
+    console.log('registerCompanyMembers', registerEmail.companyMemberEmail);
     const requestContent = {
       body: {
-        email: registerEmail,
-        companyId: '',
-        companyName: '',
-        officerName: '',
+        email: `${registerEmail.companyMemberEmail}`,
+        companyId: `${optionData.companyId}`,
+        companyName: `${optionData.companyName}`,
+        officerName: `${optionData.officerName}`,
       }
     }
     return from(API.post(apiSendInvite, pathRegisterInvite, requestContent));

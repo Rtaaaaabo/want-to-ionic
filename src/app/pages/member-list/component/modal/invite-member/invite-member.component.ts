@@ -36,9 +36,7 @@ export class InviteMemberComponent implements OnInit {
     private logic: MemberListLogic,
   ) { }
 
-  ngOnInit(): void {
-    console.log('CurrentUser', this.currentUserInfo);
-  }
+  ngOnInit(): void { }
 
   dismissModal(): void {
     this.modalCtrl.dismiss();
@@ -53,7 +51,7 @@ export class InviteMemberComponent implements OnInit {
   }
 
   registerCompanyMembers(): void {
-    this.logic.registerCompanyMembers(this.companyMemberArray.value)
+    this.logic.registerCompanyMembers(this.companyMemberArray.value, this.currentUserInfo)
       .subscribe((data) => console.log(data));
   }
 }

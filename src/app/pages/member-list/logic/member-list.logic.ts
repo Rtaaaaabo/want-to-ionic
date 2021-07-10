@@ -4,7 +4,7 @@ import { concatMap, map } from 'rxjs/operators';
 import { SessionService } from '../../../shared/service/session.service';
 import { ListUsersQuery } from '../../../shared/service/amplify.service';
 import { MemberListService } from '../service/member-list.service';
-import { RequestRegisterCompanyMember } from '../models/member-list.interface';
+import { RequestRegisterCompanyMember, CurrentUser, OptionData } from '../models/member-list.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -16,9 +16,14 @@ export class MemberListLogic {
     private sessionService: SessionService,
   ) { }
 
-  registerCompanyMembers(arrayRegisterEmail: Array<RequestRegisterCompanyMember>): Observable<any> {
+  registerCompanyMembers(arrayRegisterEmail: Array<RequestRegisterCompanyMember>, currentUser: CurrentUser): Observable<any> {
+    const optionData: OptionData = {
+      companyId: currentUser.companyID,
+      companyName: currentUser.company.name,
+      officerName: currentUser.username,
+    }
     return from(arrayRegisterEmail)
-      .pipe(concatMap((registerEmail) => this.memberListService.sendRegisterCompanyMembers(registerEmail)))
+      .pipe(concatMap((registerEmail) => this.memberListService.sendRegisterCompanyMembers(registerEmail, optionData)))
   }
 
   fetchCurrentUser(): Observable<any> {

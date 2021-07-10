@@ -52,3 +52,9 @@ export interface Attribute {
     email_verified: boolean,
     sub: string,
 };
+
+export interface OptionData {
+    companyId: string,
+    companyName: string,
+    officerName: string,
+};
