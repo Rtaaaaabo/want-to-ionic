@@ -27,7 +27,8 @@ export class MemberListPage implements OnInit {
     this.logic.fetchCurrentUser()
       .pipe(map((data) => this.currentUserAttribute = data))
       .pipe(concatMap(() => this.logic.fetchAnyUserInfoFromList(this.currentUserAttribute.email)))
-      .pipe(map(({ items }) => this.currentUser = items[0]));
+      .pipe(map(({ items }) => this.currentUser = items[0]))
+      .subscribe((data) => console.log('ngOnInit data', data));
   }
 
   /**
@@ -38,13 +39,11 @@ export class MemberListPage implements OnInit {
   }
 
   async presentInviteMembers(): Promise<void> {
+    console.log('this.currentUser', this.currentUser);
     const modal = await this.modalCtrl.create({
       component: InviteMemberComponent,
       componentProps: {
-        // CompanyName
-        // CompanyId
-        // OfficerName => CurrentUserName
-        // 以上を持っていく
+        currentUserInfo: this.currentUser,
       }
     });
     const dismissObservable = from(modal.onDidDismiss());
