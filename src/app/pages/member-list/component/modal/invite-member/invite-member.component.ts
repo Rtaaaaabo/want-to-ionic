@@ -42,7 +42,7 @@ export class InviteMemberComponent implements OnInit {
     console.log('currentUserInfo', this.currentUserInfo);
   }
 
-  dismissModal(result: Array<CreateUserMutation>): Observable<boolean> {
+  dismissModal(result?: Array<CreateUserMutation> | null): Observable<boolean> {
     return from(this.modalCtrl.dismiss(result));
   }
 

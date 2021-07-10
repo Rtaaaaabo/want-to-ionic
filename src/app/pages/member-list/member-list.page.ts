@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { Location } from '@angular/common';
 import { from } from 'rxjs';
-import { map, concatMap } from 'rxjs/operators';
+import { map, concatMap, filter } from 'rxjs/operators';
 import { MemberListLogic } from './logic/member-list.logic';
 import { InviteMemberComponent } from './component/modal/invite-member/invite-member.component';
 import { CurrentUser, Attribute } from './models/member-list.interface';
@@ -46,6 +46,9 @@ export class MemberListPage implements OnInit {
       },
     });
     const dismissObservable = from(modal.onDidDismiss());
+    dismissObservable
+      .pipe(filter((data) => data !== null))
+      .subscribe(data => console.log(data));
     return modal.present();
   }
 
