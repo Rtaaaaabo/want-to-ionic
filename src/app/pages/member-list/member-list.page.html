@@ -17,6 +17,20 @@
 
 <ion-content>
   <ion-list>
-    <ion-item> </ion-item>
+    <ion-item *ngFor="let member of companyMembers">
+      <ng-container *ngIf="member.username === null && !member.registered">
+        <ion-label>{{member.email}}</ion-label>
+        <ion-note slot="end">招待中</ion-note>
+      </ng-container>
+      <ng-container>
+        <ion-label>{{ member.username }}</ion-label>
+        <ion-note
+          *ngIf="member.id === currentUser.id"
+          slot="end"
+          color="secondary"
+          >本人</ion-note
+        >
+      </ng-container>
+    </ion-item>
   </ion-list>
 </ion-content>

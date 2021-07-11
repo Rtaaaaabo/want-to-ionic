@@ -30,6 +30,8 @@ export class MemberListPage implements OnInit {
       .pipe(map(({ items }) => this.currentUser = items[0]))
       .pipe(concatMap((currentUser) => this.logic.fetchCompanyMembers(currentUser.companyID)))
       .subscribe((data) => {
+        console.log('currentUser', this.currentUser);
+        console.log('companyMembers', data);
         this.companyMembers = data;
       });
   }
