@@ -40,14 +40,12 @@ export class SettingPage implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log('SettingPage currentUser', this.currentUser);
     this.logic.fetchCurrentUser()
       .pipe(map((data) => this.currentUserAttribute = data))
       .pipe(concatMap(() => this.logic.fetchAnyUserInfoFromList(this.currentUserAttribute.email)))
       .pipe(map(({ items }) => this.currentUser = items[0]))
       .pipe(concatMap(() => this.logic.modifiedAvatarIconUrl(this.currentUser.iconImage)))
       .subscribe((data) => {
-        console.log(data);
         this.currentUserIcon = data;
       });
   }
@@ -66,7 +64,6 @@ export class SettingPage implements OnInit {
   }
 
   async presentEditModal(): Promise<void> {
-    console.log('[PresentEditModal currentUser]', this.currentUser);
     const modal = await this.modalCtrl.create({
       component: EditProfileModalComponent,
       componentProps: {
@@ -82,8 +79,7 @@ export class SettingPage implements OnInit {
       // .pipe(concatMap((result) => this.logic.fetchUserInfo(result.username)))
       // .pipe(map((result) => this.user = result))
       // .pipe(concatMap((userInfo) => this.logic.modifiedAvatarIconUrl(userInfo)))
-      .subscribe((data) => {
-        console.log('[DismissObservable data]', data);
+      .subscribe(() => {
         // this.user = data;
       });
     return modal.present();

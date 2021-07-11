@@ -29,8 +29,10 @@ export class OwnTaskPage implements OnInit {
 
   ionViewWillEnter() {
     this.logic.fetchCurrentUser()
-      .pipe(map(result => this.currentUserId = result.sub))
-      .pipe(concatMap((currentUserId) => this.logic.getTaskChargeItems(currentUserId)))
+      .pipe(map(result => this.currentUserAttribute = result))
+      .pipe(concatMap(() => this.logic.fetchAnyUserInfoFromList(this.currentUserAttribute.email)))
+      .pipe(map(({ items }) => this.currentUser = items[0]))
+      .pipe(concatMap(() => this.logic.getTaskChargeItems(this.currentUser.id)))
       .pipe(concatMap(({ items }) => this.logic.setTaskPerRoom(items)))
       .pipe(concatMap((items) => this.logic.filterExceptDoneTask(items)))
       .subscribe((items) => {
