@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoadingController, AlertController, ToastController } from '@ionic/angular';
 import { from } from 'rxjs';
@@ -10,7 +10,7 @@ import { OwnTaskLogic } from './logic/own-task.logic';
   templateUrl: './own-task.page.html',
   styleUrls: ['./own-task.page.scss'],
 })
-export class OwnTaskPage implements OnInit, AfterViewInit {
+export class OwnTaskPage implements OnInit {
   ownTaskItems: Array<any>;
   currentUserId: string;
 
@@ -23,8 +23,6 @@ export class OwnTaskPage implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit() { }
-
-  ngAfterViewInit() { }
 
   ionViewWillEnter() {
     this.logic.fetchCurrentUser()
