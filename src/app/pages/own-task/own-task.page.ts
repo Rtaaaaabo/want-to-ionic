@@ -4,6 +4,7 @@ import { LoadingController, AlertController, ToastController } from '@ionic/angu
 import { from } from 'rxjs';
 import { concatMap, map, tap } from 'rxjs/operators';
 import { OwnTaskLogic } from './logic/own-task.logic';
+import { Attribute, CurrentUser } from './model/own-task.interface';
 
 @Component({
   selector: 'app-own-task',
@@ -11,6 +12,8 @@ import { OwnTaskLogic } from './logic/own-task.logic';
   styleUrls: ['./own-task.page.scss'],
 })
 export class OwnTaskPage implements OnInit {
+  currentUserAttribute: Attribute;
+  currentUser: CurrentUser;
   ownTaskItems: Array<any>;
   currentUserId: string;
 
