@@ -48,7 +48,7 @@ export class MemberListPage implements OnInit {
     const dismissObservable = from(modal.onDidDismiss());
     dismissObservable
       .pipe(filter((data) => data !== null))
-      .subscribe(data => console.log(data));
+      .subscribe((data) => console.log(data));
     return modal.present();
   }
 
