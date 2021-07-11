@@ -34,4 +34,8 @@ export class MemberListService {
   registerCompanyMembersToDynamoDB(content: CreateUserInput): Observable<CreateUserMutation> {
     return from(this.amplifyService.CreateUser(content));
   }
+
+  fetchCompanyMembers(companyId: string): Observable<any> {
+    return from(this.amplifyService.GetCompany(companyId));
+  }
 }

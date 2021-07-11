@@ -2352,7 +2352,7 @@ export type GetCompanyQuery = {
     items?: Array<{
       __typename: "User";
       id: string;
-      username: string;
+      username?: string | null;
       email: string;
       companyID: string;
       tel?: string | null;
@@ -2369,7 +2369,6 @@ export type GetCompanyQuery = {
   updatedAt: string;
   owner?: string | null;
 };
-
 export type ListCompanysQuery = {
   __typename: "ModelCompanyConnection";
   items?: Array<{
@@ -6205,62 +6204,62 @@ export class AmplifyService {
   }
   async GetCompany(id: string): Promise<GetCompanyQuery> {
     const statement = `query GetCompany($id: ID!) {
-      getCompany(id: $id) {
-        __typename
-        id
-        name
-        officer {
+        getCompany(id: $id) {
           __typename
-          officerEmail
-          officerName
-        }
-        isRegistered
-        otp
-        tel
-        officialEmail
-        iconCompany {
-          __typename
-          bucket
-          region
-          key
-        }
-        billing
-        room {
-          __typename
-          items {
+          id
+          name
+          officer {
             __typename
-            id
-            name
-            companyID
-            description
-            createdAt
-            updatedAt
+            officerEmail
+            officerName
           }
-          nextToken
-        }
-        companyMembers {
-          __typename
-          items {
+          isRegistered
+          otp
+          tel
+          officialEmail
+          iconCompany {
             __typename
-            id
-            username
-            email
-            companyID
-            tel
-            positionName
-            registered
-            authority
-            createdAt
-            updatedAt
-            owner
+            bucket
+            region
+            key
           }
-          nextToken
+          billing
+          room {
+            __typename
+            items {
+              __typename
+              id
+              name
+              companyID
+              description
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          companyMembers {
+            __typename
+            items {
+              __typename
+              id
+              username
+              email
+              companyID
+              tel
+              positionName
+              registered
+              authority
+              createdAt
+              updatedAt
+              owner
+            }
+            nextToken
+          }
+          createdAt
+          updatedAt
+          owner
         }
-        createdAt
-        updatedAt
-        owner
-      }
-    }`;
+      }`;
     const gqlAPIServiceArguments: any = {
       id
     };

@@ -8,7 +8,7 @@ export interface CurrentUserInfo {
 export interface CompanyMembersInfo {
     __typename: "User";
     id: string;
-    username: string;
+    username?: string | null;
     email: string;
     companyID: string;
     tel?: string | null;

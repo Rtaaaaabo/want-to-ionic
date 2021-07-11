@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { from, Observable } from 'rxjs';
+import { from, Observable, of } from 'rxjs';
 import { concatMap, map, toArray } from 'rxjs/operators';
 import { SessionService } from '../../../shared/service/session.service';
 import { ListUsersQuery, CreateUserInput, CreateUserMutation } from '../../../shared/service/amplify.service';
@@ -49,5 +49,9 @@ export class MemberListLogic {
       authority: false,
     }
     return this.memberListService.registerCompanyMembersToDynamoDB(content);
+  }
+
+  fetchCompanyMembers(companyId: string): Observable<any> {
+    return of();
   }
 }
