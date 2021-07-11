@@ -58,3 +58,18 @@ export interface OptionData {
     companyName: string,
     officerName: string,
 };
+
+export interface CompanyMember {
+    __typename: "User";
+    id: string;
+    username?: string | null;
+    email: string;
+    companyID: string;
+    tel?: string | null;
+    positionName?: string | null;
+    registered?: boolean | null;
+    authority?: boolean | null;
+    createdAt: string;
+    updatedAt: string;
+    owner?: string | null;
+}

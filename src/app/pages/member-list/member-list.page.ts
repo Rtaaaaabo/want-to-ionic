@@ -5,7 +5,7 @@ import { from } from 'rxjs';
 import { map, concatMap, filter } from 'rxjs/operators';
 import { MemberListLogic } from './logic/member-list.logic';
 import { InviteMemberComponent } from './component/modal/invite-member/invite-member.component';
-import { CurrentUser, Attribute } from './models/member-list.interface';
+import { CurrentUser, Attribute, CompanyMember } from './models/member-list.interface';
 
 @Component({
   selector: 'app-member-list',
@@ -15,7 +15,7 @@ import { CurrentUser, Attribute } from './models/member-list.interface';
 export class MemberListPage implements OnInit {
   currentUserAttribute: Attribute;
   currentUser: CurrentUser;
-  companyId: string;
+  companyMembers: Array<CompanyMember>;
 
   constructor(
     private logic: MemberListLogic,
@@ -29,7 +29,9 @@ export class MemberListPage implements OnInit {
       .pipe(concatMap(() => this.logic.fetchAnyUserInfoFromList(this.currentUserAttribute.email)))
       .pipe(map(({ items }) => this.currentUser = items[0]))
       .pipe(concatMap((currentUser) => this.logic.fetchCompanyMembers(currentUser.companyID)))
-      .subscribe((data) => console.log('ngOnInit data', data));
+      .subscribe((data) => {
+        this.companyMembers = data;
+      });
   }
 
   /**

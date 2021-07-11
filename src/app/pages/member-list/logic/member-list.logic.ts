@@ -4,7 +4,7 @@ import { concatMap, map, toArray } from 'rxjs/operators';
 import { SessionService } from '../../../shared/service/session.service';
 import { ListUsersQuery, CreateUserInput, CreateUserMutation } from '../../../shared/service/amplify.service';
 import { MemberListService } from '../service/member-list.service';
-import { RequestRegisterCompanyMember, CurrentUser, OptionData } from '../models/member-list.interface';
+import { RequestRegisterCompanyMember, CurrentUser, OptionData, CompanyMember } from '../models/member-list.interface';
 import { v4 as uuid } from 'uuid';
 
 @Injectable({
@@ -51,7 +51,8 @@ export class MemberListLogic {
     return this.memberListService.registerCompanyMembersToDynamoDB(content);
   }
 
-  fetchCompanyMembers(companyId: string): Observable<any> {
-    return of();
+  fetchCompanyMembers(companyId: string): Observable<Array<CompanyMember>> {
+    return this.memberListService.fetchCompanyMembers(companyId)
+      .pipe(map((result) => result.companyMembers.items));
   }
 }

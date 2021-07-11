@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { of, Observable, from } from 'rxjs';
 import { API } from 'aws-amplify';
-import { v4 as uuid } from 'uuid';
-import { AmplifyService, CreateUserInput, CreateUserMutation } from 'src/app/shared/service/amplify.service';
-import { RequestRegisterCompanyMember, OptionData } from '../models/member-list.interface';
+import { AmplifyService, CreateUserInput, CreateUserMutation, GetCompanyQuery } from 'src/app/shared/service/amplify.service';
+import { OptionData } from '../models/member-list.interface';
 
 const apiSendInvite = 'authSendEmail';
 const pathRegisterInvite = '/register/member';
@@ -35,7 +34,7 @@ export class MemberListService {
     return from(this.amplifyService.CreateUser(content));
   }
 
-  fetchCompanyMembers(companyId: string): Observable<any> {
+  fetchCompanyMembers(companyId: string): Observable<GetCompanyQuery> {
     return from(this.amplifyService.GetCompany(companyId));
   }
 }
