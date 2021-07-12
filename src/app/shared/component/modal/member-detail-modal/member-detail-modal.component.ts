@@ -14,7 +14,7 @@ export class MemberDetailModalComponent implements OnInit {
     private readonly modalCtrl: ModalController,
   ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     console.log(this.detailUser);
   }
 
