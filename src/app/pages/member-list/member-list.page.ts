@@ -51,8 +51,9 @@ export class MemberListPage implements OnInit {
     const dismissObservable = from(modal.onDidDismiss());
     dismissObservable
       .pipe(filter((data) => data !== null))
+      .pipe(concatMap(() => this.logic.fetchCompanyMembers(this.currentUser.companyID)))
       .subscribe((data) => {
-        console.log(data);
+        this.companyMembers = data;
       });
     return modal.present();
   }
