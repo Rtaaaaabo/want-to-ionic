@@ -17,7 +17,10 @@
 
 <ion-content>
   <ion-list>
-    <ion-item *ngFor="let member of companyMembers">
+    <ion-item
+      *ngFor="let member of companyMembers"
+      (click)="presentMemberDetail(member)"
+    >
       <ng-container *ngIf="member.username === null && !member.registered">
         <ion-label>{{member.email}}</ion-label>
         <ion-note slot="end">招待中</ion-note>

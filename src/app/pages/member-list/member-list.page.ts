@@ -58,4 +58,7 @@ export class MemberListPage implements OnInit {
     return modal.present();
   }
 
+  presentMemberDetail(member: CompanyMember): void {
+  }
+
 }
