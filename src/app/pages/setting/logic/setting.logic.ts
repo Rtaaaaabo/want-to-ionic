@@ -36,7 +36,6 @@ export class SettingLogic {
    * @returns 型IconImageからImageのURLを返す
    */
   modifiedAvatarIconUrl(currentUserIcon: IconImage | null): Observable<string | null> {
-    console.log('modifiedAvatarIconUrl currentUserIcon', currentUserIcon);
     return of(currentUserIcon)
       .pipe(concatMap((data) => data !== null ? this.getStorage(data) : of(null)))
   }
