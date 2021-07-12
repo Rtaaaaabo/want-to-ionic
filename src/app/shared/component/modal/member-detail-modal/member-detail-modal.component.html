@@ -1,3 +1,42 @@
-<p>
-  member-detail-modal works!
-</p>
+<ion-header translate="true">
+  <ion-toolbar>
+    <ion-title>メンバーの詳細</ion-title>
+    <ion-buttons>
+      <ion-button (click)="dismissModal()">
+        <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="card">
+    <div class="header">
+      <div class="avatar">
+        <img *ngIf="!userIcon" [src]="defaultIconImageUrl" alt="icon-image" />
+        <img *ngIf="userIcon" [src]="userIcon" alt="icon-image" />
+      </div>
+    </div>
+  </div>
+
+  <div class="card-body">
+    <div class="user-meta ion-text-center">
+      <ion-item>
+        <ion-label position="stacked">名前</ion-label>
+        <ion-text>名前</ion-text>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">役割</ion-label>
+        <ion-text>役割</ion-text>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Email</ion-label>
+        <ion-text>Email</ion-text>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">電話番号</ion-label>
+        <ion-text>電話番号</ion-text>
+      </ion-item>
+    </div>
+  </div>
+</ion-content>
