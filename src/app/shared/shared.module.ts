@@ -6,6 +6,7 @@ import { SessionService } from './service/session.service';
 import { AddRoomModalComponent } from './component/modal/add-room-modal/add-room-modal.component';
 import { AddTaskModalComponent } from './component/modal/add-task-modal/add-task-modal.component';
 import { DeleteTaskModalComponent } from './component/modal/delete-task-modal/delete-task-modal.component';
+import { MemberDetailModalComponent } from './component/modal/member-detail-modal/member-detail-modal.component';
 import { EditProfileModalComponent } from './component/modal/edit-profile-modal/edit-profile-modal.component';
 import { InviteMemberComponent } from 'src/app/pages/member-list/component/modal/invite-member/invite-member.component';
 import { AddPersonModalComponent } from '../pages/task/component/add-person-modal/add-person-modal.component';
@@ -22,6 +23,7 @@ import { ImagePicker } from '@ionic-native/image-picker/ngx';
     AddPersonModalComponent,
     NoContentComponent,
     InviteMemberComponent,
+    MemberDetailModalComponent,
   ],
   imports: [
     CommonModule,
@@ -36,6 +38,7 @@ import { ImagePicker } from '@ionic-native/image-picker/ngx';
     EditProfileModalComponent,
     AddPersonModalComponent,
     InviteMemberComponent,
+    MemberDetailModalComponent,
   ],
   exports: [
     AddRoomModalComponent,
@@ -44,6 +47,7 @@ import { ImagePicker } from '@ionic-native/image-picker/ngx';
     EditProfileModalComponent,
     AddPersonModalComponent,
     InviteMemberComponent,
+    MemberDetailModalComponent,
     NoContentComponent,
     ReactiveFormsModule,
     FormsModule,

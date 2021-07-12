@@ -5,6 +5,7 @@ import { from } from 'rxjs';
 import { map, concatMap, filter } from 'rxjs/operators';
 import { MemberListLogic } from './logic/member-list.logic';
 import { InviteMemberComponent } from './component/modal/invite-member/invite-member.component';
+import { MemberDetailModalComponent } from '../../shared/component/modal/member-detail-modal/member-detail-modal.component';
 import { CurrentUser, Attribute, CompanyMember } from './models/member-list.interface';
 
 @Component({
@@ -58,7 +59,14 @@ export class MemberListPage implements OnInit {
     return modal.present();
   }
 
-  presentMemberDetail(member: CompanyMember): void {
+  async presentMemberDetail(member: CompanyMember): Promise<void> {
+    const modal = await this.modalCtrl.create({
+      component: MemberDetailModalComponent,
+      componentProps: {
+        'detailUser': member
+      },
+    });
+    return modal.present();
   }
 
 }
