@@ -2408,7 +2408,7 @@ export type ListCompanysQuery = {
 export type GetUserQuery = {
   __typename: "User";
   id: string;
-  username: string;
+  username?: string | null;
   email: string;
   companyID: string;
   tel?: string | null;
@@ -2420,12 +2420,27 @@ export type GetUserQuery = {
     key: string;
   } | null;
   registered?: boolean | null;
-  authority?: string | null;
+  authority?: boolean | null;
   company: {
     __typename: "Company";
     id: string;
     name: string;
-    domain: string;
+    officer: Array<{
+      __typename: "Officer";
+      officerEmail: string;
+      officerName: string;
+    } | null>;
+    isRegistered: boolean;
+    otp?: string | null;
+    tel?: string | null;
+    officialEmail?: string | null;
+    iconCompany?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
+    billing?: boolean | null;
     room?: {
       __typename: "ModelRoomConnection";
       nextToken?: string | null;
@@ -2436,6 +2451,7 @@ export type GetUserQuery = {
     } | null;
     createdAt: string;
     updatedAt: string;
+    owner?: string | null;
   };
   messages?: {
     __typename: "ModelMessageConnection";
@@ -2448,6 +2464,7 @@ export type GetUserQuery = {
       createdAt: string;
       isSent?: boolean | null;
       updatedAt: string;
+      owner?: string | null;
     } | null> | null;
     nextToken?: string | null;
   } | null;
@@ -2495,6 +2512,7 @@ export type GetUserQuery = {
   } | null;
   createdAt: string;
   updatedAt: string;
+  owner?: string | null;
 };
 
 export type ListUsersQuery = {
@@ -6775,116 +6793,116 @@ export class AmplifyService {
 
   async GetUser(id: string): Promise<GetUserQuery> {
     const statement = `query GetUser($id: ID!) {
-        getUser(id: $id) {
+      getUser(id: $id) {
+        __typename
+        id
+        username
+        email
+        companyID
+        tel
+        positionName
+        iconImage {
+          __typename
+          bucket
+          region
+          key
+        }
+        registered
+        authority
+        company {
           __typename
           id
-          username
-          email
-          companyID
+          name
+          officer {
+            __typename
+            officerEmail
+            officerName
+          }
+          isRegistered
+          otp
           tel
-          positionName
-          iconImage {
+          officialEmail
+          iconCompany {
             __typename
             bucket
             region
             key
           }
-          registered
-          authority
-          company {
-            __typename
-            id
-            name
-            officer {
-              __typename
-              officerEmail
-              officerName
-            }
-            isRegistered
-            otp
-            tel
-            officialEmail
-            iconCompany {
-              __typename
-              bucket
-              region
-              key
-            }
-            billing
-            room {
-              __typename
-              nextToken
-            }
-            companyMembers {
-              __typename
-              nextToken
-            }
-            createdAt
-            updatedAt
-            owner
-          }
-          messages {
-            __typename
-            items {
-              __typename
-              id
-              taskID
-              authorID
-              content
-              createdAt
-              isSent
-              updatedAt
-              owner
-            }
-            nextToken
-          }
+          billing
           room {
             __typename
-            items {
-              __typename
-              id
-              roomID
-              userID
-              createdAt
-              updatedAt
-            }
             nextToken
           }
-          task {
+          companyMembers {
             __typename
-            items {
-              __typename
-              id
-              taskID
-              userID
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
-          chargeTask {
-            __typename
-            items {
-              __typename
-              id
-              authorID
-              roomID
-              chargePersonID
-              title
-              description
-              scheduleDate
-              priority
-              status
-              createdAt
-              updatedAt
-            }
             nextToken
           }
           createdAt
           updatedAt
           owner
         }
-      }`;
+        messages {
+          __typename
+          items {
+            __typename
+            id
+            taskID
+            authorID
+            content
+            createdAt
+            isSent
+            updatedAt
+            owner
+          }
+          nextToken
+        }
+        room {
+          __typename
+          items {
+            __typename
+            id
+            roomID
+            userID
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        task {
+          __typename
+          items {
+            __typename
+            id
+            taskID
+            userID
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        chargeTask {
+          __typename
+          items {
+            __typename
+            id
+            authorID
+            roomID
+            chargePersonID
+            title
+            description
+            scheduleDate
+            priority
+            status
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        createdAt
+        updatedAt
+        owner
+      }
+    }`;
     const gqlAPIServiceArguments: any = {
       id
     };

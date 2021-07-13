@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import { concatMap, filter } from 'rxjs/operators';
 import { CompanyMember } from 'src/app/pages/member-list/models/member-list.interface';
+import { MemberListLogic } from 'src/app/pages/member-list/logic/member-list.logic';
 
 @Component({
   selector: 'app-member-detail-modal',
@@ -9,13 +11,22 @@ import { CompanyMember } from 'src/app/pages/member-list/models/member-list.inte
 })
 export class MemberDetailModalComponent implements OnInit {
   @Input() detailUser: CompanyMember;
+  userIconImageUrl: string;
+  defaultIconImageUrl = '../../../../../assets/img/undefined.jpeg';
 
   constructor(
     private readonly modalCtrl: ModalController,
+    private readonly logic: MemberListLogic,
   ) { }
 
   ngOnInit(): void {
-    console.log(this.detailUser);
+    this.logic.fetchMember(this.detailUser.id)
+      .pipe(filter((result) => result === null))
+      .pipe(concatMap((member) => this.logic.modifiedAvatarIconUrl(member.iconImage)))
+      .subscribe((data) => {
+        console.log('[modifiedAvatarIconUrl]', data);
+        this.userIconImageUrl = data;
+      })
   }
 
   dismissModal(): void {

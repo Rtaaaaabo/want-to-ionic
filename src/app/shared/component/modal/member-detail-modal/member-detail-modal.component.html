@@ -13,8 +13,16 @@
   <div class="card">
     <div class="header">
       <div class="avatar">
-        <img *ngIf="!userIcon" [src]="defaultIconImageUrl" alt="icon-image" />
-        <img *ngIf="userIcon" [src]="userIcon" alt="icon-image" />
+        <img
+          *ngIf="!userIconImageUrl"
+          [src]="defaultIconImageUrl"
+          alt="icon-image"
+        />
+        <img
+          *ngIf="userIconImageUrl"
+          [src]="userIconImageUrl"
+          alt="icon-image"
+        />
       </div>
     </div>
   </div>

@@ -73,3 +73,10 @@ export interface CompanyMember {
     updatedAt: string;
     owner?: string | null;
 }
+
+export interface IconImage {
+    __typename: "S3Object";
+    bucket: string;
+    region: string;
+    key: string;
+}

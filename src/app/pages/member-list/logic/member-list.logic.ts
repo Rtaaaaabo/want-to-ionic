@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { from, Observable, of } from 'rxjs';
 import { concatMap, map, toArray } from 'rxjs/operators';
+import { Storage } from 'aws-amplify';
 import { SessionService } from '../../../shared/service/session.service';
-import { ListUsersQuery, CreateUserInput, CreateUserMutation } from '../../../shared/service/amplify.service';
+import { ListUsersQuery, CreateUserInput, CreateUserMutation, GetUserQuery } from '../../../shared/service/amplify.service';
 import { MemberListService } from '../service/member-list.service';
-import { RequestRegisterCompanyMember, CurrentUser, OptionData, CompanyMember } from '../models/member-list.interface';
+import { RequestRegisterCompanyMember, CurrentUser, OptionData, CompanyMember, IconImage } from '../models/member-list.interface';
 import { v4 as uuid } from 'uuid';
 
 @Injectable({
@@ -54,5 +55,23 @@ export class MemberListLogic {
   fetchCompanyMembers(companyId: string): Observable<Array<CompanyMember>> {
     return this.memberListService.fetchCompanyMembers(companyId)
       .pipe(map((result) => result.companyMembers.items));
+  }
+
+  fetchMember(userId: string): Observable<GetUserQuery> {
+    return this.memberListService.fetchMember(userId)
+  }
+
+  /**
+ * Current UserのIconのURLを取得
+ * @param currentUser CurrentのIconImage
+ * @returns 型IconImageからImageのURLを返す
+ */
+  modifiedAvatarIconUrl(currentUserIcon: IconImage | null): Observable<string | null> {
+    return of(currentUserIcon)
+      .pipe(concatMap((data) => data !== null ? this.getStorage(data) : of(null)))
+  }
+
+  getStorage(dataKey: IconImage): Observable<any> {
+    return from(Storage.get(dataKey.key));
   }
 }

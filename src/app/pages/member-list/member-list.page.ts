@@ -63,7 +63,7 @@ export class MemberListPage implements OnInit {
     const modal = await this.modalCtrl.create({
       component: MemberDetailModalComponent,
       componentProps: {
-        'detailUser': member
+        'detailUser': member,
       },
     });
     return modal.present();
