@@ -30,7 +30,6 @@ export class SignupPage implements OnInit {
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
       this.signUpForm.patchValue({ email: params.email });
-      // console.log(params);
     })
   }
 

@@ -38,9 +38,7 @@ export class InviteMemberComponent implements OnInit {
     private logic: MemberListLogic,
   ) { }
 
-  ngOnInit(): void {
-    console.log('currentUserInfo', this.currentUserInfo);
-  }
+  ngOnInit(): void { }
 
   dismissModal(result?: Array<CreateUserMutation> | null): Observable<boolean> {
     return from(this.modalCtrl.dismiss(result));
@@ -57,7 +55,7 @@ export class InviteMemberComponent implements OnInit {
   registerCompanyMembers(): void {
     this.logic.registerCompanyMembers(this.companyMemberArray.value, this.currentUserInfo)
       .pipe(concatMap((data) => this.dismissModal(data)))
-      .subscribe((data) => console.log(data));
+      .subscribe();
   }
 }
 

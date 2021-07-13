@@ -24,7 +24,6 @@ export class MemberDetailModalComponent implements OnInit {
       .pipe(filter((result) => result === null))
       .pipe(concatMap((member) => this.logic.modifiedAvatarIconUrl(member.iconImage)))
       .subscribe((data) => {
-        console.log('[modifiedAvatarIconUrl]', data);
         this.userIconImageUrl = data;
       })
   }

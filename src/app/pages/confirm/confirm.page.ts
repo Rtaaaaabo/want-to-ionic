@@ -48,7 +48,6 @@ export class ConfirmPage implements OnInit {
     this.logic.sendConfirmUser(this.confirmTargetEmail, this.aliasConfirmNumber.value)
       .pipe(concatMap(() => this.logic.updateUserToDynamo(this.userId)))
       .subscribe((data) => {
-        console.log('[confirmSignUp]', data);
         this.router.navigate(['/login']);
       });
   }
@@ -57,7 +56,6 @@ export class ConfirmPage implements OnInit {
    * 確認コードを再送信する処理です
    */
   reSendSignUp(): void {
-    console.log('ReSendSignUp');
   }
 
 }

@@ -107,7 +107,6 @@ export class CreateCompanyPage implements OnInit {
       .pipe(concatMap(() => this.logic.entrySignUpUser(requestUserContent, companyId)))
       .pipe(concatMap(() => this.logic.createUserWithCompanyId(companyId, officerName, officerEmail)))
       .subscribe(({ id }) => {
-        console.log('[CreateCompany id]', id);
         this.router.navigate(['/confirm'], { state: { data: { email: officerEmail, companyId: companyId, userId: id } } });
       });
   }

@@ -42,7 +42,6 @@ export class HomeService {
    * @returns CurrentUser情報更新時を行った結果を返します
    */
   updateUser(content: UpdateUserInput): Observable<UpdateUserMutation> {
-    console.log('UpdateUser content', content);
     return from(this.amplifyService.UpdateUser(content));
   }
 

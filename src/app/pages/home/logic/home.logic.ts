@@ -97,7 +97,6 @@ export class HomeLogic {
   }
 
   updateUser(formContent: FormGroup, extraData): Observable<any> {
-    console.log('updateUser formContent', formContent.value);
     const resultFormIconImageUrl = formContent.get('keyAvatarImage').value;
     const region = 'ap-northeast-1';
     const bucket = 'wattofilestorage234052-dev';

@@ -53,7 +53,6 @@ export class RegistrationCompanyPage implements OnInit {
       .pipe(concatMap((token) => this.logic.fetchCompanyInfo(token)))
       .pipe(map(({ items }) => items))
       .subscribe((result) => {
-        console.log('[RegistrationCompany ]', result);
         this.companyInfo = result[0];
         this.companyForm.patchValue({
           companyName: this.companyInfo.name,

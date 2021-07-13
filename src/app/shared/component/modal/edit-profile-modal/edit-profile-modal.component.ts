@@ -56,7 +56,6 @@ export class EditProfileModalComponent implements OnInit {
         userName: this.name,
       });
     } else {
-      console.log('[EditProfileModal user]', this.user);
       this.userIcon = this.userIcon;
       this.title = 'プロフィールの編集';
       this.editProfileForm.patchValue({
