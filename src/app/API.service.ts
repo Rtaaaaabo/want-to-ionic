@@ -184,7 +184,6 @@ export type User = {
   chargeTask?: ModelTaskConnection | null;
   createdAt: string;
   updatedAt: string;
-  owner?: string | null;
 };
 
 export type ModelMessageConnection = {
@@ -641,7 +640,6 @@ export type CreateCompanyMutation = {
       authority?: boolean | null;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
     } | null> | null;
     nextToken?: string | null;
   } | null;
@@ -697,7 +695,6 @@ export type UpdateCompanyMutation = {
       authority?: boolean | null;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
     } | null> | null;
     nextToken?: string | null;
   } | null;
@@ -753,7 +750,6 @@ export type DeleteCompanyMutation = {
       authority?: boolean | null;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
     } | null> | null;
     nextToken?: string | null;
   } | null;
@@ -806,7 +802,6 @@ export type CreateTaskGroupMutation = {
       authority?: boolean | null;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
     };
     messages?: {
       __typename: "ModelMessageConnection";
@@ -865,7 +860,6 @@ export type CreateTaskGroupMutation = {
     } | null;
     createdAt: string;
     updatedAt: string;
-    owner?: string | null;
   } | null;
   createdAt: string;
   updatedAt: string;
@@ -915,7 +909,6 @@ export type UpdateTaskGroupMutation = {
       authority?: boolean | null;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
     };
     messages?: {
       __typename: "ModelMessageConnection";
@@ -974,7 +967,6 @@ export type UpdateTaskGroupMutation = {
     } | null;
     createdAt: string;
     updatedAt: string;
-    owner?: string | null;
   } | null;
   createdAt: string;
   updatedAt: string;
@@ -1024,7 +1016,6 @@ export type DeleteTaskGroupMutation = {
       authority?: boolean | null;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
     };
     messages?: {
       __typename: "ModelMessageConnection";
@@ -1083,7 +1074,6 @@ export type DeleteTaskGroupMutation = {
     } | null;
     createdAt: string;
     updatedAt: string;
-    owner?: string | null;
   } | null;
   createdAt: string;
   updatedAt: string;
@@ -1184,7 +1174,6 @@ export type CreateTaskMutation = {
     } | null;
     createdAt: string;
     updatedAt: string;
-    owner?: string | null;
   };
   messages?: {
     __typename: "ModelMessageConnection";
@@ -1311,7 +1300,6 @@ export type UpdateTaskMutation = {
     } | null;
     createdAt: string;
     updatedAt: string;
-    owner?: string | null;
   };
   messages?: {
     __typename: "ModelMessageConnection";
@@ -1438,7 +1426,6 @@ export type DeleteTaskMutation = {
     } | null;
     createdAt: string;
     updatedAt: string;
-    owner?: string | null;
   };
   messages?: {
     __typename: "ModelMessageConnection";
@@ -1577,7 +1564,6 @@ export type CreateUserMutation = {
   } | null;
   createdAt: string;
   updatedAt: string;
-  owner?: string | null;
 };
 
 export type UpdateUserMutation = {
@@ -1687,7 +1673,6 @@ export type UpdateUserMutation = {
   } | null;
   createdAt: string;
   updatedAt: string;
-  owner?: string | null;
 };
 
 export type DeleteUserMutation = {
@@ -1797,7 +1782,6 @@ export type DeleteUserMutation = {
   } | null;
   createdAt: string;
   updatedAt: string;
-  owner?: string | null;
 };
 
 export type CreateRoomGroupMutation = {
@@ -1882,7 +1866,6 @@ export type CreateRoomGroupMutation = {
     } | null;
     createdAt: string;
     updatedAt: string;
-    owner?: string | null;
   } | null;
   createdAt: string;
   updatedAt: string;
@@ -1970,7 +1953,6 @@ export type UpdateRoomGroupMutation = {
     } | null;
     createdAt: string;
     updatedAt: string;
-    owner?: string | null;
   } | null;
   createdAt: string;
   updatedAt: string;
@@ -2058,7 +2040,6 @@ export type DeleteRoomGroupMutation = {
     } | null;
     createdAt: string;
     updatedAt: string;
-    owner?: string | null;
   } | null;
   createdAt: string;
   updatedAt: string;
@@ -2341,7 +2322,6 @@ export type CreateMessageMutation = {
     } | null;
     createdAt: string;
     updatedAt: string;
-    owner?: string | null;
   };
   task: {
     __typename: "Task";
@@ -2382,7 +2362,6 @@ export type CreateMessageMutation = {
       authority?: boolean | null;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
     };
     messages?: {
       __typename: "ModelMessageConnection";
@@ -2459,7 +2438,6 @@ export type UpdateMessageMutation = {
     } | null;
     createdAt: string;
     updatedAt: string;
-    owner?: string | null;
   };
   task: {
     __typename: "Task";
@@ -2500,7 +2478,6 @@ export type UpdateMessageMutation = {
       authority?: boolean | null;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
     };
     messages?: {
       __typename: "ModelMessageConnection";
@@ -2577,7 +2554,6 @@ export type DeleteMessageMutation = {
     } | null;
     createdAt: string;
     updatedAt: string;
-    owner?: string | null;
   };
   task: {
     __typename: "Task";
@@ -2618,7 +2594,6 @@ export type DeleteMessageMutation = {
       authority?: boolean | null;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
     };
     messages?: {
       __typename: "ModelMessageConnection";
@@ -2681,7 +2656,6 @@ export type GetCompanyQuery = {
       authority?: boolean | null;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
     } | null> | null;
     nextToken?: string | null;
   } | null;
@@ -2771,7 +2745,6 @@ export type GetTaskGroupQuery = {
       authority?: boolean | null;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
     };
     messages?: {
       __typename: "ModelMessageConnection";
@@ -2830,7 +2803,6 @@ export type GetTaskGroupQuery = {
     } | null;
     createdAt: string;
     updatedAt: string;
-    owner?: string | null;
   } | null;
   createdAt: string;
   updatedAt: string;
@@ -2869,7 +2841,6 @@ export type ListTaskGroupsQuery = {
       authority?: boolean | null;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
     } | null;
     createdAt: string;
     updatedAt: string;
@@ -2972,7 +2943,6 @@ export type GetTaskQuery = {
     } | null;
     createdAt: string;
     updatedAt: string;
-    owner?: string | null;
   };
   messages?: {
     __typename: "ModelMessageConnection";
@@ -3045,7 +3015,6 @@ export type ListTasksQuery = {
       authority?: boolean | null;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
     };
     messages?: {
       __typename: "ModelMessageConnection";
@@ -3167,7 +3136,6 @@ export type GetUserQuery = {
   } | null;
   createdAt: string;
   updatedAt: string;
-  owner?: string | null;
 };
 
 export type ListUsersQuery = {
@@ -3219,7 +3187,6 @@ export type ListUsersQuery = {
     } | null;
     createdAt: string;
     updatedAt: string;
-    owner?: string | null;
   } | null> | null;
   nextToken?: string | null;
 };
@@ -3306,7 +3273,6 @@ export type GetRoomGroupQuery = {
     } | null;
     createdAt: string;
     updatedAt: string;
-    owner?: string | null;
   } | null;
   createdAt: string;
   updatedAt: string;
@@ -3340,7 +3306,6 @@ export type ListRoomGroupsQuery = {
       authority?: boolean | null;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
     } | null;
     createdAt: string;
     updatedAt: string;
@@ -3516,7 +3481,6 @@ export type GetMessageQuery = {
     } | null;
     createdAt: string;
     updatedAt: string;
-    owner?: string | null;
   };
   task: {
     __typename: "Task";
@@ -3557,7 +3521,6 @@ export type GetMessageQuery = {
       authority?: boolean | null;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
     };
     messages?: {
       __typename: "ModelMessageConnection";
@@ -3601,7 +3564,6 @@ export type ListMessagesQuery = {
       authority?: boolean | null;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
     };
     task: {
       __typename: "Task";
@@ -3651,7 +3613,6 @@ export type TaskByCreatedAtQuery = {
       authority?: boolean | null;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
     };
     task: {
       __typename: "Task";
@@ -3720,7 +3681,6 @@ export type OnCreateCompanySubscription = {
       authority?: boolean | null;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
     } | null> | null;
     nextToken?: string | null;
   } | null;
@@ -3776,7 +3736,6 @@ export type OnUpdateCompanySubscription = {
       authority?: boolean | null;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
     } | null> | null;
     nextToken?: string | null;
   } | null;
@@ -3832,7 +3791,6 @@ export type OnDeleteCompanySubscription = {
       authority?: boolean | null;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
     } | null> | null;
     nextToken?: string | null;
   } | null;
@@ -3885,7 +3843,6 @@ export type OnCreateTaskGroupSubscription = {
       authority?: boolean | null;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
     };
     messages?: {
       __typename: "ModelMessageConnection";
@@ -3944,7 +3901,6 @@ export type OnCreateTaskGroupSubscription = {
     } | null;
     createdAt: string;
     updatedAt: string;
-    owner?: string | null;
   } | null;
   createdAt: string;
   updatedAt: string;
@@ -3994,7 +3950,6 @@ export type OnUpdateTaskGroupSubscription = {
       authority?: boolean | null;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
     };
     messages?: {
       __typename: "ModelMessageConnection";
@@ -4053,7 +4008,6 @@ export type OnUpdateTaskGroupSubscription = {
     } | null;
     createdAt: string;
     updatedAt: string;
-    owner?: string | null;
   } | null;
   createdAt: string;
   updatedAt: string;
@@ -4103,7 +4057,6 @@ export type OnDeleteTaskGroupSubscription = {
       authority?: boolean | null;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
     };
     messages?: {
       __typename: "ModelMessageConnection";
@@ -4162,7 +4115,6 @@ export type OnDeleteTaskGroupSubscription = {
     } | null;
     createdAt: string;
     updatedAt: string;
-    owner?: string | null;
   } | null;
   createdAt: string;
   updatedAt: string;
@@ -4263,7 +4215,6 @@ export type OnCreateTaskSubscription = {
     } | null;
     createdAt: string;
     updatedAt: string;
-    owner?: string | null;
   };
   messages?: {
     __typename: "ModelMessageConnection";
@@ -4390,7 +4341,6 @@ export type OnUpdateTaskSubscription = {
     } | null;
     createdAt: string;
     updatedAt: string;
-    owner?: string | null;
   };
   messages?: {
     __typename: "ModelMessageConnection";
@@ -4517,7 +4467,6 @@ export type OnDeleteTaskSubscription = {
     } | null;
     createdAt: string;
     updatedAt: string;
-    owner?: string | null;
   };
   messages?: {
     __typename: "ModelMessageConnection";
@@ -4656,7 +4605,6 @@ export type OnCreateUserSubscription = {
   } | null;
   createdAt: string;
   updatedAt: string;
-  owner?: string | null;
 };
 
 export type OnUpdateUserSubscription = {
@@ -4766,7 +4714,6 @@ export type OnUpdateUserSubscription = {
   } | null;
   createdAt: string;
   updatedAt: string;
-  owner?: string | null;
 };
 
 export type OnDeleteUserSubscription = {
@@ -4876,7 +4823,6 @@ export type OnDeleteUserSubscription = {
   } | null;
   createdAt: string;
   updatedAt: string;
-  owner?: string | null;
 };
 
 export type OnCreateRoomGroupSubscription = {
@@ -4961,7 +4907,6 @@ export type OnCreateRoomGroupSubscription = {
     } | null;
     createdAt: string;
     updatedAt: string;
-    owner?: string | null;
   } | null;
   createdAt: string;
   updatedAt: string;
@@ -5049,7 +4994,6 @@ export type OnUpdateRoomGroupSubscription = {
     } | null;
     createdAt: string;
     updatedAt: string;
-    owner?: string | null;
   } | null;
   createdAt: string;
   updatedAt: string;
@@ -5137,7 +5081,6 @@ export type OnDeleteRoomGroupSubscription = {
     } | null;
     createdAt: string;
     updatedAt: string;
-    owner?: string | null;
   } | null;
   createdAt: string;
   updatedAt: string;
@@ -5420,7 +5363,6 @@ export type OnCreateMessageSubscription = {
     } | null;
     createdAt: string;
     updatedAt: string;
-    owner?: string | null;
   };
   task: {
     __typename: "Task";
@@ -5461,7 +5403,6 @@ export type OnCreateMessageSubscription = {
       authority?: boolean | null;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
     };
     messages?: {
       __typename: "ModelMessageConnection";
@@ -5538,7 +5479,6 @@ export type OnUpdateMessageSubscription = {
     } | null;
     createdAt: string;
     updatedAt: string;
-    owner?: string | null;
   };
   task: {
     __typename: "Task";
@@ -5579,7 +5519,6 @@ export type OnUpdateMessageSubscription = {
       authority?: boolean | null;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
     };
     messages?: {
       __typename: "ModelMessageConnection";
@@ -5656,7 +5595,6 @@ export type OnDeleteMessageSubscription = {
     } | null;
     createdAt: string;
     updatedAt: string;
-    owner?: string | null;
   };
   task: {
     __typename: "Task";
@@ -5697,7 +5635,6 @@ export type OnDeleteMessageSubscription = {
       authority?: boolean | null;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
     };
     messages?: {
       __typename: "ModelMessageConnection";
@@ -5769,7 +5706,6 @@ export class APIService {
               authority
               createdAt
               updatedAt
-              owner
             }
             nextToken
           }
@@ -5841,7 +5777,6 @@ export class APIService {
               authority
               createdAt
               updatedAt
-              owner
             }
             nextToken
           }
@@ -5913,7 +5848,6 @@ export class APIService {
               authority
               createdAt
               updatedAt
-              owner
             }
             nextToken
           }
@@ -5982,7 +5916,6 @@ export class APIService {
               authority
               createdAt
               updatedAt
-              owner
             }
             messages {
               __typename
@@ -6041,7 +5974,6 @@ export class APIService {
             }
             createdAt
             updatedAt
-            owner
           }
           createdAt
           updatedAt
@@ -6107,7 +6039,6 @@ export class APIService {
               authority
               createdAt
               updatedAt
-              owner
             }
             messages {
               __typename
@@ -6166,7 +6097,6 @@ export class APIService {
             }
             createdAt
             updatedAt
-            owner
           }
           createdAt
           updatedAt
@@ -6232,7 +6162,6 @@ export class APIService {
               authority
               createdAt
               updatedAt
-              owner
             }
             messages {
               __typename
@@ -6291,7 +6220,6 @@ export class APIService {
             }
             createdAt
             updatedAt
-            owner
           }
           createdAt
           updatedAt
@@ -6408,7 +6336,6 @@ export class APIService {
             }
             createdAt
             updatedAt
-            owner
           }
           messages {
             __typename
@@ -6551,7 +6478,6 @@ export class APIService {
             }
             createdAt
             updatedAt
-            owner
           }
           messages {
             __typename
@@ -6694,7 +6620,6 @@ export class APIService {
             }
             createdAt
             updatedAt
-            owner
           }
           messages {
             __typename
@@ -6849,7 +6774,6 @@ export class APIService {
           }
           createdAt
           updatedAt
-          owner
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -6975,7 +6899,6 @@ export class APIService {
           }
           createdAt
           updatedAt
-          owner
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -7101,7 +7024,6 @@ export class APIService {
           }
           createdAt
           updatedAt
-          owner
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -7202,7 +7124,6 @@ export class APIService {
             }
             createdAt
             updatedAt
-            owner
           }
           createdAt
           updatedAt
@@ -7306,7 +7227,6 @@ export class APIService {
             }
             createdAt
             updatedAt
-            owner
           }
           createdAt
           updatedAt
@@ -7410,7 +7330,6 @@ export class APIService {
             }
             createdAt
             updatedAt
-            owner
           }
           createdAt
           updatedAt
@@ -7757,7 +7676,6 @@ export class APIService {
             }
             createdAt
             updatedAt
-            owner
           }
           task {
             __typename
@@ -7798,7 +7716,6 @@ export class APIService {
               authority
               createdAt
               updatedAt
-              owner
             }
             messages {
               __typename
@@ -7891,7 +7808,6 @@ export class APIService {
             }
             createdAt
             updatedAt
-            owner
           }
           task {
             __typename
@@ -7932,7 +7848,6 @@ export class APIService {
               authority
               createdAt
               updatedAt
-              owner
             }
             messages {
               __typename
@@ -8025,7 +7940,6 @@ export class APIService {
             }
             createdAt
             updatedAt
-            owner
           }
           task {
             __typename
@@ -8066,7 +7980,6 @@ export class APIService {
               authority
               createdAt
               updatedAt
-              owner
             }
             messages {
               __typename
@@ -8142,7 +8055,6 @@ export class APIService {
               authority
               createdAt
               updatedAt
-              owner
             }
             nextToken
           }
@@ -8263,7 +8175,6 @@ export class APIService {
               authority
               createdAt
               updatedAt
-              owner
             }
             messages {
               __typename
@@ -8322,7 +8233,6 @@ export class APIService {
             }
             createdAt
             updatedAt
-            owner
           }
           createdAt
           updatedAt
@@ -8375,7 +8285,6 @@ export class APIService {
               authority
               createdAt
               updatedAt
-              owner
             }
             createdAt
             updatedAt
@@ -8495,7 +8404,6 @@ export class APIService {
             }
             createdAt
             updatedAt
-            owner
           }
           messages {
             __typename
@@ -8582,7 +8490,6 @@ export class APIService {
               authority
               createdAt
               updatedAt
-              owner
             }
             messages {
               __typename
@@ -8721,7 +8628,6 @@ export class APIService {
           }
           createdAt
           updatedAt
-          owner
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -8787,7 +8693,6 @@ export class APIService {
             }
             createdAt
             updatedAt
-            owner
           }
           nextToken
         }
@@ -8891,7 +8796,6 @@ export class APIService {
             }
             createdAt
             updatedAt
-            owner
           }
           createdAt
           updatedAt
@@ -8939,7 +8843,6 @@ export class APIService {
               authority
               createdAt
               updatedAt
-              owner
             }
             createdAt
             updatedAt
@@ -9163,7 +9066,6 @@ export class APIService {
             }
             createdAt
             updatedAt
-            owner
           }
           task {
             __typename
@@ -9204,7 +9106,6 @@ export class APIService {
               authority
               createdAt
               updatedAt
-              owner
             }
             messages {
               __typename
@@ -9262,7 +9163,6 @@ export class APIService {
               authority
               createdAt
               updatedAt
-              owner
             }
             task {
               __typename
@@ -9336,7 +9236,6 @@ export class APIService {
               authority
               createdAt
               updatedAt
-              owner
             }
             task {
               __typename
@@ -9434,7 +9333,6 @@ export class APIService {
               authority
               createdAt
               updatedAt
-              owner
             }
             nextToken
           }
@@ -9498,7 +9396,6 @@ export class APIService {
               authority
               createdAt
               updatedAt
-              owner
             }
             nextToken
           }
@@ -9562,7 +9459,6 @@ export class APIService {
               authority
               createdAt
               updatedAt
-              owner
             }
             nextToken
           }
@@ -9623,7 +9519,6 @@ export class APIService {
               authority
               createdAt
               updatedAt
-              owner
             }
             messages {
               __typename
@@ -9682,7 +9577,6 @@ export class APIService {
             }
             createdAt
             updatedAt
-            owner
           }
           createdAt
           updatedAt
@@ -9740,7 +9634,6 @@ export class APIService {
               authority
               createdAt
               updatedAt
-              owner
             }
             messages {
               __typename
@@ -9799,7 +9692,6 @@ export class APIService {
             }
             createdAt
             updatedAt
-            owner
           }
           createdAt
           updatedAt
@@ -9857,7 +9749,6 @@ export class APIService {
               authority
               createdAt
               updatedAt
-              owner
             }
             messages {
               __typename
@@ -9916,7 +9807,6 @@ export class APIService {
             }
             createdAt
             updatedAt
-            owner
           }
           createdAt
           updatedAt
@@ -10025,7 +9915,6 @@ export class APIService {
             }
             createdAt
             updatedAt
-            owner
           }
           messages {
             __typename
@@ -10160,7 +10049,6 @@ export class APIService {
             }
             createdAt
             updatedAt
-            owner
           }
           messages {
             __typename
@@ -10295,7 +10183,6 @@ export class APIService {
             }
             createdAt
             updatedAt
-            owner
           }
           messages {
             __typename
@@ -10442,7 +10329,6 @@ export class APIService {
           }
           createdAt
           updatedAt
-          owner
         }
       }`
     )
@@ -10560,7 +10446,6 @@ export class APIService {
           }
           createdAt
           updatedAt
-          owner
         }
       }`
     )
@@ -10678,7 +10563,6 @@ export class APIService {
           }
           createdAt
           updatedAt
-          owner
         }
       }`
     )
@@ -10771,7 +10655,6 @@ export class APIService {
             }
             createdAt
             updatedAt
-            owner
           }
           createdAt
           updatedAt
@@ -10867,7 +10750,6 @@ export class APIService {
             }
             createdAt
             updatedAt
-            owner
           }
           createdAt
           updatedAt
@@ -10963,7 +10845,6 @@ export class APIService {
             }
             createdAt
             updatedAt
-            owner
           }
           createdAt
           updatedAt
@@ -11278,7 +11159,6 @@ export class APIService {
             }
             createdAt
             updatedAt
-            owner
           }
           task {
             __typename
@@ -11319,7 +11199,6 @@ export class APIService {
               authority
               createdAt
               updatedAt
-              owner
             }
             messages {
               __typename
@@ -11404,7 +11283,6 @@ export class APIService {
             }
             createdAt
             updatedAt
-            owner
           }
           task {
             __typename
@@ -11445,7 +11323,6 @@ export class APIService {
               authority
               createdAt
               updatedAt
-              owner
             }
             messages {
               __typename
@@ -11530,7 +11407,6 @@ export class APIService {
             }
             createdAt
             updatedAt
-            owner
           }
           task {
             __typename
@@ -11571,7 +11447,6 @@ export class APIService {
               authority
               createdAt
               updatedAt
-              owner
             }
             messages {
               __typename

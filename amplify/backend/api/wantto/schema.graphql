@@ -55,7 +55,7 @@ type Task
 
 type User
   @model
-  @auth(rules: [{ allow: owner, operations: [create, update, delete] }]) # 所有者のみがCreate, Update, Deleteが可能で, Readは誰でも可能
+  @auth(rules: [{ allow: private }]) # 所有者のみがCreate, Update, Deleteが可能で, Readは誰でも可能
   @key(name: "byCompany", fields: ["companyID"]) {
   id: ID!
   username: String

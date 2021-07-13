@@ -43,7 +43,6 @@ mutation CreateCompany(
         authority
         createdAt
         updatedAt
-        owner
       }
       nextToken
     }
@@ -96,7 +95,6 @@ mutation UpdateCompany(
         authority
         createdAt
         updatedAt
-        owner
       }
       nextToken
     }
@@ -149,7 +147,6 @@ mutation DeleteCompany(
         authority
         createdAt
         updatedAt
-        owner
       }
       nextToken
     }
@@ -201,7 +198,6 @@ mutation CreateTaskGroup(
         authority
         createdAt
         updatedAt
-        owner
       }
       messages {
         nextToken
@@ -251,7 +247,6 @@ mutation CreateTaskGroup(
       }
       createdAt
       updatedAt
-      owner
     }
     createdAt
     updatedAt
@@ -300,7 +295,6 @@ mutation UpdateTaskGroup(
         authority
         createdAt
         updatedAt
-        owner
       }
       messages {
         nextToken
@@ -350,7 +344,6 @@ mutation UpdateTaskGroup(
       }
       createdAt
       updatedAt
-      owner
     }
     createdAt
     updatedAt
@@ -399,7 +392,6 @@ mutation DeleteTaskGroup(
         authority
         createdAt
         updatedAt
-        owner
       }
       messages {
         nextToken
@@ -449,7 +441,6 @@ mutation DeleteTaskGroup(
       }
       createdAt
       updatedAt
-      owner
     }
     createdAt
     updatedAt
@@ -541,7 +532,6 @@ mutation CreateTask(
       }
       createdAt
       updatedAt
-      owner
     }
     messages {
       items {
@@ -655,7 +645,6 @@ mutation UpdateTask(
       }
       createdAt
       updatedAt
-      owner
     }
     messages {
       items {
@@ -769,7 +758,6 @@ mutation DeleteTask(
       }
       createdAt
       updatedAt
-      owner
     }
     messages {
       items {
@@ -893,7 +881,6 @@ mutation CreateUser(
     }
     createdAt
     updatedAt
-    owner
   }
 }
 mutation UpdateUser(
@@ -992,7 +979,6 @@ mutation UpdateUser(
     }
     createdAt
     updatedAt
-    owner
   }
 }
 mutation DeleteUser(
@@ -1091,7 +1077,6 @@ mutation DeleteUser(
     }
     createdAt
     updatedAt
-    owner
   }
 }
 mutation CreateRoomGroup(
@@ -1168,7 +1153,6 @@ mutation CreateRoomGroup(
       }
       createdAt
       updatedAt
-      owner
     }
     createdAt
     updatedAt
@@ -1248,7 +1232,6 @@ mutation UpdateRoomGroup(
       }
       createdAt
       updatedAt
-      owner
     }
     createdAt
     updatedAt
@@ -1328,7 +1311,6 @@ mutation DeleteRoomGroup(
       }
       createdAt
       updatedAt
-      owner
     }
     createdAt
     updatedAt
@@ -1588,7 +1570,6 @@ mutation CreateMessage(
       }
       createdAt
       updatedAt
-      owner
     }
     task {
       id
@@ -1625,7 +1606,6 @@ mutation CreateMessage(
         authority
         createdAt
         updatedAt
-        owner
       }
       messages {
         nextToken
@@ -1695,7 +1675,6 @@ mutation UpdateMessage(
       }
       createdAt
       updatedAt
-      owner
     }
     task {
       id
@@ -1732,7 +1711,6 @@ mutation UpdateMessage(
         authority
         createdAt
         updatedAt
-        owner
       }
       messages {
         nextToken
@@ -1802,7 +1780,6 @@ mutation DeleteMessage(
       }
       createdAt
       updatedAt
-      owner
     }
     task {
       id
@@ -1839,7 +1816,6 @@ mutation DeleteMessage(
         authority
         createdAt
         updatedAt
-        owner
       }
       messages {
         nextToken
