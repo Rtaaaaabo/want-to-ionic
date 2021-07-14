@@ -160,7 +160,6 @@ export type User = {
   chargeTask?: ModelTaskConnection | null;
   createdAt: string;
   updatedAt: string;
-  owner?: string | null;
 };
 
 export type S3Object = {
@@ -812,7 +811,6 @@ export type CreateUserMutation = {
   } | null;
   createdAt: string;
   updatedAt: string;
-  owner?: string | null;
 };
 
 export type UpdateUserMutation = {
@@ -4904,62 +4902,61 @@ export class AmplifyService {
     condition?: ModelCompanyConditionInput
   ): Promise<CreateCompanyMutation> {
     const statement = `mutation CreateCompany($input: CreateCompanyInput!, $condition: ModelCompanyConditionInput) {
-        createCompany(input: $input, condition: $condition) {
+      createCompany(input: $input, condition: $condition) {
+        __typename
+        id
+        name
+        officer {
           __typename
-          id
-          name
-          officer {
-            __typename
-            officerEmail
-            officerName
-          }
-          isRegistered
-          otp
-          tel
-          officialEmail
-          iconCompany {
-            __typename
-            bucket
-            region
-            key
-          }
-          billing
-          room {
-            __typename
-            items {
-              __typename
-              id
-              name
-              companyID
-              description
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
-          companyMembers {
-            __typename
-            items {
-              __typename
-              id
-              username
-              email
-              companyID
-              tel
-              positionName
-              registered
-              authority
-              createdAt
-              updatedAt
-              owner
-            }
-            nextToken
-          }
-          createdAt
-          updatedAt
-          owner
+          officerEmail
+          officerName
         }
-      }`;
+        isRegistered
+        otp
+        tel
+        officialEmail
+        iconCompany {
+          __typename
+          bucket
+          region
+          key
+        }
+        billing
+        room {
+          __typename
+          items {
+            __typename
+            id
+            name
+            companyID
+            description
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        companyMembers {
+          __typename
+          items {
+            __typename
+            id
+            username
+            email
+            companyID
+            tel
+            positionName
+            registered
+            authority
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        createdAt
+        updatedAt
+        owner
+      }
+    }`;
     const gqlAPIServiceArguments: any = {
       input
     };
@@ -5846,116 +5843,115 @@ export class AmplifyService {
     condition?: ModelUserConditionInput
   ): Promise<CreateUserMutation> {
     const statement = `mutation CreateUser($input: CreateUserInput!, $condition: ModelUserConditionInput) {
-        createUser(input: $input, condition: $condition) {
+      createUser(input: $input, condition: $condition) {
+        __typename
+        id
+        username
+        email
+        companyID
+        tel
+        positionName
+        iconImage {
+          __typename
+          bucket
+          region
+          key
+        }
+        registered
+        authority
+        company {
           __typename
           id
-          username
-          email
-          companyID
+          name
+          officer {
+            __typename
+            officerEmail
+            officerName
+          }
+          isRegistered
+          otp
           tel
-          positionName
-          iconImage {
+          officialEmail
+          iconCompany {
             __typename
             bucket
             region
             key
           }
-          registered
-          authority
-          company {
-            __typename
-            id
-            name
-            officer {
-              __typename
-              officerEmail
-              officerName
-            }
-            isRegistered
-            otp
-            tel
-            officialEmail
-            iconCompany {
-              __typename
-              bucket
-              region
-              key
-            }
-            billing
-            room {
-              __typename
-              nextToken
-            }
-            companyMembers {
-              __typename
-              nextToken
-            }
-            createdAt
-            updatedAt
-            owner
-          }
-          messages {
-            __typename
-            items {
-              __typename
-              id
-              taskID
-              authorID
-              content
-              createdAt
-              isSent
-              updatedAt
-              owner
-            }
-            nextToken
-          }
+          billing
           room {
             __typename
-            items {
-              __typename
-              id
-              roomID
-              userID
-              createdAt
-              updatedAt
-            }
             nextToken
           }
-          task {
+          companyMembers {
             __typename
-            items {
-              __typename
-              id
-              taskID
-              userID
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
-          chargeTask {
-            __typename
-            items {
-              __typename
-              id
-              authorID
-              roomID
-              chargePersonID
-              title
-              description
-              scheduleDate
-              priority
-              status
-              createdAt
-              updatedAt
-            }
             nextToken
           }
           createdAt
           updatedAt
           owner
         }
-      }`;
+        messages {
+          __typename
+          items {
+            __typename
+            id
+            taskID
+            authorID
+            content
+            createdAt
+            isSent
+            updatedAt
+            owner
+          }
+          nextToken
+        }
+        room {
+          __typename
+          items {
+            __typename
+            id
+            roomID
+            userID
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        task {
+          __typename
+          items {
+            __typename
+            id
+            taskID
+            userID
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        chargeTask {
+          __typename
+          items {
+            __typename
+            id
+            authorID
+            roomID
+            chargePersonID
+            title
+            description
+            scheduleDate
+            priority
+            status
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+    }`;
     const gqlAPIServiceArguments: any = {
       input
     };
@@ -6915,60 +6911,59 @@ export class AmplifyService {
     nextToken?: string
   ): Promise<ListUsersQuery> {
     const statement = `query ListUsers($filter: ModelUserFilterInput, $limit: Int, $nextToken: String) {
-        listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
+        __typename
+        items {
           __typename
-          items {
+          id
+          username
+          email
+          companyID
+          tel
+          positionName
+          iconImage {
+            __typename
+            bucket
+            region
+            key
+          }
+          registered
+          authority
+          company {
             __typename
             id
-            username
-            email
-            companyID
+            name
+            isRegistered
+            otp
             tel
-            positionName
-            iconImage {
-              __typename
-              bucket
-              region
-              key
-            }
-            registered
-            authority
-            company {
-              __typename
-              id
-              name
-              isRegistered
-              otp
-              tel
-              officialEmail
-              billing
-              createdAt
-              updatedAt
-              owner
-            }
-            messages {
-              __typename
-              nextToken
-            }
-            room {
-              __typename
-              nextToken
-            }
-            task {
-              __typename
-              nextToken
-            }
-            chargeTask {
-              __typename
-              nextToken
-            }
+            officialEmail
+            billing
             createdAt
             updatedAt
             owner
           }
-          nextToken
+          messages {
+            __typename
+            nextToken
+          }
+          room {
+            __typename
+            nextToken
+          }
+          task {
+            __typename
+            nextToken
+          }
+          chargeTask {
+            __typename
+            nextToken
+          }
+          createdAt
+          updatedAt
         }
-      }`;
+        nextToken
+      }
+    }`;
     const gqlAPIServiceArguments: any = {};
     if (filter) {
       gqlAPIServiceArguments.filter = filter;
