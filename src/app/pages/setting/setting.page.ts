@@ -72,15 +72,13 @@ export class SettingPage implements OnInit {
         'userIcon': this.currentUserIcon,
       }
     });
-
     const dismissObservable = from(modal.onDidDismiss());
     dismissObservable
-      // .pipe(concatMap(() => this.logic.fetchCurrentUser()))
-      // .pipe(concatMap((result) => this.logic.fetchUserInfo(result.username)))
-      // .pipe(map((result) => this.user = result))
-      // .pipe(concatMap((userInfo) => this.logic.modifiedAvatarIconUrl(userInfo)))
-      .subscribe(() => {
-        // this.user = data;
+      .pipe(concatMap((result) => this.logic.fetchUserInfo(this.currentUser.id)))
+      .pipe(map((result) => this.currentUser = result))
+      .pipe(concatMap(() => this.logic.modifiedAvatarIconUrl(this.currentUser.iconImage)))
+      .subscribe((data) => {
+        this.currentUserIcon = data;
       });
     return modal.present();
   }

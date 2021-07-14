@@ -97,6 +97,6 @@ export class EditProfileModalComponent implements OnInit {
     }
     const observableRegister = this.status === 'new' ?
       this.logic.createUser(this.editProfileForm) : this.logic.updateUser(this.editProfileForm, extraData);
-    observableRegister.subscribe(() => this.modalCtrl.dismiss());
+    observableRegister.subscribe(() => this.modalCtrl.dismiss({}, this.status));
   }
 }

@@ -24,6 +24,7 @@ import { v4 as uuid } from "uuid";
 import { TaskService } from "../service/task.service";
 import { CurrentUserInfo } from "../interface/current-user-info.interface";
 import { InterfaceTask } from "src/app/interfaces/task.interface";
+import { CurrentUser } from '../model/task-member.model';
 
 
 @Injectable({
@@ -207,7 +208,8 @@ export class TaskLogic {
     return this.taskService.fetchAnyCompany(companyId);
   }
 
-  fetchAnyUserInfoFromList(email: string): Observable<ListUsersQuery> {
-    return this.taskService.fetchAnyUserInfoFromList(email);
+  fetchAnyUserInfoFromList(email: string): Observable<Array<CurrentUser>> {
+    return this.taskService.fetchAnyUserInfoFromList(email)
+      .pipe(map((result) => result.items))
   }
 }

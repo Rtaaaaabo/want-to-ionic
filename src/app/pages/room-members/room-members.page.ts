@@ -38,7 +38,7 @@ export class RoomMembersPage implements OnInit {
     this.logic.fetchCurrentUser()
       .pipe(map((data) => this.currentUserAttribute = data))
       .pipe(concatMap(() => this.logic.fetchAnyUserInfoFromList(this.currentUserAttribute.email)))
-      .pipe(map(({ items }) => this.currentUser = items[0]))
+      .pipe(map((items) => this.currentUser = items[0]))
       .pipe(concatMap(() => this.logic.fetchRoomMemberGroup(this.roomId)))
       .pipe(concatMap((result) => this.logic.setRoomMembers(result, this.currentUser.id)))
       .pipe(map((members) => this.roomMembers = members))

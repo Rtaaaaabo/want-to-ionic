@@ -2510,7 +2510,6 @@ export type GetUserQuery = {
   } | null;
   createdAt: string;
   updatedAt: string;
-  owner?: string | null;
 };
 
 export type ListUsersQuery = {
@@ -2518,7 +2517,7 @@ export type ListUsersQuery = {
   items?: Array<{
     __typename: "User";
     id: string;
-    username: string;
+    username?: string | null;
     email: string;
     companyID: string;
     tel?: string | null;
@@ -2530,14 +2529,19 @@ export type ListUsersQuery = {
       key: string;
     } | null;
     registered?: boolean | null;
-    authority?: string | null;
+    authority?: boolean | null;
     company: {
       __typename: "Company";
       id: string;
       name: string;
-      domain: string;
+      isRegistered: boolean;
+      otp?: string | null;
+      tel?: string | null;
+      officialEmail?: string | null;
+      billing?: boolean | null;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     };
     messages?: {
       __typename: "ModelMessageConnection";

@@ -30,7 +30,7 @@ export class ListRoomComponent implements OnInit {
     this.logic.fetchCurrentUser()
       .pipe(map((data) => this.currentUserAttribute = data))
       .pipe(concatMap(() => this.logic.fetchAnyUserInfoFromList(this.currentUserAttribute.email)))
-      .pipe(map(({ items }) => this.currentUser = items[0]))
+      .pipe(map((items) => this.currentUser = items[0]))
       .pipe(concatMap(() => this.logic.fetchRoomList(this.currentUser.id)))
       .pipe(concatMap((data) => this.logic.setExitsRoomAndUser(data)))
       .subscribe((data) => {
