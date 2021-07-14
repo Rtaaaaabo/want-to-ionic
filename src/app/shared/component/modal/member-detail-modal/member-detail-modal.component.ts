@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { concatMap, filter } from 'rxjs/operators';
-import { CompanyMember } from 'src/app/pages/member-list/models/member-list.interface';
+import { CurrentUser } from 'src/app/pages/member-list/models/member-list.interface';
 import { MemberListLogic } from 'src/app/pages/member-list/logic/member-list.logic';
 
 @Component({
@@ -10,7 +10,7 @@ import { MemberListLogic } from 'src/app/pages/member-list/logic/member-list.log
   styleUrls: ['./member-detail-modal.component.scss'],
 })
 export class MemberDetailModalComponent implements OnInit {
-  @Input() detailUser: CompanyMember;
+  @Input() detailUser: CurrentUser;
   userIconImageUrl: string;
   defaultIconImageUrl = '../../../../../assets/img/undefined.jpeg';
 
@@ -20,12 +20,9 @@ export class MemberDetailModalComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.logic.fetchMember(this.detailUser.id)
-      .pipe(filter((result) => result === null))
-      .pipe(concatMap((member) => this.logic.modifiedAvatarIconUrl(member.iconImage)))
-      .subscribe((data) => {
-        this.userIconImageUrl = data;
-      })
+    this.logic.modifiedAvatarIconUrl(this.detailUser.iconImage).subscribe(data => {
+      this.userIconImageUrl = data;
+    })
   }
 
   dismissModal(): void {
