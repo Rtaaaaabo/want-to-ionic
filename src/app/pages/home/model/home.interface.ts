@@ -69,7 +69,7 @@ export interface Attribute {
 export interface CurrentUser {
     __typename: "User";
     id: string;
-    username: string;
+    username?: string | null;
     email: string;
     companyID: string;
     tel?: string | null;
@@ -81,14 +81,19 @@ export interface CurrentUser {
         key: string;
     } | null;
     registered?: boolean | null;
-    authority?: string | null;
+    authority?: boolean | null;
     company: {
         __typename: "Company";
         id: string;
         name: string;
-        domain: string;
+        isRegistered: boolean;
+        otp?: string | null;
+        tel?: string | null;
+        officialEmail?: string | null;
+        billing?: boolean | null;
         createdAt: string;
         updatedAt: string;
+        owner?: string | null;
     };
     messages?: {
         __typename: "ModelMessageConnection";

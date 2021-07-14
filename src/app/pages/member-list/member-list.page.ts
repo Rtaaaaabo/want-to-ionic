@@ -28,10 +28,11 @@ export class MemberListPage implements OnInit {
     this.logic.fetchCurrentUser()
       .pipe(map((data) => this.currentUserAttribute = data))
       .pipe(concatMap(() => this.logic.fetchAnyUserInfoFromList(this.currentUserAttribute.email)))
-      .pipe(map((items) => this.currentUser = items[0]))
-      .pipe(concatMap((currentUser) => this.logic.fetchCompanyMembers(currentUser.companyID)))
+      // .pipe(map((items) => this.currentUser = items[0]))
+      // .pipe(concatMap((currentUser) => this.logic.fetchCompanyMembers(currentUser.companyID)))
       .subscribe((data) => {
-        this.companyMembers = data;
+        console.log(data);
+        // this.companyMembers = data;
       });
   }
 
