@@ -37,8 +37,9 @@ export class MemberListLogic {
       .pipe(map((data) => data.attributes));
   }
 
-  fetchAnyUserInfoFromList(email: string): Observable<ListUsersQuery> {
-    return this.sessionService.fetchUserInfo(email);
+  fetchAnyUserInfoFromList(email: string): Observable<Array<CurrentUser>> {
+    return this.sessionService.fetchUserInfo(email)
+      .pipe(map((result) => result.items))
   }
 
   createCompanyUserToDynamoDB(registerEmail: string, optionData: OptionData): Observable<CreateUserMutation> {

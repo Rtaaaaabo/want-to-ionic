@@ -6220,62 +6220,61 @@ export class AmplifyService {
   }
   async GetCompany(id: string): Promise<GetCompanyQuery> {
     const statement = `query GetCompany($id: ID!) {
-        getCompany(id: $id) {
+      getCompany(id: $id) {
+        __typename
+        id
+        name
+        officer {
           __typename
-          id
-          name
-          officer {
-            __typename
-            officerEmail
-            officerName
-          }
-          isRegistered
-          otp
-          tel
-          officialEmail
-          iconCompany {
-            __typename
-            bucket
-            region
-            key
-          }
-          billing
-          room {
-            __typename
-            items {
-              __typename
-              id
-              name
-              companyID
-              description
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
-          companyMembers {
-            __typename
-            items {
-              __typename
-              id
-              username
-              email
-              companyID
-              tel
-              positionName
-              registered
-              authority
-              createdAt
-              updatedAt
-              owner
-            }
-            nextToken
-          }
-          createdAt
-          updatedAt
-          owner
+          officerEmail
+          officerName
         }
-      }`;
+        isRegistered
+        otp
+        tel
+        officialEmail
+        iconCompany {
+          __typename
+          bucket
+          region
+          key
+        }
+        billing
+        room {
+          __typename
+          items {
+            __typename
+            id
+            name
+            companyID
+            description
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        companyMembers {
+          __typename
+          items {
+            __typename
+            id
+            username
+            email
+            companyID
+            tel
+            positionName
+            registered
+            authority
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        createdAt
+        updatedAt
+        owner
+      }
+    }`;
     const gqlAPIServiceArguments: any = {
       id
     };
