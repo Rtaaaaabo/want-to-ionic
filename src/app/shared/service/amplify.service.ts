@@ -6898,7 +6898,6 @@ export class AmplifyService {
         }
         createdAt
         updatedAt
-        owner
       }
     }`;
     const gqlAPIServiceArguments: any = {
