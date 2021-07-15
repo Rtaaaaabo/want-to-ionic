@@ -33,7 +33,7 @@ export interface CompanyMembers {
     user?: {
         __typename: "User";
         id: string;
-        username: string;
+        username?: string;
         email: string;
         companyID: string;
         tel?: string | null;

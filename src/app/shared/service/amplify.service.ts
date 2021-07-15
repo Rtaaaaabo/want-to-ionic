@@ -2943,7 +2943,7 @@ export type ListRoomGroupsQuery = {
     user?: {
       __typename: "User";
       id: string;
-      username: string;
+      username: string | null;
       email: string;
       companyID: string;
       tel?: string | null;
@@ -7730,7 +7730,6 @@ export class AmplifyService {
             }
             createdAt
             updatedAt
-            owner
           }
           task {
             __typename
@@ -7771,7 +7770,6 @@ export class AmplifyService {
               authority
               createdAt
               updatedAt
-              owner
             }
             messages {
               __typename

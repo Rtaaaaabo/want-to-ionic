@@ -90,7 +90,7 @@ export class TaskDetailPage implements OnInit {
       anyTask: observerFetchAnyTask,
       messageAttachment: observerMakeMessageAttachmentUrl,
     }).subscribe((result) => {
-      this.currentUserInfo = result.currentUserInfo.items[0];
+      this.currentUserInfo = result.currentUserInfo[0];
       this.roomMembers = result.anyTask.items;
       this.message = result.messageAttachment;
     });

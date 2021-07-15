@@ -8,7 +8,7 @@ import { CurrentUserInfo } from '../../task/interface/current-user-info.interfac
 import { TaskDetailService } from '../service/task-detail.service';
 import { Filesystem, FilesystemDirectory, FilesystemEncoding, FileWriteResult, FileReadResult, FileDeleteResult } from "@capacitor/core";
 import { CreateMessageInput, GetTaskQuery, Message, S3Object, S3ObjectInput, TaskByCreatedAtQuery, UpdateTaskMutation } from 'src/app/shared/service/amplify.service';
-import { IImageFile, IS3Object, IsMessageContent, IMessageWithAttachUrl, MessageContent, TaskByCreatedAtItems } from '../models/task-detail.interface';
+import { IImageFile, IS3Object, IsMessageContent, IMessageWithAttachUrl, MessageContent, TaskByCreatedAtItems, CurrentUser } from '../models/task-detail.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -338,8 +338,8 @@ export class TaskDetailLogic {
     return of(content);
   }
 
-  fetchAnyUserInfoFromList(email: string): Observable<any> {
-    return this.taskDetailService.checkRegistrationUser(email);
+  fetchAnyUserInfoFromList(email: string): Observable<Array<CurrentUser>> {
+    return this.taskDetailService.checkRegistrationUser(email).pipe(map((result) => result.items));
   }
 
 }
