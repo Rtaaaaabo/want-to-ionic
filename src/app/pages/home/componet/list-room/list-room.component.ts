@@ -4,7 +4,7 @@ import { ModalController, AlertController, IonItemSliding } from '@ionic/angular
 import { AddRoomModalComponent } from '../../../../shared/component/modal/add-room-modal/add-room-modal.component';
 import { HomeLogic } from '../../logic/home.logic';
 import { from } from 'rxjs';
-import { concatMap, switchMap, map } from 'rxjs/operators';
+import { concatMap, switchMap, map, filter } from 'rxjs/operators';
 import { ResponseListRoomGroupsQueryItems } from '../../service/reponse/response.model';
 import { Room, RoomGroup } from 'src/app/shared/service/amplify.service';
 import { CurrentUser, Attribute } from '../../model/home.interface';
@@ -34,7 +34,6 @@ export class ListRoomComponent implements OnInit {
       .pipe(concatMap(() => this.logic.fetchRoomList(this.currentUser.id)))
       .pipe(concatMap((data) => this.logic.setExitsRoomAndUser(data)))
       .subscribe((data) => {
-        console.log(data);
         this.roomGroupsItems = data;
       });
   }
@@ -49,6 +48,7 @@ export class ListRoomComponent implements OnInit {
     });
     const observable = from(modal.onDidDismiss());
     observable
+      .pipe(filter(({ data }) => data !== undefined))
       .pipe(concatMap(({ data }) => this.logic.createRoom(data, this.currentUser)))
       .pipe(concatMap((room) => this.logic.createUserRoomGroup(this.currentUser.id, room.id)))
       .pipe(concatMap(() => this.logic.fetchRoomList(this.currentUser.id)))
