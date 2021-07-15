@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
-import { Observable, from, of, throwError, interval, concat } from 'rxjs';
-import { concatMap, mergeMap, map, filter, toArray, concatMapTo, switchMap } from 'rxjs/operators';
+import { Observable, from, of } from 'rxjs';
+import { concatMap, map, toArray } from 'rxjs/operators';
 import { Storage } from 'aws-amplify';
 import { v4 as uuid } from 'uuid';
 import { SessionService } from 'src/app/shared/service/session.service';
 import { CurrentUserInfo } from '../../task/interface/current-user-info.interface';
 import { TaskDetailService } from '../service/task-detail.service';
 import { Filesystem, FilesystemDirectory, FilesystemEncoding, FileWriteResult, FileReadResult, FileDeleteResult } from "@capacitor/core";
-import { CreateMessageInput, GetTaskQuery, Message, S3Object, S3ObjectInput, TaskByCreatedAtQuery, UpdateTaskMutation } from 'src/app/shared/service/amplify.service';
+import { CreateMessageInput, GetTaskQuery, S3Object, TaskByCreatedAtQuery, UpdateTaskMutation } from 'src/app/shared/service/amplify.service';
 import { IImageFile, IS3Object, IsMessageContent, IMessageWithAttachUrl, MessageContent, TaskByCreatedAtItems, CurrentUser } from '../models/task-detail.interface';
 
 @Injectable({
