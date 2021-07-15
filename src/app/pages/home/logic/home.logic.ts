@@ -254,8 +254,8 @@ export class HomeLogic {
     return from(Storage.get(filePathName));
   }
 
-  fetchAnyUserInfoFromList(email: string): Observable<ListUsersQuery> {
-    return this.homeService.checkRegistrationUser(email);
+  fetchAnyUserInfoFromList(email: string): Observable<Array<CurrentUser>> {
+    return this.homeService.checkRegistrationUser(email).pipe(map((result) => result.items));
   }
 
 }

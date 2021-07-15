@@ -8109,7 +8109,6 @@ export class AmplifyService {
             authority
             createdAt
             updatedAt
-            owner
           }
           createdAt
           updatedAt
