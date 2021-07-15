@@ -5,7 +5,7 @@ import { SessionService } from 'src/app/shared/service/session.service';
 import { ListUsersQuery } from 'src/app/shared/service/amplify.service';
 import { RoomMemberService } from '../service/room-member.service';
 import { InterfaceRoomMembers } from '../interface/room-members.interface';
-import { ListRoomMembersInfo, ListUserInfo, Attribute, RoomGroupItems, RoomGroupUser } from '../models/room-members.model';
+import { ListRoomMembersInfo, ListUserInfo, Attribute, RoomGroupItems, RoomGroupUser, CurrentUser } from '../models/room-members.model';
 
 @Injectable({
   providedIn: 'root'
@@ -107,8 +107,8 @@ export class RoomMembersLogic {
       .pipe(map(data => data.attributes));
   }
 
-  fetchAnyUserInfoFromList(email: string): Observable<ListUsersQuery> {
-    return this.roomMemberService.fetchUserInfo(email);
+  fetchAnyUserInfoFromList(email: string): Observable<Array<CurrentUser>> {
+    return this.roomMemberService.fetchUserInfo(email).pipe(map((result) => result.items))
   }
 
 }
