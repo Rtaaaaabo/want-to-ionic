@@ -5489,21 +5489,96 @@ export class AmplifyService {
     condition?: ModelMessageConditionInput
   ): Promise<CreateMessageMutation> {
     const statement = `mutation CreateMessage($input: CreateMessageInput!, $condition: ModelMessageConditionInput) {
-        createMessage(input: $input, condition: $condition) {
+      createMessage(input: $input, condition: $condition) {
+        __typename
+        id
+        taskID
+        authorID
+        content
+        createdAt
+        isSent
+        attachment {
+          __typename
+          bucket
+          region
+          key
+        }
+        author {
           __typename
           id
-          taskID
-          authorID
-          content
-          createdAt
-          isSent
-          attachment {
+          username
+          email
+          companyID
+          tel
+          positionName
+          iconImage {
             __typename
             bucket
             region
             key
           }
-          author {
+          registered
+          authority
+          company {
+            __typename
+            id
+            name
+            isRegistered
+            otp
+            tel
+            officialEmail
+            billing
+            createdAt
+            updatedAt
+            owner
+          }
+          messages {
+            __typename
+            nextToken
+          }
+          room {
+            __typename
+            nextToken
+          }
+          task {
+            __typename
+            nextToken
+          }
+          chargeTask {
+            __typename
+            nextToken
+          }
+          createdAt
+          updatedAt
+        }
+        task {
+          __typename
+          id
+          authorID
+          roomID
+          chargePersonID
+          title
+          room {
+            __typename
+            id
+            name
+            companyID
+            description
+            createdAt
+            updatedAt
+          }
+          description
+          iconTask {
+            __typename
+            bucket
+            region
+            key
+          }
+          scheduleDate
+          priority
+          status
+          createdAt
+          chargePerson {
             __typename
             id
             username
@@ -5511,102 +5586,25 @@ export class AmplifyService {
             companyID
             tel
             positionName
-            iconImage {
-              __typename
-              bucket
-              region
-              key
-            }
             registered
             authority
-            company {
-              __typename
-              id
-              name
-              isRegistered
-              otp
-              tel
-              officialEmail
-              billing
-              createdAt
-              updatedAt
-              owner
-            }
-            messages {
-              __typename
-              nextToken
-            }
-            room {
-              __typename
-              nextToken
-            }
-            task {
-              __typename
-              nextToken
-            }
-            chargeTask {
-              __typename
-              nextToken
-            }
             createdAt
             updatedAt
-            owner
           }
-          task {
+          messages {
             __typename
-            id
-            authorID
-            roomID
-            chargePersonID
-            title
-            room {
-              __typename
-              id
-              name
-              companyID
-              description
-              createdAt
-              updatedAt
-            }
-            description
-            iconTask {
-              __typename
-              bucket
-              region
-              key
-            }
-            scheduleDate
-            priority
-            status
-            createdAt
-            chargePerson {
-              __typename
-              id
-              username
-              email
-              companyID
-              tel
-              positionName
-              registered
-              authority
-              createdAt
-              updatedAt
-              owner
-            }
-            messages {
-              __typename
-              nextToken
-            }
-            users {
-              __typename
-              nextToken
-            }
-            updatedAt
+            nextToken
+          }
+          users {
+            __typename
+            nextToken
           }
           updatedAt
-          owner
         }
-      }`;
+        updatedAt
+        owner
+      }
+    }`;
     const gqlAPIServiceArguments: any = {
       input
     };
