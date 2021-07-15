@@ -4,6 +4,7 @@ import { concatMap, map, toArray, filter, groupBy } from 'rxjs/operators';
 import { SessionService } from 'src/app/shared/service/session.service';
 import { OwnTaskService } from '../service/own-task.service';
 import { ListUsersQuery } from 'src/app/shared/service/amplify.service';
+import { CurrentUser } from '../model/own-task.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -57,8 +58,8 @@ export class OwnTaskLogic {
     return this.ownTaskService.updateTaskItem(content);
   }
 
-  fetchAnyUserInfoFromList(email: string): Observable<ListUsersQuery> {
-    return this.sessionService.fetchUserInfo(email);
+  fetchAnyUserInfoFromList(email: string): Observable<Array<CurrentUser>> {
+    return this.sessionService.fetchUserInfo(email).pipe(map((result) => result.items));
   }
 
 }

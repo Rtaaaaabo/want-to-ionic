@@ -3,7 +3,7 @@ import { Auth } from "aws-amplify";
 import { Observable, from, BehaviorSubject, of } from "rxjs";
 import { map, tap, catchError } from "rxjs/operators";
 import { IArgsEntrySignup } from "../model/task-form.model";
-import { AmplifyService, ModelUserFilterInput } from './amplify.service';
+import { AmplifyService, ModelUserFilterInput, ListUsersQuery } from './amplify.service';
 
 @Injectable({
   providedIn: "root",
@@ -53,7 +53,7 @@ export class SessionService {
     return from(Auth.currentAuthenticatedUser());
   }
 
-  fetchUserInfo(email: string): Observable<any> {
+  fetchUserInfo(email: string): Observable<ListUsersQuery> {
     const filterContent: ModelUserFilterInput = {
       email: {
         eq: `${email}`
