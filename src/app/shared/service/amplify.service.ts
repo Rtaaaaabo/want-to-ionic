@@ -6741,7 +6741,6 @@ export class AmplifyService {
             authority
             createdAt
             updatedAt
-            owner
           }
           task {
             __typename
