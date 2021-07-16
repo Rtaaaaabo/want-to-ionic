@@ -94,8 +94,8 @@ export class TaskPage implements OnInit {
     this.companyId = this.roomId.split(/(.*)_room/)[1];
     forkJoin({
       companyUser: this.logic.fetchCompanyMembers(this.companyId),
-      activeTaskItems: this.logic.fetchActiveTaskPerRoom(this.roomId),
-      doneTaskItems: this.logic.fetchDoneTaskPerRoom(this.roomId),
+      activeTaskItems: this.logic.fetchActiveTaskPerRoom(this.roomId).pipe(concatMap((result) => this.logic.fetchEachStatusTask(result, 0))),
+      doneTaskItems: this.logic.fetchDoneTaskPerRoom(this.roomId).pipe(concatMap((result) => this.logic.fetchEachStatusTask(result, 0))),
       room: this.logic.fetchRoomInfo(this.roomId),
       roomMembers: this.logic.fetchMemberListOnRoom(this.roomId).pipe(map(({ items }) => items)),
     }).subscribe((data) => {

@@ -80,6 +80,12 @@ export class TaskLogic {
     return this.taskService.createRoomGroup(content);
   }
 
+  fetchEachStatusTask(items: Array<InterfaceTask>, targetStatus: number): Observable<Array<InterfaceTask>> {
+    return from(items)
+      .pipe(filter((data) => data.status === targetStatus))
+      .pipe(toArray());
+  }
+
   fetchActiveTaskPerRoom(roomId: string): Observable<Array<InterfaceTask>> {
     const filterContent = {
       roomID: {
@@ -89,8 +95,7 @@ export class TaskLogic {
     return this.taskService
       .fetchTaskItemsPerRoom(filterContent)
       .pipe(map((res) => res.items))
-      .pipe(filter((data) => data.status < 10))
-    // .pipe(toArray());
+
   }
 
   fetchDoneTaskPerRoom(roomId: string): Observable<Array<InterfaceTask>> {
@@ -101,9 +106,7 @@ export class TaskLogic {
     };
     return this.taskService
       .fetchTaskItemsPerRoom(filterContent)
-      .pipe(map((res) => res.items))
-      .pipe(filter((data) => data.status === 10))
-      .pipe(toArray());
+      .pipe(map((res) => res.items));
   }
 
   updateDoneTaskItem(taskFormItem, status: number): Observable<UpdateTaskMutation> {
