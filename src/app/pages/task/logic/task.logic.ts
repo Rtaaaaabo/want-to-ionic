@@ -81,7 +81,6 @@ export class TaskLogic {
   }
 
   fetchEachStatusTask(items: Array<InterfaceTask>, targetStatus: number): Observable<Array<InterfaceTask>> {
-    console.log('fetchEachStatus targetStatus', targetStatus, items);
     return from(items)
       .pipe(filter((data) => data.status === targetStatus))
       .pipe(toArray());

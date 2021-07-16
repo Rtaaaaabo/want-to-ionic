@@ -90,12 +90,12 @@ export class TaskPage implements OnInit {
       doneTaskItems: this.logic.fetchDoneTaskPerRoom(this.roomId).pipe(concatMap((result) => this.logic.fetchEachStatusTask(result, 10))),
       room: this.logic.fetchRoomInfo(this.roomId),
       roomMembers: this.logic.fetchMemberListOnRoom(this.roomId).pipe(map(({ items }) => items)),
-    }).subscribe((data) => {
-      this.companyMembers = data.companyUser.companyMembers.items;
-      this.taskActiveItems = data.activeTaskItems.sort(this.logic.compareTaskArray);
-      this.taskDoneItems = data.doneTaskItems;
-      this.room = data.room;
-      this.roomMembers = data.roomMembers;
+    }).subscribe(({ companyUser, activeTaskItems, doneTaskItems, room, roomMembers }) => {
+      this.companyMembers = companyUser.companyMembers.items;
+      this.taskActiveItems = activeTaskItems.sort(this.logic.compareTaskArray);
+      this.taskDoneItems = doneTaskItems;
+      this.room = room;
+      this.roomMembers = roomMembers;
 
     });
   }
@@ -181,9 +181,11 @@ export class TaskPage implements OnInit {
   segmentChanged(ev: CustomEvent): void {
     this.segment = ev.detail.value;
     this.location.replaceState(`task/${this.roomId}`, `status=${this.segment}`);
-    this.logic.fetchDoneTaskPerRoom(this.roomId).subscribe((data) => {
-      this.taskDoneItems = data;
-    });
+    this.logic.fetchDoneTaskPerRoom(this.roomId)
+      .pipe(concatMap((result) => this.logic.fetchEachStatusTask(result, 10)))
+      .subscribe((data) => {
+        this.taskDoneItems = data;
+      });
   }
 
   async presentDoneTaskAlert(alertBody): Promise<void> {
