@@ -6,9 +6,9 @@ import { Plugins, CameraResultType } from '@capacitor/core';
 import { forkJoin, from, Observable, Subscription } from 'rxjs';
 import { TaskDetailLogic } from './logic/task-detail.logic';
 import { AddTaskModalComponent } from 'src/app/shared/component/modal/add-task-modal/add-task-modal.component';
-import { filter, tap, map, concatMap, toArray, mergeMap } from 'rxjs/operators';
-import { GetTaskQuery, ListRoomGroupsQuery, Message } from 'src/app/shared/service/amplify.service';
-import { IMessageWithAttachUrl, CurrentUser, TaskByCreatedAtItems } from './models/task-detail.interface';
+import { filter, tap, map, concatMap, toArray } from 'rxjs/operators';
+import { GetTaskQuery, ListRoomGroupsQuery } from 'src/app/shared/service/amplify.service';
+import { IMessageWithAttachUrl, CurrentUser } from './models/task-detail.interface';
 const { Camera } = Plugins;
 
 
@@ -90,7 +90,6 @@ export class TaskDetailPage implements OnInit {
       anyTask: observerFetchAnyTask,
       messageAttachment: observerMakeMessageAttachmentUrl,
     }).subscribe((result) => {
-      console.log('observerFetchCurrentUserInfo result', result);
       this.currentUserInfo = result.currentUserInfo[0];
       this.roomMembers = result.anyTask.items;
       this.message = result.messageAttachment;
