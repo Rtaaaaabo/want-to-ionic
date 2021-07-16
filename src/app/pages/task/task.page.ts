@@ -56,10 +56,11 @@ export class TaskPage implements OnInit {
     private readonly logic: TaskLogic,
   ) {
     this.router.events
-      .pipe(filter((e: any) => e instanceof RoutesRecognized),
+      .pipe(filter((event: any) => event instanceof RoutesRecognized),
         pairwise()
-      ).subscribe((e: any) => {
-        this.previousUrl = e[0].urlAfterRedirects;
+      ).subscribe((event: any) => {
+        console.log('[taskPage event]', event);
+        this.previousUrl = event[0].urlAfterRedirects;
         if (this.previousUrl.includes('?')) {
           this.previousParam = this.previousUrl.split('?')[1];
         } else {
@@ -80,22 +81,13 @@ export class TaskPage implements OnInit {
         this.route.queryParams
           .subscribe((param) => this.segment = param.status);
       })
-
-  }
-
-  // 前のURLだけを取得
-  public getPreviousParam() {
-    return this.previousParam;
-  }
-
-  ionViewWillEnter(): void {
     this.isReorder = false;
     this.roomId = this.route.snapshot.paramMap.get('id');
     this.companyId = this.roomId.split(/(.*)_room/)[1];
     forkJoin({
       companyUser: this.logic.fetchCompanyMembers(this.companyId),
       activeTaskItems: this.logic.fetchActiveTaskPerRoom(this.roomId).pipe(concatMap((result) => this.logic.fetchEachStatusTask(result, 0))),
-      doneTaskItems: this.logic.fetchDoneTaskPerRoom(this.roomId).pipe(concatMap((result) => this.logic.fetchEachStatusTask(result, 0))),
+      doneTaskItems: this.logic.fetchDoneTaskPerRoom(this.roomId).pipe(concatMap((result) => this.logic.fetchEachStatusTask(result, 10))),
       room: this.logic.fetchRoomInfo(this.roomId),
       roomMembers: this.logic.fetchMemberListOnRoom(this.roomId).pipe(map(({ items }) => items)),
     }).subscribe((data) => {
@@ -104,8 +96,15 @@ export class TaskPage implements OnInit {
       this.taskDoneItems = data.doneTaskItems;
       this.room = data.room;
       this.roomMembers = data.roomMembers;
+
     });
   }
+
+  // 前のURLだけを取得
+  public getPreviousParam() {
+    return this.previousParam;
+  }
+
 
   async presentDoneToast(): Promise<void> {
     const toast = await this.toastCtrl.create({

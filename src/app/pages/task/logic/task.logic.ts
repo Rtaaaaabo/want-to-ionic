@@ -81,6 +81,7 @@ export class TaskLogic {
   }
 
   fetchEachStatusTask(items: Array<InterfaceTask>, targetStatus: number): Observable<Array<InterfaceTask>> {
+    console.log('fetchEachStatus targetStatus', targetStatus, items);
     return from(items)
       .pipe(filter((data) => data.status === targetStatus))
       .pipe(toArray());
@@ -95,7 +96,6 @@ export class TaskLogic {
     return this.taskService
       .fetchTaskItemsPerRoom(filterContent)
       .pipe(map((res) => res.items))
-
   }
 
   fetchDoneTaskPerRoom(roomId: string): Observable<Array<InterfaceTask>> {
