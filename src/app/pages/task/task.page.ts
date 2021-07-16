@@ -4,7 +4,7 @@ import { Router, ActivatedRoute, RoutesRecognized } from '@angular/router';
 import { ItemReorderEventDetail } from '@ionic/core';
 import { ModalController, ToastController, AlertController } from '@ionic/angular';
 import { forkJoin, from, of } from 'rxjs';
-import { flatMap, tap, map, concatMap, filter, pairwise } from 'rxjs/operators';
+import { tap, map, concatMap, filter, pairwise } from 'rxjs/operators';
 import { GetRoomQuery, GetUserQuery } from 'src/app/shared/service/amplify.service';
 import { TaskLogic } from './logic/task.logic';
 import { CompanyMembersInfo } from './interface/current-user-info.interface';
@@ -132,6 +132,7 @@ export class TaskPage implements OnInit {
       ))
       .pipe(concatMap(() => this.logic.createTaskToRoom(this.taskFormData, this.roomId, this.currentUser.id)))
       .pipe(concatMap(() => this.logic.fetchActiveTaskPerRoom(this.roomId)))
+      .pipe(concatMap((result) => this.logic.fetchEachStatusTask(result, 0)))
       .subscribe((items) => {
         this.taskActiveItems = items.sort(this.logic.compareTaskArray);;
       });
@@ -203,7 +204,8 @@ export class TaskPage implements OnInit {
           handler: () => {
             const presentToast = from(this.presentDoneToast());
             this.logic.updateDoneTaskItem(alertBody, 10)
-              .pipe(flatMap(() => this.logic.fetchActiveTaskPerRoom(this.roomId)))
+              .pipe(concatMap(() => this.logic.fetchActiveTaskPerRoom(this.roomId)))
+              .pipe(concatMap((result) => this.logic.fetchEachStatusTask(result, 0)))
               .pipe(tap(() => presentToast))
               .subscribe((data) => { this.taskActiveItems = data });
           }
