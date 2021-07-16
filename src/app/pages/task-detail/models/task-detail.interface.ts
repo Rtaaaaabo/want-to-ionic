@@ -113,7 +113,7 @@ export interface TaskByCreatedAtItems {
     author: {
         __typename: "User";
         id: string;
-        username: string;
+        username?: string | null;
         email: string;
         companyID: string;
         tel?: string | null;
@@ -122,7 +122,6 @@ export interface TaskByCreatedAtItems {
         authority?: boolean | null;
         createdAt: string;
         updatedAt: string;
-        owner?: string | null;
     };
     task: {
         __typename: "Task";

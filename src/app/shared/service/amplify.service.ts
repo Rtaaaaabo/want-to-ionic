@@ -27,6 +27,12 @@ export type OfficerInput = {
   officerName: string;
 };
 
+export type S3ObjectInput = {
+  bucket: string;
+  region: string;
+  key: string;
+};
+
 export type ModelCompanyConditionInput = {
   name?: ModelStringInput | null;
   isRegistered?: ModelBooleanInput | null;
@@ -76,6 +82,13 @@ export type ModelSizeInput = {
   ge?: number | null;
   gt?: number | null;
   between?: Array<number | null> | null;
+};
+
+export type ModelBooleanInput = {
+  ne?: boolean | null;
+  eq?: boolean | null;
+  attributeExists?: boolean | null;
+  attributeType?: ModelAttributeTypes | null;
 };
 
 export type Company = {
@@ -136,21 +149,22 @@ export type ModelTaskConnection = {
 
 export type Task = {
   __typename: "Task";
-  id?: string;
-  authorID?: string;
-  roomID?: string;
-  chargePersonID?: string;
-  title?: string;
-  room?: Room;
+  id: string;
+  authorID: string;
+  roomID: string;
+  chargePersonID: string;
+  title: string;
+  room: Room;
   description?: string | null;
+  iconTask?: S3Object | null;
   scheduleDate?: string | null;
   priority?: number | null;
   status?: number | null;
   createdAt?: string | null;
-  chargePerson?: User;
-  messages?: ModelMessageConnection;
-  users?: ModelTaskGroupConnection;
-  updatedAt?: string;
+  chargePerson: User;
+  messages?: ModelMessageConnection | null;
+  users?: ModelTaskGroupConnection | null;
+  updatedAt: string;
 };
 
 export type User = {
@@ -202,13 +216,13 @@ export type ModelRoomGroupConnection = {
 
 export type RoomGroup = {
   __typename: "RoomGroup";
-  id?: string;
-  roomID?: string;
-  userID?: string;
-  room?: Room;
-  user?: User;
-  createdAt?: string;
-  updatedAt?: string;
+  id: string;
+  roomID: string;
+  userID: string;
+  room?: Room | null;
+  user?: User | null;
+  createdAt: string;
+  updatedAt: string;
 };
 
 export type ModelTaskGroupConnection = {
@@ -219,13 +233,13 @@ export type ModelTaskGroupConnection = {
 
 export type TaskGroup = {
   __typename: "TaskGroup";
-  id?: string;
-  taskID?: string;
-  userID?: string;
-  task?: Task;
-  user?: User;
-  createdAt?: string;
-  updatedAt?: string;
+  id: string;
+  taskID: string;
+  userID: string;
+  task?: Task | null;
+  user?: User | null;
+  createdAt: string;
+  updatedAt: string;
 };
 
 export type ModelUserConnection = {
@@ -243,41 +257,25 @@ export type UpdateCompanyInput = {
   tel?: string | null;
   officialEmail?: string | null;
   iconCompany?: S3ObjectInput | null;
+  billing?: boolean | null;
 };
 
 export type DeleteCompanyInput = {
+  id: string;
+};
+
+export type CreateTaskGroupInput = {
   id?: string | null;
+  taskID: string;
+  userID: string;
 };
 
-export type CreateUserInput = {
-  id?: string | null;
-  username?: string | null;
-  email: string;
-  companyID: string;
-  tel?: string | null;
-  positionName?: string | null;
-  iconImage?: S3ObjectInput | null;
-  registered?: boolean | null;
-  authority?: boolean | null;
-};
-
-export type S3ObjectInput = {
-  bucket: string;
-  region: string;
-  key: string;
-};
-
-export type ModelUserConditionInput = {
-  username?: ModelStringInput | null;
-  email?: ModelStringInput | null;
-  companyID?: ModelIDInput | null;
-  tel?: ModelStringInput | null;
-  positionName?: ModelStringInput | null;
-  registered?: ModelBooleanInput | null;
-  authority?: ModelBooleanInput | null;
-  and?: Array<ModelUserConditionInput | null> | null;
-  or?: Array<ModelUserConditionInput | null> | null;
-  not?: ModelUserConditionInput | null;
+export type ModelTaskGroupConditionInput = {
+  taskID?: ModelIDInput | null;
+  userID?: ModelIDInput | null;
+  and?: Array<ModelTaskGroupConditionInput | null> | null;
+  or?: Array<ModelTaskGroupConditionInput | null> | null;
+  not?: ModelTaskGroupConditionInput | null;
 };
 
 export type ModelIDInput = {
@@ -296,43 +294,6 @@ export type ModelIDInput = {
   size?: ModelSizeInput | null;
 };
 
-export type ModelBooleanInput = {
-  ne?: boolean | null;
-  eq?: boolean | null;
-  attributeExists?: boolean | null;
-  attributeType?: ModelAttributeTypes | null;
-};
-
-export type UpdateUserInput = {
-  id: string;
-  username?: string | null;
-  email?: string | null;
-  companyID?: string | null;
-  tel?: string | null;
-  positionName?: string | null;
-  iconImage?: S3ObjectInput | null;
-  registered?: boolean | null;
-  authority?: boolean | null;
-};
-
-export type DeleteUserInput = {
-  id?: string | null;
-};
-
-export type CreateTaskGroupInput = {
-  id?: string | null;
-  taskID: string;
-  userID: string;
-};
-
-export type ModelTaskGroupConditionInput = {
-  taskID?: ModelIDInput | null;
-  userID?: ModelIDInput | null;
-  and?: Array<ModelTaskGroupConditionInput | null> | null;
-  or?: Array<ModelTaskGroupConditionInput | null> | null;
-  not?: ModelTaskGroupConditionInput | null;
-};
-
 export type UpdateTaskGroupInput = {
   id: string;
   taskID?: string | null;
@@ -340,7 +301,7 @@ export type UpdateTaskGroupInput = {
 };
 
 export type DeleteTaskGroupInput = {
-  id?: string | null;
+  id: string;
 };
 
 export type CreateTaskInput = {
@@ -350,6 +311,7 @@ export type CreateTaskInput = {
   chargePersonID: string;
   title: string;
   description?: string | null;
+  iconTask?: S3ObjectInput | null;
   scheduleDate?: string | null;
   priority?: number | null;
   status?: number | null;
@@ -390,6 +352,7 @@ export type UpdateTaskInput = {
   chargePersonID?: string | null;
   title?: string | null;
   description?: string | null;
+  iconTask?: S3ObjectInput | null;
   scheduleDate?: string | null;
   priority?: number | null;
   status?: number | null;
@@ -397,7 +360,48 @@ export type UpdateTaskInput = {
 };
 
 export type DeleteTaskInput = {
+  id: string;
+};
+
+export type CreateUserInput = {
   id?: string | null;
+  username?: string | null;
+  email: string;
+  companyID: string;
+  tel?: string | null;
+  positionName?: string | null;
+  iconImage?: S3ObjectInput | null;
+  registered?: boolean | null;
+  authority?: boolean | null;
+};
+
+export type ModelUserConditionInput = {
+  username?: ModelStringInput | null;
+  email?: ModelStringInput | null;
+  companyID?: ModelIDInput | null;
+  tel?: ModelStringInput | null;
+  positionName?: ModelStringInput | null;
+  registered?: ModelBooleanInput | null;
+  authority?: ModelBooleanInput | null;
+  and?: Array<ModelUserConditionInput | null> | null;
+  or?: Array<ModelUserConditionInput | null> | null;
+  not?: ModelUserConditionInput | null;
+};
+
+export type UpdateUserInput = {
+  id: string;
+  username?: string | null;
+  email?: string | null;
+  companyID?: string | null;
+  tel?: string | null;
+  positionName?: string | null;
+  iconImage?: S3ObjectInput | null;
+  registered?: boolean | null;
+  authority?: boolean | null;
+};
+
+export type DeleteUserInput = {
+  id: string;
 };
 
 export type CreateRoomGroupInput = {
@@ -421,7 +425,7 @@ export type UpdateRoomGroupInput = {
 };
 
 export type DeleteRoomGroupInput = {
-  id?: string | null;
+  id: string;
 };
 
 export type CreateRoomInput = {
@@ -448,7 +452,7 @@ export type UpdateRoomInput = {
 };
 
 export type DeleteRoomInput = {
-  id?: string | null;
+  id: string;
 };
 
 export type CreateMessageInput = {
@@ -479,10 +483,11 @@ export type UpdateMessageInput = {
   content?: string | null;
   createdAt?: string | null;
   isSent?: boolean | null;
+  attachment?: Array<S3ObjectInput | null> | null;
 };
 
 export type DeleteMessageInput = {
-  id?: string | null;
+  id: string;
 };
 
 export type ModelCompanyFilterInput = {
@@ -492,23 +497,16 @@ export type ModelCompanyFilterInput = {
   otp?: ModelStringInput | null;
   tel?: ModelStringInput | null;
   officialEmail?: ModelStringInput | null;
+  billing?: ModelBooleanInput | null;
   and?: Array<ModelCompanyFilterInput | null> | null;
   or?: Array<ModelCompanyFilterInput | null> | null;
   not?: ModelCompanyFilterInput | null;
 };
 
-export type ModelUserFilterInput = {
-  id?: ModelIDInput | null;
-  username?: ModelStringInput | null;
-  email?: ModelStringInput | null;
-  companyID?: ModelIDInput | null;
-  tel?: ModelStringInput | null;
-  positionName?: ModelStringInput | null;
-  registered?: ModelBooleanInput | null;
-  authority?: ModelBooleanInput | null;
-  and?: Array<ModelUserFilterInput | null> | null;
-  or?: Array<ModelUserFilterInput | null> | null;
-  not?: ModelUserFilterInput | null;
+export type ModelCompanyConnection = {
+  __typename: "ModelCompanyConnection";
+  items?: Array<Company | null> | null;
+  nextToken?: string | null;
 };
 
 export type ModelTaskGroupFilterInput = {
@@ -536,6 +534,20 @@ export type ModelTaskFilterInput = {
   not?: ModelTaskFilterInput | null;
 };
 
+export type ModelUserFilterInput = {
+  id?: ModelIDInput | null;
+  username?: ModelStringInput | null;
+  email?: ModelStringInput | null;
+  companyID?: ModelIDInput | null;
+  tel?: ModelStringInput | null;
+  positionName?: ModelStringInput | null;
+  registered?: ModelBooleanInput | null;
+  authority?: ModelBooleanInput | null;
+  and?: Array<ModelUserFilterInput | null> | null;
+  or?: Array<ModelUserFilterInput | null> | null;
+  not?: ModelUserFilterInput | null;
+};
+
 export type ModelRoomGroupFilterInput = {
   id?: ModelIDInput | null;
   roomID?: ModelIDInput | null;
@@ -555,17 +567,6 @@ export type ModelRoomFilterInput = {
   not?: ModelRoomFilterInput | null;
 };
 
-export type ModelStringKeyConditionInput = {
-  eq?: string | null;
-  le?: string | null;
-  lt?: string | null;
-  ge?: string | null;
-  gt?: string | null;
-  between?: Array<string | null> | null;
-  beginsWith?: string | null;
-};
-
-
 export type ModelMessageFilterInput = {
   id?: ModelIDInput | null;
   taskID?: ModelIDInput | null;
@@ -578,6 +579,16 @@ export type ModelMessageFilterInput = {
   not?: ModelMessageFilterInput | null;
 };
 
+export type ModelStringKeyConditionInput = {
+  eq?: string | null;
+  le?: string | null;
+  lt?: string | null;
+  ge?: string | null;
+  gt?: string | null;
+  between?: Array<string | null> | null;
+  beginsWith?: string | null;
+};
+
 export enum ModelSortDirection {
   ASC = "ASC",
   DESC = "DESC"
@@ -587,13 +598,22 @@ export type CreateCompanyMutation = {
   __typename: "Company";
   id: string;
   name: string;
-  officerEmail: string;
+  officer: Array<{
+    __typename: "Officer";
+    officerEmail: string;
+    officerName: string;
+  } | null>;
+  isRegistered: boolean;
+  otp?: string | null;
+  tel?: string | null;
+  officialEmail?: string | null;
   iconCompany?: {
     __typename: "S3Object";
     bucket: string;
     region: string;
     key: string;
   } | null;
+  billing?: boolean | null;
   room?: {
     __typename: "ModelRoomConnection";
     items?: Array<{
@@ -612,16 +632,15 @@ export type CreateCompanyMutation = {
     items?: Array<{
       __typename: "User";
       id: string;
-      username: string;
+      username?: string | null;
       email: string;
       companyID: string;
       tel?: string | null;
       positionName?: string | null;
       registered?: boolean | null;
-      authority?: string | null;
+      authority?: boolean | null;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
     } | null> | null;
     nextToken?: string | null;
   } | null;
@@ -634,7 +653,22 @@ export type UpdateCompanyMutation = {
   __typename: "Company";
   id: string;
   name: string;
-  domain: string;
+  officer: Array<{
+    __typename: "Officer";
+    officerEmail: string;
+    officerName: string;
+  } | null>;
+  isRegistered: boolean;
+  otp?: string | null;
+  tel?: string | null;
+  officialEmail?: string | null;
+  iconCompany?: {
+    __typename: "S3Object";
+    bucket: string;
+    region: string;
+    key: string;
+  } | null;
+  billing?: boolean | null;
   room?: {
     __typename: "ModelRoomConnection";
     items?: Array<{
@@ -653,13 +687,13 @@ export type UpdateCompanyMutation = {
     items?: Array<{
       __typename: "User";
       id: string;
-      username: string;
+      username?: string | null;
       email: string;
       companyID: string;
       tel?: string | null;
       positionName?: string | null;
       registered?: boolean | null;
-      authority?: string | null;
+      authority?: boolean | null;
       createdAt: string;
       updatedAt: string;
     } | null> | null;
@@ -667,13 +701,29 @@ export type UpdateCompanyMutation = {
   } | null;
   createdAt: string;
   updatedAt: string;
+  owner?: string | null;
 };
 
 export type DeleteCompanyMutation = {
   __typename: "Company";
   id: string;
   name: string;
-  domain: string;
+  officer: Array<{
+    __typename: "Officer";
+    officerEmail: string;
+    officerName: string;
+  } | null>;
+  isRegistered: boolean;
+  otp?: string | null;
+  tel?: string | null;
+  officialEmail?: string | null;
+  iconCompany?: {
+    __typename: "S3Object";
+    bucket: string;
+    region: string;
+    key: string;
+  } | null;
+  billing?: boolean | null;
   room?: {
     __typename: "ModelRoomConnection";
     items?: Array<{
@@ -692,19 +742,719 @@ export type DeleteCompanyMutation = {
     items?: Array<{
       __typename: "User";
       id: string;
-      username: string;
+      username?: string | null;
       email: string;
       companyID: string;
       tel?: string | null;
       positionName?: string | null;
       registered?: boolean | null;
-      authority?: string | null;
+      authority?: boolean | null;
       createdAt: string;
       updatedAt: string;
     } | null> | null;
     nextToken?: string | null;
   } | null;
   createdAt: string;
+  updatedAt: string;
+  owner?: string | null;
+};
+
+export type CreateTaskGroupMutation = {
+  __typename: "TaskGroup";
+  id: string;
+  taskID: string;
+  userID: string;
+  task?: {
+    __typename: "Task";
+    id: string;
+    authorID: string;
+    roomID: string;
+    chargePersonID: string;
+    title: string;
+    room: {
+      __typename: "Room";
+      id: string;
+      name: string;
+      companyID: string;
+      description: string;
+      createdAt: string;
+      updatedAt: string;
+    };
+    description?: string | null;
+    iconTask?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
+    scheduleDate?: string | null;
+    priority?: number | null;
+    status?: number | null;
+    createdAt?: string | null;
+    chargePerson: {
+      __typename: "User";
+      id: string;
+      username?: string | null;
+      email: string;
+      companyID: string;
+      tel?: string | null;
+      positionName?: string | null;
+      registered?: boolean | null;
+      authority?: boolean | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+    messages?: {
+      __typename: "ModelMessageConnection";
+      nextToken?: string | null;
+    } | null;
+    users?: {
+      __typename: "ModelTaskGroupConnection";
+      nextToken?: string | null;
+    } | null;
+    updatedAt: string;
+  } | null;
+  user?: {
+    __typename: "User";
+    id: string;
+    username?: string | null;
+    email: string;
+    companyID: string;
+    tel?: string | null;
+    positionName?: string | null;
+    iconImage?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
+    registered?: boolean | null;
+    authority?: boolean | null;
+    company: {
+      __typename: "Company";
+      id: string;
+      name: string;
+      isRegistered: boolean;
+      otp?: string | null;
+      tel?: string | null;
+      officialEmail?: string | null;
+      billing?: boolean | null;
+      createdAt: string;
+      updatedAt: string;
+      owner?: string | null;
+    };
+    messages?: {
+      __typename: "ModelMessageConnection";
+      nextToken?: string | null;
+    } | null;
+    room?: {
+      __typename: "ModelRoomGroupConnection";
+      nextToken?: string | null;
+    } | null;
+    task?: {
+      __typename: "ModelTaskGroupConnection";
+      nextToken?: string | null;
+    } | null;
+    chargeTask?: {
+      __typename: "ModelTaskConnection";
+      nextToken?: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type UpdateTaskGroupMutation = {
+  __typename: "TaskGroup";
+  id: string;
+  taskID: string;
+  userID: string;
+  task?: {
+    __typename: "Task";
+    id: string;
+    authorID: string;
+    roomID: string;
+    chargePersonID: string;
+    title: string;
+    room: {
+      __typename: "Room";
+      id: string;
+      name: string;
+      companyID: string;
+      description: string;
+      createdAt: string;
+      updatedAt: string;
+    };
+    description?: string | null;
+    iconTask?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
+    scheduleDate?: string | null;
+    priority?: number | null;
+    status?: number | null;
+    createdAt?: string | null;
+    chargePerson: {
+      __typename: "User";
+      id: string;
+      username?: string | null;
+      email: string;
+      companyID: string;
+      tel?: string | null;
+      positionName?: string | null;
+      registered?: boolean | null;
+      authority?: boolean | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+    messages?: {
+      __typename: "ModelMessageConnection";
+      nextToken?: string | null;
+    } | null;
+    users?: {
+      __typename: "ModelTaskGroupConnection";
+      nextToken?: string | null;
+    } | null;
+    updatedAt: string;
+  } | null;
+  user?: {
+    __typename: "User";
+    id: string;
+    username?: string | null;
+    email: string;
+    companyID: string;
+    tel?: string | null;
+    positionName?: string | null;
+    iconImage?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
+    registered?: boolean | null;
+    authority?: boolean | null;
+    company: {
+      __typename: "Company";
+      id: string;
+      name: string;
+      isRegistered: boolean;
+      otp?: string | null;
+      tel?: string | null;
+      officialEmail?: string | null;
+      billing?: boolean | null;
+      createdAt: string;
+      updatedAt: string;
+      owner?: string | null;
+    };
+    messages?: {
+      __typename: "ModelMessageConnection";
+      nextToken?: string | null;
+    } | null;
+    room?: {
+      __typename: "ModelRoomGroupConnection";
+      nextToken?: string | null;
+    } | null;
+    task?: {
+      __typename: "ModelTaskGroupConnection";
+      nextToken?: string | null;
+    } | null;
+    chargeTask?: {
+      __typename: "ModelTaskConnection";
+      nextToken?: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type DeleteTaskGroupMutation = {
+  __typename: "TaskGroup";
+  id: string;
+  taskID: string;
+  userID: string;
+  task?: {
+    __typename: "Task";
+    id: string;
+    authorID: string;
+    roomID: string;
+    chargePersonID: string;
+    title: string;
+    room: {
+      __typename: "Room";
+      id: string;
+      name: string;
+      companyID: string;
+      description: string;
+      createdAt: string;
+      updatedAt: string;
+    };
+    description?: string | null;
+    iconTask?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
+    scheduleDate?: string | null;
+    priority?: number | null;
+    status?: number | null;
+    createdAt?: string | null;
+    chargePerson: {
+      __typename: "User";
+      id: string;
+      username?: string | null;
+      email: string;
+      companyID: string;
+      tel?: string | null;
+      positionName?: string | null;
+      registered?: boolean | null;
+      authority?: boolean | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+    messages?: {
+      __typename: "ModelMessageConnection";
+      nextToken?: string | null;
+    } | null;
+    users?: {
+      __typename: "ModelTaskGroupConnection";
+      nextToken?: string | null;
+    } | null;
+    updatedAt: string;
+  } | null;
+  user?: {
+    __typename: "User";
+    id: string;
+    username?: string | null;
+    email: string;
+    companyID: string;
+    tel?: string | null;
+    positionName?: string | null;
+    iconImage?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
+    registered?: boolean | null;
+    authority?: boolean | null;
+    company: {
+      __typename: "Company";
+      id: string;
+      name: string;
+      isRegistered: boolean;
+      otp?: string | null;
+      tel?: string | null;
+      officialEmail?: string | null;
+      billing?: boolean | null;
+      createdAt: string;
+      updatedAt: string;
+      owner?: string | null;
+    };
+    messages?: {
+      __typename: "ModelMessageConnection";
+      nextToken?: string | null;
+    } | null;
+    room?: {
+      __typename: "ModelRoomGroupConnection";
+      nextToken?: string | null;
+    } | null;
+    task?: {
+      __typename: "ModelTaskGroupConnection";
+      nextToken?: string | null;
+    } | null;
+    chargeTask?: {
+      __typename: "ModelTaskConnection";
+      nextToken?: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type CreateTaskMutation = {
+  __typename: "Task";
+  id: string;
+  authorID: string;
+  roomID: string;
+  chargePersonID: string;
+  title: string;
+  room: {
+    __typename: "Room";
+    id: string;
+    name: string;
+    companyID: string;
+    description: string;
+    company: {
+      __typename: "Company";
+      id: string;
+      name: string;
+      isRegistered: boolean;
+      otp?: string | null;
+      tel?: string | null;
+      officialEmail?: string | null;
+      billing?: boolean | null;
+      createdAt: string;
+      updatedAt: string;
+      owner?: string | null;
+    };
+    tasks?: {
+      __typename: "ModelTaskConnection";
+      nextToken?: string | null;
+    } | null;
+    users?: {
+      __typename: "ModelRoomGroupConnection";
+      nextToken?: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+  };
+  description?: string | null;
+  iconTask?: {
+    __typename: "S3Object";
+    bucket: string;
+    region: string;
+    key: string;
+  } | null;
+  scheduleDate?: string | null;
+  priority?: number | null;
+  status?: number | null;
+  createdAt?: string | null;
+  chargePerson: {
+    __typename: "User";
+    id: string;
+    username?: string | null;
+    email: string;
+    companyID: string;
+    tel?: string | null;
+    positionName?: string | null;
+    iconImage?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
+    registered?: boolean | null;
+    authority?: boolean | null;
+    company: {
+      __typename: "Company";
+      id: string;
+      name: string;
+      isRegistered: boolean;
+      otp?: string | null;
+      tel?: string | null;
+      officialEmail?: string | null;
+      billing?: boolean | null;
+      createdAt: string;
+      updatedAt: string;
+      owner?: string | null;
+    };
+    messages?: {
+      __typename: "ModelMessageConnection";
+      nextToken?: string | null;
+    } | null;
+    room?: {
+      __typename: "ModelRoomGroupConnection";
+      nextToken?: string | null;
+    } | null;
+    task?: {
+      __typename: "ModelTaskGroupConnection";
+      nextToken?: string | null;
+    } | null;
+    chargeTask?: {
+      __typename: "ModelTaskConnection";
+      nextToken?: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+  };
+  messages?: {
+    __typename: "ModelMessageConnection";
+    items?: Array<{
+      __typename: "Message";
+      id: string;
+      taskID: string;
+      authorID: string;
+      content: string;
+      createdAt: string;
+      isSent?: boolean | null;
+      updatedAt: string;
+      owner?: string | null;
+    } | null> | null;
+    nextToken?: string | null;
+  } | null;
+  users?: {
+    __typename: "ModelTaskGroupConnection";
+    items?: Array<{
+      __typename: "TaskGroup";
+      id: string;
+      taskID: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken?: string | null;
+  } | null;
+  updatedAt: string;
+};
+
+export type UpdateTaskMutation = {
+  __typename: "Task";
+  id: string;
+  authorID: string;
+  roomID: string;
+  chargePersonID: string;
+  title: string;
+  room: {
+    __typename: "Room";
+    id: string;
+    name: string;
+    companyID: string;
+    description: string;
+    company: {
+      __typename: "Company";
+      id: string;
+      name: string;
+      isRegistered: boolean;
+      otp?: string | null;
+      tel?: string | null;
+      officialEmail?: string | null;
+      billing?: boolean | null;
+      createdAt: string;
+      updatedAt: string;
+      owner?: string | null;
+    };
+    tasks?: {
+      __typename: "ModelTaskConnection";
+      nextToken?: string | null;
+    } | null;
+    users?: {
+      __typename: "ModelRoomGroupConnection";
+      nextToken?: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+  };
+  description?: string | null;
+  iconTask?: {
+    __typename: "S3Object";
+    bucket: string;
+    region: string;
+    key: string;
+  } | null;
+  scheduleDate?: string | null;
+  priority?: number | null;
+  status?: number | null;
+  createdAt?: string | null;
+  chargePerson: {
+    __typename: "User";
+    id: string;
+    username?: string | null;
+    email: string;
+    companyID: string;
+    tel?: string | null;
+    positionName?: string | null;
+    iconImage?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
+    registered?: boolean | null;
+    authority?: boolean | null;
+    company: {
+      __typename: "Company";
+      id: string;
+      name: string;
+      isRegistered: boolean;
+      otp?: string | null;
+      tel?: string | null;
+      officialEmail?: string | null;
+      billing?: boolean | null;
+      createdAt: string;
+      updatedAt: string;
+      owner?: string | null;
+    };
+    messages?: {
+      __typename: "ModelMessageConnection";
+      nextToken?: string | null;
+    } | null;
+    room?: {
+      __typename: "ModelRoomGroupConnection";
+      nextToken?: string | null;
+    } | null;
+    task?: {
+      __typename: "ModelTaskGroupConnection";
+      nextToken?: string | null;
+    } | null;
+    chargeTask?: {
+      __typename: "ModelTaskConnection";
+      nextToken?: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+  };
+  messages?: {
+    __typename: "ModelMessageConnection";
+    items?: Array<{
+      __typename: "Message";
+      id: string;
+      taskID: string;
+      authorID: string;
+      content: string;
+      createdAt: string;
+      isSent?: boolean | null;
+      updatedAt: string;
+      owner?: string | null;
+    } | null> | null;
+    nextToken?: string | null;
+  } | null;
+  users?: {
+    __typename: "ModelTaskGroupConnection";
+    items?: Array<{
+      __typename: "TaskGroup";
+      id: string;
+      taskID: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken?: string | null;
+  } | null;
+  updatedAt: string;
+};
+
+export type DeleteTaskMutation = {
+  __typename: "Task";
+  id: string;
+  authorID: string;
+  roomID: string;
+  chargePersonID: string;
+  title: string;
+  room: {
+    __typename: "Room";
+    id: string;
+    name: string;
+    companyID: string;
+    description: string;
+    company: {
+      __typename: "Company";
+      id: string;
+      name: string;
+      isRegistered: boolean;
+      otp?: string | null;
+      tel?: string | null;
+      officialEmail?: string | null;
+      billing?: boolean | null;
+      createdAt: string;
+      updatedAt: string;
+      owner?: string | null;
+    };
+    tasks?: {
+      __typename: "ModelTaskConnection";
+      nextToken?: string | null;
+    } | null;
+    users?: {
+      __typename: "ModelRoomGroupConnection";
+      nextToken?: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+  };
+  description?: string | null;
+  iconTask?: {
+    __typename: "S3Object";
+    bucket: string;
+    region: string;
+    key: string;
+  } | null;
+  scheduleDate?: string | null;
+  priority?: number | null;
+  status?: number | null;
+  createdAt?: string | null;
+  chargePerson: {
+    __typename: "User";
+    id: string;
+    username?: string | null;
+    email: string;
+    companyID: string;
+    tel?: string | null;
+    positionName?: string | null;
+    iconImage?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
+    registered?: boolean | null;
+    authority?: boolean | null;
+    company: {
+      __typename: "Company";
+      id: string;
+      name: string;
+      isRegistered: boolean;
+      otp?: string | null;
+      tel?: string | null;
+      officialEmail?: string | null;
+      billing?: boolean | null;
+      createdAt: string;
+      updatedAt: string;
+      owner?: string | null;
+    };
+    messages?: {
+      __typename: "ModelMessageConnection";
+      nextToken?: string | null;
+    } | null;
+    room?: {
+      __typename: "ModelRoomGroupConnection";
+      nextToken?: string | null;
+    } | null;
+    task?: {
+      __typename: "ModelTaskGroupConnection";
+      nextToken?: string | null;
+    } | null;
+    chargeTask?: {
+      __typename: "ModelTaskConnection";
+      nextToken?: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+  };
+  messages?: {
+    __typename: "ModelMessageConnection";
+    items?: Array<{
+      __typename: "Message";
+      id: string;
+      taskID: string;
+      authorID: string;
+      content: string;
+      createdAt: string;
+      isSent?: boolean | null;
+      updatedAt: string;
+      owner?: string | null;
+    } | null> | null;
+    nextToken?: string | null;
+  } | null;
+  users?: {
+    __typename: "ModelTaskGroupConnection";
+    items?: Array<{
+      __typename: "TaskGroup";
+      id: string;
+      taskID: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken?: string | null;
+  } | null;
   updatedAt: string;
 };
 
@@ -820,7 +1570,7 @@ export type CreateUserMutation = {
 export type UpdateUserMutation = {
   __typename: "User";
   id: string;
-  username: string;
+  username?: string | null;
   email: string;
   companyID: string;
   tel?: string | null;
@@ -924,13 +1674,12 @@ export type UpdateUserMutation = {
   } | null;
   createdAt: string;
   updatedAt: string;
-  owner?: string | null;
 };
 
 export type DeleteUserMutation = {
   __typename: "User";
   id: string;
-  username: string;
+  username?: string | null;
   email: string;
   companyID: string;
   tel?: string | null;
@@ -942,12 +1691,27 @@ export type DeleteUserMutation = {
     key: string;
   } | null;
   registered?: boolean | null;
-  authority?: string | null;
+  authority?: boolean | null;
   company: {
     __typename: "Company";
     id: string;
     name: string;
-    domain: string;
+    officer: Array<{
+      __typename: "Officer";
+      officerEmail: string;
+      officerName: string;
+    } | null>;
+    isRegistered: boolean;
+    otp?: string | null;
+    tel?: string | null;
+    officialEmail?: string | null;
+    iconCompany?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
+    billing?: boolean | null;
     room?: {
       __typename: "ModelRoomConnection";
       nextToken?: string | null;
@@ -958,6 +1722,7 @@ export type DeleteUserMutation = {
     } | null;
     createdAt: string;
     updatedAt: string;
+    owner?: string | null;
   };
   messages?: {
     __typename: "ModelMessageConnection";
@@ -970,6 +1735,7 @@ export type DeleteUserMutation = {
       createdAt: string;
       isSent?: boolean | null;
       updatedAt: string;
+      owner?: string | null;
     } | null> | null;
     nextToken?: string | null;
   } | null;
@@ -1019,294 +1785,12 @@ export type DeleteUserMutation = {
   updatedAt: string;
 };
 
-export type CreateTaskGroupMutation = {
-  __typename: "TaskGroup";
+export type CreateRoomGroupMutation = {
+  __typename: "RoomGroup";
   id: string;
-  taskID: string;
-  userID: string;
-  task?: {
-    __typename: "Task";
-    id: string;
-    authorID: string;
-    roomID: string;
-    chargePersonID: string;
-    title: string;
-    room: {
-      __typename: "Room";
-      id: string;
-      name: string;
-      companyID: string;
-      description: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    description?: string | null;
-    scheduleDate?: string | null;
-    priority?: number | null;
-    status?: number | null;
-    createdAt?: string | null;
-    chargePerson: {
-      __typename: "User";
-      id: string;
-      username: string;
-      email: string;
-      companyID: string;
-      tel?: string | null;
-      positionName?: string | null;
-      registered?: boolean | null;
-      authority?: string | null;
-      createdAt: string;
-      updatedAt: string;
-    };
-    messages?: {
-      __typename: "ModelMessageConnection";
-      nextToken?: string | null;
-    } | null;
-    users?: {
-      __typename: "ModelTaskGroupConnection";
-      nextToken?: string | null;
-    } | null;
-    updatedAt: string;
-  } | null;
-  user?: {
-    __typename: "User";
-    id: string;
-    username: string;
-    email: string;
-    companyID: string;
-    tel?: string | null;
-    positionName?: string | null;
-    iconImage?: {
-      __typename: "S3Object";
-      bucket: string;
-      region: string;
-      key: string;
-    } | null;
-    registered?: boolean | null;
-    authority?: string | null;
-    company: {
-      __typename: "Company";
-      id: string;
-      name: string;
-      domain: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    messages?: {
-      __typename: "ModelMessageConnection";
-      nextToken?: string | null;
-    } | null;
-    room?: {
-      __typename: "ModelRoomGroupConnection";
-      nextToken?: string | null;
-    } | null;
-    task?: {
-      __typename: "ModelTaskGroupConnection";
-      nextToken?: string | null;
-    } | null;
-    chargeTask?: {
-      __typename: "ModelTaskConnection";
-      nextToken?: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type UpdateTaskGroupMutation = {
-  __typename: "TaskGroup";
-  id: string;
-  taskID: string;
-  userID: string;
-  task: {
-    __typename: "Task";
-    id: string;
-    authorID: string;
-    roomID: string;
-    chargePersonID: string;
-    title: string;
-    room: {
-      __typename: "Room";
-      id: string;
-      name: string;
-      companyID: string;
-      description: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    description: string | null;
-    scheduleDate: string | null;
-    priority: number | null;
-    status: number | null;
-    createdAt: string | null;
-    messages: {
-      __typename: "ModelMessageConnection";
-      nextToken: string | null;
-    } | null;
-    users: {
-      __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
-    } | null;
-    chargePerson: {
-      __typename: "User";
-      id: string;
-      username: string;
-      email: string;
-      companyID: string;
-      tel: string | null;
-      positionName: string | null;
-      iconImage: string | null;
-      registered: boolean | null;
-      authority: string | null;
-      createdAt: string;
-      updatedAt: string;
-    } | null;
-    updatedAt: string;
-  } | null;
-  user: {
-    __typename: "User";
-    id: string;
-    username: string;
-    email: string;
-    companyID: string;
-    tel: string | null;
-    positionName: string | null;
-    iconImage: string | null;
-    registered: boolean | null;
-    authority: string | null;
-    company: {
-      __typename: "Company";
-      id: string;
-      name: string;
-      domain: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    messages: {
-      __typename: "ModelMessageConnection";
-      nextToken: string | null;
-    } | null;
-    room: {
-      __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
-    } | null;
-    task: {
-      __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
-    } | null;
-    chargeTask: {
-      __typename: "ModelTaskConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type DeleteTaskGroupMutation = {
-  __typename: "TaskGroup";
-  id: string;
-  taskID: string;
-  userID: string;
-  task: {
-    __typename: "Task";
-    id: string;
-    authorID: string;
-    roomID: string;
-    chargePersonID: string;
-    title: string;
-    room: {
-      __typename: "Room";
-      id: string;
-      name: string;
-      companyID: string;
-      description: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    description: string | null;
-    scheduleDate: string | null;
-    priority: number | null;
-    status: number | null;
-    createdAt: string | null;
-    messages: {
-      __typename: "ModelMessageConnection";
-      nextToken: string | null;
-    } | null;
-    users: {
-      __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
-    } | null;
-    chargePerson: {
-      __typename: "User";
-      id: string;
-      username: string;
-      email: string;
-      companyID: string;
-      tel: string | null;
-      positionName: string | null;
-      iconImage: string | null;
-      registered: boolean | null;
-      authority: string | null;
-      createdAt: string;
-      updatedAt: string;
-    } | null;
-    updatedAt: string;
-  } | null;
-  user: {
-    __typename: "User";
-    id: string;
-    username: string;
-    email: string;
-    companyID: string;
-    tel: string | null;
-    positionName: string | null;
-    iconImage: string | null;
-    registered: boolean | null;
-    authority: string | null;
-    company: {
-      __typename: "Company";
-      id: string;
-      name: string;
-      domain: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    messages: {
-      __typename: "ModelMessageConnection";
-      nextToken: string | null;
-    } | null;
-    room: {
-      __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
-    } | null;
-    task: {
-      __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
-    } | null;
-    chargeTask: {
-      __typename: "ModelTaskConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type CreateTaskMutation = {
-  __typename: "Task";
-  id: string;
-  authorID: string;
   roomID: string;
-  chargePersonID: string;
-  title: string;
-  room: {
+  userID: string;
+  room?: {
     __typename: "Room";
     id: string;
     name: string;
@@ -1316,9 +1800,14 @@ export type CreateTaskMutation = {
       __typename: "Company";
       id: string;
       name: string;
-      domain: string;
+      isRegistered: boolean;
+      otp?: string | null;
+      tel?: string | null;
+      officialEmail?: string | null;
+      billing?: boolean | null;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     };
     tasks?: {
       __typename: "ModelTaskConnection";
@@ -1330,694 +1819,11 @@ export type CreateTaskMutation = {
     } | null;
     createdAt: string;
     updatedAt: string;
-  };
-  description?: string | null;
-  scheduleDate?: string | null;
-  priority?: number | null;
-  status?: number | null;
-  createdAt?: string | null;
-  chargePerson: {
+  } | null;
+  user?: {
     __typename: "User";
     id: string;
-    username: string;
-    email: string;
-    companyID: string;
-    tel?: string | null;
-    positionName?: string | null;
-    iconImage?: {
-      __typename: "S3Object";
-      bucket: string;
-      region: string;
-      key: string;
-    } | null;
-    registered?: boolean | null;
-    authority?: string | null;
-    company: {
-      __typename: "Company";
-      id: string;
-      name: string;
-      domain: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    messages?: {
-      __typename: "ModelMessageConnection";
-      nextToken?: string | null;
-    } | null;
-    room?: {
-      __typename: "ModelRoomGroupConnection";
-      nextToken?: string | null;
-    } | null;
-    task?: {
-      __typename: "ModelTaskGroupConnection";
-      nextToken?: string | null;
-    } | null;
-    chargeTask?: {
-      __typename: "ModelTaskConnection";
-      nextToken?: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  };
-  messages?: {
-    __typename: "ModelMessageConnection";
-    items?: Array<{
-      __typename: "Message";
-      id: string;
-      taskID: string;
-      authorID: string;
-      content: string;
-      createdAt: string;
-      isSent?: boolean | null;
-      updatedAt: string;
-    } | null> | null;
-    nextToken?: string | null;
-  } | null;
-  users?: {
-    __typename: "ModelTaskGroupConnection";
-    items?: Array<{
-      __typename: "TaskGroup";
-      id: string;
-      taskID: string;
-      userID: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
-    nextToken?: string | null;
-  } | null;
-  updatedAt: string;
-};
-
-export type UpdateTaskMutation = {
-  __typename: "Task";
-  id: string;
-  authorID: string;
-  roomID: string;
-  chargePersonID: string;
-  title: string;
-  room: {
-    __typename: "Room";
-    id: string;
-    name: string;
-    companyID: string;
-    description: string;
-    company: {
-      __typename: "Company";
-      id: string;
-      name: string;
-      domain: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    tasks: {
-      __typename: "ModelTaskConnection";
-      nextToken: string | null;
-    } | null;
-    users: {
-      __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  };
-  description: string | null;
-  scheduleDate: string | null;
-  priority: number | null;
-  status: number | null;
-  createdAt: string | null;
-  messages: {
-    __typename: "ModelMessageConnection";
-    items: Array<{
-      __typename: "Message";
-      id: string;
-      taskID: string;
-      authorID: string;
-      content: string;
-      createdAt: string | null;
-      isSent: boolean | null;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  users: {
-    __typename: "ModelTaskGroupConnection";
-    items: Array<{
-      __typename: "TaskGroup";
-      id: string;
-      taskID: string;
-      userID: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  chargePerson: {
-    __typename: "User";
-    id: string;
-    username: string;
-    email: string;
-    companyID: string;
-    tel: string | null;
-    positionName: string | null;
-    iconImage: string | null;
-    registered: boolean | null;
-    authority: string | null;
-    company: {
-      __typename: "Company";
-      id: string;
-      name: string;
-      domain: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    messages: {
-      __typename: "ModelMessageConnection";
-      nextToken: string | null;
-    } | null;
-    room: {
-      __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
-    } | null;
-    task: {
-      __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
-    } | null;
-    chargeTask: {
-      __typename: "ModelTaskConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
-  updatedAt: string;
-};
-
-export type DeleteTaskMutation = {
-  __typename: "Task";
-  id: string;
-  authorID: string;
-  roomID: string;
-  chargePersonID: string;
-  title: string;
-  room: {
-    __typename: "Room";
-    id: string;
-    name: string;
-    companyID: string;
-    description: string;
-    company: {
-      __typename: "Company";
-      id: string;
-      name: string;
-      domain: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    tasks: {
-      __typename: "ModelTaskConnection";
-      nextToken: string | null;
-    } | null;
-    users: {
-      __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  };
-  description: string | null;
-  scheduleDate: string | null;
-  priority: number | null;
-  status: number | null;
-  createdAt: string | null;
-  messages: {
-    __typename: "ModelMessageConnection";
-    items: Array<{
-      __typename: "Message";
-      id: string;
-      taskID: string;
-      authorID: string;
-      content: string;
-      createdAt: string | null;
-      isSent: boolean | null;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  users: {
-    __typename: "ModelTaskGroupConnection";
-    items: Array<{
-      __typename: "TaskGroup";
-      id: string;
-      taskID: string;
-      userID: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  chargePerson: {
-    __typename: "User";
-    id: string;
-    username: string;
-    email: string;
-    companyID: string;
-    tel: string | null;
-    positionName: string | null;
-    iconImage: string | null;
-    registered: boolean | null;
-    authority: string | null;
-    company: {
-      __typename: "Company";
-      id: string;
-      name: string;
-      domain: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    messages: {
-      __typename: "ModelMessageConnection";
-      nextToken: string | null;
-    } | null;
-    room: {
-      __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
-    } | null;
-    task: {
-      __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
-    } | null;
-    chargeTask: {
-      __typename: "ModelTaskConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
-  updatedAt: string;
-};
-
-export type CreateRoomGroupMutation = {
-  __typename: "RoomGroup";
-  id: string;
-  roomID: string;
-  userID: string;
-  room: {
-    __typename: "Room";
-    id: string;
-    name: string;
-    companyID: string;
-    description: string;
-    company: {
-      __typename: "Company";
-      id: string;
-      name: string;
-      domain: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    tasks: {
-      __typename: "ModelTaskConnection";
-      nextToken: string | null;
-    } | null;
-    users: {
-      __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
-  user: {
-    __typename: "User";
-    id: string;
-    username: string;
-    email: string;
-    companyID: string;
-    tel: string | null;
-    positionName: string | null;
-    iconImage: string | null;
-    registered: boolean | null;
-    authority: string | null;
-    company: {
-      __typename: "Company";
-      id: string;
-      name: string;
-      domain: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    messages: {
-      __typename: "ModelMessageConnection";
-      nextToken: string | null;
-    } | null;
-    room: {
-      __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
-    } | null;
-    task: {
-      __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
-    } | null;
-    chargeTask: {
-      __typename: "ModelTaskConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type UpdateRoomGroupMutation = {
-  __typename: "RoomGroup";
-  id: string;
-  roomID: string;
-  userID: string;
-  room: {
-    __typename: "Room";
-    id: string;
-    name: string;
-    companyID: string;
-    description: string;
-    company: {
-      __typename: "Company";
-      id: string;
-      name: string;
-      domain: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    tasks: {
-      __typename: "ModelTaskConnection";
-      nextToken: string | null;
-    } | null;
-    users: {
-      __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
-  user: {
-    __typename: "User";
-    id: string;
-    username: string;
-    email: string;
-    companyID: string;
-    tel: string | null;
-    positionName: string | null;
-    iconImage: string | null;
-    registered: boolean | null;
-    authority: string | null;
-    company: {
-      __typename: "Company";
-      id: string;
-      name: string;
-      domain: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    messages: {
-      __typename: "ModelMessageConnection";
-      nextToken: string | null;
-    } | null;
-    room: {
-      __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
-    } | null;
-    task: {
-      __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
-    } | null;
-    chargeTask: {
-      __typename: "ModelTaskConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type DeleteRoomGroupMutation = {
-  __typename: "RoomGroup";
-  id: string;
-  roomID: string;
-  userID: string;
-  room: {
-    __typename: "Room";
-    id: string;
-    name: string;
-    companyID: string;
-    description: string;
-    company: {
-      __typename: "Company";
-      id: string;
-      name: string;
-      domain: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    tasks: {
-      __typename: "ModelTaskConnection";
-      nextToken: string | null;
-    } | null;
-    users: {
-      __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
-  user: {
-    __typename: "User";
-    id: string;
-    username: string;
-    email: string;
-    companyID: string;
-    tel: string | null;
-    positionName: string | null;
-    iconImage: string | null;
-    registered: boolean | null;
-    authority: string | null;
-    company: {
-      __typename: "Company";
-      id: string;
-      name: string;
-      domain: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    messages: {
-      __typename: "ModelMessageConnection";
-      nextToken: string | null;
-    } | null;
-    room: {
-      __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
-    } | null;
-    task: {
-      __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
-    } | null;
-    chargeTask: {
-      __typename: "ModelTaskConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type CreateRoomMutation = {
-  __typename: "Room";
-  id: string;
-  name: string;
-  companyID: string;
-  description: string;
-  company: {
-    __typename: "Company";
-    id: string;
-    name: string;
-    domain: string;
-    room: {
-      __typename: "ModelRoomConnection";
-      nextToken: string | null;
-    } | null;
-    companyMembers: {
-      __typename: "ModelUserConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  };
-  tasks: {
-    __typename: "ModelTaskConnection";
-    items: Array<{
-      __typename: "Task";
-      id: string;
-      authorID: string;
-      roomID: string;
-      chargePersonID: string;
-      title: string;
-      description: string | null;
-      scheduleDate: string | null;
-      priority: number | null;
-      status: number | null;
-      createdAt: string | null;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  users: {
-    __typename: "ModelRoomGroupConnection";
-    items: Array<{
-      __typename: "RoomGroup";
-      id: string;
-      roomID: string;
-      userID: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type UpdateRoomMutation = {
-  __typename: "Room";
-  id: string;
-  name: string;
-  companyID: string;
-  description: string;
-  company: {
-    __typename: "Company";
-    id: string;
-    name: string;
-    domain: string;
-    room: {
-      __typename: "ModelRoomConnection";
-      nextToken: string | null;
-    } | null;
-    companyMembers: {
-      __typename: "ModelUserConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  };
-  tasks: {
-    __typename: "ModelTaskConnection";
-    items: Array<{
-      __typename: "Task";
-      id: string;
-      authorID: string;
-      roomID: string;
-      chargePersonID: string;
-      title: string;
-      description: string | null;
-      scheduleDate: string | null;
-      priority: number | null;
-      status: number | null;
-      createdAt: string | null;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  users: {
-    __typename: "ModelRoomGroupConnection";
-    items: Array<{
-      __typename: "RoomGroup";
-      id: string;
-      roomID: string;
-      userID: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type DeleteRoomMutation = {
-  __typename: "Room";
-  id: string;
-  name: string;
-  companyID: string;
-  description: string;
-  company: {
-    __typename: "Company";
-    id: string;
-    name: string;
-    domain: string;
-    room: {
-      __typename: "ModelRoomConnection";
-      nextToken: string | null;
-    } | null;
-    companyMembers: {
-      __typename: "ModelUserConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  };
-  tasks: {
-    __typename: "ModelTaskConnection";
-    items: Array<{
-      __typename: "Task";
-      id: string;
-      authorID: string;
-      roomID: string;
-      chargePersonID: string;
-      title: string;
-      description: string | null;
-      scheduleDate: string | null;
-      priority: number | null;
-      status: number | null;
-      createdAt: string | null;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  users: {
-    __typename: "ModelRoomGroupConnection";
-    items: Array<{
-      __typename: "RoomGroup";
-      id: string;
-      roomID: string;
-      userID: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type CreateMessageMutation = {
-  __typename: "Message";
-  id: string;
-  taskID: string;
-  authorID: string;
-  content: string;
-  createdAt: string;
-  isSent?: boolean | null;
-  attachment?: Array<{
-    __typename: "S3Object";
-    bucket: string;
-    region: string;
-    key: string;
-  } | null> | null;
-  author: {
-    __typename: "User";
-    id: string;
-    username: string;
+    username?: string | null;
     email: string;
     companyID: string;
     tel?: string | null;
@@ -2061,45 +1867,71 @@ export type CreateMessageMutation = {
     } | null;
     createdAt: string;
     updatedAt: string;
-    owner?: string | null;
-  };
-  task: {
-    __typename: "Task";
+  } | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type UpdateRoomGroupMutation = {
+  __typename: "RoomGroup";
+  id: string;
+  roomID: string;
+  userID: string;
+  room?: {
+    __typename: "Room";
     id: string;
-    authorID: string;
-    roomID: string;
-    chargePersonID: string;
-    title: string;
-    room: {
-      __typename: "Room";
+    name: string;
+    companyID: string;
+    description: string;
+    company: {
+      __typename: "Company";
       id: string;
       name: string;
-      companyID: string;
-      description: string;
+      isRegistered: boolean;
+      otp?: string | null;
+      tel?: string | null;
+      officialEmail?: string | null;
+      billing?: boolean | null;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     };
-    description?: string | null;
-    iconTask?: {
+    tasks?: {
+      __typename: "ModelTaskConnection";
+      nextToken?: string | null;
+    } | null;
+    users?: {
+      __typename: "ModelRoomGroupConnection";
+      nextToken?: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+  user?: {
+    __typename: "User";
+    id: string;
+    username?: string | null;
+    email: string;
+    companyID: string;
+    tel?: string | null;
+    positionName?: string | null;
+    iconImage?: {
       __typename: "S3Object";
       bucket: string;
       region: string;
       key: string;
     } | null;
-    scheduleDate?: string | null;
-    priority?: number | null;
-    status?: number | null;
-    createdAt?: string | null;
-    chargePerson: {
-      __typename: "User";
+    registered?: boolean | null;
+    authority?: boolean | null;
+    company: {
+      __typename: "Company";
       id: string;
-      username: string;
-      email: string;
-      companyID: string;
+      name: string;
+      isRegistered: boolean;
+      otp?: string | null;
       tel?: string | null;
-      positionName?: string | null;
-      registered?: boolean | null;
-      authority?: boolean | null;
+      officialEmail?: string | null;
+      billing?: boolean | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
@@ -2108,17 +1940,329 @@ export type CreateMessageMutation = {
       __typename: "ModelMessageConnection";
       nextToken?: string | null;
     } | null;
-    users?: {
+    room?: {
+      __typename: "ModelRoomGroupConnection";
+      nextToken?: string | null;
+    } | null;
+    task?: {
       __typename: "ModelTaskGroupConnection";
       nextToken?: string | null;
     } | null;
+    chargeTask?: {
+      __typename: "ModelTaskConnection";
+      nextToken?: string | null;
+    } | null;
+    createdAt: string;
     updatedAt: string;
-  };
+  } | null;
+  createdAt: string;
   updatedAt: string;
-  owner?: string | null;
 };
 
-export type UpdateMessageMutation = {
+export type DeleteRoomGroupMutation = {
+  __typename: "RoomGroup";
+  id: string;
+  roomID: string;
+  userID: string;
+  room?: {
+    __typename: "Room";
+    id: string;
+    name: string;
+    companyID: string;
+    description: string;
+    company: {
+      __typename: "Company";
+      id: string;
+      name: string;
+      isRegistered: boolean;
+      otp?: string | null;
+      tel?: string | null;
+      officialEmail?: string | null;
+      billing?: boolean | null;
+      createdAt: string;
+      updatedAt: string;
+      owner?: string | null;
+    };
+    tasks?: {
+      __typename: "ModelTaskConnection";
+      nextToken?: string | null;
+    } | null;
+    users?: {
+      __typename: "ModelRoomGroupConnection";
+      nextToken?: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+  user?: {
+    __typename: "User";
+    id: string;
+    username?: string | null;
+    email: string;
+    companyID: string;
+    tel?: string | null;
+    positionName?: string | null;
+    iconImage?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
+    registered?: boolean | null;
+    authority?: boolean | null;
+    company: {
+      __typename: "Company";
+      id: string;
+      name: string;
+      isRegistered: boolean;
+      otp?: string | null;
+      tel?: string | null;
+      officialEmail?: string | null;
+      billing?: boolean | null;
+      createdAt: string;
+      updatedAt: string;
+      owner?: string | null;
+    };
+    messages?: {
+      __typename: "ModelMessageConnection";
+      nextToken?: string | null;
+    } | null;
+    room?: {
+      __typename: "ModelRoomGroupConnection";
+      nextToken?: string | null;
+    } | null;
+    task?: {
+      __typename: "ModelTaskGroupConnection";
+      nextToken?: string | null;
+    } | null;
+    chargeTask?: {
+      __typename: "ModelTaskConnection";
+      nextToken?: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type CreateRoomMutation = {
+  __typename: "Room";
+  id: string;
+  name: string;
+  companyID: string;
+  description: string;
+  company: {
+    __typename: "Company";
+    id: string;
+    name: string;
+    officer: Array<{
+      __typename: "Officer";
+      officerEmail: string;
+      officerName: string;
+    } | null>;
+    isRegistered: boolean;
+    otp?: string | null;
+    tel?: string | null;
+    officialEmail?: string | null;
+    iconCompany?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
+    billing?: boolean | null;
+    room?: {
+      __typename: "ModelRoomConnection";
+      nextToken?: string | null;
+    } | null;
+    companyMembers?: {
+      __typename: "ModelUserConnection";
+      nextToken?: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+    owner?: string | null;
+  };
+  tasks?: {
+    __typename: "ModelTaskConnection";
+    items?: Array<{
+      __typename: "Task";
+      id: string;
+      authorID: string;
+      roomID: string;
+      chargePersonID: string;
+      title: string;
+      description?: string | null;
+      scheduleDate?: string | null;
+      priority?: number | null;
+      status?: number | null;
+      createdAt?: string | null;
+      updatedAt: string;
+    } | null> | null;
+    nextToken?: string | null;
+  } | null;
+  users?: {
+    __typename: "ModelRoomGroupConnection";
+    items?: Array<{
+      __typename: "RoomGroup";
+      id: string;
+      roomID: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken?: string | null;
+  } | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type UpdateRoomMutation = {
+  __typename: "Room";
+  id: string;
+  name: string;
+  companyID: string;
+  description: string;
+  company: {
+    __typename: "Company";
+    id: string;
+    name: string;
+    officer: Array<{
+      __typename: "Officer";
+      officerEmail: string;
+      officerName: string;
+    } | null>;
+    isRegistered: boolean;
+    otp?: string | null;
+    tel?: string | null;
+    officialEmail?: string | null;
+    iconCompany?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
+    billing?: boolean | null;
+    room?: {
+      __typename: "ModelRoomConnection";
+      nextToken?: string | null;
+    } | null;
+    companyMembers?: {
+      __typename: "ModelUserConnection";
+      nextToken?: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+    owner?: string | null;
+  };
+  tasks?: {
+    __typename: "ModelTaskConnection";
+    items?: Array<{
+      __typename: "Task";
+      id: string;
+      authorID: string;
+      roomID: string;
+      chargePersonID: string;
+      title: string;
+      description?: string | null;
+      scheduleDate?: string | null;
+      priority?: number | null;
+      status?: number | null;
+      createdAt?: string | null;
+      updatedAt: string;
+    } | null> | null;
+    nextToken?: string | null;
+  } | null;
+  users?: {
+    __typename: "ModelRoomGroupConnection";
+    items?: Array<{
+      __typename: "RoomGroup";
+      id: string;
+      roomID: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken?: string | null;
+  } | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type DeleteRoomMutation = {
+  __typename: "Room";
+  id: string;
+  name: string;
+  companyID: string;
+  description: string;
+  company: {
+    __typename: "Company";
+    id: string;
+    name: string;
+    officer: Array<{
+      __typename: "Officer";
+      officerEmail: string;
+      officerName: string;
+    } | null>;
+    isRegistered: boolean;
+    otp?: string | null;
+    tel?: string | null;
+    officialEmail?: string | null;
+    iconCompany?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
+    billing?: boolean | null;
+    room?: {
+      __typename: "ModelRoomConnection";
+      nextToken?: string | null;
+    } | null;
+    companyMembers?: {
+      __typename: "ModelUserConnection";
+      nextToken?: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+    owner?: string | null;
+  };
+  tasks?: {
+    __typename: "ModelTaskConnection";
+    items?: Array<{
+      __typename: "Task";
+      id: string;
+      authorID: string;
+      roomID: string;
+      chargePersonID: string;
+      title: string;
+      description?: string | null;
+      scheduleDate?: string | null;
+      priority?: number | null;
+      status?: number | null;
+      createdAt?: string | null;
+      updatedAt: string;
+    } | null> | null;
+    nextToken?: string | null;
+  } | null;
+  users?: {
+    __typename: "ModelRoomGroupConnection";
+    items?: Array<{
+      __typename: "RoomGroup";
+      id: string;
+      roomID: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken?: string | null;
+  } | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type CreateMessageMutation = {
   __typename: "Message";
   id: string;
   taskID: string;
@@ -2135,7 +2279,7 @@ export type UpdateMessageMutation = {
   author: {
     __typename: "User";
     id: string;
-    username: string;
+    username?: string | null;
     email: string;
     companyID: string;
     tel?: string | null;
@@ -2147,14 +2291,19 @@ export type UpdateMessageMutation = {
       key: string;
     } | null;
     registered?: boolean | null;
-    authority?: string | null;
+    authority?: boolean | null;
     company: {
       __typename: "Company";
       id: string;
       name: string;
-      domain: string;
+      isRegistered: boolean;
+      otp?: string | null;
+      tel?: string | null;
+      officialEmail?: string | null;
+      billing?: boolean | null;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     };
     messages?: {
       __typename: "ModelMessageConnection";
@@ -2192,6 +2341,12 @@ export type UpdateMessageMutation = {
       updatedAt: string;
     };
     description?: string | null;
+    iconTask?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
     scheduleDate?: string | null;
     priority?: number | null;
     status?: number | null;
@@ -2199,13 +2354,13 @@ export type UpdateMessageMutation = {
     chargePerson: {
       __typename: "User";
       id: string;
-      username: string;
+      username?: string | null;
       email: string;
       companyID: string;
       tel?: string | null;
       positionName?: string | null;
       registered?: boolean | null;
-      authority?: string | null;
+      authority?: boolean | null;
       createdAt: string;
       updatedAt: string;
     };
@@ -2220,50 +2375,67 @@ export type UpdateMessageMutation = {
     updatedAt: string;
   };
   updatedAt: string;
+  owner?: string | null;
 };
 
-export type DeleteMessageMutation = {
+export type UpdateMessageMutation = {
   __typename: "Message";
   id: string;
   taskID: string;
   authorID: string;
   content: string;
-  createdAt: string | null;
-  isSent: boolean | null;
+  createdAt: string;
+  isSent?: boolean | null;
+  attachment?: Array<{
+    __typename: "S3Object";
+    bucket: string;
+    region: string;
+    key: string;
+  } | null> | null;
   author: {
     __typename: "User";
     id: string;
-    username: string;
+    username?: string | null;
     email: string;
     companyID: string;
-    tel: string | null;
-    positionName: string | null;
-    iconImage: string | null;
-    registered: boolean | null;
-    authority: string | null;
+    tel?: string | null;
+    positionName?: string | null;
+    iconImage?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
+    registered?: boolean | null;
+    authority?: boolean | null;
     company: {
       __typename: "Company";
       id: string;
       name: string;
-      domain: string;
+      isRegistered: boolean;
+      otp?: string | null;
+      tel?: string | null;
+      officialEmail?: string | null;
+      billing?: boolean | null;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     };
-    messages: {
+    messages?: {
       __typename: "ModelMessageConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    room: {
+    room?: {
       __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    task: {
+    task?: {
       __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    chargeTask: {
+    chargeTask?: {
       __typename: "ModelTaskConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
     createdAt: string;
     updatedAt: string;
@@ -2284,36 +2456,158 @@ export type DeleteMessageMutation = {
       createdAt: string;
       updatedAt: string;
     };
-    description: string | null;
-    scheduleDate: string | null;
-    priority: number | null;
-    status: number | null;
-    createdAt: string | null;
-    messages: {
-      __typename: "ModelMessageConnection";
-      nextToken: string | null;
+    description?: string | null;
+    iconTask?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
     } | null;
-    users: {
-      __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
-    } | null;
+    scheduleDate?: string | null;
+    priority?: number | null;
+    status?: number | null;
+    createdAt?: string | null;
     chargePerson: {
       __typename: "User";
       id: string;
-      username: string;
+      username?: string | null;
       email: string;
       companyID: string;
-      tel: string | null;
-      positionName: string | null;
-      iconImage: string | null;
-      registered: boolean | null;
-      authority: string | null;
+      tel?: string | null;
+      positionName?: string | null;
+      registered?: boolean | null;
+      authority?: boolean | null;
       createdAt: string;
       updatedAt: string;
+    };
+    messages?: {
+      __typename: "ModelMessageConnection";
+      nextToken?: string | null;
+    } | null;
+    users?: {
+      __typename: "ModelTaskGroupConnection";
+      nextToken?: string | null;
     } | null;
     updatedAt: string;
   };
   updatedAt: string;
+  owner?: string | null;
+};
+
+export type DeleteMessageMutation = {
+  __typename: "Message";
+  id: string;
+  taskID: string;
+  authorID: string;
+  content: string;
+  createdAt: string;
+  isSent?: boolean | null;
+  attachment?: Array<{
+    __typename: "S3Object";
+    bucket: string;
+    region: string;
+    key: string;
+  } | null> | null;
+  author: {
+    __typename: "User";
+    id: string;
+    username?: string | null;
+    email: string;
+    companyID: string;
+    tel?: string | null;
+    positionName?: string | null;
+    iconImage?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
+    registered?: boolean | null;
+    authority?: boolean | null;
+    company: {
+      __typename: "Company";
+      id: string;
+      name: string;
+      isRegistered: boolean;
+      otp?: string | null;
+      tel?: string | null;
+      officialEmail?: string | null;
+      billing?: boolean | null;
+      createdAt: string;
+      updatedAt: string;
+      owner?: string | null;
+    };
+    messages?: {
+      __typename: "ModelMessageConnection";
+      nextToken?: string | null;
+    } | null;
+    room?: {
+      __typename: "ModelRoomGroupConnection";
+      nextToken?: string | null;
+    } | null;
+    task?: {
+      __typename: "ModelTaskGroupConnection";
+      nextToken?: string | null;
+    } | null;
+    chargeTask?: {
+      __typename: "ModelTaskConnection";
+      nextToken?: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+  };
+  task: {
+    __typename: "Task";
+    id: string;
+    authorID: string;
+    roomID: string;
+    chargePersonID: string;
+    title: string;
+    room: {
+      __typename: "Room";
+      id: string;
+      name: string;
+      companyID: string;
+      description: string;
+      createdAt: string;
+      updatedAt: string;
+    };
+    description?: string | null;
+    iconTask?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
+    scheduleDate?: string | null;
+    priority?: number | null;
+    status?: number | null;
+    createdAt?: string | null;
+    chargePerson: {
+      __typename: "User";
+      id: string;
+      username?: string | null;
+      email: string;
+      companyID: string;
+      tel?: string | null;
+      positionName?: string | null;
+      registered?: boolean | null;
+      authority?: boolean | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+    messages?: {
+      __typename: "ModelMessageConnection";
+      nextToken?: string | null;
+    } | null;
+    users?: {
+      __typename: "ModelTaskGroupConnection";
+      nextToken?: string | null;
+    } | null;
+    updatedAt: string;
+  };
+  updatedAt: string;
+  owner?: string | null;
 };
 
 export type GetCompanyQuery = {
@@ -2363,7 +2657,6 @@ export type GetCompanyQuery = {
       authority?: boolean | null;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
     } | null> | null;
     nextToken?: string | null;
   } | null;
@@ -2371,6 +2664,7 @@ export type GetCompanyQuery = {
   updatedAt: string;
   owner?: string | null;
 };
+
 export type ListCompanysQuery = {
   __typename: "ModelCompanyConnection";
   items?: Array<{
@@ -2392,6 +2686,7 @@ export type ListCompanysQuery = {
       region: string;
       key: string;
     } | null;
+    billing?: boolean | null;
     room?: {
       __typename: "ModelRoomConnection";
       nextToken?: string | null;
@@ -2403,6 +2698,334 @@ export type ListCompanysQuery = {
     createdAt: string;
     updatedAt: string;
     owner?: string | null;
+  } | null> | null;
+  nextToken?: string | null;
+};
+
+export type GetTaskGroupQuery = {
+  __typename: "TaskGroup";
+  id: string;
+  taskID: string;
+  userID: string;
+  task?: {
+    __typename: "Task";
+    id: string;
+    authorID: string;
+    roomID: string;
+    chargePersonID: string;
+    title: string;
+    room: {
+      __typename: "Room";
+      id: string;
+      name: string;
+      companyID: string;
+      description: string;
+      createdAt: string;
+      updatedAt: string;
+    };
+    description?: string | null;
+    iconTask?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
+    scheduleDate?: string | null;
+    priority?: number | null;
+    status?: number | null;
+    createdAt?: string | null;
+    chargePerson: {
+      __typename: "User";
+      id: string;
+      username?: string | null;
+      email: string;
+      companyID: string;
+      tel?: string | null;
+      positionName?: string | null;
+      registered?: boolean | null;
+      authority?: boolean | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+    messages?: {
+      __typename: "ModelMessageConnection";
+      nextToken?: string | null;
+    } | null;
+    users?: {
+      __typename: "ModelTaskGroupConnection";
+      nextToken?: string | null;
+    } | null;
+    updatedAt: string;
+  } | null;
+  user?: {
+    __typename: "User";
+    id: string;
+    username?: string | null;
+    email: string;
+    companyID: string;
+    tel?: string | null;
+    positionName?: string | null;
+    iconImage?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
+    registered?: boolean | null;
+    authority?: boolean | null;
+    company: {
+      __typename: "Company";
+      id: string;
+      name: string;
+      isRegistered: boolean;
+      otp?: string | null;
+      tel?: string | null;
+      officialEmail?: string | null;
+      billing?: boolean | null;
+      createdAt: string;
+      updatedAt: string;
+      owner?: string | null;
+    };
+    messages?: {
+      __typename: "ModelMessageConnection";
+      nextToken?: string | null;
+    } | null;
+    room?: {
+      __typename: "ModelRoomGroupConnection";
+      nextToken?: string | null;
+    } | null;
+    task?: {
+      __typename: "ModelTaskGroupConnection";
+      nextToken?: string | null;
+    } | null;
+    chargeTask?: {
+      __typename: "ModelTaskConnection";
+      nextToken?: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type ListTaskGroupsQuery = {
+  __typename: "ModelTaskGroupConnection";
+  items?: Array<{
+    __typename: "TaskGroup";
+    id: string;
+    taskID: string;
+    userID: string;
+    task?: {
+      __typename: "Task";
+      id: string;
+      authorID: string;
+      roomID: string;
+      chargePersonID: string;
+      title: string;
+      description?: string | null;
+      scheduleDate?: string | null;
+      priority?: number | null;
+      status?: number | null;
+      createdAt?: string | null;
+      updatedAt: string;
+    } | null;
+    user?: {
+      __typename: "User";
+      id: string;
+      username?: string | null;
+      email: string;
+      companyID: string;
+      tel?: string | null;
+      positionName?: string | null;
+      registered?: boolean | null;
+      authority?: boolean | null;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+  } | null> | null;
+  nextToken?: string | null;
+};
+
+export type GetTaskQuery = {
+  __typename: "Task";
+  id: string;
+  authorID: string;
+  roomID: string;
+  chargePersonID: string;
+  title: string;
+  room: {
+    __typename: "Room";
+    id: string;
+    name: string;
+    companyID: string;
+    description: string;
+    company: {
+      __typename: "Company";
+      id: string;
+      name: string;
+      isRegistered: boolean;
+      otp?: string | null;
+      tel?: string | null;
+      officialEmail?: string | null;
+      billing?: boolean | null;
+      createdAt: string;
+      updatedAt: string;
+      owner?: string | null;
+    };
+    tasks?: {
+      __typename: "ModelTaskConnection";
+      nextToken?: string | null;
+    } | null;
+    users?: {
+      __typename: "ModelRoomGroupConnection";
+      nextToken?: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+  };
+  description?: string | null;
+  iconTask?: {
+    __typename: "S3Object";
+    bucket: string;
+    region: string;
+    key: string;
+  } | null;
+  scheduleDate?: string | null;
+  priority?: number | null;
+  status?: number | null;
+  createdAt?: string | null;
+  chargePerson: {
+    __typename: "User";
+    id: string;
+    username?: string | null;
+    email: string;
+    companyID: string;
+    tel?: string | null;
+    positionName?: string | null;
+    iconImage?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
+    registered?: boolean | null;
+    authority?: boolean | null;
+    company: {
+      __typename: "Company";
+      id: string;
+      name: string;
+      isRegistered: boolean;
+      otp?: string | null;
+      tel?: string | null;
+      officialEmail?: string | null;
+      billing?: boolean | null;
+      createdAt: string;
+      updatedAt: string;
+      owner?: string | null;
+    };
+    messages?: {
+      __typename: "ModelMessageConnection";
+      nextToken?: string | null;
+    } | null;
+    room?: {
+      __typename: "ModelRoomGroupConnection";
+      nextToken?: string | null;
+    } | null;
+    task?: {
+      __typename: "ModelTaskGroupConnection";
+      nextToken?: string | null;
+    } | null;
+    chargeTask?: {
+      __typename: "ModelTaskConnection";
+      nextToken?: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+  };
+  messages?: {
+    __typename: "ModelMessageConnection";
+    items?: Array<{
+      __typename: "Message";
+      id: string;
+      taskID: string;
+      authorID: string;
+      content: string;
+      createdAt: string;
+      isSent?: boolean | null;
+      updatedAt: string;
+      owner?: string | null;
+    } | null> | null;
+    nextToken?: string | null;
+  } | null;
+  users?: {
+    __typename: "ModelTaskGroupConnection";
+    items?: Array<{
+      __typename: "TaskGroup";
+      id: string;
+      taskID: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken?: string | null;
+  } | null;
+  updatedAt: string;
+};
+
+export type ListTasksQuery = {
+  __typename: "ModelTaskConnection";
+  items?: Array<{
+    __typename: "Task";
+    id: string;
+    authorID: string;
+    roomID: string;
+    chargePersonID: string;
+    title: string;
+    room: {
+      __typename: "Room";
+      id: string;
+      name: string;
+      companyID: string;
+      description: string;
+      createdAt: string;
+      updatedAt: string;
+    };
+    description?: string | null;
+    iconTask?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
+    scheduleDate?: string | null;
+    priority?: number | null;
+    status?: number | null;
+    createdAt?: string | null;
+    chargePerson: {
+      __typename: "User";
+      id: string;
+      username?: string | null;
+      email: string;
+      companyID: string;
+      tel?: string | null;
+      positionName?: string | null;
+      registered?: boolean | null;
+      authority?: boolean | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+    messages?: {
+      __typename: "ModelMessageConnection";
+      nextToken?: string | null;
+    } | null;
+    users?: {
+      __typename: "ModelTaskGroupConnection";
+      nextToken?: string | null;
+    } | null;
+    updatedAt: string;
   } | null> | null;
   nextToken?: string | null;
 };
@@ -2569,293 +3192,6 @@ export type ListUsersQuery = {
   nextToken?: string | null;
 };
 
-export type GetTaskGroupQuery = {
-  __typename: "TaskGroup";
-  id: string;
-  taskID: string;
-  userID: string;
-  task: {
-    __typename: "Task";
-    id: string;
-    authorID: string;
-    roomID: string;
-    chargePersonID: string;
-    title: string;
-    room: {
-      __typename: "Room";
-      id: string;
-      name: string;
-      companyID: string;
-      description: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    description: string | null;
-    scheduleDate: string | null;
-    priority: number | null;
-    status: number | null;
-    createdAt: string | null;
-    messages: {
-      __typename: "ModelMessageConnection";
-      nextToken: string | null;
-    } | null;
-    users: {
-      __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
-    } | null;
-    chargePerson: {
-      __typename: "User";
-      id: string;
-      username: string;
-      email: string;
-      companyID: string;
-      tel: string | null;
-      positionName: string | null;
-      iconImage: string | null;
-      registered: boolean | null;
-      authority: string | null;
-      createdAt: string;
-      updatedAt: string;
-    } | null;
-    updatedAt: string;
-  } | null;
-  user: {
-    __typename: "User";
-    id: string;
-    username: string;
-    email: string;
-    companyID: string;
-    tel: string | null;
-    positionName: string | null;
-    iconImage: string | null;
-    registered: boolean | null;
-    authority: string | null;
-    company: {
-      __typename: "Company";
-      id: string;
-      name: string;
-      domain: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    messages: {
-      __typename: "ModelMessageConnection";
-      nextToken: string | null;
-    } | null;
-    room: {
-      __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
-    } | null;
-    task: {
-      __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
-    } | null;
-    chargeTask: {
-      __typename: "ModelTaskConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type ListTaskGroupsQuery = {
-  __typename: "ModelTaskGroupConnection";
-  items: Array<{
-    __typename: "TaskGroup";
-    id: string;
-    taskID: string;
-    userID: string;
-    task: {
-      __typename: "Task";
-      id: string;
-      authorID: string;
-      roomID: string;
-      chargePersonID: string;
-      title: string;
-      description: string | null;
-      scheduleDate: string | null;
-      priority: number | null;
-      status: number | null;
-      createdAt: string | null;
-      updatedAt: string;
-    } | null;
-    user: {
-      __typename: "User";
-      id: string;
-      username: string;
-      email: string;
-      companyID: string;
-      tel: string | null;
-      positionName: string | null;
-      iconImage: string | null;
-      registered: boolean | null;
-      authority: string | null;
-      createdAt: string;
-      updatedAt: string;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null> | null;
-  nextToken: string | null;
-};
-
-export type GetTaskQuery = {
-  __typename: "Task";
-  id: string;
-  authorID: string;
-  roomID: string;
-  chargePersonID: string;
-  title: string;
-  room: {
-    __typename: "Room";
-    id: string;
-    name: string;
-    companyID: string;
-    description: string;
-    company: {
-      __typename: "Company";
-      id: string;
-      name: string;
-      domain: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    tasks: {
-      __typename: "ModelTaskConnection";
-      nextToken: string | null;
-    } | null;
-    users: {
-      __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  };
-  description: string | null;
-  scheduleDate: string | null;
-  priority: number | null;
-  status: number | null;
-  createdAt: string | null;
-  messages: {
-    __typename: "ModelMessageConnection";
-    items: Array<{
-      __typename: "Message";
-      id: string;
-      taskID: string;
-      authorID: string;
-      content: string;
-      createdAt: string | null;
-      isSent: boolean | null;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  users: {
-    __typename: "ModelTaskGroupConnection";
-    items: Array<{
-      __typename: "TaskGroup";
-      id: string;
-      taskID: string;
-      userID: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  chargePerson: {
-    __typename: "User";
-    id: string;
-    username: string;
-    email: string;
-    companyID: string;
-    tel: string | null;
-    positionName: string | null;
-    iconImage: string | null;
-    registered: boolean | null;
-    authority: string | null;
-    company: {
-      __typename: "Company";
-      id: string;
-      name: string;
-      domain: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    messages: {
-      __typename: "ModelMessageConnection";
-      nextToken: string | null;
-    } | null;
-    room: {
-      __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
-    } | null;
-    task: {
-      __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
-    } | null;
-    chargeTask: {
-      __typename: "ModelTaskConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
-  updatedAt: string;
-};
-
-export type ListTasksQuery = {
-  __typename: "ModelTaskConnection";
-  items: Array<{
-    __typename: "Task";
-    id: string;
-    authorID: string;
-    roomID: string;
-    chargePersonID: string;
-    title: string;
-    room: {
-      __typename: "Room";
-      id: string;
-      name: string;
-      companyID: string;
-      description: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    description: string | null;
-    scheduleDate: string | null;
-    priority: number | null;
-    status: number | null;
-    createdAt: string | null;
-    messages: {
-      __typename: "ModelMessageConnection";
-      nextToken: string | null;
-    } | null;
-    users: {
-      __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
-    } | null;
-    chargePerson: {
-      __typename: "User";
-      id: string;
-      username: string;
-      email: string;
-      companyID: string;
-      tel: string | null;
-      positionName: string | null;
-      iconImage: string | null;
-      registered: boolean | null;
-      authority: string | null;
-      createdAt: string;
-      updatedAt: string;
-    } | null;
-    updatedAt: string;
-  } | null> | null;
-  nextToken: string | null;
-};
-
 export type GetRoomGroupQuery = {
   __typename: "RoomGroup";
   id: string;
@@ -2871,1748 +3207,30 @@ export type GetRoomGroupQuery = {
       __typename: "Company";
       id: string;
       name: string;
-      domain: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    tasks: {
-      __typename: "ModelTaskConnection";
-      nextToken: string | null;
-    } | null;
-    users: {
-      __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
-  user: {
-    __typename: "User";
-    id: string;
-    username: string;
-    email: string;
-    companyID: string;
-    tel: string | null;
-    positionName: string | null;
-    iconImage: string | null;
-    registered: boolean | null;
-    authority: string | null;
-    company: {
-      __typename: "Company";
-      id: string;
-      name: string;
-      domain: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    messages: {
-      __typename: "ModelMessageConnection";
-      nextToken: string | null;
-    } | null;
-    room: {
-      __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
-    } | null;
-    task: {
-      __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
-    } | null;
-    chargeTask: {
-      __typename: "ModelTaskConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type ListRoomGroupsQuery = {
-  __typename: "ModelRoomGroupConnection";
-  items?: Array<{
-    __typename: "RoomGroup";
-    id: string;
-    roomID: string;
-    userID: string;
-    room?: {
-      __typename: "Room";
-      id: string;
-      name: string;
-      companyID: string;
-      description: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null;
-    user?: {
-      __typename: "User";
-      id: string;
-      username: string | null;
-      email: string;
-      companyID: string;
+      isRegistered: boolean;
+      otp?: string | null;
       tel?: string | null;
-      positionName?: string | null;
-      registered?: boolean | null;
-      authority?: boolean | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null> | null;
-  nextToken?: string | null;
-};
-
-export type GetRoomQuery = {
-  __typename: "Room";
-  id: string;
-  name: string;
-  companyID: string;
-  description: string;
-  company: {
-    __typename: "Company";
-    id: string;
-    name: string;
-    domain: string;
-    room: {
-      __typename: "ModelRoomConnection";
-      nextToken: string | null;
-    } | null;
-    companyMembers: {
-      __typename: "ModelUserConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  };
-  tasks: {
-    __typename: "ModelTaskConnection";
-    items: Array<{
-      __typename: "Task";
-      id: string;
-      authorID: string;
-      roomID: string;
-      chargePersonID: string;
-      title: string;
-      description: string | null;
-      scheduleDate: string | null;
-      priority: number | null;
-      status: number | null;
-      createdAt: string | null;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  users: {
-    __typename: "ModelRoomGroupConnection";
-    items: Array<{
-      __typename: "RoomGroup";
-      id: string;
-      roomID: string;
-      userID: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type ListRoomsQuery = {
-  __typename: "ModelRoomConnection";
-  items: Array<{
-    __typename: "Room";
-    id: string;
-    name: string;
-    companyID: string;
-    description: string;
-    company: {
-      __typename: "Company";
-      id: string;
-      name: string;
-      domain: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    tasks: {
-      __typename: "ModelTaskConnection";
-      nextToken: string | null;
-    } | null;
-    users: {
-      __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null> | null;
-  nextToken: string | null;
-};
-
-export type GetMessageQuery = {
-  __typename: "Message";
-  id: string;
-  taskID: string;
-  authorID: string;
-  content: string;
-  createdAt: string | null;
-  isSent: boolean | null;
-  author: {
-    __typename: "User";
-    id: string;
-    username: string;
-    email: string;
-    companyID: string;
-    tel: string | null;
-    positionName: string | null;
-    iconImage: string | null;
-    registered: boolean | null;
-    authority: string | null;
-    company: {
-      __typename: "Company";
-      id: string;
-      name: string;
-      domain: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    messages: {
-      __typename: "ModelMessageConnection";
-      nextToken: string | null;
-    } | null;
-    room: {
-      __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
-    } | null;
-    task: {
-      __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
-    } | null;
-    chargeTask: {
-      __typename: "ModelTaskConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  };
-  task: {
-    __typename: "Task";
-    id: string;
-    authorID: string;
-    roomID: string;
-    chargePersonID: string;
-    title: string;
-    room: {
-      __typename: "Room";
-      id: string;
-      name: string;
-      companyID: string;
-      description: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    description: string | null;
-    scheduleDate: string | null;
-    priority: number | null;
-    status: number | null;
-    createdAt: string | null;
-    messages: {
-      __typename: "ModelMessageConnection";
-      nextToken: string | null;
-    } | null;
-    users: {
-      __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
-    } | null;
-    chargePerson: {
-      __typename: "User";
-      id: string;
-      username: string;
-      email: string;
-      companyID: string;
-      tel: string | null;
-      positionName: string | null;
-      iconImage: string | null;
-      registered: boolean | null;
-      authority: string | null;
-      createdAt: string;
-      updatedAt: string;
-    } | null;
-    updatedAt: string;
-  };
-  updatedAt: string;
-};
-
-export type TaskByCreatedAtQuery = {
-  __typename: "ModelMessageConnection";
-  items?: Array<{
-    __typename: "Message";
-    id: string;
-    taskID: string;
-    authorID: string;
-    content: string;
-    createdAt: string;
-    isSent?: boolean | null;
-    attachment?: Array<{
-      __typename: "S3Object";
-      bucket: string;
-      region: string;
-      key: string;
-    } | null> | null;
-    author: {
-      __typename: "User";
-      id: string;
-      username: string;
-      email: string;
-      companyID: string;
-      tel?: string | null;
-      positionName?: string | null;
-      registered?: boolean | null;
-      authority?: boolean | null;
+      officialEmail?: string | null;
+      billing?: boolean | null;
       createdAt: string;
       updatedAt: string;
       owner?: string | null;
     };
-    task: {
-      __typename: "Task";
-      id: string;
-      authorID: string;
-      roomID: string;
-      chargePersonID: string;
-      title: string;
-      description?: string | null;
-      scheduleDate?: string | null;
-      priority?: number | null;
-      status?: number | null;
-      createdAt?: string | null;
-      updatedAt: string;
-    };
-    updatedAt: string;
-    owner?: string | null;
-  } | null> | null;
-  nextToken?: string | null;
-};
-
-export type ListMessagesQuery = {
-  __typename: "ModelMessageConnection";
-  items?: Array<{
-    __typename: "Message";
-    id: string;
-    taskID: string;
-    authorID: string;
-    content: string;
-    createdAt: string;
-    isSent?: boolean | null;
-    attachment?: Array<{
-      __typename: "S3Object";
-      bucket: string;
-      region: string;
-      key: string;
-    } | null> | null;
-    author: {
-      __typename: "User";
-      id: string;
-      username: string;
-      email: string;
-      companyID: string;
-      tel?: string | null;
-      positionName?: string | null;
-      registered?: boolean | null;
-      authority?: string | null;
-      createdAt: string;
-      updatedAt: string;
-    };
-    task: {
-      __typename: "Task";
-      id: string;
-      authorID: string;
-      roomID: string;
-      chargePersonID: string;
-      title: string;
-      description?: string | null;
-      scheduleDate?: string | null;
-      priority?: number | null;
-      status?: number | null;
-      createdAt?: string | null;
-      updatedAt: string;
-    };
-    updatedAt: string;
-  } | null> | null;
-  nextToken?: string | null;
-};
-
-export type OnCreateCompanySubscription = {
-  __typename: "Company";
-  id: string;
-  name: string;
-  domain: string;
-  room: {
-    __typename: "ModelRoomConnection";
-    items: Array<{
-      __typename: "Room";
-      id: string;
-      name: string;
-      companyID: string;
-      description: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  companyMembers: {
-    __typename: "ModelUserConnection";
-    items: Array<{
-      __typename: "User";
-      id: string;
-      username: string;
-      email: string;
-      companyID: string;
-      tel: string | null;
-      positionName: string | null;
-      iconImage: string | null;
-      registered: boolean | null;
-      authority: string | null;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type OnUpdateCompanySubscription = {
-  __typename: "Company";
-  id: string;
-  name: string;
-  domain: string;
-  room: {
-    __typename: "ModelRoomConnection";
-    items: Array<{
-      __typename: "Room";
-      id: string;
-      name: string;
-      companyID: string;
-      description: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  companyMembers: {
-    __typename: "ModelUserConnection";
-    items: Array<{
-      __typename: "User";
-      id: string;
-      username: string;
-      email: string;
-      companyID: string;
-      tel: string | null;
-      positionName: string | null;
-      iconImage: string | null;
-      registered: boolean | null;
-      authority: string | null;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type OnDeleteCompanySubscription = {
-  __typename: "Company";
-  id: string;
-  name: string;
-  domain: string;
-  room: {
-    __typename: "ModelRoomConnection";
-    items: Array<{
-      __typename: "Room";
-      id: string;
-      name: string;
-      companyID: string;
-      description: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  companyMembers: {
-    __typename: "ModelUserConnection";
-    items: Array<{
-      __typename: "User";
-      id: string;
-      username: string;
-      email: string;
-      companyID: string;
-      tel: string | null;
-      positionName: string | null;
-      iconImage: string | null;
-      registered: boolean | null;
-      authority: string | null;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type OnCreateUserSubscription = {
-  __typename: "User";
-  id: string;
-  username: string;
-  email: string;
-  companyID: string;
-  tel: string | null;
-  positionName: string | null;
-  iconImage: string | null;
-  registered: boolean | null;
-  authority: string | null;
-  company: {
-    __typename: "Company";
-    id: string;
-    name: string;
-    domain: string;
-    room: {
-      __typename: "ModelRoomConnection";
-      nextToken: string | null;
+    tasks?: {
+      __typename: "ModelTaskConnection";
+      nextToken?: string | null;
     } | null;
-    companyMembers: {
-      __typename: "ModelUserConnection";
-      nextToken: string | null;
+    users?: {
+      __typename: "ModelRoomGroupConnection";
+      nextToken?: string | null;
     } | null;
     createdAt: string;
     updatedAt: string;
-  };
-  messages: {
-    __typename: "ModelMessageConnection";
-    items: Array<{
-      __typename: "Message";
-      id: string;
-      taskID: string;
-      authorID: string;
-      content: string;
-      createdAt: string | null;
-      isSent: boolean | null;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
   } | null;
-  room: {
-    __typename: "ModelRoomGroupConnection";
-    items: Array<{
-      __typename: "RoomGroup";
-      id: string;
-      roomID: string;
-      userID: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  task: {
-    __typename: "ModelTaskGroupConnection";
-    items: Array<{
-      __typename: "TaskGroup";
-      id: string;
-      taskID: string;
-      userID: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  chargeTask: {
-    __typename: "ModelTaskConnection";
-    items: Array<{
-      __typename: "Task";
-      id: string;
-      authorID: string;
-      roomID: string;
-      chargePersonID: string;
-      title: string;
-      description: string | null;
-      scheduleDate: string | null;
-      priority: number | null;
-      status: number | null;
-      createdAt: string | null;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type OnUpdateUserSubscription = {
-  __typename: "User";
-  id: string;
-  username: string;
-  email: string;
-  companyID: string;
-  tel: string | null;
-  positionName: string | null;
-  iconImage: string | null;
-  registered: boolean | null;
-  authority: string | null;
-  company: {
-    __typename: "Company";
-    id: string;
-    name: string;
-    domain: string;
-    room: {
-      __typename: "ModelRoomConnection";
-      nextToken: string | null;
-    } | null;
-    companyMembers: {
-      __typename: "ModelUserConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  };
-  messages: {
-    __typename: "ModelMessageConnection";
-    items: Array<{
-      __typename: "Message";
-      id: string;
-      taskID: string;
-      authorID: string;
-      content: string;
-      createdAt: string | null;
-      isSent: boolean | null;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  room: {
-    __typename: "ModelRoomGroupConnection";
-    items: Array<{
-      __typename: "RoomGroup";
-      id: string;
-      roomID: string;
-      userID: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  task: {
-    __typename: "ModelTaskGroupConnection";
-    items: Array<{
-      __typename: "TaskGroup";
-      id: string;
-      taskID: string;
-      userID: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  chargeTask: {
-    __typename: "ModelTaskConnection";
-    items: Array<{
-      __typename: "Task";
-      id: string;
-      authorID: string;
-      roomID: string;
-      chargePersonID: string;
-      title: string;
-      description: string | null;
-      scheduleDate: string | null;
-      priority: number | null;
-      status: number | null;
-      createdAt: string | null;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type OnDeleteUserSubscription = {
-  __typename: "User";
-  id: string;
-  username: string;
-  email: string;
-  companyID: string;
-  tel: string | null;
-  positionName: string | null;
-  iconImage: string | null;
-  registered: boolean | null;
-  authority: string | null;
-  company: {
-    __typename: "Company";
-    id: string;
-    name: string;
-    domain: string;
-    room: {
-      __typename: "ModelRoomConnection";
-      nextToken: string | null;
-    } | null;
-    companyMembers: {
-      __typename: "ModelUserConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  };
-  messages: {
-    __typename: "ModelMessageConnection";
-    items: Array<{
-      __typename: "Message";
-      id: string;
-      taskID: string;
-      authorID: string;
-      content: string;
-      createdAt: string | null;
-      isSent: boolean | null;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  room: {
-    __typename: "ModelRoomGroupConnection";
-    items: Array<{
-      __typename: "RoomGroup";
-      id: string;
-      roomID: string;
-      userID: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  task: {
-    __typename: "ModelTaskGroupConnection";
-    items: Array<{
-      __typename: "TaskGroup";
-      id: string;
-      taskID: string;
-      userID: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  chargeTask: {
-    __typename: "ModelTaskConnection";
-    items: Array<{
-      __typename: "Task";
-      id: string;
-      authorID: string;
-      roomID: string;
-      chargePersonID: string;
-      title: string;
-      description: string | null;
-      scheduleDate: string | null;
-      priority: number | null;
-      status: number | null;
-      createdAt: string | null;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type OnCreateTaskGroupSubscription = {
-  __typename: "TaskGroup";
-  id: string;
-  taskID: string;
-  userID: string;
-  task: {
-    __typename: "Task";
-    id: string;
-    authorID: string;
-    roomID: string;
-    chargePersonID: string;
-    title: string;
-    room: {
-      __typename: "Room";
-      id: string;
-      name: string;
-      companyID: string;
-      description: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    description: string | null;
-    scheduleDate: string | null;
-    priority: number | null;
-    status: number | null;
-    createdAt: string | null;
-    messages: {
-      __typename: "ModelMessageConnection";
-      nextToken: string | null;
-    } | null;
-    users: {
-      __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
-    } | null;
-    chargePerson: {
-      __typename: "User";
-      id: string;
-      username: string;
-      email: string;
-      companyID: string;
-      tel: string | null;
-      positionName: string | null;
-      iconImage: string | null;
-      registered: boolean | null;
-      authority: string | null;
-      createdAt: string;
-      updatedAt: string;
-    } | null;
-    updatedAt: string;
-  } | null;
-  user: {
+  user?: {
     __typename: "User";
     id: string;
-    username: string;
-    email: string;
-    companyID: string;
-    tel: string | null;
-    positionName: string | null;
-    iconImage: string | null;
-    registered: boolean | null;
-    authority: string | null;
-    company: {
-      __typename: "Company";
-      id: string;
-      name: string;
-      domain: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    messages: {
-      __typename: "ModelMessageConnection";
-      nextToken: string | null;
-    } | null;
-    room: {
-      __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
-    } | null;
-    task: {
-      __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
-    } | null;
-    chargeTask: {
-      __typename: "ModelTaskConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type OnUpdateTaskGroupSubscription = {
-  __typename: "TaskGroup";
-  id: string;
-  taskID: string;
-  userID: string;
-  task: {
-    __typename: "Task";
-    id: string;
-    authorID: string;
-    roomID: string;
-    chargePersonID: string;
-    title: string;
-    room: {
-      __typename: "Room";
-      id: string;
-      name: string;
-      companyID: string;
-      description: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    description: string | null;
-    scheduleDate: string | null;
-    priority: number | null;
-    status: number | null;
-    createdAt: string | null;
-    messages: {
-      __typename: "ModelMessageConnection";
-      nextToken: string | null;
-    } | null;
-    users: {
-      __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
-    } | null;
-    chargePerson: {
-      __typename: "User";
-      id: string;
-      username: string;
-      email: string;
-      companyID: string;
-      tel: string | null;
-      positionName: string | null;
-      iconImage: string | null;
-      registered: boolean | null;
-      authority: string | null;
-      createdAt: string;
-      updatedAt: string;
-    } | null;
-    updatedAt: string;
-  } | null;
-  user: {
-    __typename: "User";
-    id: string;
-    username: string;
-    email: string;
-    companyID: string;
-    tel: string | null;
-    positionName: string | null;
-    iconImage: string | null;
-    registered: boolean | null;
-    authority: string | null;
-    company: {
-      __typename: "Company";
-      id: string;
-      name: string;
-      domain: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    messages: {
-      __typename: "ModelMessageConnection";
-      nextToken: string | null;
-    } | null;
-    room: {
-      __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
-    } | null;
-    task: {
-      __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
-    } | null;
-    chargeTask: {
-      __typename: "ModelTaskConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type OnDeleteTaskGroupSubscription = {
-  __typename: "TaskGroup";
-  id: string;
-  taskID: string;
-  userID: string;
-  task: {
-    __typename: "Task";
-    id: string;
-    authorID: string;
-    roomID: string;
-    chargePersonID: string;
-    title: string;
-    room: {
-      __typename: "Room";
-      id: string;
-      name: string;
-      companyID: string;
-      description: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    description: string | null;
-    scheduleDate: string | null;
-    priority: number | null;
-    status: number | null;
-    createdAt: string | null;
-    messages: {
-      __typename: "ModelMessageConnection";
-      nextToken: string | null;
-    } | null;
-    users: {
-      __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
-    } | null;
-    chargePerson: {
-      __typename: "User";
-      id: string;
-      username: string;
-      email: string;
-      companyID: string;
-      tel: string | null;
-      positionName: string | null;
-      iconImage: string | null;
-      registered: boolean | null;
-      authority: string | null;
-      createdAt: string;
-      updatedAt: string;
-    } | null;
-    updatedAt: string;
-  } | null;
-  user: {
-    __typename: "User";
-    id: string;
-    username: string;
-    email: string;
-    companyID: string;
-    tel: string | null;
-    positionName: string | null;
-    iconImage: string | null;
-    registered: boolean | null;
-    authority: string | null;
-    company: {
-      __typename: "Company";
-      id: string;
-      name: string;
-      domain: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    messages: {
-      __typename: "ModelMessageConnection";
-      nextToken: string | null;
-    } | null;
-    room: {
-      __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
-    } | null;
-    task: {
-      __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
-    } | null;
-    chargeTask: {
-      __typename: "ModelTaskConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type OnCreateTaskSubscription = {
-  __typename: "Task";
-  id: string;
-  authorID: string;
-  roomID: string;
-  chargePersonID: string;
-  title: string;
-  room: {
-    __typename: "Room";
-    id: string;
-    name: string;
-    companyID: string;
-    description: string;
-    company: {
-      __typename: "Company";
-      id: string;
-      name: string;
-      domain: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    tasks: {
-      __typename: "ModelTaskConnection";
-      nextToken: string | null;
-    } | null;
-    users: {
-      __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  };
-  description: string | null;
-  scheduleDate: string | null;
-  priority: number | null;
-  status: number | null;
-  createdAt: string | null;
-  messages: {
-    __typename: "ModelMessageConnection";
-    items: Array<{
-      __typename: "Message";
-      id: string;
-      taskID: string;
-      authorID: string;
-      content: string;
-      createdAt: string | null;
-      isSent: boolean | null;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  users: {
-    __typename: "ModelTaskGroupConnection";
-    items: Array<{
-      __typename: "TaskGroup";
-      id: string;
-      taskID: string;
-      userID: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  chargePerson: {
-    __typename: "User";
-    id: string;
-    username: string;
-    email: string;
-    companyID: string;
-    tel: string | null;
-    positionName: string | null;
-    iconImage: string | null;
-    registered: boolean | null;
-    authority: string | null;
-    company: {
-      __typename: "Company";
-      id: string;
-      name: string;
-      domain: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    messages: {
-      __typename: "ModelMessageConnection";
-      nextToken: string | null;
-    } | null;
-    room: {
-      __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
-    } | null;
-    task: {
-      __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
-    } | null;
-    chargeTask: {
-      __typename: "ModelTaskConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
-  updatedAt: string;
-};
-
-export type OnUpdateTaskSubscription = {
-  __typename: "Task";
-  id: string;
-  authorID: string;
-  roomID: string;
-  chargePersonID: string;
-  title: string;
-  room: {
-    __typename: "Room";
-    id: string;
-    name: string;
-    companyID: string;
-    description: string;
-    company: {
-      __typename: "Company";
-      id: string;
-      name: string;
-      domain: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    tasks: {
-      __typename: "ModelTaskConnection";
-      nextToken: string | null;
-    } | null;
-    users: {
-      __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  };
-  description: string | null;
-  scheduleDate: string | null;
-  priority: number | null;
-  status: number | null;
-  createdAt: string | null;
-  messages: {
-    __typename: "ModelMessageConnection";
-    items: Array<{
-      __typename: "Message";
-      id: string;
-      taskID: string;
-      authorID: string;
-      content: string;
-      createdAt: string | null;
-      isSent: boolean | null;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  users: {
-    __typename: "ModelTaskGroupConnection";
-    items: Array<{
-      __typename: "TaskGroup";
-      id: string;
-      taskID: string;
-      userID: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  chargePerson: {
-    __typename: "User";
-    id: string;
-    username: string;
-    email: string;
-    companyID: string;
-    tel: string | null;
-    positionName: string | null;
-    iconImage: string | null;
-    registered: boolean | null;
-    authority: string | null;
-    company: {
-      __typename: "Company";
-      id: string;
-      name: string;
-      domain: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    messages: {
-      __typename: "ModelMessageConnection";
-      nextToken: string | null;
-    } | null;
-    room: {
-      __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
-    } | null;
-    task: {
-      __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
-    } | null;
-    chargeTask: {
-      __typename: "ModelTaskConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
-  updatedAt: string;
-};
-
-export type OnDeleteTaskSubscription = {
-  __typename: "Task";
-  id: string;
-  authorID: string;
-  roomID: string;
-  chargePersonID: string;
-  title: string;
-  room: {
-    __typename: "Room";
-    id: string;
-    name: string;
-    companyID: string;
-    description: string;
-    company: {
-      __typename: "Company";
-      id: string;
-      name: string;
-      domain: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    tasks: {
-      __typename: "ModelTaskConnection";
-      nextToken: string | null;
-    } | null;
-    users: {
-      __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  };
-  description: string | null;
-  scheduleDate: string | null;
-  priority: number | null;
-  status: number | null;
-  createdAt: string | null;
-  messages: {
-    __typename: "ModelMessageConnection";
-    items: Array<{
-      __typename: "Message";
-      id: string;
-      taskID: string;
-      authorID: string;
-      content: string;
-      createdAt: string | null;
-      isSent: boolean | null;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  users: {
-    __typename: "ModelTaskGroupConnection";
-    items: Array<{
-      __typename: "TaskGroup";
-      id: string;
-      taskID: string;
-      userID: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  chargePerson: {
-    __typename: "User";
-    id: string;
-    username: string;
-    email: string;
-    companyID: string;
-    tel: string | null;
-    positionName: string | null;
-    iconImage: string | null;
-    registered: boolean | null;
-    authority: string | null;
-    company: {
-      __typename: "Company";
-      id: string;
-      name: string;
-      domain: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    messages: {
-      __typename: "ModelMessageConnection";
-      nextToken: string | null;
-    } | null;
-    room: {
-      __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
-    } | null;
-    task: {
-      __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
-    } | null;
-    chargeTask: {
-      __typename: "ModelTaskConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
-  updatedAt: string;
-};
-
-export type OnCreateRoomGroupSubscription = {
-  __typename: "RoomGroup";
-  id: string;
-  roomID: string;
-  userID: string;
-  room: {
-    __typename: "Room";
-    id: string;
-    name: string;
-    companyID: string;
-    description: string;
-    company: {
-      __typename: "Company";
-      id: string;
-      name: string;
-      domain: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    tasks: {
-      __typename: "ModelTaskConnection";
-      nextToken: string | null;
-    } | null;
-    users: {
-      __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
-  user: {
-    __typename: "User";
-    id: string;
-    username: string;
-    email: string;
-    companyID: string;
-    tel: string | null;
-    positionName: string | null;
-    iconImage: string | null;
-    registered: boolean | null;
-    authority: string | null;
-    company: {
-      __typename: "Company";
-      id: string;
-      name: string;
-      domain: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    messages: {
-      __typename: "ModelMessageConnection";
-      nextToken: string | null;
-    } | null;
-    room: {
-      __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
-    } | null;
-    task: {
-      __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
-    } | null;
-    chargeTask: {
-      __typename: "ModelTaskConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type OnUpdateRoomGroupSubscription = {
-  __typename: "RoomGroup";
-  id: string;
-  roomID: string;
-  userID: string;
-  room: {
-    __typename: "Room";
-    id: string;
-    name: string;
-    companyID: string;
-    description: string;
-    company: {
-      __typename: "Company";
-      id: string;
-      name: string;
-      domain: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    tasks: {
-      __typename: "ModelTaskConnection";
-      nextToken: string | null;
-    } | null;
-    users: {
-      __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
-  user: {
-    __typename: "User";
-    id: string;
-    username: string;
-    email: string;
-    companyID: string;
-    tel: string | null;
-    positionName: string | null;
-    iconImage: string | null;
-    registered: boolean | null;
-    authority: string | null;
-    company: {
-      __typename: "Company";
-      id: string;
-      name: string;
-      domain: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    messages: {
-      __typename: "ModelMessageConnection";
-      nextToken: string | null;
-    } | null;
-    room: {
-      __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
-    } | null;
-    task: {
-      __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
-    } | null;
-    chargeTask: {
-      __typename: "ModelTaskConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type OnDeleteRoomGroupSubscription = {
-  __typename: "RoomGroup";
-  id: string;
-  roomID: string;
-  userID: string;
-  room: {
-    __typename: "Room";
-    id: string;
-    name: string;
-    companyID: string;
-    description: string;
-    company: {
-      __typename: "Company";
-      id: string;
-      name: string;
-      domain: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    tasks: {
-      __typename: "ModelTaskConnection";
-      nextToken: string | null;
-    } | null;
-    users: {
-      __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
-  user: {
-    __typename: "User";
-    id: string;
-    username: string;
-    email: string;
-    companyID: string;
-    tel: string | null;
-    positionName: string | null;
-    iconImage: string | null;
-    registered: boolean | null;
-    authority: string | null;
-    company: {
-      __typename: "Company";
-      id: string;
-      name: string;
-      domain: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    messages: {
-      __typename: "ModelMessageConnection";
-      nextToken: string | null;
-    } | null;
-    room: {
-      __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
-    } | null;
-    task: {
-      __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
-    } | null;
-    chargeTask: {
-      __typename: "ModelTaskConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type OnCreateRoomSubscription = {
-  __typename: "Room";
-  id: string;
-  name: string;
-  companyID: string;
-  description: string;
-  company: {
-    __typename: "Company";
-    id: string;
-    name: string;
-    domain: string;
-    room: {
-      __typename: "ModelRoomConnection";
-      nextToken: string | null;
-    } | null;
-    companyMembers: {
-      __typename: "ModelUserConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  };
-  tasks: {
-    __typename: "ModelTaskConnection";
-    items: Array<{
-      __typename: "Task";
-      id: string;
-      authorID: string;
-      roomID: string;
-      chargePersonID: string;
-      title: string;
-      description: string | null;
-      scheduleDate: string | null;
-      priority: number | null;
-      status: number | null;
-      createdAt: string | null;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  users: {
-    __typename: "ModelRoomGroupConnection";
-    items: Array<{
-      __typename: "RoomGroup";
-      id: string;
-      roomID: string;
-      userID: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type OnUpdateRoomSubscription = {
-  __typename: "Room";
-  id: string;
-  name: string;
-  companyID: string;
-  description: string;
-  company: {
-    __typename: "Company";
-    id: string;
-    name: string;
-    domain: string;
-    room: {
-      __typename: "ModelRoomConnection";
-      nextToken: string | null;
-    } | null;
-    companyMembers: {
-      __typename: "ModelUserConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  };
-  tasks: {
-    __typename: "ModelTaskConnection";
-    items: Array<{
-      __typename: "Task";
-      id: string;
-      authorID: string;
-      roomID: string;
-      chargePersonID: string;
-      title: string;
-      description: string | null;
-      scheduleDate: string | null;
-      priority: number | null;
-      status: number | null;
-      createdAt: string | null;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  users: {
-    __typename: "ModelRoomGroupConnection";
-    items: Array<{
-      __typename: "RoomGroup";
-      id: string;
-      roomID: string;
-      userID: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type OnDeleteRoomSubscription = {
-  __typename: "Room";
-  id: string;
-  name: string;
-  companyID: string;
-  description: string;
-  company: {
-    __typename: "Company";
-    id: string;
-    name: string;
-    domain: string;
-    room: {
-      __typename: "ModelRoomConnection";
-      nextToken: string | null;
-    } | null;
-    companyMembers: {
-      __typename: "ModelUserConnection";
-      nextToken: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  };
-  tasks: {
-    __typename: "ModelTaskConnection";
-    items: Array<{
-      __typename: "Task";
-      id: string;
-      authorID: string;
-      roomID: string;
-      chargePersonID: string;
-      title: string;
-      description: string | null;
-      scheduleDate: string | null;
-      priority: number | null;
-      status: number | null;
-      createdAt: string | null;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  users: {
-    __typename: "ModelRoomGroupConnection";
-    items: Array<{
-      __typename: "RoomGroup";
-      id: string;
-      roomID: string;
-      userID: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
-    nextToken: string | null;
-  } | null;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type OnCreateMessageSubscription = {
-  __typename: "Message";
-  id: string;
-  taskID: string;
-  authorID: string;
-  content: string;
-  createdAt: string;
-  isSent?: boolean | null;
-  attachment?: Array<{
-    __typename: "S3Object";
-    bucket: string;
-    region: string;
-    key: string;
-  } | null> | null;
-  author: {
-    __typename: "User";
-    id: string;
-    username: string;
+    username?: string | null;
     email: string;
     companyID: string;
     tel?: string | null;
@@ -4656,7 +3274,214 @@ export type OnCreateMessageSubscription = {
     } | null;
     createdAt: string;
     updatedAt: string;
+  } | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type ListRoomGroupsQuery = {
+  __typename: "ModelRoomGroupConnection";
+  items?: Array<{
+    __typename: "RoomGroup";
+    id: string;
+    roomID: string;
+    userID: string;
+    room?: {
+      __typename: "Room";
+      id: string;
+      name: string;
+      companyID: string;
+      description: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    user?: {
+      __typename: "User";
+      id: string;
+      username?: string | null;
+      email: string;
+      companyID: string;
+      tel?: string | null;
+      positionName?: string | null;
+      registered?: boolean | null;
+      authority?: boolean | null;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+  } | null> | null;
+  nextToken?: string | null;
+};
+
+export type GetRoomQuery = {
+  __typename: "Room";
+  id: string;
+  name: string;
+  companyID: string;
+  description: string;
+  company: {
+    __typename: "Company";
+    id: string;
+    name: string;
+    officer: Array<{
+      __typename: "Officer";
+      officerEmail: string;
+      officerName: string;
+    } | null>;
+    isRegistered: boolean;
+    otp?: string | null;
+    tel?: string | null;
+    officialEmail?: string | null;
+    iconCompany?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
+    billing?: boolean | null;
+    room?: {
+      __typename: "ModelRoomConnection";
+      nextToken?: string | null;
+    } | null;
+    companyMembers?: {
+      __typename: "ModelUserConnection";
+      nextToken?: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
     owner?: string | null;
+  };
+  tasks?: {
+    __typename: "ModelTaskConnection";
+    items?: Array<{
+      __typename: "Task";
+      id: string;
+      authorID: string;
+      roomID: string;
+      chargePersonID: string;
+      title: string;
+      description?: string | null;
+      scheduleDate?: string | null;
+      priority?: number | null;
+      status?: number | null;
+      createdAt?: string | null;
+      updatedAt: string;
+    } | null> | null;
+    nextToken?: string | null;
+  } | null;
+  users?: {
+    __typename: "ModelRoomGroupConnection";
+    items?: Array<{
+      __typename: "RoomGroup";
+      id: string;
+      roomID: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken?: string | null;
+  } | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type ListRoomsQuery = {
+  __typename: "ModelRoomConnection";
+  items?: Array<{
+    __typename: "Room";
+    id: string;
+    name: string;
+    companyID: string;
+    description: string;
+    company: {
+      __typename: "Company";
+      id: string;
+      name: string;
+      isRegistered: boolean;
+      otp?: string | null;
+      tel?: string | null;
+      officialEmail?: string | null;
+      billing?: boolean | null;
+      createdAt: string;
+      updatedAt: string;
+      owner?: string | null;
+    };
+    tasks?: {
+      __typename: "ModelTaskConnection";
+      nextToken?: string | null;
+    } | null;
+    users?: {
+      __typename: "ModelRoomGroupConnection";
+      nextToken?: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+  } | null> | null;
+  nextToken?: string | null;
+};
+
+export type GetMessageQuery = {
+  __typename: "Message";
+  id: string;
+  taskID: string;
+  authorID: string;
+  content: string;
+  createdAt: string;
+  isSent?: boolean | null;
+  attachment?: Array<{
+    __typename: "S3Object";
+    bucket: string;
+    region: string;
+    key: string;
+  } | null> | null;
+  author: {
+    __typename: "User";
+    id: string;
+    username?: string | null;
+    email: string;
+    companyID: string;
+    tel?: string | null;
+    positionName?: string | null;
+    iconImage?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
+    registered?: boolean | null;
+    authority?: boolean | null;
+    company: {
+      __typename: "Company";
+      id: string;
+      name: string;
+      isRegistered: boolean;
+      otp?: string | null;
+      tel?: string | null;
+      officialEmail?: string | null;
+      billing?: boolean | null;
+      createdAt: string;
+      updatedAt: string;
+      owner?: string | null;
+    };
+    messages?: {
+      __typename: "ModelMessageConnection";
+      nextToken?: string | null;
+    } | null;
+    room?: {
+      __typename: "ModelRoomGroupConnection";
+      nextToken?: string | null;
+    } | null;
+    task?: {
+      __typename: "ModelTaskGroupConnection";
+      nextToken?: string | null;
+    } | null;
+    chargeTask?: {
+      __typename: "ModelTaskConnection";
+      nextToken?: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
   };
   task: {
     __typename: "Task";
@@ -4688,7 +3513,7 @@ export type OnCreateMessageSubscription = {
     chargePerson: {
       __typename: "User";
       id: string;
-      username: string;
+      username?: string | null;
       email: string;
       companyID: string;
       tel?: string | null;
@@ -4697,7 +3522,1888 @@ export type OnCreateMessageSubscription = {
       authority?: boolean | null;
       createdAt: string;
       updatedAt: string;
+    };
+    messages?: {
+      __typename: "ModelMessageConnection";
+      nextToken?: string | null;
+    } | null;
+    users?: {
+      __typename: "ModelTaskGroupConnection";
+      nextToken?: string | null;
+    } | null;
+    updatedAt: string;
+  };
+  updatedAt: string;
+  owner?: string | null;
+};
+
+export type ListMessagesQuery = {
+  __typename: "ModelMessageConnection";
+  items?: Array<{
+    __typename: "Message";
+    id: string;
+    taskID: string;
+    authorID: string;
+    content: string;
+    createdAt: string;
+    isSent?: boolean | null;
+    attachment?: Array<{
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null> | null;
+    author: {
+      __typename: "User";
+      id: string;
+      username?: string | null;
+      email: string;
+      companyID: string;
+      tel?: string | null;
+      positionName?: string | null;
+      registered?: boolean | null;
+      authority?: boolean | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+    task: {
+      __typename: "Task";
+      id: string;
+      authorID: string;
+      roomID: string;
+      chargePersonID: string;
+      title: string;
+      description?: string | null;
+      scheduleDate?: string | null;
+      priority?: number | null;
+      status?: number | null;
+      createdAt?: string | null;
+      updatedAt: string;
+    };
+    updatedAt: string;
+    owner?: string | null;
+  } | null> | null;
+  nextToken?: string | null;
+};
+
+export type TaskByCreatedAtQuery = {
+  __typename: "ModelMessageConnection";
+  items?: Array<{
+    __typename: "Message";
+    id: string;
+    taskID: string;
+    authorID: string;
+    content: string;
+    createdAt: string;
+    isSent?: boolean | null;
+    attachment?: Array<{
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null> | null;
+    author: {
+      __typename: "User";
+      id: string;
+      username?: string | null;
+      email: string;
+      companyID: string;
+      tel?: string | null;
+      positionName?: string | null;
+      registered?: boolean | null;
+      authority?: boolean | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+    task: {
+      __typename: "Task";
+      id: string;
+      authorID: string;
+      roomID: string;
+      chargePersonID: string;
+      title: string;
+      description?: string | null;
+      scheduleDate?: string | null;
+      priority?: number | null;
+      status?: number | null;
+      createdAt?: string | null;
+      updatedAt: string;
+    };
+    updatedAt: string;
+    owner?: string | null;
+  } | null> | null;
+  nextToken?: string | null;
+};
+
+export type OnCreateCompanySubscription = {
+  __typename: "Company";
+  id: string;
+  name: string;
+  officer: Array<{
+    __typename: "Officer";
+    officerEmail: string;
+    officerName: string;
+  } | null>;
+  isRegistered: boolean;
+  otp?: string | null;
+  tel?: string | null;
+  officialEmail?: string | null;
+  iconCompany?: {
+    __typename: "S3Object";
+    bucket: string;
+    region: string;
+    key: string;
+  } | null;
+  billing?: boolean | null;
+  room?: {
+    __typename: "ModelRoomConnection";
+    items?: Array<{
+      __typename: "Room";
+      id: string;
+      name: string;
+      companyID: string;
+      description: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken?: string | null;
+  } | null;
+  companyMembers?: {
+    __typename: "ModelUserConnection";
+    items?: Array<{
+      __typename: "User";
+      id: string;
+      username?: string | null;
+      email: string;
+      companyID: string;
+      tel?: string | null;
+      positionName?: string | null;
+      registered?: boolean | null;
+      authority?: boolean | null;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken?: string | null;
+  } | null;
+  createdAt: string;
+  updatedAt: string;
+  owner?: string | null;
+};
+
+export type OnUpdateCompanySubscription = {
+  __typename: "Company";
+  id: string;
+  name: string;
+  officer: Array<{
+    __typename: "Officer";
+    officerEmail: string;
+    officerName: string;
+  } | null>;
+  isRegistered: boolean;
+  otp?: string | null;
+  tel?: string | null;
+  officialEmail?: string | null;
+  iconCompany?: {
+    __typename: "S3Object";
+    bucket: string;
+    region: string;
+    key: string;
+  } | null;
+  billing?: boolean | null;
+  room?: {
+    __typename: "ModelRoomConnection";
+    items?: Array<{
+      __typename: "Room";
+      id: string;
+      name: string;
+      companyID: string;
+      description: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken?: string | null;
+  } | null;
+  companyMembers?: {
+    __typename: "ModelUserConnection";
+    items?: Array<{
+      __typename: "User";
+      id: string;
+      username?: string | null;
+      email: string;
+      companyID: string;
+      tel?: string | null;
+      positionName?: string | null;
+      registered?: boolean | null;
+      authority?: boolean | null;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken?: string | null;
+  } | null;
+  createdAt: string;
+  updatedAt: string;
+  owner?: string | null;
+};
+
+export type OnDeleteCompanySubscription = {
+  __typename: "Company";
+  id: string;
+  name: string;
+  officer: Array<{
+    __typename: "Officer";
+    officerEmail: string;
+    officerName: string;
+  } | null>;
+  isRegistered: boolean;
+  otp?: string | null;
+  tel?: string | null;
+  officialEmail?: string | null;
+  iconCompany?: {
+    __typename: "S3Object";
+    bucket: string;
+    region: string;
+    key: string;
+  } | null;
+  billing?: boolean | null;
+  room?: {
+    __typename: "ModelRoomConnection";
+    items?: Array<{
+      __typename: "Room";
+      id: string;
+      name: string;
+      companyID: string;
+      description: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken?: string | null;
+  } | null;
+  companyMembers?: {
+    __typename: "ModelUserConnection";
+    items?: Array<{
+      __typename: "User";
+      id: string;
+      username?: string | null;
+      email: string;
+      companyID: string;
+      tel?: string | null;
+      positionName?: string | null;
+      registered?: boolean | null;
+      authority?: boolean | null;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken?: string | null;
+  } | null;
+  createdAt: string;
+  updatedAt: string;
+  owner?: string | null;
+};
+
+export type OnCreateTaskGroupSubscription = {
+  __typename: "TaskGroup";
+  id: string;
+  taskID: string;
+  userID: string;
+  task?: {
+    __typename: "Task";
+    id: string;
+    authorID: string;
+    roomID: string;
+    chargePersonID: string;
+    title: string;
+    room: {
+      __typename: "Room";
+      id: string;
+      name: string;
+      companyID: string;
+      description: string;
+      createdAt: string;
+      updatedAt: string;
+    };
+    description?: string | null;
+    iconTask?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
+    scheduleDate?: string | null;
+    priority?: number | null;
+    status?: number | null;
+    createdAt?: string | null;
+    chargePerson: {
+      __typename: "User";
+      id: string;
+      username?: string | null;
+      email: string;
+      companyID: string;
+      tel?: string | null;
+      positionName?: string | null;
+      registered?: boolean | null;
+      authority?: boolean | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+    messages?: {
+      __typename: "ModelMessageConnection";
+      nextToken?: string | null;
+    } | null;
+    users?: {
+      __typename: "ModelTaskGroupConnection";
+      nextToken?: string | null;
+    } | null;
+    updatedAt: string;
+  } | null;
+  user?: {
+    __typename: "User";
+    id: string;
+    username?: string | null;
+    email: string;
+    companyID: string;
+    tel?: string | null;
+    positionName?: string | null;
+    iconImage?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
+    registered?: boolean | null;
+    authority?: boolean | null;
+    company: {
+      __typename: "Company";
+      id: string;
+      name: string;
+      isRegistered: boolean;
+      otp?: string | null;
+      tel?: string | null;
+      officialEmail?: string | null;
+      billing?: boolean | null;
+      createdAt: string;
+      updatedAt: string;
       owner?: string | null;
+    };
+    messages?: {
+      __typename: "ModelMessageConnection";
+      nextToken?: string | null;
+    } | null;
+    room?: {
+      __typename: "ModelRoomGroupConnection";
+      nextToken?: string | null;
+    } | null;
+    task?: {
+      __typename: "ModelTaskGroupConnection";
+      nextToken?: string | null;
+    } | null;
+    chargeTask?: {
+      __typename: "ModelTaskConnection";
+      nextToken?: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type OnUpdateTaskGroupSubscription = {
+  __typename: "TaskGroup";
+  id: string;
+  taskID: string;
+  userID: string;
+  task?: {
+    __typename: "Task";
+    id: string;
+    authorID: string;
+    roomID: string;
+    chargePersonID: string;
+    title: string;
+    room: {
+      __typename: "Room";
+      id: string;
+      name: string;
+      companyID: string;
+      description: string;
+      createdAt: string;
+      updatedAt: string;
+    };
+    description?: string | null;
+    iconTask?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
+    scheduleDate?: string | null;
+    priority?: number | null;
+    status?: number | null;
+    createdAt?: string | null;
+    chargePerson: {
+      __typename: "User";
+      id: string;
+      username?: string | null;
+      email: string;
+      companyID: string;
+      tel?: string | null;
+      positionName?: string | null;
+      registered?: boolean | null;
+      authority?: boolean | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+    messages?: {
+      __typename: "ModelMessageConnection";
+      nextToken?: string | null;
+    } | null;
+    users?: {
+      __typename: "ModelTaskGroupConnection";
+      nextToken?: string | null;
+    } | null;
+    updatedAt: string;
+  } | null;
+  user?: {
+    __typename: "User";
+    id: string;
+    username?: string | null;
+    email: string;
+    companyID: string;
+    tel?: string | null;
+    positionName?: string | null;
+    iconImage?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
+    registered?: boolean | null;
+    authority?: boolean | null;
+    company: {
+      __typename: "Company";
+      id: string;
+      name: string;
+      isRegistered: boolean;
+      otp?: string | null;
+      tel?: string | null;
+      officialEmail?: string | null;
+      billing?: boolean | null;
+      createdAt: string;
+      updatedAt: string;
+      owner?: string | null;
+    };
+    messages?: {
+      __typename: "ModelMessageConnection";
+      nextToken?: string | null;
+    } | null;
+    room?: {
+      __typename: "ModelRoomGroupConnection";
+      nextToken?: string | null;
+    } | null;
+    task?: {
+      __typename: "ModelTaskGroupConnection";
+      nextToken?: string | null;
+    } | null;
+    chargeTask?: {
+      __typename: "ModelTaskConnection";
+      nextToken?: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type OnDeleteTaskGroupSubscription = {
+  __typename: "TaskGroup";
+  id: string;
+  taskID: string;
+  userID: string;
+  task?: {
+    __typename: "Task";
+    id: string;
+    authorID: string;
+    roomID: string;
+    chargePersonID: string;
+    title: string;
+    room: {
+      __typename: "Room";
+      id: string;
+      name: string;
+      companyID: string;
+      description: string;
+      createdAt: string;
+      updatedAt: string;
+    };
+    description?: string | null;
+    iconTask?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
+    scheduleDate?: string | null;
+    priority?: number | null;
+    status?: number | null;
+    createdAt?: string | null;
+    chargePerson: {
+      __typename: "User";
+      id: string;
+      username?: string | null;
+      email: string;
+      companyID: string;
+      tel?: string | null;
+      positionName?: string | null;
+      registered?: boolean | null;
+      authority?: boolean | null;
+      createdAt: string;
+      updatedAt: string;
+    };
+    messages?: {
+      __typename: "ModelMessageConnection";
+      nextToken?: string | null;
+    } | null;
+    users?: {
+      __typename: "ModelTaskGroupConnection";
+      nextToken?: string | null;
+    } | null;
+    updatedAt: string;
+  } | null;
+  user?: {
+    __typename: "User";
+    id: string;
+    username?: string | null;
+    email: string;
+    companyID: string;
+    tel?: string | null;
+    positionName?: string | null;
+    iconImage?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
+    registered?: boolean | null;
+    authority?: boolean | null;
+    company: {
+      __typename: "Company";
+      id: string;
+      name: string;
+      isRegistered: boolean;
+      otp?: string | null;
+      tel?: string | null;
+      officialEmail?: string | null;
+      billing?: boolean | null;
+      createdAt: string;
+      updatedAt: string;
+      owner?: string | null;
+    };
+    messages?: {
+      __typename: "ModelMessageConnection";
+      nextToken?: string | null;
+    } | null;
+    room?: {
+      __typename: "ModelRoomGroupConnection";
+      nextToken?: string | null;
+    } | null;
+    task?: {
+      __typename: "ModelTaskGroupConnection";
+      nextToken?: string | null;
+    } | null;
+    chargeTask?: {
+      __typename: "ModelTaskConnection";
+      nextToken?: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type OnCreateTaskSubscription = {
+  __typename: "Task";
+  id: string;
+  authorID: string;
+  roomID: string;
+  chargePersonID: string;
+  title: string;
+  room: {
+    __typename: "Room";
+    id: string;
+    name: string;
+    companyID: string;
+    description: string;
+    company: {
+      __typename: "Company";
+      id: string;
+      name: string;
+      isRegistered: boolean;
+      otp?: string | null;
+      tel?: string | null;
+      officialEmail?: string | null;
+      billing?: boolean | null;
+      createdAt: string;
+      updatedAt: string;
+      owner?: string | null;
+    };
+    tasks?: {
+      __typename: "ModelTaskConnection";
+      nextToken?: string | null;
+    } | null;
+    users?: {
+      __typename: "ModelRoomGroupConnection";
+      nextToken?: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+  };
+  description?: string | null;
+  iconTask?: {
+    __typename: "S3Object";
+    bucket: string;
+    region: string;
+    key: string;
+  } | null;
+  scheduleDate?: string | null;
+  priority?: number | null;
+  status?: number | null;
+  createdAt?: string | null;
+  chargePerson: {
+    __typename: "User";
+    id: string;
+    username?: string | null;
+    email: string;
+    companyID: string;
+    tel?: string | null;
+    positionName?: string | null;
+    iconImage?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
+    registered?: boolean | null;
+    authority?: boolean | null;
+    company: {
+      __typename: "Company";
+      id: string;
+      name: string;
+      isRegistered: boolean;
+      otp?: string | null;
+      tel?: string | null;
+      officialEmail?: string | null;
+      billing?: boolean | null;
+      createdAt: string;
+      updatedAt: string;
+      owner?: string | null;
+    };
+    messages?: {
+      __typename: "ModelMessageConnection";
+      nextToken?: string | null;
+    } | null;
+    room?: {
+      __typename: "ModelRoomGroupConnection";
+      nextToken?: string | null;
+    } | null;
+    task?: {
+      __typename: "ModelTaskGroupConnection";
+      nextToken?: string | null;
+    } | null;
+    chargeTask?: {
+      __typename: "ModelTaskConnection";
+      nextToken?: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+  };
+  messages?: {
+    __typename: "ModelMessageConnection";
+    items?: Array<{
+      __typename: "Message";
+      id: string;
+      taskID: string;
+      authorID: string;
+      content: string;
+      createdAt: string;
+      isSent?: boolean | null;
+      updatedAt: string;
+      owner?: string | null;
+    } | null> | null;
+    nextToken?: string | null;
+  } | null;
+  users?: {
+    __typename: "ModelTaskGroupConnection";
+    items?: Array<{
+      __typename: "TaskGroup";
+      id: string;
+      taskID: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken?: string | null;
+  } | null;
+  updatedAt: string;
+};
+
+export type OnUpdateTaskSubscription = {
+  __typename: "Task";
+  id: string;
+  authorID: string;
+  roomID: string;
+  chargePersonID: string;
+  title: string;
+  room: {
+    __typename: "Room";
+    id: string;
+    name: string;
+    companyID: string;
+    description: string;
+    company: {
+      __typename: "Company";
+      id: string;
+      name: string;
+      isRegistered: boolean;
+      otp?: string | null;
+      tel?: string | null;
+      officialEmail?: string | null;
+      billing?: boolean | null;
+      createdAt: string;
+      updatedAt: string;
+      owner?: string | null;
+    };
+    tasks?: {
+      __typename: "ModelTaskConnection";
+      nextToken?: string | null;
+    } | null;
+    users?: {
+      __typename: "ModelRoomGroupConnection";
+      nextToken?: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+  };
+  description?: string | null;
+  iconTask?: {
+    __typename: "S3Object";
+    bucket: string;
+    region: string;
+    key: string;
+  } | null;
+  scheduleDate?: string | null;
+  priority?: number | null;
+  status?: number | null;
+  createdAt?: string | null;
+  chargePerson: {
+    __typename: "User";
+    id: string;
+    username?: string | null;
+    email: string;
+    companyID: string;
+    tel?: string | null;
+    positionName?: string | null;
+    iconImage?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
+    registered?: boolean | null;
+    authority?: boolean | null;
+    company: {
+      __typename: "Company";
+      id: string;
+      name: string;
+      isRegistered: boolean;
+      otp?: string | null;
+      tel?: string | null;
+      officialEmail?: string | null;
+      billing?: boolean | null;
+      createdAt: string;
+      updatedAt: string;
+      owner?: string | null;
+    };
+    messages?: {
+      __typename: "ModelMessageConnection";
+      nextToken?: string | null;
+    } | null;
+    room?: {
+      __typename: "ModelRoomGroupConnection";
+      nextToken?: string | null;
+    } | null;
+    task?: {
+      __typename: "ModelTaskGroupConnection";
+      nextToken?: string | null;
+    } | null;
+    chargeTask?: {
+      __typename: "ModelTaskConnection";
+      nextToken?: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+  };
+  messages?: {
+    __typename: "ModelMessageConnection";
+    items?: Array<{
+      __typename: "Message";
+      id: string;
+      taskID: string;
+      authorID: string;
+      content: string;
+      createdAt: string;
+      isSent?: boolean | null;
+      updatedAt: string;
+      owner?: string | null;
+    } | null> | null;
+    nextToken?: string | null;
+  } | null;
+  users?: {
+    __typename: "ModelTaskGroupConnection";
+    items?: Array<{
+      __typename: "TaskGroup";
+      id: string;
+      taskID: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken?: string | null;
+  } | null;
+  updatedAt: string;
+};
+
+export type OnDeleteTaskSubscription = {
+  __typename: "Task";
+  id: string;
+  authorID: string;
+  roomID: string;
+  chargePersonID: string;
+  title: string;
+  room: {
+    __typename: "Room";
+    id: string;
+    name: string;
+    companyID: string;
+    description: string;
+    company: {
+      __typename: "Company";
+      id: string;
+      name: string;
+      isRegistered: boolean;
+      otp?: string | null;
+      tel?: string | null;
+      officialEmail?: string | null;
+      billing?: boolean | null;
+      createdAt: string;
+      updatedAt: string;
+      owner?: string | null;
+    };
+    tasks?: {
+      __typename: "ModelTaskConnection";
+      nextToken?: string | null;
+    } | null;
+    users?: {
+      __typename: "ModelRoomGroupConnection";
+      nextToken?: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+  };
+  description?: string | null;
+  iconTask?: {
+    __typename: "S3Object";
+    bucket: string;
+    region: string;
+    key: string;
+  } | null;
+  scheduleDate?: string | null;
+  priority?: number | null;
+  status?: number | null;
+  createdAt?: string | null;
+  chargePerson: {
+    __typename: "User";
+    id: string;
+    username?: string | null;
+    email: string;
+    companyID: string;
+    tel?: string | null;
+    positionName?: string | null;
+    iconImage?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
+    registered?: boolean | null;
+    authority?: boolean | null;
+    company: {
+      __typename: "Company";
+      id: string;
+      name: string;
+      isRegistered: boolean;
+      otp?: string | null;
+      tel?: string | null;
+      officialEmail?: string | null;
+      billing?: boolean | null;
+      createdAt: string;
+      updatedAt: string;
+      owner?: string | null;
+    };
+    messages?: {
+      __typename: "ModelMessageConnection";
+      nextToken?: string | null;
+    } | null;
+    room?: {
+      __typename: "ModelRoomGroupConnection";
+      nextToken?: string | null;
+    } | null;
+    task?: {
+      __typename: "ModelTaskGroupConnection";
+      nextToken?: string | null;
+    } | null;
+    chargeTask?: {
+      __typename: "ModelTaskConnection";
+      nextToken?: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+  };
+  messages?: {
+    __typename: "ModelMessageConnection";
+    items?: Array<{
+      __typename: "Message";
+      id: string;
+      taskID: string;
+      authorID: string;
+      content: string;
+      createdAt: string;
+      isSent?: boolean | null;
+      updatedAt: string;
+      owner?: string | null;
+    } | null> | null;
+    nextToken?: string | null;
+  } | null;
+  users?: {
+    __typename: "ModelTaskGroupConnection";
+    items?: Array<{
+      __typename: "TaskGroup";
+      id: string;
+      taskID: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken?: string | null;
+  } | null;
+  updatedAt: string;
+};
+
+export type OnCreateUserSubscription = {
+  __typename: "User";
+  id: string;
+  username?: string | null;
+  email: string;
+  companyID: string;
+  tel?: string | null;
+  positionName?: string | null;
+  iconImage?: {
+    __typename: "S3Object";
+    bucket: string;
+    region: string;
+    key: string;
+  } | null;
+  registered?: boolean | null;
+  authority?: boolean | null;
+  company: {
+    __typename: "Company";
+    id: string;
+    name: string;
+    officer: Array<{
+      __typename: "Officer";
+      officerEmail: string;
+      officerName: string;
+    } | null>;
+    isRegistered: boolean;
+    otp?: string | null;
+    tel?: string | null;
+    officialEmail?: string | null;
+    iconCompany?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
+    billing?: boolean | null;
+    room?: {
+      __typename: "ModelRoomConnection";
+      nextToken?: string | null;
+    } | null;
+    companyMembers?: {
+      __typename: "ModelUserConnection";
+      nextToken?: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+    owner?: string | null;
+  };
+  messages?: {
+    __typename: "ModelMessageConnection";
+    items?: Array<{
+      __typename: "Message";
+      id: string;
+      taskID: string;
+      authorID: string;
+      content: string;
+      createdAt: string;
+      isSent?: boolean | null;
+      updatedAt: string;
+      owner?: string | null;
+    } | null> | null;
+    nextToken?: string | null;
+  } | null;
+  room?: {
+    __typename: "ModelRoomGroupConnection";
+    items?: Array<{
+      __typename: "RoomGroup";
+      id: string;
+      roomID: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken?: string | null;
+  } | null;
+  task?: {
+    __typename: "ModelTaskGroupConnection";
+    items?: Array<{
+      __typename: "TaskGroup";
+      id: string;
+      taskID: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken?: string | null;
+  } | null;
+  chargeTask?: {
+    __typename: "ModelTaskConnection";
+    items?: Array<{
+      __typename: "Task";
+      id: string;
+      authorID: string;
+      roomID: string;
+      chargePersonID: string;
+      title: string;
+      description?: string | null;
+      scheduleDate?: string | null;
+      priority?: number | null;
+      status?: number | null;
+      createdAt?: string | null;
+      updatedAt: string;
+    } | null> | null;
+    nextToken?: string | null;
+  } | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type OnUpdateUserSubscription = {
+  __typename: "User";
+  id: string;
+  username?: string | null;
+  email: string;
+  companyID: string;
+  tel?: string | null;
+  positionName?: string | null;
+  iconImage?: {
+    __typename: "S3Object";
+    bucket: string;
+    region: string;
+    key: string;
+  } | null;
+  registered?: boolean | null;
+  authority?: boolean | null;
+  company: {
+    __typename: "Company";
+    id: string;
+    name: string;
+    officer: Array<{
+      __typename: "Officer";
+      officerEmail: string;
+      officerName: string;
+    } | null>;
+    isRegistered: boolean;
+    otp?: string | null;
+    tel?: string | null;
+    officialEmail?: string | null;
+    iconCompany?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
+    billing?: boolean | null;
+    room?: {
+      __typename: "ModelRoomConnection";
+      nextToken?: string | null;
+    } | null;
+    companyMembers?: {
+      __typename: "ModelUserConnection";
+      nextToken?: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+    owner?: string | null;
+  };
+  messages?: {
+    __typename: "ModelMessageConnection";
+    items?: Array<{
+      __typename: "Message";
+      id: string;
+      taskID: string;
+      authorID: string;
+      content: string;
+      createdAt: string;
+      isSent?: boolean | null;
+      updatedAt: string;
+      owner?: string | null;
+    } | null> | null;
+    nextToken?: string | null;
+  } | null;
+  room?: {
+    __typename: "ModelRoomGroupConnection";
+    items?: Array<{
+      __typename: "RoomGroup";
+      id: string;
+      roomID: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken?: string | null;
+  } | null;
+  task?: {
+    __typename: "ModelTaskGroupConnection";
+    items?: Array<{
+      __typename: "TaskGroup";
+      id: string;
+      taskID: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken?: string | null;
+  } | null;
+  chargeTask?: {
+    __typename: "ModelTaskConnection";
+    items?: Array<{
+      __typename: "Task";
+      id: string;
+      authorID: string;
+      roomID: string;
+      chargePersonID: string;
+      title: string;
+      description?: string | null;
+      scheduleDate?: string | null;
+      priority?: number | null;
+      status?: number | null;
+      createdAt?: string | null;
+      updatedAt: string;
+    } | null> | null;
+    nextToken?: string | null;
+  } | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type OnDeleteUserSubscription = {
+  __typename: "User";
+  id: string;
+  username?: string | null;
+  email: string;
+  companyID: string;
+  tel?: string | null;
+  positionName?: string | null;
+  iconImage?: {
+    __typename: "S3Object";
+    bucket: string;
+    region: string;
+    key: string;
+  } | null;
+  registered?: boolean | null;
+  authority?: boolean | null;
+  company: {
+    __typename: "Company";
+    id: string;
+    name: string;
+    officer: Array<{
+      __typename: "Officer";
+      officerEmail: string;
+      officerName: string;
+    } | null>;
+    isRegistered: boolean;
+    otp?: string | null;
+    tel?: string | null;
+    officialEmail?: string | null;
+    iconCompany?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
+    billing?: boolean | null;
+    room?: {
+      __typename: "ModelRoomConnection";
+      nextToken?: string | null;
+    } | null;
+    companyMembers?: {
+      __typename: "ModelUserConnection";
+      nextToken?: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+    owner?: string | null;
+  };
+  messages?: {
+    __typename: "ModelMessageConnection";
+    items?: Array<{
+      __typename: "Message";
+      id: string;
+      taskID: string;
+      authorID: string;
+      content: string;
+      createdAt: string;
+      isSent?: boolean | null;
+      updatedAt: string;
+      owner?: string | null;
+    } | null> | null;
+    nextToken?: string | null;
+  } | null;
+  room?: {
+    __typename: "ModelRoomGroupConnection";
+    items?: Array<{
+      __typename: "RoomGroup";
+      id: string;
+      roomID: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken?: string | null;
+  } | null;
+  task?: {
+    __typename: "ModelTaskGroupConnection";
+    items?: Array<{
+      __typename: "TaskGroup";
+      id: string;
+      taskID: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken?: string | null;
+  } | null;
+  chargeTask?: {
+    __typename: "ModelTaskConnection";
+    items?: Array<{
+      __typename: "Task";
+      id: string;
+      authorID: string;
+      roomID: string;
+      chargePersonID: string;
+      title: string;
+      description?: string | null;
+      scheduleDate?: string | null;
+      priority?: number | null;
+      status?: number | null;
+      createdAt?: string | null;
+      updatedAt: string;
+    } | null> | null;
+    nextToken?: string | null;
+  } | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type OnCreateRoomGroupSubscription = {
+  __typename: "RoomGroup";
+  id: string;
+  roomID: string;
+  userID: string;
+  room?: {
+    __typename: "Room";
+    id: string;
+    name: string;
+    companyID: string;
+    description: string;
+    company: {
+      __typename: "Company";
+      id: string;
+      name: string;
+      isRegistered: boolean;
+      otp?: string | null;
+      tel?: string | null;
+      officialEmail?: string | null;
+      billing?: boolean | null;
+      createdAt: string;
+      updatedAt: string;
+      owner?: string | null;
+    };
+    tasks?: {
+      __typename: "ModelTaskConnection";
+      nextToken?: string | null;
+    } | null;
+    users?: {
+      __typename: "ModelRoomGroupConnection";
+      nextToken?: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+  user?: {
+    __typename: "User";
+    id: string;
+    username?: string | null;
+    email: string;
+    companyID: string;
+    tel?: string | null;
+    positionName?: string | null;
+    iconImage?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
+    registered?: boolean | null;
+    authority?: boolean | null;
+    company: {
+      __typename: "Company";
+      id: string;
+      name: string;
+      isRegistered: boolean;
+      otp?: string | null;
+      tel?: string | null;
+      officialEmail?: string | null;
+      billing?: boolean | null;
+      createdAt: string;
+      updatedAt: string;
+      owner?: string | null;
+    };
+    messages?: {
+      __typename: "ModelMessageConnection";
+      nextToken?: string | null;
+    } | null;
+    room?: {
+      __typename: "ModelRoomGroupConnection";
+      nextToken?: string | null;
+    } | null;
+    task?: {
+      __typename: "ModelTaskGroupConnection";
+      nextToken?: string | null;
+    } | null;
+    chargeTask?: {
+      __typename: "ModelTaskConnection";
+      nextToken?: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type OnUpdateRoomGroupSubscription = {
+  __typename: "RoomGroup";
+  id: string;
+  roomID: string;
+  userID: string;
+  room?: {
+    __typename: "Room";
+    id: string;
+    name: string;
+    companyID: string;
+    description: string;
+    company: {
+      __typename: "Company";
+      id: string;
+      name: string;
+      isRegistered: boolean;
+      otp?: string | null;
+      tel?: string | null;
+      officialEmail?: string | null;
+      billing?: boolean | null;
+      createdAt: string;
+      updatedAt: string;
+      owner?: string | null;
+    };
+    tasks?: {
+      __typename: "ModelTaskConnection";
+      nextToken?: string | null;
+    } | null;
+    users?: {
+      __typename: "ModelRoomGroupConnection";
+      nextToken?: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+  user?: {
+    __typename: "User";
+    id: string;
+    username?: string | null;
+    email: string;
+    companyID: string;
+    tel?: string | null;
+    positionName?: string | null;
+    iconImage?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
+    registered?: boolean | null;
+    authority?: boolean | null;
+    company: {
+      __typename: "Company";
+      id: string;
+      name: string;
+      isRegistered: boolean;
+      otp?: string | null;
+      tel?: string | null;
+      officialEmail?: string | null;
+      billing?: boolean | null;
+      createdAt: string;
+      updatedAt: string;
+      owner?: string | null;
+    };
+    messages?: {
+      __typename: "ModelMessageConnection";
+      nextToken?: string | null;
+    } | null;
+    room?: {
+      __typename: "ModelRoomGroupConnection";
+      nextToken?: string | null;
+    } | null;
+    task?: {
+      __typename: "ModelTaskGroupConnection";
+      nextToken?: string | null;
+    } | null;
+    chargeTask?: {
+      __typename: "ModelTaskConnection";
+      nextToken?: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type OnDeleteRoomGroupSubscription = {
+  __typename: "RoomGroup";
+  id: string;
+  roomID: string;
+  userID: string;
+  room?: {
+    __typename: "Room";
+    id: string;
+    name: string;
+    companyID: string;
+    description: string;
+    company: {
+      __typename: "Company";
+      id: string;
+      name: string;
+      isRegistered: boolean;
+      otp?: string | null;
+      tel?: string | null;
+      officialEmail?: string | null;
+      billing?: boolean | null;
+      createdAt: string;
+      updatedAt: string;
+      owner?: string | null;
+    };
+    tasks?: {
+      __typename: "ModelTaskConnection";
+      nextToken?: string | null;
+    } | null;
+    users?: {
+      __typename: "ModelRoomGroupConnection";
+      nextToken?: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+  user?: {
+    __typename: "User";
+    id: string;
+    username?: string | null;
+    email: string;
+    companyID: string;
+    tel?: string | null;
+    positionName?: string | null;
+    iconImage?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
+    registered?: boolean | null;
+    authority?: boolean | null;
+    company: {
+      __typename: "Company";
+      id: string;
+      name: string;
+      isRegistered: boolean;
+      otp?: string | null;
+      tel?: string | null;
+      officialEmail?: string | null;
+      billing?: boolean | null;
+      createdAt: string;
+      updatedAt: string;
+      owner?: string | null;
+    };
+    messages?: {
+      __typename: "ModelMessageConnection";
+      nextToken?: string | null;
+    } | null;
+    room?: {
+      __typename: "ModelRoomGroupConnection";
+      nextToken?: string | null;
+    } | null;
+    task?: {
+      __typename: "ModelTaskGroupConnection";
+      nextToken?: string | null;
+    } | null;
+    chargeTask?: {
+      __typename: "ModelTaskConnection";
+      nextToken?: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type OnCreateRoomSubscription = {
+  __typename: "Room";
+  id: string;
+  name: string;
+  companyID: string;
+  description: string;
+  company: {
+    __typename: "Company";
+    id: string;
+    name: string;
+    officer: Array<{
+      __typename: "Officer";
+      officerEmail: string;
+      officerName: string;
+    } | null>;
+    isRegistered: boolean;
+    otp?: string | null;
+    tel?: string | null;
+    officialEmail?: string | null;
+    iconCompany?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
+    billing?: boolean | null;
+    room?: {
+      __typename: "ModelRoomConnection";
+      nextToken?: string | null;
+    } | null;
+    companyMembers?: {
+      __typename: "ModelUserConnection";
+      nextToken?: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+    owner?: string | null;
+  };
+  tasks?: {
+    __typename: "ModelTaskConnection";
+    items?: Array<{
+      __typename: "Task";
+      id: string;
+      authorID: string;
+      roomID: string;
+      chargePersonID: string;
+      title: string;
+      description?: string | null;
+      scheduleDate?: string | null;
+      priority?: number | null;
+      status?: number | null;
+      createdAt?: string | null;
+      updatedAt: string;
+    } | null> | null;
+    nextToken?: string | null;
+  } | null;
+  users?: {
+    __typename: "ModelRoomGroupConnection";
+    items?: Array<{
+      __typename: "RoomGroup";
+      id: string;
+      roomID: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken?: string | null;
+  } | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type OnUpdateRoomSubscription = {
+  __typename: "Room";
+  id: string;
+  name: string;
+  companyID: string;
+  description: string;
+  company: {
+    __typename: "Company";
+    id: string;
+    name: string;
+    officer: Array<{
+      __typename: "Officer";
+      officerEmail: string;
+      officerName: string;
+    } | null>;
+    isRegistered: boolean;
+    otp?: string | null;
+    tel?: string | null;
+    officialEmail?: string | null;
+    iconCompany?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
+    billing?: boolean | null;
+    room?: {
+      __typename: "ModelRoomConnection";
+      nextToken?: string | null;
+    } | null;
+    companyMembers?: {
+      __typename: "ModelUserConnection";
+      nextToken?: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+    owner?: string | null;
+  };
+  tasks?: {
+    __typename: "ModelTaskConnection";
+    items?: Array<{
+      __typename: "Task";
+      id: string;
+      authorID: string;
+      roomID: string;
+      chargePersonID: string;
+      title: string;
+      description?: string | null;
+      scheduleDate?: string | null;
+      priority?: number | null;
+      status?: number | null;
+      createdAt?: string | null;
+      updatedAt: string;
+    } | null> | null;
+    nextToken?: string | null;
+  } | null;
+  users?: {
+    __typename: "ModelRoomGroupConnection";
+    items?: Array<{
+      __typename: "RoomGroup";
+      id: string;
+      roomID: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken?: string | null;
+  } | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type OnDeleteRoomSubscription = {
+  __typename: "Room";
+  id: string;
+  name: string;
+  companyID: string;
+  description: string;
+  company: {
+    __typename: "Company";
+    id: string;
+    name: string;
+    officer: Array<{
+      __typename: "Officer";
+      officerEmail: string;
+      officerName: string;
+    } | null>;
+    isRegistered: boolean;
+    otp?: string | null;
+    tel?: string | null;
+    officialEmail?: string | null;
+    iconCompany?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
+    billing?: boolean | null;
+    room?: {
+      __typename: "ModelRoomConnection";
+      nextToken?: string | null;
+    } | null;
+    companyMembers?: {
+      __typename: "ModelUserConnection";
+      nextToken?: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+    owner?: string | null;
+  };
+  tasks?: {
+    __typename: "ModelTaskConnection";
+    items?: Array<{
+      __typename: "Task";
+      id: string;
+      authorID: string;
+      roomID: string;
+      chargePersonID: string;
+      title: string;
+      description?: string | null;
+      scheduleDate?: string | null;
+      priority?: number | null;
+      status?: number | null;
+      createdAt?: string | null;
+      updatedAt: string;
+    } | null> | null;
+    nextToken?: string | null;
+  } | null;
+  users?: {
+    __typename: "ModelRoomGroupConnection";
+    items?: Array<{
+      __typename: "RoomGroup";
+      id: string;
+      roomID: string;
+      userID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken?: string | null;
+  } | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type OnCreateMessageSubscription = {
+  __typename: "Message";
+  id: string;
+  taskID: string;
+  authorID: string;
+  content: string;
+  createdAt: string;
+  isSent?: boolean | null;
+  attachment?: Array<{
+    __typename: "S3Object";
+    bucket: string;
+    region: string;
+    key: string;
+  } | null> | null;
+  author: {
+    __typename: "User";
+    id: string;
+    username?: string | null;
+    email: string;
+    companyID: string;
+    tel?: string | null;
+    positionName?: string | null;
+    iconImage?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
+    registered?: boolean | null;
+    authority?: boolean | null;
+    company: {
+      __typename: "Company";
+      id: string;
+      name: string;
+      isRegistered: boolean;
+      otp?: string | null;
+      tel?: string | null;
+      officialEmail?: string | null;
+      billing?: boolean | null;
+      createdAt: string;
+      updatedAt: string;
+      owner?: string | null;
+    };
+    messages?: {
+      __typename: "ModelMessageConnection";
+      nextToken?: string | null;
+    } | null;
+    room?: {
+      __typename: "ModelRoomGroupConnection";
+      nextToken?: string | null;
+    } | null;
+    task?: {
+      __typename: "ModelTaskGroupConnection";
+      nextToken?: string | null;
+    } | null;
+    chargeTask?: {
+      __typename: "ModelTaskConnection";
+      nextToken?: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+  };
+  task: {
+    __typename: "Task";
+    id: string;
+    authorID: string;
+    roomID: string;
+    chargePersonID: string;
+    title: string;
+    room: {
+      __typename: "Room";
+      id: string;
+      name: string;
+      companyID: string;
+      description: string;
+      createdAt: string;
+      updatedAt: string;
+    };
+    description?: string | null;
+    iconTask?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
+    scheduleDate?: string | null;
+    priority?: number | null;
+    status?: number | null;
+    createdAt?: string | null;
+    chargePerson: {
+      __typename: "User";
+      id: string;
+      username?: string | null;
+      email: string;
+      companyID: string;
+      tel?: string | null;
+      positionName?: string | null;
+      registered?: boolean | null;
+      authority?: boolean | null;
+      createdAt: string;
+      updatedAt: string;
     };
     messages?: {
       __typename: "ModelMessageConnection";
@@ -4719,42 +5425,58 @@ export type OnUpdateMessageSubscription = {
   taskID: string;
   authorID: string;
   content: string;
-  createdAt: string | null;
-  isSent: boolean | null;
+  createdAt: string;
+  isSent?: boolean | null;
+  attachment?: Array<{
+    __typename: "S3Object";
+    bucket: string;
+    region: string;
+    key: string;
+  } | null> | null;
   author: {
     __typename: "User";
     id: string;
-    username: string;
+    username?: string | null;
     email: string;
     companyID: string;
-    tel: string | null;
-    positionName: string | null;
-    iconImage: string | null;
-    registered: boolean | null;
-    authority: string | null;
+    tel?: string | null;
+    positionName?: string | null;
+    iconImage?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
+    registered?: boolean | null;
+    authority?: boolean | null;
     company: {
       __typename: "Company";
       id: string;
       name: string;
-      domain: string;
+      isRegistered: boolean;
+      otp?: string | null;
+      tel?: string | null;
+      officialEmail?: string | null;
+      billing?: boolean | null;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     };
-    messages: {
+    messages?: {
       __typename: "ModelMessageConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    room: {
+    room?: {
       __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    task: {
+    task?: {
       __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    chargeTask: {
+    chargeTask?: {
       __typename: "ModelTaskConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
     createdAt: string;
     updatedAt: string;
@@ -4775,36 +5497,42 @@ export type OnUpdateMessageSubscription = {
       createdAt: string;
       updatedAt: string;
     };
-    description: string | null;
-    scheduleDate: string | null;
-    priority: number | null;
-    status: number | null;
-    createdAt: string | null;
-    messages: {
-      __typename: "ModelMessageConnection";
-      nextToken: string | null;
+    description?: string | null;
+    iconTask?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
     } | null;
-    users: {
-      __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
-    } | null;
+    scheduleDate?: string | null;
+    priority?: number | null;
+    status?: number | null;
+    createdAt?: string | null;
     chargePerson: {
       __typename: "User";
       id: string;
-      username: string;
+      username?: string | null;
       email: string;
       companyID: string;
-      tel: string | null;
-      positionName: string | null;
-      iconImage: string | null;
-      registered: boolean | null;
-      authority: string | null;
+      tel?: string | null;
+      positionName?: string | null;
+      registered?: boolean | null;
+      authority?: boolean | null;
       createdAt: string;
       updatedAt: string;
+    };
+    messages?: {
+      __typename: "ModelMessageConnection";
+      nextToken?: string | null;
+    } | null;
+    users?: {
+      __typename: "ModelTaskGroupConnection";
+      nextToken?: string | null;
     } | null;
     updatedAt: string;
   };
   updatedAt: string;
+  owner?: string | null;
 };
 
 export type OnDeleteMessageSubscription = {
@@ -4813,42 +5541,58 @@ export type OnDeleteMessageSubscription = {
   taskID: string;
   authorID: string;
   content: string;
-  createdAt: string | null;
-  isSent: boolean | null;
+  createdAt: string;
+  isSent?: boolean | null;
+  attachment?: Array<{
+    __typename: "S3Object";
+    bucket: string;
+    region: string;
+    key: string;
+  } | null> | null;
   author: {
     __typename: "User";
     id: string;
-    username: string;
+    username?: string | null;
     email: string;
     companyID: string;
-    tel: string | null;
-    positionName: string | null;
-    iconImage: string | null;
-    registered: boolean | null;
-    authority: string | null;
+    tel?: string | null;
+    positionName?: string | null;
+    iconImage?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
+    registered?: boolean | null;
+    authority?: boolean | null;
     company: {
       __typename: "Company";
       id: string;
       name: string;
-      domain: string;
+      isRegistered: boolean;
+      otp?: string | null;
+      tel?: string | null;
+      officialEmail?: string | null;
+      billing?: boolean | null;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     };
-    messages: {
+    messages?: {
       __typename: "ModelMessageConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    room: {
+    room?: {
       __typename: "ModelRoomGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    task: {
+    task?: {
       __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
-    chargeTask: {
+    chargeTask?: {
       __typename: "ModelTaskConnection";
-      nextToken: string | null;
+      nextToken?: string | null;
     } | null;
     createdAt: string;
     updatedAt: string;
@@ -4869,36 +5613,42 @@ export type OnDeleteMessageSubscription = {
       createdAt: string;
       updatedAt: string;
     };
-    description: string | null;
-    scheduleDate: string | null;
-    priority: number | null;
-    status: number | null;
-    createdAt: string | null;
-    messages: {
-      __typename: "ModelMessageConnection";
-      nextToken: string | null;
+    description?: string | null;
+    iconTask?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
     } | null;
-    users: {
-      __typename: "ModelTaskGroupConnection";
-      nextToken: string | null;
-    } | null;
+    scheduleDate?: string | null;
+    priority?: number | null;
+    status?: number | null;
+    createdAt?: string | null;
     chargePerson: {
       __typename: "User";
       id: string;
-      username: string;
+      username?: string | null;
       email: string;
       companyID: string;
-      tel: string | null;
-      positionName: string | null;
-      iconImage: string | null;
-      registered: boolean | null;
-      authority: string | null;
+      tel?: string | null;
+      positionName?: string | null;
+      registered?: boolean | null;
+      authority?: boolean | null;
       createdAt: string;
       updatedAt: string;
+    };
+    messages?: {
+      __typename: "ModelMessageConnection";
+      nextToken?: string | null;
+    } | null;
+    users?: {
+      __typename: "ModelTaskGroupConnection";
+      nextToken?: string | null;
     } | null;
     updatedAt: string;
   };
   updatedAt: string;
+  owner?: string | null;
 };
 
 @Injectable({

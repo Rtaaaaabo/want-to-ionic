@@ -108,7 +108,7 @@ export class RoomMembersLogic {
   }
 
   fetchAnyUserInfoFromList(email: string): Observable<Array<CurrentUser>> {
-    return this.roomMemberService.fetchUserInfo(email).pipe(map((result) => result.items))
+    return this.roomMemberService.fetchUserInfo(email).pipe(map((result) => result.items));
   }
 
 }
