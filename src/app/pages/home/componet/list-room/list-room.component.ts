@@ -34,6 +34,7 @@ export class ListRoomComponent implements OnInit {
       .pipe(concatMap(() => this.logic.fetchRoomList(this.currentUser.id)))
       .pipe(concatMap((data) => this.logic.setExitsRoomAndUser(data)))
       .subscribe((data) => {
+        // console.log('ListRoomComponent data', data);
         this.roomGroupsItems = data;
       });
   }
