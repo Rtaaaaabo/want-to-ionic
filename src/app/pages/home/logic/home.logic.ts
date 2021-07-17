@@ -255,7 +255,8 @@ export class HomeLogic {
   }
 
   fetchAnyUserInfoFromList(email: string): Observable<Array<CurrentUser>> {
-    return this.homeService.checkRegistrationUser(email).pipe(map((result) => result.items));
+    return this.homeService.checkRegistrationUser(email)
+      .pipe(map((result) => result.items));
   }
 
 }
