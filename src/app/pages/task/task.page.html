@@ -2,10 +2,12 @@
   <ion-toolbar>
     <ion-title> {{ room.name }} </ion-title>
     <ion-buttons slot="start">
-      <!-- <ion-back-button text="" icon="chevron-back-outline"> </ion-back-button> -->
-      <ion-button *ngIf="!isReorder" (click)="goBackToRoom()">
-        <ion-icon name="chevron-back-outline"></ion-icon>
-      </ion-button>
+      <ion-back-button
+        *ngIf="!isReorder"
+        defaultHref="/"
+        text=""
+        icon="chevron-back-outline"
+      ></ion-back-button>
     </ion-buttons>
     <ion-buttons *ngIf="segment === 'active'" slot="end">
       <ion-button *ngIf="!isReorder" (click)="navigateToRoomMember()">

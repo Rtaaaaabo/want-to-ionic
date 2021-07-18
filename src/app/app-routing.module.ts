@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
-import { ExtraOptions, PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { ExtraOptions, RouterModule, Routes } from '@angular/router';
+import { DataResolverService } from './shared/service/resolver/data-resolver.service';
 import { AuthGuard } from './guard/auth.guard';
 
 const routerOptions: ExtraOptions = {
@@ -16,10 +17,6 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'task',
-    loadChildren: () => import('./pages/task/task.module').then((m) => m.TaskPageModule),
-  },
-  {
     path: 'signup',
     loadChildren: () => import('./pages/signup/signup.module').then(m => m.SignupPageModule),
   },
@@ -32,8 +29,31 @@ const routes: Routes = [
     loadChildren: () => import('./pages/login/login.module').then(m => m.LoginPageModule)
   },
   {
+    path: 'create-company',
+    loadChildren: () => import('./pages/create-company/create-company.module').then(m => m.CreateCompanyPageModule)
+  },
+  {
+    path: 'registration-company',
+    loadChildren: () => import('./pages/registration-company/registration-company.module').then(m => m.RegistrationCompanyPageModule)
+  },
+  {
+    path: 'complete-register',
+    loadChildren: () => import('./pages/complete-register/complete-register.module').then(m => m.CompleteRegisterPageModule)
+  },
+  {
+    path: 'task',
+    loadChildren: () => import('./pages/task/task.module').then((m) => m.TaskPageModule),
+    resolve: {
+      special: DataResolverService
+    },
+    canActivate: [AuthGuard],
+  },
+  {
     path: 'task-detail',
     loadChildren: () => import('./pages/task-detail/task-detail.module').then(m => m.TaskDetailPageModule),
+    resolve: {
+      special: DataResolverService
+    },
     canActivate: [AuthGuard],
   },
   {
@@ -50,18 +70,6 @@ const routes: Routes = [
     path: 'member-list',
     loadChildren: () => import('./pages/member-list/member-list.module').then(m => m.MemberListPageModule),
     canActivate: [AuthGuard],
-  },
-  {
-    path: 'create-company',
-    loadChildren: () => import('./pages/create-company/create-company.module').then(m => m.CreateCompanyPageModule)
-  },
-  {
-    path: 'registration-company',
-    loadChildren: () => import('./pages/registration-company/registration-company.module').then(m => m.RegistrationCompanyPageModule)
-  },
-  {
-    path: 'complete-register',
-    loadChildren: () => import('./pages/complete-register/complete-register.module').then(m => m.CompleteRegisterPageModule)
   },
 ];
 @NgModule({

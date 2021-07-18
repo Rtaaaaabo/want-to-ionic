@@ -59,8 +59,8 @@ export class TaskPage implements OnInit {
     this.router.events
       .pipe(filter((event: any) => event instanceof RoutesRecognized), pairwise())
       .subscribe((event: any) => {
+        console.log('Event', event);
         this.previousUrl = event[0].urlAfterRedirects;
-        console.log('taskPage previousUrl', this.previousUrl);
         if (this.previousUrl.includes('?')) {
           // this.previousParam = this.previousUrl.split('?')[1];
         } else {
