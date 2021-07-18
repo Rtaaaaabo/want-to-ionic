@@ -43,6 +43,7 @@ export class TaskPage implements OnInit {
 
   currentUserAttribute: Attribute;
   currentUser: CurrentUser;
+  eventSubscribe;
 
 
   constructor(
@@ -56,14 +57,14 @@ export class TaskPage implements OnInit {
     private readonly logic: TaskLogic,
   ) {
     this.router.events
-      .pipe(filter((event: any) => event instanceof RoutesRecognized),
-        pairwise()
-      ).subscribe((event: any) => {
+      .pipe(filter((event: any) => event instanceof RoutesRecognized), pairwise())
+      .subscribe((event: any) => {
         this.previousUrl = event[0].urlAfterRedirects;
+        console.log('taskPage previousUrl', this.previousUrl);
         if (this.previousUrl.includes('?')) {
-          this.previousParam = this.previousUrl.split('?')[1];
+          // this.previousParam = this.previousUrl.split('?')[1];
         } else {
-          this.previousParam = undefined;
+          // this.previousParam = undefined;
         }
       });
     this.locationStrate.onPopState(() => {

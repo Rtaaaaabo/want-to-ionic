@@ -1,16 +1,16 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Location, ViewportScroller } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { Location, ViewportScroller, LocationStrategy } from '@angular/common';
+import { Router, ActivatedRoute, RoutesRecognized } from '@angular/router';
 import { ModalController, ActionSheetController, ToastController, IonContent, Platform, AlertController } from '@ionic/angular';
 import { Plugins, CameraResultType } from '@capacitor/core';
 import { forkJoin, from, Observable, Subscription } from 'rxjs';
+import { filter, tap, map, concatMap, toArray, pairwise } from 'rxjs/operators';
 import { TaskDetailLogic } from './logic/task-detail.logic';
 import { AddTaskModalComponent } from 'src/app/shared/component/modal/add-task-modal/add-task-modal.component';
-import { filter, tap, map, concatMap, toArray } from 'rxjs/operators';
 import { GetTaskQuery, ListRoomGroupsQuery } from 'src/app/shared/service/amplify.service';
 import { IMessageWithAttachUrl, CurrentUser } from './models/task-detail.interface';
 const { Camera } = Plugins;
-
+import { TaskPage } from '../task/task.page';
 
 interface Attribute {
   name: string,
@@ -26,6 +26,7 @@ interface Attribute {
 export class TaskDetailPage implements OnInit {
   @ViewChild('comment') child: HTMLElement;
   @ViewChild(IonContent, { static: false }) content: IonContent;
+  @ViewChild(TaskPage) taskPage: TaskPage;
   taskId: string;
   segment: string;
   taskDetail: GetTaskQuery;
@@ -37,6 +38,8 @@ export class TaskDetailPage implements OnInit {
   link = "comment"
   fragmentComment = '';
   newMsg: string = '';
+  private previousUrl: string = undefined;
+  private previousParam: string = undefined;
 
   currentUserAttribute: Attribute;
   currentUserInfo: CurrentUser;
@@ -44,6 +47,7 @@ export class TaskDetailPage implements OnInit {
   constructor(
     private logic: TaskDetailLogic,
     private readonly scroll: ViewportScroller,
+    private readonly router: Router,
     private readonly route: ActivatedRoute,
     private readonly location: Location,
     private readonly modalCtrl: ModalController,
@@ -51,6 +55,7 @@ export class TaskDetailPage implements OnInit {
     private readonly toastCtrl: ToastController,
     private readonly platform: Platform,
     private readonly alertCtrl: AlertController,
+    private readonly locationStrate: LocationStrategy,
   ) {
     let resultMessage;
     this.taskId = this.route.snapshot.paramMap.get('id');
@@ -67,6 +72,25 @@ export class TaskDetailPage implements OnInit {
             }),
         });
     });
+    this.router.events
+      .pipe(filter((event: any) => event instanceof RoutesRecognized), pairwise())
+      .subscribe((event: any) => {
+        this.previousUrl = event[0].urlAfterRedirects;
+        console.log('taskDetailPage previousUrl', this.previousUrl);
+        if (this.previousUrl.includes('?')) {
+          // this.previousParam = this.previousUrl.split('?')[1];
+        } else {
+          // this.previousParam = undefined;
+        }
+      });
+    this.locationStrate.onPopState(() => {
+      // システムの戻るボタンクリック時の挙動
+    })
+  }
+
+  // 前のURLだけを取得
+  public getPreviousParam() {
+    return this.previousParam;
   }
 
   ngOnInit(): void {
