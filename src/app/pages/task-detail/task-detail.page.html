@@ -2,9 +2,14 @@
   <ion-toolbar>
     <ion-title>タスクの詳細</ion-title>
     <ion-buttons slot="start">
-      <ion-button (click)="goBackToRoom()">
+      <ion-back-button
+        defaultHref="/"
+        name=""
+        icon="chevron-back-outline"
+      ></ion-back-button>
+      <!-- <ion-button (click)="goBackToRoom()">
         <ion-icon name="chevron-back-outline"></ion-icon>
-      </ion-button>
+      </ion-button> -->
     </ion-buttons>
     <ion-buttons slot="end">
       <ion-button (click)="presentActionSheet(taskDetail)">
