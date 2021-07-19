@@ -10,7 +10,11 @@
     </ion-buttons>
     <ion-buttons slot="end">
       <ion-button (click)="presentActionSheet(taskDetail)">
-        <ion-icon name="checkmark-outline"></ion-icon>
+        <ion-icon
+          *ngIf="segment !== 'done'"
+          name="checkmark-outline"
+        ></ion-icon>
+        <ion-icon *ngIf="segment === 'done'" name="bookmark-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
