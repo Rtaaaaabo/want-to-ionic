@@ -69,7 +69,7 @@ export class TaskPage implements OnInit {
         }
       });
     this.locationStrate.onPopState(() => {
-      // システムの戻るボタンクリック時の挙動
+      console.log(this.previousUrl);
     })
   }
 
