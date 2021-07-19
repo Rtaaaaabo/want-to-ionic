@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
 import { ModalController, AlertController, IonItemSliding } from '@ionic/angular';
 import { AddRoomModalComponent } from '../../../../shared/component/modal/add-room-modal/add-room-modal.component';
 import { HomeLogic } from '../../logic/home.logic';
@@ -64,7 +64,10 @@ export class ListRoomComponent implements OnInit {
    * @param room 部屋の情報
    */
   navigateToTask(room: Room): void {
-    this.router.navigate(['task', `${room.id}`], { queryParams: { status: 'active' } });
+    const navigationExtras: NavigationExtras = {
+      state: { status: 'active' }
+    }
+    this.router.navigate(['task', `${room.id}`], navigationExtras);
   }
 
   /**

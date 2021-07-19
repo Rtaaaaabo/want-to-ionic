@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Location, LocationStrategy } from '@angular/common';
-import { Router, ActivatedRoute, RoutesRecognized } from '@angular/router';
+import { Router, ActivatedRoute, RoutesRecognized, NavigationExtras } from '@angular/router';
 import { ItemReorderEventDetail } from '@ionic/core';
 import { ModalController, ToastController, AlertController } from '@ionic/angular';
 import { forkJoin, from, of } from 'rxjs';
@@ -56,15 +56,13 @@ export class TaskPage implements OnInit {
     private readonly route: ActivatedRoute,
     private readonly logic: TaskLogic,
   ) {
+    this.segment = this.router.getCurrentNavigation().extras.state?.status;
     this.router.events
       .pipe(filter((event: any) => event instanceof RoutesRecognized), pairwise())
       .subscribe((event: any) => {
-        console.log('Event', event);
         this.previousUrl = event[0].urlAfterRedirects;
-        if (this.previousUrl.includes('?')) {
-          // this.previousParam = this.previousUrl.split('?')[1];
-        } else {
-          // this.previousParam = undefined;
+        if (this.previousUrl.includes('active')) {
+        } else if (this.previousUrl.includes('done')) {
         }
       });
     this.locationStrate.onPopState(() => {
@@ -77,10 +75,7 @@ export class TaskPage implements OnInit {
       .pipe(map((data) => this.currentUserAttribute = data))
       .pipe(concatMap(() => this.logic.fetchAnyUserInfoFromList(this.currentUserAttribute.email)))
       .pipe(map((items) => this.currentUser = items[0]))
-      .subscribe(() => {
-        this.route.queryParams
-          .subscribe((param) => this.segment = param.status);
-      })
+      .subscribe(() => { });
     this.isReorder = false;
     this.roomId = this.route.snapshot.paramMap.get('id');
     this.companyId = this.roomId.split(/(.*)_room/)[1];
@@ -170,7 +165,12 @@ export class TaskPage implements OnInit {
 
   navigateToTaskDetail(task, segment: string, isReorder: boolean): void {
     if (isReorder) return;
-    this.router.navigate(['task-detail', `${task.id}`, `${segment}`])
+    let navigationExtras: NavigationExtras = {
+      state: {
+        segment: segment,
+      }
+    };
+    this.router.navigate(['task-detail', `${task.id}`, `${segment}`], navigationExtras);
   }
 
   async addCommentToTaskDetail(task): Promise<void> {
