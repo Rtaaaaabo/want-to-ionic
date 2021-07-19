@@ -64,13 +64,11 @@ export class TaskPage implements OnInit {
       .pipe(filter((event: any) => event instanceof RoutesRecognized), pairwise())
       .subscribe((event: any) => {
         this.previousUrl = event[0].urlAfterRedirects;
-        if (this.previousUrl.includes('active')) {
-        } else if (this.previousUrl.includes('done')) {
-        }
+        this.locationStrate.onPopState(() => {
+          // アプリでの実装を考えているため
+          // console.log('[taskPage previousUrl]', this.previousUrl);
+        })
       });
-    this.locationStrate.onPopState(() => {
-      console.log(this.previousUrl);
-    })
   }
 
   ngOnInit() {

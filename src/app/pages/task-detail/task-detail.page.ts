@@ -76,15 +76,10 @@ export class TaskDetailPage implements OnInit {
       .pipe(filter((event: any) => event instanceof RoutesRecognized), pairwise())
       .subscribe((event: any) => {
         this.previousUrl = event[0].urlAfterRedirects;
-        if (this.previousUrl.includes('?')) {
-          // this.previousParam = this.previousUrl.split('?')[1];
-        } else {
-          // this.previousParam = undefined;
-        }
+        this.locationStrate.onPopState(() => {
+          // console.log('[taskDetailPage previousUrl]', this.previousUrl);
+        })
       });
-    this.locationStrate.onPopState(() => {
-      // システムの戻るボタンクリック時の挙動
-    })
   }
 
   // 前のURLだけを取得
