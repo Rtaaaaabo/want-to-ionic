@@ -57,6 +57,9 @@ export class TaskPage implements OnInit {
     private readonly logic: TaskLogic,
   ) {
     this.segment = this.router.getCurrentNavigation().extras.state?.status;
+    if (!this.segment) {
+      this.segment = 'active';
+    }
     this.router.events
       .pipe(filter((event: any) => event instanceof RoutesRecognized), pairwise())
       .subscribe((event: any) => {
