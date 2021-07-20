@@ -14,13 +14,16 @@
           *ngIf="segment !== 'done'"
           name="checkmark-outline"
         ></ion-icon>
-        <ion-icon *ngIf="segment === 'done'" name="bookmark-outline"></ion-icon>
+        <ion-icon
+          *ngIf="segment === 'done'"
+          name="arrow-redo-outline"
+        ></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content fullscreen="true">
   <ion-card (click)="presentModalEditTask(taskDetail)">
     <ion-card-header class="card-title">
       <ion-card-subtitle>

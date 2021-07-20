@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ɵCompiler_compileModuleSync__POST_R3__ } from '@angular/core';
 import { Location, ViewportScroller, LocationStrategy } from '@angular/common';
 import { Router, ActivatedRoute, RoutesRecognized } from '@angular/router';
 import { ModalController, ActionSheetController, ToastController, IonContent, Platform, AlertController } from '@ionic/angular';
@@ -76,11 +76,6 @@ export class TaskDetailPage implements OnInit {
       .pipe(filter((event: any) => event instanceof RoutesRecognized), pairwise())
       .subscribe((event: any) => {
         this.previousUrl = event[0].urlAfterRedirects;
-        if (this.previousUrl.includes('?')) {
-          // this.previousParam = this.previousUrl.split('?')[1];
-        } else {
-          // this.previousParam = undefined;
-        }
       });
     this.locationStrate.onPopState(() => {
       // システムの戻るボタンクリック時の挙動
@@ -193,7 +188,7 @@ export class TaskDetailPage implements OnInit {
 
   moveTask(taskDetail): void {
     const presentToast = from(this.presentMoveTask());
-    const messageContent = 'このタスクをActiveにもどしました。\n 頑張ってください！';
+    const messageContent = 'このタスクをActiveにもどしました。';
     this.logic.updateTaskItem(taskDetail, 0)
       .pipe(concatMap((result) => this.logic.createMessage(result, messageContent)))
       .pipe(concatMap(() => this.logic.fetchAnyTask(taskDetail.id)))
@@ -227,12 +222,6 @@ export class TaskDetailPage implements OnInit {
           text: 'Activeに移動',
           handler: () => {
             this.moveTask(taskDetail);
-          }
-        },
-        {
-          text: '編集',
-          handler: () => {
-            this.presentModalEditTask(taskDetail)
           }
         },
         {
