@@ -60,23 +60,22 @@ export class TaskPage implements OnInit {
     if (!this.segment) {
       this.segment = 'active';
     }
-    this.router.events
-      .pipe(filter((event: any) => event instanceof RoutesRecognized), pairwise())
-      .subscribe((event: any) => {
-        this.previousUrl = event[0].urlAfterRedirects;
-        // ここにFetch Taskの処理を記載する
-        forkJoin({
-          activeTaskItems: this.logic.fetchActiveTaskPerRoom(this.roomId).pipe(concatMap((result) => this.logic.fetchEachStatusTask(result, 0))),
-          doneTaskItems: this.logic.fetchDoneTaskPerRoom(this.roomId).pipe(concatMap((result) => this.logic.fetchEachStatusTask(result, 10))),
-          room: this.logic.fetchRoomInfo(this.roomId),
-          roomMembers: this.logic.fetchMemberListOnRoom(this.roomId).pipe(map(({ items }) => items)),
-        }).subscribe(({ activeTaskItems, doneTaskItems, room, roomMembers }) => {
-          this.taskActiveItems = activeTaskItems.sort(this.logic.compareTaskArray);
-          this.taskDoneItems = doneTaskItems;
-          this.room = room;
-          this.roomMembers = roomMembers;
-        });
-      });
+    // this.router.events
+    //   .pipe(filter((event: any) => event instanceof RoutesRecognized), pairwise())
+    //   .subscribe((event: any) => {
+    // this.previousUrl = event[0].urlAfterRedirects;
+    forkJoin({
+      activeTaskItems: this.logic.fetchActiveTaskPerRoom(this.roomId).pipe(concatMap((result) => this.logic.fetchEachStatusTask(result, 0))),
+      doneTaskItems: this.logic.fetchDoneTaskPerRoom(this.roomId).pipe(concatMap((result) => this.logic.fetchEachStatusTask(result, 10))),
+      room: this.logic.fetchRoomInfo(this.roomId),
+      roomMembers: this.logic.fetchMemberListOnRoom(this.roomId).pipe(map(({ items }) => items)),
+    }).subscribe(({ activeTaskItems, doneTaskItems, room, roomMembers }) => {
+      this.taskActiveItems = activeTaskItems.sort(this.logic.compareTaskArray);
+      this.taskDoneItems = doneTaskItems;
+      this.room = room;
+      this.roomMembers = roomMembers;
+    });
+    // });
     this.locationStrate.onPopState(() => {
       // システムの戻るボタンクリック時の挙動
     })
