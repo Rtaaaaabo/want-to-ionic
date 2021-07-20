@@ -214,4 +214,12 @@ export class TaskLogic {
     return this.taskService.fetchAnyUserInfoFromList(email)
       .pipe(map((result) => result.items))
   }
+
+  onUpdateTaskListener(): any {
+    return this.taskService.onUpdateTaskListener();
+  }
+
+  onUpdateRoomListener(): any {
+    return this.taskService.onUpdateRoomListener();
+  }
 }

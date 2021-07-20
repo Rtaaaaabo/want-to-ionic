@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Location, LocationStrategy } from '@angular/common';
 import { Router, ActivatedRoute, RoutesRecognized, NavigationExtras } from '@angular/router';
 import { ItemReorderEventDetail } from '@ionic/core';
-import { ModalController, ToastController, AlertController } from '@ionic/angular';
-import { forkJoin, from, of } from 'rxjs';
+import { ModalController, ToastController, AlertController, Platform } from '@ionic/angular';
+import { forkJoin, from, of, Observable, Subscription } from 'rxjs';
 import { tap, map, concatMap, filter, pairwise } from 'rxjs/operators';
 import { GetRoomQuery, GetUserQuery } from 'src/app/shared/service/amplify.service';
 import { TaskLogic } from './logic/task.logic';
@@ -40,11 +40,11 @@ export class TaskPage implements OnInit {
   private previousUrl: string = undefined;
   private previousParam: string = undefined;
 
-
   currentUserAttribute: Attribute;
   currentUser: CurrentUser;
-  eventSubscribe;
 
+  subscriptionTask: Subscription;
+  subscriptionRoom: Subscription;
 
   constructor(
     private readonly locationStrate: LocationStrategy,
@@ -55,15 +55,32 @@ export class TaskPage implements OnInit {
     private readonly modalCtrl: ModalController,
     private readonly route: ActivatedRoute,
     private readonly logic: TaskLogic,
+    private readonly platform: Platform,
   ) {
+    this.roomId = this.route.snapshot.paramMap.get('id');
+    this.initializeApp().subscribe(() => {
+      // this.subscriptionActiveTask = this.logic.onUpdateTask
+      this.subscriptionTask = this.logic.onUpdateTaskListener().subscribe({
+        next: () => this.logic.fetchActiveTaskPerRoom(this.roomId).pipe(concatMap((result) => this.logic.fetchEachStatusTask(result, 0)))
+          .pipe(map((data) => this.taskActiveItems = data.sort(this.logic.compareTaskArray)))
+          .pipe(concatMap(() => this.logic.fetchDoneTaskPerRoom(this.roomId).pipe(concatMap((result) => this.logic.fetchEachStatusTask(result, 10)))))
+          .pipe(map((doneResult) => this.taskDoneItems = doneResult))
+          .subscribe(),
+      });
+      this.subscriptionRoom = this.logic.onUpdateRoomListener().subscribe({
+        next: () => this.logic.fetchRoomInfo(this.roomId)
+          .pipe(map((result) => this.room = result))
+          .pipe(concatMap(() => this.logic.fetchMemberListOnRoom(this.roomId).pipe(map(({ items }) => items))))
+          .pipe(map((result) => this.roomMembers = result))
+          .subscribe(),
+      });
+    });
     this.segment = this.router.getCurrentNavigation().extras.state?.status;
     if (!this.segment) {
       this.segment = 'active';
     }
-    // this.router.events
-    //   .pipe(filter((event: any) => event instanceof RoutesRecognized), pairwise())
-    //   .subscribe((event: any) => {
-    // this.previousUrl = event[0].urlAfterRedirects;
+
+    this.roomId = this.route.snapshot.paramMap.get('id');
     forkJoin({
       activeTaskItems: this.logic.fetchActiveTaskPerRoom(this.roomId).pipe(concatMap((result) => this.logic.fetchEachStatusTask(result, 0))),
       doneTaskItems: this.logic.fetchDoneTaskPerRoom(this.roomId).pipe(concatMap((result) => this.logic.fetchEachStatusTask(result, 10))),
@@ -81,7 +98,11 @@ export class TaskPage implements OnInit {
     })
   }
 
-  ngOnInit() {
+  initializeApp(): Observable<string> {
+    return from(this.platform.ready());
+  }
+
+  ngOnInit(): void {
     this.logic.fetchCurrentUserCognitoInfo()
       .pipe(map((data) => this.currentUserAttribute = data))
       .pipe(concatMap(() => this.logic.fetchAnyUserInfoFromList(this.currentUserAttribute.email)))
@@ -229,4 +250,8 @@ export class TaskPage implements OnInit {
     this.router.navigate(['room-members', `${this.roomId}`, `${this.companyId}`]);
   }
 
+  ngOnDestroy(): void {
+    this.subscriptionRoom.unsubscribe();
+    this.subscriptionTask.unsubscribe();
+  }
 }
