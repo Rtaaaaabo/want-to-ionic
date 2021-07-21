@@ -226,8 +226,4 @@ export class TaskLogic {
   onUpdateTaskListener(): any {
     return this.taskService.onUpdateTaskListener();
   }
-
-  onDeleteTaskListener(): any {
-    return this.taskService.onDeleteTaskListener();
-  }
 }

@@ -108,10 +108,4 @@ export class TaskService {
   onUpdateTaskListener(): any {
     return this.amplifyService.OnUpdateTaskListener;
   }
-
-  onDeleteTaskListener(): any {
-    return this.amplifyService.OnDeleteTaskListener;
-  }
-
-
 }
