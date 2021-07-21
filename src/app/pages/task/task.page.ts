@@ -43,7 +43,8 @@ export class TaskPage implements OnInit {
   currentUserAttribute: Attribute;
   currentUser: CurrentUser;
 
-  subscriptionTask: Subscription;
+  subscriptionCreateTask: Subscription;
+  subscriptionUpdateTask: Subscription;
   subscriptionRoom: Subscription;
 
   constructor(
@@ -60,8 +61,9 @@ export class TaskPage implements OnInit {
     this.roomId = this.route.snapshot.paramMap.get('id');
     this.isReorder = false;
     this.initializeApp().subscribe(() => {
-      this.subscriptionTask = this.logic.onUpdateTaskListener().subscribe({
-        next: () => this.logic.fetchActiveTaskPerRoom(this.roomId).pipe(concatMap((result) => this.logic.fetchEachStatusTask(result, 0)))
+      this.subscriptionUpdateTask = this.logic.onUpdateTaskListener().subscribe({
+        next: () => this.logic.fetchActiveTaskPerRoom(this.roomId)
+          .pipe(concatMap((result) => this.logic.fetchEachStatusTask(result, 0)))
           .pipe(map((data) => this.taskActiveItems = data.sort(this.logic.compareTaskArray)))
           .pipe(concatMap(() => this.logic.fetchDoneTaskPerRoom(this.roomId).pipe(concatMap((result) => this.logic.fetchEachStatusTask(result, 10)))))
           .pipe(map((doneResult) => this.taskDoneItems = doneResult))
@@ -242,6 +244,6 @@ export class TaskPage implements OnInit {
 
   ngOnDestroy(): void {
     this.subscriptionRoom.unsubscribe();
-    this.subscriptionTask.unsubscribe();
+    this.subscriptionUpdateTask.unsubscribe();
   }
 }

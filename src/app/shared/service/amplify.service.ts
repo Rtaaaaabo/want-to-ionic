@@ -8175,7 +8175,9 @@ export class AmplifyService {
     )
   ) as Observable<OnDeleteRoomSubscription>;
 
-  OnCreateTaskListener: Observable<OnCreateTaskSubscription> = API.graphql(
+  OnCreateTaskListener: Observable<
+    SubscriptionResponse<OnCreateTaskSubscription>
+  > = API.graphql(
     graphqlOperation(
       `subscription OnCreateTask {
         onCreateTask {
@@ -8183,57 +8185,91 @@ export class AmplifyService {
           id
           authorID
           roomID
+          chargePersonID
           title
+          room {
+            __typename
+            id
+            name
+            companyID
+            description
+            company {
+              __typename
+              id
+              name
+              isRegistered
+              otp
+              tel
+              officialEmail
+              billing
+              createdAt
+              updatedAt
+              owner
+            }
+            tasks {
+              __typename
+              nextToken
+            }
+            users {
+              __typename
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
           description
+          iconTask {
+            __typename
+            bucket
+            region
+            key
+          }
           scheduleDate
           priority
           status
           createdAt
-          members {
+          chargePerson {
             __typename
             id
+            username
             email
             companyID
-            username
+            tel
+            positionName
+            iconImage {
+              __typename
+              bucket
+              region
+              key
+            }
             registered
             authority
             company {
               __typename
               id
               name
-              domain
+              isRegistered
+              otp
+              tel
+              officialEmail
+              billing
               createdAt
               updatedAt
+              owner
             }
-            createdAt
-            updatedAt
-          }
-          room {
-            __typename
-            id
-            companyID
-            name
-            description
-            members {
+            messages {
               __typename
-              id
-              email
-              companyID
-              username
-              registered
-              authority
-              createdAt
-              updatedAt
+              nextToken
             }
-            company {
+            room {
               __typename
-              id
-              name
-              domain
-              createdAt
-              updatedAt
+              nextToken
             }
-            tasks {
+            task {
+              __typename
+              nextToken
+            }
+            chargeTask {
               __typename
               nextToken
             }
@@ -8246,9 +8282,23 @@ export class AmplifyService {
               __typename
               id
               taskID
+              authorID
               content
               createdAt
               isSent
+              updatedAt
+              owner
+            }
+            nextToken
+          }
+          users {
+            __typename
+            items {
+              __typename
+              id
+              taskID
+              userID
+              createdAt
               updatedAt
             }
             nextToken
@@ -8257,7 +8307,7 @@ export class AmplifyService {
         }
       }`
     )
-  ) as Observable<OnCreateTaskSubscription>;
+  ) as Observable<SubscriptionResponse<OnCreateTaskSubscription>>;
 
   OnUpdateTaskListener: Observable<OnUpdateTaskSubscription> = API.graphql(
     graphqlOperation(
@@ -8391,7 +8441,9 @@ export class AmplifyService {
     )
   ) as Observable<OnUpdateTaskSubscription>;
 
-  OnDeleteTaskListener: Observable<OnDeleteTaskSubscription> = API.graphql(
+  OnDeleteTaskListener: Observable<
+    SubscriptionResponse<OnDeleteTaskSubscription>
+  > = API.graphql(
     graphqlOperation(
       `subscription OnDeleteTask {
         onDeleteTask {
@@ -8399,57 +8451,91 @@ export class AmplifyService {
           id
           authorID
           roomID
+          chargePersonID
           title
+          room {
+            __typename
+            id
+            name
+            companyID
+            description
+            company {
+              __typename
+              id
+              name
+              isRegistered
+              otp
+              tel
+              officialEmail
+              billing
+              createdAt
+              updatedAt
+              owner
+            }
+            tasks {
+              __typename
+              nextToken
+            }
+            users {
+              __typename
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
           description
+          iconTask {
+            __typename
+            bucket
+            region
+            key
+          }
           scheduleDate
           priority
           status
           createdAt
-          members {
+          chargePerson {
             __typename
             id
+            username
             email
             companyID
-            username
+            tel
+            positionName
+            iconImage {
+              __typename
+              bucket
+              region
+              key
+            }
             registered
             authority
             company {
               __typename
               id
               name
-              domain
+              isRegistered
+              otp
+              tel
+              officialEmail
+              billing
               createdAt
               updatedAt
+              owner
             }
-            createdAt
-            updatedAt
-          }
-          room {
-            __typename
-            id
-            companyID
-            name
-            description
-            members {
+            messages {
               __typename
-              id
-              email
-              companyID
-              username
-              registered
-              authority
-              createdAt
-              updatedAt
+              nextToken
             }
-            company {
+            room {
               __typename
-              id
-              name
-              domain
-              createdAt
-              updatedAt
+              nextToken
             }
-            tasks {
+            task {
+              __typename
+              nextToken
+            }
+            chargeTask {
               __typename
               nextToken
             }
@@ -8462,9 +8548,23 @@ export class AmplifyService {
               __typename
               id
               taskID
+              authorID
               content
               createdAt
               isSent
+              updatedAt
+              owner
+            }
+            nextToken
+          }
+          users {
+            __typename
+            items {
+              __typename
+              id
+              taskID
+              userID
+              createdAt
               updatedAt
             }
             nextToken
@@ -8473,7 +8573,7 @@ export class AmplifyService {
         }
       }`
     )
-  ) as Observable<OnDeleteTaskSubscription>;
+  ) as Observable<SubscriptionResponse<OnDeleteTaskSubscription>>;
 
   OnCreateMessageListener: Observable<
     SubscriptionResponse<OnCreateMessageSubscription>
