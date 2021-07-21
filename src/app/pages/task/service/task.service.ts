@@ -97,12 +97,21 @@ export class TaskService {
     return from(this.amplifyService.ListUsers(filterContent));
   }
 
+  onUpdateRoomListener(): any {
+    return this.amplifyService.OnUpdateRoomListener;
+  }
+
+  onCreateTaskListener(): any {
+    return this.amplifyService.OnCreateTaskListener;
+  }
+
   onUpdateTaskListener(): any {
     return this.amplifyService.OnUpdateTaskListener;
   }
 
-  onUpdateRoomListener(): any {
-    return this.amplifyService.OnUpdateRoomListener;
+  onDeleteTaskListener(): any {
+    return this.amplifyService.OnDeleteTaskListener;
   }
+
 
 }

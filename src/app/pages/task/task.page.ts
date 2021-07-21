@@ -76,6 +76,14 @@ export class TaskPage implements OnInit {
           .pipe(map((result) => this.roomMembers = result))
           .subscribe(),
       });
+      this.subscriptionCreateTask = this.logic.onCreateTaskListener().subscribe({
+        next: () => this.logic.fetchActiveTaskPerRoom(this.roomId)
+          .pipe(concatMap((result) => this.logic.fetchEachStatusTask(result, 0)))
+          .subscribe((items) => {
+            this.taskActiveItems = items.sort(this.logic.compareTaskArray);;
+          }),
+      })
+
     });
     this.segment = this.router.getCurrentNavigation().extras.state?.status;
     if (!this.segment) {

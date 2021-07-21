@@ -215,11 +215,19 @@ export class TaskLogic {
       .pipe(map((result) => result.items))
   }
 
+  onUpdateRoomListener(): any {
+    return this.taskService.onUpdateRoomListener();
+  }
+
+  onCreateTaskListener(): any {
+    return this.taskService.onCreateTaskListener();
+  }
+
   onUpdateTaskListener(): any {
     return this.taskService.onUpdateTaskListener();
   }
 
-  onUpdateRoomListener(): any {
-    return this.taskService.onUpdateRoomListener();
+  onDeleteTaskListener(): any {
+    return this.taskService.onDeleteTaskListener();
   }
 }
