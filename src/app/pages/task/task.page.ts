@@ -30,7 +30,7 @@ export class TaskPage implements OnInit {
   roomId: string;
   isReorder: boolean;
   segment: string;
-  companyId: number | string;
+  companyId: string;
   companyMembers: Array<CompanyMembersInfo>;
   roomMembers: Array<CompanyMembers>;
   user: GetUserQuery;
@@ -58,6 +58,7 @@ export class TaskPage implements OnInit {
     private readonly platform: Platform,
   ) {
     this.roomId = this.route.snapshot.paramMap.get('id');
+    this.isReorder = false;
     console.log('TaskPage Constructor', this.roomId);
     this.initializeApp().subscribe(() => {
       this.subscriptionTask = this.logic.onUpdateTaskListener().subscribe({
@@ -90,27 +91,29 @@ export class TaskPage implements OnInit {
   }
 
   ngOnInit(): void {
+    this.companyId = this.roomId.split(/(.*)_room/)[1];
     this.logic.fetchCurrentUserCognitoInfo()
       .pipe(map((data) => this.currentUserAttribute = data))
       .pipe(concatMap(() => this.logic.fetchAnyUserInfoFromList(this.currentUserAttribute.email)))
       .pipe(map((items) => this.currentUser = items[0]))
-      .subscribe(() => { });
-    this.isReorder = false;
-    this.roomId = this.route.snapshot.paramMap.get('id');
+      .pipe(concatMap(() => this.logic.fetchCompanyMembers(this.companyId)))
+      .subscribe((data) => {
+        this.companyMembers = data.companyMembers.items;
+      });
     this.companyId = this.roomId.split(/(.*)_room/)[1];
-    forkJoin({
-      companyUser: this.logic.fetchCompanyMembers(this.companyId),
-      activeTaskItems: this.logic.fetchActiveTaskPerRoom(this.roomId).pipe(concatMap((result) => this.logic.fetchEachStatusTask(result, 0))),
-      doneTaskItems: this.logic.fetchDoneTaskPerRoom(this.roomId).pipe(concatMap((result) => this.logic.fetchEachStatusTask(result, 10))),
-      room: this.logic.fetchRoomInfo(this.roomId),
-      roomMembers: this.logic.fetchMemberListOnRoom(this.roomId).pipe(map(({ items }) => items)),
-    }).subscribe(({ companyUser, activeTaskItems, doneTaskItems, room, roomMembers }) => {
-      this.companyMembers = companyUser.companyMembers.items;
-      this.taskActiveItems = activeTaskItems.sort(this.logic.compareTaskArray);
-      this.taskDoneItems = doneTaskItems;
-      this.room = room;
-      this.roomMembers = roomMembers;
-    });
+    // forkJoin({
+    //   companyUser: this.logic.fetchCompanyMembers(this.companyId),
+    //   activeTaskItems: this.logic.fetchActiveTaskPerRoom(this.roomId).pipe(concatMap((result) => this.logic.fetchEachStatusTask(result, 0))),
+    //   doneTaskItems: this.logic.fetchDoneTaskPerRoom(this.roomId).pipe(concatMap((result) => this.logic.fetchEachStatusTask(result, 10))),
+    //   room: this.logic.fetchRoomInfo(this.roomId),
+    //   roomMembers: this.logic.fetchMemberListOnRoom(this.roomId).pipe(map(({ items }) => items)),
+    // }).subscribe(({ companyUser, activeTaskItems, doneTaskItems, room, roomMembers }) => {
+    //   this.companyMembers = companyUser.companyMembers.items;
+    //   this.taskActiveItems = activeTaskItems.sort(this.logic.compareTaskArray);
+    //   this.taskDoneItems = doneTaskItems;
+    //   this.room = room;
+    //   this.roomMembers = roomMembers;
+    // });
   }
 
   // 前のURLだけを取得
