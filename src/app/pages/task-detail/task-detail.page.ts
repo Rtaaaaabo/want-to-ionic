@@ -57,6 +57,8 @@ export class TaskDetailPage implements OnInit {
     private readonly alertCtrl: AlertController,
     private readonly locationStrate: LocationStrategy,
   ) {
+    this.segment = this.route.snapshot.paramMap.get('segment');
+
     let resultMessage;
     this.taskId = this.route.snapshot.paramMap.get('id');
     this.initializeApp().subscribe(() => {

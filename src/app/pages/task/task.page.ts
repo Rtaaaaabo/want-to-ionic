@@ -60,7 +60,6 @@ export class TaskPage implements OnInit {
     this.roomId = this.route.snapshot.paramMap.get('id');
     console.log('TaskPage Constructor', this.roomId);
     this.initializeApp().subscribe(() => {
-      // this.subscriptionActiveTask = this.logic.onUpdateTask
       this.subscriptionTask = this.logic.onUpdateTaskListener().subscribe({
         next: () => this.logic.fetchActiveTaskPerRoom(this.roomId).pipe(concatMap((result) => this.logic.fetchEachStatusTask(result, 0)))
           .pipe(map((data) => this.taskActiveItems = data.sort(this.logic.compareTaskArray)))
@@ -81,19 +80,6 @@ export class TaskPage implements OnInit {
       this.segment = 'active';
     }
 
-    this.roomId = this.route.snapshot.paramMap.get('id');
-    forkJoin({
-      activeTaskItems: this.logic.fetchActiveTaskPerRoom(this.roomId).pipe(concatMap((result) => this.logic.fetchEachStatusTask(result, 0))),
-      doneTaskItems: this.logic.fetchDoneTaskPerRoom(this.roomId).pipe(concatMap((result) => this.logic.fetchEachStatusTask(result, 10))),
-      room: this.logic.fetchRoomInfo(this.roomId),
-      roomMembers: this.logic.fetchMemberListOnRoom(this.roomId).pipe(map(({ items }) => items)),
-    }).subscribe(({ activeTaskItems, doneTaskItems, room, roomMembers }) => {
-      this.taskActiveItems = activeTaskItems.sort(this.logic.compareTaskArray);
-      this.taskDoneItems = doneTaskItems;
-      this.room = room;
-      this.roomMembers = roomMembers;
-    });
-    // });
     this.locationStrate.onPopState(() => {
       // システムの戻るボタンクリック時の挙動
     })
