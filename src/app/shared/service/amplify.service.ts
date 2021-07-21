@@ -8847,107 +8847,356 @@ export class AmplifyService {
     )
   ) as Observable<OnDeleteMessageSubscription>;
 
-  OnCreateUserListener: Observable<OnCreateUserSubscription> = API.graphql(
+  OnCreateUserListener: Observable<
+    SubscriptionResponse<OnCreateUserSubscription>
+  > = API.graphql(
     graphqlOperation(
       `subscription OnCreateUser {
         onCreateUser {
           __typename
           id
+          username
           email
           companyID
-          username
+          tel
+          positionName
+          iconImage {
+            __typename
+            bucket
+            region
+            key
+          }
           registered
           authority
           company {
             __typename
             id
             name
-            domain
+            officer {
+              __typename
+              officerEmail
+              officerName
+            }
+            isRegistered
+            otp
+            tel
+            officialEmail
+            iconCompany {
+              __typename
+              bucket
+              region
+              key
+            }
+            billing
             room {
               __typename
               nextToken
             }
-            members {
+            companyMembers {
               __typename
               nextToken
             }
             createdAt
             updatedAt
+            owner
+          }
+          messages {
+            __typename
+            items {
+              __typename
+              id
+              taskID
+              authorID
+              content
+              createdAt
+              isSent
+              updatedAt
+              owner
+            }
+            nextToken
+          }
+          room {
+            __typename
+            items {
+              __typename
+              id
+              roomID
+              userID
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          task {
+            __typename
+            items {
+              __typename
+              id
+              taskID
+              userID
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          chargeTask {
+            __typename
+            items {
+              __typename
+              id
+              authorID
+              roomID
+              chargePersonID
+              title
+              description
+              scheduleDate
+              priority
+              status
+              createdAt
+              updatedAt
+            }
+            nextToken
           }
           createdAt
           updatedAt
         }
       }`
     )
-  ) as Observable<OnCreateUserSubscription>;
+  ) as Observable<SubscriptionResponse<OnCreateUserSubscription>>;
 
-  OnUpdateUserListener: Observable<OnUpdateUserSubscription> = API.graphql(
+  OnUpdateUserListener: Observable<
+    SubscriptionResponse<OnUpdateUserSubscription>
+  > = API.graphql(
     graphqlOperation(
       `subscription OnUpdateUser {
         onUpdateUser {
           __typename
           id
+          username
           email
           companyID
-          username
+          tel
+          positionName
+          iconImage {
+            __typename
+            bucket
+            region
+            key
+          }
           registered
           authority
           company {
             __typename
             id
             name
-            domain
+            officer {
+              __typename
+              officerEmail
+              officerName
+            }
+            isRegistered
+            otp
+            tel
+            officialEmail
+            iconCompany {
+              __typename
+              bucket
+              region
+              key
+            }
+            billing
             room {
               __typename
               nextToken
             }
-            members {
+            companyMembers {
               __typename
               nextToken
             }
             createdAt
             updatedAt
+            owner
+          }
+          messages {
+            __typename
+            items {
+              __typename
+              id
+              taskID
+              authorID
+              content
+              createdAt
+              isSent
+              updatedAt
+              owner
+            }
+            nextToken
+          }
+          room {
+            __typename
+            items {
+              __typename
+              id
+              roomID
+              userID
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          task {
+            __typename
+            items {
+              __typename
+              id
+              taskID
+              userID
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          chargeTask {
+            __typename
+            items {
+              __typename
+              id
+              authorID
+              roomID
+              chargePersonID
+              title
+              description
+              scheduleDate
+              priority
+              status
+              createdAt
+              updatedAt
+            }
+            nextToken
           }
           createdAt
           updatedAt
         }
       }`
     )
-  ) as Observable<OnUpdateUserSubscription>;
+  ) as Observable<SubscriptionResponse<OnUpdateUserSubscription>>;
 
-  OnDeleteUserListener: Observable<OnDeleteUserSubscription> = API.graphql(
+  OnDeleteUserListener: Observable<
+    SubscriptionResponse<OnDeleteUserSubscription>
+  > = API.graphql(
     graphqlOperation(
       `subscription OnDeleteUser {
         onDeleteUser {
           __typename
           id
+          username
           email
           companyID
-          username
+          tel
+          positionName
+          iconImage {
+            __typename
+            bucket
+            region
+            key
+          }
           registered
           authority
           company {
             __typename
             id
             name
-            domain
+            officer {
+              __typename
+              officerEmail
+              officerName
+            }
+            isRegistered
+            otp
+            tel
+            officialEmail
+            iconCompany {
+              __typename
+              bucket
+              region
+              key
+            }
+            billing
             room {
               __typename
               nextToken
             }
-            members {
+            companyMembers {
               __typename
               nextToken
             }
             createdAt
             updatedAt
+            owner
+          }
+          messages {
+            __typename
+            items {
+              __typename
+              id
+              taskID
+              authorID
+              content
+              createdAt
+              isSent
+              updatedAt
+              owner
+            }
+            nextToken
+          }
+          room {
+            __typename
+            items {
+              __typename
+              id
+              roomID
+              userID
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          task {
+            __typename
+            items {
+              __typename
+              id
+              taskID
+              userID
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          chargeTask {
+            __typename
+            items {
+              __typename
+              id
+              authorID
+              roomID
+              chargePersonID
+              title
+              description
+              scheduleDate
+              priority
+              status
+              createdAt
+              updatedAt
+            }
+            nextToken
           }
           createdAt
           updatedAt
         }
       }`
     )
-  ) as Observable<OnDeleteUserSubscription>;
+  ) as Observable<SubscriptionResponse<OnDeleteUserSubscription>>;
 
   async CreateRoomGroup(
     input: CreateRoomGroupInput,
