@@ -58,6 +58,7 @@ export class TaskPage implements OnInit {
     private readonly platform: Platform,
   ) {
     this.roomId = this.route.snapshot.paramMap.get('id');
+    console.log('TaskPage Constructor', this.roomId);
     this.initializeApp().subscribe(() => {
       // this.subscriptionActiveTask = this.logic.onUpdateTask
       this.subscriptionTask = this.logic.onUpdateTaskListener().subscribe({

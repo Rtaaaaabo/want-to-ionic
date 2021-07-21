@@ -8027,49 +8027,48 @@ export class AmplifyService {
     )
   ) as Observable<OnCreateRoomSubscription>;
 
-  OnUpdateRoomListener: Observable<OnUpdateRoomSubscription> = API.graphql(
+  OnUpdateRoomListener: Observable<
+    SubscriptionResponse<OnUpdateRoomSubscription>
+  > = API.graphql(
     graphqlOperation(
       `subscription OnUpdateRoom {
         onUpdateRoom {
           __typename
           id
-          companyID
           name
+          companyID
           description
-          members {
-            __typename
-            id
-            email
-            companyID
-            username
-            registered
-            authority
-            company {
-              __typename
-              id
-              name
-              domain
-              createdAt
-              updatedAt
-            }
-            createdAt
-            updatedAt
-          }
           company {
             __typename
             id
             name
-            domain
+            officer {
+              __typename
+              officerEmail
+              officerName
+            }
+            isRegistered
+            otp
+            tel
+            officialEmail
+            iconCompany {
+              __typename
+              bucket
+              region
+              key
+            }
+            billing
             room {
               __typename
               nextToken
             }
-            members {
+            companyMembers {
               __typename
               nextToken
             }
             createdAt
             updatedAt
+            owner
           }
           tasks {
             __typename
@@ -8078,6 +8077,7 @@ export class AmplifyService {
               id
               authorID
               roomID
+              chargePersonID
               title
               description
               scheduleDate
@@ -8088,12 +8088,24 @@ export class AmplifyService {
             }
             nextToken
           }
+          users {
+            __typename
+            items {
+              __typename
+              id
+              roomID
+              userID
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
           createdAt
           updatedAt
         }
       }`
     )
-  ) as Observable<OnUpdateRoomSubscription>;
+  ) as Observable<SubscriptionResponse<OnUpdateRoomSubscription>>;
 
   OnDeleteRoomListener: Observable<OnDeleteRoomSubscription> = API.graphql(
     graphqlOperation(
@@ -8255,57 +8267,91 @@ export class AmplifyService {
           id
           authorID
           roomID
+          chargePersonID
           title
+          room {
+            __typename
+            id
+            name
+            companyID
+            description
+            company {
+              __typename
+              id
+              name
+              isRegistered
+              otp
+              tel
+              officialEmail
+              billing
+              createdAt
+              updatedAt
+              owner
+            }
+            tasks {
+              __typename
+              nextToken
+            }
+            users {
+              __typename
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
           description
+          iconTask {
+            __typename
+            bucket
+            region
+            key
+          }
           scheduleDate
           priority
           status
           createdAt
-          members {
+          chargePerson {
             __typename
             id
+            username
             email
             companyID
-            username
+            tel
+            positionName
+            iconImage {
+              __typename
+              bucket
+              region
+              key
+            }
             registered
             authority
             company {
               __typename
               id
               name
-              domain
+              isRegistered
+              otp
+              tel
+              officialEmail
+              billing
               createdAt
               updatedAt
+              owner
             }
-            createdAt
-            updatedAt
-          }
-          room {
-            __typename
-            id
-            companyID
-            name
-            description
-            members {
+            messages {
               __typename
-              id
-              email
-              companyID
-              username
-              registered
-              authority
-              createdAt
-              updatedAt
+              nextToken
             }
-            company {
+            room {
               __typename
-              id
-              name
-              domain
-              createdAt
-              updatedAt
+              nextToken
             }
-            tasks {
+            task {
+              __typename
+              nextToken
+            }
+            chargeTask {
               __typename
               nextToken
             }
@@ -8318,9 +8364,23 @@ export class AmplifyService {
               __typename
               id
               taskID
+              authorID
               content
               createdAt
               isSent
+              updatedAt
+              owner
+            }
+            nextToken
+          }
+          users {
+            __typename
+            items {
+              __typename
+              id
+              taskID
+              userID
+              createdAt
               updatedAt
             }
             nextToken
