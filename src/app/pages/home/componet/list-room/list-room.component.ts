@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationExtras } from '@angular/router';
-import { ModalController, AlertController, IonItemSliding } from '@ionic/angular';
+import { ModalController, AlertController, IonItemSliding, Platform } from '@ionic/angular';
 import { AddRoomModalComponent } from '../../../../shared/component/modal/add-room-modal/add-room-modal.component';
 import { HomeLogic } from '../../logic/home.logic';
-import { from } from 'rxjs';
+import { from, Subscription, Observable } from 'rxjs';
 import { concatMap, switchMap, map, filter } from 'rxjs/operators';
 import { ResponseListRoomGroupsQueryItems } from '../../service/reponse/response.model';
 import { Room, RoomGroup } from 'src/app/shared/service/amplify.service';
@@ -19,12 +19,33 @@ export class ListRoomComponent implements OnInit {
   currentUserAttribute: Attribute;
   currentUser: CurrentUser;
 
+  subscriptionCreateRoom: Subscription;
+  subscriptionDeleteRoom: Subscription;
+
   constructor(
     private logic: HomeLogic,
     private readonly modalCtrl: ModalController,
     private readonly router: Router,
     private readonly alertCtrl: AlertController,
-  ) { }
+    private readonly platform: Platform,
+  ) {
+    this.initializeApp().subscribe(() => {
+      this.subscriptionCreateRoom = this.logic.onCreateRoomListener().subscribe(() => {
+        next: () => logic.fetchRoomList(this.currentUser.id)
+          .pipe(concatMap((data) => this.logic.setExitsRoomAndUser(data)))
+          .subscribe((data) => {
+            this.roomGroupsItems = data;
+          });
+      }),
+        this.subscriptionDeleteRoom = this.logic.onDeleteRoomListener().subscribe(() => {
+          next: () => this.logic.fetchRoomList(this.currentUser.id)
+            .pipe(concatMap((data) => this.logic.setExitsRoomAndUser(data)))
+            .subscribe(data => {
+              this.roomGroupsItems = data;
+            })
+        })
+    })
+  }
 
   ngOnInit(): void {
     this.logic.fetchCurrentUser()
@@ -36,6 +57,10 @@ export class ListRoomComponent implements OnInit {
       .subscribe((data) => {
         this.roomGroupsItems = data;
       });
+  }
+
+  initializeApp(): Observable<string> {
+    return from(this.platform.ready());
   }
 
   /**
@@ -116,6 +141,11 @@ export class ListRoomComponent implements OnInit {
       ]
     });
     alert.present();
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptionCreateRoom.unsubscribe();
+    this.subscriptionDeleteRoom.unsubscribe();
   }
 
 }
