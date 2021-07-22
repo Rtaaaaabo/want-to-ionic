@@ -9,6 +9,7 @@ import { GetRoomQuery, GetUserQuery } from 'src/app/shared/service/amplify.servi
 import { TaskLogic } from './logic/task.logic';
 import { CompanyMembersInfo } from './interface/current-user-info.interface';
 import { AddTaskModalComponent } from '../../shared/component/modal/add-task-modal/add-task-modal.component';
+import { EditRoomModalComponent } from '../../shared/component/modal/edit-room-modal/edit-room-modal.component';
 import { InterfaceTask } from 'src/app/interfaces/task.interface';
 import { TaskFormModel } from 'src/app/shared/model/task-form.model';
 import { CompanyMembers, CurrentUser } from './model/task-member.model';
@@ -130,7 +131,6 @@ export class TaskPage implements OnInit {
     return this.previousParam;
   }
 
-
   async presentDoneToast(): Promise<void> {
     const toast = await this.toastCtrl.create({
       message: 'おつかれさまでした！',
@@ -161,6 +161,17 @@ export class TaskPage implements OnInit {
       .subscribe((items) => {
         this.taskActiveItems = items.sort(this.logic.compareTaskArray);;
       });
+    return modal.present();
+  }
+
+  async presentEditRoom(): Promise<void> {
+    const modal = await this.modalCtrl.create({
+      component: EditRoomModalComponent,
+      componentProps: {
+        room: this.room,
+      },
+    });
+    const dismissObservable = from(modal.onDidDismiss());
     return modal.present();
   }
 
