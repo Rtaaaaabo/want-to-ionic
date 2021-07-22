@@ -36,14 +36,14 @@ export class ListRoomComponent implements OnInit {
           .subscribe((data) => {
             this.roomGroupsItems = data;
           });
-      }),
-        this.subscriptionDeleteRoom = this.logic.onDeleteRoomListener().subscribe(() => {
-          next: () => this.logic.fetchRoomList(this.currentUser.id)
-            .pipe(concatMap((data) => this.logic.setExitsRoomAndUser(data)))
-            .subscribe(data => {
-              this.roomGroupsItems = data;
-            })
-        })
+      });
+      this.subscriptionDeleteRoom = this.logic.onDeleteRoomListener().subscribe(() => {
+        next: () => this.logic.fetchRoomList(this.currentUser.id)
+          .pipe(concatMap((data) => this.logic.setExitsRoomAndUser(data)))
+          .subscribe(data => {
+            this.roomGroupsItems = data;
+          })
+      })
     })
   }
 

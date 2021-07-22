@@ -74,7 +74,7 @@ export class TaskPage implements OnInit {
           .pipe(map((result) => this.room = result))
           .pipe(concatMap(() => this.logic.fetchMemberListOnRoom(this.roomId).pipe(map(({ items }) => items))))
           .pipe(map((result) => this.roomMembers = result))
-          .subscribe(),
+          .subscribe()
       });
       this.subscriptionCreateTask = this.logic.onCreateTaskListener().subscribe({
         next: () => this.logic.fetchActiveTaskPerRoom(this.roomId)
@@ -83,7 +83,6 @@ export class TaskPage implements OnInit {
             this.taskActiveItems = items.sort(this.logic.compareTaskArray);;
           }),
       })
-
     });
     this.segment = this.router.getCurrentNavigation().extras.state?.status;
     if (!this.segment) {
