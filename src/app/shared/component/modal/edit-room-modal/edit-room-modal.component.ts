@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { ModalController } from '@ionic/angular';
+import { GetRoomQuery } from '../../../service/amplify.service';
 
 @Component({
   selector: 'app-edit-room-modal',
@@ -7,8 +9,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EditRoomModalComponent implements OnInit {
 
-  constructor() { }
+  @Input() room: GetRoomQuery;
 
-  ngOnInit() {}
+  title: string;
+
+  constructor(
+    private readonly modalCtrl: ModalController,
+  ) { }
+
+  ngOnInit(): void { }
+
+  saveRoom(): void {
+
+  }
+
+  dismissModal(): void {
+    this.modalCtrl.dismiss();
+  }
 
 }

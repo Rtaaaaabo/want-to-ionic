@@ -9,7 +9,8 @@ import { GetRoomQuery, GetUserQuery } from 'src/app/shared/service/amplify.servi
 import { TaskLogic } from './logic/task.logic';
 import { CompanyMembersInfo } from './interface/current-user-info.interface';
 import { AddTaskModalComponent } from '../../shared/component/modal/add-task-modal/add-task-modal.component';
-import { EditRoomModalComponent } from '../../shared/component/modal/edit-room-modal/edit-room-modal.component';
+import { AddRoomModalComponent } from '../../shared/component/modal/add-room-modal/add-room-modal.component';
+// import { EditRoomModalComponent } from '../../shared/component/modal/edit-room-modal/edit-room-modal.component';
 import { InterfaceTask } from 'src/app/interfaces/task.interface';
 import { TaskFormModel } from 'src/app/shared/model/task-form.model';
 import { CompanyMembers, CurrentUser } from './model/task-member.model';
@@ -166,7 +167,7 @@ export class TaskPage implements OnInit {
 
   async presentEditRoom(): Promise<void> {
     const modal = await this.modalCtrl.create({
-      component: EditRoomModalComponent,
+      component: AddRoomModalComponent,
       componentProps: {
         room: this.room,
       },

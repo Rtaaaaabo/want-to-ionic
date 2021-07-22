@@ -20,8 +20,8 @@ export class AddPersonModalComponent implements OnInit {
   users;
 
   constructor(
+    private readonly logic: TaskLogic,
     private modalCtrl: ModalController,
-    private logic: TaskLogic,
   ) { }
 
   ngOnInit(): void {
