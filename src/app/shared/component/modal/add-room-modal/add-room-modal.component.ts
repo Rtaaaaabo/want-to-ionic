@@ -14,6 +14,11 @@ export class AddRoomModalComponent implements OnInit {
 
   role = 'create';
 
+  viewContent = {
+    create: { title: '案件情報の追加', button: '追加' },
+    update: { title: '案件情報の更新', button: '更新' },
+  }
+
   roomItemGroup = new FormGroup({
     nameItem: new FormControl('', [Validators.required]),
     descriptionItem: new FormControl(''),

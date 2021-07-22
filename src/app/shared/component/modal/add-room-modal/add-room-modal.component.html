@@ -1,6 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>案件の追加</ion-title>
+    <ion-title>{{ viewContent[role].title }}</ion-title>
     <ion-buttons slot="start">
       <ion-button (click)="dismissModal()">
         <ion-icon slot="icon-only" name="close-outline"></ion-icon>
@@ -28,7 +28,7 @@
       (click)="createItem()"
       [disabled]="nameItem.invalid"
       expand="full"
-      >追加
+      >{{ viewContent[role].button }}
     </ion-button>
   </form>
 </ion-content>

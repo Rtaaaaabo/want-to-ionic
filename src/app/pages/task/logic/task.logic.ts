@@ -18,6 +18,7 @@ import {
   ListUsersQuery,
   UpdateTaskMutation,
   GetCompanyQuery,
+  UpdateRoomInput,
 } from "src/app/shared/service/amplify.service";
 import { SessionService } from "../../../shared/service/session.service";
 import { v4 as uuid } from "uuid";
@@ -213,6 +214,15 @@ export class TaskLogic {
   fetchAnyUserInfoFromList(email: string): Observable<Array<CurrentUser>> {
     return this.taskService.fetchAnyUserInfoFromList(email)
       .pipe(map((result) => result.items))
+  }
+
+  updateRoom(result: { nameItem: string, descriptionItem: string }, roomId: string): Observable<any> {
+    const requestContent: UpdateRoomInput = {
+      id: roomId,
+      name: result.nameItem,
+      description: result.descriptionItem,
+    }
+    return this.taskService.updateRoom(requestContent);
   }
 
   onUpdateRoomListener(): any {

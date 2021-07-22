@@ -173,6 +173,14 @@ export class TaskPage implements OnInit {
       },
     });
     const dismissObservable = from(modal.onDidDismiss());
+    dismissObservable
+      .pipe(filter(({ data }) => data !== undefined))
+      .pipe(concatMap(({ data }) => this.logic.updateRoom(data, this.room.id)))
+      .pipe(concatMap(() => this.logic.fetchRoomInfo(this.roomId)))
+      .subscribe((room) => {
+        this.room = room;
+      })
+    dismissObservable.subscribe(data => console.log('presentEditRoom data', data));
     return modal.present();
   }
 

@@ -13,6 +13,7 @@ import {
   UpdateTaskMutation,
   GetCompanyQuery,
   ModelUserFilterInput,
+  UpdateRoomInput,
 } from "../../../shared/service/amplify.service";
 import { Observable, from } from "rxjs";
 
@@ -107,5 +108,9 @@ export class TaskService {
 
   onUpdateTaskListener(): any {
     return this.amplifyService.OnUpdateTaskListener;
+  }
+
+  updateRoom(data: UpdateRoomInput): any {
+    return this.amplifyService.UpdateRoom(data);
   }
 }

@@ -5891,68 +5891,78 @@ export class AmplifyService {
     condition?: ModelRoomConditionInput
   ): Promise<UpdateRoomMutation> {
     const statement = `mutation UpdateRoom($input: UpdateRoomInput!, $condition: ModelRoomConditionInput) {
-        updateRoom(input: $input, condition: $condition) {
+      updateRoom(input: $input, condition: $condition) {
+        __typename
+        id
+        name
+        companyID
+        description
+        company {
           __typename
           id
-          companyID
           name
-          description
-          members {
+          officer {
             __typename
-            id
-            email
-            companyID
-            username
-            registered
-            authority
-            company {
-              __typename
-              id
-              name
-              domain
-              createdAt
-              updatedAt
-            }
-            createdAt
-            updatedAt
+            officerEmail
+            officerName
           }
-          company {
+          isRegistered
+          otp
+          tel
+          officialEmail
+          iconCompany {
             __typename
-            id
-            name
-            domain
-            room {
-              __typename
-              nextToken
-            }
-            members {
-              __typename
-              nextToken
-            }
-            createdAt
-            updatedAt
+            bucket
+            region
+            key
           }
-          tasks {
+          billing
+          room {
             __typename
-            items {
-              __typename
-              id
-              authorID
-              roomID
-              title
-              description
-              scheduleDate
-              priority
-              status
-              createdAt
-              updatedAt
-            }
+            nextToken
+          }
+          companyMembers {
+            __typename
             nextToken
           }
           createdAt
           updatedAt
+          owner
         }
-      }`;
+        tasks {
+          __typename
+          items {
+            __typename
+            id
+            authorID
+            roomID
+            chargePersonID
+            title
+            description
+            scheduleDate
+            priority
+            status
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        users {
+          __typename
+          items {
+            __typename
+            id
+            roomID
+            userID
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+    }`;
     const gqlAPIServiceArguments: any = {
       input
     };
