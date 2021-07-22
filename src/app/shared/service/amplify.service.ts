@@ -9222,6 +9222,292 @@ export class AmplifyService {
     )
   ) as Observable<SubscriptionResponse<OnDeleteUserSubscription>>;
 
+  OnCreateRoomGroupListener: Observable<
+    SubscriptionResponse<OnCreateRoomGroupSubscription>
+  > = API.graphql(
+    graphqlOperation(
+      `subscription OnCreateRoomGroup {
+        onCreateRoomGroup {
+          __typename
+          id
+          roomID
+          userID
+          room {
+            __typename
+            id
+            name
+            companyID
+            description
+            company {
+              __typename
+              id
+              name
+              isRegistered
+              otp
+              tel
+              officialEmail
+              billing
+              createdAt
+              updatedAt
+              owner
+            }
+            tasks {
+              __typename
+              nextToken
+            }
+            users {
+              __typename
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          user {
+            __typename
+            id
+            username
+            email
+            companyID
+            tel
+            positionName
+            iconImage {
+              __typename
+              bucket
+              region
+              key
+            }
+            registered
+            authority
+            company {
+              __typename
+              id
+              name
+              isRegistered
+              otp
+              tel
+              officialEmail
+              billing
+              createdAt
+              updatedAt
+              owner
+            }
+            messages {
+              __typename
+              nextToken
+            }
+            room {
+              __typename
+              nextToken
+            }
+            task {
+              __typename
+              nextToken
+            }
+            chargeTask {
+              __typename
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          createdAt
+          updatedAt
+        }
+      }`
+    )
+  ) as Observable<SubscriptionResponse<OnCreateRoomGroupSubscription>>;
+
+  OnUpdateRoomGroupListener: Observable<
+    SubscriptionResponse<OnUpdateRoomGroupSubscription>
+  > = API.graphql(
+    graphqlOperation(
+      `subscription OnUpdateRoomGroup {
+        onUpdateRoomGroup {
+          __typename
+          id
+          roomID
+          userID
+          room {
+            __typename
+            id
+            name
+            companyID
+            description
+            company {
+              __typename
+              id
+              name
+              isRegistered
+              otp
+              tel
+              officialEmail
+              billing
+              createdAt
+              updatedAt
+              owner
+            }
+            tasks {
+              __typename
+              nextToken
+            }
+            users {
+              __typename
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          user {
+            __typename
+            id
+            username
+            email
+            companyID
+            tel
+            positionName
+            iconImage {
+              __typename
+              bucket
+              region
+              key
+            }
+            registered
+            authority
+            company {
+              __typename
+              id
+              name
+              isRegistered
+              otp
+              tel
+              officialEmail
+              billing
+              createdAt
+              updatedAt
+              owner
+            }
+            messages {
+              __typename
+              nextToken
+            }
+            room {
+              __typename
+              nextToken
+            }
+            task {
+              __typename
+              nextToken
+            }
+            chargeTask {
+              __typename
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          createdAt
+          updatedAt
+        }
+      }`
+    )
+  ) as Observable<SubscriptionResponse<OnUpdateRoomGroupSubscription>>;
+
+  OnDeleteRoomGroupListener: Observable<
+    SubscriptionResponse<OnDeleteRoomGroupSubscription>
+  > = API.graphql(
+    graphqlOperation(
+      `subscription OnDeleteRoomGroup {
+        onDeleteRoomGroup {
+          __typename
+          id
+          roomID
+          userID
+          room {
+            __typename
+            id
+            name
+            companyID
+            description
+            company {
+              __typename
+              id
+              name
+              isRegistered
+              otp
+              tel
+              officialEmail
+              billing
+              createdAt
+              updatedAt
+              owner
+            }
+            tasks {
+              __typename
+              nextToken
+            }
+            users {
+              __typename
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          user {
+            __typename
+            id
+            username
+            email
+            companyID
+            tel
+            positionName
+            iconImage {
+              __typename
+              bucket
+              region
+              key
+            }
+            registered
+            authority
+            company {
+              __typename
+              id
+              name
+              isRegistered
+              otp
+              tel
+              officialEmail
+              billing
+              createdAt
+              updatedAt
+              owner
+            }
+            messages {
+              __typename
+              nextToken
+            }
+            room {
+              __typename
+              nextToken
+            }
+            task {
+              __typename
+              nextToken
+            }
+            chargeTask {
+              __typename
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          createdAt
+          updatedAt
+        }
+      }`
+    )
+  ) as Observable<SubscriptionResponse<OnDeleteRoomGroupSubscription>>;
+
+
   async CreateRoomGroup(
     input: CreateRoomGroupInput,
     condition?: ModelRoomConditionInput
