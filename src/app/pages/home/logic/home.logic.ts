@@ -259,4 +259,11 @@ export class HomeLogic {
       .pipe(map((result) => result.items));
   }
 
+  onCreateRoomListener(): any {
+    return this.homeService.onCreateRoomListener();
+  }
+
+  onDeleteRoomListener(): any {
+    return this.homeService.onDeleteRoomListener();
+  }
 }

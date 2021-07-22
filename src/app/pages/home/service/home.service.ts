@@ -78,4 +78,12 @@ export class HomeService {
   fetchAnyUserInfoFromList(userFilter: ModelUserFilterInput): Observable<ListUsersQuery> {
     return from(this.amplifyService.ListUsers(userFilter));
   }
+
+  onCreateRoomListener(): any {
+    return this.amplifyService.OnCreateRoomListener;
+  }
+
+  onDeleteRoomListener(): any {
+    return this.amplifyService.OnDeleteRoomListener;
+  }
 }
