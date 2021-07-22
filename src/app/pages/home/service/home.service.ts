@@ -83,7 +83,23 @@ export class HomeService {
     return this.amplifyService.OnCreateRoomListener;
   }
 
+  onUpdateRoomListener(): any {
+    return this.amplifyService.OnUpdateRoomListener;
+  }
+
   onDeleteRoomListener(): any {
     return this.amplifyService.OnDeleteRoomListener;
+  }
+
+  onCreateRoomGroupListener(): any {
+    return this.amplifyService.OnCreateRoomGroupListener;
+  }
+
+  onUpdateRoomGroupListener(): any {
+    return this.amplifyService.OnUpdateRoomGroupListener;
+  }
+
+  onDeleteRoomGroupListener(): any {
+    return this.amplifyService.OnDeleteRoomGroupListener;
   }
 }

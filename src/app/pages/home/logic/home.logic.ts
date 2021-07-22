@@ -263,7 +263,23 @@ export class HomeLogic {
     return this.homeService.onCreateRoomListener();
   }
 
+  onUpdateRoomListener(): any {
+    return this.homeService.onUpdateRoomListener();
+  }
+
   onDeleteRoomListener(): any {
     return this.homeService.onDeleteRoomListener();
+  }
+
+  onCreateRoomGroupListener(): any {
+    return this.homeService.onCreateRoomGroupListener();
+  }
+
+  onUpdateRoomGroupListener(): any {
+    return this.homeService.onUpdateRoomGroupListener();
+  }
+
+  onDeleteRoomGroupListener(): any {
+    return this.homeService.onDeleteRoomGroupListener();
   }
 }
