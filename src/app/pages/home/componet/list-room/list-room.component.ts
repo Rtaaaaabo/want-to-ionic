@@ -20,7 +20,11 @@ export class ListRoomComponent implements OnInit {
   currentUser: CurrentUser;
 
   subscriptionCreateRoom: Subscription;
+  subscriptionUpdateRoom: Subscription;
   subscriptionDeleteRoom: Subscription;
+  subscriptionCreateRoomGroup: Subscription;
+  subscriptionUpdateRoomGroup: Subscription;
+  subscriptionDeleteRoomGroup: Subscription;
 
   constructor(
     private logic: HomeLogic,
@@ -31,16 +35,49 @@ export class ListRoomComponent implements OnInit {
   ) {
     this.initializeApp().subscribe(() => {
       this.subscriptionCreateRoom = this.logic.onCreateRoomListener().subscribe(() => {
-        next: () => logic.fetchRoomList(this.currentUser.id)
+        next: () => this.logic.fetchRoomList(this.currentUser.id)
           .pipe(concatMap((data) => this.logic.setExitsRoomAndUser(data)))
           .subscribe((data) => {
             this.roomGroupsItems = data;
           });
       });
+
+      this.subscriptionUpdateRoom = this.logic.onUpdateRoomListener().subscribe(() => {
+        next: () => this.logic.fetchRoomList(this.currentUser.id)
+          .pipe(concatMap((data) => this.logic.setExitsRoomAndUser(data)))
+          .subscribe((data) => {
+            this.roomGroupsItems = data;
+          })
+      });
+
       this.subscriptionDeleteRoom = this.logic.onDeleteRoomListener().subscribe(() => {
         next: () => this.logic.fetchRoomList(this.currentUser.id)
           .pipe(concatMap((data) => this.logic.setExitsRoomAndUser(data)))
-          .subscribe(data => {
+          .subscribe((data) => {
+            this.roomGroupsItems = data;
+          })
+      });
+
+      this.subscriptionCreateRoomGroup = this.logic.onCreateRoomGroupListener().subscribe(() => {
+        next: () => this.logic.fetchRoomList(this.currentUser.id)
+          .pipe(concatMap((data) => this.logic.setExitsRoomAndUser(data)))
+          .subscribe((data) => {
+            this.roomGroupsItems = data;
+          })
+      });
+
+      this.subscriptionUpdateRoomGroup = this.logic.onUpdateRoomGroupListener().subscribe(() => {
+        next: () => this.logic.fetchRoomList(this.currentUser.id)
+          .pipe(concatMap((data) => this.logic.setExitsRoomAndUser(data)))
+          .subscribe((data) => {
+            this.roomGroupsItems = data;
+          })
+      })
+
+      this.subscriptionDeleteRoomGroup = this.logic.onDeleteRoomGroupListener().subscribe(() => {
+        next: () => this.logic.fetchRoomList(this.currentUser.id)
+          .pipe(concatMap((data) => this.logic.setExitsRoomAndUser(data)))
+          .subscribe((data) => {
             this.roomGroupsItems = data;
           })
       })
