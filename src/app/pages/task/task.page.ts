@@ -63,6 +63,13 @@ export class TaskPage implements OnInit {
     this.roomId = this.route.snapshot.paramMap.get('id');
     this.isReorder = false;
     this.initializeApp().subscribe(() => {
+      this.subscriptionCreateTask = this.logic.onCreateTaskListener().subscribe({
+        next: () => this.logic.fetchActiveTaskPerRoom(this.roomId)
+          .pipe(concatMap((result) => this.logic.fetchEachStatusTask(result, 0)))
+          .subscribe((items) => {
+            this.taskActiveItems = items.sort(this.logic.compareTaskArray);;
+          }),
+      })
       this.subscriptionUpdateTask = this.logic.onUpdateTaskListener().subscribe({
         next: () => this.logic.fetchActiveTaskPerRoom(this.roomId)
           .pipe(concatMap((result) => this.logic.fetchEachStatusTask(result, 0)))
@@ -79,13 +86,6 @@ export class TaskPage implements OnInit {
             this.roomMembers = result
           })
       });
-      this.subscriptionCreateTask = this.logic.onCreateTaskListener().subscribe({
-        next: () => this.logic.fetchActiveTaskPerRoom(this.roomId)
-          .pipe(concatMap((result) => this.logic.fetchEachStatusTask(result, 0)))
-          .subscribe((items) => {
-            this.taskActiveItems = items.sort(this.logic.compareTaskArray);;
-          }),
-      })
     });
     this.segment = this.router.getCurrentNavigation().extras.state?.status;
     if (!this.segment) {
