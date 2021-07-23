@@ -26,7 +26,9 @@
         <ion-note slot="end">招待中</ion-note>
       </ng-container>
       <ng-container>
-        <ion-label>{{ member.username }}</ion-label>
+        <!-- <ion-label> -->
+        <ion-text> {{ member.username }} </ion-text>
+        <!-- </ion-label> -->
         <ion-note
           *ngIf="member.id === currentUser.id"
           slot="end"
