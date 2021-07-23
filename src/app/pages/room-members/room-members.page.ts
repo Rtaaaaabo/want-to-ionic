@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ModalController } from '@ionic/angular';
+import { ModalController, Platform } from '@ionic/angular';
+import { from, Observable, Subscription } from 'rxjs';
 import { concatMap, map, switchMap } from 'rxjs/operators';
 import { RoomMembersLogic } from './logic/room-members.logic';
 import { AddPersonModalComponent } from '../task/component/add-person-modal/add-person-modal.component';
@@ -23,13 +24,52 @@ export class RoomMembersPage implements OnInit {
   currentUserAttribute: Attribute;
   currentUser: CurrentUser;
 
+  subscriptionCreateRoomMember: Subscription;
+  subscriptionUpdateRoomMember: Subscription;
+  subscriptionDeleteRoomMember: Subscription;
+
   constructor(
     private readonly logic: RoomMembersLogic,
     private readonly modalCtrl: ModalController,
     private readonly location: Location,
     private readonly router: Router,
     private readonly route: ActivatedRoute,
-  ) { }
+    private readonly platform: Platform,
+  ) {
+    this.initializeApp().subscribe(() => {
+      this.subscriptionCreateRoomMember = this.logic.onCreateRoomMemberListener().subscribe({
+        next: () => this.logic.fetchRoomMembers(this.roomId)
+          .pipe(concatMap(({ items: members }) => this.logic.setRoomMembers(members, this.currentUser.id)))
+          .subscribe((members) => {
+            this.roomMembers = members;
+            this.roomMembers.unshift(this.currentUser);
+            this.notAssignMembers = this.checkNotAssignMember(this.companyMembers, this.roomMembers);
+          })
+      });
+      this.subscriptionUpdateRoomMember = this.logic.onUpdateRoomMemberListener().subscribe({
+        next: () => this.logic.fetchRoomMembers(this.roomId)
+          .pipe(concatMap(({ items: members }) => this.logic.setRoomMembers(members, this.currentUser.id)))
+          .subscribe((members) => {
+            this.roomMembers = members;
+            this.roomMembers.unshift(this.currentUser);
+            this.notAssignMembers = this.checkNotAssignMember(this.companyMembers, this.roomMembers);
+          })
+      })
+      this.subscriptionDeleteRoomMember = this.logic.onDeleteRoomMemberListener().subscribe({
+        next: () => this.logic.fetchRoomMembers(this.roomId)
+          .pipe(concatMap(({ items: members }) => this.logic.setRoomMembers(members, this.currentUser.id)))
+          .subscribe((members) => {
+            this.roomMembers = members;
+            this.roomMembers.unshift(this.currentUser);
+            this.notAssignMembers = this.checkNotAssignMember(this.companyMembers, this.roomMembers);
+          })
+      })
+    })
+  }
+
+  initializeApp(): Observable<string> {
+    return from(this.platform.ready());
+  }
 
   ngOnInit(): void {
     this.notAssignMembers = [];

@@ -53,4 +53,16 @@ export class RoomMemberService {
     }
     return from(this.amplifyService.ListUsers(filterContent));
   }
+
+  onCreateRoomMemberListener(): any {
+    return this.amplifyService.OnCreateRoomGroupListener;
+  }
+
+  onUpdateRoomMemberListener(): any {
+    return this.amplifyService.OnUpdateRoomGroupListener;
+  }
+
+  onDeleteRoomMemberListener(): any {
+    return this.amplifyService.OnDeleteRoomGroupListener;
+  }
 }

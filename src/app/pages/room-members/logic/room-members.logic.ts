@@ -111,4 +111,16 @@ export class RoomMembersLogic {
     return this.roomMemberService.fetchUserInfo(email).pipe(map((result) => result.items));
   }
 
+  onCreateRoomMemberListener(): any {
+    return this.roomMemberService.onCreateRoomMemberListener();
+  }
+
+  onUpdateRoomMemberListener(): any {
+    return this.roomMemberService.onUpdateRoomMemberListener();
+  }
+
+  onDeleteRoomMemberListener(): any {
+    return this.roomMemberService.onDeleteRoomMemberListener();
+  }
+
 }
