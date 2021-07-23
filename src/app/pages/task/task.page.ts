@@ -47,7 +47,7 @@ export class TaskPage implements OnInit {
 
   subscriptionCreateTask: Subscription;
   subscriptionUpdateTask: Subscription;
-  subscriptionRoom: Subscription;
+  subscriptionUpdateRoom: Subscription;
 
   constructor(
     private readonly locationStrate: LocationStrategy,
@@ -69,14 +69,15 @@ export class TaskPage implements OnInit {
           .pipe(map((data) => this.taskActiveItems = data.sort(this.logic.compareTaskArray)))
           .pipe(concatMap(() => this.logic.fetchDoneTaskPerRoom(this.roomId).pipe(concatMap((result) => this.logic.fetchEachStatusTask(result, 10)))))
           .pipe(map((doneResult) => this.taskDoneItems = doneResult))
-          .subscribe(() => console.log('TaskActiveItems', this.taskActiveItems)),
+          .subscribe(() => { }),
       });
-      this.subscriptionRoom = this.logic.onUpdateRoomListener().subscribe({
+      this.subscriptionUpdateRoom = this.logic.onUpdateRoomListener().subscribe({
         next: () => this.logic.fetchRoomInfo(this.roomId)
           .pipe(map((result) => this.room = result))
           .pipe(concatMap(() => this.logic.fetchMemberListOnRoom(this.roomId).pipe(map(({ items }) => items))))
-          .pipe(map((result) => this.roomMembers = result))
-          .subscribe()
+          .subscribe((result) => {
+            this.roomMembers = result
+          })
       });
       this.subscriptionCreateTask = this.logic.onCreateTaskListener().subscribe({
         next: () => this.logic.fetchActiveTaskPerRoom(this.roomId)
@@ -180,7 +181,6 @@ export class TaskPage implements OnInit {
       .subscribe((room) => {
         this.room = room;
       })
-    dismissObservable.subscribe(data => console.log('presentEditRoom data', data));
     return modal.present();
   }
 
@@ -270,7 +270,8 @@ export class TaskPage implements OnInit {
   }
 
   ngOnDestroy(): void {
-    this.subscriptionRoom.unsubscribe();
+    this.subscriptionCreateTask.unsubscribe();
+    this.subscriptionUpdateRoom.unsubscribe();
     this.subscriptionUpdateTask.unsubscribe();
   }
 }
