@@ -152,4 +152,10 @@ export class RoomMembersPage implements OnInit {
       })
     return modal.present();
   }
+
+  ngOnDestroy(): void {
+    this.subscriptionCreateRoomMember.unsubscribe();
+    this.subscriptionUpdateRoomMember.unsubscribe();
+    this.subscriptionDeleteRoomMember.unsubscribe();
+  }
 }

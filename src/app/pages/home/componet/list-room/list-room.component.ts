@@ -182,7 +182,11 @@ export class ListRoomComponent implements OnInit {
 
   ngOnDestroy(): void {
     this.subscriptionCreateRoom.unsubscribe();
+    this.subscriptionUpdateRoom.unsubscribe();
     this.subscriptionDeleteRoom.unsubscribe();
+    this.subscriptionCreateRoomGroup.unsubscribe();
+    this.subscriptionUpdateRoomGroup.unsubscribe();
+    this.subscriptionDeleteRoomGroup.unsubscribe();
   }
 
 }
