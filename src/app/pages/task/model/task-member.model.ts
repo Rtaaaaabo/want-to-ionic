@@ -1,18 +1,6 @@
 import { StatusBarInfoResult } from '@capacitor/core';
-
-export interface MemberTask {
-    __typename: string,
-    id: string,
-    companyID: string,
-    username: string,
-    email: string,
-    iconImage: string,
-    positionName: string,
-    tel: string,
-    registered: null,
-    authority: null,
-    createdAt: string,
-    updatedAt: string,
+import { User } from 'src/app/shared/service/amplify.service';
+export interface MemberTask extends User {
     checked: boolean
 }
 

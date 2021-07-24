@@ -3,6 +3,7 @@ import { ModalController } from '@ionic/angular';
 import { map } from 'rxjs/operators';
 import { TaskLogic } from '../../logic/task.logic';
 import { MemberTask } from '../../model/task-member.model';
+import { User } from 'src/app/shared/service/amplify.service';
 
 @Component({
   selector: 'app-add-person-modal',
@@ -27,6 +28,7 @@ export class AddPersonModalComponent implements OnInit {
   ngOnInit(): void {
     this.arraySelectedPersonId = [];
     this.members = this.notAssignMembers;
+    console.log(this.members);
   }
 
   dismissModal(): void {
