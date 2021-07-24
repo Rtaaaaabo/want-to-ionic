@@ -9671,12 +9671,12 @@ export class AmplifyService {
     )) as any;
     return <ListTaskGroupsQuery>response.data.listTaskGroups;
   }
-  async DeleteRoomGroup(
-    input: DeleteRoomGroupInput,
+  async UpdateRoomGroup(
+    input: UpdateRoomGroupInput,
     condition?: ModelRoomGroupConditionInput
-  ): Promise<DeleteRoomGroupMutation> {
-    const statement = `mutation DeleteRoomGroup($input: DeleteRoomGroupInput!, $condition: ModelRoomGroupConditionInput) {
-        deleteRoomGroup(input: $input, condition: $condition) {
+  ): Promise<UpdateRoomGroupMutation> {
+    const statement = `mutation UpdateRoomGroup($input: UpdateRoomGroupInput!, $condition: ModelRoomGroupConditionInput) {
+        updateRoomGroup(input: $input, condition: $condition) {
           __typename
           id
           roomID
@@ -9687,6 +9687,19 @@ export class AmplifyService {
             name
             companyID
             description
+            company {
+              __typename
+              id
+              name
+              isRegistered
+              otp
+              tel
+              officialEmail
+              billing
+              createdAt
+              updatedAt
+              owner
+            }
             tasks {
               __typename
               nextToken
@@ -9706,9 +9719,130 @@ export class AmplifyService {
             companyID
             tel
             positionName
-            iconImage
+            iconImage {
+              __typename
+              bucket
+              region
+              key
+            }
             registered
             authority
+            company {
+              __typename
+              id
+              name
+              isRegistered
+              otp
+              tel
+              officialEmail
+              billing
+              createdAt
+              updatedAt
+              owner
+            }
+            messages {
+              __typename
+              nextToken
+            }
+            room {
+              __typename
+              nextToken
+            }
+            task {
+              __typename
+              nextToken
+            }
+            chargeTask {
+              __typename
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          createdAt
+          updatedAt
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      input
+    };
+    if (condition) {
+      gqlAPIServiceArguments.condition = condition;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <UpdateRoomGroupMutation>response.data.updateRoomGroup;
+  }
+  async DeleteRoomGroup(
+    input: DeleteRoomGroupInput,
+    condition?: ModelRoomGroupConditionInput
+  ): Promise<DeleteRoomGroupMutation> {
+    const statement = `mutation DeleteRoomGroup($input: DeleteRoomGroupInput!, $condition: ModelRoomGroupConditionInput) {
+        deleteRoomGroup(input: $input, condition: $condition) {
+          __typename
+          id
+          roomID
+          userID
+          room {
+            __typename
+            id
+            name
+            companyID
+            description
+            company {
+              __typename
+              id
+              name
+              isRegistered
+              otp
+              tel
+              officialEmail
+              billing
+              createdAt
+              updatedAt
+              owner
+            }
+            tasks {
+              __typename
+              nextToken
+            }
+            users {
+              __typename
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          user {
+            __typename
+            id
+            username
+            email
+            companyID
+            tel
+            positionName
+            iconImage {
+              __typename
+              bucket
+              region
+              key
+            }
+            registered
+            authority
+            company {
+              __typename
+              id
+              name
+              isRegistered
+              otp
+              tel
+              officialEmail
+              billing
+              createdAt
+              updatedAt
+              owner
+            }
             messages {
               __typename
               nextToken
@@ -9743,7 +9877,6 @@ export class AmplifyService {
     )) as any;
     return <DeleteRoomGroupMutation>response.data.deleteRoomGroup;
   }
-
 }
 
 

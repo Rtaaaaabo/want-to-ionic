@@ -139,7 +139,7 @@ export class ListRoomComponent implements OnInit {
    */
   deleteRoom(roomId: string, slideItem: IonItemSliding): void {
     this.logic.fetchRoomMembers(roomId, this.currentUser.id)
-      .pipe(switchMap((data) => data.length === 0 ?
+      .pipe(concatMap((data) => data.length === 0 ?
         this.logic.deleteRoomItem(roomId) : this.logic.removeMeFromRoom(roomId, this.currentUser.id))
       )
       .pipe(concatMap(() => this.logic.fetchRoomList(this.currentUser.id)))
