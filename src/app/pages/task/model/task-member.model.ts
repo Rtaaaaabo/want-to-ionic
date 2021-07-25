@@ -1,7 +1,7 @@
 import { StatusBarInfoResult } from '@capacitor/core';
 import { User } from 'src/app/shared/service/amplify.service';
 export interface MemberTask extends User {
-    checked: boolean
+    checked?: boolean
 }
 
 export interface CompanyMembers {

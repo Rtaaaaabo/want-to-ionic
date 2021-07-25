@@ -27,8 +27,10 @@ export class AddPersonModalComponent implements OnInit {
 
   ngOnInit(): void {
     this.arraySelectedPersonId = [];
-    this.members = this.notAssignMembers;
-    console.log(this.members);
+    this.members = this.notAssignMembers.map((member) => {
+      member.checked = false
+      return member;
+    });
   }
 
   dismissModal(): void {

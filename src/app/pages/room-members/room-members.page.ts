@@ -7,6 +7,7 @@ import { concatMap, map, switchMap } from 'rxjs/operators';
 import { RoomMembersLogic } from './logic/room-members.logic';
 import { AddPersonModalComponent } from '../task/component/add-person-modal/add-person-modal.component';
 import { CurrentUser, Attribute } from './models/room-members.model';
+import { MemberTask } from 'src/app/pages/task/model/task-member.model';
 
 @Component({
   selector: 'app-room-members',
@@ -19,7 +20,7 @@ export class RoomMembersPage implements OnInit {
   roomId: string;
   companyMembers: any;
   roomMembers = [];
-  notAssignMembers = [];
+  notAssignMembers: Array<MemberTask> = [];
 
   currentUserAttribute: Attribute;
   currentUser: CurrentUser;
