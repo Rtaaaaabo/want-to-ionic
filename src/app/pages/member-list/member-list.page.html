@@ -26,14 +26,12 @@
         <ion-note slot="end">招待中</ion-note>
       </ng-container>
       <ng-container>
-        <!-- <ion-label> -->
         <ion-text> {{ member.username }} </ion-text>
-        <!-- </ion-label> -->
-        <ion-note
+        <ion-badge
           *ngIf="member.id === currentUser.id"
+          color="medium"
           slot="end"
-          color="secondary"
-          >本人</ion-note
+          >本人</ion-badge
         >
       </ng-container>
     </ion-item>
