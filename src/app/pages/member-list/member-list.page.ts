@@ -30,8 +30,10 @@ export class MemberListPage implements OnInit {
       .pipe(concatMap(() => this.logic.fetchAnyUserInfoFromList(this.currentUserAttribute.email)))
       .pipe(map((items) => this.currentUser = items[0]))
       .pipe(concatMap((currentUser) => this.logic.fetchCompanyMembers(currentUser.companyID)))
-      .subscribe((data) => {
-        this.companyMembers = data;
+      .pipe(concatMap((members) => this.logic.setCompanyMembers(members, this.currentUser.id)))
+      .subscribe((members) => {
+        this.companyMembers = members;
+        this.companyMembers.unshift(this.currentUser);
       });
   }
 

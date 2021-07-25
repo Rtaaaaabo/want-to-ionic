@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { from, Observable, of } from 'rxjs';
-import { concatMap, map, toArray } from 'rxjs/operators';
+import { concatMap, map, toArray, filter } from 'rxjs/operators';
 import { Storage } from 'aws-amplify';
 import { SessionService } from '../../../shared/service/session.service';
 import { ListUsersQuery, CreateUserInput, CreateUserMutation, GetUserQuery } from '../../../shared/service/amplify.service';
@@ -70,6 +70,12 @@ export class MemberListLogic {
   modifiedAvatarIconUrl(currentUserIcon: IconImage | null): Observable<string | null> {
     return of(currentUserIcon)
       .pipe(concatMap((data) => data ? this.getStorage(data) : of(null)))
+  }
+
+  setCompanyMembers(members: Array<CompanyMember>, currentUserId: string): Observable<Array<CompanyMember>> {
+    return from(members)
+      .pipe(filter((item) => item.id !== currentUserId))
+      .pipe(toArray());
   }
 
   getStorage(dataKey?: IconImage): Observable<any> {
