@@ -59,11 +59,11 @@ export class MemberListPage implements OnInit {
     return modal.present();
   }
 
-  async presentMemberDetail(): Promise<void> {
+  async presentMemberDetail(member: CurrentUser): Promise<void> {
     const modal = await this.modalCtrl.create({
       component: MemberDetailModalComponent,
       componentProps: {
-        'detailUser': this.currentUser,
+        'detailUser': member,
       },
     });
     return modal.present();

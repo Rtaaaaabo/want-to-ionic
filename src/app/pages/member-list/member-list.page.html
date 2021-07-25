@@ -19,7 +19,7 @@
   <ion-list>
     <ion-item
       *ngFor="let member of companyMembers"
-      (click)="presentMemberDetail()"
+      (click)="presentMemberDetail(member)"
     >
       <ng-container *ngIf="member.username === null && !member.registered">
         <ion-label>{{member.email}}</ion-label>
