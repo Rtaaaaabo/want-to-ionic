@@ -69,10 +69,10 @@ export class MemberListLogic {
  */
   modifiedAvatarIconUrl(currentUserIcon: IconImage | null): Observable<string | null> {
     return of(currentUserIcon)
-      .pipe(concatMap((data) => data !== null ? this.getStorage(data) : of(null)))
+      .pipe(concatMap((data) => data ? this.getStorage(data) : of(null)))
   }
 
-  getStorage(dataKey: IconImage): Observable<any> {
+  getStorage(dataKey?: IconImage): Observable<any> {
     return from(Storage.get(dataKey.key));
   }
 }
