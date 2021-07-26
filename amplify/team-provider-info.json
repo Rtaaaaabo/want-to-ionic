@@ -56,11 +56,26 @@
         "wanttoeca31dcb": {}
       },
       "function": {
-        "RegisterCompanyOfficer": {},
-        "createcompany": {},
-        "verifyToken": {},
-        "RegisterOfficer": {},
-        "sendRegisterMembers": {}
+        "RegisterCompanyOfficer": {
+          "deploymentBucketName": "amplify-wantto-stag-230303-deployment",
+          "s3Key": "amplify-builds/RegisterCompanyOfficer-6c307a2f456c4f4c3639-build.zip"
+        },
+        "createcompany": {
+          "deploymentBucketName": "amplify-wantto-stag-230303-deployment",
+          "s3Key": "amplify-builds/createcompany-44696c34566b75495648-build.zip"
+        },
+        "verifyToken": {
+          "deploymentBucketName": "amplify-wantto-stag-230303-deployment",
+          "s3Key": "amplify-builds/verifyToken-36417677484e2f333663-build.zip"
+        },
+        "RegisterOfficer": {
+          "deploymentBucketName": "amplify-wantto-stag-230303-deployment",
+          "s3Key": "amplify-builds/RegisterOfficer-7a6e377339376d796654-build.zip"
+        },
+        "sendRegisterMembers": {
+          "deploymentBucketName": "amplify-wantto-stag-230303-deployment",
+          "s3Key": "amplify-builds/sendRegisterMembers-7159472b754d6b66697a-build.zip"
+        }
       }
     }
   }
