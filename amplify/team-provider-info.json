@@ -38,5 +38,30 @@
         }
       }
     }
+  },
+  "stag": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-wantto-stag-230303-authRole",
+      "UnauthRoleArn": "arn:aws:iam::136164370018:role/amplify-wantto-stag-230303-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::136164370018:role/amplify-wantto-stag-230303-authRole",
+      "Region": "ap-northeast-1",
+      "DeploymentBucketName": "amplify-wantto-stag-230303-deployment",
+      "UnauthRoleName": "amplify-wantto-stag-230303-unauthRole",
+      "StackName": "amplify-wantto-stag-230303",
+      "StackId": "arn:aws:cloudformation:ap-northeast-1:136164370018:stack/amplify-wantto-stag-230303/3266f260-ee1a-11eb-aa17-0aff0c5575a3",
+      "AmplifyAppId": "d2fte5rfwminhr"
+    },
+    "categories": {
+      "auth": {
+        "wanttoeca31dcb": {}
+      },
+      "function": {
+        "RegisterCompanyOfficer": {},
+        "createcompany": {},
+        "verifyToken": {},
+        "RegisterOfficer": {},
+        "sendRegisterMembers": {}
+      }
+    }
   }
 }
