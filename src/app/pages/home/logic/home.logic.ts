@@ -9,6 +9,7 @@ import { CreateRoomGroupMutation, CreateRoomMutation, CreateUserMutation, Delete
 import { Storage } from 'aws-amplify';
 import { CurrentUser, RoomGroupItems, InterfaceLogicArgsCreateRoom } from '../model/home.interface';
 import { IS3Object } from '../../task-detail/models/task-detail.interface';
+import { environment } from 'src/environments/environment';
 
 interface Attribute {
   name: string,
@@ -68,7 +69,7 @@ export class HomeLogic {
   createUser(formContent: FormGroup): Observable<CreateUserMutation> {
     const resultFormIconImageUrl = formContent.get('keyAvatarImage').value;
     const region = 'ap-northeast-1';
-    const bucket = 'wattofilestorage234052-dev';
+    const bucket = environment.bucket;
     let avatarUserImage: IS3Object;
     if (resultFormIconImageUrl !== '') {
       avatarUserImage = {
@@ -99,7 +100,7 @@ export class HomeLogic {
   updateUser(formContent: FormGroup, extraData): Observable<any> {
     const resultFormIconImageUrl = formContent.get('keyAvatarImage').value;
     const region = 'ap-northeast-1';
-    const bucket = 'wattofilestorage234052-dev';
+    const bucket = environment.bucket;
     const requestContent: UpdateUserInput = {
       id: formContent.get('id').value,
       username: formContent.get('userName').value,
@@ -240,7 +241,7 @@ export class HomeLogic {
 
   makeS3Object(key: string): Observable<IS3Object> {
     const region = 'ap-northeast-1';
-    const bucket = 'wattofilestorage234052-dev';
+    const bucket = environment.bucket;
     const keyFile = `public/${key}`;
     const returnResult = {
       key: keyFile,

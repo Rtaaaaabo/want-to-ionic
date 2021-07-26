@@ -9,6 +9,7 @@ import { TaskDetailService } from '../service/task-detail.service';
 import { Filesystem, FilesystemDirectory, FilesystemEncoding, FileWriteResult, FileReadResult, FileDeleteResult } from "@capacitor/core";
 import { CreateMessageInput, GetTaskQuery, S3Object, TaskByCreatedAtQuery, UpdateTaskMutation } from 'src/app/shared/service/amplify.service';
 import { IImageFile, IS3Object, IsMessageContent, IMessageWithAttachUrl, MessageContent, TaskByCreatedAtItems, CurrentUser } from '../models/task-detail.interface';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -144,7 +145,7 @@ export class TaskDetailLogic {
    */
   makeS3Object(key: string): Observable<IS3Object> {
     const region = 'ap-northeast-1';
-    const bucket = 'wattofilestorage234052-dev';
+    const bucket = environment.bucket;
     const keyFile = `${key}`;
     const returnResult = {
       key: keyFile,
