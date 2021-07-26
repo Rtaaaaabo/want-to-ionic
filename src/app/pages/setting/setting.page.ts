@@ -13,6 +13,8 @@ import { IUser, Attribute, CurrentUser } from './interface/setting.interface';
 })
 export class SettingPage implements OnInit {
 
+  isAdmin: boolean = false;
+
   ButtonEdit = [
     {
       text: 'ログアウト',
@@ -46,6 +48,9 @@ export class SettingPage implements OnInit {
       .pipe(map(({ items }) => this.currentUser = items[0]))
       .pipe(concatMap(() => this.logic.modifiedAvatarIconUrl(this.currentUser.iconImage)))
       .subscribe((data) => {
+        if (this.currentUser.email === 'r.taaaaabo+wantto01@gmail.com') {
+          this.isAdmin = true;
+        }
         this.currentUserIcon = data;
       });
   }
