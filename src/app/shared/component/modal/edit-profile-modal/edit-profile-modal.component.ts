@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { HomeLogic } from '../../../../pages/home/logic/home.logic';
-import { Camera, CameraResultType } from '@capacitor/core';
+import { Camera, CameraResultType } from '@capacitor/camera';
 import { from, of } from 'rxjs';
 import { catchError, concatMap, filter, map } from 'rxjs/operators';
 import { CurrentUser } from '../../../../pages/setting/interface/setting.interface';

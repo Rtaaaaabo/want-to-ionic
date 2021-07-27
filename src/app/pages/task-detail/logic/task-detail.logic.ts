@@ -7,7 +7,6 @@ import { SessionService } from 'src/app/shared/service/session.service';
 import { CurrentUserInfo } from '../../task/interface/current-user-info.interface';
 import { TaskDetailService } from '../service/task-detail.service';
 import { Filesystem, Directory, Encoding, ReadFileResult, WriteFileResult } from '@capacitor/filesystem';
-// import { Filesystem, FilesystemDirectory, FilesystemEncoding, FileWriteResult, FileReadResult, FileDeleteResult } from "@capacitor/core";
 import { CreateMessageInput, GetTaskQuery, S3Object, TaskByCreatedAtQuery, UpdateTaskMutation } from 'src/app/shared/service/amplify.service';
 import { IImageFile, IS3Object, IsMessageContent, IMessageWithAttachUrl, MessageContent, TaskByCreatedAtItems, CurrentUser } from '../models/task-detail.interface';
 import { environment } from 'src/environments/environment';

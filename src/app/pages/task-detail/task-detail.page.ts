@@ -2,14 +2,13 @@ import { Component, OnInit, ViewChild, ɵCompiler_compileModuleSync__POST_R3__ }
 import { Location, ViewportScroller, LocationStrategy } from '@angular/common';
 import { Router, ActivatedRoute, RoutesRecognized } from '@angular/router';
 import { ModalController, ActionSheetController, ToastController, IonContent, Platform, AlertController } from '@ionic/angular';
-import { Plugins, CameraResultType } from '@capacitor/core';
+import { Camera, CameraResultType } from '@capacitor/camera';
 import { forkJoin, from, Observable, Subscription } from 'rxjs';
 import { filter, tap, map, concatMap, toArray, pairwise } from 'rxjs/operators';
 import { TaskDetailLogic } from './logic/task-detail.logic';
 import { AddTaskModalComponent } from 'src/app/shared/component/modal/add-task-modal/add-task-modal.component';
 import { GetTaskQuery, ListRoomGroupsQuery } from 'src/app/shared/service/amplify.service';
 import { IMessageWithAttachUrl, CurrentUser } from './models/task-detail.interface';
-const { Camera } = Plugins;
 import { TaskPage } from '../task/task.page';
 
 interface Attribute {
