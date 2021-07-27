@@ -6,7 +6,8 @@ import { v4 as uuid } from 'uuid';
 import { SessionService } from 'src/app/shared/service/session.service';
 import { CurrentUserInfo } from '../../task/interface/current-user-info.interface';
 import { TaskDetailService } from '../service/task-detail.service';
-import { Filesystem, FilesystemDirectory, FilesystemEncoding, FileWriteResult, FileReadResult, FileDeleteResult } from "@capacitor/core";
+import { Filesystem, Directory, Encoding, ReadFileResult, WriteFileResult } from '@capacitor/filesystem';
+// import { Filesystem, FilesystemDirectory, FilesystemEncoding, FileWriteResult, FileReadResult, FileDeleteResult } from "@capacitor/core";
 import { CreateMessageInput, GetTaskQuery, S3Object, TaskByCreatedAtQuery, UpdateTaskMutation } from 'src/app/shared/service/amplify.service';
 import { IImageFile, IS3Object, IsMessageContent, IMessageWithAttachUrl, MessageContent, TaskByCreatedAtItems, CurrentUser } from '../models/task-detail.interface';
 import { environment } from 'src/environments/environment';
@@ -258,27 +259,27 @@ export class TaskDetailLogic {
       ("00" + dt.getUTCSeconds()).slice(-2);
   }
 
-  fileWrite(fileName: string, fileData: string): Observable<FileWriteResult> {
+  fileWrite(fileName: string, fileData: string): Observable<WriteFileResult> {
     return from(Filesystem.writeFile({
       path: fileName,
       data: fileData,
-      directory: FilesystemDirectory.Documents,
-      encoding: FilesystemEncoding.UTF8,
+      directory: Directory.Documents,
+      encoding: Encoding.UTF8,
     }));
   }
 
-  fileRead(fileName: string): Observable<FileReadResult> {
+  fileRead(fileName: string): Observable<ReadFileResult> {
     return from(Filesystem.readFile({
       path: fileName,
-      directory: FilesystemDirectory.Documents,
-      encoding: FilesystemEncoding.UTF8
+      directory: Directory.Documents,
+      encoding: Encoding.UTF8
     }));
   }
 
-  fileDelete(fileName: string): Observable<FileDeleteResult> {
+  fileDelete(fileName: string): Observable<void> {
     return from(Filesystem.deleteFile({
       path: fileName,
-      directory: FilesystemDirectory.Documents
+      directory: Directory.Documents
     }));
   }
 
