@@ -4,6 +4,8 @@ import { from } from 'rxjs';
 import { concatMap, map } from 'rxjs/operators';
 import { EditProfileModalComponent } from 'src/app/shared/component/modal/edit-profile-modal/edit-profile-modal.component';
 import { HomeLogic } from './logic/home.logic';
+import { CurrentUser, Attribute } from './model/home.interface';
+import { ResponseListRoomGroupsQueryItems } from './service/response/response.model';
 
 @Component({
   selector: 'app-home',
@@ -11,7 +13,11 @@ import { HomeLogic } from './logic/home.logic';
   styleUrls: ['./home.page.scss'],
 })
 
-export class HomePage {
+export class HomePage implements OnInit {
+  roomGroupsItems: Array<ResponseListRoomGroupsQueryItems>;
+  currentUserAttribute: Attribute;
+  currentUser: CurrentUser;
+
   email: string;
   attributes: {
     name: string,
@@ -25,25 +31,17 @@ export class HomePage {
     private logic: HomeLogic,
   ) { }
 
-  ionViewWillEnter(): void { }
-
-  async presentRegistrationUser(): Promise<void> {
-    const modal = await this.modalCtrl.create({
-      component: EditProfileModalComponent,
-      componentProps: {
-        'status': 'new',
-        'name': this.attributes.name,
-        'email': this.attributes.email,
-        'userId': this.attributes.sub,
-      },
-    });
-    const dismissObservable = from(modal.onDidDismiss());
-    dismissObservable
-      .pipe(concatMap(() => this.logic.fetchCurrentUser()))
-      .pipe(map((attributes) => {
-        this.attributes = attributes;
-      }));
-    return modal.present();
+  ngOnInit(): void {
+    this.logic.fetchCurrentUser()
+      .pipe(map((data) => this.currentUserAttribute = data))
+      .pipe(concatMap(() => this.logic.fetchAnyUserInfoFromList(this.currentUserAttribute.email)))
+      .pipe(map((items) => this.currentUser = items[0]))
+      .pipe(concatMap(() => this.logic.fetchRoomList(this.currentUser.id)))
+      .pipe(concatMap((data) => this.logic.setExitsRoomAndUser(data)))
+      .subscribe((data) => {
+        console.log(this.currentUser);
+        this.roomGroupsItems = data;
+      });
   }
 
 }

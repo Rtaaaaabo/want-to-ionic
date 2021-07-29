@@ -1,9 +1,13 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>会社名</ion-title>
+    <ion-title>{{ currentUser?.company.name }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <app-list-room></app-list-room>
+  <app-list-room
+    [currentUser]="currentUser"
+    [currentUserAttribute]="currentUserAttribute"
+    [roomGroupsItems]="roomGroupsItems"
+  ></app-list-room>
 </ion-content>

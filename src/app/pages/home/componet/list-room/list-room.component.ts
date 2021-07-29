@@ -1,13 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Router, NavigationExtras } from '@angular/router';
 import { ModalController, AlertController, IonItemSliding, Platform } from '@ionic/angular';
 import { AddRoomModalComponent } from '../../../../shared/component/modal/add-room-modal/add-room-modal.component';
 import { HomeLogic } from '../../logic/home.logic';
 import { from, Subscription, Observable } from 'rxjs';
 import { concatMap, switchMap, map, filter } from 'rxjs/operators';
-import { ResponseListRoomGroupsQueryItems } from '../../service/reponse/response.model';
+import { ResponseListRoomGroupsQueryItems } from '../../service/response/response.model';
 import { Room, RoomGroup } from 'src/app/shared/service/amplify.service';
 import { CurrentUser, Attribute } from '../../model/home.interface';
+import { input } from 'aws-amplify';
 
 @Component({
   selector: 'app-list-room',
@@ -15,9 +16,9 @@ import { CurrentUser, Attribute } from '../../model/home.interface';
   styleUrls: ['./list-room.component.scss'],
 })
 export class ListRoomComponent implements OnInit {
-  roomGroupsItems: Array<ResponseListRoomGroupsQueryItems>;
-  currentUserAttribute: Attribute;
-  currentUser: CurrentUser;
+  @Input() roomGroupsItems: Array<ResponseListRoomGroupsQueryItems>;
+  @Input() currentUserAttribute: Attribute;
+  @Input() currentUser: CurrentUser;
 
   subscriptionCreateRoom: Subscription;
   subscriptionUpdateRoom: Subscription;
@@ -34,62 +35,43 @@ export class ListRoomComponent implements OnInit {
     private readonly platform: Platform,
   ) {
     this.initializeApp().subscribe(() => {
-      this.subscriptionCreateRoom = this.logic.onCreateRoomListener().subscribe(() => {
-        next: () => this.logic.fetchRoomList(this.currentUser.id)
-          .pipe(concatMap((data) => this.logic.setExitsRoomAndUser(data)))
-          .subscribe((data) => {
-            this.roomGroupsItems = data;
-          });
-      });
+      this.subscriptionCreateRoom = this.logic.onCreateRoomListener()
+        .subscribe(() => {
+          next: () => this.fetchGroupItems();
+        });
 
-      this.subscriptionUpdateRoom = this.logic.onUpdateRoomListener().subscribe(() => {
-        next: () => this.logic.fetchRoomList(this.currentUser.id)
-          .pipe(concatMap((data) => this.logic.setExitsRoomAndUser(data)))
-          .subscribe((data) => {
-            this.roomGroupsItems = data;
-          })
-      });
+      this.subscriptionUpdateRoom = this.logic.onUpdateRoomListener()
+        .subscribe(() => {
+          next: () => this.fetchGroupItems();
+        });
 
-      this.subscriptionDeleteRoom = this.logic.onDeleteRoomListener().subscribe(() => {
-        next: () => this.logic.fetchRoomList(this.currentUser.id)
-          .pipe(concatMap((data) => this.logic.setExitsRoomAndUser(data)))
-          .subscribe((data) => {
-            this.roomGroupsItems = data;
-          })
-      });
+      this.subscriptionDeleteRoom = this.logic.onDeleteRoomListener()
+        .subscribe(() => {
+          next: () => this.fetchGroupItems();
+        });
 
-      this.subscriptionCreateRoomGroup = this.logic.onCreateRoomGroupListener().subscribe(() => {
-        next: () => this.logic.fetchRoomList(this.currentUser.id)
-          .pipe(concatMap((data) => this.logic.setExitsRoomAndUser(data)))
-          .subscribe((data) => {
-            this.roomGroupsItems = data;
-          })
-      });
+      this.subscriptionCreateRoomGroup = this.logic.onCreateRoomGroupListener()
+        .subscribe(() => {
+          next: () => this.fetchGroupItems();
+        });
 
-      this.subscriptionUpdateRoomGroup = this.logic.onUpdateRoomGroupListener().subscribe(() => {
-        next: () => this.logic.fetchRoomList(this.currentUser.id)
-          .pipe(concatMap((data) => this.logic.setExitsRoomAndUser(data)))
-          .subscribe((data) => {
-            this.roomGroupsItems = data;
-          })
-      })
+      this.subscriptionUpdateRoomGroup = this.logic.onUpdateRoomGroupListener()
+        .subscribe(() => {
+          next: () => this.fetchGroupItems();
+        });
 
-      this.subscriptionDeleteRoomGroup = this.logic.onDeleteRoomGroupListener().subscribe(() => {
-        next: () => this.logic.fetchRoomList(this.currentUser.id)
-          .pipe(concatMap((data) => this.logic.setExitsRoomAndUser(data)))
-          .subscribe((data) => {
-            this.roomGroupsItems = data;
-          })
-      })
+      this.subscriptionDeleteRoomGroup = this.logic.onDeleteRoomGroupListener()
+        .subscribe(() => {
+          next: () => this.fetchGroupItems();
+        });
     })
   }
 
   ngOnInit(): void {
-    this.logic.fetchCurrentUser()
-      .pipe(map((data) => this.currentUserAttribute = data))
-      .pipe(concatMap(() => this.logic.fetchAnyUserInfoFromList(this.currentUserAttribute.email)))
-      .pipe(map((items) => this.currentUser = items[0]))
-      .pipe(concatMap(() => this.logic.fetchRoomList(this.currentUser.id)))
+  }
+
+  fetchGroupItems(): void {
+    this.logic.fetchRoomList(this.currentUser.id)
       .pipe(concatMap((data) => this.logic.setExitsRoomAndUser(data)))
       .subscribe((data) => {
         this.roomGroupsItems = data;
