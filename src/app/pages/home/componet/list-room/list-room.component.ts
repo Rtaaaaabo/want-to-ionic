@@ -4,11 +4,10 @@ import { ModalController, AlertController, IonItemSliding, Platform } from '@ion
 import { AddRoomModalComponent } from '../../../../shared/component/modal/add-room-modal/add-room-modal.component';
 import { HomeLogic } from '../../logic/home.logic';
 import { from, Subscription, Observable } from 'rxjs';
-import { concatMap, switchMap, map, filter } from 'rxjs/operators';
+import { concatMap, filter } from 'rxjs/operators';
 import { ResponseListRoomGroupsQueryItems } from '../../service/response/response.model';
 import { Room, RoomGroup } from 'src/app/shared/service/amplify.service';
 import { CurrentUser, Attribute } from '../../model/home.interface';
-import { input } from 'aws-amplify';
 
 @Component({
   selector: 'app-list-room',
@@ -67,13 +66,13 @@ export class ListRoomComponent implements OnInit {
     })
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 
   fetchGroupItems(): void {
     this.logic.fetchRoomList(this.currentUser.id)
       .pipe(concatMap((data) => this.logic.setExitsRoomAndUser(data)))
       .subscribe((data) => {
+        console.log('[fetchGroupItems data]', data);
         this.roomGroupsItems = data;
       });
   }

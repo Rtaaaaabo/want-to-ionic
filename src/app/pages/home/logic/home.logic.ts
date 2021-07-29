@@ -164,6 +164,7 @@ export class HomeLogic {
   }
 
   fetchRoomList(currentUseId: string): Observable<Array<RoomGroupItems>> {
+    console.log('[fetchRoomList currentUseId]', currentUseId);
     const filterContent = {
       userID: {
         eq: currentUseId
@@ -201,6 +202,7 @@ export class HomeLogic {
   }
 
   setExitsRoomAndUser(data: Array<RoomGroupItems>): Observable<any> {
+    console.log('[setExitsRoomAndUser]', data);
     return from(data)
       .pipe(filter((item: RoomGroupItems) => item.room !== null))
       .pipe(filter((item: RoomGroupItems) => item.user !== null))
