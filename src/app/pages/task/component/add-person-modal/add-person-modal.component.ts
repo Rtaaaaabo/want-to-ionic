@@ -18,7 +18,6 @@ export class AddPersonModalComponent implements OnInit {
   roomId: string;
   companyMembers;
   notAssignMembers;
-  users;
 
   constructor(
     private readonly logic: TaskLogic,

@@ -38,15 +38,16 @@ export class RoomMembersPage implements OnInit {
     private readonly platform: Platform,
   ) {
     this.initializeApp().subscribe(() => {
-      this.subscriptionCreateRoomMember = this.logic.onCreateRoomMemberListener().subscribe({
-        next: () => this.logic.fetchRoomMembers(this.roomId)
-          .pipe(concatMap(({ items: members }) => this.logic.setRoomMembers(members, this.currentUser.id)))
-          .subscribe((members) => {
-            this.roomMembers = members;
-            this.roomMembers.unshift(this.currentUser);
-            this.notAssignMembers = this.checkNotAssignMember(this.companyMembers, this.roomMembers);
-          })
-      });
+      this.subscriptionCreateRoomMember = this.logic.onCreateRoomMemberListener()
+        .subscribe({
+          next: () => this.logic.fetchRoomMembers(this.roomId)
+            .pipe(concatMap(({ items: members }) => this.logic.setRoomMembers(members, this.currentUser.id)))
+            .subscribe((members) => {
+              this.roomMembers = members;
+              this.roomMembers.unshift(this.currentUser);
+              this.notAssignMembers = this.checkNotAssignMember(this.companyMembers, this.roomMembers);
+            })
+        });
       this.subscriptionUpdateRoomMember = this.logic.onUpdateRoomMemberListener().subscribe({
         next: () => this.logic.fetchRoomMembers(this.roomId)
           .pipe(concatMap(({ items: members }) => this.logic.setRoomMembers(members, this.currentUser.id)))

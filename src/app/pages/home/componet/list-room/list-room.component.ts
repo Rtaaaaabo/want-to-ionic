@@ -35,38 +35,33 @@ export class ListRoomComponent implements OnInit {
   ) {
     this.initializeApp().subscribe(() => {
       this.subscriptionCreateRoom = this.logic.onCreateRoomListener()
-        .subscribe(() => {
-          next: () => this.fetchGroupItems();
+        .subscribe({
+          next: () => this.fetchGroupItems(),
         });
 
       this.subscriptionUpdateRoom = this.logic.onUpdateRoomListener()
-        .subscribe(() => {
-          next: () => this.fetchGroupItems();
+        .subscribe({
+          next: () => this.fetchGroupItems(),
         });
 
       this.subscriptionDeleteRoom = this.logic.onDeleteRoomListener()
-        .subscribe(() => {
-          next: () => this.fetchGroupItems();
+        .subscribe({
+          next: () => this.fetchGroupItems(),
         });
 
       this.subscriptionCreateRoomGroup = this.logic.onCreateRoomGroupListener()
-        .subscribe(() => {
-          next: () => this.fetchGroupItems();
+        .subscribe({
+          next: () => this.fetchGroupItems(),
         });
 
       this.subscriptionUpdateRoomGroup = this.logic.onUpdateRoomGroupListener()
-        .subscribe(() => {
-          next: () => this.logic.fetchRoomList(this.currentUser.id)
-            .pipe(concatMap((data) => this.logic.setExitsRoomAndUser(data)))
-            .subscribe((data) => {
-              console.log('[Native fetchGroupItems data]', data);
-              this.roomGroupsItems = data;
-            });
+        .subscribe({
+          next: () => this.fetchGroupItems(),
         });
 
       this.subscriptionDeleteRoomGroup = this.logic.onDeleteRoomGroupListener()
-        .subscribe(() => {
-          next: () => this.fetchGroupItems();
+        .subscribe({
+          next: () => this.fetchGroupItems(),
         });
     })
   }
@@ -103,7 +98,7 @@ export class ListRoomComponent implements OnInit {
       .pipe(concatMap((data) => this.logic.setExitsRoomAndUser(data)))
       .subscribe((response) => {
         this.roomGroupsItems = response;
-      })
+      });
     return modal.present();
   }
 
