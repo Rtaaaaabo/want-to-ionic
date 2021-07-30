@@ -40,37 +40,29 @@ export class RoomMembersPage implements OnInit {
     this.initializeApp().subscribe(() => {
       this.subscriptionCreateRoomMember = this.logic.onCreateRoomMemberListener()
         .subscribe({
-          next: () => this.logic.fetchRoomMembers(this.roomId)
-            .pipe(concatMap(({ items: members }) => this.logic.setRoomMembers(members, this.currentUser.id)))
-            .subscribe((members) => {
-              this.roomMembers = members;
-              this.roomMembers.unshift(this.currentUser);
-              this.notAssignMembers = this.checkNotAssignMember(this.companyMembers, this.roomMembers);
-            })
+          next: () => this.fetchRoomMembers(),
         });
       this.subscriptionUpdateRoomMember = this.logic.onUpdateRoomMemberListener().subscribe({
-        next: () => this.logic.fetchRoomMembers(this.roomId)
-          .pipe(concatMap(({ items: members }) => this.logic.setRoomMembers(members, this.currentUser.id)))
-          .subscribe((members) => {
-            this.roomMembers = members;
-            this.roomMembers.unshift(this.currentUser);
-            this.notAssignMembers = this.checkNotAssignMember(this.companyMembers, this.roomMembers);
-          })
+        next: () => this.fetchRoomMembers(),
       })
       this.subscriptionDeleteRoomMember = this.logic.onDeleteRoomMemberListener().subscribe({
-        next: () => this.logic.fetchRoomMembers(this.roomId)
-          .pipe(concatMap(({ items: members }) => this.logic.setRoomMembers(members, this.currentUser.id)))
-          .subscribe((members) => {
-            this.roomMembers = members;
-            this.roomMembers.unshift(this.currentUser);
-            this.notAssignMembers = this.checkNotAssignMember(this.companyMembers, this.roomMembers);
-          })
+        next: () => this.fetchRoomMembers(),
       })
     })
   }
 
   initializeApp(): Observable<string> {
     return from(this.platform.ready());
+  }
+
+  fetchRoomMembers(): void {
+    this.logic.fetchRoomMembers(this.roomId)
+      .pipe(concatMap(({ items: members }) => this.logic.setRoomMembers(members, this.currentUser.id)))
+      .subscribe((members) => {
+        this.roomMembers = members;
+        this.roomMembers.unshift(this.currentUser);
+        this.notAssignMembers = this.checkNotAssignMember(this.companyMembers, this.roomMembers);
+      });
   }
 
   ngOnInit(): void {
