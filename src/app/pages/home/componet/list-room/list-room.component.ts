@@ -56,7 +56,12 @@ export class ListRoomComponent implements OnInit {
 
       this.subscriptionUpdateRoomGroup = this.logic.onUpdateRoomGroupListener()
         .subscribe(() => {
-          next: () => this.fetchGroupItems();
+          next: () => this.logic.fetchRoomList(this.currentUser.id)
+            .pipe(concatMap((data) => this.logic.setExitsRoomAndUser(data)))
+            .subscribe((data) => {
+              console.log('[Native fetchGroupItems data]', data);
+              this.roomGroupsItems = data;
+            });
         });
 
       this.subscriptionDeleteRoomGroup = this.logic.onDeleteRoomGroupListener()

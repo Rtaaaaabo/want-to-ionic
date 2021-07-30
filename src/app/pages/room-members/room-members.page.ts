@@ -3,7 +3,7 @@ import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ModalController, Platform } from '@ionic/angular';
 import { from, Observable, Subscription } from 'rxjs';
-import { concatMap, map, switchMap } from 'rxjs/operators';
+import { concatMap, map, switchMap, filter } from 'rxjs/operators';
 import { RoomMembersLogic } from './logic/room-members.logic';
 import { AddPersonModalComponent } from '../task/component/add-person-modal/add-person-modal.component';
 import { CurrentUser, Attribute } from './models/room-members.model';
@@ -138,18 +138,15 @@ export class RoomMembersPage implements OnInit {
         roomId: this.roomId,
       }
     });
-    modal.onDidDismiss()
-      .then(({ data }) => {
-        if (data.result === 'dismiss') {
-          return;
-        };
-        this.logic.fetchRoomMembers(this.roomId)
-          .pipe(concatMap(({ items: members }) => this.logic.setRoomMembers(members, this.currentUser.id)))
-          .subscribe((members) => {
-            this.roomMembers = members;
-            this.roomMembers.unshift(this.currentUser);
-            this.notAssignMembers = this.checkNotAssignMember(this.companyMembers, this.roomMembers);
-          })
+    const observableDismiss = from(modal.onDidDismiss());
+    observableDismiss
+      .pipe(filter(({ data }) => data.result === 'dismiss'))
+      .pipe(concatMap(() => this.logic.fetchRoomMembers(this.roomId)))
+      .pipe(concatMap(({ items: members }) => this.logic.setRoomMembers(members, this.currentUser.id)))
+      .subscribe((members) => {
+        this.roomMembers = members;
+        this.roomMembers.unshift(this.currentUser);
+        this.notAssignMembers = this.checkNotAssignMember(this.companyMembers, this.roomMembers);
       })
     return modal.present();
   }
