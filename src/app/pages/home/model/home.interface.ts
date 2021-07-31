@@ -145,3 +145,9 @@ export interface RoomGroupItems {
     createdAt: string;
     updatedAt: string;
 }
+
+export interface FilterTaskGroupPerUser {
+    userID: {
+        eq: string
+    }
+}

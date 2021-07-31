@@ -1,17 +1,23 @@
 import { Injectable } from '@angular/core';
-import { AmplifyService, ModelUserFilterInput, ModelRoomGroupFilterInput, ListRoomGroupsQuery, ListUsersQuery, CreateRoomMutation, CreateUserMutation, CreateUserInput, DeleteRoomMutation, CreateRoomGroupMutation, UpdateUserMutation, UpdateUserInput, GetUserQuery } from '../../../shared/service/amplify.service';
+import {
+  AmplifyService,
+  ModelUserFilterInput,
+  ModelRoomGroupFilterInput,
+  ListRoomGroupsQuery,
+  ListUsersQuery,
+  CreateRoomMutation,
+  CreateUserMutation,
+  CreateUserInput,
+  DeleteRoomMutation,
+  CreateRoomGroupMutation,
+  UpdateUserMutation,
+  UpdateUserInput,
+  GetUserQuery,
+  ListTaskGroupsQuery
+} from '../../../shared/service/amplify.service';
 import { from, Observable } from 'rxjs';
-import { InterfaceArgsCreateRoom, ISArgsCreateRoomGroup } from '../model/home.interface';
+import { InterfaceArgsCreateRoom, ISArgsCreateRoomGroup, FilterTaskGroupPerUser } from '../model/home.interface';
 
-interface IUpdateUserRequest {
-  companyID: string,
-  email: string,
-  iconImage: string,
-  id: string,
-  positionName: string,
-  tel: string,
-  username: string,
-}
 @Injectable({
   providedIn: 'root',
 })
@@ -101,5 +107,9 @@ export class HomeService {
 
   onDeleteRoomGroupListener(): any {
     return this.amplifyService.OnDeleteRoomGroupListener;
+  }
+
+  fetchTaskGroupPerUser(filterContent: FilterTaskGroupPerUser): Observable<ListTaskGroupsQuery> {
+    return from(this.amplifyService.ListTaskGroups(filterContent));
   }
 }

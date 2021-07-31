@@ -9615,47 +9615,46 @@ export class AmplifyService {
     nextToken?: string
   ): Promise<ListTaskGroupsQuery> {
     const statement = `query ListTaskGroups($filter: ModelTaskGroupFilterInput, $limit: Int, $nextToken: String) {
-        listTaskGroups(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      listTaskGroups(filter: $filter, limit: $limit, nextToken: $nextToken) {
+        __typename
+        items {
           __typename
-          items {
+          id
+          taskID
+          userID
+          task {
             __typename
             id
-            taskID
-            userID
-            task {
-              __typename
-              id
-              authorID
-              roomID
-              chargePersonID
-              title
-              description
-              scheduleDate
-              priority
-              status
-              createdAt
-              updatedAt
-            }
-            user {
-              __typename
-              id
-              username
-              email
-              companyID
-              tel
-              positionName
-              iconImage
-              registered
-              authority
-              createdAt
-              updatedAt
-            }
+            authorID
+            roomID
+            chargePersonID
+            title
+            description
+            scheduleDate
+            priority
+            status
             createdAt
             updatedAt
           }
-          nextToken
+          user {
+            __typename
+            id
+            username
+            email
+            companyID
+            tel
+            positionName
+            registered
+            authority
+            createdAt
+            updatedAt
+          }
+          createdAt
+          updatedAt
         }
-      }`;
+        nextToken
+      }
+    }`;
     const gqlAPIServiceArguments: any = {};
     if (filter) {
       gqlAPIServiceArguments.filter = filter;

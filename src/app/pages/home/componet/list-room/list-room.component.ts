@@ -72,7 +72,6 @@ export class ListRoomComponent implements OnInit {
     this.logic.fetchRoomList(this.currentUser.id)
       .pipe(concatMap((data) => this.logic.setExitsRoomAndUser(data)))
       .subscribe((data) => {
-        console.log('[fetchGroupItems data]', data);
         this.roomGroupsItems = data;
       });
   }
@@ -153,12 +152,19 @@ export class ListRoomComponent implements OnInit {
           text: 'OK',
           role: 'ok',
           handler: () => {
-            this.deleteRoom(item.roomID, slideItem);
+            // this.deleteRoom(item.roomID, slideItem);
+            this.verifyDeleteTask(slideItem, item);
           }
         }
       ]
     });
     alert.present();
+  }
+
+  verifyDeleteTask(slideItem: IonItemSliding, item: RoomGroup): void {
+    this.logic.fetchTaskGroupPerUser(item.userID).subscribe((data) => {
+      console.log('fetchTaskGroupPerUser', data);
+    })
   }
 
   ngOnDestroy(): void {
