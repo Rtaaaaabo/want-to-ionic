@@ -25,9 +25,7 @@ export class OwnTaskPage implements OnInit {
     private readonly toastCtrl: ToastController,
   ) { }
 
-  ngOnInit() { }
-
-  ionViewWillEnter() {
+  ngOnInit() {
     this.logic.fetchCurrentUser()
       .pipe(map(result => this.currentUserAttribute = result))
       .pipe(concatMap(() => this.logic.fetchAnyUserInfoFromList(this.currentUserAttribute.email)))
@@ -38,6 +36,9 @@ export class OwnTaskPage implements OnInit {
       .subscribe((items) => {
         this.ownTaskItems = items;
       })
+  }
+
+  ionViewWillEnter() {
   }
 
   async presentLoading() {

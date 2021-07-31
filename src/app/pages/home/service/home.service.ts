@@ -112,4 +112,8 @@ export class HomeService {
   fetchTaskGroupPerUser(filterContent: FilterTaskGroupPerUser): Observable<ListTaskGroupsQuery> {
     return from(this.amplifyService.ListTaskGroups(filterContent));
   }
+
+  fetchUserInfo(userId: string): Observable<GetUserQuery> {
+    return from(this.amplifyService.GetUser(userId));
+  }
 }

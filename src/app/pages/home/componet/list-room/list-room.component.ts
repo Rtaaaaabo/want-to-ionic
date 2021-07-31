@@ -162,7 +162,7 @@ export class ListRoomComponent implements OnInit {
   }
 
   verifyDeleteTask(slideItem: IonItemSliding, item: RoomGroup): void {
-    this.logic.fetchTaskGroupPerUser(item.userID).subscribe((data) => {
+    this.logic.fetchUserInfo(item.userID).subscribe((data) => {
       console.log('fetchTaskGroupPerUser', data);
     })
   }

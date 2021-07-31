@@ -13,7 +13,8 @@ import {
   ListUsersQuery,
   ModelRoomGroupFilterInput,
   UpdateUserInput,
-  ListTaskGroupsQuery
+  ListTaskGroupsQuery,
+  GetUserQuery,
 } from 'src/app/shared/service/amplify.service';
 import { Storage } from 'aws-amplify';
 import { CurrentUser, RoomGroupItems, InterfaceLogicArgsCreateRoom } from '../model/home.interface';
@@ -299,6 +300,11 @@ export class HomeLogic {
         eq: userID
       }
     }
+    console.log('fetchTaskGroupPerUser', filterContent);
     return this.homeService.fetchTaskGroupPerUser(filterContent);
+  }
+
+  fetchUserInfo(userId): Observable<GetUserQuery> {
+    return this.homeService.fetchUserInfo(userId);
   }
 }
