@@ -192,9 +192,8 @@ export class ListRoomComponent implements OnInit {
       // 引数のitem.roomIDを確認して一致するものがあればAlertで通知する
       // なければDeleteすることをAlertとして出すdeleteRoom Functionを呼び出す
       .pipe(concatMap((data) => this.logic.verifyExistTaskOnRoom(data.chargeTask.items, item.roomID)))
-      .subscribe((data) => {
-        // console.log('RoomGroupItem RoomID', item.roomID);
-        // console.log('fetchTaskGroupPerUser ChargeTask', data.chargeTask.items);
+      .subscribe((isExist) => {
+        isExist ? this.presentStillExistsOwnTask(item, slideItem) : this.presentDeleteAlert(item, slideItem);
       })
   }
 
