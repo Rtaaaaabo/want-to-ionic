@@ -17,7 +17,7 @@ import {
   GetUserQuery,
 } from 'src/app/shared/service/amplify.service';
 import { Storage } from 'aws-amplify';
-import { CurrentUser, RoomGroupItems, InterfaceLogicArgsCreateRoom } from '../model/home.interface';
+import { CurrentUser, RoomGroupItems, InterfaceLogicArgsCreateRoom, FetchTaskGroup } from '../model/home.interface';
 import { IS3Object } from '../../task-detail/models/task-detail.interface';
 import { environment } from 'src/environments/environment';
 
@@ -303,9 +303,12 @@ export class HomeLogic {
     return this.homeService.fetchTaskGroupPerUser(filterContent);
   }
 
-  fetchUserInfo(userId): Observable<GetUserQuery> {
+  fetchUserInfo(userId: string): Observable<GetUserQuery> {
     return this.homeService.fetchUserInfo(userId);
   }
 
+  verifyExistTaskOnRoom(items: Array<FetchTaskGroup>, roomId: string): Observable<boolean> {
+    return of(true);
+  }
 
 }

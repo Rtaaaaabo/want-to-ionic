@@ -7,7 +7,7 @@ import { from, Subscription, Observable } from 'rxjs';
 import { concatMap, filter } from 'rxjs/operators';
 import { ResponseListRoomGroupsQueryItems } from '../../service/response/response.model';
 import { Room, RoomGroup } from 'src/app/shared/service/amplify.service';
-import { CurrentUser, Attribute } from '../../model/home.interface';
+import { CurrentUser, Attribute, FetchTaskGroup } from '../../model/home.interface';
 
 @Component({
   selector: 'app-list-room',
@@ -154,8 +154,8 @@ export class ListRoomComponent implements OnInit {
           text: 'OK',
           role: 'ok',
           handler: () => {
-            // this.deleteRoom(item.roomID, slideItem);
-            this.verifyDeleteTask(slideItem, item);
+            this.deleteRoom(item.roomID, slideItem);
+            // this.verifyDeleteTask(slideItem, item);
             // this.presentStillExistsOwnTask()
           }
         }
@@ -186,14 +186,15 @@ export class ListRoomComponent implements OnInit {
    * @param slideItem 
    * @param item 
    */
-  verifyDeleteTask(slideItem: IonItemSliding, item: RoomGroup): void {
+  verifyDeleteTask(item: RoomGroup, slideItem: IonItemSliding): void {
     this.logic.fetchUserInfo(item.userID)
-      // FetchUserInfoから取得したDataの中のChargeTask.itemsArrayのRoomIDと引数のitem.roomIDを確認して一致するものがあればAlertで通知する
+      // FetchUserInfoから取得したDataの中のChargeTask.itemsArrayのRoomIDと
+      // 引数のitem.roomIDを確認して一致するものがあればAlertで通知する
       // なければDeleteすることをAlertとして出すdeleteRoom Functionを呼び出す
-      .pipe()
+      .pipe(concatMap((data) => this.logic.verifyExistTaskOnRoom(data.chargeTask.items, item.roomID)))
       .subscribe((data) => {
-        console.log('RoomGroupItem', item);
-        console.log('fetchTaskGroupPerUser', data);
+        // console.log('RoomGroupItem RoomID', item.roomID);
+        // console.log('fetchTaskGroupPerUser ChargeTask', data.chargeTask.items);
       })
   }
 
