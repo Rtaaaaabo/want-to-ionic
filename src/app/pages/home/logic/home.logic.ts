@@ -300,11 +300,12 @@ export class HomeLogic {
         eq: userID
       }
     }
-    console.log('fetchTaskGroupPerUser', filterContent);
     return this.homeService.fetchTaskGroupPerUser(filterContent);
   }
 
   fetchUserInfo(userId): Observable<GetUserQuery> {
     return this.homeService.fetchUserInfo(userId);
   }
+
+
 }

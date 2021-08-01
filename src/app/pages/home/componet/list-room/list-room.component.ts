@@ -130,6 +130,8 @@ export class ListRoomComponent implements OnInit {
       });
   }
 
+
+
   /**
    * ルームを削除するときの確認モーダルを表示させます
    * @param item RoomGroupの情報
@@ -154,6 +156,7 @@ export class ListRoomComponent implements OnInit {
           handler: () => {
             // this.deleteRoom(item.roomID, slideItem);
             this.verifyDeleteTask(slideItem, item);
+            // this.presentStillExistsOwnTask()
           }
         }
       ]
@@ -161,10 +164,37 @@ export class ListRoomComponent implements OnInit {
     alert.present();
   }
 
+  async presentStillExistsOwnTask(item: RoomGroup, slideItem: IonItemSliding): Promise<void> {
+    const alert = await this.alertCtrl.create({
+      header: '担当タスクがまだ残っています',
+      message: '担当タスクを他の方に変更するか、終わっていればステータスをDONEにしてください',
+      buttons: [
+        {
+          text: 'OK',
+          role: 'ok',
+          handler: () => {
+            slideItem.close();
+          }
+        },
+      ]
+    });
+    alert.present();
+  }
+
+  /**
+   * 削除対象のRoomの中に担当するタスクがあれば削除しないようにする
+   * @param slideItem 
+   * @param item 
+   */
   verifyDeleteTask(slideItem: IonItemSliding, item: RoomGroup): void {
-    this.logic.fetchUserInfo(item.userID).subscribe((data) => {
-      console.log('fetchTaskGroupPerUser', data);
-    })
+    this.logic.fetchUserInfo(item.userID)
+      // FetchUserInfoから取得したDataの中のChargeTask.itemsArrayのRoomIDと引数のitem.roomIDを確認して一致するものがあればAlertで通知する
+      // なければDeleteすることをAlertとして出すdeleteRoom Functionを呼び出す
+      .pipe()
+      .subscribe((data) => {
+        console.log('RoomGroupItem', item);
+        console.log('fetchTaskGroupPerUser', data);
+      })
   }
 
   ngOnDestroy(): void {
