@@ -188,12 +188,8 @@ export class ListRoomComponent implements OnInit {
    */
   verifyDeleteTask(item: RoomGroup, slideItem: IonItemSliding): void {
     this.logic.fetchUserInfo(item.userID)
-      // FetchUserInfoから取得したDataの中のChargeTask.itemsArrayのRoomIDと
-      // 引数のitem.roomIDを確認して一致するものがあればAlertで通知する
-      // なければDeleteすることをAlertとして出すdeleteRoom Functionを呼び出す
       .pipe(concatMap((data) => this.logic.verifyExistTaskOnRoom(data.chargeTask.items, item.roomID)))
       .subscribe((isExist) => {
-        console.log('isExist', isExist);
         isExist ? this.presentStillExistsOwnTask(item, slideItem) : this.presentDeleteAlert(item, slideItem);
       })
   }

@@ -309,10 +309,9 @@ export class HomeLogic {
 
   verifyExistTaskOnRoom(chargeItems: Array<FetchTaskGroup>, roomId: string): Observable<any> {
     let isExist = false;
-    console.log('chargeItems', chargeItems);
-    console.log('roomId', roomId);
+    const statusDone = 10;
     return from(chargeItems)
-      .pipe(find((item) => item.roomID === roomId && item.status !== 10))
+      .pipe(find((item) => item.roomID === roomId && item.status !== statusDone))
       .pipe(map((data) => !data ? isExist = false : isExist = true));
   }
 
