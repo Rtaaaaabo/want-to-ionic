@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Observable, from, of } from 'rxjs';
-import { concatMap, map, filter, toArray } from 'rxjs/operators';
+import { concatMap, map, filter, toArray, find } from 'rxjs/operators';
 import { v4 as uuid } from 'uuid';
 import { HomeService } from '../service/home.service';
 import { SessionService } from '../../../shared/service/session.service';
@@ -307,8 +307,13 @@ export class HomeLogic {
     return this.homeService.fetchUserInfo(userId);
   }
 
-  verifyExistTaskOnRoom(items: Array<FetchTaskGroup>, roomId: string): Observable<boolean> {
-    return of(true);
+  verifyExistTaskOnRoom(chargeItems: Array<FetchTaskGroup>, roomId: string): Observable<any> {
+    let isExist = false;
+    console.log('chargeItems', chargeItems);
+    console.log('roomId', roomId);
+    return from(chargeItems)
+      .pipe(find((item) => item.roomID === roomId && item.status !== 10))
+      .pipe(map((data) => !data ? isExist = false : isExist = true));
   }
 
 }

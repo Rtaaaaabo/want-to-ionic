@@ -193,6 +193,7 @@ export class ListRoomComponent implements OnInit {
       // なければDeleteすることをAlertとして出すdeleteRoom Functionを呼び出す
       .pipe(concatMap((data) => this.logic.verifyExistTaskOnRoom(data.chargeTask.items, item.roomID)))
       .subscribe((isExist) => {
+        console.log('isExist', isExist);
         isExist ? this.presentStillExistsOwnTask(item, slideItem) : this.presentDeleteAlert(item, slideItem);
       })
   }
