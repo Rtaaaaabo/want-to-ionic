@@ -183,8 +183,8 @@ export class ListRoomComponent implements OnInit {
 
   /**
    * 削除対象のRoomの中に担当するタスクがあれば削除しないようにする
-   * @param slideItem 
-   * @param item 
+   * @param slideItem SlideItemの情報
+   * @param item RoomGroupのItem
    */
   verifyDeleteTask(item: RoomGroup, slideItem: IonItemSliding): void {
     this.logic.fetchUserInfo(item.userID)
