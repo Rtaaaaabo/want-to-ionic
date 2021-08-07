@@ -1,4 +1,4 @@
-<ion-header>
+<ion-header class="bg-gray-50">
   <ion-toolbar>
     <ion-title>{{ currentUser?.company.name }}</ion-title>
   </ion-toolbar>
@@ -6,6 +6,7 @@
 
 <ion-content>
   <app-list-room
+    class="bg-gray-50"
     [currentUser]="currentUser"
     [currentUserAttribute]="currentUserAttribute"
     [roomGroupsItems]="roomGroupsItems"
