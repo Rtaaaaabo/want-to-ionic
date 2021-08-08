@@ -78,7 +78,12 @@ export class MemberListLogic {
       .pipe(toArray());
   }
 
-  getStorage(dataKey?: IconImage): Observable<any> {
+  getStorage(dataKey?: IconImage): Observable<string | object> {
     return from(Storage.get(dataKey.key));
+  }
+
+  fetchFilteredCompanyMembers(companyId: string): Observable<Array<CompanyMember>> {
+    return this.memberListService.fetchCompanyMembers(companyId)
+      .pipe(map((result) => result.companyMembers.items));
   }
 }
