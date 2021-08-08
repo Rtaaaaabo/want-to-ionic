@@ -11,7 +11,10 @@
     </ion-buttons>
   </ion-toolbar>
   <ion-toolbar>
-    <ion-searchbar placeholder="検索"></ion-searchbar>
+    <ion-searchbar
+      (ionChange)="searchValue($event)"
+      placeholder="検索"
+    ></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 

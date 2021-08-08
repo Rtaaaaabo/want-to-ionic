@@ -71,4 +71,8 @@ export class MemberListPage implements OnInit {
     return modal.present();
   }
 
+  searchValue(ev: CustomEvent): void {
+    console.log('SearchValue', ev.detail.value);
+  }
+
 }
