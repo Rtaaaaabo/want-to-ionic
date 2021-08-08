@@ -51,4 +51,4 @@ amplifytools.xcconfig
 .secret-*
 
 # 新規追加
-*.env
+*.envdocumentation.json
