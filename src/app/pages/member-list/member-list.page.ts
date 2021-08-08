@@ -72,7 +72,11 @@ export class MemberListPage implements OnInit {
   }
 
   searchValue(ev: CustomEvent): void {
-    console.log('SearchValue', ev.detail.value);
+    const searchContent = ev.detail.value;
+    this.logic.fetchFilteredCompanyMembers(this.currentUser.companyID, searchContent)
+      .subscribe((data) => {
+        this.companyMembers = data;
+      })
   }
 
 }
