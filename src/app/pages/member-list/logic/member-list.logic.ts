@@ -82,8 +82,12 @@ export class MemberListLogic {
     return from(Storage.get(dataKey.key));
   }
 
-  fetchFilteredCompanyMembers(companyId: string): Observable<Array<CompanyMember>> {
-    return this.memberListService.fetchCompanyMembers(companyId)
-      .pipe(map((result) => result.companyMembers.items));
+  fetchFilteredCompanyMembers(companyId: string, searchValue: string): Observable<Array<CompanyMember>> {
+    const filterContent = {
+      companyID: { eq: companyId },
+      username: { contains: searchValue },
+    }
+    return this.memberListService.fetchFilteredCompanyMembers(filterContent)
+      .pipe(map((result) => result.items));
   }
 }

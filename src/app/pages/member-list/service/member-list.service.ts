@@ -1,7 +1,15 @@
 import { Injectable } from '@angular/core';
 import { of, Observable, from } from 'rxjs';
 import { API } from 'aws-amplify';
-import { AmplifyService, CreateUserInput, CreateUserMutation, GetCompanyQuery, GetUserQuery } from 'src/app/shared/service/amplify.service';
+import {
+  AmplifyService,
+  CreateUserInput,
+  CreateUserMutation,
+  GetCompanyQuery,
+  GetUserQuery,
+  ModelUserFilterInput,
+  ListUsersQuery
+} from 'src/app/shared/service/amplify.service';
 import { OptionData } from '../models/member-list.interface';
 
 const apiSendInvite = 'authSendEmail';
@@ -40,5 +48,9 @@ export class MemberListService {
 
   fetchMember(userId: string): Observable<GetUserQuery> {
     return from(this.amplifyService.GetUser(userId));
+  }
+
+  fetchFilteredCompanyMembers(filterContent?: ModelUserFilterInput): Observable<ListUsersQuery> {
+    return from(this.amplifyService.ListUsers(filterContent));
   }
 }
