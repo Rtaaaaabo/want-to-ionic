@@ -3,7 +3,7 @@ import { from, Observable, of } from 'rxjs';
 import { concatMap, map, toArray, filter } from 'rxjs/operators';
 import { Storage } from 'aws-amplify';
 import { SessionService } from '../../../shared/service/session.service';
-import { ListUsersQuery, CreateUserInput, CreateUserMutation, GetUserQuery } from '../../../shared/service/amplify.service';
+import { ListUsersQuery, CreateUserInput, CreateUserMutation, GetUserQuery, ModelUserFilterInput } from '../../../shared/service/amplify.service';
 import { MemberListService } from '../service/member-list.service';
 import { RequestRegisterCompanyMember, CurrentUser, OptionData, CompanyMember, IconImage } from '../models/member-list.interface';
 import { v4 as uuid } from 'uuid';
@@ -83,10 +83,13 @@ export class MemberListLogic {
   }
 
   fetchFilteredCompanyMembers(companyId: string, searchValue: string): Observable<Array<CompanyMember>> {
-    const filterContent = {
+    const filterContent: ModelUserFilterInput = {
       companyID: { eq: companyId },
-      username: { contains: searchValue },
     }
+    if (searchValue !== "") {
+      filterContent.username = { contains: searchValue };
+    }
+
     return this.memberListService.fetchFilteredCompanyMembers(filterContent)
       .pipe(map((result) => result.items));
   }
