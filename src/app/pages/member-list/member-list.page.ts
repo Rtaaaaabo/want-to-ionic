@@ -17,6 +17,7 @@ export class MemberListPage implements OnInit {
   currentUserAttribute: Attribute;
   currentUser: CurrentUser;
   companyMembers: Array<CompanyMember>;
+  segment = 'active';
 
   constructor(
     private logic: MemberListLogic,
@@ -73,11 +74,14 @@ export class MemberListPage implements OnInit {
 
   searchValue(ev: CustomEvent): void {
     const searchContent = ev.detail.value;
-
     this.logic.fetchFilteredCompanyMembers(this.currentUser.companyID, searchContent)
       .subscribe((data) => {
         this.companyMembers = data;
       });
+  }
+
+  segmentChanged(ev): void {
+    console.log(ev);
   }
 
 }
