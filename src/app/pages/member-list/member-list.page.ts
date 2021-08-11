@@ -17,7 +17,7 @@ export class MemberListPage implements OnInit {
   currentUserAttribute: Attribute;
   currentUser: CurrentUser;
   companyMembers: Array<CompanyMember>;
-  segment = 'active';
+  // segment = 'active';
 
   constructor(
     private logic: MemberListLogic,
@@ -78,10 +78,6 @@ export class MemberListPage implements OnInit {
       .subscribe((data) => {
         this.companyMembers = data;
       });
-  }
-
-  segmentChanged(ev): void {
-    console.log(ev);
   }
 
 }

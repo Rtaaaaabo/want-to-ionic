@@ -82,6 +82,7 @@ export class MemberListLogic {
     return from(Storage.get(dataKey.key));
   }
 
+  // ここではEmailと名前でのFilterを行って返す
   fetchFilteredCompanyMembers(companyId: string, searchValue: string): Observable<Array<CompanyMember>> {
     const filterContent: ModelUserFilterInput = {
       companyID: { eq: companyId },
