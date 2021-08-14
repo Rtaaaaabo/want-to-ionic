@@ -80,12 +80,8 @@ export class MemberListPage implements OnInit {
       .pipe(concatMap(() => this.logic.fetchEmailFilteredCompanyMembers(this.currentUser.companyID, searchContent)))
       .pipe(map((result) => resultEmailData = result))
       .subscribe(() => {
-        const test = resultUsernameData.filter((usernameData) => {
-          return resultEmailData.filter((emailData) => {
-            usernameData.id === emailData.id;
-          });
-        });
-        this.companyMembers = resultUsernameData.concat(resultEmailData);
+        const companyMembers = resultUsernameData.concat(resultEmailData)
+        this.companyMembers = Array.from(new Map(companyMembers.map(o => [o.id, o])).values());
       });
   }
 
