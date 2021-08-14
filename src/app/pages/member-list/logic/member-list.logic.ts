@@ -83,12 +83,23 @@ export class MemberListLogic {
   }
 
   // ここではEmailと名前でのFilterを行って返す
-  fetchFilteredCompanyMembers(companyId: string, searchValue: string): Observable<Array<CompanyMember>> {
+  fetchUsernameFilteredCompanyMembers(companyId: string, searchValue: string): Observable<Array<CompanyMember>> {
     const filterContent: ModelUserFilterInput = {
       companyID: { eq: companyId },
     }
     if (searchValue !== "") {
       filterContent.username = { contains: searchValue };
+    }
+    return this.memberListService.fetchFilteredCompanyMembers(filterContent)
+      .pipe(map((result) => result.items));
+  }
+
+  fetchEmailFilteredCompanyMembers(companyId: string, searchValue: string): Observable<Array<CompanyMember>> {
+    const filterContent: ModelUserFilterInput = {
+      companyID: { eq: companyId },
+    }
+    if (searchValue !== "") {
+      filterContent.email = { contains: searchValue }
     }
     return this.memberListService.fetchFilteredCompanyMembers(filterContent)
       .pipe(map((result) => result.items));
