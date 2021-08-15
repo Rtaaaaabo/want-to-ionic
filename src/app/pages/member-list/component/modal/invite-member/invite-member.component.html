@@ -15,7 +15,9 @@
       <ng-container formArrayName="companyMembers">
         <ion-list-header>
           <ion-label>メンバー</ion-label>
-          <ion-button (click)="addCompanyMember()">追加</ion-button>
+          <ion-button (click)="addCompanyMember()">
+            <ion-icon name="add-circle-outline"></ion-icon>
+          </ion-button>
         </ion-list-header>
         <ng-container
           *ngFor="let item of companyMemberArray.controls; let i = index"

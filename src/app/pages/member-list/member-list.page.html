@@ -7,13 +7,15 @@
       </ion-button>
     </ion-buttons>
     <ion-buttons slot="end">
-      <ion-button (click)="presentInviteMembers()">招待</ion-button>
+      <ion-button (click)="presentInviteMembers()">
+        <ion-icon name="person-add-outline"></ion-icon>
+      </ion-button>
     </ion-buttons>
   </ion-toolbar>
   <ion-toolbar>
     <ion-searchbar
       (ionChange)="searchValue($event)"
-      placeholder="検索"
+      placeholder="Email, 氏名"
     ></ion-searchbar>
   </ion-toolbar>
 </ion-header>
