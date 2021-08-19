@@ -35,6 +35,10 @@
         "sendRegisterMembers": {
           "deploymentBucketName": "amplify-wantto-dev-234052-deployment",
           "s3Key": "amplify-builds/sendRegisterMembers-7159472b754d6b66697a-build.zip"
+        },
+        "wanttocrondelete": {
+          "deploymentBucketName": "amplify-wantto-dev-234052-deployment",
+          "s3Key": "amplify-builds/wanttocrondelete-6f4b6b3936754c4c577a-build.zip"
         }
       }
     }

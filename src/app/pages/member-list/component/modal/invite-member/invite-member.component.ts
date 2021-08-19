@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
-import { of, Observable, from } from 'rxjs';
+import { Observable, from } from 'rxjs';
 import { concatMap } from 'rxjs/operators';
 import { CreateUserMutation } from 'src/app/shared/service/amplify.service';
 import { MemberListLogic } from '../../../logic/member-list.logic';

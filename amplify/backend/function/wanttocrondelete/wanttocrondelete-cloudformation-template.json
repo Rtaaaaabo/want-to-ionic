@@ -7,37 +7,77 @@
       "Default": "NONE",
       "Description": " Schedule Expression"
     },
-    "deploymentBucketName": { "Type": "String" },
-    "env": { "Type": "String" },
-    "s3Key": { "Type": "String" }
+    "deploymentBucketName": {
+      "Type": "String"
+    },
+    "env": {
+      "Type": "String"
+    },
+    "s3Key": {
+      "Type": "String"
+    }
   },
   "Conditions": {
-    "ShouldNotCreateEnvResources": { "Fn::Equals": [{ "Ref": "env" }, "NONE"] }
+    "ShouldNotCreateEnvResources": {
+      "Fn::Equals": [
+        {
+          "Ref": "env"
+        },
+        "NONE"
+      ]
+    }
   },
   "Resources": {
     "LambdaFunction": {
       "Type": "AWS::Lambda::Function",
-      "Metadata": { "aws:asset:path": "./src", "aws:asset:property": "Code" },
+      "Metadata": {
+        "aws:asset:path": "./src",
+        "aws:asset:property": "Code"
+      },
       "Properties": {
         "Code": {
-          "S3Bucket": { "Ref": "deploymentBucketName" },
-          "S3Key": { "Ref": "s3Key" }
+          "S3Bucket": {
+            "Ref": "deploymentBucketName"
+          },
+          "S3Key": {
+            "Ref": "s3Key"
+          }
         },
         "Handler": "index.handler",
         "FunctionName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
             "wanttocrondelete",
-            { "Fn::Join": ["", ["wanttocrondelete", "-", { "Ref": "env" }]] }
+            {
+              "Fn::Join": [
+                "",
+                [
+                  "wanttocrondelete",
+                  "-",
+                  {
+                    "Ref": "env"
+                  }
+                ]
+              ]
+            }
           ]
         },
         "Environment": {
           "Variables": {
-            "ENV": { "Ref": "env" },
-            "REGION": { "Ref": "AWS::Region" }
+            "ENV": {
+              "Ref": "env"
+            },
+            "REGION": {
+              "Ref": "AWS::Region"
+            }
           }
         },
-        "Role": { "Fn::GetAtt": ["LambdaExecutionRole", "Arn"] },
+        "Role": {
+          "Fn::GetAtt": [
+            "LambdaExecutionRole",
+            "Arn"
+          ]
+        },
         "Runtime": "nodejs14.x",
         "Layers": [],
         "Timeout": 25
@@ -53,7 +93,13 @@
             {
               "Fn::Join": [
                 "",
-                ["wanttoLambdaRole09fa93ce", "-", { "Ref": "env" }]
+                [
+                  "wanttoLambdaRole09fa93ce",
+                  "-",
+                  {
+                    "Ref": "env"
+                  }
+                ]
               ]
             }
           ]
@@ -63,19 +109,31 @@
           "Statement": [
             {
               "Effect": "Allow",
-              "Principal": { "Service": ["lambda.amazonaws.com"] },
-              "Action": ["sts:AssumeRole"]
+              "Principal": {
+                "Service": [
+                  "lambda.amazonaws.com"
+                ]
+              },
+              "Action": [
+                "sts:AssumeRole"
+              ]
             }
           ]
         }
       }
     },
     "lambdaexecutionpolicy": {
-      "DependsOn": ["LambdaExecutionRole"],
+      "DependsOn": [
+        "LambdaExecutionRole"
+      ],
       "Type": "AWS::IAM::Policy",
       "Properties": {
         "PolicyName": "lambda-execution-policy",
-        "Roles": [{ "Ref": "LambdaExecutionRole" }],
+        "Roles": [
+          {
+            "Ref": "LambdaExecutionRole"
+          }
+        ],
         "PolicyDocument": {
           "Version": "2012-10-17",
           "Statement": [
@@ -90,9 +148,15 @@
                 "Fn::Sub": [
                   "arn:aws:logs:${region}:${account}:log-group:/aws/lambda/${lambda}:log-stream:*",
                   {
-                    "region": { "Ref": "AWS::Region" },
-                    "account": { "Ref": "AWS::AccountId" },
-                    "lambda": { "Ref": "LambdaFunction" }
+                    "region": {
+                      "Ref": "AWS::Region"
+                    },
+                    "account": {
+                      "Ref": "AWS::AccountId"
+                    },
+                    "lambda": {
+                      "Ref": "LambdaFunction"
+                    }
                   }
                 ]
               }
@@ -105,12 +169,21 @@
       "Type": "AWS::Events::Rule",
       "Properties": {
         "Description": "Schedule rule for Lambda",
-        "ScheduleExpression": { "Ref": "CloudWatchRule" },
+        "ScheduleExpression": {
+          "Ref": "CloudWatchRule"
+        },
         "State": "ENABLED",
         "Targets": [
           {
-            "Arn": { "Fn::GetAtt": ["LambdaFunction", "Arn"] },
-            "Id": { "Ref": "LambdaFunction" }
+            "Arn": {
+              "Fn::GetAtt": [
+                "LambdaFunction",
+                "Arn"
+              ]
+            },
+            "Id": {
+              "Ref": "LambdaFunction"
+            }
           }
         ]
       }
@@ -118,18 +191,48 @@
     "PermissionForEventsToInvokeLambda": {
       "Type": "AWS::Lambda::Permission",
       "Properties": {
-        "FunctionName": { "Ref": "LambdaFunction" },
+        "FunctionName": {
+          "Ref": "LambdaFunction"
+        },
         "Action": "lambda:InvokeFunction",
         "Principal": "events.amazonaws.com",
-        "SourceArn": { "Fn::GetAtt": ["CloudWatchEvent", "Arn"] }
+        "SourceArn": {
+          "Fn::GetAtt": [
+            "CloudWatchEvent",
+            "Arn"
+          ]
+        }
       }
     }
   },
   "Outputs": {
-    "Name": { "Value": { "Ref": "LambdaFunction" } },
-    "Arn": { "Value": { "Fn::GetAtt": ["LambdaFunction", "Arn"] } },
-    "Region": { "Value": { "Ref": "AWS::Region" } },
-    "LambdaExecutionRole": { "Value": { "Ref": "LambdaExecutionRole" } },
-    "CloudWatchEventRule": { "Value": { "Ref": "CloudWatchEvent" } }
+    "Name": {
+      "Value": {
+        "Ref": "LambdaFunction"
+      }
+    },
+    "Arn": {
+      "Value": {
+        "Fn::GetAtt": [
+          "LambdaFunction",
+          "Arn"
+        ]
+      }
+    },
+    "Region": {
+      "Value": {
+        "Ref": "AWS::Region"
+      }
+    },
+    "LambdaExecutionRole": {
+      "Value": {
+        "Ref": "LambdaExecutionRole"
+      }
+    },
+    "CloudWatchEventRule": {
+      "Value": {
+        "Ref": "CloudWatchEvent"
+      }
+    }
   }
 }

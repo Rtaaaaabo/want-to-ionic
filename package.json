@@ -16,7 +16,8 @@
     "build:prod": "cross-env NODE_ENV=production ng build --prod",
     "docs:json": "compodoc -p ./tsconfig.json -e json -d .",
     "storybook": "npm run docs:json && start-storybook -p 6006",
-    "build-storybook": "npm run docs:json && build-storybook"
+    "build-storybook": "npm run docs:json && build-storybook",
+    "amplify:cronDelete": "cd amplify/backend/function/wanttocrondelete/ts-src && npx tsc && cd -"
   },
   "private": true,
   "dependencies": {
