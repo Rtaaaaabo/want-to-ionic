@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
 import { RegistrationCompanyPage } from './registration-company.page';
@@ -7,7 +7,7 @@ describe('RegistrationCompanyPage', () => {
   let component: RegistrationCompanyPage;
   let fixture: ComponentFixture<RegistrationCompanyPage>;
 
-  beforeEach((() => {
+  beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [RegistrationCompanyPage],
       imports: [IonicModule.forRoot()]
@@ -19,7 +19,7 @@ describe('RegistrationCompanyPage', () => {
   }));
 
 
-  test('should create', () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });
