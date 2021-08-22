@@ -7,7 +7,7 @@ describe('CreateCompanyService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    logic = TestBed.inject(CreateCompanyService);
+    logic = TestBed.inject(CreateCompanyLogic);
   });
 
   it('should be created', () => {

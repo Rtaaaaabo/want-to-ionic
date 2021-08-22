@@ -7,9 +7,9 @@ describe('MemberListPage', () => {
   let component: MemberListPage;
   let fixture: ComponentFixture<MemberListPage>;
 
-  beforeEach(async(() => {
+  beforeEach((() => {
     TestBed.configureTestingModule({
-      declarations: [ MemberListPage ],
+      declarations: [MemberListPage],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 

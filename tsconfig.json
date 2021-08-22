@@ -22,7 +22,7 @@
       "@app/*": ["projects/client/src/app/*"],
     },
     "esModuleInterop": true,
-    "emitDecoratorMetadata": false,
+    "emitDecoratorMetadata": true,
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
