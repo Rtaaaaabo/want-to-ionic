@@ -19,9 +19,7 @@ export class EditRoomModalComponent implements OnInit {
 
   ngOnInit(): void { }
 
-  saveRoom(): void {
-
-  }
+  saveRoom(): void { }
 
   dismissModal(): void {
     this.modalCtrl.dismiss();

@@ -10,7 +10,6 @@ describe('SettingLogic', () => {
   });
 
   it('should be created', () => {
-    console.log('Logic', logic);
-    // expect(logic).toBeTruthy();
+    expect(logic).toBeTruthy();
   });
 });
