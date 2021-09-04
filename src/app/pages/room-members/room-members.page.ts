@@ -148,6 +148,10 @@ export class RoomMembersPage implements OnInit {
     }
   }
 
+  /**
+   * ルームにメンバーを追加します
+   * @returns {Promise<void>}
+   */
   async addMemberOnRoom(): Promise<void> {
     const modal = await this.modalCtrl.create({
       component: AddPersonModalComponent,
@@ -171,6 +175,9 @@ export class RoomMembersPage implements OnInit {
     return modal.present();
   }
 
+  /**
+   * 対象ページ離脱時の動作
+   */
   ngOnDestroy(): void {
     this.subscriptionCreateRoomMember.unsubscribe();
     this.subscriptionUpdateRoomMember.unsubscribe();
