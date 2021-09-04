@@ -4,17 +4,19 @@ import { HomeService } from '../service/home.service';
 import { SessionService } from '../../../shared/service/session.service';
 import { of } from 'rxjs';
 import { CreateRoomGroupMutation, CreateRoomMutation, CreateUserMutation, DeleteRoomMutation, ListUsersQuery } from 'src/app/shared/service/amplify.service';
-import { ILResponseFetchRoomMembers, CurrentUser, RoomGroupItems } from '../model/home.interface';
+import { CurrentUser, RoomGroupItems } from '../model/home.interface';
 import { ListRoomGroupsQuery } from 'src/app/API.service';
 
 describe('HomeLogic', () => {
   let logic: HomeLogic;
+  let homeService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [HomeService, SessionService]
     });
     logic = TestBed.inject(HomeLogic);
+    homeService = TestBed.inject(HomeService);
   });
 
   describe('テスト準備', () => {
@@ -31,7 +33,6 @@ describe('HomeLogic', () => {
       email_verified: true,
       sub: 'testSub',
     }
-    const homeService = TestBed.inject(HomeService);
     const mockHomeServiceCheckRegistration = jest.spyOn(homeService, 'checkRegistrationUser').mockReturnValue(of(dummyResponseListUsersQuery));
     logic.checkRegistrationUser(argsParams).subscribe((result) => {
       expect(result).toBe(dummyResponseListUsersQuery);
@@ -67,7 +68,6 @@ describe('HomeLogic', () => {
       descriptionItem: 'testArgsDescription',
     }
     const currentUser = {} as CurrentUser;
-    const homeService = TestBed.inject(HomeService);
     const mockHomeServiceCreateUserRoomGroup = jest.spyOn(homeService, 'createRoom').mockReturnValue(of(mockResponseService));
     logic.createRoom(argsParam, currentUser).subscribe((result) => {
       expect(result).toBe(mockResponseService);
@@ -85,7 +85,6 @@ describe('HomeLogic', () => {
       description: 'testDescription',
     } as DeleteRoomMutation;
     const argsRoomId = 'testRoomId'
-    const homeService = TestBed.inject(HomeService);
     const mockDeleteRoomItem = jest.spyOn(homeService, "deleteRoomItem").mockReturnValue(of(expectedResult));
     logic.deleteRoomItem(argsRoomId).subscribe(result => {
       expect(result).toBe(expectedResult);
@@ -100,7 +99,6 @@ describe('HomeLogic', () => {
       roomID: 'testRoomId',
       userID: 'testUserId;'
     } as CreateRoomGroupMutation
-    const homeService = TestBed.inject(HomeService);
     const mockCreateUserRoomGroup = jest.spyOn(homeService, "createUserRoomGroup").mockReturnValue(of(expectedResult));
     logic.createUserRoomGroup('tesUserId', 'testRoomId')
       .subscribe(result => {
@@ -110,12 +108,6 @@ describe('HomeLogic', () => {
   });
 
   test('fetchRoomMembersのテスト', () => {
-    const expectedResult = [{
-      __typename: "RoomGroup",
-      id: 'testId',
-      roomID: 'testRoomId',
-      userID: 'testUserId',
-    }] as Array<ILResponseFetchRoomMembers>;
     const serviceResult = {
       __typename: "ModelRoomGroupConnection",
       items: [{
@@ -131,7 +123,6 @@ describe('HomeLogic', () => {
       roomID: 'testRoomId',
       userID: 'testUserId',
     }] as RoomGroupItems[];
-    const homeService = TestBed.inject(HomeService);
     const mockServiceFetchRoomMembers = jest.spyOn(homeService, 'fetchRoomMembers').mockReturnValue(of(serviceResult));
     logic.fetchRoomMembers('testRoomId', 'testUserId').subscribe((data) => {
       expect(data).toBe(resultLogic);
@@ -148,7 +139,22 @@ describe('HomeLogic', () => {
   });
 
   test('fetchRoomListのテスト', () => {
-
+    const argsParam = 'testUserId';
+    const resultResult = [{
+      __typename: "RoomGroup",
+      id: 'testUserId',
+      roomID: 'testRoomId',
+      userID: 'testUserId',
+    }]
+    const mockResult = {
+      __typename: "ModelRoomGroupConnection",
+      items: resultResult
+    };
+    const mockService = jest.spyOn(homeService, 'fetchRoomList').mockReturnValue(of(mockResult));
+    logic.fetchRoomList(argsParam).subscribe((data) => {
+      expect(data).toBe(resultResult);
+    });
+    expect(mockService).toBeCalled();
   });
 
   test('fetchAvatarIconUrlのテスト', () => {
