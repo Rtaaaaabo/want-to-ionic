@@ -1,59 +1,38 @@
 import { TestBed } from '@angular/core/testing';
-import { FormGroup } from '@angular/forms';
 import { HomeLogic } from './home.logic';
 import { HomeService } from '../service/home.service';
 import { SessionService } from '../../../shared/service/session.service';
 import { of } from 'rxjs';
 import { CreateRoomGroupMutation, CreateRoomMutation, CreateUserMutation, DeleteRoomMutation, ListUsersQuery } from 'src/app/shared/service/amplify.service';
-import { ILResponseFetchRoomMembers } from '../model/home.interface';
+import { CurrentUser, RoomGroupItems } from '../model/home.interface';
 import { ListRoomGroupsQuery } from 'src/app/API.service';
-
 
 describe('HomeLogic', () => {
   let logic: HomeLogic;
+  let homeService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [HomeService, SessionService]
     });
     logic = TestBed.inject(HomeLogic);
+    homeService = TestBed.inject(HomeService);
   });
 
-  test('HomeLogicがインスタンス化されていること', () => {
-    expect(logic).toBeTruthy();
+  describe('テスト準備', () => {
+    test('HomeLogicがインスタンス化されていること', () => {
+      expect(HomeLogic).toBeTruthy();
+    });
   });
 
   test('checkRegistrationUserのテスト', () => {
-    const dummyResponseListUsersQuery = {
-      __typename: "ModelUserConnection",
-      items: [{
-        __typename: "User",
-        id: '11111',
-        username: 'testUserName',
-        email: 'testEmail',
-        companyID: 'testCompanyId',
-        tel: '09093234',
-        positionName: 'testPositionName',
-        iconImage: null,
-        registered: null,
-        authority: null,
-        company: {
-          __typename: "Company",
-          id: '111111',
-          name: 'testCompanyName',
-          domain: 'testCompanyDomain',
-          createdAt: 'testCompanyCreatedAt',
-          updatedAt: 'testCompanyUpdatedAt',
-        },
-      }],
-      nextToken: null
-    } as ListUsersQuery;
+    const dummyResponseListUsersQuery = {} as ListUsersQuery;
     const argsParams = {
+      name: 'test',
       email: 'test@test.com',
       email_verified: true,
       sub: 'testSub',
     }
-    const homeService = TestBed.inject(HomeService);
     const mockHomeServiceCheckRegistration = jest.spyOn(homeService, 'checkRegistrationUser').mockReturnValue(of(dummyResponseListUsersQuery));
     logic.checkRegistrationUser(argsParams).subscribe((result) => {
       expect(result).toBe(dummyResponseListUsersQuery);
@@ -83,30 +62,14 @@ describe('HomeLogic', () => {
   });
 
   test('createRoomのテスト', () => {
-    const mockResponseService = {
-      __typename: "Room",
-      id: 'testId',
-      name: 'testName',
-      companyID: 'testCompanyId',
-      description: 'testDescription',
-      company: {
-        __typename: "Company",
-        id: 'testCompanyId',
-        name: 'testCompanyName',
-        domain: 'testCompanyDomain',
-        createdAt: 'testCreatedAt',
-        updatedAt: 'testUpdatedAt',
-      },
-      createdAt: 'testCreatedAt',
-      updatedAt: 'testUpdatedAt',
-    } as CreateRoomMutation;
+    const mockResponseService = {} as CreateRoomMutation;
     const argsParam = {
       nameItem: 'testArgsName',
       descriptionItem: 'testArgsDescription',
     }
-    const homeService = TestBed.inject(HomeService);
+    const currentUser = {} as CurrentUser;
     const mockHomeServiceCreateUserRoomGroup = jest.spyOn(homeService, 'createRoom').mockReturnValue(of(mockResponseService));
-    logic.createRoom(argsParam).subscribe((result) => {
+    logic.createRoom(argsParam, currentUser).subscribe((result) => {
       expect(result).toBe(mockResponseService);
     });
     expect(mockHomeServiceCreateUserRoomGroup).toBeCalled();
@@ -122,7 +85,6 @@ describe('HomeLogic', () => {
       description: 'testDescription',
     } as DeleteRoomMutation;
     const argsRoomId = 'testRoomId'
-    const homeService = TestBed.inject(HomeService);
     const mockDeleteRoomItem = jest.spyOn(homeService, "deleteRoomItem").mockReturnValue(of(expectedResult));
     logic.deleteRoomItem(argsRoomId).subscribe(result => {
       expect(result).toBe(expectedResult);
@@ -137,21 +99,15 @@ describe('HomeLogic', () => {
       roomID: 'testRoomId',
       userID: 'testUserId;'
     } as CreateRoomGroupMutation
-    const homeService = TestBed.inject(HomeService);
     const mockCreateUserRoomGroup = jest.spyOn(homeService, "createUserRoomGroup").mockReturnValue(of(expectedResult));
-    logic.createUserRoomGroup('tesUserId', 'testRoomId').subscribe(result => {
-      expect(result).toBe(expectedResult);
-    });
+    logic.createUserRoomGroup('tesUserId', 'testRoomId')
+      .subscribe(result => {
+        expect(result).toBe(expectedResult);
+      });
     expect(mockCreateUserRoomGroup).toBeCalled();
   });
 
   test('fetchRoomMembersのテスト', () => {
-    const expectedResult = [{
-      __typename: "RoomGroup",
-      id: 'testId',
-      roomID: 'testRoomId',
-      userID: 'testUserId',
-    }] as Array<ILResponseFetchRoomMembers>;
     const serviceResult = {
       __typename: "ModelRoomGroupConnection",
       items: [{
@@ -161,8 +117,17 @@ describe('HomeLogic', () => {
         userID: 'testUserId',
       }]
     } as ListRoomGroupsQuery;
-    const homeService = TestBed.inject(HomeService);
-    const mockFetchRoomMembers = jest.spyOn(homeService, 'fetchRoomMembers').mockReturnValue(of(serviceResult));
+    const resultLogic = [{
+      __typename: "RoomGroup",
+      id: 'testId',
+      roomID: 'testRoomId',
+      userID: 'testUserId',
+    }] as RoomGroupItems[];
+    const mockServiceFetchRoomMembers = jest.spyOn(homeService, 'fetchRoomMembers').mockReturnValue(of(serviceResult));
+    logic.fetchRoomMembers('testRoomId', 'testUserId').subscribe((data) => {
+      expect(data).toBe(resultLogic);
+    });
+    expect(mockServiceFetchRoomMembers).toBeCalled();
   });
 
   test('removeMeFromRoomのテスト', () => {
@@ -174,7 +139,22 @@ describe('HomeLogic', () => {
   });
 
   test('fetchRoomListのテスト', () => {
-
+    const argsParam = 'testUserId';
+    const resultResult = [{
+      __typename: "RoomGroup",
+      id: 'testUserId',
+      roomID: 'testRoomId',
+      userID: 'testUserId',
+    }]
+    const mockResult = {
+      __typename: "ModelRoomGroupConnection",
+      items: resultResult
+    };
+    const mockService = jest.spyOn(homeService, 'fetchRoomList').mockReturnValue(of(mockResult));
+    logic.fetchRoomList(argsParam).subscribe((data) => {
+      expect(data).toBe(resultResult);
+    });
+    expect(mockService).toBeCalled();
   });
 
   test('fetchAvatarIconUrlのテスト', () => {

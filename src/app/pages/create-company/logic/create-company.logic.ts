@@ -19,7 +19,7 @@ export class CreateCompanyLogic {
 
   /**
    * Company一次登録の情報をDynamoDBにいれます
-   * @param {CreateCompanyInput} content DynamoDBに保存するPram
+   * @param {CreateCompanyInput} content DynamoDBに保存するParam
    * @returns {string} CompanyID
    */
   createCompanyToDynamoDB(content: CreateCompanyInput): Observable<string> {
@@ -66,15 +66,6 @@ export class CreateCompanyLogic {
     }
     return this.createCompanyService.sendEmailForRegister(requestBody)
       .pipe(catchError((e) => `Not Send for Register Message: ${e}`))
-  }
-
-  /**
-   * OneTimePasswordを生成します
-   * @returns {string} oneTimePasswordを返します
-   */
-  generateOneTimePassword(companyId: string): Observable<string> {
-    return this.createCompanyService.generateOTP(companyId)
-      .pipe(map(({ otp }) => otp));
   }
 
   /**

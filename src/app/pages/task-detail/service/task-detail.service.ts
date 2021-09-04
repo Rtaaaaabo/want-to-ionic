@@ -1,8 +1,22 @@
 import { Injectable } from '@angular/core';
-import { AmplifyService, GetTaskQuery, UpdateTaskMutation, ModelSortDirection, CreateMessageInput, SubscriptionResponse, OnCreateMessageSubscription, TaskByCreatedAtQuery, CreateMessageMutation, GetUserQuery, ListRoomGroupsQuery, ModelUserFilterInput, ListUsersQuery } from '../../../shared/service/amplify.service';
+import {
+  AmplifyService,
+  GetTaskQuery,
+  UpdateTaskMutation,
+  ModelSortDirection,
+  CreateMessageInput,
+  TaskByCreatedAtQuery,
+  CreateMessageMutation,
+  GetUserQuery,
+  ListRoomGroupsQuery,
+  ModelUserFilterInput,
+  ListUsersQuery,
+  ModelRoomGroupFilterInput,
+  UpdateTaskInput,
+} from '../../../shared/service/amplify.service';
 import { Observable, from, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
-import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
+
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +36,7 @@ export class TaskDetailService {
     return from(this.amplifyService.TaskByCreatedAt(taskId, ModelSortDirection.DESC, limitMessage));
   }
 
-  updateTaskItem(inputContent): Observable<UpdateTaskMutation> {
+  updateTaskItem(inputContent: UpdateTaskInput): Observable<UpdateTaskMutation> {
     return from(this.amplifyService.UpdateTask(inputContent));
   }
 
@@ -34,7 +48,7 @@ export class TaskDetailService {
     return this.amplifyService.OnCreateMessageListener;
   }
 
-  fetchRoomMember(content): Observable<ListRoomGroupsQuery> {
+  fetchRoomMember(content: ModelRoomGroupFilterInput): Observable<ListRoomGroupsQuery> {
     return from(this.amplifyService.ListRoomGroups(content));
   }
 
