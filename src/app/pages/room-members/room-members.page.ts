@@ -51,10 +51,18 @@ export class RoomMembersPage implements OnInit {
     })
   }
 
+
+  /**
+   * デバイスを初期化します。
+   * @returns Platformを準備
+   */
   initializeApp(): Observable<string> {
     return from(this.platform.ready());
   }
 
+  /**
+   * ルームメンバーを取得します
+   */
   fetchRoomMembers(): void {
     this.logic.fetchRoomMembers(this.roomId)
       .pipe(concatMap(({ items: members }) => this.logic.setRoomMembers(members, this.currentUser.id)))
@@ -65,6 +73,9 @@ export class RoomMembersPage implements OnInit {
       });
   }
 
+  /**
+   * 画面の初期化
+   */
   ngOnInit(): void {
     this.notAssignMembers = [];
     this.companyId = this.route.snapshot.paramMap.get('companyId');
@@ -84,6 +95,12 @@ export class RoomMembersPage implements OnInit {
       });
   }
 
+  /**
+   * ルームにアサインしていないメンバーリストを返します
+   * @param companyMembers 会社のメンバー
+   * @param roomMembers ルームのメンバー
+   * @returns MemberList
+   */
   checkNotAssignMember(companyMembers, roomMembers): Array<any> {
     return companyMembers.filter((companyMember) => {
       return !roomMembers.some((roomMember) => {
@@ -92,13 +109,19 @@ export class RoomMembersPage implements OnInit {
     });
   }
 
+  /**
+   * 画面を戻ります
+   */
   goBackToRoom(): void {
     this.location.back();
   }
 
+  /**
+   * 退出ルームボタンクリック時
+   */
   withdrawalFromAnyRoom(): void {
     this.logic.fetchRoomMembersExceptOwn(this.roomId, this.currentUser.id)
-      .pipe(switchMap((data) => data.length === 0 ?
+      .pipe(concatMap((data) => data.length === 0 ?
         this.logic.deleteRoomItem(this.roomId) : this.logic.removeOwnFromRoom(this.roomId, this.currentUser.id)
       ))
       .subscribe(() => {
@@ -106,6 +129,10 @@ export class RoomMembersPage implements OnInit {
       })
   }
 
+  /**
+   * ルームに所属しているメンバーを検索します
+   * @param ev Componentの入力イベント
+   */
   searchRoomMembers(ev: CustomEvent): void {
     const nameQuery = ev.detail.value;
     if (nameQuery !== null) {
