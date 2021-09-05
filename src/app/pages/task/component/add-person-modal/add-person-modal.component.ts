@@ -87,10 +87,10 @@ export class AddPersonModalComponent implements OnInit {
   }
 
   /**
-   * 
+   * アサインされていないメンバーを取得する
    * @param {Array<MemberTask>} companyMembers 会社に所属しているメンバーの配列
    * @param {Array<MemberTask>} roomMembers タスクルームに所属しているメンバーの配列
-   * @returns 
+   * @returns {Array<MemberTask>} CompanyMemberIDとRoomMemberIDが一致している値
    */
   checkNotAssignMember(companyMembers: Array<MemberTask>, roomMembers: Array<MemberTask>): Array<MemberTask> {
     return companyMembers.filter((companyMember) => {
