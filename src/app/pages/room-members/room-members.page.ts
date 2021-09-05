@@ -121,15 +121,12 @@ export class RoomMembersPage implements OnInit {
    * 退出ルームボタンクリック
    */
   withdrawalFromAnyRoom(): void {
-    from(this.presentWithdrawalRoom())
-      // .pipe(filter((result) => result === 'ok'))
-      // this.logic.fetchRoomMembersExceptOwn(this.roomId, this.currentUser.id)
-      //   .pipe(concatMap((data) => data.length === 0 ?
-      //     this.logic.deleteRoomItem(this.roomId) : this.logic.removeOwnFromRoom(this.roomId, this.currentUser.id)
-      //   ))
-      .subscribe((data) => {
-        console.log('withdrawalFromAnyRoom data', data);
-        // this.router.navigate(['/home']);
+    this.logic.fetchRoomMembersExceptOwn(this.roomId, this.currentUser.id)
+      .pipe(concatMap((data) => data.length === 0 ?
+        this.logic.deleteRoomItem(this.roomId) : this.logic.removeOwnFromRoom(this.roomId, this.currentUser.id)
+      ))
+      .subscribe(() => {
+        this.router.navigate(['/home']);
       })
   }
 
