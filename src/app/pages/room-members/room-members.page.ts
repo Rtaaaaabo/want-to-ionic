@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ModalController, Platform } from '@ionic/angular';
-import { from, Observable, Subscription } from 'rxjs';
-import { concatMap, map, switchMap, filter } from 'rxjs/operators';
+import { ModalController, Platform, AlertController } from '@ionic/angular';
+import { from, Observable, of, Subscription } from 'rxjs';
+import { concatMap, map, filter } from 'rxjs/operators';
 import { RoomMembersLogic } from './logic/room-members.logic';
 import { AddPersonModalComponent } from '../task/component/add-person-modal/add-person-modal.component';
 import { CurrentUser, Attribute } from './models/room-members.model';
@@ -36,6 +36,7 @@ export class RoomMembersPage implements OnInit {
     private readonly router: Router,
     private readonly route: ActivatedRoute,
     private readonly platform: Platform,
+    private readonly alertCtrl: AlertController,
   ) {
     this.initializeApp().subscribe(() => {
       this.subscriptionCreateRoomMember = this.logic.onCreateRoomMemberListener()
@@ -117,15 +118,18 @@ export class RoomMembersPage implements OnInit {
   }
 
   /**
-   * 退出ルームボタンクリック時
+   * 退出ルームボタンクリック
    */
   withdrawalFromAnyRoom(): void {
-    this.logic.fetchRoomMembersExceptOwn(this.roomId, this.currentUser.id)
-      .pipe(concatMap((data) => data.length === 0 ?
-        this.logic.deleteRoomItem(this.roomId) : this.logic.removeOwnFromRoom(this.roomId, this.currentUser.id)
-      ))
-      .subscribe(() => {
-        this.router.navigate(['/home']);
+    from(this.presentWithdrawalRoom())
+      // .pipe(filter((result) => result === 'ok'))
+      // this.logic.fetchRoomMembersExceptOwn(this.roomId, this.currentUser.id)
+      //   .pipe(concatMap((data) => data.length === 0 ?
+      //     this.logic.deleteRoomItem(this.roomId) : this.logic.removeOwnFromRoom(this.roomId, this.currentUser.id)
+      //   ))
+      .subscribe((data) => {
+        console.log('withdrawalFromAnyRoom data', data);
+        // this.router.navigate(['/home']);
       })
   }
 
@@ -146,6 +150,30 @@ export class RoomMembersPage implements OnInit {
         .pipe(map((result) => result.items))
         .subscribe(() => { });
     }
+  }
+
+  async presentWithdrawalRoom(): Promise<void> {
+    const alert = await this.alertCtrl.create({
+      header: 'ルームの退出',
+      message: 'ルームを退出してもよろしいでしょうか？',
+      buttons: [
+        {
+          text: 'キャンセル',
+          role: 'cancel',
+          handler: () => {
+            return of('cancel');
+          }
+        },
+        {
+          text: 'OK',
+          role: 'ok',
+          handler: () => {
+            return of('ok');
+          }
+        }
+      ]
+    });
+    await alert.present();
   }
 
   /**

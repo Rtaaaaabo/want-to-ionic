@@ -16,8 +16,8 @@ export class AddPersonModalComponent implements OnInit {
   members: Array<MemberTask>;
   companyId: string;
   roomId: string;
-  companyMembers;
-  notAssignMembers;
+  companyMembers: Array<MemberTask>;
+  notAssignMembers: Array<MemberTask>;;
 
   constructor(
     private readonly logic: TaskLogic,
@@ -27,15 +27,22 @@ export class AddPersonModalComponent implements OnInit {
   ngOnInit(): void {
     this.arraySelectedPersonId = [];
     this.members = this.notAssignMembers.map((member) => {
-      member.checked = false
+      member.checked = false;
       return member;
     });
+    console.log('Members ngOnInit', this.members);
   }
 
+  /**
+   * モーダルを閉じる
+   */
   dismissModal(): void {
     this.modalCtrl.dismiss({ result: 'dismiss' });
   }
 
+  /**
+   * タスクに人を追加する
+   */
   addPersonToTask(): void {
     this.logic.addMembersToAnyRoom(this.arraySelectedPersonId, this.roomId)
       .subscribe(() => {
@@ -43,6 +50,10 @@ export class AddPersonModalComponent implements OnInit {
       })
   }
 
+  /**
+   * タスクに追加するユーザーを選択
+   * @param {MemberTask} member 切り替えユーザー
+   */
   changeCheckUser(member: MemberTask): void {
     const indexTargetId = this.arraySelectedPersonId.findIndex(item => item === member.id);
     const targetIndex = this.members.findIndex(item => item.id === member.id);
@@ -55,6 +66,10 @@ export class AddPersonModalComponent implements OnInit {
     }
   }
 
+  /**
+   * タスクに追加するユーザをユーザー名もしくはEmailで検索する
+   * @param ev 検索入力した値
+   */
   inputSearch(ev: CustomEvent): void {
     if (ev.detail.value !== null) {
       this.logic.fetchCompanyMember(this.companyId, ev.detail.value)
@@ -71,7 +86,13 @@ export class AddPersonModalComponent implements OnInit {
     }
   }
 
-  checkNotAssignMember(companyMembers, roomMembers): Array<any> {
+  /**
+   * 
+   * @param {Array<MemberTask>} companyMembers 会社に所属しているメンバーの配列
+   * @param {Array<MemberTask>} roomMembers タスクルームに所属しているメンバーの配列
+   * @returns 
+   */
+  checkNotAssignMember(companyMembers: Array<MemberTask>, roomMembers: Array<MemberTask>): Array<MemberTask> {
     return companyMembers.filter((companyMember) => {
       return roomMembers.some((roomMember) => {
         return companyMember.id === roomMember.id;
@@ -79,8 +100,8 @@ export class AddPersonModalComponent implements OnInit {
     });
   }
 
-  cancelSearch(ev): void { }
+  cancelSearch(ev: CustomEvent): void { }
 
-  clearSearch(ev): void { }
+  clearSearch(ev: CustomEvent): void { }
 
 }
