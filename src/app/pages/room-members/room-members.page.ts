@@ -160,15 +160,12 @@ export class RoomMembersPage implements OnInit {
         {
           text: 'キャンセル',
           role: 'cancel',
-          handler: () => {
-            return of('cancel');
-          }
         },
         {
           text: 'OK',
           role: 'ok',
           handler: () => {
-            return of('ok');
+            this.withdrawalFromAnyRoom();
           }
         }
       ]
