@@ -149,6 +149,9 @@ export class RoomMembersPage implements OnInit {
     }
   }
 
+  /**
+   * ルーム退出時に表示するアラート
+   */
   async presentWithdrawalRoom(): Promise<void> {
     const alert = await this.alertCtrl.create({
       header: 'ルームの退出',
