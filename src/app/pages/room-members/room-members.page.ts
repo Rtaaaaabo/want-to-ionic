@@ -98,11 +98,11 @@ export class RoomMembersPage implements OnInit {
 
   /**
    * ルームにアサインしていないメンバーリストを返します
-   * @param companyMembers 会社のメンバー
-   * @param roomMembers ルームのメンバー
-   * @returns MemberList
+   * @param {Array<MemberTask>} companyMembers 会社のメンバー
+   * @param {Array<MemberTask>} roomMembers ルームのメンバー
+   * @returns {Array<MemberTask>} MemberList
    */
-  checkNotAssignMember(companyMembers, roomMembers): Array<any> {
+  checkNotAssignMember(companyMembers: Array<MemberTask>, roomMembers: Array<MemberTask>): Array<MemberTask> {
     return companyMembers.filter((companyMember) => {
       return !roomMembers.some((roomMember) => {
         return companyMember.id === roomMember.id;
