@@ -136,3 +136,34 @@ export interface RoomGroupUser {
     createdAt: string;
     updatedAt: string;
 }
+
+export interface RoomMembers {
+    __typename: "RoomGroup";
+    id: string;
+    roomID: string;
+    userID: string;
+    room?: {
+        __typename: "Room";
+        id: string;
+        name: string;
+        companyID: string;
+        description: string;
+        createdAt: string;
+        updatedAt: string;
+    } | null;
+    user?: {
+        __typename: "User";
+        id: string;
+        username?: string | null;
+        email: string;
+        companyID: string;
+        tel?: string | null;
+        positionName?: string | null;
+        registered?: boolean | null;
+        authority?: boolean | null;
+        createdAt: string;
+        updatedAt: string;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+}

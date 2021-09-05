@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { from, Observable, of } from 'rxjs';
 import { filter, map, toArray, concatMap } from 'rxjs/operators';
 import { SessionService } from 'src/app/shared/service/session.service';
-import { ListUsersQuery } from 'src/app/shared/service/amplify.service';
 import { RoomMemberService } from '../service/room-member.service';
 import { InterfaceRoomMembers } from '../interface/room-members.interface';
-import { ListRoomMembersInfo, ListUserInfo, Attribute, RoomGroupItems, RoomGroupUser, CurrentUser } from '../models/room-members.model';
+import { Attribute, RoomGroupItems, RoomGroupUser, CurrentUser, RoomMembers } from '../models/room-members.model';
+import { ListRoomGroupsQuery, DeleteRoomMutation } from '../../../shared/service/amplify.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +17,12 @@ export class RoomMembersLogic {
     private readonly sessionService: SessionService,
   ) { }
 
+  /**
+   * 会社のメンバーを返す
+   * @param companyId 会社のID
+   * @param queryFilterUser ルームメンバーの配列
+   * @returns {Observable<ModelUserFilterInput>} 会社に所属しているメンバー
+   */
   fetchCompanyMember(companyId: number | string, queryFilterUser?: Array<InterfaceRoomMembers>): Observable<any> {
     const contentObject = {
       companyID: {
@@ -30,6 +36,11 @@ export class RoomMembersLogic {
     }
   };
 
+  /**
+   * ルームに紐付いているユーザーを取得
+   * @param roomId RoomのID
+   * @returns {Observable<Array<RoomGroupItems>>} 非同期でルームとユーザー紐付けの配列
+   */
   fetchRoomMemberGroup(roomId: string): Observable<Array<RoomGroupItems>> {
     const filterContent = {
       roomID: {
@@ -40,7 +51,12 @@ export class RoomMembersLogic {
       .pipe(map((result) => result.items));
   }
 
-  fetchRoomMembers(roomId: string, currentUserId?: string): Observable<any> {
+  /**
+   * ルームのメンバーを取得
+   * @param roomId RoomのID
+   * @returns {Observable<ListRoomGroupsQuery>} 非同期でルームのメンバー
+   */
+  fetchRoomMembers(roomId: string): Observable<ListRoomGroupsQuery> {
     const filterContent = {
       roomID: {
         eq: `${roomId}`
@@ -49,7 +65,13 @@ export class RoomMembersLogic {
     return this.roomMemberService.fetchRoomMember(filterContent)
   }
 
-  fetchRoomMembersExceptOwn(roomId: string, currentUserId: string): Observable<any> {
+  /**
+   * ログインしているユーザー以外のルームメンバーの取得
+   * @param roomId RoomのID
+   * @param currentUserId ログインしているUserID
+   * @returns {Observable<Array<RoomMembers>>} 非同期でルームユーザー
+   */
+  fetchRoomMembersExceptOwn(roomId: string, currentUserId: string): Observable<Array<RoomMembers>> {
     const filterContent = {
       roomID: {
         eq: `${roomId}`
@@ -62,7 +84,12 @@ export class RoomMembersLogic {
       .pipe(map((result) => result.items));
   }
 
-  deleteRoomItem(roomId: string): Observable<any> {
+  /**
+   * ルームを削除する
+   * @param roomId ルームのID
+   * @returns {Observable<DeleteRoomMutation>} 非同期でDeleteRoomItemの結果
+   */
+  deleteRoomItem(roomId: string): Observable<DeleteRoomMutation> {
     return this.roomMemberService.deleteRoomItem(roomId);
   }
 

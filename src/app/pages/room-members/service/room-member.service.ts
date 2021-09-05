@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { from, Observable } from 'rxjs';
-import { AmplifyService, ListRoomGroupsQuery, ModelRoomGroupFilterInput, ModelUserFilterInput, ListUsersQuery } from '../../../shared/service/amplify.service';
+import { AmplifyService, ListRoomGroupsQuery, ModelRoomGroupFilterInput, ModelUserFilterInput, ListUsersQuery, DeleteRoomMutation } from '../../../shared/service/amplify.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,11 +11,11 @@ export class RoomMemberService {
     private amplifyService: AmplifyService,
   ) { }
 
-  fetchCompanyMember(content): Observable<any> {
+  fetchCompanyMember(content: ModelUserFilterInput): Observable<ListUsersQuery> {
     return from(this.amplifyService.ListUsers(content));
   }
 
-  fetchRoomMember(filterContent?): Observable<ListRoomGroupsQuery> {
+  fetchRoomMember(filterContent?: ModelRoomGroupFilterInput): Observable<ListRoomGroupsQuery> {
     return from(this.amplifyService.ListRoomGroups(filterContent));
   }
 
@@ -27,7 +27,7 @@ export class RoomMemberService {
     return from(this.amplifyService.GetUser(currentUserId))
   }
 
-  deleteRoomItem(roomId: string): Observable<any> {
+  deleteRoomItem(roomId: string): Observable<DeleteRoomMutation> {
     const requestContent = {
       id: roomId
     }

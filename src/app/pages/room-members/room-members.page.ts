@@ -137,7 +137,7 @@ export class RoomMembersPage implements OnInit {
   searchRoomMembers(ev: CustomEvent): void {
     const nameQuery = ev.detail.value;
     if (nameQuery !== null) {
-      this.logic.fetchRoomMembers(this.roomId, nameQuery)
+      this.logic.fetchRoomMembers(this.roomId)
         .pipe(map((result) => result.items))
         .subscribe((items) => {
           this.roomMembers = items;
