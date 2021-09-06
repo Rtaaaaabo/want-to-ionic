@@ -21,7 +21,7 @@ describe('HomeLogic', () => {
 
   describe('テスト準備', () => {
     test('HomeLogicがインスタンス化されていること', () => {
-      expect(HomeLogic).toBeTruthy();
+      expect(logic).toBeTruthy();
     });
   });
 
