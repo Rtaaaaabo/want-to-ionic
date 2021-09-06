@@ -5,7 +5,7 @@ import { SessionService } from 'src/app/shared/service/session.service';
 import { RoomMemberService } from '../service/room-member.service';
 import { InterfaceRoomMembers } from '../interface/room-members.interface';
 import { Attribute, RoomGroupItems, RoomGroupUser, CurrentUser, RoomMembers } from '../models/room-members.model';
-import { ListRoomGroupsQuery, DeleteRoomMutation } from '../../../shared/service/amplify.service';
+import { ListRoomGroupsQuery, DeleteRoomMutation, DeleteRoomGroupMutation } from '../../../shared/service/amplify.service';
 
 @Injectable({
   providedIn: 'root'
@@ -93,12 +93,24 @@ export class RoomMembersLogic {
     return this.roomMemberService.deleteRoomItem(roomId);
   }
 
-  removeOwnFromRoom(roomId: string, currentUserId: string): Observable<any> {
+  /**
+   * 対象のルームから退出する
+   * @param roomId ルームのID
+   * @param currentUserId ログインしているユーザーのID
+   * @returns {Observable<DeleteRoomGroupMutation>} 非同期でルームGroup解除結果
+   */
+  removeOwnFromRoom(roomId: string, currentUserId: string): Observable<DeleteRoomGroupMutation> {
     return this.fetchRoomGroupsId(roomId, currentUserId)
       .pipe(concatMap((roomGroupId) => this.roomMemberService.deleteRoomGroupsItem(roomGroupId)));
   }
 
-  fetchRoomGroupsId(roomId, currentUserId): Observable<string> {
+  /**
+   * ルームIDとログインしているユーザIDとマッチするグループIDを取得
+   * @param roomId ルームのID
+   * @param currentUserId ログインしているユーザのID
+   * @returns {Observable<string>} 非同期 ルームグループのID
+   */
+  fetchRoomGroupsId(roomId: string, currentUserId: string): Observable<string> {
     const filterContent = {
       roomID: {
         eq: roomId,
@@ -109,11 +121,6 @@ export class RoomMembersLogic {
     }
     return this.roomMemberService.fetchRoomGroupsId(filterContent)
       .pipe(map(({ items: groups }) => groups[0].id))
-  }
-
-  fetchNonAssignRoomMemberGroup(roomId?: string): Observable<any> {
-    return this.roomMemberService.fetchRoomMember()
-      .pipe(map(({ items }) => items));
   }
 
   /**
@@ -129,23 +136,45 @@ export class RoomMembersLogic {
       .pipe(toArray());
   }
 
+  /**
+   * ログインしているユーザー情報の取得
+   * @returns ユーザー情報
+   */
   fetchCurrentUser(): Observable<Attribute> {
     return this.sessionService.fetchCurrentUser()
       .pipe(map(data => data.attributes));
   }
 
+  /**
+   * 任意のユーザリストの取得
+   * @param email E-mail
+   * @returns ユーザー情報の配列
+   */
   fetchAnyUserInfoFromList(email: string): Observable<Array<CurrentUser>> {
-    return this.roomMemberService.fetchUserInfo(email).pipe(map((result) => result.items));
+    return this.roomMemberService.fetchUserInfo(email)
+      .pipe(map((result) => result.items));
   }
 
+  /**
+   * ルームメンバーに作成したときのSubscribe
+   * @returns {Observable<SubscriptionResponse<OnCreateRoomGroupSubscription>}
+   */
   onCreateRoomMemberListener(): any {
     return this.roomMemberService.onCreateRoomMemberListener();
   }
 
+  /**
+   * ルームメンバーをアップデートしたときのSubscribe
+   * @returns {Observable<SubscriptionResponse<OnUpdateRoomGroupSubscription>>}
+   */
   onUpdateRoomMemberListener(): any {
     return this.roomMemberService.onUpdateRoomMemberListener();
   }
 
+  /**
+   * ルームメンバーを削除したときのSubscribe
+   * @returns {Observable<SubscriptionResponse<OnDeleteRoomGroupSubscription>>}
+   */
   onDeleteRoomMemberListener(): any {
     return this.roomMemberService.onDeleteRoomMemberListener();
   }
