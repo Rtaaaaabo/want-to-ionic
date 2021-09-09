@@ -62,7 +62,7 @@ export class RoomMembersLogic {
         eq: `${roomId}`
       },
     }
-    return this.roomMemberService.fetchRoomMember(filterContent)
+    return this.roomMemberService.fetchRoomMember(filterContent);
   }
 
   /**

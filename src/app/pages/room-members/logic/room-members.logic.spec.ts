@@ -4,8 +4,13 @@ import { of } from 'rxjs';
 import { RoomMembersLogic } from './room-members.logic';
 import { RoomMemberService } from '../service/room-member.service';
 import { SessionService } from 'src/app/shared/service/session.service';
-import { ListUsersQuery } from 'src/app/shared/service/amplify.service';
-
+import {
+  ListUsersQuery,
+  ListRoomGroupsQuery,
+  DeleteRoomMutation,
+  DeleteRoomGroupMutation,
+} from 'src/app/shared/service/amplify.service';
+import { RoomGroupItems } from '../models/room-members.model';
 import { InterfaceRoomMembers } from '../interface/room-members.interface';
 
 describe('RoomMembersService', () => {
@@ -60,6 +65,179 @@ describe('RoomMembersService', () => {
         });
         expect(mockService).not.toBeCalled();
       })
-    })
+    });
+
+    describe('fetchRoomMember serviceのテスト', () => {
+      let mockService;
+      beforeEach(() => {
+        mockService = jest.spyOn(service, 'fetchRoomMember').mockReturnValue(of(mockResultService));
+      })
+      const mockResultService = {
+        __typename: "ModelRoomGroupConnection",
+        items: [{
+          __typename: "RoomGroup",
+          id: 'testId',
+          roomID: 'testRoomId',
+          userID: 'testUserId',
+          createdAt: 'testCreatedAt',
+          updatedAt: 'testUpdatedAt'
+        }]
+      } as ListRoomGroupsQuery;
+      test('fetchRoomMemberGroupのテスト', () => {
+        logic.fetchRoomMemberGroup('testRoomId').subscribe((data) => {
+          expect(data).toBe(mockResultService.items);
+        });
+      });
+
+      test('fetchRoomMembersのテスト', () => {
+        logic.fetchRoomMembers('testRoomId').subscribe((data) => {
+          expect(data).toBe(mockResultService);
+        });
+      });
+
+      test('fetchRoomMembersExceptOwnのテスト', () => {
+        logic.fetchRoomMembersExceptOwn('testRoomId', 'testCurrentUserId').subscribe((data) => {
+          expect(data).toBe(mockResultService.items);
+        });
+      });
+
+      afterEach(() => {
+        expect(mockService).toBeCalled();
+      })
+    });
+
+    test('deleteRoomItemのテスト', () => {
+      const mockServiceResult = {
+        __typename: "Room",
+        id: 'testId',
+        name: 'testName',
+        companyID: 'testCompanyId',
+        description: 'testDescription',
+        createdAt: 'testCreatedAt',
+        updatedAt: 'testUpdatedAt',
+      } as DeleteRoomMutation;
+      const mockService = jest.spyOn(service, 'deleteRoomItem').mockReturnValue(of(mockServiceResult));
+      logic.deleteRoomItem('argsRoomId').subscribe((data) => {
+        expect(data).toBe(mockServiceResult);
+      });
+      expect(mockService).toBeCalled();
+    });
+
+    test('fetchRoomGroupsIdのテスト', () => {
+      const mockResultService = {
+        __typename: "ModelRoomGroupConnection",
+        items: [{
+          __typename: "RoomGroup",
+          id: 'testId',
+          roomID: 'testRoomId',
+          userID: 'testUserId',
+          createdAt: 'testCreatedAt',
+          updatedAt: 'testUpdatedAt',
+        }]
+      } as ListRoomGroupsQuery;
+      const mockService = jest.spyOn(service, 'fetchRoomGroupsId').mockReturnValue(of(mockResultService));
+      logic.fetchRoomGroupsId('testRoomId', 'testCurrentUserId').subscribe((data) => {
+        expect(data).toBe(mockResultService.items[0].id);
+      });
+      expect(mockService).toBeCalled();
+    });
+
+    test('removeOwnFromRoomのテスト', () => {
+      const serviceResult = {
+        __typename: "RoomGroup",
+        id: 'testId',
+        roomID: 'testRoomId',
+        userID: 'testUserId',
+        createdAt: 'testCreatedAt',
+        updatedAt: 'testUpdatedAt',
+      } as DeleteRoomGroupMutation;
+      const mockFetchRoomGroupId = jest.spyOn(logic, 'fetchRoomGroupsId').mockReturnValue(of('testGroupId'));
+      const mockService = jest.spyOn(service, 'deleteRoomGroupsItem').mockReturnValue(of(serviceResult));
+      logic.removeOwnFromRoom('testRoomId', 'testCurrentUserId').subscribe((data) => {
+        expect(data).toBe(serviceResult);
+      });
+      expect(mockFetchRoomGroupId).toBeCalled();
+      expect(mockService).toBeCalled();
+    });
+
+
+    describe('setRoomMembersのテスト', () => {
+      const argsRoomGroupItems = [{
+        __typename: "RoomGroup",
+        id: 'testId',
+        roomID: 'testRoomId',
+        userID: 'testCurrentUserId',
+        createdAt: 'testCreatedAt',
+        updatedAt: 'testUpdatedAt',
+        user: {
+          __typename: "User",
+          id: 'testUserId',
+          email: 'testUserEmail',
+          companyID: 'testCompanyId',
+          createdAt: 'testCreatedAt',
+          updatedAt: 'testUpdatedAt',
+        }
+      }] as Array<RoomGroupItems>;
+      test('CurrentUserIDとUserIDが一致するときのテスト', () => {
+        const argsCurrentUserId = 'testCurrentUserId';
+        logic.setRoomMembers(argsRoomGroupItems, argsCurrentUserId).subscribe((data) => {
+          expect(data).toHaveLength(0);
+        });
+      });
+
+      test('CurrentUserIDとUserIDが一致しないときのテスト', () => {
+        const argsCurrentUserId = 'dummyCurrentUserID';
+        const result = [{
+          __typename: "User",
+          id: 'testUserId',
+          email: 'testUserEmail',
+          companyID: 'testCompanyId',
+          createdAt: 'testCreatedAt',
+          updatedAt: 'testUpdatedAt',
+        }]
+        logic.setRoomMembers(argsRoomGroupItems, argsCurrentUserId).subscribe((data) => {
+          expect(data).toBe(result);
+        })
+      });
+    });
+
+    test('fetchCurrentUserのテスト', () => {
+      const mockServiceResult = {
+        test: {
+          test: 'testTest',
+          test2: 'testTest2',
+        },
+        attributes: {
+          name: 'testName',
+          email: 'testEmail',
+          email_verified: true,
+          sub: 'testSub',
+        }
+      }
+      const mockService = jest.spyOn(sessionService, 'fetchCurrentUser').mockReturnValue(of(mockServiceResult));
+      logic.fetchCurrentUser().subscribe((data) => {
+        expect(data).toBe(mockServiceResult.attributes);
+      });
+      expect(mockService).toBeCalled();
+    });
+
+    test('fetchAnyUserInfoFromListのテスト', () => {
+      const mockResultService = {
+        __typename: "ModelUserConnection",
+        items: [{
+          __typename: "User",
+          id: 'testId',
+          email: 'testEmail',
+          companyID: 'testCompanyId',
+          createdAt: 'testCreatedAt',
+          updatedAt: 'testUpdatedAt',
+        }],
+      } as ListUsersQuery;
+      const mockService = jest.spyOn(service, 'fetchUserInfo').mockReturnValue(of(mockResultService));
+      logic.fetchAnyUserInfoFromList('testEmail').subscribe((data) => {
+        expect(data).toBe(mockReturnValue.items);
+      });
+      expect(mockService).toBeCalled();
+    });
   });
 });
