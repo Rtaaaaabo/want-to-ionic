@@ -38,9 +38,6 @@ export class OwnTaskPage implements OnInit {
       })
   }
 
-  ionViewWillEnter() {
-  }
-
   async presentLoading() {
     const loading = await this.loadingCtrl.create({
       cssClass: 'custom-loading',
