@@ -7,14 +7,14 @@
 <ion-content>
   <ion-list class="list-header">
     <ion-card *ngFor="let item of ownTaskItems">
-      <ion-card-header (click)="navigateToTaskDetail(item)">
+      <ion-card-header (click)="navigateToTaskDetail(item.task.id)">
         <ion-card-subtitle>
           {{item.room.name}} {{ item.task.scheduleDate | date: 'yyyy/MM/dd'
           }}まで
         </ion-card-subtitle>
         <ion-card-title>{{item.task.title}}</ion-card-title>
       </ion-card-header>
-      <ion-card-content (click)="navigateToTaskDetail(item)">
+      <ion-card-content (click)="navigateToTaskDetail(item.task.id)">
         <ion-item class="card-background" lines="none">
           <p>{{ item.task.description}}</p>
         </ion-item>
@@ -22,7 +22,7 @@
       <ion-button
         expand="full"
         class="button-center"
-        (click)="presentDoneTaskAlert(item)"
+        (click)="presentDoneTaskAlert(item.task.id)"
         color="primary"
       >
         <ion-icon name="checkmark"></ion-icon>

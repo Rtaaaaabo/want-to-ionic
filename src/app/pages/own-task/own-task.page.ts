@@ -56,12 +56,16 @@ export class OwnTaskPage implements OnInit {
 
   /**
    * タスクの詳細画面に遷移する
-   * @param item 
+   * @param taskId タスクとルームの情報
    */
-  navigateToTaskDetail(item: { task: ChargeTaskItems, room: GetRoomQuery }): void {
-    this.router.navigate(['task-detail', `${item.task.id}`, `active`]);
+  navigateToTaskDetail(taskId: string): void {
+    this.router.navigate(['task-detail', `${taskId}`, `active`]);
   }
 
+  /**
+   * 完了ボタンクリック時の確認アラート
+   * @param alertBody タスクとルーム
+   */
   async presentDoneTaskAlert(alertBody: { task: ChargeTaskItems, room: GetRoomQuery }): Promise<void> {
     const alert = await this.alertCtrl.create({
       header: '完了にしますか？',
@@ -91,6 +95,9 @@ export class OwnTaskPage implements OnInit {
     await alert.present();
   }
 
+  /**
+   * 完了ボタンクリック時
+   */
   async presentDoneToast(): Promise<void> {
     const toast = await this.toastCtrl.create({
       message: 'おつかれさまでした',
@@ -98,6 +105,4 @@ export class OwnTaskPage implements OnInit {
     });
     toast.present();
   }
-
-
 }
