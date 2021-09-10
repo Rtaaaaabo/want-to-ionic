@@ -5,6 +5,8 @@ import { from } from 'rxjs';
 import { concatMap, map, tap } from 'rxjs/operators';
 import { OwnTaskLogic } from './logic/own-task.logic';
 import { Attribute, CurrentUser } from './model/own-task.interface';
+import { ChargeTaskItems } from 'src/app/shared/model/user.model';
+import { GetRoomQuery } from 'src/app/shared/service/amplify.service';
 
 @Component({
   selector: 'app-own-task',
@@ -14,14 +16,14 @@ import { Attribute, CurrentUser } from './model/own-task.interface';
 export class OwnTaskPage implements OnInit {
   currentUserAttribute: Attribute;
   currentUser: CurrentUser;
-  ownTaskItems: Array<any>;
+  ownTaskItems: Array<{ task: ChargeTaskItems, room: GetRoomQuery }>;
   currentUserId: string;
 
   constructor(
-    private router: Router,
-    private loadingCtrl: LoadingController,
     private logic: OwnTaskLogic,
-    private alertCtrl: AlertController,
+    private readonly router: Router,
+    private readonly loadingCtrl: LoadingController,
+    private readonly alertCtrl: AlertController,
     private readonly toastCtrl: ToastController,
   ) { }
 
@@ -38,6 +40,9 @@ export class OwnTaskPage implements OnInit {
       })
   }
 
+  /**
+   * ローディングを表示する
+   */
   async presentLoading() {
     const loading = await this.loadingCtrl.create({
       cssClass: 'custom-loading',
@@ -49,11 +54,15 @@ export class OwnTaskPage implements OnInit {
     await loading.onDidDismiss();
   }
 
-  navigateToTaskDetail(item) {
+  /**
+   * タスクの詳細画面に遷移する
+   * @param item 
+   */
+  navigateToTaskDetail(item: { task: ChargeTaskItems, room: GetRoomQuery }): void {
     this.router.navigate(['task-detail', `${item.task.id}`, `active`]);
   }
 
-  async presentDoneTaskAlert(alertBody): Promise<void> {
+  async presentDoneTaskAlert(alertBody: { task: ChargeTaskItems, room: GetRoomQuery }): Promise<void> {
     const alert = await this.alertCtrl.create({
       header: '完了にしますか？',
       message: `${alertBody.task.title}を完了します。`,

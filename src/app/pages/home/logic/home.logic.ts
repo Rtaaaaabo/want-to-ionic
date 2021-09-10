@@ -20,13 +20,7 @@ import { Storage } from 'aws-amplify';
 import { CurrentUser, RoomGroupItems, InterfaceLogicArgsCreateRoom, FetchTaskGroup } from '../model/home.interface';
 import { IS3Object } from '../../task-detail/models/task-detail.interface';
 import { environment } from 'src/environments/environment';
-
-interface Attribute {
-  name: string,
-  email: string,
-  email_verified: boolean,
-  sub: string,
-};
+import { Attribute } from 'src/app/shared/model/user.model';
 
 @Injectable({
   providedIn: 'root',
