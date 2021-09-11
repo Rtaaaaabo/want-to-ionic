@@ -9,7 +9,7 @@ describe('InviteMemberComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ InviteMemberComponent ],
+      declarations: [InviteMemberComponent],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
@@ -18,7 +18,7 @@ describe('InviteMemberComponent', () => {
     fixture.detectChanges();
   }));
 
-  it('should create', () => {
+  test('should create', () => {
     expect(component).toBeTruthy();
   });
 });

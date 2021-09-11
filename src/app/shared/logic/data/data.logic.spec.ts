@@ -10,7 +10,7 @@ describe('DataService', () => {
     logic = TestBed.inject(DataLogic);
   });
 
-  it('should be created', () => {
+  test('should be created', () => {
     expect(logic).toBeTruthy();
   });
 });

@@ -9,7 +9,7 @@ describe('SessionService', () => {
     service = TestBed.inject(SessionService);
   });
 
-  it('Created SessionService', () => {
+  test('Created SessionService', () => {
     expect(service).toBeTruthy();
   });
 });

@@ -10,7 +10,7 @@ describe('RegistrationCompanyService', () => {
     logic = TestBed.inject(RegistrationCompanyLogic);
   });
 
-  it('should be created', () => {
+  test('should be created', () => {
     expect(logic).toBeTruthy();
   });
 });

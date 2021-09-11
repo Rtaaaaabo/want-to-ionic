@@ -10,7 +10,7 @@ describe('DataResolverService', () => {
     service = TestBed.inject(DataResolverService);
   });
 
-  it('should be created', () => {
+  test('should be created', () => {
     expect(service).toBeTruthy();
   });
 });
