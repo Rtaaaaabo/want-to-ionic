@@ -6,6 +6,7 @@ import { concatMap, map, tap } from 'rxjs/operators';
 import { OwnTaskLogic } from './logic/own-task.logic';
 import { Attribute, CurrentUser } from './model/own-task.interface';
 import { ChargeTaskItems } from 'src/app/shared/model/user.model';
+import { TaskFormItem } from './model/own-task.interface';
 import { GetRoomQuery } from 'src/app/shared/service/amplify.service';
 
 @Component({
@@ -16,7 +17,7 @@ import { GetRoomQuery } from 'src/app/shared/service/amplify.service';
 export class OwnTaskPage implements OnInit {
   currentUserAttribute: Attribute;
   currentUser: CurrentUser;
-  ownTaskItems: Array<{ task: ChargeTaskItems, room: GetRoomQuery }>;
+  ownTaskItems: Array<TaskFormItem>;
   currentUserId: string;
 
   constructor(
@@ -36,6 +37,7 @@ export class OwnTaskPage implements OnInit {
       .pipe(concatMap(({ items }) => this.logic.setTaskPerRoom(items)))
       .pipe(concatMap((items) => this.logic.filterExceptDoneTask(items)))
       .subscribe((items) => {
+        console.log('OwnTaskPage', this.ownTaskItems);
         this.ownTaskItems = items;
       })
   }

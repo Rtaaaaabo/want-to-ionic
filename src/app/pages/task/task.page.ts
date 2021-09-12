@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Location, LocationStrategy } from '@angular/common';
-import { Router, ActivatedRoute, RoutesRecognized, NavigationExtras } from '@angular/router';
+import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { ItemReorderEventDetail } from '@ionic/core';
 import { ModalController, ToastController, AlertController, Platform } from '@ionic/angular';
 import { forkJoin, from, of, Observable, Subscription } from 'rxjs';
-import { tap, map, concatMap, filter, pairwise } from 'rxjs/operators';
+import { tap, map, concatMap, filter } from 'rxjs/operators';
 import { GetRoomQuery, GetUserQuery } from 'src/app/shared/service/amplify.service';
 import { TaskLogic } from './logic/task.logic';
 import { CompanyMembersInfo } from './interface/current-user-info.interface';
@@ -12,14 +12,8 @@ import { AddTaskModalComponent } from '../../shared/component/modal/add-task-mod
 import { AddRoomModalComponent } from '../../shared/component/modal/add-room-modal/add-room-modal.component';
 import { InterfaceTask } from 'src/app/interfaces/task.interface';
 import { TaskFormModel } from 'src/app/shared/model/task-form.model';
+import { Attribute } from 'src/app/shared/model/user.model';
 import { CompanyMembers, CurrentUser } from './model/task-member.model';
-
-interface Attribute {
-  name: string,
-  email: string,
-  email_verified: boolean,
-  sub: string,
-}
 
 @Component({
   selector: 'app-task',
@@ -27,6 +21,7 @@ interface Attribute {
   styleUrls: ['./task.page.scss'],
 })
 export class TaskPage implements OnInit {
+  private previousParam: string = undefined;
   room = {} as GetRoomQuery;
   roomId: string;
   isReorder: boolean;
@@ -38,8 +33,6 @@ export class TaskPage implements OnInit {
   taskFormData: TaskFormModel;
   taskActiveItems: Array<InterfaceTask>;
   taskDoneItems: Array<InterfaceTask>;
-  private previousUrl: string = undefined;
-  private previousParam: string = undefined;
 
   currentUserAttribute: Attribute;
   currentUser: CurrentUser;
