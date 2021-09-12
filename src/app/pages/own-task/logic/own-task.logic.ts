@@ -4,7 +4,7 @@ import { concatMap, map, toArray, filter } from 'rxjs/operators';
 import { GetRoomQuery, UpdateTaskMutation } from 'src/app/shared/service/amplify.service';
 import { SessionService } from 'src/app/shared/service/session.service';
 import { OwnTaskService } from '../service/own-task.service';
-import { CurrentUser } from '../model/own-task.interface';
+import { CurrentUser, TaskFormItem } from '../model/own-task.interface';
 import { Attribute, ChargeTask, ChargeTaskItems } from 'src/app/shared/model/user.model';
 
 @Injectable({
@@ -41,7 +41,7 @@ export class OwnTaskLogic {
    * @param arrayTask タスクの配列
    * @returns タスクとルーム
    */
-  setTaskPerRoom(arrayTask: Array<ChargeTaskItems>): Observable<Array<{ task: ChargeTaskItems, room: GetRoomQuery }>> {
+  setTaskPerRoom(arrayTask: Array<ChargeTaskItems>): Observable<Array<TaskFormItem>> {
     return from(arrayTask)
       .pipe(concatMap((taskItem) => this.fetchRoomInfo(taskItem)))
       .pipe(toArray());
@@ -52,7 +52,7 @@ export class OwnTaskLogic {
    * @param taskItems 担当のタスク
    * @returns タスクとルーム
    */
-  fetchRoomInfo(taskItems: ChargeTaskItems): Observable<{ task: ChargeTaskItems, room: GetRoomQuery }> {
+  fetchRoomInfo(taskItems: ChargeTaskItems): Observable<TaskFormItem> {
     return this.ownTaskService.fetchRoomInfoItem(taskItems)
       .pipe(filter((result) => result !== null))
       .pipe(concatMap((roomInfo) => this.makeOwnTaskItems(taskItems, roomInfo)))
@@ -76,7 +76,7 @@ export class OwnTaskLogic {
    * @param itemsArray タスクとルームの配列
    * @returns タスクとルームの配列
    */
-  filterExceptDoneTask(itemsArray: Array<{ task: ChargeTaskItems, room: GetRoomQuery }>): Observable<Array<{ task: ChargeTaskItems, room: GetRoomQuery }>> {
+  filterExceptDoneTask(itemsArray: Array<{ task: ChargeTaskItems, room: GetRoomQuery }>): Observable<Array<TaskFormItem>> {
     return from(itemsArray.filter(item => item.task.status < 10))
       .pipe(toArray());
   }
@@ -87,7 +87,7 @@ export class OwnTaskLogic {
    * @param status ステータス情報
    * @returns 更新したタスク情報
    */
-  updateDoneTaskItem(taskFormItem: { task: ChargeTaskItems, room: GetRoomQuery }, status: number): Observable<UpdateTaskMutation> {
+  updateDoneTaskItem(taskFormItem: TaskFormItem, status: number): Observable<UpdateTaskMutation> {
     const content = {
       id: taskFormItem.task.id,
       status: status,

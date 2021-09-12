@@ -1,3 +1,6 @@
+
+import { GetRoomQuery } from 'src/app/shared/service/amplify.service';
+import { ChargeTaskItems } from 'src/app/shared/model/user.model';
 export interface CurrentUser {
     __typename: "User";
     id: string;
@@ -53,3 +56,8 @@ export interface Attribute {
     email_verified: boolean,
     sub: string,
 };
+
+export interface TaskFormItem {
+    task: ChargeTaskItems,
+    room: GetRoomQuery,
+}
