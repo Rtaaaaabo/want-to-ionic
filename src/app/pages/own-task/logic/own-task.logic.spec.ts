@@ -49,6 +49,15 @@ describe('OwnTaskService', () => {
     },
   } as GetRoomQuery;
 
+  const mockChargeTaskItems = {
+    __typename: "Task",
+    id: 'testId',
+    authorID: 'testAuthorId',
+    roomID: 'testRoomId',
+    chargePersonID: 'testChargePersonId',
+    title: 'testTitle',
+  } as ChargeTaskItems;
+
   beforeEach(() => {
     TestBed.configureTestingModule({});
     logic = TestBed.inject(OwnTaskLogic);
@@ -102,44 +111,36 @@ describe('OwnTaskService', () => {
     })
 
     describe('setTaskPerRoomのテスト', () => {
-      const argsTask = {
-        __typename: "Task",
-        id: 'testId',
-        authorID: 'testAuthorId',
-        roomID: 'testRoomId',
-        chargePersonID: 'testChargePersonId',
-        title: 'testTitle',
-      } as ChargeTaskItems;
+
       test('makeOwnTaskItemsのテスト', () => {
-        logic.makeOwnTaskItems(argsTask, mockGetRoomQuery).subscribe((data) => {
-          expect(data).toBe({ task: argsTask, room: mockGetRoomQuery });
+        logic.makeOwnTaskItems(mockChargeTaskItems, mockGetRoomQuery).subscribe((data) => {
+          expect(data).toBe({ task: mockChargeTaskItems, room: mockGetRoomQuery });
         });
       })
 
       test('fetchRoomInfoのテスト', () => {
         const mockService = jest.spyOn(service, 'fetchRoomInfoItem').mockReturnValue(of(mockGetRoomQuery))
-        const mockLogicMakeOwnTaskItems = jest.spyOn(logic, "makeOwnTaskItems").mockReturnValue(of({ task: argsTask, room: mockGetRoomQuery }));
-        logic.fetchRoomInfo(argsTask).subscribe((data) => {
-          expect(data).toBe({ task: argsTask, room: mockGetRoomQuery });
+        const mockLogicMakeOwnTaskItems = jest.spyOn(logic, "makeOwnTaskItems").mockReturnValue(of({ task: mockChargeTaskItems, room: mockGetRoomQuery }));
+        logic.fetchRoomInfo(mockChargeTaskItems).subscribe((data) => {
+          expect(data).toBe({ task: mockChargeTaskItems, room: mockGetRoomQuery });
         });
         expect(mockService).toBeCalled();
         expect(mockLogicMakeOwnTaskItems).toBeCalled();
       })
 
       test('setTaskPerRoomのテスト', () => {
-        const arrayArgsTask = [argsTask];
+        const arrayArgsTask = [mockChargeTaskItems];
         const mockLogicResult = {
-          task: argsTask,
+          task: mockChargeTaskItems,
           room: mockGetRoomQuery,
         }
         const mockLogicFetchRoomInfo = jest.spyOn(logic, "fetchRoomInfo").mockReturnValue(of(mockLogicResult));
-        logic.setTaskPerRoom(arrayArgsTask).subscribe((data) => {
-          expect(data).toBe(arrayArgsTask);
+        logic.setTaskPerRoom(arrayArgsTask).subscribe((result) => {
+          expect(result).toBe(arrayArgsTask);
         });
         expect(mockLogicFetchRoomInfo).toBeCalled();
       })
     })
-
   })
 
 });
