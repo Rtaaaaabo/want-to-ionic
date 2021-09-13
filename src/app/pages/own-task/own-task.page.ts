@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { LoadingController, AlertController, ToastController } from '@ionic/angular';
-import { from } from 'rxjs';
+import { LoadingController, AlertController, ToastController, Platform } from '@ionic/angular';
+import { from, Subscription, Observable } from 'rxjs';
 import { concatMap, map, tap } from 'rxjs/operators';
 import { OwnTaskLogic } from './logic/own-task.logic';
 import { Attribute, CurrentUser } from './model/own-task.interface';
@@ -18,13 +18,29 @@ export class OwnTaskPage implements OnInit {
   currentUserAttribute: Attribute;
   ownTaskItems: Array<TaskFormItem>;
 
+  subscriptionCreateTaskGroup: Subscription;
+  subscriptionUpdateTaskGroup: Subscription;
+  subscriptionDeleteTaskGroup: Subscription;
+
   constructor(
     private logic: OwnTaskLogic,
     private readonly router: Router,
     private readonly loadingCtrl: LoadingController,
     private readonly alertCtrl: AlertController,
     private readonly toastCtrl: ToastController,
-  ) { }
+    private readonly platform: Platform,
+  ) {
+    this.initializeApp().subscribe(() => {
+      // this.subscriptionCreateTaskGroup = 
+      // this.logic.getTaskChargeItems(this.currentUser.id)
+      // .pipe(concatMap(({ items }) => this.logic.setTaskPerRoom(items)))
+      // .pipe(concatMap((items) => this.logic.filterExceptDoneTask(items)))
+    })
+  }
+
+  initializeApp(): Observable<string> {
+    return from(this.platform.ready());
+  }
 
   ngOnInit() {
     this.logic.fetchCurrentUser()
@@ -35,7 +51,6 @@ export class OwnTaskPage implements OnInit {
       .pipe(concatMap(({ items }) => this.logic.setTaskPerRoom(items)))
       .pipe(concatMap((items) => this.logic.filterExceptDoneTask(items)))
       .subscribe((items) => {
-        console.log('OwnTaskPage', this.ownTaskItems);
         this.ownTaskItems = items;
       })
   }
