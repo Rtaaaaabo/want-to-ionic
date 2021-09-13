@@ -33,10 +33,9 @@ export class TaskPage implements OnInit {
   taskFormData: TaskFormModel;
   taskActiveItems: Array<InterfaceTask>;
   taskDoneItems: Array<InterfaceTask>;
-
   currentUserAttribute: Attribute;
   currentUser: CurrentUser;
-
+  // Subscription
   subscriptionCreateTask: Subscription;
   subscriptionUpdateTask: Subscription;
   subscriptionUpdateRoom: Subscription;

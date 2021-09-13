@@ -15,10 +15,9 @@ import { GetRoomQuery } from 'src/app/shared/service/amplify.service';
   styleUrls: ['./own-task.page.scss'],
 })
 export class OwnTaskPage implements OnInit {
-  currentUserAttribute: Attribute;
   currentUser: CurrentUser;
+  currentUserAttribute: Attribute;
   ownTaskItems: Array<TaskFormItem>;
-  currentUserId: string;
 
   constructor(
     private logic: OwnTaskLogic,
@@ -84,7 +83,7 @@ export class OwnTaskPage implements OnInit {
             const presentToast = from(this.presentDoneToast());
             this.logic.updateDoneTaskItem(alertBody, 10)
               .pipe(tap(() => presentToast))
-              .pipe(concatMap(() => this.logic.getTaskChargeItems(this.currentUserId)))
+              .pipe(concatMap(() => this.logic.getTaskChargeItems(this.currentUser.id)))
               .pipe(concatMap(({ items }) => this.logic.setTaskPerRoom(items)))
               .pipe(concatMap((items) => this.logic.filterExceptDoneTask(items)))
               .subscribe((data) => {
