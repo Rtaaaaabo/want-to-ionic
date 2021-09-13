@@ -105,4 +105,28 @@ export class OwnTaskLogic {
       .pipe(map(({ items }) => items));
   }
 
+  /**
+   * ルームと担当者を作成したときに実行されます
+   * @returns OnCreateRoomGroupListener
+   */
+  onCreateRoomGroupListener(): any {
+    return this.ownTaskService.onCreateRoomGroupListener();
+  }
+
+  /**
+   * ルームと担当者を更新したときに実行されます
+   * @returns OnUpdateRoomGroupListener
+   */
+  onUpdateRoomGroupListener(): any {
+    return this.ownTaskService.onUpdateRoomGroupListener();
+  }
+
+  /**
+   * ルームと担当者を削除したときに実行されます
+   * @returns OnDeleteRoomGroupListener
+   */
+  onDeleteRoomGroupListener(): any {
+    return this.ownTaskService.onDeleteRoomGroupListener();
+  }
+
 }
