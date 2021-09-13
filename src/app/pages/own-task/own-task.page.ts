@@ -21,6 +21,9 @@ export class OwnTaskPage implements OnInit {
   subscriptionCreateTaskGroup: Subscription;
   subscriptionUpdateTaskGroup: Subscription;
   subscriptionDeleteTaskGroup: Subscription;
+  subscriptionCreateTask: Subscription;
+  subscriptionUpdateTask: Subscription;
+  subscriptionDeleteTask: Subscription;
 
   constructor(
     private logic: OwnTaskLogic,
@@ -31,10 +34,59 @@ export class OwnTaskPage implements OnInit {
     private readonly platform: Platform,
   ) {
     this.initializeApp().subscribe(() => {
-      // this.subscriptionCreateTaskGroup = 
-      // this.logic.getTaskChargeItems(this.currentUser.id)
-      // .pipe(concatMap(({ items }) => this.logic.setTaskPerRoom(items)))
-      // .pipe(concatMap((items) => this.logic.filterExceptDoneTask(items)))
+      this.subscriptionCreateTaskGroup = this.logic.onCreateRoomGroupListener().subscribe({
+        next: () => this.logic.getTaskChargeItems(this.currentUser.id)
+          .pipe(concatMap(({ items }) => this.logic.setTaskPerRoom(items)))
+          .pipe(concatMap((items) => this.logic.filterExceptDoneTask(items)))
+          .subscribe((items) => {
+            this.ownTaskItems = items;
+          })
+      });
+
+      this.subscriptionUpdateTaskGroup = this.logic.onUpdateRoomGroupListener().subscribe({
+        next: () => this.logic.getTaskChargeItems(this.currentUser.id)
+          .pipe(concatMap(({ items }) => this.logic.setTaskPerRoom(items)))
+          .pipe(concatMap((items) => this.logic.filterExceptDoneTask(items)))
+          .subscribe((items) => {
+            this.ownTaskItems = items;
+          })
+      })
+
+      this.subscriptionDeleteTaskGroup = this.logic.onDeleteRoomGroupListener().subscribe({
+        next: () => this.logic.getTaskChargeItems(this.currentUser.id)
+          .pipe(concatMap(({ items }) => this.logic.setTaskPerRoom(items)))
+          .pipe(concatMap((items) => this.logic.filterExceptDoneTask(items)))
+          .subscribe((items) => {
+            this.ownTaskItems = items;
+          })
+      })
+
+      this.subscriptionCreateTask = this.logic.onCreateTaskListener().subscribe({
+        next: () => this.logic.getTaskChargeItems(this.currentUser.id)
+          .pipe(concatMap(({ items }) => this.logic.setTaskPerRoom(items)))
+          .pipe(concatMap((items) => this.logic.filterExceptDoneTask(items)))
+          .subscribe((items) => {
+            this.ownTaskItems = items;
+          })
+      })
+
+      this.subscriptionUpdateTask = this.logic.onUpdateTaskListener().subscribe({
+        next: () => this.logic.getTaskChargeItems(this.currentUser.id)
+          .pipe(concatMap(({ items }) => this.logic.setTaskPerRoom(items)))
+          .pipe(concatMap((items) => this.logic.filterExceptDoneTask(items)))
+          .subscribe((items) => {
+            this.ownTaskItems = items;
+          })
+      })
+
+      this.subscriptionDeleteTask = this.logic.onDeleteTaskListener().subscribe({
+        next: () => this.logic.getTaskChargeItems(this.currentUser.id)
+          .pipe(concatMap(({ items }) => this.logic.setTaskPerRoom(items)))
+          .pipe(concatMap((items) => this.logic.filterExceptDoneTask(items)))
+          .subscribe((items) => {
+            this.ownTaskItems = items;
+          })
+      })
     })
   }
 

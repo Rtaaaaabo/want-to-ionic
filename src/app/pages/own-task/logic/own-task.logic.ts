@@ -129,4 +129,28 @@ export class OwnTaskLogic {
     return this.ownTaskService.onDeleteRoomGroupListener();
   }
 
+  /**
+   * タスクが作成されたときに実行されます
+   * @returns onCreateTaskListener
+   */
+  onCreateTaskListener(): any {
+    return this.ownTaskService.onCreateTaskListener();
+  }
+
+  /**
+   * タスクが更新されたときに実行されます
+   * @returns onUpdateTaskListener
+   */
+  onUpdateTaskListener(): any {
+    return this.ownTaskService.onUpdateTaskListener();
+  }
+
+  /**
+   * タスクが削除されたときに実行されます
+   * @returns onUpdateTaskListener
+   */
+  onDeleteTaskListener(): any {
+    return this.ownTaskService.onDeleteTaskListener();
+  }
+
 }

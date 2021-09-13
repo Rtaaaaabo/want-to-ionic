@@ -176,7 +176,7 @@ export class TaskDetailPage implements OnInit {
   }
 
   doneTask(taskDetail): void {
-    const presentToast = from(this.presentDoneToast());
+    const presentToast = this.presentDoneToast();
     const messageContent = 'このタスクを完了としました';
     this.logic.updateTaskItem(taskDetail, 10)
       .pipe(concatMap((data) => this.logic.createMessage(data, messageContent)))

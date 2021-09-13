@@ -51,7 +51,7 @@ export class OwnTaskService {
    * @returns OnCreateRoomGroupListener
    */
   onCreateRoomGroupListener(): any {
-    return from(this.amplifyService.OnCreateRoomGroupListener);
+    return this.amplifyService.OnCreateRoomGroupListener;
   }
 
   /**
@@ -59,7 +59,7 @@ export class OwnTaskService {
    * @returns OnUpdateRoomGroupListener
    */
   onUpdateRoomGroupListener(): any {
-    return from(this.amplifyService.OnUpdateRoomGroupListener);
+    return this.amplifyService.OnUpdateRoomGroupListener;
   }
 
   /**
@@ -67,6 +67,18 @@ export class OwnTaskService {
    * @returns OnDeleteRoomGroupListener
    */
   onDeleteRoomGroupListener(): any {
-    return from(this.amplifyService.OnDeleteRoomGroupListener);
+    return this.amplifyService.OnDeleteRoomGroupListener;
+  }
+
+  onCreateTaskListener(): any {
+    return this.amplifyService.OnCreateTaskListener;
+  }
+
+  onUpdateTaskListener(): any {
+    return this.amplifyService.OnUpdateTaskListener;
+  }
+
+  onDeleteTaskListener(): any {
+    return this.amplifyService.OnDeleteTaskListener;
   }
 }
