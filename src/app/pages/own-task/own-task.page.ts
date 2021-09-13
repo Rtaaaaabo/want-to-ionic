@@ -7,7 +7,6 @@ import { OwnTaskLogic } from './logic/own-task.logic';
 import { Attribute, CurrentUser } from './model/own-task.interface';
 import { ChargeTaskItems } from 'src/app/shared/model/user.model';
 import { TaskFormItem } from './model/own-task.interface';
-import { GetRoomQuery } from 'src/app/shared/service/amplify.service';
 
 @Component({
   selector: 'app-own-task',
@@ -67,10 +66,10 @@ export class OwnTaskPage implements OnInit {
    * 完了ボタンクリック時の確認アラート
    * @param alertBody タスクとルーム
    */
-  async presentDoneTaskAlert(alertBody: { task: ChargeTaskItems, room: GetRoomQuery }): Promise<void> {
+  async presentDoneTaskAlert(task: ChargeTaskItems): Promise<void> {
     const alert = await this.alertCtrl.create({
       header: '完了にしますか？',
-      message: `${alertBody.task.title}を完了します。`,
+      message: `${task.title}を完了します。`,
       buttons: [
         {
           text: 'キャンセル',
@@ -81,7 +80,7 @@ export class OwnTaskPage implements OnInit {
           role: 'ok',
           handler: () => {
             const presentToast = from(this.presentDoneToast());
-            this.logic.updateDoneTaskItem(alertBody, 10)
+            this.logic.updateDoneTaskItem(task.id, 10)
               .pipe(tap(() => presentToast))
               .pipe(concatMap(() => this.logic.getTaskChargeItems(this.currentUser.id)))
               .pipe(concatMap(({ items }) => this.logic.setTaskPerRoom(items)))

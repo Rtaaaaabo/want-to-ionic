@@ -87,9 +87,9 @@ export class OwnTaskLogic {
    * @param status ステータス情報
    * @returns 更新したタスク情報
    */
-  updateDoneTaskItem(taskFormItem: TaskFormItem, status: number): Observable<UpdateTaskMutation> {
+  updateDoneTaskItem(taskId: string, status: number): Observable<UpdateTaskMutation> {
     const content = {
-      id: taskFormItem.task.id,
+      id: taskId,
       status: status,
     };
     return this.ownTaskService.updateTaskItem(content);
