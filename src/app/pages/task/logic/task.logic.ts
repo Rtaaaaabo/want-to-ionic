@@ -7,7 +7,6 @@ import {
   concatMap,
   findIndex,
 } from "rxjs/operators";
-import { Storage } from 'aws-amplify';
 import {
   CreateMessageInput,
   CreateRoomGroupMutation,
@@ -19,8 +18,10 @@ import {
   UpdateTaskMutation,
   GetCompanyQuery,
   UpdateRoomInput,
+  CreateMessageMutation,
 } from "src/app/shared/service/amplify.service";
 import { SessionService } from "../../../shared/service/session.service";
+import { TaskFormModel } from 'src/app/shared/model/task-form.model';
 import { v4 as uuid } from "uuid";
 import { TaskService } from "../service/task.service";
 import { CurrentUserInfo } from "../interface/current-user-info.interface";
@@ -37,20 +38,36 @@ export class TaskLogic {
     private sessionService: SessionService
   ) { }
 
+  /**
+   * ルーム情報を取得します
+   * @param roomId ルームID
+   * @returns ルーム情報
+   */
   fetchRoomInfo(roomId: string): Observable<GetRoomQuery> {
     return this.taskService.fetchRoomInfo(roomId);
   }
 
+  /**
+   * Cognitoに登録しているユーザーのAttributeを取得します
+   * @returns ユーザーのAttribute
+   */
   fetchCurrentUserCognitoInfo(): Observable<CurrentUserInfo> {
     return this.sessionService
       .fetchCurrentUser()
       .pipe(map((res) => res.attributes));
   }
 
+  /**
+   * フォーム経由でタスクを登録します
+   * @param taskFormData Formで入力した登録するタスク情報
+   * @param roomId ルームID
+   * @param userId ユーザーID
+   * @returns 登録したタスク情報
+   */
   createTaskToRoom(
-    taskFormData,
-    roomId,
-    userId
+    taskFormData: TaskFormModel,
+    roomId: string,
+    userId: string,
   ): Observable<CreateTaskMutation> {
     const isoStringDate = new Date().toISOString();
     if (taskFormData === undefined) {
@@ -72,7 +89,13 @@ export class TaskLogic {
     }
   }
 
-  createRoomGroup(userId, roomId): Observable<CreateRoomGroupMutation> {
+  /**
+   * ルームとユーザーを結びつけます
+   * @param userId ユーザーID
+   * @param roomId ルームID
+   * @returns ルームグループを作成した情報
+   */
+  createRoomGroup(userId: string, roomId: string): Observable<CreateRoomGroupMutation> {
     const content = {
       id: `room-group${uuid()}`,
       roomID: `${roomId}`,
@@ -81,12 +104,23 @@ export class TaskLogic {
     return this.taskService.createRoomGroup(content);
   }
 
+  /**
+   * それぞれのタスクステータスに一致するタスクを取得します
+   * @param items 配列でのタスク情報
+   * @param targetStatus タスクのステータス情報
+   * @returns 配列でのタスク情報
+   */
   fetchEachStatusTask(items: Array<InterfaceTask>, targetStatus: number): Observable<Array<InterfaceTask>> {
     return from(items)
       .pipe(filter((data) => data.status === targetStatus))
       .pipe(toArray());
   }
 
+  /**
+   * アクティブのタスクを取得します
+   * @param roomId ルームID
+   * @returns タスク情報
+   */
   fetchActiveTaskPerRoom(roomId: string): Observable<Array<InterfaceTask>> {
     const filterContent = {
       roomID: {
@@ -98,6 +132,11 @@ export class TaskLogic {
       .pipe(map((res) => res.items))
   }
 
+  /**
+   * 完了済みのタスクを取得します
+   * @param roomId ルームID
+   * @returns タスク情報
+   */
   fetchDoneTaskPerRoom(roomId: string): Observable<Array<InterfaceTask>> {
     const filterContent = {
       roomID: {
@@ -109,15 +148,26 @@ export class TaskLogic {
       .pipe(map((res) => res.items));
   }
 
-  updateDoneTaskItem(taskFormItem, status: number): Observable<UpdateTaskMutation> {
+  /**
+   * タスクを完了済みに更新します
+   * @param taskId タスクID
+   * @param status タスクステータス
+   * @returns タスクを完了にした情報
+   */
+  updateDoneTaskItem(taskId: string, status: number): Observable<UpdateTaskMutation> {
     const content = {
-      id: taskFormItem.id,
+      id: taskId,
       status: status,
     };
     return this.taskService.updateTaskItem(content);
   }
 
-  updateStatusTaskItems(taskItems): Observable<Array<UpdateTaskMutation>> {
+  /**
+   * 配列のタスクアイテムのステータスを更新します
+   * @param taskItems 配列でのタスク情報
+   * @returns 更新したタスク情報
+   */
+  updateStatusTaskItems(taskItems: Array<InterfaceTask>): Observable<Array<UpdateTaskMutation>> {
     return from(taskItems)
       .pipe(
         concatMap((result: InterfaceTask) =>
@@ -127,12 +177,24 @@ export class TaskLogic {
       .pipe(toArray());
   }
 
-  getIndexNewArray(taskActiveItems: Array<InterfaceTask>, taskActiveItem): Observable<number> {
+  /**
+   * タスク並び替え時にインデックス値を取得します
+   * @param taskActiveItems ルームに紐づく配列のタスク情報
+   * @param taskActiveItem 並び替え対象タスク情報
+   * @returns インデックス値
+   */
+  getIndexNewArray(taskActiveItems: Array<InterfaceTask>, taskActiveItem: InterfaceTask): Observable<number> {
     return from(taskActiveItems)
       .pipe(findIndex(taskItem => taskItem.id === taskActiveItem.id))
   }
 
-  updateTaskItemPriority(indexArray: number, taskActiveItems: Array<InterfaceTask>): Observable<any> {
+  /**
+   * タスクの並び替えを行ったときに各タスクのステータスを変更します
+   * @param indexArray 配列内のタスクのIndex
+   * @param taskActiveItems アクティブのタスク情報
+   * @returns 更新したタスク情報
+   */
+  updateTaskItemPriority(indexArray: number, taskActiveItems: Array<InterfaceTask>): Observable<UpdateTaskMutation> {
     const targetTaskItem = taskActiveItems[indexArray];
     const content = {
       id: targetTaskItem.id,
@@ -141,10 +203,21 @@ export class TaskLogic {
     return this.taskService.updateTaskStatusForReorder(content);
   }
 
+  /**
+   * ユーザーIDに紐づくユーザー情報を取得します
+   * @param userId ユーザーID
+   * @returns ユーザー情報
+   */
   fetchUserInfoFromAmplify(userId: string): Observable<GetUserQuery> {
     return this.taskService.fetchUserInfo(userId);
   }
 
+  /**
+   * 会社に所属しているメンバーを取得します
+   * @param companyId 会社ID
+   * @param queryFilterUser 検索対象の文字
+   * @returns 配列のメンバー情報
+   */
   fetchCompanyMember(
     companyId: string,
     queryFilterUser?: string
@@ -166,6 +239,11 @@ export class TaskLogic {
     return this.taskService.fetchCompanyMember(filterContent);
   }
 
+  /**
+   * ルームに所属するユーザー情報を取得します
+   * @param roomId ルームID
+   * @returns ルームに所属するユーザー情報
+   */
   fetchMemberListOnRoom(
     roomId: string | number
   ): Observable<ListRoomGroupsQuery> {
@@ -177,13 +255,25 @@ export class TaskLogic {
     return this.taskService.fetchRoomMember(filterContent);
   }
 
+  /**
+   * 各タスクの優先順位を計算します
+   * @param a 比較するタスク情報
+   * @param b 比較するタスク直後情報
+   * @returns 比較した結果のタスクの優先順位
+   */
   compareTaskArray(a: InterfaceTask, b: InterfaceTask): number {
     const priorityA = a.priority;
     const priorityB = b.priority;
     return priorityA - priorityB;
   }
 
-  createUserRoomGroup(userId: string, roomId: string): Observable<any> {
+  /**
+   * ユーザーに紐づくルーム情報を作成します
+   * @param userId ユーザーID
+   * @param roomId ルームID
+   * @returns ルームグループを作成した情報
+   */
+  createUserRoomGroup(userId: string, roomId: string): Observable<CreateRoomGroupMutation> {
     const content = {
       id: `user-room-group-${uuid()}`,
       roomID: `${roomId}`,
@@ -192,12 +282,23 @@ export class TaskLogic {
     return this.taskService.createUserRoomGroup(content);
   }
 
-  addMembersToAnyRoom(arrayUserId: Array<string>, roomId: string): Observable<any> {
+  /**
+   * ルームにメンバーを追加します
+   * @param arrayUserId ルームに追加するユーザーのID
+   * @param roomId ルームID
+   * @returns ルームグループを更新した情報
+   */
+  addMembersToAnyRoom(arrayUserId: Array<string>, roomId: string): Observable<CreateRoomGroupMutation> {
     return from(arrayUserId)
       .pipe(concatMap((userId) => this.createUserRoomGroup(userId, roomId)));
   }
 
-  reorderTaskMessage(data: UpdateTaskMutation): Observable<any> {
+  /**
+   * 並び替えを行った場合にメッセージを送信します
+   * @param data メッセージを送る対象のタスク情報
+   * @returns メッセージを送信した結果
+   */
+  reorderTaskMessage(data: UpdateTaskMutation): Observable<CreateMessageMutation> {
     const createContent: CreateMessageInput = {
       id: `${uuid()}`,
       taskID: `${data.id}`,
@@ -207,32 +308,60 @@ export class TaskLogic {
     return this.taskService.updateMessage(createContent);
   }
 
+  /**
+   * 会社に所属しているメンバー
+   * @param companyId 会社ID
+   * @returns 会社情報
+   */
   fetchCompanyMembers(companyId: string): Observable<GetCompanyQuery> {
     return this.taskService.fetchAnyCompany(companyId);
   }
 
+  /**
+   * E-mailに一致するユーザー情報
+   * @param email E-mail
+   * @returns ログインしているユーザー情報
+   */
   fetchAnyUserInfoFromList(email: string): Observable<Array<CurrentUser>> {
     return this.taskService.fetchAnyUserInfoFromList(email)
       .pipe(map((result) => result.items))
   }
 
-  updateRoom(result: { nameItem: string, descriptionItem: string }, roomId: string): Observable<any> {
+  /**
+   * ルーム情報を更新します
+   * @param result 更新する情報
+   * @param roomId ルーム情報
+   * @returns ルーム情報を更新した結果
+   */
+  updateRoom(roomInfo: { nameItem: string, descriptionItem: string }, roomId: string): Observable<any> {
     const requestContent: UpdateRoomInput = {
       id: roomId,
-      name: result.nameItem,
-      description: result.descriptionItem,
+      name: roomInfo.nameItem,
+      description: roomInfo.descriptionItem,
     }
     return this.taskService.updateRoom(requestContent);
   }
 
+  /**
+   * ルーム情報が更新されたときに実行される
+   * @returns onUpdateRoomListener
+   */
   onUpdateRoomListener(): any {
     return this.taskService.onUpdateRoomListener();
   }
 
+  /**
+   * タスク情報が作成されたときに実行される
+   * @returns onUpdateRoomListener
+   */
   onCreateTaskListener(): any {
     return this.taskService.onCreateTaskListener();
   }
 
+  /**
+   * タスク情報が作成されたときに実行される
+   * @returns onUpdateRoomListener
+   */
   onUpdateTaskListener(): any {
     return this.taskService.onUpdateTaskListener();
   }

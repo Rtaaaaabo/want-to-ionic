@@ -14,6 +14,8 @@ import {
   GetCompanyQuery,
   ModelUserFilterInput,
   UpdateRoomInput,
+  CreateMessageMutation,
+  UpdateRoomMutation,
 } from "../../../shared/service/amplify.service";
 import { Observable, from } from "rxjs";
 
@@ -77,11 +79,11 @@ export class TaskService {
     return from(this.amplifyService.ListRoomGroups(content));
   }
 
-  createUserRoomGroup(filterContent): Observable<any> {
+  createUserRoomGroup(filterContent): Observable<CreateRoomGroupMutation> {
     return from(this.amplifyService.CreateRoomGroup(filterContent));
   }
 
-  updateMessage(content: CreateMessageInput): Observable<any> {
+  updateMessage(content: CreateMessageInput): Observable<CreateMessageMutation> {
     return from(this.amplifyService.CreateMessage(content));
   }
 
@@ -98,6 +100,10 @@ export class TaskService {
     return from(this.amplifyService.ListUsers(filterContent));
   }
 
+  updateRoom(data: UpdateRoomInput): Observable<UpdateRoomMutation> {
+    return from(this.amplifyService.UpdateRoom(data));
+  }
+
   onUpdateRoomListener(): any {
     return this.amplifyService.OnUpdateRoomListener;
   }
@@ -110,7 +116,4 @@ export class TaskService {
     return this.amplifyService.OnUpdateTaskListener;
   }
 
-  updateRoom(data: UpdateRoomInput): any {
-    return this.amplifyService.UpdateRoom(data);
-  }
 }
