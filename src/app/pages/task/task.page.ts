@@ -214,12 +214,6 @@ export class TaskPage implements OnInit {
     this.router.navigate(['task-detail', `${task.id}`, `${segment}`], navigationExtras);
   }
 
-  async addCommentToTaskDetail(task): Promise<void> {
-    await this.router.navigate(['task-detail', `${task.id}`, 'active'], {
-      fragment: 'comment'
-    });
-  }
-
   segmentChanged(ev: CustomEvent): void {
     this.segment = ev.detail.value;
     this.location.replaceState(`task/${this.roomId}`, `status=${this.segment}`);
