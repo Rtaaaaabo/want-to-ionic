@@ -66,9 +66,13 @@ export class ListRoomComponent implements OnInit {
     })
   }
 
+  initializeApp(): Observable<string> {
+    return from(this.platform.ready());
+  }
+
   ngOnInit(): void { }
 
-  fetchGroupItems(): void {
+  private fetchGroupItems(): void {
     this.logic.fetchRoomList(this.currentUser.id)
       .pipe(concatMap((data) => this.logic.setExitsRoomAndUser(data)))
       .subscribe((data) => {
@@ -77,15 +81,11 @@ export class ListRoomComponent implements OnInit {
       });
   }
 
-  initializeApp(): Observable<string> {
-    return from(this.platform.ready());
-  }
-
   /**
    * Roomを作成するモーダルを表示させます
    * @returns Roomを増やすためのモーダルを表示させます
    */
-  async presentAddRoomItem(): Promise<void> {
+  public async presentAddRoomItem(): Promise<void> {
     const modal = await this.modalCtrl.create({
       component: AddRoomModalComponent,
     });
@@ -106,7 +106,7 @@ export class ListRoomComponent implements OnInit {
    * タスク追加画面に遷移させます
    * @param room 部屋の情報
    */
-  navigateToTask(room: Room): void {
+  public navigateToTask(room: Room): void {
     const navigationExtras: NavigationExtras = {
       state: { status: 'active' }
     }
@@ -118,7 +118,7 @@ export class ListRoomComponent implements OnInit {
    * @param roomId RoomのID
    * @param slideItem SlideItem情報を取得します
    */
-  deleteRoom(roomId: string, slideItem: IonItemSliding): void {
+  private deleteRoom(roomId: string, slideItem: IonItemSliding): void {
     this.logic.fetchRoomMembers(roomId, this.currentUser.id)
       .pipe(concatMap((data) => data.length === 0 ?
         this.logic.deleteRoomItem(roomId) : this.logic.removeMeFromRoom(roomId, this.currentUser.id))
@@ -131,14 +131,12 @@ export class ListRoomComponent implements OnInit {
       });
   }
 
-
-
   /**
    * ルームを削除するときの確認モーダルを表示させます
    * @param item RoomGroupの情報
    * @param slideItem SlideItemの情報
    */
-  async presentDeleteAlert(item: RoomGroup, slideItem: IonItemSliding): Promise<void> {
+  private async presentDeleteAlert(item: RoomGroup, slideItem: IonItemSliding): Promise<void> {
     const alert = await this.alertCtrl.create({
       header: '項目を削除します',
       subHeader: `${item.room.name}を削除します。よろしいでしょうか？`,
@@ -156,8 +154,6 @@ export class ListRoomComponent implements OnInit {
           role: 'ok',
           handler: () => {
             this.deleteRoom(item.roomID, slideItem);
-            // this.verifyDeleteTask(slideItem, item);
-            // this.presentStillExistsOwnTask()
           }
         }
       ]
@@ -165,7 +161,7 @@ export class ListRoomComponent implements OnInit {
     alert.present();
   }
 
-  async presentStillExistsOwnTask(item: RoomGroup, slideItem: IonItemSliding): Promise<void> {
+  private async presentStillExistsOwnTask(item: RoomGroup, slideItem: IonItemSliding): Promise<void> {
     const alert = await this.alertCtrl.create({
       header: '担当タスクがまだ残っています',
       message: '担当タスクを他の方に変更するか、終わっていればステータスをDONEにしてください',
@@ -180,19 +176,6 @@ export class ListRoomComponent implements OnInit {
       ]
     });
     alert.present();
-  }
-
-  /**
-   * 削除対象のRoomの中に担当するタスクがあれば削除しないようにする
-   * @param slideItem SlideItemの情報
-   * @param item RoomGroupのItem
-   */
-  verifyDeleteTask(item: RoomGroup, slideItem: IonItemSliding): void {
-    this.logic.fetchUserInfo(item.userID)
-      .pipe(concatMap((data) => this.logic.verifyExistTaskOnRoom(data.chargeTask.items, item.roomID)))
-      .subscribe((isExist) => {
-        isExist ? this.presentStillExistsOwnTask(item, slideItem) : this.presentDeleteAlert(item, slideItem);
-      })
   }
 
   ngOnDestroy(): void {
