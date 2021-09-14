@@ -4,7 +4,7 @@ import { IonicModule } from '@ionic/angular';
 import { HomePageRoutingModule } from './home-routing.module';
 import { SharedModule } from '../../shared/shared.module';
 import { HomePage } from './home.page';
-import { ListRoomComponent } from './componet/list-room/list-room.component';
+import { ListRoomComponent } from './component/list-room/list-room.component';
 import { HomeService } from './service/home.service';
 import { HomeLogic } from './logic/home.logic';
 
