@@ -4,8 +4,8 @@ import { IonicModule } from '@ionic/angular';
 import { ListRoomComponent } from './list-room.component';
 
 describe('ListRoomComponent', () => {
-  let component: ListRoomComponent;
   let fixture: ComponentFixture<ListRoomComponent>;
+  let component: ListRoomComponent;
 
   beforeEach((() => {
     TestBed.configureTestingModule({

@@ -7,7 +7,7 @@ import { from, Subscription, Observable } from 'rxjs';
 import { concatMap, filter } from 'rxjs/operators';
 import { ResponseListRoomGroupsQueryItems } from '../../service/response/response.model';
 import { Room, RoomGroup } from 'src/app/shared/service/amplify.service';
-import { CurrentUser, Attribute, FetchTaskGroup } from '../../model/home.interface';
+import { CurrentUser, Attribute } from '../../model/home.interface';
 
 @Component({
   selector: 'app-list-room',
@@ -76,7 +76,6 @@ export class ListRoomComponent implements OnInit {
     this.logic.fetchRoomList(this.currentUser.id)
       .pipe(concatMap((data) => this.logic.setExitsRoomAndUser(data)))
       .subscribe((data) => {
-        console.log('ListRoomComponent', data);
         this.roomGroupsItems = data;
       });
   }
