@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ɵCompiler_compileModuleSync__POST_R3__ } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Location, ViewportScroller, LocationStrategy } from '@angular/common';
 import { Router, ActivatedRoute, RoutesRecognized } from '@angular/router';
 import { ModalController, ActionSheetController, ToastController, IonContent, Platform, AlertController } from '@ionic/angular';
@@ -10,13 +10,8 @@ import { AddTaskModalComponent } from 'src/app/shared/component/modal/add-task-m
 import { GetTaskQuery, ListRoomGroupsQuery } from 'src/app/shared/service/amplify.service';
 import { IMessageWithAttachUrl, CurrentUser } from './models/task-detail.interface';
 import { TaskPage } from '../task/task.page';
+import { Attribute } from 'src/app/shared/model/user.model';
 
-interface Attribute {
-  name: string,
-  email: string,
-  email_verified: boolean,
-  sub: string,
-};
 @Component({
   selector: 'app-task-detail',
   templateUrl: './task-detail.page.html',
@@ -37,9 +32,8 @@ export class TaskDetailPage implements OnInit {
   link = "comment"
   fragmentComment = '';
   newMsg: string = '';
-  private previousUrl: string = undefined;
-  private previousParam: string = undefined;
-
+  previousUrl: string = undefined;
+  previousParam: string = undefined;
   currentUserAttribute: Attribute;
   currentUserInfo: CurrentUser;
 
@@ -57,7 +51,6 @@ export class TaskDetailPage implements OnInit {
     private readonly locationStrate: LocationStrategy,
   ) {
     this.segment = this.route.snapshot.paramMap.get('segment');
-
     let resultMessage;
     this.taskId = this.route.snapshot.paramMap.get('id');
     this.initializeApp().subscribe(() => {
@@ -74,7 +67,7 @@ export class TaskDetailPage implements OnInit {
         });
     });
     this.router.events
-      .pipe(filter((event: any) => event instanceof RoutesRecognized), pairwise())
+      .pipe(filter((event) => event instanceof RoutesRecognized), pairwise())
       .subscribe((event: any) => {
         this.previousUrl = event[0].urlAfterRedirects;
       });
@@ -83,12 +76,11 @@ export class TaskDetailPage implements OnInit {
     })
   }
 
-  // 前のURLだけを取得
-  public getPreviousParam() {
-    return this.previousParam;
+  private initializeApp(): Observable<string> {
+    return from(this.platform.ready());
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     let resultMessage;
     this.segment = this.route.snapshot.paramMap.get('segment');
     const observerFetchCurrentUserInfo = this.logic.fetchCurrentUserInfo()
@@ -103,7 +95,6 @@ export class TaskDetailPage implements OnInit {
       .pipe(concatMap((result) => this.logic.makeMessageAuthorImageUrl(result))) //AuthorIconのURLを設定する
       .pipe(concatMap((result) => this.logic.makeAttachmentUrl(result)))
       .pipe(concatMap((arrayAttachment) => this.logic.modifiedMessageItems(arrayAttachment, resultMessage)))
-
     forkJoin({
       currentUserInfo: observerFetchCurrentUserInfo,
       anyTask: observerFetchAnyTask,
@@ -115,7 +106,10 @@ export class TaskDetailPage implements OnInit {
     });
   }
 
-  sendMessage(): void {
+  /**
+   * コミュニケーションにメッセージを送ります
+   */
+  public sendMessage(): void {
     if (this.arrayImageBase64Data.length === 0) {
       this.logic.sendNewMessage(this.taskId, this.newMsg, this.currentUserInfo.id)
         .subscribe(() => this.newMsg = '');
@@ -131,7 +125,16 @@ export class TaskDetailPage implements OnInit {
     }
   }
 
-  async presentDoneToast(): Promise<void> {
+  public ngAfterViewInit(): void {
+    this.route.fragment.subscribe((result) => {
+      this.scroll.scrollToAnchor(result);
+    });
+  }
+
+  /**
+   * 完了のトーストを送ります
+   */
+  public async presentDoneToast(): Promise<void> {
     const toast = await this.toastCtrl.create({
       message: 'おつかれさまでした！',
       duration: 2000
@@ -139,7 +142,10 @@ export class TaskDetailPage implements OnInit {
     toast.present();
   }
 
-  async presentMoveTask(): Promise<void> {
+  /**
+   * タスクを完了したトーストを送ります
+   */
+  public async presentMoveTask(): Promise<void> {
     const toast = await this.toastCtrl.create({
       message: '再度、戻しました。',
       duration: 2000
@@ -147,13 +153,12 @@ export class TaskDetailPage implements OnInit {
     toast.present();
   }
 
-  ngAfterViewInit(): void {
-    this.route.fragment.subscribe((result) => {
-      this.scroll.scrollToAnchor(result);
-    });
-  }
-
-  async presentModalEditTask(taskDetail: GetTaskQuery): Promise<void> {
+  /**
+   * タスク編集モーダルを表示します
+   * @param taskDetail タスクの詳細情報
+   * @returns 空
+   */
+  public async presentModalEditTask(taskDetail: GetTaskQuery): Promise<void> {
     const modal = await this.modalCtrl.create({
       component: AddTaskModalComponent,
       componentProps: {
@@ -175,7 +180,11 @@ export class TaskDetailPage implements OnInit {
     return modal.present();
   }
 
-  doneTask(taskDetail: GetTaskQuery): void {
+  /**
+   * タスクを完了します
+   * @param taskDetail タスク詳細情報
+   */
+  public doneTask(taskDetail: GetTaskQuery): void {
     const presentToast = this.presentDoneToast();
     const messageContent = 'このタスクを完了としました';
     this.logic.updateTaskItem(taskDetail, 10)
@@ -188,7 +197,11 @@ export class TaskDetailPage implements OnInit {
       });
   }
 
-  moveTask(taskDetail: GetTaskQuery): void {
+  /**
+   * タスクをActiveにします
+   * @param taskDetail タスク詳細情報
+   */
+  public moveTask(taskDetail: GetTaskQuery): void {
     const presentToast = from(this.presentMoveTask());
     const messageContent = 'このタスクをActiveにもどしました。';
     this.logic.updateTaskItem(taskDetail, 0)
@@ -201,7 +214,11 @@ export class TaskDetailPage implements OnInit {
       });
   }
 
-  async presentActionSheet(taskDetail: GetTaskQuery): Promise<void> {
+  /**
+   * ヘッダー部分のアクションボタンを押下時
+   * @param taskDetail タスク詳細情報
+   */
+  public async presentActionSheet(taskDetail: GetTaskQuery): Promise<void> {
     const activeActionSheet = await this.actionSheetCtrl.create({
       cssClass: 'my-custom-class',
       buttons: [
@@ -241,13 +258,17 @@ export class TaskDetailPage implements OnInit {
     }
   }
 
-  goBackToRoom(): void {
+  /**
+   * 戻るボタン
+   */
+  public goBackToRoom(): void {
     this.location.back();
   }
 
-  selectFile(): void { }
-
-  async takePhoto(): Promise<void> {
+  /**
+   * 写真を選択または撮影します
+   */
+  public async takePhoto(): Promise<void> {
     const image = await Camera.getPhoto({
       quality: 50,
       allowEditing: true,
@@ -260,15 +281,18 @@ export class TaskDetailPage implements OnInit {
     this.arrayImageBase64Data.push(image.dataUrl);
   }
 
-  initializeApp(): Observable<string> {
-    return from(this.platform.ready());
-  }
-
-  deleteImage(indexTarget: number): void {
+  /**
+   * 選択した画像を削除します
+   * @param indexTarget 削除した写真のインデックス値
+   */
+  public deleteImage(indexTarget: number): void {
     this.arrayImageBase64Data.splice(indexTarget, 1);
   }
 
-  async presentAlert(): Promise<void> {
+  /**
+   * アップロードする写真の上限値についてアラートを表示します。
+   */
+  public async presentAlert(): Promise<void> {
     const alert = await this.alertCtrl.create({
       header: 'アップロード最大値です',
       message: '一度にアップロードできる数は一件です',
@@ -277,7 +301,7 @@ export class TaskDetailPage implements OnInit {
     await alert.present();
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     this.subscriptionMessage.unsubscribe();
   }
 }

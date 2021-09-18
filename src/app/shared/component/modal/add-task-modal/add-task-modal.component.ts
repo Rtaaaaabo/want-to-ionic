@@ -18,20 +18,16 @@ export class AddTaskModalComponent implements OnInit {
     chargePersonId: new FormControl(''),
     scheduleDateItem: new FormControl(''),
   });
-
   userId: string;
   minYear: string = '';
   maxYear: string = '';
   currentIsoString: string;
   roomMembers: ListRoomGroupsQuery;
-
   strButton: string;
-
   room;
   taskDetail: GetTaskQuery;
   userList;
   hasModifyForm = false;
-
   hasTaskKind = {
     name: false,
     description: false,
@@ -40,7 +36,7 @@ export class AddTaskModalComponent implements OnInit {
   };
 
   constructor(
-    private modalCtrl: ModalController,
+    private readonly modalCtrl: ModalController,
   ) { }
 
   ngOnInit() {
