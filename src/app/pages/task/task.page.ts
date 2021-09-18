@@ -230,7 +230,7 @@ export class TaskPage implements OnInit {
       });
   }
 
-  async presentDoneTaskAlert(alertBody): Promise<void> {
+  async presentDoneTaskAlert(alertBody: InterfaceTask): Promise<void> {
     const alert = await this.alertCtrl.create({
       header: '完了にしますか？',
       message: `${alertBody.title}を完了にします。`,
@@ -244,7 +244,7 @@ export class TaskPage implements OnInit {
           role: 'ok',
           handler: () => {
             const presentToast = from(this.presentDoneToast());
-            this.logic.updateDoneTaskItem(alertBody.task.id, 10)
+            this.logic.updateDoneTaskItem(alertBody.id, 10)
               .pipe(concatMap(() => this.logic.fetchActiveTaskPerRoom(this.roomId)))
               .pipe(concatMap((result) => this.logic.fetchEachStatusTask(result, 0)))
               .pipe(tap(() => presentToast))
