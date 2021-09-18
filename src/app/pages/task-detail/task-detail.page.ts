@@ -199,7 +199,7 @@ export class TaskDetailPage implements OnInit {
       });
   }
 
-  async presentActionSheet(taskDetail): Promise<void> {
+  async presentActionSheet(taskDetail: GetTaskQuery): Promise<void> {
     const activeActionSheet = await this.actionSheetCtrl.create({
       cssClass: 'my-custom-class',
       buttons: [
