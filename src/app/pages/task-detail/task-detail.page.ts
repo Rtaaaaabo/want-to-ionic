@@ -153,7 +153,7 @@ export class TaskDetailPage implements OnInit {
     });
   }
 
-  async presentModalEditTask(taskDetail): Promise<void> {
+  async presentModalEditTask(taskDetail: GetTaskQuery): Promise<void> {
     const modal = await this.modalCtrl.create({
       component: AddTaskModalComponent,
       componentProps: {
@@ -175,7 +175,7 @@ export class TaskDetailPage implements OnInit {
     return modal.present();
   }
 
-  doneTask(taskDetail): void {
+  doneTask(taskDetail: GetTaskQuery): void {
     const presentToast = this.presentDoneToast();
     const messageContent = 'このタスクを完了としました';
     this.logic.updateTaskItem(taskDetail, 10)
@@ -184,10 +184,11 @@ export class TaskDetailPage implements OnInit {
       .pipe(tap(() => presentToast))
       .subscribe((data) => {
         this.taskDetail = data;
+        this.segment = 'done';
       });
   }
 
-  moveTask(taskDetail): void {
+  moveTask(taskDetail: GetTaskQuery): void {
     const presentToast = from(this.presentMoveTask());
     const messageContent = 'このタスクをActiveにもどしました。';
     this.logic.updateTaskItem(taskDetail, 0)
@@ -196,6 +197,7 @@ export class TaskDetailPage implements OnInit {
       .pipe(tap(() => presentToast))
       .subscribe((data) => {
         this.taskDetail = data;
+        this.segment = 'active';
       });
   }
 
