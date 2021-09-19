@@ -62,7 +62,7 @@ export class TaskDetailPage implements OnInit {
             .pipe(concatMap((result) => this.logic.makeAttachmentUrl(result)))
             .pipe(concatMap((arrayAttachment) => this.logic.modifiedMessageItems(arrayAttachment, resultMessage)))
             .subscribe((items) => {
-              this.message = items
+              this.message = items;
             }),
         });
     });
@@ -103,6 +103,7 @@ export class TaskDetailPage implements OnInit {
       this.currentUserInfo = result.currentUserInfo[0];
       this.roomMembers = result.anyTask.items;
       this.message = result.messageAttachment;
+      console.log('this.message', this.message);
     });
   }
 
