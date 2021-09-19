@@ -116,4 +116,8 @@ export class TaskService {
     return this.amplifyService.OnUpdateTaskListener;
   }
 
+  createMessageItem(inputContent: CreateMessageInput): Observable<CreateMessageMutation> {
+    return from(this.amplifyService.CreateMessage(inputContent));
+  }
+
 }

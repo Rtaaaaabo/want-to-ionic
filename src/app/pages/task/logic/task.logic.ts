@@ -27,6 +27,7 @@ import { TaskService } from "../service/task.service";
 import { CurrentUserInfo } from "../interface/current-user-info.interface";
 import { InterfaceTask } from "src/app/interfaces/task.interface";
 import { CurrentUser } from '../model/task-member.model';
+import { MessageContent, IsMessageContent } from '../../task-detail/models/task-detail.interface';
 
 
 @Injectable({
@@ -364,5 +365,44 @@ export class TaskLogic {
    */
   onUpdateTaskListener(): any {
     return this.taskService.onUpdateTaskListener();
+  }
+
+  createMessage(data: UpdateTaskMutation, argContent?: string | IsMessageContent): Observable<any> {
+    return this.createMessageContent(data, argContent)
+      .pipe(concatMap((messageContent) => this.taskService.createMessageItem(messageContent)));
+  }
+
+  createMessageContent(data, argContent): Observable<MessageContent> {
+    let messageContent = '';
+    if (typeof (argContent) === "object") {
+      if (argContent.data.hasTaskKind.chargePerson) {
+        messageContent = `・担当者を ${data.chargePerson.username}に変更しました`;
+      }
+      if (argContent.data.hasTaskKind.description) {
+        messageContent =
+          `${messageContent}\n` +
+          `・説明文を${argContent.data.taskValue.descriptionItem}に変更しました。`;
+      }
+      if (argContent.data.hasTaskKind.name) {
+        messageContent =
+          `${messageContent}\n` +
+          `・タイトルを${argContent.data.taskValue.nameItem}に変更しました。`;
+      }
+      if (argContent.data.hasTaskKind.scheduleDate) {
+        messageContent =
+          `${messageContent}\n` +
+          `・締め切りを${argContent.data.taskValue.scheduleDateItem}に変更しました。`;
+      }
+    } else {
+      messageContent = argContent;
+    }
+
+    const content = {
+      id: `${uuid()}`,
+      taskID: `${data.id}`,
+      authorID: `${data.authorID}`,
+      content: `${messageContent}`
+    }
+    return of(content);
   }
 }
