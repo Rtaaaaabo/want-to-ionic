@@ -92,7 +92,8 @@ export class TaskDetailPage implements OnInit {
     const observerFetchMessagePerTask = this.logic.fetchMessagePerTask(this.taskId);
     const observerMakeMessageAttachmentUrl = observerFetchMessagePerTask
       .pipe(map((result) => resultMessage = result.items))
-      .pipe(concatMap((result) => this.logic.makeMessageAuthorImageUrl(result))) //AuthorIconのURLを設定する
+      .pipe(concatMap((result) => this.logic.makeMessageAuthorImageUrl(result)))
+      .pipe(map((result) => resultMessage = result))
       .pipe(concatMap((result) => this.logic.makeAttachmentUrl(result)))
       .pipe(concatMap((arrayAttachment) => this.logic.modifiedMessageItems(arrayAttachment, resultMessage)))
     forkJoin({
@@ -103,7 +104,6 @@ export class TaskDetailPage implements OnInit {
       this.currentUserInfo = result.currentUserInfo[0];
       this.roomMembers = result.anyTask.items;
       this.message = result.messageAttachment;
-      console.log('this.message', this.message);
     });
   }
 

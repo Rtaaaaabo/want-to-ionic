@@ -102,7 +102,7 @@ export class TaskDetailLogic {
    */
   modifiedMessageItems(arrayAttachmentUrl, resultMessage: Array<IMessageWithAttachUrl>): Observable<Array<IMessageWithAttachUrl>> {
     let result: Array<IMessageWithAttachUrl> = resultMessage;
-    resultMessage.forEach((el, index) => {
+    resultMessage.forEach((_, index) => {
       result[index].attachmentWithUrl = arrayAttachmentUrl[index];
     });
     return of(result);
