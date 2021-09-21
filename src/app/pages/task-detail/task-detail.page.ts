@@ -50,8 +50,8 @@ export class TaskDetailPage implements OnInit {
     private readonly alertCtrl: AlertController,
     private readonly locationStrate: LocationStrategy,
   ) {
-    this.segment = this.route.snapshot.paramMap.get('segment');
     let resultMessage;
+    this.segment = this.route.snapshot.paramMap.get('segment');
     this.taskId = this.route.snapshot.paramMap.get('id');
     this.initializeApp().subscribe(() => {
       this.subscriptionMessage = this.logic.onCreateMessageListener()
@@ -59,6 +59,7 @@ export class TaskDetailPage implements OnInit {
           next: () => this.logic.fetchMessagePerTask(this.taskId)
             .pipe(map((result) => resultMessage = result.items))
             .pipe(concatMap(() => this.logic.makeMessageAuthorImageUrl(resultMessage)))
+            .pipe(map((result) => resultMessage = result))
             .pipe(concatMap((result) => this.logic.makeAttachmentUrl(result)))
             .pipe(concatMap((arrayAttachment) => this.logic.modifiedMessageItems(arrayAttachment, resultMessage)))
             .subscribe((items) => {
@@ -85,17 +86,21 @@ export class TaskDetailPage implements OnInit {
     this.segment = this.route.snapshot.paramMap.get('segment');
     const observerFetchCurrentUserInfo = this.logic.fetchCurrentUserInfo()
       .pipe(map((data) => this.currentUserAttribute = data))
-      .pipe(concatMap(() => this.logic.fetchAnyUserInfoFromList(this.currentUserAttribute.email)))
+      .pipe(concatMap(() => this.logic.fetchAnyUserInfoFromList(this.currentUserAttribute.email)));
+
     const observerFetchAnyTask = this.logic.fetchAnyTask(this.taskId)
       .pipe(map((data) => this.taskDetail = data))
       .pipe(concatMap(() => this.logic.fetchMemberListOnRoom(this.taskDetail.roomID)));
+
     const observerFetchMessagePerTask = this.logic.fetchMessagePerTask(this.taskId);
+
     const observerMakeMessageAttachmentUrl = observerFetchMessagePerTask
       .pipe(map((result) => resultMessage = result.items))
       .pipe(concatMap((result) => this.logic.makeMessageAuthorImageUrl(result)))
       .pipe(map((result) => resultMessage = result))
       .pipe(concatMap((result) => this.logic.makeAttachmentUrl(result)))
-      .pipe(concatMap((arrayAttachment) => this.logic.modifiedMessageItems(arrayAttachment, resultMessage)))
+      .pipe(concatMap((arrayAttachment) => this.logic.modifiedMessageItems(arrayAttachment, resultMessage)));
+
     forkJoin({
       currentUserInfo: observerFetchCurrentUserInfo,
       anyTask: observerFetchAnyTask,
