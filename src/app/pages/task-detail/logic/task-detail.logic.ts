@@ -113,9 +113,9 @@ export class TaskDetailLogic {
    * @param status TaskItemのObject
    * @returns Observable型で updateTaskItemを返します
    */
-  updateTaskItem(taskItem, status): Observable<any> {
+  updateTaskItem(taskId: string, status: number): Observable<UpdateTaskMutation> {
     const content = {
-      id: taskItem.id,
+      id: taskId,
       status: status,
     }
     return this.taskDetailService.updateTaskItem(content);

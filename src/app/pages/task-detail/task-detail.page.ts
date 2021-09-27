@@ -196,7 +196,7 @@ export class TaskDetailPage implements OnInit {
   public doneTask(taskDetail: GetTaskQuery): void {
     const presentToast = this.presentDoneToast();
     const messageContent = 'タスクを完了としました';
-    this.logic.updateTaskItem(taskDetail, 10)
+    this.logic.updateTaskItem(taskDetail.id, 10)
       .pipe(concatMap((data) => this.logic.createMessage(data, messageContent)))
       .pipe(concatMap(() => this.logic.fetchAnyTask(taskDetail.id)))
       .pipe(tap(() => presentToast))
@@ -213,7 +213,7 @@ export class TaskDetailPage implements OnInit {
   public moveTask(taskDetail: GetTaskQuery): void {
     const presentToast = from(this.presentMoveTask());
     const messageContent = 'このタスクをActiveにもどしました。';
-    this.logic.updateTaskItem(taskDetail, 0)
+    this.logic.updateTaskItem(taskDetail.id, 0)
       .pipe(concatMap((result) => this.logic.createMessage(result, messageContent)))
       .pipe(concatMap(() => this.logic.fetchAnyTask(taskDetail.id)))
       .pipe(tap(() => presentToast))
