@@ -50,11 +50,10 @@ export class TaskDetailLogic {
    * @param items 昇降順になっているMessage Items
    * @returns 昇降順になっているMessageItems(authorIconWithUrlも含まれる)
    */
+  // この返り値を修正する
   makeMessageAuthorImageUrl(items: Array<TaskByCreatedAtItems>): Observable<Array<TaskByCreatedAtItems>> {
-    let messageItem: TaskByCreatedAtItems;
     return from(items)
-      .pipe(map((result) => messageItem = result))
-      .pipe(concatMap(() => this.fetchAnyUserIconUrl(messageItem)))
+      .pipe(concatMap((messageItem) => this.fetchAnyUserIconUrl(messageItem)))
       .pipe(toArray());
   }
 
@@ -64,7 +63,7 @@ export class TaskDetailLogic {
    * @returns TaskByCreatedAtItemsになっているItemを返します
    */
   fetchAnyUserIconUrl(item: TaskByCreatedAtItems): Observable<TaskByCreatedAtItems> {
-    let messageWithAttachUrl: TaskByCreatedAtItems = item;
+    let messageWithAttachUrl = item;
     return this.taskDetailService.fetchUserIconKey(item.authorID)
       .pipe(concatMap((iconKey) => iconKey !== '' ? this.getStorage(iconKey) : of('')))
       .pipe(map((result) => messageWithAttachUrl.authorIconWithUrl = result))
@@ -140,7 +139,7 @@ export class TaskDetailLogic {
     };
     if (arrayAttachment !== undefined) {
       inputContent.attachment = arrayAttachment;
-    }
+    };
     return this.taskDetailService.createMessageItem(inputContent);
   }
 

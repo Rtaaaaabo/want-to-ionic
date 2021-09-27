@@ -93,8 +93,10 @@ export class TaskDetailPage implements OnInit {
       .pipe(map((data) => this.taskDetail = data))
       .pipe(concatMap(() => this.logic.fetchMemberListOnRoom(this.taskDetail.roomID)));
 
+    // ここではちゃんと取得できている
     const observerFetchMessagePerTask = this.logic.fetchMessagePerTask(this.taskId);
 
+    // ここを書き換える必要がある
     const observerMakeMessageAttachmentUrl = observerFetchMessagePerTask
       .pipe(map((result) => resultMessage = result.items))
       .pipe(concatMap((result) => this.logic.makeMessageAuthorImageUrl(result)))
@@ -106,6 +108,7 @@ export class TaskDetailPage implements OnInit {
       currentUserInfo: observerFetchCurrentUserInfo,
       anyTask: observerFetchAnyTask,
       messageAttachment: observerMakeMessageAttachmentUrl,
+      test: observerFetchMessagePerTask,
     }).subscribe((result) => {
       this.currentUserInfo = result.currentUserInfo[0];
       this.roomMembers = result.anyTask.items;
