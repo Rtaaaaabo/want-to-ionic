@@ -25,7 +25,6 @@ export class TaskDetailPage implements OnInit {
   segment: string;
   taskDetail: GetTaskQuery;
   message: Array<IMessageWithAttachUrl>;
-  currentUserId: string;
   roomMembers: Array<ListRoomGroupsQuery>;
   arrayImageBase64Data: Array<string> = [];
   subscriptionMessage: Subscription;

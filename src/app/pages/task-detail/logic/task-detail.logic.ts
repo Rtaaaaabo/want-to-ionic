@@ -14,7 +14,8 @@ import {
   GetTaskQuery,
   S3Object,
   TaskByCreatedAtQuery,
-  UpdateTaskMutation
+  UpdateTaskMutation,
+  CreateMessageMutation,
 } from 'src/app/shared/service/amplify.service';
 
 @Injectable({
@@ -305,12 +306,12 @@ export class TaskDetailLogic {
     return of(blob);
   }
 
-  createMessage(data: UpdateTaskMutation, argContent?: string | IsMessageContent): Observable<any> {
+  createMessage(data: UpdateTaskMutation, argContent?: string | IsMessageContent): Observable<CreateMessageMutation> {
     return this.createMessageContent(data, argContent)
       .pipe(concatMap((messageContent) => this.taskDetailService.createMessageItem(messageContent)));
   }
 
-  createMessageContent(data, argContent): Observable<MessageContent> {
+  createMessageContent(data: UpdateTaskMutation, argContent: string | IsMessageContent): Observable<MessageContent> {
     let messageContent = '';
     if (typeof (argContent) === "object") {
       if (argContent.data.hasTaskKind.chargePerson) {
