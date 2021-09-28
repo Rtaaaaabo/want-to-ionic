@@ -246,7 +246,7 @@ export class TaskPage implements OnInit {
           handler: () => {
             const presentToast = from(this.presentDoneToast());
             this.logic.updateDoneTaskItem(alertBody.id, 10)
-              .pipe(concatMap((data) => this.logic.createMessage(data, messageContent)))
+              .pipe(concatMap((data) => this.logic.createMessage(data, this.currentUser.id, messageContent)))
               .pipe(concatMap(() => this.logic.fetchActiveTaskPerRoom(this.roomId)))
               .pipe(concatMap((result) => this.logic.fetchEachStatusTask(result, 0)))
               .pipe(tap(() => presentToast))

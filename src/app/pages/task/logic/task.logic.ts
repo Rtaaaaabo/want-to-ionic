@@ -367,12 +367,12 @@ export class TaskLogic {
     return this.taskService.onUpdateTaskListener();
   }
 
-  createMessage(data: UpdateTaskMutation, argContent?: string | IsMessageContent): Observable<any> {
-    return this.createMessageContent(data, argContent)
+  createMessage(data: UpdateTaskMutation, currentUserId: string, argContent?: string | IsMessageContent): Observable<any> {
+    return this.createMessageContent(data, argContent, currentUserId)
       .pipe(concatMap((messageContent) => this.taskService.createMessageItem(messageContent)));
   }
 
-  createMessageContent(data, argContent): Observable<MessageContent> {
+  createMessageContent(data: UpdateTaskMutation, argContent: string | IsMessageContent, currentUserId: string): Observable<MessageContent> {
     let messageContent = '';
     if (typeof (argContent) === "object") {
       if (argContent.data.hasTaskKind.chargePerson) {
@@ -400,7 +400,7 @@ export class TaskLogic {
     const content = {
       id: `${uuid()}`,
       taskID: `${data.id}`,
-      authorID: `${data.authorID}`,
+      authorID: `${currentUserId}`,
       content: `${messageContent}`
     }
     return of(content);
