@@ -306,12 +306,12 @@ export class TaskDetailLogic {
     return of(blob);
   }
 
-  createMessage(data: UpdateTaskMutation, argContent?: string | IsMessageContent): Observable<CreateMessageMutation> {
-    return this.createMessageContent(data, argContent)
+  createMessage(data: UpdateTaskMutation, currentUserId: string, argContent?: string | IsMessageContent): Observable<CreateMessageMutation> {
+    return this.createMessageContent(data, argContent, currentUserId)
       .pipe(concatMap((messageContent) => this.taskDetailService.createMessageItem(messageContent)));
   }
 
-  createMessageContent(data: UpdateTaskMutation, argContent: string | IsMessageContent): Observable<MessageContent> {
+  createMessageContent(data: UpdateTaskMutation, argContent: string | IsMessageContent, currentUserId: string): Observable<MessageContent> {
     let messageContent = '';
     if (typeof (argContent) === "object") {
       if (argContent.data.hasTaskKind.chargePerson) {
@@ -339,7 +339,7 @@ export class TaskDetailLogic {
     const content = {
       id: `${uuid()}`,
       taskID: `${data.id}`,
-      authorID: `${data.authorID}`,
+      authorID: `${currentUserId}`,
       content: `${messageContent}`
     }
     return of(content);
