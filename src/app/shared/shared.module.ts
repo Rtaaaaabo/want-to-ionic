@@ -13,6 +13,7 @@ import { AddPersonModalComponent } from '../pages/task/component/add-person-moda
 import { NoContentComponent } from './component/no-content/no-content.component';
 import { EditRoomModalComponent } from './component/modal/edit-room-modal/edit-room-modal.component';
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
+import { MessageContentDatePipe } from './pipe/message/message-content-date.pipe';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import { ImagePicker } from '@ionic-native/image-picker/ngx';
     InviteMemberComponent,
     MemberDetailModalComponent,
     EditRoomModalComponent,
+    MessageContentDatePipe,
   ],
   imports: [
     CommonModule,
