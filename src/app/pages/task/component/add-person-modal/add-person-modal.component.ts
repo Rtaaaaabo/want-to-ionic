@@ -30,8 +30,6 @@ export class AddPersonModalComponent implements OnInit {
       member.checked = false;
       return member;
     });
-    console.log('Members ngOnInit', this.members);
-    console.log('notAssignMembers', this.notAssignMembers);
   }
 
   /**
