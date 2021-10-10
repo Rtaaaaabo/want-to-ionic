@@ -10,14 +10,8 @@
     </ion-buttons>
     <ion-buttons slot="end">
       <ion-button (click)="presentActionSheet(taskDetail)">
-        <ion-icon
-          *ngIf="segment !== 'done'"
-          name="checkmark-outline"
-        ></ion-icon>
-        <ion-icon
-          *ngIf="segment === 'done'"
-          name="arrow-redo-outline"
-        ></ion-icon>
+        <ion-label *ngIf="segment !== 'done'">完了</ion-label>
+        <ion-label *ngIf="segment === 'done'">Active</ion-label>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
