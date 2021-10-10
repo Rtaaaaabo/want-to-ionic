@@ -24,7 +24,8 @@
 </ion-header>
 <ion-content>
   <ion-list *ngFor="let member of members">
-    <ion-item *ngIf="member.registered">
+    <!-- <ion-item *ngIf="member.registered"> -->
+    <ion-item *ngIf="member.username">
       <ion-label>{{ member.username }}</ion-label>
       <ion-checkbox
         (ionChange)="changeCheckUser(member)"

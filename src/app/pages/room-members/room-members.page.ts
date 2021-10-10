@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ModalController, Platform, AlertController } from '@ionic/angular';
-import { from, Observable, of, Subscription } from 'rxjs';
+import { from, Observable, Subscription } from 'rxjs';
 import { concatMap, map, filter } from 'rxjs/operators';
 import { RoomMembersLogic } from './logic/room-members.logic';
 import { AddPersonModalComponent } from '../task/component/add-person-modal/add-person-modal.component';
