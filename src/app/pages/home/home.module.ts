@@ -15,9 +15,6 @@ import { HomeLogic } from './logic/home.logic';
     HomePageRoutingModule,
     SharedModule,
   ],
-  entryComponents: [
-
-  ],
   declarations: [HomePage, ListRoomComponent],
   providers: [HomeService, HomeLogic]
 })
