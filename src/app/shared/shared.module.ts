@@ -57,6 +57,7 @@ import { MessageContentDatePipe } from './pipe/message/message-content-date.pipe
     ReactiveFormsModule,
     FormsModule,
     EditRoomModalComponent,
+    MessageContentDatePipe,
   ],
   providers: [
     SessionService,
