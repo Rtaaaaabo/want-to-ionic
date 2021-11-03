@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 import { Observable, from } from 'rxjs';
@@ -12,7 +12,7 @@ import { CurrentUser } from '../../../models/member-list.interface';
   templateUrl: './invite-member.component.html',
   styleUrls: ['./invite-member.component.scss'],
 })
-export class InviteMemberComponent implements OnInit {
+export class InviteMemberComponent {
   @Input() currentUserInfo: CurrentUser
 
   companyMembersForm = new FormGroup({
@@ -37,8 +37,6 @@ export class InviteMemberComponent implements OnInit {
     private readonly modalCtrl: ModalController,
     private logic: MemberListLogic,
   ) { }
-
-  ngOnInit(): void { }
 
   dismissModal(result?: Array<CreateUserMutation> | null): Observable<boolean> {
     return from(this.modalCtrl.dismiss(result));
