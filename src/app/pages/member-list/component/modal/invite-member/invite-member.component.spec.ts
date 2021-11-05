@@ -49,7 +49,7 @@ describe('InviteMemberComponent', () => {
     test('コンポーネントがインスタンス化されていること', () => {
       expect(component).toBeTruthy();
     });
-    test('', () => {
+    test('Modalがインスタンス化されていること', () => {
       expect(modalCtrl).toBeTruthy();
     })
     test('MemberListLogicがインスタンス化されていること', () => {
